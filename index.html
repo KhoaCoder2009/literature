@@ -881,6 +881,24 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
   </div>
 </dialog>
 
+<dialog id="ai-dialog">
+  <form id="ai-form" onsubmit="submitAiSet(event)">
+    <h2 style="margin-top:0;">🤖 Tạo câu hỏi bằng Gemini AI</h2>
+    <label for="ai-topic">Chủ đề / bài học</label>
+    <input id="ai-topic" type="text" maxlength="500" required
+      placeholder="Ví dụ: Truyện ngắn Vợ nhặt - Ngữ văn 12">
+    <label for="ai-source" style="margin-top:14px;">Nội dung văn bản nguồn</label>
+    <textarea id="ai-source" maxlength="20000" required
+      placeholder="Dán đoạn văn bản hoặc nội dung bài học để Gemini tạo câu hỏi dựa trên tài liệu này..."
+      style="min-height:220px;"></textarea>
+    <p class="mut" style="font-size:13px;">Tối đa 20.000 ký tự. Gemini sẽ tạo 4–8 câu hỏi trắc nghiệm dựa trên nội dung bạn cung cấp.</p>
+    <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px;">
+      <button class="btn gh sm" type="button" onclick="$('#ai-dialog').close()">Hủy</button>
+      <button class="btn au" id="ai-submit" type="submit">✨ Tạo bộ câu hỏi</button>
+    </div>
+  </form>
+</dialog>
+
 <div id="toast" role="status"></div>
 
 <script src="./config.js"></script>
@@ -1208,13 +1226,24 @@ function deleteSelectedSets() {
   });
 }
 
-async function generateAiSet() {
+function generateAiSet() {
   if (!appConfig.ai || !appConfig.ai.enabled || !hasSupabaseCredentials()) {
     return toast('Cần cấu hình Supabase URL, anon key và bật Gemini trong config.js. Không đặt Gemini API key tại đây.', 'bad');
   }
-  const topic = prompt('Nhập chủ đề hoặc yêu cầu cho bộ câu hỏi AI:', 'Ngữ Văn lớp 11 - văn học Việt Nam');
-  if (topic === null || !topic.trim()) return;
+  $('#ai-form').reset();
+  $('#ai-dialog').showModal();
+  $('#ai-topic').focus();
+}
 
+async function submitAiSet(event) {
+  event.preventDefault();
+  const topic = $('#ai-topic').value.trim();
+  const sourceText = $('#ai-source').value.trim();
+  if (!topic || !sourceText) return toast('Vui lòng nhập cả chủ đề và nội dung văn bản.', 'bad');
+
+  const submitButton = $('#ai-submit');
+  submitButton.disabled = true;
+  submitButton.textContent = '⏳ Đang tạo câu hỏi...';
   try {
     const supabaseUrl = appConfig.supabase.url.replace(/\/$/, '');
     const res = await fetch(`${supabaseUrl}/functions/v1/generate-questions`, {
@@ -1224,7 +1253,7 @@ async function generateAiSet() {
         'apikey': appConfig.supabase.anonKey,
         'Authorization': `Bearer ${appConfig.supabase.anonKey}`
       },
-      body: JSON.stringify({ topic: topic.trim() })
+      body: JSON.stringify({ topic, sourceText })
     });
     const responseText = await res.text();
     let data = {};
@@ -1250,10 +1279,14 @@ async function generateAiSet() {
       qs
     };
     sets.unshift(set); save(); R.lib(); go('edit', set.id);
+    $('#ai-dialog').close();
     toast('Đã tạo bộ câu hỏi bằng Gemini AI!', 'ok');
   } catch (e) {
     console.error(e);
     toast(`Tạo bộ câu hỏi bằng Gemini thất bại: ${e.message || 'Lỗi không xác định'}`, 'bad');
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = '✨ Tạo bộ câu hỏi';
   }
 }
 function newSet() {
