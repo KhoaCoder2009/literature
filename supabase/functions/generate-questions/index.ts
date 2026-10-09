@@ -38,7 +38,7 @@ Deno.serve(async (request: Request) => {
     return jsonResponse({ error: "Source text must contain 1 to 20,000 characters" }, 400);
   }
 
-  const model = Deno.env.get("GEMINI_MODEL") || "gemini-2.5-flash";
+  const model = Deno.env.get("GEMINI_MODEL") || "gemini-3.8-flash";
   const systemInstruction = `Bạn là giáo viên Ngữ Văn giàu kinh nghiệm, có khả năng đọc hiểu văn bản và thiết kế câu hỏi đánh giá năng lực học sinh. Nhiệm vụ của bạn là tạo một bộ câu hỏi trắc nghiệm chất lượng cao từ CHỦ ĐỀ và VĂN BẢN NGUỒN do người dùng cung cấp.
 
 NGUYÊN TẮC ƯU TIÊN
@@ -71,22 +71,51 @@ TRƯỚC KHI TRẢ LỜI, TỰ KIỂM TRA
 3. Ba phương án còn lại sai nhưng hợp lý; không có câu trùng ý.
 4. Lời giải thích được văn bản hỗ trợ, mức độ d phù hợp, và toàn bộ đầu ra parse được như JSON.`;
 
+  const questionSchema = {
+    type: "object",
+    properties: {
+      title: { type: "string" },
+      topic: { type: "string" },
+      qs: {
+        type: "array",
+        minItems: 4,
+        maxItems: 8,
+        items: {
+          type: "object",
+          properties: {
+            type: { type: "string", enum: ["mc"] },
+            c: { type: "string" },
+            o: { type: "array", items: { type: "string" }, minItems: 4, maxItems: 4 },
+            a: { type: "integer", minimum: 0, maximum: 3 },
+            e: { type: "string" },
+            d: { type: "string", enum: ["Dễ", "Trung bình", "Khó"] },
+          },
+          required: ["type", "c", "o", "a", "e", "d"],
+        },
+      },
+    },
+    required: ["title", "topic", "qs"],
+  };
+
   let providerResponse: Response;
   try {
     providerResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`,
+      "https://generativelanguage.googleapis.com/v1beta/interactions",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey,
+        },
         body: JSON.stringify({
-          systemInstruction: { parts: [{ text: systemInstruction }] },
-          contents: [{
-            role: "user",
-            parts: [{
-              text: `Chủ đề: ${topic.trim()}\n\nTạo câu hỏi dựa trên văn bản nguồn trong thẻ <source_text>. Nếu văn bản không cung cấp đủ dữ kiện, hãy hỏi về những nội dung có thể xác định được và không tự bịa thông tin.\n\n<source_text>\n${sourceText.trim()}\n</source_text>`,
-            }],
-          }],
-          generationConfig: { temperature: 0.7, responseMimeType: "application/json" },
+          model,
+          input: `${systemInstruction}\n\nChủ đề: ${topic.trim()}\n\nTạo câu hỏi dựa trên văn bản nguồn trong thẻ <source_text>. Nếu văn bản không cung cấp đủ dữ kiện, hãy hỏi về những nội dung có thể xác định được và không tự bịa thông tin.\n\n<source_text>\n${sourceText.trim()}\n</source_text>`,
+          response_format: {
+            type: "text",
+            mime_type: "application/json",
+            schema: questionSchema,
+          },
+          store: false,
         }),
       },
     );
@@ -96,11 +125,17 @@ TRƯỚC KHI TRẢ LỜI, TỰ KIỂM TRA
   }
 
   if (!providerResponse.ok) {
-    console.error("Gemini returned status", providerResponse.status);
+    const providerError = await providerResponse.text();
+    console.error("Gemini returned status", providerResponse.status, providerError);
     return jsonResponse({ error: `Gemini request failed (${providerResponse.status})` }, 502);
   }
 
-  let providerData: { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> };
+  let providerData: {
+    steps?: Array<{
+      type?: string;
+      content?: Array<{ type?: string; text?: string }>;
+    }>;
+  };
   try {
     providerData = await providerResponse.json();
   } catch (error) {
@@ -108,8 +143,11 @@ TRƯỚC KHI TRẢ LỜI, TỰ KIỂM TRA
     return jsonResponse({ error: "Gemini returned an invalid response" }, 502);
   }
 
-  const content = providerData.candidates?.[0]?.content?.parts
-    ?.map((part) => part.text || "")
+  const content = providerData.steps
+    ?.filter((step) => step.type === "model_output")
+    .flatMap((step) => step.content || [])
+    .filter((part) => part.type === "text")
+    .map((part) => part.text || "")
     .join("")
     .trim();
   if (!content) {

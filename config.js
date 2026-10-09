@@ -9,6 +9,6 @@ window.APP_CONFIG = {
   ai: {
     enabled: true,
     provider: 'gemini',
-    model: 'gemini-2.5-flash',
+    model: 'gemini-3.8-flash',
   }
 };
