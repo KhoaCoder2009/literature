@@ -1283,7 +1283,10 @@ async function submitAiSet(event) {
     toast('Đã tạo bộ câu hỏi bằng Gemini AI!', 'ok');
   } catch (e) {
     console.error(e);
-    toast(`Tạo bộ câu hỏi bằng Gemini thất bại: ${e.message || 'Lỗi không xác định'}`, 'bad');
+    const message = e instanceof TypeError && e.message === 'Failed to fetch'
+      ? 'Không kết nối được Edge Function. Kiểm tra function generate-questions đã được deploy lên đúng project Supabase và thử lại.'
+      : e.message || 'Lỗi không xác định';
+    toast(`Tạo bộ câu hỏi bằng Gemini thất bại: ${message}`, 'bad');
   } finally {
     submitButton.disabled = false;
     submitButton.textContent = '✨ Tạo bộ câu hỏi';
