@@ -268,10 +268,12 @@ label { display: block; font-size: 14px; font-weight: 700; color: var(--ink); ma
 
 .leaderboard {
   width: 100%;
+  min-width: 640px;
   border-collapse: separate;
   border-spacing: 0 10px;
   margin: 12px 0 24px;
 }
+#hr { overflow-x: auto; }
 .leaderboard th, .leaderboard td {
   padding: 12px 14px;
   text-align: left;
@@ -509,6 +511,60 @@ dialog {
   box-shadow: 0 12px 0 var(--stroke);
 }
 dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
+#ai-dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+}
+#ai-loading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 16px;
+  padding: 14px;
+  border: 2px solid var(--primary);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--primary) 9%, var(--bg-card));
+}
+#ai-loading[hidden] { display: none; }
+.ai-spinner {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  border: 3px solid color-mix(in srgb, var(--primary) 25%, transparent);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: aiSpin 0.8s linear infinite;
+}
+.ai-loading-copy { flex: 1; min-width: 0; }
+.ai-loading-copy p { margin: 0; }
+.ai-loading-copy #ai-loading-message { font-weight: 700; }
+.ai-loading-copy .mut { font-size: 12px; }
+.ai-progress {
+  height: 5px;
+  margin-top: 8px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--primary) 18%, var(--bg-card));
+}
+.ai-progress::after {
+  display: block;
+  width: 38%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--primary);
+  content: "";
+  animation: aiProgress 1.4s ease-in-out infinite;
+}
+@keyframes aiSpin { to { transform: rotate(360deg); } }
+@keyframes aiProgress {
+  from { transform: translateX(-110%); }
+  to { transform: translateX(280%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ai-spinner, .ai-progress::after { animation-duration: 2.5s; }
+}
 
 @media(max-width: 560px) {
   .mt { grid-template-columns: 1fr; }
@@ -517,6 +573,10 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
   .hud { font-size: 15px; }
   .question-list-card { position: static !important; max-height: none !important; }
   #el { max-height: 38vh !important; }
+  .question-row-content { width: 100%; }
+  .question-preview-heading { grid-template-columns: 1fr; }
+  .question-preview-options { grid-template-columns: 1fr; margin-left: 0; }
+  .opt { padding: 12px 14px; overflow-wrap: anywhere; }
 }
 
 .question-list-card {
@@ -533,20 +593,37 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
 }
 .question-row {
   align-items: flex-start;
+  display: block;
 }
+.question-row .ac { justify-content: flex-end; margin-top: 8px; }
 .question-row-content {
   min-width: 0;
-  overflow-wrap: anywhere;
   flex: 1;
 }
+.question-preview-heading {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 8px 10px;
+}
+.question-preview-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.question-preview-meta .tag { margin: 0; }
+.question-preview-heading .question-number { margin: 0; }
 .question-preview-options {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 6px;
-  margin: 10px 0 4px 40px;
+  margin: 10px 0 4px;
 }
 .question-preview-option {
   display: flex;
+  min-width: 0;
+  height: 100%;
   align-items: flex-start;
   gap: 7px;
   margin: 0;
@@ -554,7 +631,9 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
   border: 1px solid var(--stroke);
   border-radius: 12px;
   background: var(--bg-card);
+  font-size: 14px;
   font-weight: 500;
+  line-height: 1.5;
   cursor: pointer;
 }
 .question-preview-option:has(input:checked) {
@@ -568,14 +647,21 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
   accent-color: var(--green);
 }
 .question-preview-option span {
+  min-width: 0;
   overflow-wrap: anywhere;
 }
 .question-preview-answer {
-  margin: 8px 0 0 40px;
-  color: var(--mut);
+  margin: 8px 0 0;
+  padding: 9px 12px;
+  border-left: 4px solid var(--green);
+  border-radius: 8px;
+  background: #d1fae5;
+  color: #065f46;
   font-size: 13px;
+  overflow-wrap: anywhere;
 }
 .question-open {
+  min-width: 0;
   border: 0;
   padding: 0;
   background: transparent;
@@ -583,6 +669,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
   font: inherit;
   line-height: inherit;
   text-align: left;
+  overflow-wrap: anywhere;
   cursor: pointer;
 }
 .question-open:hover b,
@@ -649,11 +736,6 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
 .option-editor-row input.option-value {
   min-width: 0;
   width: 100%;
-}
-@media(max-width: 420px) {
-  .option-editor-row { grid-template-columns: 34px minmax(0, 1fr); }
-  .question-preview-options { grid-template-columns: 1fr; margin-left: 0; }
-  .question-preview-answer { margin-left: 0; }
 }
 </style>
 </head>
@@ -784,6 +866,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
       <div class="g2">
         <label>Chọn bộ câu hỏi<select id="ss"></select></label>
         <label>Biệt danh người chơi<input id="nick" maxlength="20" placeholder="Tên của bạn..."></label>
+        <label>Lớp (không bắt buộc)<input id="class-name" maxlength="30" placeholder="Ví dụ: 11A1"></label>
         <label>Số lượng câu hỏi
           <select id="cnt">
             <option>5</option>
@@ -858,7 +941,10 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
       <h1 id="rt">🏆 Kết quả cuộc thi</h1>
       <p id="rn" class="mut" style="font-size:18px;"></p>
     </div>
-
+    <div class="card" style="text-align:center;">
+      <p id="score-save-status" role="status" aria-live="polite" style="margin:0 0 10px;">Đang lưu kết quả bảng xếp hạng...</p>
+      <button class="btn gh sm" id="score-save-retry" onclick="saveScoreToLeaderboard()" hidden>↻ Thử lưu lại</button>
+    </div>
     <div class="g3" id="rs" style="margin-bottom:24px;"></div>
 
     <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
@@ -892,9 +978,20 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
       placeholder="Dán đoạn văn bản hoặc nội dung bài học để Gemini tạo câu hỏi dựa trên tài liệu này..."
       style="min-height:220px;"></textarea>
     <p class="mut" style="font-size:13px;">Tối đa 20.000 ký tự. Gemini sẽ tạo 4–8 câu hỏi trắc nghiệm dựa trên nội dung bạn cung cấp.</p>
+    <div id="ai-loading" role="status" aria-live="polite" aria-atomic="true" hidden>
+      <span class="ai-spinner" aria-hidden="true"></span>
+      <div class="ai-loading-copy">
+        <p id="ai-loading-message"><strong>Đang gửi văn bản đến Gemini...</strong></p>
+        <p class="mut">Vui lòng đợi trong khi AI phân tích nội dung và tạo câu hỏi.</p>
+        <div class="ai-progress" aria-hidden="true"></div>
+      </div>
+    </div>
     <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px;">
-      <button class="btn gh sm" type="button" onclick="$('#ai-dialog').close()">Hủy</button>
-      <button class="btn au" id="ai-submit" type="submit">✨ Tạo bộ câu hỏi</button>
+      <button class="btn gh sm" id="ai-cancel" type="button" onclick="$('#ai-dialog').close()">Hủy</button>
+      <button class="btn au" id="ai-submit" type="submit">
+        <span class="ai-spinner" aria-hidden="true" hidden></span>
+        <span id="ai-submit-label">✨ Tạo bộ câu hỏi</span>
+      </button>
     </div>
   </form>
 </dialog>
@@ -1108,6 +1205,29 @@ function toast(m, k) {
   tt = setTimeout(() => t.className = '', 2800);
 }
 
+function setAiLoading(isLoading, message = '') {
+  const dialog = $('#ai-dialog');
+  const loading = $('#ai-loading');
+  const submitButton = $('#ai-submit');
+  const cancelButton = $('#ai-cancel');
+  const spinner = submitButton.querySelector('.ai-spinner');
+
+  dialog.dataset.loading = String(isLoading);
+  dialog.setAttribute('aria-busy', String(isLoading));
+  loading.hidden = !isLoading;
+  $('#ai-loading-message').textContent = message;
+  submitButton.disabled = isLoading;
+  cancelButton.disabled = isLoading;
+  $('#ai-topic').disabled = isLoading;
+  $('#ai-source').disabled = isLoading;
+  spinner.hidden = !isLoading;
+  $('#ai-submit-label').textContent = isLoading ? 'Đang tạo...' : '✨ Tạo bộ câu hỏi';
+}
+
+$('#ai-dialog').addEventListener('cancel', event => {
+  if ($('#ai-dialog').dataset.loading === 'true') event.preventDefault();
+});
+
 function ask(m, f) {
   $('#dm').textContent = m;
   $('#dy').onclick = () => { dlg.close(); f(); };
@@ -1139,27 +1259,59 @@ const cardHtml = s => `
   </div>
 </div>`;
 
-R.home = () => {
-  $('#hr').innerHTML = `
-    <table class="leaderboard">
-      <thead>
-        <tr>
-          <th>Hạng</th>
-          <th>Tên</th>
-          <th>Lớp</th>
-          <th>Bộ câu hỏi</th>
-          <th>Đúng / Tổng</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td colspan="5" style="text-align:center;">
-            Chưa có kết quả thật. Bảng xếp hạng sẽ hiển thị khi có người chơi hoàn thành lượt ôn tập.
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  `;
+R.home = async () => {
+  const host = $('#hr');
+  if (!isSupabaseConfigured()) {
+    host.textContent = 'Chưa kết nối Supabase nên bảng xếp hạng chưa thể tải.';
+    return;
+  }
+  host.innerHTML = '<p class="mut" role="status">Đang tải bảng xếp hạng...</p>';
+  try {
+    const table = appConfig.supabase.leaderboardTable || 'leaderboard_entries';
+    const url = `${appConfig.supabase.url.replace(/\/$/, '')}/rest/v1/${table}?select=player_name,class_name,set_title,score,correct_count,question_count&order=score.desc,correct_count.desc,created_at.asc&limit=10`;
+    const res = await fetch(url, {
+      headers: {
+        'apikey': appConfig.supabase.anonKey,
+        'Authorization': `Bearer ${appConfig.supabase.anonKey}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!res.ok) {
+      const details = await res.text();
+      throw new Error(details || `Supabase request failed (${res.status})`);
+    }
+    const rows = await res.json();
+    if (!Array.isArray(rows)) throw new Error('Bảng xếp hạng trả về dữ liệu không hợp lệ.');
+    host.innerHTML = `
+      <table class="leaderboard">
+        <thead>
+          <tr>
+            <th>Hạng</th>
+            <th>Tên</th>
+            <th>Lớp</th>
+            <th>Bộ câu hỏi</th>
+            <th>Điểm</th>
+            <th>Đúng / Tổng</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.length ? rows.map((row, index) => `
+            <tr>
+              <td class="rank">${index + 1}</td>
+              <td>${esc(row.player_name)}</td>
+              <td>${esc(row.class_name || '—')}</td>
+              <td>${esc(row.set_title)}</td>
+              <td><b>${Number(row.score) || 0}</b></td>
+              <td>${Number(row.correct_count) || 0} / ${Number(row.question_count) || 0}</td>
+            </tr>
+          `).join('') : '<tr><td colspan="6" style="text-align:center;">Chưa có kết quả. Hãy hoàn thành một lượt ôn tập để ghi tên lên bảng xếp hạng.</td></tr>'}
+        </tbody>
+      </table>
+    `;
+  } catch (error) {
+    console.error('Leaderboard load failed:', error);
+    host.innerHTML = '<p role="alert">Không tải được bảng xếp hạng. Kiểm tra bảng leaderboard_entries và quyền đọc Supabase, rồi thử tải lại.</p><button class="btn gh sm" onclick="R.home()">↻ Tải lại</button>';
+  }
 };
 
 R.lib = () => {
@@ -1237,13 +1389,16 @@ function generateAiSet() {
 
 async function submitAiSet(event) {
   event.preventDefault();
+  if ($('#ai-dialog').dataset.loading === 'true') return;
   const topic = $('#ai-topic').value.trim();
   const sourceText = $('#ai-source').value.trim();
   if (!topic || !sourceText) return toast('Vui lòng nhập cả chủ đề và nội dung văn bản.', 'bad');
 
-  const submitButton = $('#ai-submit');
-  submitButton.disabled = true;
-  submitButton.textContent = '⏳ Đang tạo câu hỏi...';
+  let loadingMessageTimer;
+  setAiLoading(true, 'Đang gửi văn bản đến Gemini...');
+  loadingMessageTimer = setTimeout(() => {
+    setAiLoading(true, 'Gemini đang đọc văn bản và tạo bộ câu hỏi...');
+  }, 700);
   try {
     const supabaseUrl = appConfig.supabase.url.replace(/\/$/, '');
     const res = await fetch(`${supabaseUrl}/functions/v1/generate-questions`, {
@@ -1251,10 +1406,12 @@ async function submitAiSet(event) {
       headers: {
         'Content-Type': 'application/json',
         'apikey': appConfig.supabase.anonKey,
-        'Authorization': `Bearer ${appConfig.supabase.anonKey}`
+        'Authorization': `Bearer ${appConfig.supabase.anonKey}`,
       },
       body: JSON.stringify({ topic, sourceText })
     });
+    clearTimeout(loadingMessageTimer);
+    setAiLoading(true, 'AI đã phản hồi, đang kiểm tra câu hỏi...');
     const responseText = await res.text();
     let data = {};
     try {
@@ -1288,8 +1445,8 @@ async function submitAiSet(event) {
       : e.message || 'Lỗi không xác định';
     toast(`Tạo bộ câu hỏi bằng Gemini thất bại: ${message}`, 'bad');
   } finally {
-    submitButton.disabled = false;
-    submitButton.textContent = '✨ Tạo bộ câu hỏi';
+    clearTimeout(loadingMessageTimer);
+    setAiLoading(false);
   }
 }
 function newSet() {
@@ -1363,21 +1520,31 @@ function pickImg(i) {
 function renderQs() {
   const f = N($('#ef').value), l = CS.qs.map((q, i) => [q, i]).filter(([q]) => N(q.c).includes(f));
   $('#en').textContent = CS.qs.length;
-  $('#el').innerHTML = l.length ? l.map(([q, i]) => `
+  $('#el').innerHTML = l.length ? l.map(([q, i]) => {
+    const options = q.o || q.type == 'tf' ? opts(q) : [];
+    const answerIndex = Number(q.a);
+    const correctAnswer = Number.isInteger(answerIndex) && answerIndex >= 0 && answerIndex < options.length
+      ? `${'ABCDEF'[answerIndex] || answerIndex + 1}. ${options[answerIndex]}`
+      : '';
+    return `
     <div class="row question-row">
       <div class="question-row-content">
-        <span class="question-number">${i + 1}</span><span class="tag">${T_[q.type]}</span>
-        <button class="question-open" onclick="qact(${i},'e')" aria-label="Mở câu hỏi ${i + 1} để xem hoặc chỉnh sửa"><b>${esc(q.c)}</b></button>
+        <div class="question-preview-heading">
+          <div class="question-preview-meta">
+            <span class="question-number">${i + 1}</span><span class="tag">${T_[q.type]}</span>
+          </div>
+          <button class="question-open" onclick="qact(${i},'e')" aria-label="Mở câu hỏi ${i + 1} để xem hoặc chỉnh sửa"><b>${esc(q.c)}</b></button>
+        </div>
         ${q.o || q.type == 'tf' ? `
           <div class="question-preview-options">
-            ${opts(q).map((option, optionIndex) => `
+            ${options.map((option, optionIndex) => `
               <label class="question-preview-option">
                 <input type="radio" name="correct-question-${i}" value="${optionIndex}" ${Number(q.a) === optionIndex ? 'checked' : ''} onchange="setCorrectAnswer(${i}, this.value)">
                 <span><b>${'ABCDEF'[optionIndex] || optionIndex + 1}.</b> ${esc(option)}</span>
               </label>
             `).join('')}
           </div>
-          <p class="question-preview-answer">${Number.isInteger(Number(q.a)) && Number(q.a) >= 0 && Number(q.a) < opts(q).length ? `✅ Đáp án đúng: ${'ABCDEF'[Number(q.a)] || Number(q.a) + 1}` : 'Chọn đáp án đúng cho câu hỏi này'}</p>
+          <p class="question-preview-answer">${correctAnswer ? `✅ Đáp án đúng: <b>${esc(correctAnswer)}</b>` : '⚠️ Chọn đáp án đúng cho câu hỏi này.'}</p>
         ` : q.type == 'match' ? `
           <div class="question-preview-answer">${q.p.map(pair => `${esc(pair[0])} → ${esc(pair[1])}`).join(' · ')}</div>
         ` : `
@@ -1391,7 +1558,8 @@ function renderQs() {
         <button onclick="qact(${i},'d')">↓</button>
         <button onclick="qact(${i},'x')">🗑</button>
       </div>
-    </div>`).join('') : '<p class="mut">Chưa có câu hỏi nào trong bộ này.</p>';
+    </div>`;
+  }).join('') : '<p class="mut">Chưa có câu hỏi nào trong bộ này.</p>';
 }
 
 function setCorrectAnswer(questionIndex, answerIndex) {
@@ -1466,6 +1634,7 @@ function begin() {
   
   G = {
     s, m: document.querySelector('[name=mode]:checked').value, nm,
+    className: $('#class-name').value.trim(),
     qs: [...s.qs].sort(() => Math.random() - .5).slice(0, +$('#cnt').value),
     i: 0, sc: 0, cb: 0, best: 0, ok: 0, bad: 0, no: 0, hp: 100, t0: Date.now(),
     log: [], sec: Math.min(120, Math.max(5, +$('#sec').value || 20))
@@ -1575,7 +1744,42 @@ function fin(r, u) {
   }
 }
 
-function end() {
+async function saveScoreToLeaderboard() {
+  if (!G || !G.scoreEntry || G.scoreSavePending) return;
+  const status = $('#score-save-status');
+  const retryButton = $('#score-save-retry');
+  G.scoreSavePending = true;
+  retryButton.hidden = true;
+  status.textContent = '⏳ Đang lưu kết quả vào bảng xếp hạng...';
+  try {
+    if (!isSupabaseConfigured()) throw new Error('Supabase chưa được bật trong config.js.');
+    const table = appConfig.supabase.leaderboardTable || 'leaderboard_entries';
+    const url = `${appConfig.supabase.url.replace(/\/$/, '')}/rest/v1/${table}`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'apikey': appConfig.supabase.anonKey,
+        'Authorization': `Bearer ${appConfig.supabase.anonKey}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=ignore-duplicates,return=minimal'
+      },
+      body: JSON.stringify(G.scoreEntry)
+    });
+    if (!res.ok) {
+      const details = await res.text();
+      throw new Error(details || `Supabase request failed (${res.status})`);
+    }
+    status.textContent = '✅ Kết quả đã được lưu vào bảng xếp hạng.';
+  } catch (error) {
+    console.error('Leaderboard save failed:', error);
+    status.textContent = '⚠️ Chưa lưu được kết quả. Kết quả lượt chơi vẫn còn trên màn hình; hãy kiểm tra kết nối Supabase rồi thử lại.';
+    retryButton.hidden = false;
+  } finally {
+    G.scoreSavePending = false;
+  }
+}
+
+async function end() {
   clearInterval(T); const n = G.log.length, dt = Math.round((Date.now() - G.t0) / 1000);
   go('res');
   $('#rt').textContent = G.m == 'boss' ? (G.hp <= 0 ? '🏆 BẠN ĐÃ HẠ GỤC BOSS!' : '🐉 BOSS VẪN CÒN SỐNG!') : '🎉 CHIẾN THẮNG RẠNG RỠ!';
@@ -1592,6 +1796,21 @@ function end() {
       <div><b>${l.st == 'ok' ? '✅' : l.st == 'no' ? '⏰' : '❌'} ${esc(l.q.c)}</b><br><span class="mut">${esc(l.q.e || '')}</span></div>
       <span class="tag">+${l.pts}</span>
     </div>`).join('');
+
+  G.scoreEntry = {
+    id: uid(),
+    player_name: G.nm,
+    class_name: G.className || '',
+    set_id: String(G.s.id),
+    set_title: G.s.title,
+    score: G.sc,
+    correct_count: G.ok,
+    question_count: Math.max(1, n),
+    accuracy: n ? Math.round(G.ok / n * 10000) / 100 : 0,
+    game_mode: G.m,
+    elapsed_seconds: dt
+  };
+  await saveScoreToLeaderboard();
 }
 
 function replay() { go('setup', G.s.id); }
