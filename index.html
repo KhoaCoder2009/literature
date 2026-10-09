@@ -1,0 +1,1566 @@
+<!ioctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ngữ Văn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Be+Vietnam+Pro:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-sky: #e0f2fe;
+  --bg-card: #ffffff;
+  --ink: #1e293b;
+  --stroke: #2d3748;
+  --mut: #64748b;
+  --primary: #8b5cf6;
+  --primary-hover: #7c3aed;
+  --yellow: #f59e0b;
+  --yellow-light: #fef3c7;
+  --cyan: #06b6d4;
+  --pink: #ec4899;
+  --green: #10b981;
+  --red: #ef4444;
+  --shadow-color: rgba(45, 55, 72, 0.15);
+  box-sizing: border-box;
+}
+
+[data-theme="dark"] {
+  --bg-sky: #0f172a;
+  --bg-card: #1e293b;
+  --ink: #f8fafc;
+  --stroke: #475569;
+  --mut: #94a3b8;
+  --primary: #a78bfa;
+  --yellow: #fbbf24;
+  --cyan: #22d3ee;
+  --pink: #f472b6;
+  --green: #34d399;
+  --red: #f87171;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+}
+
+* { box-sizing: border-box; font-family: 'Be Vietnam Pro', 'Segoe UI', system-ui, sans-serif; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background: var(--bg-sky);
+  position: relative;
+  overflow-x: hidden;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+h1, h2, h3, h4, h5, h6, nav b, .btn {
+  font-family: 'Be Vietnam Pro', 'Segoe UI', system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Background Canvas */
+#bg-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 20px;
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 4px solid var(--stroke);
+  z-index: 10;
+}
+
+.brand-wrap {
+  margin-left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 2px 0;
+  min-width: 0;
+  order: -1;
+}
+
+.brand-logo {
+  display: block;
+  width: min(28vw, 150px);
+  max-width: 150px;
+  height: 70px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 0 rgba(45, 55, 72, 0.12));
+}
+[data-theme="dark"] nav { background: rgba(15, 23, 42, 0.85); }
+
+nav b {
+  font-size: 22px;
+  font-weight: 700;
+  margin-right: 12px;
+  color: var(--primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-shadow: 2px 2px 0px var(--stroke);
+  color: #fff;
+  -webkit-text-stroke: 1.5px var(--stroke);
+}
+
+nav a {
+  padding: 8px 16px;
+  border-radius: 99px;
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 700;
+  border: 3px solid transparent;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+nav a:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+nav a.on {
+  background: var(--yellow);
+  border-color: var(--stroke);
+  color: #1e293b;
+  box-shadow: 0 4px 0 var(--stroke);
+}
+
+/* Sections & Layout */
+.scr { display: none; }
+.scr.on { display: block; animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.92) translateY(15px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.wrap { max-width: 960px; margin: auto; padding: 20px 16px 60px; }
+
+/* Cartoon Cards */
+.card {
+  background: var(--bg-card);
+  border: 3.5px solid var(--stroke);
+  border-radius: 24px;
+  padding: 22px;
+  box-shadow: 0 8px 0 var(--stroke), 0 15px 25px var(--shadow-color);
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.set {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+}
+.set:hover {
+  transform: translateY(-6px) rotate(-1deg);
+  box-shadow: 0 12px 0 var(--stroke), 0 20px 30px var(--shadow-color);
+}
+.set.bulk-selectable { cursor: pointer; }
+.set.selected { border-color: var(--red); }
+.cov { font-size: 48px; text-shadow: 3px 3px 0 var(--stroke); }
+
+/* Typography */
+h1 { font-size: clamp(30px, 6vw, 46px); margin: .2em 0; font-weight: 700; text-shadow: 2px 2px 0 var(--shadow-color); }
+h2 { margin: .4em 0 .6em; font-size: clamp(20px, 4vw, 26px); }
+h3 { margin: 0 0 12px; font-size: 20px; }
+.mut { color: var(--mut); font-family: 'Be Vietnam Pro', sans-serif; font-weight: 500; }
+
+.g2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+.g3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
+
+/* Cartoon Buttons */
+.btn {
+  padding: 12px 22px;
+  border: 3px solid var(--stroke);
+  border-radius: 18px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+  background: var(--primary);
+  box-shadow: 0 6px 0 var(--stroke);
+  cursor: pointer;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s, background 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+}
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 9px 0 var(--stroke);
+}
+.btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 var(--stroke);
+}
+.btn.cy { background: var(--cyan); color: #0f172a; }
+.btn.au { background: var(--yellow); color: #1e293b; }
+.btn.no { background: var(--red); }
+.btn.gh { background: var(--bg-card); color: var(--ink); }
+.btn.sm { padding: 6px 14px; font-size: 14px; border-radius: 12px; box-shadow: 0 4px 0 var(--stroke); }
+.btn.sm:hover { box-shadow: 0 6px 0 var(--stroke); }
+.btn.sm:active { box-shadow: 0 2px 0 var(--stroke); }
+.btn:disabled { opacity: .5; cursor: not-allowed; transform: none !important; }
+
+/* Inputs & Form */
+input, select, textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: 3px solid var(--stroke);
+  background: var(--bg-card);
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.25);
+}
+textarea { min-height: 95px; resize: vertical; }
+label { display: block; font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+
+/* Hero Banner */
+.hero {
+  text-align: center;
+  padding: 30px 16px 20px;
+  position: relative;
+  background: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(245, 158, 11, 0.15));
+  border-radius: 28px;
+  border: 3.5px solid var(--stroke);
+  box-shadow: 0 8px 0 var(--stroke);
+  margin-bottom: 24px;
+}
+.hero h1 { color: var(--primary); text-shadow: 3px 3px 0 var(--stroke); }
+.hero h1 em { font-style: normal; color: var(--yellow); }
+
+/* Badges & Tags */
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 2px solid var(--stroke);
+  background: var(--yellow-light);
+  color: #92400e;
+  margin: 0 4px 4px 0;
+  box-shadow: 0 2px 0 var(--stroke);
+}
+.tag.ok { background: #d1fae5; color: #065f46; }
+.tag.dr { background: #fef3c7; color: #92400e; }
+
+.leaderboard {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  margin: 12px 0 24px;
+}
+.leaderboard th, .leaderboard td {
+  padding: 12px 14px;
+  text-align: left;
+  background: rgba(255,255,255,0.7);
+  border: 3px solid var(--stroke);
+  box-shadow: 0 4px 0 var(--stroke);
+}
+.leaderboard th {
+  background: var(--yellow);
+  color: #1e293b;
+  font-size: 14px;
+  border-radius: 14px 14px 0 0;
+}
+.leaderboard td:first-child,
+.leaderboard th:first-child {
+  border-radius: 14px 0 0 14px;
+}
+.leaderboard td:last-child,
+.leaderboard th:last-child {
+  border-radius: 0 14px 14px 0;
+}
+.leaderboard .rank {
+  font-weight: 800;
+  color: var(--primary);
+}
+
+/* Rows */
+.row {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border: 2.5px solid var(--stroke);
+  border-radius: 16px;
+  background: var(--bg-card);
+  margin-bottom: 8px;
+  box-shadow: 0 4px 0 var(--stroke);
+}
+.ac { display: flex; gap: 6px; flex: none; }
+.ac button {
+  border: 2px solid var(--stroke);
+  background: var(--bg-card);
+  color: var(--ink);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 4px 10px;
+  font-weight: 700;
+  box-shadow: 0 2px 0 var(--stroke);
+  transition: transform 0.1s;
+}
+.ac button:active { transform: translateY(2px); box-shadow: none; }
+
+/* HUD Header */
+.hud {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+.hud-pill {
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border: 3px solid var(--stroke);
+  border-radius: 99px;
+  box-shadow: 0 4px 0 var(--stroke);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Progress Bar */
+.bar {
+  height: 18px;
+  background: var(--bg-card);
+  border: 3px solid var(--stroke);
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 10px 0 16px;
+  box-shadow: 0 4px 0 var(--stroke);
+  position: relative;
+}
+.bar i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--cyan), var(--primary));
+  transition: width 0.4s ease-out;
+  border-radius: 99px;
+}
+.bar.hp i {
+  background: linear-gradient(90deg, #ef4444, #f59e0b);
+}
+
+/* Question Options */
+.opt {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  margin: 10px 0;
+  padding: 14px 18px;
+  border-radius: 20px;
+  border: 3px solid var(--stroke);
+  background: var(--bg-card);
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 0 var(--stroke);
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s, box-shadow 0.15s;
+}
+.opt b {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  border: 2px solid var(--stroke);
+  background: var(--yellow);
+  color: #1e293b;
+  font-weight: 800;
+  flex: none;
+  box-shadow: 0 2px 0 var(--stroke);
+}
+.opt:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 9px 0 var(--stroke);
+  background: var(--yellow-light);
+}
+.opt.sel { border-color: var(--primary); background: #f3e8ff; }
+.opt.paired { border-color: var(--cyan); background: #e0f2fe; }
+.opt.right { border-color: var(--stroke); background: #d1fae5; color: #065f46; }
+.opt.wrong { border-color: var(--stroke); background: #fee2e2; color: #991b1b; }
+
+/* Match Grid */
+.mt { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.qi { max-width: 100%; max-height: 220px; border-radius: 18px; border: 3px solid var(--stroke); margin: 10px 0; }
+
+/* Feedback Card */
+.fb {
+  margin-top: 16px;
+  border-width: 3.5px;
+  animation: bounceUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes bounceUp {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.fb.ok { border-color: var(--stroke); background: #d1fae5; color: #065f46; }
+.fb.bad, .fb.no { border-color: var(--stroke); background: #fee2e2; color: #991b1b; }
+
+/* Boss Card */
+#boss {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #fef3c7, #fee2e2);
+}
+#boss .face {
+  font-size: 60px;
+  filter: drop-shadow(3px 3px 0 var(--stroke));
+  animation: floatAnim 3s infinite ease-in-out;
+}
+@keyframes floatAnim {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(4deg); }
+}
+#boss.hit .face { animation: bossHit 0.5s ease; }
+@keyframes bossHit {
+  0% { transform: scale(1) rotate(0deg); }
+  20% { transform: scale(1.3) rotate(-15deg); filter: hue-rotate(90deg); }
+  40% { transform: scale(0.8) rotate(15deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Stat Box */
+.stat { text-align: center; }
+.stat b { display: block; font-size: 36px; color: var(--primary); text-shadow: 2px 2px 0 var(--stroke); }
+
+/* Speech Bubble */
+.speech-bubble {
+  position: relative;
+  background: #ffffff;
+  border: 3px solid var(--stroke);
+  border-radius: 18px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 0 var(--stroke);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 24px;
+  border-width: 12px 12px 0;
+  border-style: solid;
+  border-color: #ffffff transparent;
+  display: block;
+  width: 0;
+}
+
+/* Toast & Dialog */
+#toast {
+  position: fixed;
+  left: 50%;
+  bottom: 30px;
+  transform: translate(-50%, 40px);
+  opacity: 0;
+  padding: 12px 24px;
+  border-radius: 99px;
+  background: var(--bg-card);
+  border: 3.5px solid var(--stroke);
+  font-weight: 700;
+  box-shadow: 0 8px 0 var(--stroke);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 100;
+}
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+dialog {
+  border: 3.5px solid var(--stroke);
+  border-radius: 24px;
+  background: var(--bg-card);
+  color: var(--ink);
+  padding: 24px;
+  max-width: 380px;
+  box-shadow: 0 12px 0 var(--stroke);
+}
+dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
+
+@media(max-width: 560px) {
+  .mt { grid-template-columns: 1fr; }
+  nav { padding: 10px; }
+  nav b { font-size: 18px; }
+  .hud { font-size: 15px; }
+  .question-list-card { position: static !important; max-height: none !important; }
+  #el { max-height: 38vh !important; }
+}
+
+.question-list-card {
+  position: sticky;
+  top: 110px;
+  max-height: calc(100vh - 130px);
+  display: flex;
+  flex-direction: column;
+}
+#el {
+  overflow-y: auto;
+  max-height: 58vh;
+  padding: 2px 4px 8px 2px;
+}
+.question-row {
+  align-items: flex-start;
+}
+.question-row-content {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  flex: 1;
+}
+.question-preview-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin: 10px 0 4px 40px;
+}
+.question-preview-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  background: var(--bg-card);
+  font-weight: 500;
+  cursor: pointer;
+}
+.question-preview-option:has(input:checked) {
+  background: #d1fae5;
+  border-color: var(--green);
+}
+.question-preview-option input {
+  width: auto;
+  flex: 0 0 auto;
+  margin: 3px 0 0;
+  accent-color: var(--green);
+}
+.question-preview-option span {
+  overflow-wrap: anywhere;
+}
+.question-preview-answer {
+  margin: 8px 0 0 40px;
+  color: var(--mut);
+  font-size: 13px;
+}
+.question-open {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  line-height: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.question-open:hover b,
+.question-open:focus-visible b {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.question-open:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.set-select {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 10px;
+  cursor: pointer;
+}
+.set-select input {
+  width: auto;
+  margin: 0;
+  accent-color: var(--red);
+}
+.question-number {
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--yellow);
+  border: 2px solid var(--stroke);
+  font-weight: 800;
+  margin-right: 8px;
+}
+@media(max-width: 560px) {
+  .question-list-card { position: static; max-height: none; }
+  #el { max-height: 38vh; }
+}
+.option-editor {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.option-editor-row {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+.option-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--stroke);
+  border-radius: 50%;
+  background: var(--bg-card);
+  font-weight: 800;
+}
+.option-editor-row input.option-value {
+  min-width: 0;
+  width: 100%;
+}
+@media(max-width: 420px) {
+  .option-editor-row { grid-template-columns: 34px minmax(0, 1fr); }
+  .question-preview-options { grid-template-columns: 1fr; margin-left: 0; }
+  .question-preview-answer { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<nav>
+  <a data-g="home" onclick="go('home')">Trang chủ</a>
+  <a data-g="setup" onclick="go('setup')">Ôn tập</a>
+  <a data-g="lib" onclick="go('lib')">Thư viện</a>
+  <div class="brand-wrap" onclick="go('home')" aria-label="Về Trang chủ">
+    <img class="brand-logo" src="./assets/logo-nguvan.png" alt="Logo Ngữ Văn">
+  </div>
+  <button class="btn sm gh" onclick="toggleTheme()">🌗</button>
+</nav>
+
+<!-- SCREEN 1: HOME -->
+<section id="s-home" class="scr">
+  <div class="wrap">
+    <div class="hero">
+      <div style="font-size:64px; animation: floatAnim 2.5s infinite ease-in-out;">📚✨</div>
+      <h1>Ngữ Văn</h1>
+      <p class="mut" style="font-size:18px; font-weight:600;">Học Văn theo phong cách cuộc phiêu lưu hoạt hình vui nhộn!</p>
+    </div>
+    <div class="card" style="padding:18px 20px;">
+      <h2 style="margin:0 0 12px;">🏆 Bảng xếp hạng</h2>
+      <div id="hr"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREEN 2: LIBRARY / EDITOR -->
+<section id="s-lib" class="scr">
+  <div class="wrap">
+    <div id="lv">
+      <div class="hud">
+        <h1 style="font-size:32px; margin:0;">Thư viện câu hỏi</h1>
+        <button class="btn au" style="margin-left:auto;" onclick="newSet()">+ Tạo bộ mới</button>
+        <button class="btn cy" onclick="generateAiSet()">🤖 GEMINI AI</button>
+        <button id="bulk-delete-start" class="btn no" onclick="enableBulkDeleteMode()">🗑️ Xóa nhiều</button>
+        <div id="bulk-delete-actions" hidden>
+          <button id="bulk-delete" class="btn no" onclick="deleteSelectedSets()" disabled>🗑️ Xóa đã chọn (0)</button>
+          <button class="btn gh" onclick="cancelBulkDeleteMode()">Hủy</button>
+        </div>
+      </div>
+      <div style="margin:16px 0">
+        <input id="lf" placeholder="🔍 Tìm theo tên hoặc chủ đề…" oninput="R.lib()">
+      </div>
+      <div class="g3" id="lg"></div>
+    </div>
+
+    <!-- EDITOR VIEW -->
+    <div id="ev" hidden>
+      <button class="btn gh sm" style="margin-bottom:12px;" onclick="go('lib')">← Quay lại thư viện</button>
+      <div class="hud">
+        <h1 style="font-size:30px; margin:0;">Soạn thảo bộ câu hỏi</h1>
+        <button class="btn cy" style="margin-left:auto;" onclick="go('setup',CS.id)">🎮 Ôn tập bộ này</button>
+      </div>
+      <div class="card">
+        <div class="g2">
+          <label>Tên bộ câu hỏi<input id="et" oninput="meta()"></label>
+          <label>Chủ đề / Bài học<input id="ec" oninput="meta()"></label>
+        </div>
+      </div>
+
+      <div class="g2" style="margin-top:16px; align-items:start;">
+        <div class="card question-list-card">
+          <h3>📝 Câu hỏi mình đã tạo (<span id="en"></span>)</h3>
+          <p class="mut" style="margin:0 0 10px;">Câu hỏi đã lưu trong bộ này sẽ hiện ở đây. Chọn đáp án đúng ngay trên từng câu.</p>
+          <input id="ef" oninput="renderQs()" placeholder="🔍 Tìm câu hỏi…">
+          <div id="el" style="margin-top:12px;"></div>
+        </div>
+
+        <div class="card">
+          <h3 id="eh">Thêm câu hỏi mới</h3>
+          <div class="tabs" id="ty" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;"></div>
+          
+          <label>Nội dung câu hỏi<textarea id="fc"></textarea></label>
+          
+          <div data-t="mc img">
+            <label>4 phương án (đáp án đúng sẽ chọn sau khi thêm câu)</label>
+            <div id="fo" class="option-editor"></div>
+          </div>
+          
+          <div data-t="img">
+            <label>Tải ảnh minh họa (PNG/JPG/WebP, &lt;1.5MB)
+              <input type="file" accept="image/png,image/jpeg,image/webp" onchange="pickImg(this)">
+            </label>
+            <img id="fi" class="qi" hidden>
+          </div>
+          
+          <div data-t="short fill">
+            <label>Đáp án chấp nhận (cách nhau bởi dấu |)<input id="fk" placeholder="Hồ Chí Minh | Nguyễn Ái Quốc"></label>
+          </div>
+          
+          <div data-t="match">
+            <label>Các cặp ghép nối (mỗi dòng "Vế 1 | Vế 2")<textarea id="fp"></textarea></label>
+          </div>
+          
+          <label>Lời giải thích chi tiết<textarea id="fe" style="min-height:60px"></textarea></label>
+          
+          <div class="g2">
+            <label>Độ khó
+              <select id="fd">
+                <option>Dễ</option>
+                <option>Trung bình</option>
+                <option>Khó</option>
+              </select>
+            </label>
+            <label>Nguồn trích dẫn<input id="fs"></label>
+          </div>
+          
+          <div style="display:flex; gap:10px; margin-top:16px;">
+            <button id="qsave" class="btn au" onclick="saveQ()">💾 Thêm câu hỏi vào bộ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREEN 3: SETUP GAME -->
+<section id="s-setup" class="scr">
+  <div class="wrap">
+    <h1>🚀 Chuẩn bị ôn tập</h1>
+    <div class="card">
+      <div class="g2">
+        <label>Chọn bộ câu hỏi<select id="ss"></select></label>
+        <label>Biệt danh người chơi<input id="nick" maxlength="20" placeholder="Tên của bạn..."></label>
+        <label>Số lượng câu hỏi
+          <select id="cnt">
+            <option>5</option>
+            <option selected>10</option>
+            <option>20</option>
+          </select>
+        </label>
+        <label>Thời gian mỗi câu (giây)<input id="sec" type="number" min="5" max="120" value="20"></label>
+      </div>
+
+      <h3 style="margin-top:20px;">🎮 Chế độ thử thách</h3>
+      <div class="g3">
+        <label class="card" style="cursor:pointer;">
+          <input type="radio" name="mode" value="quiz" checked style="width:auto"> 📖 Tự do (Quiz)<br>
+          <span class="mut">Không đếm ngược thời gian.</span>
+        </label>
+        <label class="card" style="cursor:pointer;">
+          <input type="radio" name="mode" value="timed" style="width:auto"> ⏱ Đua thời gian<br>
+          <span class="mut">Khóa câu khi hết giờ.</span>
+        </label>
+        <label class="card" style="cursor:pointer;">
+          <input type="radio" name="mode" value="boss" style="width:auto"> 🐉 Đánh Boss Cổ Văn<br>
+          <span class="mut">Boss 100 HP, trả lời đúng để hạ gục!</span>
+        </label>
+      </div>
+
+      <div style="margin-top:20px;">
+        <button class="btn au" style="width:100%; font-size:18px;" onclick="begin()">⚔️ Bắt đầu cuộc phiêu lưu</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREEN 4: GAMEPLAY -->
+<section id="s-game" class="scr">
+  <div class="wrap">
+    <div class="hud">
+      <div class="hud-pill">⭐ <span id="hs">0</span></div>
+      <div class="hud-pill">🔥 x<span id="hc">0</span></div>
+      <div class="hud-pill" id="ht">⏱ 20s</div>
+      <div class="hud-pill" id="hp">1/10</div>
+      <button class="btn gh sm" style="margin-left:auto;" onclick="go('home')">🚪 Thoát</button>
+    </div>
+
+    <div class="bar"><i id="pb"></i></div>
+
+    <!-- BOSS HUD -->
+    <div id="boss" class="card" hidden>
+      <span class="face pl">🧙‍♂️</span>
+      <div style="flex:1">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <b>Dragon Ancient Boss</b>
+          <small id="hpt" class="mut">HP: 100/100</small>
+        </div>
+        <div class="bar hp" style="margin:6px 0;"><i id="hpb" style="width:100%"></i></div>
+      </div>
+      <span class="face">🐉</span>
+    </div>
+
+    <!-- QUESTION CARD -->
+    <div class="card" id="q"></div>
+    
+    <!-- FEEDBACK CARD -->
+    <div id="fb"></div>
+  </div>
+</section>
+
+<!-- SCREEN 5: RESULTS -->
+<section id="s-res" class="scr">
+  <div class="wrap">
+    <div class="hero">
+      <h1 id="rt">🏆 Kết quả cuộc thi</h1>
+      <p id="rn" class="mut" style="font-size:18px;"></p>
+    </div>
+
+    <div class="g3" id="rs" style="margin-bottom:24px;"></div>
+
+    <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+      <button class="btn au" onclick="replay()">🔄 Thử lại bộ này</button>
+      <button class="btn cy" onclick="go('setup')">🎮 Chọn bộ khác</button>
+      <button class="btn gh" onclick="go('home')">🏠 Trang chủ</button>
+    </div>
+
+    <h2 style="margin-top:32px;">📝 Chi tiết từng câu hỏi</h2>
+    <div id="rv"></div>
+  </div>
+</section>
+
+<!-- DIALOG & TOAST -->
+<dialog id="dlg">
+  <p id="dm" style="font-size:16px; font-weight:600; margin-bottom:20px;"></p>
+  <div style="display:flex; gap:10px; justify-content:flex-end;">
+    <button class="btn gh sm" onclick="dlg.close()">Hủy</button>
+    <button class="btn no sm" id="dy">Xóa</button>
+  </div>
+</dialog>
+
+<div id="toast" role="status"></div>
+
+<script src="./config.js"></script>
+<script>
+/* WEB AUDIO SYNTHESIZER FOR CARTOON SOUND EFFECTS */
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+
+function playSound(type) {
+  try {
+    if (!audioCtx) audioCtx = new AudioCtx();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    if (type === 'correct') {
+      // Upward Arpeggio / Chime
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(523.25, now); // C5
+      osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.1); // E5
+      osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.2); // G5
+      osc.frequency.exponentialRampToValueAtTime(1046.50, now + 0.3); // C6
+      gain.gain.setValueAtTime(0.3, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+      osc.start(now);
+      osc.stop(now + 0.45);
+    } else if (type === 'wrong') {
+      // Wobble Down / Boing
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(220, now);
+      osc.frequency.exponentialRampToValueAtTime(110, now + 0.3);
+      gain.gain.setValueAtTime(0.3, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+      osc.start(now);
+      osc.stop(now + 0.35);
+    } else if (type === 'pop') {
+      // Pop Sound
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(400, now);
+      osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+      osc.start(now);
+      osc.stop(now + 0.06);
+    } else if (type === 'boss') {
+      // Impact Hit
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(150, now);
+      osc.frequency.exponentialRampToValueAtTime(40, now + 0.2);
+      gain.gain.setValueAtTime(0.4, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+      osc.start(now);
+      osc.stop(now + 0.25);
+    }
+  } catch(e) {}
+}
+
+/* CARTOON CLOUD BACKGROUND CANVAS */
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let clouds = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+for (let i = 0; i < 8; i++) {
+  clouds.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height * 0.7,
+    r: 30 + Math.random() * 30,
+    speed: 0.2 + Math.random() * 0.4
+  });
+}
+
+function drawBackground() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  ctx.fillStyle = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.6)';
+  
+  clouds.forEach(c => {
+    c.x += c.speed;
+    if (c.x - c.r * 3 > canvas.width) c.x = -c.r * 3;
+    
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+    ctx.arc(c.x + c.r * 0.7, c.y - c.r * 0.5, c.r * 0.8, 0, Math.PI * 2);
+    ctx.arc(c.x + c.r * 1.4, c.y, c.r * 0.9, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  requestAnimationFrame(drawBackground);
+}
+drawBackground();
+
+/* APP STATE & LOGIC */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const uid = () => Math.random().toString(36).slice(2, 9);
+const N = s => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+const lines = s => s.split('\n').map(x => x.trim()).filter(Boolean);
+
+const T_ = { mc: 'Trắc nghiệm', short: 'Trả lời ngắn', fill: 'Điền từ', tf: 'Đúng/Sai', img: 'Có hình ảnh', match: 'Nối cặp' };
+
+let sets = [];
+
+const appConfig = window.APP_CONFIG || {};
+const hasSupabaseCredentials = () => !!(appConfig.supabase && appConfig.supabase.url && appConfig.supabase.anonKey);
+const isSupabaseConfigured = () => !!(appConfig.supabase && appConfig.supabase.enabled && hasSupabaseCredentials());
+
+async function loadSetsFromSupabase() {
+  if (!isSupabaseConfigured()) return false;
+  try {
+    const url = `${appConfig.supabase.url.replace(/\/$/, '')}/rest/v1/${appConfig.supabase.table || 'question_sets'}?select=id,title,topic,status,qs&order=updated_at.desc`;
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'apikey': appConfig.supabase.anonKey,
+        'Authorization': `Bearer ${appConfig.supabase.anonKey}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!res.ok) throw new Error('Supabase request failed');
+    const rows = await res.json();
+    if (Array.isArray(rows) && rows.length) {
+      sets = rows.map(row => ({
+        id: String(row.id),
+        emo: row.emo || '📖',
+        title: row.title || 'Bộ câu hỏi',
+        topic: row.topic || '',
+        status: row.status || 'draft',
+        qs: Array.isArray(row.qs) ? row.qs : []
+      }));
+      return true;
+    }
+  } catch (e) {
+    console.warn('Supabase load failed, fallback localStorage:', e);
+  }
+  return false;
+}
+
+async function syncSetsToSupabase() {
+  if (!isSupabaseConfigured()) return;
+  try {
+    const rows = sets.map(s => ({
+      id: String(s.id),
+      emo: s.emo || '📖',
+      title: s.title,
+      topic: s.topic || '',
+      status: s.status || 'draft',
+      qs: s.qs || []
+    }));
+    const url = `${appConfig.supabase.url.replace(/\/$/, '')}/rest/v1/${appConfig.supabase.table || 'question_sets'}`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'apikey': appConfig.supabase.anonKey,
+        'Authorization': `Bearer ${appConfig.supabase.anonKey}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify(rows)
+    });
+    if (!res.ok) {
+      const txt = await res.text();
+      throw new Error(txt || 'Supabase sync failed');
+    }
+  } catch (e) {
+    console.warn('Supabase save failed:', e);
+  }
+}
+
+(async function initPersistedData() {
+  const fromSupabase = await loadSetsFromSupabase();
+  if (!fromSupabase) {
+    try { const x = JSON.parse(localStorage.vq_cartoon); if (Array.isArray(x) && x.length) sets = x; } catch (e) {}
+  }
+})();
+const save = () => { 
+  try { localStorage.vq_cartoon = JSON.stringify(sets); } catch (e) {} 
+  syncSetsToSupabase();
+};
+
+let tt, T, G, CS, EQ, ET = 'mc', IMG;
+const selectedSetIds = new Set();
+let bulkDeleteMode = false;
+const R = {};
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  playSound('pop');
+}
+
+function toast(m, k) {
+  const t = $('#toast');
+  t.textContent = m;
+  t.className = 'show ' + (k || '');
+  clearTimeout(tt);
+  tt = setTimeout(() => t.className = '', 2800);
+}
+
+function ask(m, f) {
+  $('#dm').textContent = m;
+  $('#dy').onclick = () => { dlg.close(); f(); };
+  dlg.showModal();
+}
+
+function go(n, p) {
+  playSound('pop');
+  const sc = n == 'edit' ? 'lib' : n;
+  document.querySelectorAll('.scr').forEach(s => s.classList.toggle('on', s.id == 's-' + sc));
+  document.querySelectorAll('nav a').forEach(a => a.classList.toggle('on', a.dataset.g == sc));
+  clearInterval(T);
+  R[n] && R[n](p);
+  scrollTo(0, 0);
+}
+
+const cardHtml = s => `
+<div class="card set ${bulkDeleteMode ? `bulk-selectable${selectedSetIds.has(String(s.id)) ? ' selected' : ''}` : ''}" onclick="toggleSetFromCard(event, '${esc(s.id)}')">
+  ${bulkDeleteMode ? `<label class="set-select"><input type="checkbox" data-set-id="${esc(s.id)}" ${selectedSetIds.has(String(s.id)) ? 'checked' : ''} onchange="toggleSetSelection(this)"> Chọn xóa</label>` : ''}
+  <div class="cov">${s.emo || '📜'}</div>
+  <h3>${esc(s.title)}</h3>
+  <span class="tag">${esc(s.topic || 'Chưa phân loại')}</span>
+  <p class="mut">${s.qs.length} câu hỏi</p>
+  <div class="ac" style="flex-wrap:wrap; margin-top:12px;">
+    <button class="btn au sm" onclick="go('setup','${s.id}')">🎮 Ôn tập</button>
+    <button class="btn gh sm" onclick="go('edit','${s.id}')">✏️ Sửa</button>
+    <button class="btn gh sm" onclick="dup('${s.id}')">📋 Sao chép</button>
+    <button class="btn gh sm" onclick="del('${s.id}')">🗑️ Xóa</button>
+  </div>
+</div>`;
+
+R.home = () => {
+  $('#hr').innerHTML = `
+    <table class="leaderboard">
+      <thead>
+        <tr>
+          <th>Hạng</th>
+          <th>Tên</th>
+          <th>Lớp</th>
+          <th>Bộ câu hỏi</th>
+          <th>Đúng / Tổng</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="5" style="text-align:center;">
+            Chưa có kết quả thật. Bảng xếp hạng sẽ hiển thị khi có người chơi hoàn thành lượt ôn tập.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  `;
+};
+
+R.lib = () => {
+  $('#lv').hidden = 0; $('#ev').hidden = 1;
+  const f = N($('#lf').value);
+  const l = sets.filter(s => N(s.title + ' ' + s.topic).includes(f));
+  $('#lg').innerHTML = l.length ? l.map(cardHtml).join('') : '<div class="card">Không tìm thấy bộ câu hỏi phù hợp.</div>';
+  updateBulkDeleteButton();
+};
+
+function updateBulkDeleteButton() {
+  selectedSetIds.forEach(id => {
+    if (!sets.some(set => String(set.id) === id)) selectedSetIds.delete(id);
+  });
+  $('#bulk-delete-start').hidden = bulkDeleteMode;
+  $('#bulk-delete-actions').hidden = !bulkDeleteMode;
+  const button = $('#bulk-delete');
+  button.textContent = `🗑️ Xóa đã chọn (${selectedSetIds.size})`;
+  button.disabled = selectedSetIds.size === 0;
+}
+
+function enableBulkDeleteMode() {
+  bulkDeleteMode = true;
+  R.lib();
+}
+
+function cancelBulkDeleteMode() {
+  bulkDeleteMode = false;
+  selectedSetIds.clear();
+  R.lib();
+}
+
+function toggleSetSelection(checkbox) {
+  const id = String(checkbox.dataset.setId);
+  setSetSelected(id, checkbox.checked);
+}
+
+function toggleSetFromCard(event, id) {
+  if (!bulkDeleteMode || event.target.closest('button, input, label')) return;
+  const checkbox = event.currentTarget.querySelector('.set-select input');
+  setSetSelected(id, !selectedSetIds.has(String(id)));
+  checkbox.checked = selectedSetIds.has(String(id));
+}
+
+function setSetSelected(id, selected) {
+  id = String(id);
+  if (selected) selectedSetIds.add(id);
+  else selectedSetIds.delete(id);
+  const card = document.querySelector(`.set-select input[data-set-id="${CSS.escape(id)}"]`)?.closest('.set');
+  if (card) card.classList.toggle('selected', selected);
+  updateBulkDeleteButton();
+}
+
+function deleteSelectedSets() {
+  const ids = new Set(selectedSetIds);
+  if (!ids.size) return;
+  ask(`Bạn có chắc chắn muốn xóa ${ids.size} bộ câu hỏi đã chọn?`, () => {
+    sets = sets.filter(set => !ids.has(String(set.id)));
+    selectedSetIds.clear();
+    bulkDeleteMode = false;
+    save();
+    R.lib();
+    toast(`Đã xóa ${ids.size} bộ câu hỏi.`, 'ok');
+  });
+}
+
+async function generateAiSet() {
+  if (!appConfig.ai || !appConfig.ai.enabled || !hasSupabaseCredentials()) {
+    return toast('Cần cấu hình Supabase URL, anon key và bật Gemini trong config.js. Không đặt Gemini API key tại đây.', 'bad');
+  }
+  const topic = prompt('Nhập chủ đề hoặc yêu cầu cho bộ câu hỏi AI:', 'Ngữ Văn lớp 11 - văn học Việt Nam');
+  if (topic === null || !topic.trim()) return;
+
+  try {
+    const supabaseUrl = appConfig.supabase.url.replace(/\/$/, '');
+    const res = await fetch(`${supabaseUrl}/functions/v1/generate-questions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': appConfig.supabase.anonKey,
+        'Authorization': `Bearer ${appConfig.supabase.anonKey}`
+      },
+      body: JSON.stringify({ topic: topic.trim() })
+    });
+    const responseText = await res.text();
+    let data = {};
+    try {
+      data = responseText ? JSON.parse(responseText) : {};
+    } catch {
+      if (res.ok) throw new Error('Supabase trả về dữ liệu không hợp lệ');
+    }
+    if (!res.ok) {
+      if (res.status === 404) {
+        throw new Error('Edge Function generate-questions chưa được deploy lên Supabase. Gemini API key vẫn để trong Supabase Secrets, không cần thêm vào config.js.');
+      }
+      throw new Error(data.error || data.message || `Yêu cầu Gemini thất bại (${res.status})`);
+    }
+    const qs = Array.isArray(data.qs) ? data.qs : [];
+    if (qs.length < 4 || qs.length > 8) throw new Error('Gemini không trả về từ 4 đến 8 câu hỏi hợp lệ');
+
+    const set = {
+      id: uid(),
+      emo: '🤖',
+      title: data.title || 'Bộ Gemini mới',
+      topic: data.topic || topic,
+      qs
+    };
+    sets.unshift(set); save(); R.lib(); go('edit', set.id);
+    toast('Đã tạo bộ câu hỏi bằng Gemini AI!', 'ok');
+  } catch (e) {
+    console.error(e);
+    toast(`Tạo bộ câu hỏi bằng Gemini thất bại: ${e.message || 'Lỗi không xác định'}`, 'bad');
+  }
+}
+function newSet() {
+  const s = { id: uid(), emo: '📖', title: 'Bộ câu hỏi mới', topic: '', qs: [] };
+  sets.unshift(s); save(); go('edit', s.id);
+}
+
+function dup(id) {
+  const s = sets.find(x => x.id == id);
+  sets.unshift({ ...JSON.parse(JSON.stringify(s)), id: uid(), title: s.title + ' (Bản sao)' });
+  save(); R.lib(); toast('Đã sao chép bộ câu hỏi!', 'ok');
+}
+
+function del(id) {
+  ask('Bạn có chắc chắn muốn xóa bộ câu hỏi này?', () => {
+    sets = sets.filter(x => x.id != id);
+    selectedSetIds.delete(String(id));
+    save(); R.lib();
+  });
+}
+
+R.edit = id => {
+  $('#lv').hidden = 1; $('#ev').hidden = 0;
+  if (!sets.length) newSet();
+  CS = sets.find(s => s.id == id) || CS || sets[0];
+  $('#et').value = CS.title; $('#ec').value = CS.topic;
+  $('#ty').innerHTML = Object.entries(T_).filter(([k]) => k !== 'match').map(([k, v]) => `<button class="btn sm gh" data-k="${k}" onclick="setT('${k}')">${v}</button>`).join('');
+  resetForm(); renderQs();
+};
+
+function meta() { CS.title = $('#et').value; CS.topic = $('#ec').value; save(); }
+
+function setT(t) {
+  ET = t;
+  document.querySelectorAll('#ty button').forEach(b => b.classList.toggle('au', b.dataset.k == t));
+  document.querySelectorAll('[data-t]').forEach(g => g.hidden = !g.dataset.t.split(' ').includes(t));
+}
+
+function resetForm() {
+  EQ = null; IMG = null;
+  ['fc', 'fk', 'fp', 'fe', 'fs'].forEach(i => $('#' + i).value = '');
+  renderOptionFields();
+  $('#fi').hidden = true; $('#eh').textContent = 'Thêm câu hỏi mới';
+  $('#qsave').textContent = '💾 Thêm câu hỏi vào bộ';
+  const imageInput = document.querySelector('input[type="file"][accept^="image/"]');
+  if (imageInput) imageInput.value = '';
+  setT('mc');
+}
+
+function renderOptionFields(options = ['', '', '', '']) {
+  const values = Array.from({ length: 4 }, (_, index) => options[index] || '');
+  $('#fo').innerHTML = values.map((value, index) => `
+    <div class="option-editor-row">
+      <span class="option-letter">${'ABCD'[index]}</span>
+      <input class="option-value" type="text" value="${esc(value)}" placeholder="Nhập phương án ${index + 1}" aria-label="Phương án ${index + 1}">
+    </div>
+  `).join('');
+}
+
+function pickImg(i) {
+  const f = i.files[0];
+  if (!f) return;
+  if (!/^image\/(png|jpeg|webp)$/.test(f.type) || f.size > 1.5e6) {
+    i.value = ''; return toast('Chỉ hỗ trợ file PNG, JPG, WebP dưới 1.5 MB', 'bad');
+  }
+  const r = new FileReader();
+  r.onload = () => { IMG = r.result; $('#fi').src = IMG; $('#fi').hidden = false; };
+  r.readAsDataURL(f);
+}
+
+function renderQs() {
+  const f = N($('#ef').value), l = CS.qs.map((q, i) => [q, i]).filter(([q]) => N(q.c).includes(f));
+  $('#en').textContent = CS.qs.length;
+  $('#el').innerHTML = l.length ? l.map(([q, i]) => `
+    <div class="row question-row">
+      <div class="question-row-content">
+        <span class="question-number">${i + 1}</span><span class="tag">${T_[q.type]}</span>
+        <button class="question-open" onclick="qact(${i},'e')" aria-label="Mở câu hỏi ${i + 1} để xem hoặc chỉnh sửa"><b>${esc(q.c)}</b></button>
+        ${q.o || q.type == 'tf' ? `
+          <div class="question-preview-options">
+            ${opts(q).map((option, optionIndex) => `
+              <label class="question-preview-option">
+                <input type="radio" name="correct-question-${i}" value="${optionIndex}" ${Number(q.a) === optionIndex ? 'checked' : ''} onchange="setCorrectAnswer(${i}, this.value)">
+                <span><b>${'ABCDEF'[optionIndex] || optionIndex + 1}.</b> ${esc(option)}</span>
+              </label>
+            `).join('')}
+          </div>
+          <p class="question-preview-answer">${Number.isInteger(Number(q.a)) && Number(q.a) >= 0 && Number(q.a) < opts(q).length ? `✅ Đáp án đúng: ${'ABCDEF'[Number(q.a)] || Number(q.a) + 1}` : 'Chọn đáp án đúng cho câu hỏi này'}</p>
+        ` : q.type == 'match' ? `
+          <div class="question-preview-answer">${q.p.map(pair => `${esc(pair[0])} → ${esc(pair[1])}`).join(' · ')}</div>
+        ` : `
+          <div class="question-preview-answer">Đáp án: ${esc((q.acc || []).join(' / ') || 'Chưa có')}</div>
+        `}
+      </div>
+      <div class="ac">
+        <button title="Xem hoặc sửa câu hỏi ${i + 1}" aria-label="Xem hoặc sửa câu hỏi ${i + 1}" onclick="qact(${i},'e')">✏️</button>
+        <button onclick="qact(${i},'c')">📋</button>
+        <button onclick="qact(${i},'u')">↑</button>
+        <button onclick="qact(${i},'d')">↓</button>
+        <button onclick="qact(${i},'x')">🗑</button>
+      </div>
+    </div>`).join('') : '<p class="mut">Chưa có câu hỏi nào trong bộ này.</p>';
+}
+
+function setCorrectAnswer(questionIndex, answerIndex) {
+  const question = CS.qs[questionIndex];
+  if (!question || !(question.o || question.type == 'tf')) return;
+  question.a = Number(answerIndex);
+  save();
+  renderQs();
+  toast(`Đã chọn đáp án ${'ABCDEF'[question.a] || question.a + 1} cho câu ${questionIndex + 1}.`, 'ok');
+}
+
+function qact(i, a) {
+  const L = CS.qs, q = L[i];
+  if (a == 'e') {
+    EQ = q; setT(q.type);
+    $('#fc').value = q.c; $('#fe').value = q.e || ''; $('#fd').value = q.d || 'Dễ'; $('#fs').value = q.src || '';
+    renderOptionFields(q.o || ['', '']);
+    $('#fk').value = (q.acc || []).join(' | '); $('#fp').value = (q.p || []).map(p => p.join(' | ')).join('\n');
+    IMG = q.img || null; $('#fi').hidden = !IMG; if (IMG) $('#fi').src = IMG;
+    $('#eh').textContent = `Chỉnh sửa câu hỏi`;
+    $('#qsave').textContent = '💾 Lưu thay đổi';
+    return scrollTo(0, 0);
+  }
+  if (a == 'x') return ask('Xóa câu hỏi này?', () => { L.splice(i, 1); save(); renderQs(); });
+  if (a == 'c') L.splice(i + 1, 0, { ...q, id: uid() });
+  if (a == 'u' && i > 0) [L[i - 1], L[i]] = [L[i], L[i - 1]];
+  if (a == 'd' && i < L.length - 1) [L[i + 1], L[i]] = [L[i], L[i + 1]];
+  save(); renderQs();
+}
+
+function saveQ() {
+  const t = ET, c = $('#fc').value.trim();
+  if (!c) return toast('Vui lòng nhập nội dung câu hỏi', 'bad');
+  const wasEditing = Boolean(EQ);
+  const q = { id: EQ?.id || uid(), type: t, c, e: $('#fe').value.trim(), d: $('#fd').value, src: $('#fs').value };
+  
+  if (t == 'mc' || t == 'img') {
+    const optionInputs = [...document.querySelectorAll('#fo .option-value')];
+    if (optionInputs.length !== 4 || optionInputs.some(input => !input.value.trim())) return toast('Vui lòng điền đủ 4 phương án.', 'bad');
+    q.o = optionInputs.map(input => input.value.trim());
+    q.a = EQ && Number.isInteger(EQ.a) && EQ.a >= 0 && EQ.a < q.o.length ? EQ.a : undefined;
+    if (q.o.length !== 4) return toast('Câu trắc nghiệm phải có đúng 4 phương án.', 'bad');
+    if (t == 'img') { if (!IMG) return toast('Vui lòng tải ảnh lên', 'bad'); q.img = IMG; }
+  } else if (t == 'tf') {
+    q.a = EQ && Number.isInteger(EQ.a) && (EQ.a === 0 || EQ.a === 1) ? EQ.a : undefined;
+  } else if (t == 'match') {
+    q.p = lines($('#fp').value).map(l => l.split('|').map(x => x.trim())).filter(p => p[0] && p[1]);
+    if (q.p.length < 2) return toast('Cần ít nhất 2 cặp ghép nối', 'bad');
+  } else {
+    q.acc = $('#fk').value.split('|').map(x => x.trim()).filter(Boolean);
+    if (!q.acc.length) return toast('Hãy nhập ít nhất 1 đáp án hợp lệ', 'bad');
+  }
+
+  const idx = CS.qs.findIndex(x => x.id == q.id);
+  idx < 0 ? CS.qs.push(q) : CS.qs[idx] = q;
+  save(); resetForm(); renderQs();
+  toast(wasEditing ? 'Đã cập nhật câu hỏi!' : 'Đã thêm câu hỏi. Bạn có thể nhập câu tiếp theo!', 'ok');
+}
+
+R.setup = id => {
+  $('#ss').innerHTML = sets.map(s => `<option value="${s.id}">${esc(s.title)} (${s.qs.length} câu)</option>`).join('');
+  if (id) $('#ss').value = id;
+};
+
+function begin() {
+  const s = sets.find(x => x.id == $('#ss').value), nm = $('#nick').value.trim();
+  if (!nm) return toast('Vui lòng nhập biệt danh!', 'bad');
+  if (!s || !s.qs.length) return toast('Bộ câu hỏi này chưa có dữ liệu!', 'bad');
+  if (s.qs.some(q => (q.o || q.type == 'tf') && !Number.isInteger(q.a))) {
+    return toast('Hãy chọn đáp án đúng cho tất cả câu trắc nghiệm trong danh sách câu hỏi.', 'bad');
+  }
+  
+  G = {
+    s, m: document.querySelector('[name=mode]:checked').value, nm,
+    qs: [...s.qs].sort(() => Math.random() - .5).slice(0, +$('#cnt').value),
+    i: 0, sc: 0, cb: 0, best: 0, ok: 0, bad: 0, no: 0, hp: 100, t0: Date.now(),
+    log: [], sec: Math.min(120, Math.max(5, +$('#sec').value || 20))
+  };
+  go('game'); nextQ();
+}
+
+const opts = q => q.type == 'tf' ? ['Đúng', 'Sai'] : q.o;
+
+function hud() {
+  $('#hs').textContent = G.sc; $('#hc').textContent = G.cb;
+  $('#hp').textContent = (G.i + 1) + '/' + G.qs.length;
+  $('#pb').style.width = (G.i / G.qs.length * 100) + '%';
+  $('#boss').hidden = G.m != 'boss';
+  $('#hpb').style.width = G.hp + '\%'; $('#hpt').textContent = 'HP: ' + G.hp + '/100';
+}
+
+function tick() { $('#ht').textContent = '⏱ ' + G.tl + 's'; }
+
+function nextQ() {
+  if (G.i >= G.qs.length || (G.m == 'boss' && G.hp <= 0)) return end();
+  const q = G.qs[G.i]; G.lock = 0; $('#fb').innerHTML = ''; hud();
+  
+  let h = `<span class="tag">${T_[q.type]}</span> <span class="tag">${q.d || 'Dễ'}</span>
+    ${q.img ? `<br><img class="qi" src="${q.img}">` : ''}
+    <h2 style="margin:12px 0;">${esc(q.c)}</h2>`;
+  
+  if (q.type == 'match') {
+    G.sel = null; G.pr = {}; G.Rr = q.p.map((p, i) => i).sort(() => Math.random() - .5);
+    h += '<div class="mt"><div id="ml"></div><div id="mr"></div></div>';
+  } else if (q.type == 'short' || q.type == 'fill') {
+    h += '<input id="ans" autocomplete="off" placeholder="Nhập câu trả lời của bạn..." onkeydown="event.key==\'Enter\'&&sub()"><br><br><button class="btn au" onclick="sub()">Gửi đáp án</button>';
+  } else {
+    h += opts(q).map((x, i) => `<button class="opt" onclick="pick(${i})"><b>${'ABCDEF'[i]}</b>${esc(x)}</button>`).join('');
+  }
+  
+  $('#q').innerHTML = h;
+  q.type == 'match' && mt();
+  $('#ans')?.focus();
+
+  if (G.m == 'quiz') $('#ht').textContent = '⏱ ∞';
+  else {
+    G.tl = G.sec; tick();
+    T = setInterval(() => { G.tl--; tick(); if (G.tl <= 0) fin(null); }, 1000);
+  }
+}
+
+function mt() {
+  const q = G.qs[G.i];
+  $('#ml').innerHTML = q.p.map((p, i) => `<button class="opt ${G.sel === i ? 'sel' : ''} ${i in G.pr ? 'paired' : ''}" onclick="ml(${i})">${esc(p[0])}</button>`).join('');
+  $('#mr').innerHTML = G.Rr.map(j => `<button class="opt ${Object.values(G.pr).includes(j) ? 'paired' : ''}" onclick="mr(${j})">${esc(q.p[j][1])}</button>`).join('');
+}
+function ml(i) { if (G.lock) return; playSound('pop'); G.sel = i; delete G.pr[i]; mt(); }
+function mr(j) {
+  if (G.lock || G.sel == null) return;
+  playSound('pop');
+  for (const k in G.pr) if (G.pr[k] == j) delete G.pr[k];
+  G.pr[G.sel] = j; G.sel = null; mt();
+  const q = G.qs[G.i];
+  if (Object.keys(G.pr).length == q.p.length) fin(Object.entries(G.pr).filter(([k, v]) => +k == v).length / q.p.length, '');
+}
+
+function pick(i) { fin(i == G.qs[G.i].a ? 1 : 0, i); }
+function sub() {
+  const v = N($('#ans').value);
+  if (!v) return toast('Vui lòng nhập câu trả lời', 'bad');
+  fin(G.qs[G.i].acc.some(a => N(a) == v) ? 1 : 0, v);
+}
+
+function fin(r, u) {
+  if (G.lock) return; G.lock = 1; clearInterval(T);
+  const q = G.qs[G.i]; let pts = 0, st;
+  
+  if (r == null) {
+    G.no++; G.cb = 0; st = 'no'; playSound('wrong');
+  } else if (r == 1) {
+    pts = 100 + Math.min(50, 10 * G.cb); G.cb++; G.best = Math.max(G.best, G.cb); G.ok++; st = 'ok';
+    playSound('correct');
+    if (G.m == 'boss') { G.hp = Math.max(0, G.hp - 20); playSound('boss'); }
+  } else {
+    pts = Math.round(100 * r); G.bad++; G.cb = 0; st = 'bad'; playSound('wrong');
+  }
+
+  G.sc += pts; G.log.push({ q, st, pts });
+  const ans = q.type == 'match' ? q.p.map(p => p[0] + ' → ' + p[1]).join('; ') : q.acc ? q.acc[0] : opts(q)[q.a];
+  
+  document.querySelectorAll('#q .opt, #q input, #q .btn').forEach(b => b.disabled = true);
+  if (q.o || q.type == 'tf') {
+    const b = document.querySelectorAll('#q .opt');
+    b[q.a].classList.add('right');
+    if (typeof u == 'number' && u != q.a) b[u].classList.add('wrong');
+  }
+
+  const last = G.i + 1 >= G.qs.length || (G.m == 'boss' && G.hp <= 0);
+  $('#fb').innerHTML = `
+    <div class="card fb ${st}">
+      <b>${{ ok: '🎉 Tuyệt vời! Chính xác +' + pts + ' điểm', bad: '😅 Chưa chính xác (+' + pts + ' điểm)', no: '⏰ Hết giờ mất rồi!' }[st]}</b>
+      <p style="margin:8px 0;">Đáp án đúng: <b>${esc(ans)}</b></p>
+      <p class="mut">${esc(q.e || 'Không có giải thích bổ sung.')}</p>
+      <button class="btn au" style="margin-top:12px;" onclick="G.i++;nextQ()">${last ? '📊 Xem kết quả' : 'Câu tiếp theo ➔'}</button>
+    </div>`;
+  
+  hud();
+  if (G.m == 'boss') {
+    const b = $('#boss'); b.classList.remove('hit'); void b.offsetWidth;
+    if (st == 'ok') b.classList.add('hit');
+  }
+}
+
+function end() {
+  clearInterval(T); const n = G.log.length, dt = Math.round((Date.now() - G.t0) / 1000);
+  go('res');
+  $('#rt').textContent = G.m == 'boss' ? (G.hp <= 0 ? '🏆 BẠN ĐÃ HẠ GỤC BOSS!' : '🐉 BOSS VẪN CÒN SỐNG!') : '🎉 CHIẾN THẮNG RẠNG RỠ!';
+  $('#rn').textContent = 'Người chơi: ' + G.nm + ' | ' + G.s.title;
+  
+  $('#rs').innerHTML = [
+    ['Tổng điểm', G.sc], ['Trả lời đúng', G.ok], ['Trả lời sai', G.bad],
+    ['Bỏ qua', G.no], ['Độ chính xác', (n ? Math.round(G.ok / n * 100) : 0) + '%'],
+    ['Chuỗi Combo', G.best], ['Thời gian', dt + 's']
+  ].map(x => `<div class="card stat"><b>${x[1]}</b>${x[0]}</div>`).join('');
+
+  $('#rv').innerHTML = G.log.map(l => `
+    <div class="row">
+      <div><b>${l.st == 'ok' ? '✅' : l.st == 'no' ? '⏰' : '❌'} ${esc(l.q.c)}</b><br><span class="mut">${esc(l.q.e || '')}</span></div>
+      <span class="tag">+${l.pts}</span>
+    </div>`).join('');
+}
+
+function replay() { go('setup', G.s.id); }
+
+R.home(); go('home');
+</script>
+</body>
+</html>
