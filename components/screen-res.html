@@ -1,0 +1,23 @@
+<!-- SCREEN 5: RESULTS -->
+<section id="s-res" class="scr">
+  <div class="wrap">
+    <div class="hero">
+      <h1 id="rt">🏆 Kết quả cuộc thi</h1>
+      <p id="rn" class="mut" style="font-size:18px;"></p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <p id="score-save-status" role="status" aria-live="polite" style="margin:0 0 10px;">Đang lưu kết quả bảng xếp hạng...</p>
+      <button class="btn gh sm" id="score-save-retry" onclick="saveScoreToLeaderboard()" hidden>↻ Thử lưu lại</button>
+    </div>
+    <div class="g3" id="rs" style="margin-bottom:24px;"></div>
+
+    <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+      <button class="btn au" onclick="replay()">🔄 Thử lại bộ này</button>
+      <button class="btn cy" onclick="go('setup')">🎮 Chọn bộ khác</button>
+      <button class="btn gh" onclick="go('home')">🏠 Trang chủ</button>
+    </div>
+
+    <h2 style="margin-top:32px;">📝 Chi tiết từng câu hỏi</h2>
+    <div id="rv"></div>
+  </div>
+</section>

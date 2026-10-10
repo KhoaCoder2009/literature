@@ -1,0 +1,135 @@
+<!-- SCREEN 2: LIBRARY / EDITOR -->
+<section id="s-lib" class="scr">
+  <div class="wrap">
+    <div id="lv">
+      <!-- Library Hero Banner -->
+      <div class="cartoon-lib-banner">
+        <div class="lib-banner-content">
+          <div class="hero-badge-pill" style="margin-bottom:6px;">📚 KHO HỌC LIỆU DÀNH CHO THẦY CÔ</div>
+          <h2>Ngân Hàng Câu Hỏi &amp; Đề Thi Của Bạn</h2>
+        </div>
+        <div class="lib-banner-stickers">
+          <span>📖</span>
+          <span>✏️</span>
+          <span>☁️</span>
+        </div>
+      </div>
+
+      <div class="hud">
+        <h1 style="font-size:30px; margin:0;">Danh mục bộ câu hỏi</h1>
+        <span id="sync-badge" class="sync-badge" aria-live="polite">☁️ Đã đồng bộ</span>
+        <button class="btn au" style="margin-left:8px;" onclick="newSet()">+ Tạo bộ mới</button>
+        <button class="btn cy" onclick="openPromptDialog()">🪄 Tạo bằng prompt</button>
+        <button id="bulk-delete-start" class="btn no" onclick="enableBulkDeleteMode()">🗑️ Xóa nhiều</button>
+        <div id="bulk-delete-actions" hidden>
+          <button id="bulk-delete" class="btn no" onclick="deleteSelectedSets()" disabled>🗑️ Xóa đã chọn (0)</button>
+          <button class="btn gh" onclick="cancelBulkDeleteMode()">Hủy</button>
+        </div>
+      </div>
+      <!-- Search & Topic Tags Filter -->
+      <div class="lib-search-filter-card">
+        <div class="lib-search-bar-row">
+          <div class="lib-search-input-box">
+            <span class="lib-search-lead-icon">🔍</span>
+            <input id="lf" type="text" placeholder="Tìm kiếm theo tên bộ câu hỏi, thẻ chủ đề…" oninput="onLibSearchInput()" autocomplete="off">
+            <button id="lf-clear" class="lib-search-clear-btn" type="button" onclick="clearLibSearch()" aria-label="Xóa tìm kiếm" hidden>✕</button>
+          </div>
+        </div>
+        <div class="topic-filter-row">
+          <div class="topic-filter-meta">
+            <span class="topic-filter-title">🏷️ Lọc theo thẻ chủ đề:</span>
+            <span id="topic-filter-summary" class="topic-filter-summary"></span>
+          </div>
+          <div id="topic-chips-bar" class="topic-chips-bar" role="tablist" aria-label="Bộ lọc thẻ chủ đề"></div>
+        </div>
+      </div>
+      <div class="g3" id="lg"></div>
+    </div>
+
+    <!-- EDITOR VIEW -->
+    <div id="ev" hidden>
+      <button class="btn gh sm" style="margin-bottom:12px;" onclick="go('lib')">← Quay lại thư viện</button>
+      <div class="hud">
+        <h1 style="font-size:30px; margin:0;">Soạn thảo bộ câu hỏi</h1>
+        <button class="btn cy" style="margin-left:auto;" onclick="go('setup',CS.id)">🎮 Ôn tập bộ này</button>
+      </div>
+      <div class="card">
+        <div class="g2">
+          <label>Tên bộ câu hỏi<input id="et" oninput="meta()"></label>
+          <label>Chủ đề / Bài học<input id="ec" oninput="meta()"></label>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap;">
+          <span style="font-weight:700;">Biểu tượng bộ đề:</span>
+          <button class="emoji-trigger" type="button" onclick="toggleEmojiPicker()" id="emoji-trigger-btn"><span id="current-emo">📖</span> ▾ Chọn emoji</button>
+        </div>
+        <div class="emoji-picker" id="emoji-picker"></div>
+      </div>
+
+      <div class="g2" style="margin-top:16px; align-items:start;">
+        <div class="card question-list-card">
+          <h3>📝 Câu hỏi mình đã tạo (<span id="en"></span>)</h3>
+          <p class="mut" style="margin:0 0 10px;">Câu hỏi đã lưu trong bộ này sẽ hiện ở đây. Chọn đáp án đúng ngay trên từng câu.</p>
+          <input id="ef" oninput="renderQs()" placeholder="🔍 Tìm câu hỏi…">
+          <div id="el" style="margin-top:12px;"></div>
+        </div>
+
+        <div class="card">
+          <h3 id="eh">Thêm câu hỏi mới</h3>
+          <div class="tabs" id="ty" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;"></div>
+          
+          <label>Nội dung câu hỏi
+            <textarea id="fc" placeholder="Nội dung câu hỏi (mặc định với dạng Đúng/Sai: Phát biểu sau đây là đúng?)"></textarea>
+          </label>
+
+          <div data-t="tf">
+            <label>Văn bản / Ngữ liệu đọc hiểu (không bắt buộc)
+              <textarea id="tf-passage" style="min-height:85px;" placeholder="Dán văn bản ngữ liệu, trích đoạn văn học nếu câu hỏi cần đọc hiểu..."></textarea>
+            </label>
+            <div style="font-size:13px; color:var(--mut); margin:-4px 0 12px;">
+              💡 <i>Phụ thuộc vào câu hỏi có cần văn bản hay không. Nếu để trống câu hỏi phía trên, hệ thống sẽ mặc định là: <b>"Phát biểu sau đây là đúng?"</b></i>
+            </div>
+            <label style="font-weight:700; margin-bottom:6px; display:block;">4 phát biểu (nhấp chọn phát biểu Đúng / Sai):</label>
+            <div id="tf-items-editor" class="tf-editor-container"></div>
+          </div>
+
+          <div data-t="mc img">
+            <label>4 phương án (đáp án đúng sẽ chọn sau khi thêm câu)</label>
+            <div id="fo" class="option-editor"></div>
+          </div>
+          
+          <div data-t="img">
+            <label>Tải ảnh minh họa (PNG/JPG/WebP, &lt;1.5MB)
+              <input type="file" accept="image/png,image/jpeg,image/webp" onchange="pickImg(this)">
+            </label>
+            <img id="fi" class="qi" hidden>
+          </div>
+          
+          <div data-t="short fill">
+            <label>Đáp án chấp nhận (cách nhau bởi dấu |)<input id="fk" placeholder="Hồ Chí Minh | Nguyễn Ái Quốc"></label>
+          </div>
+          
+          <div data-t="match">
+            <label>Các cặp ghép nối (mỗi dòng "Vế 1 | Vế 2")<textarea id="fp"></textarea></label>
+          </div>
+          
+          <label>Lời giải thích chi tiết<textarea id="fe" style="min-height:60px"></textarea></label>
+          
+          <div class="g2">
+            <label>Độ khó
+              <select id="fd">
+                <option>Dễ</option>
+                <option>Trung bình</option>
+                <option>Khó</option>
+              </select>
+            </label>
+            <label>Nguồn trích dẫn<input id="fs"></label>
+          </div>
+          
+          <div style="display:flex; gap:10px; margin-top:16px;">
+            <button id="qsave" class="btn au" onclick="saveQ()">💾 Thêm câu hỏi vào bộ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

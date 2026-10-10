@@ -1,0 +1,38 @@
+<!-- SCREEN 4: GAMEPLAY -->
+<section id="s-game" class="scr">
+  <div class="wrap">
+    <div class="hud">
+      <div class="hud-pill">⭐ <span id="hs">0</span></div>
+      <div class="hud-pill">🔥 x<span id="hc">0</span></div>
+      <div class="hud-pill" id="ht" style="display:none;">⏱ 20s</div>
+      <div class="hud-pill" id="hp">1/10</div>
+      <button class="btn gh sm" id="btn-projector-toggle" onclick="toggleProjectorMode()" style="margin-left:auto;" title="Chế độ máy chiếu">🖥️ Máy chiếu</button>
+      <button class="btn gh sm" onclick="go('home')">🚪 Thoát</button>
+    </div>
+
+    <div class="bar"><i id="pb"></i></div>
+
+    <!-- BOSS HUD (HIDDEN) -->
+    <div id="boss" class="card boss-hud-card" hidden style="display:none !important;">
+      <div class="boss-player-side">
+        <span class="face pl">🧙‍♂️</span>
+        <span class="boss-player-title">Chiến Binh</span>
+      </div>
+      <div class="boss-center-bar">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+          <b class="boss-name-tag">🐉 Thần Long Cổ Văn (Boss)</b>
+          <span id="hpt" class="boss-hp-tag">HP: 100/100</span>
+        </div>
+        <div class="bar hp" style="margin:4px 0;"><i id="hpb" style="width:100%"></i></div>
+        <small class="mut" style="font-size:12px;">Trả lời đúng để tung chiêu thức hạ gục Boss!</small>
+      </div>
+      <div class="boss-avatar-wrap">
+        <div class="boss-avatar-cartoon" id="boss-dragon-avatar">🐉</div>
+      </div>
+    </div>
+
+    <!-- QUESTION CARD -->
+    <div class="card" id="q"></div>
+    
+  </div>
+</section>

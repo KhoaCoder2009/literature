@@ -1,0 +1,34 @@
+<canvas id="bg-canvas"></canvas>
+
+<nav>
+  <button class="btn sm gh mobile-menu-toggle" type="button" onclick="toggleMobileMenu()" aria-label="Mở menu điều hướng" aria-controls="mobile-sidebar" aria-expanded="false" title="Menu điều hướng">
+    <span>☰</span> <span class="nav-btn-label">Menu</span>
+  </button>
+  <button class="btn sm gh nav-settings-btn" type="button" onclick="openSettingsDialog()" aria-label="Cài đặt hệ thống" title="Cài đặt âm thanh và giao diện">
+    <span>⚙️</span> <span class="nav-btn-label">Cài đặt</span>
+  </button>
+  <div class="brand-wrap" onclick="go('home')" aria-label="Về Trang chủ">
+    <img class="brand-logo" src="./assets/logo-nguvan.png" alt="Logo Ngữ Văn">
+  </div>
+</nav>
+
+<div class="mobile-menu-backdrop" onclick="closeMobileMenu()" aria-hidden="true"></div>
+<aside class="mobile-sidebar" id="mobile-sidebar" aria-label="Menu điều hướng" aria-hidden="true">
+  <div class="mobile-sidebar-header">
+    <div style="display:flex;align-items:center;cursor:pointer;" onclick="go('home'); closeMobileMenu();" title="Về trang chủ">
+      <img src="./assets/logo-nguvan.png" alt="Logo Ngữ Văn" class="sidebar-logo">
+    </div>
+    <button class="btn sm gh" type="button" onclick="closeMobileMenu()" aria-label="Đóng menu">✕</button>
+  </div>
+  <div class="sidebar-links-list">
+    <a data-g="home" onclick="go('home'); closeMobileMenu();">
+      <span class="sidebar-icon">🏠</span> <span>Trang chủ</span>
+    </a>
+    <a data-g="setup" onclick="go('setup'); closeMobileMenu();">
+      <span class="sidebar-icon">📖</span> <span>Ôn tập</span>
+    </a>
+    <a data-g="lib" onclick="go('lib'); closeMobileMenu();">
+      <span class="sidebar-icon">📚</span> <span>Thư viện</span>
+    </a>
+  </div>
+</aside>

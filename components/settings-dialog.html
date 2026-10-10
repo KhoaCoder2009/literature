@@ -1,0 +1,48 @@
+<!-- SETTINGS DIALOG -->
+<dialog id="settings-dialog" class="settings-modal">
+  <div class="settings-header">
+    <div class="settings-title-wrap">
+      <span class="settings-icon">⚙️</span>
+      <h3>Cài Đặt Hệ Thống</h3>
+    </div>
+    <button class="btn sm gh" type="button" onclick="closeSettingsDialog()" aria-label="Đóng cài đặt">✕</button>
+  </div>
+  <div class="settings-body">
+    <!-- Hiệu ứng âm thanh -->
+    <div class="settings-item">
+      <div class="settings-item-info">
+        <div class="settings-item-icon">🔊</div>
+        <div>
+          <div class="settings-item-name">Hiệu ứng âm thanh</div>
+          <div class="settings-item-desc">Âm thanh vui nhộn khi chọn đáp án và tương tác</div>
+        </div>
+      </div>
+      <button class="btn sm" id="btn-setting-sound" onclick="toggleSound()">Bật</button>
+    </div>
+    <!-- Giao diện Sáng / Tối -->
+    <div class="settings-item">
+      <div class="settings-item-info">
+        <div class="settings-item-icon">🌗</div>
+        <div>
+          <div class="settings-item-name">Giao diện (Sáng / Tối)</div>
+          <div class="settings-item-desc">Chuyển đổi giao diện Sáng năng động hoặc Tối dịu mắt</div>
+        </div>
+      </div>
+      <button class="btn sm gh" id="btn-setting-theme" onclick="toggleTheme()">Sáng</button>
+    </div>
+    <!-- Chế độ Máy chiếu -->
+    <div class="settings-item">
+      <div class="settings-item-info">
+        <div class="settings-item-icon">🖥️</div>
+        <div>
+          <div class="settings-item-name">Chế độ máy chiếu</div>
+          <div class="settings-item-desc">Tối ưu kích thước chữ to rõ ràng khi chiếu lên bảng lớp</div>
+        </div>
+      </div>
+      <button class="btn sm gh" id="btn-setting-projector" onclick="toggleProjectorMode()">Tắt</button>
+    </div>
+  </div>
+  <div class="settings-footer">
+    <button class="btn au" type="button" onclick="closeSettingsDialog()">✓ Hoàn tất</button>
+  </div>
+</dialog>

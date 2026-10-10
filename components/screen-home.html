@@ -1,0 +1,42 @@
+<!-- SCREEN 1: HOME -->
+<section id="s-home" class="scr">
+  <div class="wrap">
+    <!-- HERO SHOWCASE -->
+    <div class="hero-showcase" id="hero-showcase">
+      <div class="hero-study-card" id="hero-study-card">
+        <div class="study-card-img-wrap" id="study-img-wrap">
+          <img class="study-card-img" id="study-img" src="./assets/bac-ho.jpg" alt="Chủ tịch Hồ Chí Minh">
+        </div>
+        <div class="study-card-content" id="study-content">
+          <div class="study-quote-tag" id="study-tag">✨ LỜI DẠY CỦA BÁC HỒ</div>
+          <div class="study-main-quote long-quote" id="study-quote">“Non sông Việt Nam có trở nên tươi đẹp hay không, dân tộc Việt Nam có bước tới đài vinh quang để sánh vai với các cường quốc năm châu được hay không, chính là nhờ một phần lớn ở công học tập của các em.”</div>
+          <div class="study-quote-author" id="study-author">— Chủ tịch Hồ Chí Minh —</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEADERBOARD -->
+    <div class="card lb-card" style="padding:24px 28px;">
+      <div class="lb-header-bar">
+        <div class="lb-title-wrap">
+          <span class="lb-trophy-icon">🏆</span>
+          <div>
+            <h2 class="lb-heading">Bảng Vàng Vinh Danh Học Sinh</h2>
+            <p class="lb-subheading">Thành tích xuất sắc qua các lượt ôn tập &amp; thử thách tri thức</p>
+          </div>
+        </div>
+        <button class="btn gh sm lb-filter-reset" onclick="R.home()" title="Làm mới bảng xếp hạng">↻ Làm mới</button>
+      </div>
+      <div class="lb-filters">
+        <div class="lb-search-wrap">
+          <input id="lb-search" class="lb-search-input" placeholder="🔍 Tìm kiếm theo tên học sinh, lớp, bộ đề..." oninput="renderLeaderboard()">
+        </div>
+        <select id="lb-mode-filter" class="lb-mode-select" onchange="renderLeaderboard()" style="display:none;">
+          <option value="">✨ Tất cả kết quả</option>
+        </select>
+        <button class="btn gh sm lb-filter-reset" onclick="resetLbFilters()">✕ Xóa lọc</button>
+      </div>
+      <div id="lb-container"></div>
+    </div>
+  </div>
+</section>

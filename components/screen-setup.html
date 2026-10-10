@@ -1,0 +1,21 @@
+<!-- SCREEN 3: SETUP GAME -->
+<section id="s-setup" class="scr">
+  <div class="wrap">
+    <h1>🚀 Chuẩn bị ôn tập</h1>
+    <div class="card">
+      <div class="g2">
+        <label>Chọn bộ câu hỏi<select id="ss" onchange="updateSetupQuestionCount()"></select></label>
+        <label>Biệt danh người chơi<input id="nick" maxlength="20" placeholder="Tên của bạn..."></label>
+        <label>Lớp (không bắt buộc)<input id="class-name" maxlength="30" placeholder="Ví dụ: 11A1"></label>
+        <label>Số lượng câu hỏi
+          <input id="cnt-display" type="text" readonly value="0 câu hỏi (Tự động theo bộ đề)" style="background: rgba(148, 163, 184, 0.12); font-weight: 800; cursor: default;">
+        </label>
+      </div>
+
+      <div style="margin-top:24px;">
+        <button class="btn au" style="width:100%; font-size:18px;" onclick="begin()">✍️ Bắt đầu trả lời câu hỏi</button>
+        <p class="mut" style="text-align:center;margin-top:12px;font-size:13px;">Nhấn <kbd class="kbd">1</kbd>–<kbd class="kbd">4</kbd> để chọn đáp án · <kbd class="kbd">Enter</kbd> để tiếp tục · <kbd class="kbd">Esc</kbd> để đóng menu</p>
+      </div>
+    </div>
+  </div>
+</section>
