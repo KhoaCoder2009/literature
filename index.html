@@ -993,7 +993,8 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
     <textarea id="ai-source" maxlength="20000" required
       placeholder="Dán đoạn văn bản hoặc nội dung bài học để Gemini tạo câu hỏi dựa trên tài liệu này..."
       style="min-height:220px;"></textarea>
-    <p class="mut" style="font-size:13px;">Tối đa 20.000 ký tự. Gemini sẽ chia đều các dạng đã chọn và tạo đúng số câu yêu cầu.</p>
+    <p id="ai-source-guidance" class="mut" style="font-size:13px;" aria-live="polite"></p>
+    <p id="ai-source-count" class="mut" style="font-size:13px;" aria-live="polite"></p>
     <div id="ai-loading" role="status" aria-live="polite" aria-atomic="true" hidden>
       <span class="ai-spinner" aria-hidden="true"></span>
       <div class="ai-loading-copy">
@@ -1398,8 +1399,20 @@ function generateAiSet() {
     return toast('Cần cấu hình Supabase URL, anon key và bật Gemini trong config.js. Không đặt Gemini API key tại đây.', 'bad');
   }
   $('#ai-form').reset();
+  updateAiSourceRequirement();
   $('#ai-dialog').showModal();
   $('#ai-topic').focus();
+}
+
+function updateAiSourceRequirement() {
+  const questionCount = Number($('#ai-question-count').value);
+  const minimumCharacters = questionCount * 200;
+  const sourceCharacters = Array.from($('#ai-source').value.trim()).length;
+  $('#ai-source-guidance').textContent =
+    `Với ${questionCount} câu, cần tối thiểu ${minimumCharacters.toLocaleString('vi-VN')} ký tự văn bản nguồn (200 ký tự/câu). Đây là ngưỡng tối thiểu, không đảm bảo đủ dữ kiện nếu nội dung quá ít thông tin.`;
+  $('#ai-source-count').textContent =
+    `${sourceCharacters.toLocaleString('vi-VN')} / ${minimumCharacters.toLocaleString('vi-VN')} ký tự tối thiểu · Tối đa 20.000 ký tự`;
+  $('#ai-source-count').style.color = sourceCharacters >= minimumCharacters ? 'var(--green)' : '';
 }
 
 async function submitAiSet(event) {
@@ -1408,11 +1421,16 @@ async function submitAiSet(event) {
   const topic = $('#ai-topic').value.trim();
   const sourceText = $('#ai-source').value.trim();
   const questionCount = Number($('#ai-question-count').value);
+  const minimumCharacters = questionCount * 200;
+  const sourceCharacters = Array.from(sourceText).length;
   const questionTypes = [...document.querySelectorAll('input[name="ai-question-type"]:checked')]
     .map(input => input.value);
   if (!topic || !sourceText) return toast('Vui lòng nhập cả chủ đề và nội dung văn bản.', 'bad');
   if (![5, 10, 15, 20].includes(questionCount)) {
     return toast('Vui lòng chọn 5, 10, 15 hoặc 20 câu hỏi.', 'bad');
+  }
+  if (sourceCharacters < minimumCharacters) {
+    return toast(`Văn bản nguồn cần ít nhất ${minimumCharacters.toLocaleString('vi-VN')} ký tự cho ${questionCount} câu hỏi (hiện có ${sourceCharacters.toLocaleString('vi-VN')}).`, 'bad');
   }
   if (!questionTypes.length) return toast('Vui lòng chọn ít nhất một dạng câu hỏi.', 'bad');
 
@@ -1479,6 +1497,11 @@ async function submitAiSet(event) {
     setAiLoading(false);
   }
 }
+
+$('#ai-question-count').addEventListener('change', updateAiSourceRequirement);
+$('#ai-source').addEventListener('input', updateAiSourceRequirement);
+updateAiSourceRequirement();
+
 function newSet() {
   const s = { id: uid(), emo: '📖', title: 'Bộ câu hỏi mới', topic: '', qs: [] };
   sets.unshift(s); save(); go('edit', s.id);
