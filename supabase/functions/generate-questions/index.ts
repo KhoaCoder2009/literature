@@ -217,8 +217,12 @@ Xác nhận số lượng và thứ tự dạng chính xác; từng câu không 
     }
 
     if (Array.isArray(generated.qs) && generated.qs.length === 0) {
+      if (attempt < 2) {
+        retryInstruction = `\n\nLẦN TẠO TRƯỚC TRẢ VỀ MẢNG RỖNG. Hãy đọc lại toàn bộ nguồn và thử tạo chính xác ${requestedCount} câu theo đúng thứ tự dạng: ${typePlan.join(", ")}. Chỉ dùng dữ kiện được nêu rõ trong nguồn; mỗi câu cần có trích dẫn nguyên văn, chính xác trong giải thích. Không tạo câu lặp hoặc suy đoán.`;
+        continue;
+      }
       return jsonResponse({
-        error: `Văn bản chưa đủ dữ kiện để tạo ${requestedCount} câu hỏi theo các dạng đã chọn. Hãy chọn ít dạng hơn hoặc cung cấp thêm văn bản.`,
+        error: `Văn bản chưa đủ dữ kiện để tạo ${requestedCount} câu hỏi đạt yêu cầu sau 2 lần thử. Hãy chọn ít dạng hơn hoặc cung cấp thêm văn bản.`,
       }, 422);
     }
 
