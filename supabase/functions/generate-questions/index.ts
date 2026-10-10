@@ -21,8 +21,8 @@ export async function handleRequest(request: Request): Promise<Response> {
 
   const openRouterApiKey = Deno.env.get("OPENROUTER_API_KEY");
   const geminiApiKey = Deno.env.get("GEMINI_API_KEY");
-  const provider = openRouterApiKey ? "openrouter" : geminiApiKey ? "gemini" : null;
-  const apiKey = openRouterApiKey || geminiApiKey;
+  let provider = openRouterApiKey ? "openrouter" : geminiApiKey ? "gemini" : null;
+  let apiKey = openRouterApiKey || geminiApiKey;
   if (!apiKey || !provider) {
     return jsonResponse({
       error: "Chưa cấu hình AI trên máy chủ. Hãy thêm OPENROUTER_API_KEY vào Supabase Edge Function Secrets.",
@@ -80,7 +80,7 @@ export async function handleRequest(request: Request): Promise<Response> {
     (_, index) => questionTypes[index % questionTypes.length],
   );
 
-  const model = provider === "openrouter"
+  let model = provider === "openrouter"
     ? Deno.env.get("OPENROUTER_MODEL") || "google/gemini-2.5-flash"
     : Deno.env.get("GEMINI_MODEL") || "gemini-3.8-flash";
   const systemInstruction = `VAI TRÒ
@@ -204,6 +204,14 @@ Xác nhận số lượng và thứ tự dạng chính xác; từng câu không 
       }
     } catch (error) {
       console.error(`${provider} request failed`, error);
+      if (provider === "openrouter" && geminiApiKey && attempt < 2) {
+        provider = "gemini";
+        apiKey = geminiApiKey;
+        model = Deno.env.get("GEMINI_MODEL") || "gemini-3.8-flash";
+        retryInstruction =
+          "\n\nDịch vụ OpenRouter tạm thời không kết nối được. Hãy tạo bộ câu hỏi hoàn chỉnh theo đúng yêu cầu.";
+        continue;
+      }
       return jsonResponse({ error: "Không kết nối được với dịch vụ AI." }, 502);
     }
 

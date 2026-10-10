@@ -69,13 +69,15 @@ function createRequest(): Request {
 async function withOpenRouterMock(
   mockFetch: typeof fetch,
   run: () => Promise<void>,
+  geminiApiKey?: string,
 ): Promise<void> {
   const previousFetch = globalThis.fetch;
   const previousOpenRouterKey = Deno.env.get("OPENROUTER_API_KEY");
   const previousGeminiKey = Deno.env.get("GEMINI_API_KEY");
   const previousModel = Deno.env.get("OPENROUTER_MODEL");
   Deno.env.set("OPENROUTER_API_KEY", "unit-test-openrouter-key");
-  Deno.env.delete("GEMINI_API_KEY");
+  if (geminiApiKey) Deno.env.set("GEMINI_API_KEY", geminiApiKey);
+  else Deno.env.delete("GEMINI_API_KEY");
   Deno.env.delete("OPENROUTER_MODEL");
   globalThis.fetch = mockFetch;
 
@@ -163,4 +165,30 @@ Deno.test("OpenRouter quota errors are returned clearly without retrying", async
     assert(body.error.includes("OpenRouter"), "Expected an OpenRouter-specific quota message");
     assert(callCount === 1, `Quota error should not be retried, got ${callCount} calls`);
   });
+});
+
+Deno.test("OpenRouter connection failures fall back to Gemini when configured", async () => {
+  let callCount = 0;
+  await withOpenRouterMock(async (input, init) => {
+    callCount++;
+    if (callCount === 1) throw new TypeError("Network error");
+    assert(
+      String(input) === "https://generativelanguage.googleapis.com/v1beta/interactions",
+      "Expected Gemini fallback after the OpenRouter connection failure",
+    );
+    const headers = new Headers(init?.headers);
+    assert(headers.get("x-goog-api-key") === "unit-test-gemini-key", "Gemini key was not used");
+    return Response.json({
+      steps: [{
+        type: "model_output",
+        content: [{ type: "text", text: JSON.stringify({ title: "Bộ đọc hiểu", topic: "Đọc hiểu", qs: createQuestions() }) }],
+      }],
+    });
+  }, async () => {
+    const response = await handleRequest(createRequest());
+    const body = await response.json();
+    assert(response.status === 200, `Expected fallback to succeed, got ${response.status}: ${JSON.stringify(body)}`);
+    assert(callCount === 2, `Expected OpenRouter and Gemini calls, got ${callCount}`);
+    assert(body.qs.length === 5, "Gemini fallback did not return the complete question set");
+  }, "unit-test-gemini-key");
 });
