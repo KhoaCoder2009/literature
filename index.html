@@ -1,4 +1,4 @@
-<!ioctype html>
+<!DOCTYPE html>
 <html lang="vi" data-theme="light">
 <head>
 <meta charset="utf-8">
@@ -775,6 +775,269 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
   min-width: 0;
   width: 100%;
 }
+
+/* === ENHANCEMENTS v2 === */
+
+/* Timer pill urgent state */
+.hud-pill.timer-urgent {
+  background: var(--red);
+  color: #fff;
+  border-color: #b91c1c;
+  box-shadow: 0 4px 0 #b91c1c;
+  animation: timerPulse 0.5s ease infinite alternate;
+}
+.hud-pill.timer-warning {
+  background: var(--yellow);
+  color: #1e293b;
+  border-color: #b45309;
+  box-shadow: 0 4px 0 #b45309;
+}
+@keyframes timerPulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+/* Score pop animation when points gained */
+@keyframes scorePop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.35); color: var(--green); }
+  100% { transform: scale(1); }
+}
+.score-pop { animation: scorePop 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+
+/* Combo streak badge */
+.hud-pill.combo-hot {
+  background: linear-gradient(135deg, var(--yellow), var(--pink));
+  color: #1e293b;
+  border-color: var(--stroke);
+  animation: comboGlow 1s ease infinite alternate;
+}
+@keyframes comboGlow {
+  0% { box-shadow: 0 4px 0 var(--stroke), 0 0 8px rgba(236,72,153,0.3); }
+  100% { box-shadow: 0 4px 0 var(--stroke), 0 0 20px rgba(236,72,153,0.6); }
+}
+
+/* Progress bar pulse when time running out */
+.bar i.urgent {
+  background: linear-gradient(90deg, var(--red), #f97316);
+}
+
+/* Leaderboard filter bar */
+.lb-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.lb-filters select, .lb-filters input {
+  width: auto;
+  flex: 1;
+  min-width: 120px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 12px;
+}
+.lb-filter-reset {
+  flex: 0 0 auto;
+}
+
+/* Leaderboard rank medals */
+.rank-1 { color: #f59e0b; font-size: 18px; }
+.rank-2 { color: #94a3b8; font-size: 18px; }
+.rank-3 { color: #b45309; font-size: 18px; }
+.leaderboard tbody tr:first-child td { background: rgba(245,158,11,0.12); }
+.leaderboard tbody tr:nth-child(2) td { background: rgba(148,163,184,0.12); }
+.leaderboard tbody tr:nth-child(3) td { background: rgba(180,83,9,0.12); }
+
+/* Accuracy bar in leaderboard */
+.acc-bar {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 99px;
+  margin-top: 3px;
+  overflow: hidden;
+}
+.acc-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--green));
+  border-radius: 99px;
+  transition: width 0.6s ease-out;
+}
+
+/* Emoji picker */
+.emoji-picker {
+  display: none;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px;
+  background: var(--bg-card);
+  border: 3px solid var(--stroke);
+  border-radius: 18px;
+  box-shadow: 0 8px 0 var(--stroke);
+  margin-bottom: 14px;
+  max-width: 320px;
+}
+.emoji-picker.open { display: flex; }
+.emoji-picker button {
+  width: 40px;
+  height: 40px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+  transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), background 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.emoji-picker button:hover {
+  transform: scale(1.2);
+  background: var(--yellow-light);
+  border-color: var(--stroke);
+}
+.emoji-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  border: 2px solid var(--stroke);
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  font-weight: 700;
+  margin-bottom: 10px;
+  box-shadow: 0 3px 0 var(--stroke);
+  transition: transform 0.15s;
+}
+.emoji-trigger:hover { transform: translateY(-2px); }
+
+/* Keyboard shortcut hints */
+.kbd {
+  display: inline-block;
+  background: var(--bg-card);
+  border: 2px solid var(--stroke);
+  border-radius: 6px;
+  padding: 1px 6px;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 2px 0 var(--stroke);
+  color: var(--mut);
+}
+
+/* Import status indicator */
+.sync-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--mut);
+  padding: 4px 10px;
+  border: 2px solid var(--stroke);
+  border-radius: 99px;
+  background: var(--bg-card);
+  margin-left: auto;
+}
+.sync-badge.saving { color: var(--yellow); }
+.sync-badge.saved { color: var(--green); }
+.sync-badge.error { color: var(--red); }
+
+/* Set card difficulty indicator line */
+.set { border-top: 4px solid var(--primary); }
+.set .card-stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 8px 0 12px;
+  font-size: 13px;
+  color: var(--mut);
+}
+
+/* Question result summary row animation */
+.result-row-anim {
+  animation: slideInLeft 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes slideInLeft {
+  0% { opacity: 0; transform: translateX(-20px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Improved dialog feedback colors */
+#feedback-dialog.ok { --fb-glow: rgba(16,185,129,0.25); }
+#feedback-dialog.bad { --fb-glow: rgba(239,68,68,0.25); }
+
+/* Quick setup nickame save indicator */
+.saved-indicator {
+  font-size: 12px;
+  color: var(--green);
+  margin-left: 6px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.saved-indicator.show { opacity: 1; }
+
+/* Game mode card hover */
+label.card:has(input[type=radio]:checked) {
+  border-color: var(--primary);
+  background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(6,182,212,0.06));
+  box-shadow: 0 8px 0 var(--stroke), 0 0 0 2px var(--primary);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--stroke); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--mut); }
+
+/* Back to top button */
+#back-to-top {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 50;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid var(--stroke);
+  background: var(--yellow);
+  color: #1e293b;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--stroke);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1);
+}
+#back-to-top.visible { display: flex; }
+#back-to-top:hover { transform: translateY(-4px); }
+
+/* CSV import drag zone */
+.import-zone {
+  border: 3px dashed var(--stroke);
+  border-radius: 18px;
+  padding: 24px;
+  text-align: center;
+  background: var(--bg-sky);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  margin-bottom: 12px;
+}
+.import-zone:hover, .import-zone.drag-over {
+  background: var(--yellow-light);
+  border-color: var(--yellow);
+}
+
+/* Dark mode extra */
+[data-theme="dark"] .question-preview-option:has(input:checked) { background: rgba(52,211,153,0.15); border-color: var(--green); }
+[data-theme="dark"] .question-preview-answer { background: rgba(52,211,153,0.12); color: var(--green); }
+[data-theme="dark"] .leaderboard td { background: rgba(255,255,255,0.04); }
+[data-theme="dark"] .leaderboard tbody tr:first-child td { background: rgba(245,158,11,0.08); }
+[data-theme="dark"] label.card:has(input[type=radio]:checked) { background: rgba(139,92,246,0.12); }
+[data-theme="dark"] .fb.ok { background: rgba(16,185,129,0.2); color: var(--green); }
+[data-theme="dark"] .fb.bad, [data-theme="dark"] .fb.no { background: rgba(239,68,68,0.2); color: #fca5a5; }
 </style>
 </head>
 <body>
@@ -812,8 +1075,21 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
       <p class="mut" style="font-size:18px; font-weight:600;">Học Văn theo phong cách cuộc phiêu lưu hoạt hình vui nhộn!</p>
     </div>
     <div class="card" style="padding:18px 20px;">
-      <h2 style="margin:0 0 12px;">🏆 Bảng xếp hạng</h2>
-      <div id="hr"></div>
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+        <h2 style="margin:0;">🏆 Top người chơi xuất sắc</h2>
+        <button class="btn gh sm" onclick="R.home()" style="margin-left:auto;" title="Làm mới bảng xếp hạng">↻ Làm mới</button>
+      </div>
+      <div class="lb-filters">
+        <input id="lb-search" placeholder="🔍 Tìm theo tên..." oninput="renderLeaderboard()">
+        <select id="lb-mode-filter" onchange="renderLeaderboard()">
+          <option value="">Tất cả chế độ</option>
+          <option value="quiz">📖 Quiz Tự do</option>
+          <option value="timed">⏱ Đua thời gian</option>
+          <option value="boss">🐉 Đánh Boss</option>
+        </select>
+        <button class="btn gh sm lb-filter-reset" onclick="resetLbFilters()">✕ Xóa bộ lọc</button>
+      </div>
+      <div id="lb-container"></div>
     </div>
   </div>
 </section>
@@ -824,7 +1100,8 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
     <div id="lv">
       <div class="hud">
         <h1 style="font-size:32px; margin:0;">Thư viện câu hỏi</h1>
-        <button class="btn au" style="margin-left:auto;" onclick="newSet()">+ Tạo bộ mới</button>
+        <span id="sync-badge" class="sync-badge" aria-live="polite">☁️ Đã đồng bộ</span>
+        <button class="btn au" style="margin-left:8px;" onclick="newSet()">+ Tạo bộ mới</button>
         <button class="btn cy" onclick="openPromptDialog()">🪄 Tạo bằng prompt</button>
         <button id="bulk-delete-start" class="btn no" onclick="enableBulkDeleteMode()">🗑️ Xóa nhiều</button>
         <div id="bulk-delete-actions" hidden>
@@ -850,6 +1127,11 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
           <label>Tên bộ câu hỏi<input id="et" oninput="meta()"></label>
           <label>Chủ đề / Bài học<input id="ec" oninput="meta()"></label>
         </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap;">
+          <span style="font-weight:700;">Biểu tượng bộ đề:</span>
+          <button class="emoji-trigger" type="button" onclick="toggleEmojiPicker()" id="emoji-trigger-btn"><span id="current-emo">📖</span> ▾ Chọn emoji</button>
+        </div>
+        <div class="emoji-picker" id="emoji-picker"></div>
       </div>
 
       <div class="g2" style="margin-top:16px; align-items:start;">
@@ -945,6 +1227,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
 
       <div style="margin-top:20px;">
         <button class="btn au" style="width:100%; font-size:18px;" onclick="begin()">⚔️ Bắt đầu cuộc phiêu lưu</button>
+        <p class="mut" style="text-align:center;margin-top:10px;font-size:13px;">Nhấn <kbd class="kbd">1</kbd>–<kbd class="kbd">4</kbd> để chọn đáp án · <kbd class="kbd">Enter</kbd> để chuyển câu · <kbd class="kbd">Esc</kbd> để đóng menu</p>
       </div>
     </div>
   </div>
@@ -1068,6 +1351,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
 </dialog>
 
 <div id="toast" role="status"></div>
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Về đầu trang" title="Về đầu trang">↑</button>
 
 <script src="./config.js"></script>
 <script>
@@ -1397,9 +1681,28 @@ async function initPersistedData() {
     try { const x = JSON.parse(localStorage.vq_cartoon); if (Array.isArray(x) && x.length) sets = x; } catch (e) {}
   }
 }
+
+let syncDebounceTimer = null;
+function setSyncBadge(state, text) {
+  const badge = $('#sync-badge');
+  if (!badge) return;
+  badge.className = 'sync-badge ' + (state || '');
+  badge.textContent = { saving: '⏳ Đang lưu...', saved: '✅ Đã đồng bộ', error: '⚠️ Lỗi lưu' }[state] || text || '☁️ Đã đồng bộ';
+}
+
 const save = () => { 
-  try { localStorage.vq_cartoon = JSON.stringify(sets); } catch (e) {} 
-  syncSetsToSupabase();
+  try { localStorage.vq_cartoon = JSON.stringify(sets); } catch (e) {}
+  setSyncBadge('saving');
+  clearTimeout(syncDebounceTimer);
+  syncDebounceTimer = setTimeout(async () => {
+    try {
+      await syncSetsToSupabase();
+      setSyncBadge('saved');
+      setTimeout(() => setSyncBadge('', '☁️ Đã đồng bộ'), 2000);
+    } catch (e) {
+      setSyncBadge('error');
+    }
+  }, 800);
 };
 
 let tt, T, G, CS, EQ, ET = 'mc', IMG;
@@ -1503,13 +1806,24 @@ function go(n, p) {
   scrollTo(0, 0);
 }
 
-const cardHtml = s => `
+const cardHtml = s => {
+  const qCount = s.qs.length;
+  const mcCount = s.qs.filter(q => q.type === 'mc' || q.type === 'img').length;
+  const shortCount = s.qs.filter(q => q.type === 'short' || q.type === 'fill').length;
+  const tfCount = s.qs.filter(q => q.type === 'tf').length;
+  const matchCount = s.qs.filter(q => q.type === 'match').length;
+  const statParts = [];
+  if (mcCount) statParts.push(`📝 ${mcCount} trắc nghiệm`);
+  if (shortCount) statParts.push(`✏️ ${shortCount} tự luận`);
+  if (tfCount) statParts.push(`✅ ${tfCount} đúng/sai`);
+  if (matchCount) statParts.push(`🔗 ${matchCount} nối cặp`);
+  return `
 <div class="card set ${bulkDeleteMode ? `bulk-selectable${selectedSetIds.has(String(s.id)) ? ' selected' : ''}` : ''}" onclick="toggleSetFromCard(event, '${esc(s.id)}')">
   ${bulkDeleteMode ? `<label class="set-select"><input type="checkbox" data-set-id="${esc(s.id)}" ${selectedSetIds.has(String(s.id)) ? 'checked' : ''} onchange="toggleSetSelection(this)"> Chọn xóa</label>` : ''}
   <div class="cov">${s.emo || '📜'}</div>
   <h3>${esc(s.title)}</h3>
   <span class="tag">${esc(s.topic || 'Chưa phân loại')}</span>
-  <p class="mut">${s.qs.length} câu hỏi</p>
+  <div class="card-stats">${qCount} câu hỏi${statParts.length ? ' · ' + statParts.join(' · ') : ''}</div>
   <div class="ac" style="flex-wrap:wrap; margin-top:12px;">
     <button class="btn au sm" onclick="go('setup','${s.id}')">🎮 Ôn tập</button>
     <button class="btn gh sm" onclick="go('edit','${s.id}')">✏️ Sửa</button>
@@ -1517,17 +1831,21 @@ const cardHtml = s => `
     <button class="btn gh sm" onclick="del('${s.id}')">🗑️ Xóa</button>
   </div>
 </div>`;
+};
+
+let _lbAllRows = [];
 
 R.home = async () => {
-  const host = $('#hr');
+  const host = $('#lb-container');
+  if (!host) return;
   if (!isSupabaseConfigured()) {
     host.textContent = 'Chưa kết nối Supabase nên bảng xếp hạng chưa thể tải.';
     return;
   }
-  host.innerHTML = '<p class="mut" role="status">Đang tải bảng xếp hạng...</p>';
+  host.innerHTML = '<p class="mut" role="status">⏳ Đang tải bảng xếp hạng...</p>';
   try {
     const table = appConfig.supabase.leaderboardTable || 'leaderboard_entries';
-    const url = `${appConfig.supabase.url.replace(/\/$/, '')}/rest/v1/${table}?select=player_name,class_name,set_title,score,correct_count,question_count&order=score.desc,correct_count.desc,created_at.asc&limit=10`;
+    const url = `${appConfig.supabase.url.replace(/\/$/, '')}/rest/v1/${table}?select=player_name,class_name,set_title,score,correct_count,question_count,accuracy,game_mode,elapsed_seconds&order=score.desc,correct_count.desc,created_at.asc&limit=50`;
     const res = await fetch(url, {
       headers: {
         'apikey': appConfig.supabase.anonKey,
@@ -1541,7 +1859,30 @@ R.home = async () => {
     }
     const rows = await res.json();
     if (!Array.isArray(rows)) throw new Error('Bảng xếp hạng trả về dữ liệu không hợp lệ.');
-    host.innerHTML = `
+    _lbAllRows = rows;
+    renderLeaderboard();
+  } catch (error) {
+    console.error('Leaderboard load failed:', error);
+    host.innerHTML = '<p role="alert">Không tải được bảng xếp hạng. Kiểm tra bảng leaderboard_entries và quyền đọc Supabase, rồi thử tải lại.</p><button class="btn gh sm" onclick="R.home()">↻ Tải lại</button>';
+  }
+};
+
+function renderLeaderboard() {
+  const host = $('#lb-container');
+  if (!host) return;
+  const search = N($('#lb-search')?.value || '');
+  const mode = $('#lb-mode-filter')?.value || '';
+  const modeLabels = { quiz: '📖 Quiz', timed: '⏱ Thời gian', boss: '🐉 Boss' };
+  const medals = ['🥇', '🥈', '🥉'];
+  let rows = _lbAllRows;
+  if (search) rows = rows.filter(r => N(r.player_name + ' ' + (r.class_name || '') + ' ' + r.set_title).includes(search));
+  if (mode) rows = rows.filter(r => r.game_mode === mode);
+  if (!rows.length) {
+    host.innerHTML = '<p class="mut" style="text-align:center;padding:20px;">Không tìm thấy kết quả nào. ' + (search || mode ? 'Thử xóa bộ lọc.' : 'Hãy hoàn thành một lượt ôn tập để ghi tên!') + '</p>';
+    return;
+  }
+  host.innerHTML = `
+    <div style="overflow-x:auto;">
       <table class="leaderboard">
         <thead>
           <tr>
@@ -1549,29 +1890,41 @@ R.home = async () => {
             <th>Tên</th>
             <th>Lớp</th>
             <th>Bộ câu hỏi</th>
+            <th>Chế độ</th>
             <th>Điểm</th>
-            <th>Đúng / Tổng</th>
+            <th>Độ chính xác</th>
           </tr>
         </thead>
         <tbody>
-          ${rows.length ? rows.map((row, index) => `
+          ${rows.map((row, index) => {
+            const acc = Number(row.accuracy) || 0;
+            const medal = medals[index] || '';
+            const rankClass = index < 3 ? `rank-${index+1}` : '';
+            return `
             <tr>
-              <td class="rank">${index + 1}</td>
-              <td>${esc(row.player_name)}</td>
+              <td class="rank ${rankClass}">${medal || (index + 1)}</td>
+              <td><b>${esc(row.player_name)}</b></td>
               <td>${esc(row.class_name || '—')}</td>
-              <td>${esc(row.set_title)}</td>
-              <td><b>${Number(row.score) || 0}</b></td>
-              <td>${Number(row.correct_count) || 0} / ${Number(row.question_count) || 0}</td>
-            </tr>
-          `).join('') : '<tr><td colspan="6" style="text-align:center;">Chưa có kết quả. Hãy hoàn thành một lượt ôn tập để ghi tên lên bảng xếp hạng.</td></tr>'}
+              <td style="font-size:13px;">${esc(row.set_title)}</td>
+              <td>${modeLabels[row.game_mode] || esc(row.game_mode)}</td>
+              <td><b style="color:var(--primary);">${Number(row.score) || 0}</b></td>
+              <td>
+                <span>${Number(row.correct_count)||0}/${Number(row.question_count)||0} (${acc.toFixed(0)}%)</span>
+                <div class="acc-bar"><div class="acc-bar-fill" style="width:${acc}%"></div></div>
+              </td>
+            </tr>`;
+          }).join('')}
         </tbody>
       </table>
-    `;
-  } catch (error) {
-    console.error('Leaderboard load failed:', error);
-    host.innerHTML = '<p role="alert">Không tải được bảng xếp hạng. Kiểm tra bảng leaderboard_entries và quyền đọc Supabase, rồi thử tải lại.</p><button class="btn gh sm" onclick="R.home()">↻ Tải lại</button>';
-  }
-};
+    </div>
+  `;
+}
+
+function resetLbFilters() {
+  const s = $('#lb-search'); if (s) s.value = '';
+  const m = $('#lb-mode-filter'); if (m) m.value = '';
+  renderLeaderboard();
+}
 
 R.lib = () => {
   $('#lv').hidden = 0; $('#ev').hidden = 1;
@@ -1829,11 +2182,56 @@ R.edit = id => {
   if (!sets.length) newSet();
   CS = sets.find(s => s.id == id) || CS || sets[0];
   $('#et').value = CS.title; $('#ec').value = CS.topic;
+  // Sync emoji picker display
+  const currentEmo = $('#current-emo');
+  if (currentEmo) currentEmo.textContent = CS.emo || '📖';
+  initEmojiPicker();
   $('#ty').innerHTML = Object.entries(T_).filter(([k]) => k !== 'match').map(([k, v]) => `<button class="btn sm gh" data-k="${k}" onclick="setT('${k}')">${v}</button>`).join('');
   resetForm(); renderQs();
 };
 
 function meta() { CS.title = $('#et').value; CS.topic = $('#ec').value; save(); }
+
+/* === EMOJI PICKER === */
+const EMOJIS = ['📖','📜','📚','✨','🌟','🚀','🎯','🎓','🧐','📝',
+  '🏆','🎮','🐉','🥇','🔥','⚡','🌈','👑','🛡️','⚔️',
+  '🧠','💡','🔮','🆻🇳','🆻🇳','💬','🌏','🌿','🍎','🧩',
+  '🦋','🐼','🐭','🙏','👋','💚','💛','💙','💯','🌞'];
+
+function initEmojiPicker() {
+  const picker = $('#emoji-picker');
+  if (!picker) return;
+  picker.innerHTML = EMOJIS.map(e =>
+    `<button type="button" title="${e}" onclick="selectEmoji('${e}')">${e}</button>`
+  ).join('');
+}
+
+function toggleEmojiPicker() {
+  const picker = $('#emoji-picker');
+  if (!picker) return;
+  const isOpen = picker.classList.toggle('open');
+  const btn = $('#emoji-trigger-btn');
+  if (btn) btn.setAttribute('aria-expanded', String(isOpen));
+}
+
+function selectEmoji(emoji) {
+  if (!CS) return;
+  CS.emo = emoji;
+  const currentEmo = $('#current-emo');
+  if (currentEmo) currentEmo.textContent = emoji;
+  $('#emoji-picker').classList.remove('open');
+  save();
+  toast(`Đã chọn biểu tượng ${emoji}`, 'ok');
+}
+
+// Close emoji picker when clicking outside
+document.addEventListener('click', e => {
+  const picker = $('#emoji-picker');
+  if (!picker) return;
+  if (!e.target.closest('#emoji-picker') && !e.target.closest('#emoji-trigger-btn')) {
+    picker.classList.remove('open');
+  }
+});
 
 function setT(t) {
   ET = t;
@@ -1978,7 +2376,22 @@ function saveQ() {
 R.setup = id => {
   $('#ss').innerHTML = sets.map(s => `<option value="${s.id}">${esc(s.title)} (${s.qs.length} câu)</option>`).join('');
   if (id) $('#ss').value = id;
+  // Restore saved nickname and class
+  try {
+    const savedNick = localStorage.getItem('vq_player_nick');
+    const savedClass = localStorage.getItem('vq_player_class');
+    if (savedNick && !$('#nick').value) $('#nick').value = savedNick;
+    if (savedClass && !$('#class-name').value) $('#class-name').value = savedClass;
+  } catch (e) {}
 };
+
+// Auto-save nickname and class as user types
+$('#nick').addEventListener('input', () => {
+  try { localStorage.setItem('vq_player_nick', $('#nick').value.trim()); } catch (e) {}
+});
+$('#class-name').addEventListener('input', () => {
+  try { localStorage.setItem('vq_player_class', $('#class-name').value.trim()); } catch (e) {}
+});
 
 function begin() {
   const s = sets.find(x => x.id == $('#ss').value), nm = $('#nick').value.trim();
@@ -2001,15 +2414,32 @@ function begin() {
 const opts = q => q.type == 'tf' ? ['Đúng', 'Sai'] : q.o;
 
 function hud() {
-  $('#hs').textContent = G.sc; $('#hc').textContent = G.cb;
+  const scoreEl = $('#hs');
+  const prevScore = parseInt(scoreEl.textContent) || 0;
+  if (G.sc > prevScore) {
+    scoreEl.classList.remove('score-pop');
+    void scoreEl.offsetWidth; // force reflow
+    scoreEl.classList.add('score-pop');
+  }
+  scoreEl.textContent = G.sc;
+  const comboEl = $('#hc').parentElement;
+  $('#hc').textContent = G.cb;
+  if (G.cb >= 3) comboEl.classList.add('combo-hot');
+  else comboEl.classList.remove('combo-hot');
   $('#hp').textContent = (G.i + 1) + '/' + G.qs.length;
   $('#pb').style.width = (G.i / G.qs.length * 100) + '%';
   $('#boss').hidden = G.m != 'boss';
-  $('#hpb').style.width = G.hp + '\%'; $('#hpt').textContent = 'HP: ' + G.hp + '/100';
+  $('#hpb').style.width = G.hp + '%'; $('#hpt').textContent = 'HP: ' + G.hp + '/100';
   $('#boss').style.setProperty('--boss-damage', (100 - G.hp) + '%');
 }
 
-function tick() { $('#ht').textContent = '⏱ ' + G.tl + 's'; }
+function tick() {
+  const timerEl = $('#ht');
+  timerEl.textContent = '⏱ ' + G.tl + 's';
+  timerEl.classList.toggle('timer-urgent', G.tl <= Math.ceil(G.sec * 0.25));
+  timerEl.classList.toggle('timer-warning', G.tl > Math.ceil(G.sec * 0.25) && G.tl <= Math.ceil(G.sec * 0.5));
+  $('#pb i, .bar i').forEach?.(b => b.classList.toggle('urgent', G.tl <= Math.ceil(G.sec * 0.25)));
+}
 
 function advanceAfterFeedback() {
   clearTimeout(feedbackTimeout);
@@ -2027,6 +2457,26 @@ $('#feedback-dialog').addEventListener('keydown', event => {
 });
 
 $('#feedback-dialog').addEventListener('cancel', event => event.preventDefault());
+
+// Keyboard shortcuts: 1-4 to select MC/TF answers during game
+document.addEventListener('keydown', event => {
+  if (!G || G.lock || currentScreen !== 'game') return;
+  if ($('#feedback-dialog').open) return;
+  if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') return;
+  const q = G.qs[G.i];
+  const key = event.key;
+  if ((q.type === 'mc' || q.type === 'tf' || q.type === 'img') && ['1','2','3','4'].includes(key)) {
+    const idx = parseInt(key) - 1;
+    const optButtons = document.querySelectorAll('#q .opt');
+    if (optButtons[idx]) { event.preventDefault(); optButtons[idx].click(); }
+  }
+  if ((q.type === 'short' || q.type === 'fill') && key === 'Enter') {
+    const input = $('#ans');
+    if (input && document.activeElement !== input) {
+      event.preventDefault(); input.focus();
+    }
+  }
+});
 
 function nextQ() {
   if (G.i >= G.qs.length || (G.m == 'boss' && G.hp <= 0)) return end();
@@ -2052,8 +2502,11 @@ function nextQ() {
   q.type == 'match' && mt();
   $('#ans')?.focus();
 
-  if (G.m == 'quiz') $('#ht').textContent = '⏱ ∞';
-  else {
+  if (G.m == 'quiz') {
+    const timerEl = $('#ht');
+    timerEl.textContent = '⏱ ∞';
+    timerEl.classList.remove('timer-urgent', 'timer-warning');
+  } else {
     G.tl = G.sec; tick();
     T = setInterval(() => { G.tl--; tick(); if (G.tl <= 0) fin(null); }, 1000);
   }
@@ -2186,14 +2639,14 @@ async function end() {
     ['Chuỗi Combo', G.best], ['Thời gian', dt + 's']
   ].map(x => `<div class="card stat"><b>${x[1]}</b>${x[0]}</div>`).join('');
 
-  $('#rv').innerHTML = G.log.map(l => `
-    <div class="row">
+  $('#rv').innerHTML = G.log.map((l, idx) => `
+    <div class="row result-row-anim" style="animation-delay:${idx * 0.05}s">
       <div>
         <b>${l.st == 'ok' ? '✅' : l.st == 'no' ? '⏰' : '❌'} ${esc(l.q.c)}</b><br>
         <span class="mut">Bạn trả lời: ${esc(l.submittedAnswer || 'Chưa trả lời')} · Đáp án: ${esc(l.correctAnswer)}</span><br>
         <span class="mut">${esc(l.q.e || '')}</span>
       </div>
-      <span class="tag">+${l.pts}</span>
+      <span class="tag ${l.st === 'ok' ? 'ok' : ''}">${l.st === 'ok' ? '+' : ''}${l.pts}</span>
     </div>`).join('');
 
   G.scoreEntry = {
@@ -2214,6 +2667,12 @@ async function end() {
 
 function replay() { go('setup', G.s.id); }
 
+/* === BACK TO TOP === */
+window.addEventListener('scroll', () => {
+  const btn = $('#back-to-top');
+  if (btn) btn.classList.toggle('visible', window.scrollY > 400);
+}, { passive: true });
+
 let initialScreen = 'home';
 try {
   const savedScreen = sessionStorage.getItem('vq_current_screen');
@@ -2224,6 +2683,7 @@ try {
 go(initialScreen);
 initPersistedData().then(() => {
   if (currentScreen === 'lib') R.lib();
+  if (currentScreen === 'home') R.home();
 });
 </script>
 </body>
