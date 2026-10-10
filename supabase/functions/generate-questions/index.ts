@@ -81,7 +81,7 @@ export async function handleRequest(request: Request): Promise<Response> {
   );
 
   let model = provider === "openrouter"
-    ? Deno.env.get("OPENROUTER_MODEL") || "google/gemini-2.5-flash"
+    ? Deno.env.get("OPENROUTER_MODEL") || "nvidia/nemotron-3.5-lightning:free"
     : Deno.env.get("GEMINI_MODEL") || "gemini-3.8-flash";
   const systemInstruction = `VAI TRÒ
 Bạn là giáo viên Ngữ Văn giàu kinh nghiệm, đồng thời là người biên soạn câu hỏi đọc hiểu cẩn thận. Hãy tạo một bộ câu hỏi chính xác, dễ hiểu, có đáp án đáng tin cậy và phù hợp với học sinh phổ thông từ CHỦ ĐỀ và VĂN BẢN NGUỒN trong yêu cầu.

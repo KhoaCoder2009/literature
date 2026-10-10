@@ -117,7 +117,7 @@ Deno.test("OpenRouter returns the requested question types in order", async () =
     const headers = new Headers(requestInit?.headers);
     assert(headers.get("Authorization") === "Bearer unit-test-openrouter-key", "OpenRouter authorization was not set");
     const sent = JSON.parse(String(requestInit?.body));
-    assert(sent.model === "google/gemini-2.5-flash", "Unexpected default OpenRouter model");
+    assert(sent.model === "nvidia/nemotron-3.5-lightning:free", "Unexpected default OpenRouter model");
     assert(sent.response_format?.type === "json_object", "JSON response mode was not enabled");
     assert(body.qs.length === 5, "Expected five questions");
     assert(

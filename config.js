@@ -10,6 +10,6 @@ window.APP_CONFIG = {
   ai: {
     enabled: true,
     provider: 'openrouter',
-    model: 'google/gemini-2.5-flash',
+    model: 'nvidia/nemotron-3.5-lightning:free',
   }
 };
