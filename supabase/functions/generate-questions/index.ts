@@ -115,7 +115,7 @@ QUY CÁCH TỪNG DẠNG
 ĐỊNH DẠNG ĐẦU RA
 - Chỉ trả về JSON hợp lệ, không markdown, không lời dẫn hay nội dung bên ngoài JSON.
 - Đối tượng cấp cao nhất có đúng ba trường: title, topic, qs. title ngắn gọn, phản ánh văn bản; topic giữ chủ đề người dùng yêu cầu hoặc cách viết tương đương.
-- Nếu đủ căn cứ, qs có chính xác ${requestedCount} phần tử theo đúng kế hoạch dạng câu. Mỗi câu có type, c, e, d; mc thêm o và a; short/fill thêm acc; tf thêm a. Không đưa trường không dùng cho dạng câu đó.
+- Mỗi câu trong JSON nội bộ phải có đủ các khóa type, c, e, d, o, acc và a. Với mc: o có 4 phương án, acc=[], a là chỉ số 0-3. Với short/fill: o=[], acc có ít nhất một đáp án, a=-1. Với tf: o=[], acc=[], a là 0 hoặc 1. Máy chủ sẽ loại các khóa không áp dụng trước khi gửi câu hỏi về trò chơi.
 - Nếu không đủ căn cứ để tạo trọn bộ đạt chất lượng, qs là mảng rỗng. Không trả bộ câu hỏi thiếu số lượng.
 - Mọi giá trị a là số nguyên, không phải chuỗi. Mọi acc/o là mảng chuỗi không rỗng. JSON phải parse được, không có chú thích, dấu phẩy thừa hoặc giá trị không hợp lệ.
 
@@ -136,13 +136,13 @@ Xác nhận số lượng và thứ tự dạng chính xác; từng câu không 
           properties: {
             type: { type: "string", enum: questionTypes },
             c: { type: "string" },
-            o: { type: "array", items: { type: "string" }, minItems: 4, maxItems: 4 },
-            acc: { type: "array", items: { type: "string" }, minItems: 1 },
-            a: { type: "integer", minimum: 0, maximum: 3 },
+            o: { type: "array", items: { type: "string" }, minItems: 0, maxItems: 4 },
+            acc: { type: "array", items: { type: "string" }, minItems: 0 },
+            a: { type: "integer", minimum: -1, maximum: 3 },
             e: { type: "string" },
             d: { type: "string", enum: ["Dễ", "Trung bình", "Khó"] },
           },
-          required: ["type", "c", "e", "d"],
+          required: ["type", "c", "e", "d", "o", "acc", "a"],
         },
       },
     },
@@ -269,20 +269,34 @@ Xác nhận số lượng và thứ tự dạng chính xác; từng câu không 
           ) {
             validationErrors.push(`câu ${index + 1} phải có đúng 4 phương án`);
           }
+          if (!Array.isArray(item.acc) || item.acc.length !== 0) {
+            validationErrors.push(`câu ${index + 1} mc không được có đáp án dạng văn bản`);
+          }
           if (typeof item.a !== "number" || !Number.isInteger(item.a) || item.a < 0 || item.a > 3) {
             validationErrors.push(`câu ${index + 1} có đáp án trắc nghiệm không hợp lệ`);
           }
         } else if (item.type === "tf") {
+          if (
+            !Array.isArray(item.o) || item.o.length !== 0 ||
+            !Array.isArray(item.acc) || item.acc.length !== 0
+          ) {
+            validationErrors.push(`câu ${index + 1} tf không được có phương án hoặc đáp án dạng văn bản`);
+          }
           if (typeof item.a !== "number" || !Number.isInteger(item.a) || (item.a !== 0 && item.a !== 1)) {
             validationErrors.push(`câu ${index + 1} cần đáp án đúng/sai là 0 hoặc 1`);
           }
         } else if (item.type === "short" || item.type === "fill") {
           if (
+            !Array.isArray(item.o) ||
+            item.o.length !== 0 ||
             !Array.isArray(item.acc) ||
             item.acc.length === 0 ||
             !item.acc.every((answer) => typeof answer === "string" && answer.trim())
           ) {
             validationErrors.push(`câu ${index + 1} thiếu đáp án được chấp nhận`);
+          }
+          if (item.a !== -1) {
+            validationErrors.push(`câu ${index + 1} short/fill phải dùng a=-1`);
           }
         }
       });
@@ -292,10 +306,22 @@ Xác nhận số lượng và thứ tự dạng chính xác; từng câu không 
       return jsonResponse({
         title: generated.title,
         topic: typeof generated.topic === "string" ? generated.topic : topic.trim(),
-        qs: generated.qs.map((question) => ({
-          ...(question as Record<string, unknown>),
-          id: crypto.randomUUID(),
-        })),
+        qs: generated.qs.map((question) => {
+          const item: Record<string, unknown> = {
+            ...(question as Record<string, unknown>),
+            id: crypto.randomUUID(),
+          };
+          if (item.type === "mc") {
+            delete item.acc;
+          } else if (item.type === "tf") {
+            delete item.o;
+            delete item.acc;
+          } else {
+            delete item.o;
+            delete item.a;
+          }
+          return item;
+        }),
       });
     }
 
