@@ -181,6 +181,21 @@ Xác nhận số lượng và thứ tự dạng chính xác; từng câu không 
     if (!providerResponse.ok) {
       const providerError = await providerResponse.text();
       console.error("Gemini returned status", providerResponse.status, providerError);
+      if (providerResponse.status === 503 && attempt < 2) {
+        await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
+        retryInstruction = "\n\nYêu cầu trước tạm thời quá tải. Hãy tiếp tục và trả về trọn bộ câu hỏi đúng cấu trúc JSON đã yêu cầu.";
+        continue;
+      }
+      if (providerResponse.status === 429) {
+        return jsonResponse({
+          error: "Gemini đang giới hạn yêu cầu (429), thường do hết quota hoặc gọi quá nhanh. Hãy chờ rồi thử lại; nếu vẫn lỗi, kiểm tra quota và thanh toán của Gemini API.",
+        }, 429);
+      }
+      if (providerResponse.status === 503) {
+        return jsonResponse({
+          error: "Gemini đang tạm thời quá tải (503). Vui lòng chờ ít phút rồi thử lại.",
+        }, 503);
+      }
       return jsonResponse({ error: `Gemini request failed (${providerResponse.status})` }, 502);
     }
 
