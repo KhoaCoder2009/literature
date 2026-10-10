@@ -147,113 +147,156 @@ Xác nhận số lượng và thứ tự dạng chính xác; từng câu không 
     required: ["title", "topic", "qs"],
   };
 
-  let providerResponse: Response;
-  try {
-    providerResponse = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/interactions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": apiKey,
-        },
-        body: JSON.stringify({
-          model,
-          input: `${systemInstruction}\n\nChủ đề: ${topic.trim()}\n\nTạo câu hỏi dựa trên văn bản nguồn trong thẻ <source_text>. Nếu văn bản không cung cấp đủ dữ kiện, hãy hỏi về những nội dung có thể xác định được và không tự bịa thông tin.\n\n<source_text>\n${sourceText.trim()}\n</source_text>`,
-          response_format: {
-            type: "text",
-            mime_type: "application/json",
-            schema: questionSchema,
+  let retryInstruction = "";
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    let providerResponse: Response;
+    try {
+      providerResponse = await fetch(
+        "https://generativelanguage.googleapis.com/v1beta/interactions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-goog-api-key": apiKey,
           },
-          store: false,
-        }),
-      },
-    );
-  } catch (error) {
-    console.error("Gemini request failed", error);
-    return jsonResponse({ error: "Could not connect to Gemini" }, 502);
-  }
+          body: JSON.stringify({
+            model,
+            input: `${systemInstruction}${retryInstruction}\n\nChủ đề: ${topic.trim()}\n\nTạo câu hỏi dựa trên văn bản nguồn trong thẻ <source_text>. Nếu văn bản không cung cấp đủ dữ kiện, hãy hỏi về những nội dung có thể xác định được và không tự bịa thông tin.\n\n<source_text>\n${sourceText.trim()}\n</source_text>`,
+            response_format: {
+              type: "text",
+              mime_type: "application/json",
+              schema: questionSchema,
+            },
+            store: false,
+          }),
+        },
+      );
+    } catch (error) {
+      console.error("Gemini request failed", error);
+      return jsonResponse({ error: "Could not connect to Gemini" }, 502);
+    }
 
-  if (!providerResponse.ok) {
-    const providerError = await providerResponse.text();
-    console.error("Gemini returned status", providerResponse.status, providerError);
-    return jsonResponse({ error: `Gemini request failed (${providerResponse.status})` }, 502);
-  }
+    if (!providerResponse.ok) {
+      const providerError = await providerResponse.text();
+      console.error("Gemini returned status", providerResponse.status, providerError);
+      return jsonResponse({ error: `Gemini request failed (${providerResponse.status})` }, 502);
+    }
 
-  let providerData: {
-    steps?: Array<{
-      type?: string;
-      content?: Array<{ type?: string; text?: string }>;
-    }>;
-  };
-  try {
-    providerData = await providerResponse.json();
-  } catch (error) {
-    console.error("Gemini returned invalid JSON", error);
-    return jsonResponse({ error: "Gemini returned an invalid response" }, 502);
-  }
+    let providerData: {
+      steps?: Array<{
+        type?: string;
+        content?: Array<{ type?: string; text?: string }>;
+      }>;
+    };
+    try {
+      providerData = await providerResponse.json();
+    } catch (error) {
+      console.error("Gemini returned invalid JSON", error);
+      return jsonResponse({ error: "Gemini returned an invalid response" }, 502);
+    }
 
-  const content = providerData.steps
-    ?.filter((step) => step.type === "model_output")
-    .flatMap((step) => step.content || [])
-    .filter((part) => part.type === "text")
-    .map((part) => part.text || "")
-    .join("")
-    .trim();
-  if (!content) {
-    return jsonResponse({ error: "Gemini returned no question data" }, 502);
-  }
+    const content = providerData.steps
+      ?.filter((step) => step.type === "model_output")
+      .flatMap((step) => step.content || [])
+      .filter((part) => part.type === "text")
+      .map((part) => part.text || "")
+      .join("")
+      .trim();
+    if (!content) {
+      return jsonResponse({ error: "Gemini returned no question data" }, 502);
+    }
 
-  let generated: { title?: unknown; topic?: unknown; qs?: unknown };
-  try {
-    generated = JSON.parse(content);
-  } catch (error) {
-    console.error("Gemini returned invalid question JSON", error);
-    return jsonResponse({ error: "Gemini returned question data in an invalid format" }, 502);
-  }
+    let generated: { title?: unknown; topic?: unknown; qs?: unknown };
+    try {
+      generated = JSON.parse(content);
+    } catch (error) {
+      console.error("Gemini returned invalid question JSON", error);
+      return jsonResponse({ error: "Gemini returned question data in an invalid format" }, 502);
+    }
 
-  if (Array.isArray(generated.qs) && generated.qs.length === 0) {
-    return jsonResponse({
-      error: `Văn bản chưa đủ dữ kiện để tạo ${requestedCount} câu hỏi theo các dạng đã chọn. Hãy chọn ít dạng hơn hoặc cung cấp thêm văn bản.`,
-    }, 422);
-  }
+    if (Array.isArray(generated.qs) && generated.qs.length === 0) {
+      return jsonResponse({
+        error: `Văn bản chưa đủ dữ kiện để tạo ${requestedCount} câu hỏi theo các dạng đã chọn. Hãy chọn ít dạng hơn hoặc cung cấp thêm văn bản.`,
+      }, 422);
+    }
 
-  if (
-    typeof generated.title !== "string" ||
-    !Array.isArray(generated.qs) ||
-    generated.qs.length !== requestedCount ||
-    !generated.qs.every((question, index) => {
-      if (
-        !question ||
-        question.type !== typePlan[index] ||
-        typeof question.c !== "string" ||
-        !question.c.trim() ||
-        typeof question.e !== "string" ||
-        !["Dễ", "Trung bình", "Khó"].includes(question.d)
-      ) return false;
-
-      if (question.type === "mc") {
-        return Array.isArray(question.o) &&
-          question.o.length === 4 &&
-          question.o.every((option: unknown) => typeof option === "string" && option.trim().length > 0) &&
-          Number.isInteger(question.a) &&
-          question.a >= 0 &&
-          question.a < 4;
+    const validationErrors: string[] = [];
+    if (typeof generated.title !== "string" || !generated.title.trim()) {
+      validationErrors.push("tiêu đề bộ câu hỏi bị thiếu");
+    }
+    if (!Array.isArray(generated.qs)) {
+      validationErrors.push("danh sách câu hỏi không phải là mảng");
+    } else {
+      if (generated.qs.length !== requestedCount) {
+        validationErrors.push(`cần ${requestedCount} câu nhưng nhận được ${generated.qs.length}`);
       }
-      if (question.type === "tf") {
-        return Number.isInteger(question.a) && (question.a === 0 || question.a === 1);
-      }
-      return Array.isArray(question.acc) &&
-        question.acc.length > 0 &&
-        question.acc.every((answer: unknown) => typeof answer === "string" && answer.trim().length > 0);
-    })
-  ) {
-    return jsonResponse({ error: "Gemini returned questions in an invalid format" }, 502);
+      generated.qs.forEach((question, index) => {
+        if (!question || typeof question !== "object" || Array.isArray(question)) {
+          validationErrors.push(`câu ${index + 1} không phải đối tượng hợp lệ`);
+          return;
+        }
+        const item = question as Record<string, unknown>;
+        const expectedType = typePlan[index];
+        if (item.type !== expectedType) {
+          validationErrors.push(`câu ${index + 1} phải thuộc dạng ${expectedType}`);
+        }
+        if (typeof item.c !== "string" || !item.c.trim()) {
+          validationErrors.push(`câu ${index + 1} thiếu nội dung`);
+        }
+        if (typeof item.e !== "string" || !item.e.trim()) {
+          validationErrors.push(`câu ${index + 1} thiếu giải thích`);
+        }
+        if (typeof item.d !== "string" || !["Dễ", "Trung bình", "Khó"].includes(item.d)) {
+          validationErrors.push(`câu ${index + 1} có mức độ không hợp lệ`);
+        }
+
+        if (item.type === "mc") {
+          if (
+            !Array.isArray(item.o) ||
+            item.o.length !== 4 ||
+            !item.o.every((option) => typeof option === "string" && option.trim())
+          ) {
+            validationErrors.push(`câu ${index + 1} phải có đúng 4 phương án`);
+          }
+          if (typeof item.a !== "number" || !Number.isInteger(item.a) || item.a < 0 || item.a > 3) {
+            validationErrors.push(`câu ${index + 1} có đáp án trắc nghiệm không hợp lệ`);
+          }
+        } else if (item.type === "tf") {
+          if (typeof item.a !== "number" || !Number.isInteger(item.a) || (item.a !== 0 && item.a !== 1)) {
+            validationErrors.push(`câu ${index + 1} cần đáp án đúng/sai là 0 hoặc 1`);
+          }
+        } else if (item.type === "short" || item.type === "fill") {
+          if (
+            !Array.isArray(item.acc) ||
+            item.acc.length === 0 ||
+            !item.acc.every((answer) => typeof answer === "string" && answer.trim())
+          ) {
+            validationErrors.push(`câu ${index + 1} thiếu đáp án được chấp nhận`);
+          }
+        }
+      });
+    }
+
+    if (validationErrors.length === 0 && Array.isArray(generated.qs)) {
+      return jsonResponse({
+        title: generated.title,
+        topic: typeof generated.topic === "string" ? generated.topic : topic.trim(),
+        qs: generated.qs.map((question) => ({
+          ...(question as Record<string, unknown>),
+          id: crypto.randomUUID(),
+        })),
+      });
+    }
+
+    console.error("Gemini question validation failed", validationErrors);
+    if (attempt < 2) {
+      retryInstruction = `\n\nLẦN TẠO TRƯỚC KHÔNG ĐẠT. Hãy tạo lại TOÀN BỘ bộ câu hỏi, không chỉ sửa riêng câu lỗi. Các lỗi cần sửa: ${validationErrors.join("; ")}. Bắt buộc tạo chính xác ${requestedCount} câu và dùng đúng thứ tự dạng: ${typePlan.join(", ")}. Kiểm tra kỹ các trường bắt buộc theo từng dạng trước khi trả JSON.`;
+    } else {
+      return jsonResponse({
+        error: `Gemini vẫn chưa tạo được bộ câu hỏi đúng yêu cầu sau 2 lần thử (${validationErrors.slice(0, 4).join("; ")}). Hãy thử lại hoặc giảm số câu.`,
+      }, 502);
+    }
   }
 
-  return jsonResponse({
-    title: generated.title,
-    topic: typeof generated.topic === "string" ? generated.topic : topic.trim(),
-    qs: generated.qs.map((question) => ({ ...question, id: crypto.randomUUID() })),
-  });
+  return jsonResponse({ error: "Could not generate a valid question set" }, 502);
 });
