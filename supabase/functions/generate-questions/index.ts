@@ -11,7 +11,7 @@ function jsonResponse(body: unknown, status = 200): Response {
   });
 }
 
-Deno.serve(async (request: Request) => {
+export async function handleRequest(request: Request): Promise<Response> {
   if (request.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
@@ -19,9 +19,14 @@ Deno.serve(async (request: Request) => {
     return jsonResponse({ error: "Method not allowed" }, 405);
   }
 
-  const apiKey = Deno.env.get("GEMINI_API_KEY");
-  if (!apiKey) {
-    return jsonResponse({ error: "Gemini API key is not configured on the server" }, 500);
+  const openRouterApiKey = Deno.env.get("OPENROUTER_API_KEY");
+  const geminiApiKey = Deno.env.get("GEMINI_API_KEY");
+  const provider = openRouterApiKey ? "openrouter" : geminiApiKey ? "gemini" : null;
+  const apiKey = openRouterApiKey || geminiApiKey;
+  if (!apiKey || !provider) {
+    return jsonResponse({
+      error: "Chưa cấu hình AI trên máy chủ. Hãy thêm OPENROUTER_API_KEY vào Supabase Edge Function Secrets.",
+    }, 500);
   }
 
   let topic: unknown;
@@ -75,7 +80,9 @@ Deno.serve(async (request: Request) => {
     (_, index) => questionTypes[index % questionTypes.length],
   );
 
-  const model = Deno.env.get("GEMINI_MODEL") || "gemini-3.8-flash";
+  const model = provider === "openrouter"
+    ? Deno.env.get("OPENROUTER_MODEL") || "google/gemini-2.5-flash"
+    : Deno.env.get("GEMINI_MODEL") || "gemini-3.8-flash";
   const systemInstruction = `VAI TRÒ
 Bạn là giáo viên Ngữ Văn giàu kinh nghiệm, đồng thời là người biên soạn câu hỏi đọc hiểu cẩn thận. Hãy tạo một bộ câu hỏi chính xác, dễ hiểu, có đáp án đáng tin cậy và phù hợp với học sinh phổ thông từ CHỦ ĐỀ và VĂN BẢN NGUỒN trong yêu cầu.
 
@@ -153,82 +160,140 @@ Xác nhận số lượng và thứ tự dạng chính xác; từng câu không 
   for (let attempt = 1; attempt <= 2; attempt++) {
     let providerResponse: Response;
     try {
-      providerResponse = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/interactions",
-        {
+      if (provider === "openrouter") {
+        providerResponse = await fetch("https://openrouter.ai/api/v1/chat/completions", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "x-goog-api-key": apiKey,
+            "Authorization": `Bearer ${apiKey}`,
+            "X-Title": "Ngu Van",
           },
           body: JSON.stringify({
             model,
-            input: `${systemInstruction}${retryInstruction}\n\nChủ đề: ${topic.trim()}\n\nTạo câu hỏi dựa trên văn bản nguồn trong thẻ <source_text>. Nếu văn bản không cung cấp đủ dữ kiện, hãy hỏi về những nội dung có thể xác định được và không tự bịa thông tin.\n\n<source_text>\n${sourceText.trim()}\n</source_text>`,
-            response_format: {
-              type: "text",
-              mime_type: "application/json",
-              schema: questionSchema,
-            },
-            store: false,
+            messages: [
+              { role: "system", content: `${systemInstruction}${retryInstruction}` },
+              {
+                role: "user",
+                content: `Chủ đề: ${topic.trim()}\n\nTạo câu hỏi dựa trên văn bản nguồn trong thẻ <source_text>. Nếu văn bản không cung cấp đủ dữ kiện, hãy hỏi về những nội dung có thể xác định được và không tự bịa thông tin.\n\n<source_text>\n${sourceText.trim()}\n</source_text>`,
+              },
+            ],
+            response_format: { type: "json_object" },
           }),
-        },
-      );
+        });
+      } else {
+        providerResponse = await fetch(
+          "https://generativelanguage.googleapis.com/v1beta/interactions",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-goog-api-key": apiKey,
+            },
+            body: JSON.stringify({
+              model,
+              input: `${systemInstruction}${retryInstruction}\n\nChủ đề: ${topic.trim()}\n\nTạo câu hỏi dựa trên văn bản nguồn trong thẻ <source_text>. Nếu văn bản không cung cấp đủ dữ kiện, hãy hỏi về những nội dung có thể xác định được và không tự bịa thông tin.\n\n<source_text>\n${sourceText.trim()}\n</source_text>`,
+              response_format: {
+                type: "text",
+                mime_type: "application/json",
+                schema: questionSchema,
+              },
+              store: false,
+            }),
+          },
+        );
+      }
     } catch (error) {
-      console.error("Gemini request failed", error);
-      return jsonResponse({ error: "Could not connect to Gemini" }, 502);
+      console.error(`${provider} request failed`, error);
+      return jsonResponse({ error: "Không kết nối được với dịch vụ AI." }, 502);
     }
 
     if (!providerResponse.ok) {
-      const providerError = await providerResponse.text();
-      console.error("Gemini returned status", providerResponse.status, providerError);
+      console.error(`${provider} returned status`, providerResponse.status);
       if (providerResponse.status === 503 && attempt < 2) {
         await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
         retryInstruction = "\n\nYêu cầu trước tạm thời quá tải. Hãy tiếp tục và trả về trọn bộ câu hỏi đúng cấu trúc JSON đã yêu cầu.";
         continue;
       }
+      if (providerResponse.status === 401 || providerResponse.status === 403) {
+        return jsonResponse({
+          error: "Dịch vụ AI từ chối API key. Hãy kiểm tra OPENROUTER_API_KEY trong Supabase Secrets và bảo đảm key còn hiệu lực.",
+        }, providerResponse.status);
+      }
+      if (providerResponse.status === 402) {
+        return jsonResponse({
+          error: "Tài khoản OpenRouter không đủ credit để tạo câu hỏi. Hãy kiểm tra số dư hoặc giới hạn chi tiêu.",
+        }, 402);
+      }
       if (providerResponse.status === 429) {
         return jsonResponse({
-          error: "Gemini đang giới hạn yêu cầu (429), thường do hết quota hoặc gọi quá nhanh. Hãy chờ rồi thử lại; nếu vẫn lỗi, kiểm tra quota và thanh toán của Gemini API.",
+          error: provider === "openrouter"
+            ? "OpenRouter đang giới hạn yêu cầu (429). Hãy chờ rồi thử lại, kiểm tra giới hạn tốc độ, credit và trạng thái của model đã chọn."
+            : "Gemini đang giới hạn yêu cầu (429), thường do hết quota hoặc gọi quá nhanh. Hãy chờ rồi thử lại; nếu vẫn lỗi, kiểm tra quota và thanh toán của Gemini API.",
         }, 429);
       }
       if (providerResponse.status === 503) {
         return jsonResponse({
-          error: "Gemini đang tạm thời quá tải (503). Vui lòng chờ ít phút rồi thử lại.",
+          error: "Dịch vụ AI đang tạm thời quá tải (503). Vui lòng chờ ít phút rồi thử lại.",
         }, 503);
       }
-      return jsonResponse({ error: `Gemini request failed (${providerResponse.status})` }, 502);
+      return jsonResponse({ error: `Yêu cầu ${provider} thất bại (${providerResponse.status}).` }, 502);
     }
 
-    let providerData: {
-      steps?: Array<{
-        type?: string;
-        content?: Array<{ type?: string; text?: string }>;
-      }>;
-    };
+    let providerData: Record<string, unknown>;
     try {
       providerData = await providerResponse.json();
     } catch (error) {
-      console.error("Gemini returned invalid JSON", error);
-      return jsonResponse({ error: "Gemini returned an invalid response" }, 502);
+      console.error(`${provider} returned invalid JSON`, error);
+      return jsonResponse({ error: "Dịch vụ AI trả về phản hồi không hợp lệ." }, 502);
     }
 
-    const content = providerData.steps
-      ?.filter((step) => step.type === "model_output")
-      .flatMap((step) => step.content || [])
-      .filter((part) => part.type === "text")
-      .map((part) => part.text || "")
-      .join("")
-      .trim();
+    let content = "";
+    if (provider === "openrouter") {
+      const choices = providerData.choices;
+      if (Array.isArray(choices) && choices.length > 0) {
+        const message = choices[0]?.message;
+        if (message && typeof message === "object") {
+          const messageContent = (message as Record<string, unknown>).content;
+          if (typeof messageContent === "string") {
+            content = messageContent.trim();
+          } else if (Array.isArray(messageContent)) {
+            content = messageContent
+              .filter((part) => part && typeof part === "object")
+              .map((part) => (part as Record<string, unknown>).text)
+              .filter((text): text is string => typeof text === "string")
+              .join("")
+              .trim();
+          }
+        }
+      }
+    } else {
+      const steps = providerData.steps;
+      if (Array.isArray(steps)) {
+        content = steps
+          .filter((step) => step && typeof step === "object" && (step as Record<string, unknown>).type === "model_output")
+          .flatMap((step) => {
+            const parts = (step as Record<string, unknown>).content;
+            return Array.isArray(parts) ? parts : [];
+          })
+          .filter((part) => part && typeof part === "object" && (part as Record<string, unknown>).type === "text")
+          .map((part) => {
+            const text = (part as Record<string, unknown>).text;
+            return typeof text === "string" ? text : "";
+          })
+          .join("")
+          .trim();
+      }
+    }
     if (!content) {
-      return jsonResponse({ error: "Gemini returned no question data" }, 502);
+      return jsonResponse({ error: "Dịch vụ AI không trả về nội dung câu hỏi." }, 502);
     }
 
     let generated: { title?: unknown; topic?: unknown; qs?: unknown };
     try {
       generated = JSON.parse(content);
     } catch (error) {
-      console.error("Gemini returned invalid question JSON", error);
-      return jsonResponse({ error: "Gemini returned question data in an invalid format" }, 502);
+      console.error(`${provider} returned invalid question JSON`, error);
+      return jsonResponse({ error: "Dịch vụ AI trả câu hỏi không đúng định dạng JSON." }, 502);
     }
 
     if (Array.isArray(generated.qs) && generated.qs.length === 0) {
@@ -340,15 +405,19 @@ Xác nhận số lượng và thứ tự dạng chính xác; từng câu không 
       });
     }
 
-    console.error("Gemini question validation failed", validationErrors);
+    console.error(`${provider} question validation failed`, validationErrors);
     if (attempt < 2) {
       retryInstruction = `\n\nLẦN TẠO TRƯỚC KHÔNG ĐẠT. Hãy tạo lại TOÀN BỘ bộ câu hỏi, không chỉ sửa riêng câu lỗi. Các lỗi cần sửa: ${validationErrors.join("; ")}. Bắt buộc tạo chính xác ${requestedCount} câu và dùng đúng thứ tự dạng: ${typePlan.join(", ")}. Kiểm tra kỹ các trường bắt buộc theo từng dạng trước khi trả JSON.`;
     } else {
       return jsonResponse({
-        error: `Gemini vẫn chưa tạo được bộ câu hỏi đúng yêu cầu sau 2 lần thử (${validationErrors.slice(0, 4).join("; ")}). Hãy thử lại hoặc giảm số câu.`,
+        error: `AI vẫn chưa tạo được bộ câu hỏi đúng yêu cầu sau 2 lần thử (${validationErrors.slice(0, 4).join("; ")}). Hãy thử lại hoặc giảm số câu.`,
       }, 502);
     }
   }
 
   return jsonResponse({ error: "Could not generate a valid question set" }, 502);
-});
+}
+
+if (import.meta.main) {
+  Deno.serve(handleRequest);
+}

@@ -775,7 +775,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
       <div class="hud">
         <h1 style="font-size:32px; margin:0;">Thư viện câu hỏi</h1>
         <button class="btn au" style="margin-left:auto;" onclick="newSet()">+ Tạo bộ mới</button>
-        <button class="btn cy" onclick="generateAiSet()">🤖 GEMINI AI</button>
+        <button class="btn cy" onclick="generateAiSet()">🤖 AI</button>
         <button id="bulk-delete-start" class="btn no" onclick="enableBulkDeleteMode()">🗑️ Xóa nhiều</button>
         <div id="bulk-delete-actions" hidden>
           <button id="bulk-delete" class="btn no" onclick="deleteSelectedSets()" disabled>🗑️ Xóa đã chọn (0)</button>
@@ -969,7 +969,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
 
 <dialog id="ai-dialog">
   <form id="ai-form" onsubmit="submitAiSet(event)">
-    <h2 style="margin-top:0;">🤖 Tạo câu hỏi bằng Gemini AI</h2>
+    <h2 style="margin-top:0;">🤖 Tạo câu hỏi bằng AI</h2>
     <label for="ai-topic">Chủ đề / bài học</label>
     <input id="ai-topic" type="text" maxlength="500" required
       placeholder="Ví dụ: Truyện ngắn Vợ nhặt - Ngữ văn 12">
@@ -991,14 +991,14 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
     </fieldset>
     <label for="ai-source" style="margin-top:14px;">Nội dung văn bản nguồn</label>
     <textarea id="ai-source" maxlength="20000" required
-      placeholder="Dán đoạn văn bản hoặc nội dung bài học để Gemini tạo câu hỏi dựa trên tài liệu này..."
+      placeholder="Dán đoạn văn bản hoặc nội dung bài học để AI tạo câu hỏi dựa trên tài liệu này..."
       style="min-height:220px;"></textarea>
     <p id="ai-source-guidance" class="mut" style="font-size:13px;" aria-live="polite"></p>
     <p id="ai-source-count" class="mut" style="font-size:13px;" aria-live="polite"></p>
     <div id="ai-loading" role="status" aria-live="polite" aria-atomic="true" hidden>
       <span class="ai-spinner" aria-hidden="true"></span>
       <div class="ai-loading-copy">
-        <p id="ai-loading-message"><strong>Đang gửi văn bản đến Gemini...</strong></p>
+        <p id="ai-loading-message"><strong>Đang gửi văn bản đến AI...</strong></p>
         <p class="mut">Vui lòng đợi trong khi AI phân tích nội dung và tạo câu hỏi.</p>
         <div class="ai-progress" aria-hidden="true"></div>
       </div>
@@ -1396,7 +1396,7 @@ function deleteSelectedSets() {
 
 function generateAiSet() {
   if (!appConfig.ai || !appConfig.ai.enabled || !hasSupabaseCredentials()) {
-    return toast('Cần cấu hình Supabase URL, anon key và bật Gemini trong config.js. Không đặt Gemini API key tại đây.', 'bad');
+    return toast('Cần cấu hình Supabase URL, anon key và bật AI trong config.js. API key phải được lưu trong Supabase Edge Function Secrets.', 'bad');
   }
   $('#ai-form').reset();
   updateAiSourceRequirement();
@@ -1435,9 +1435,9 @@ async function submitAiSet(event) {
   if (!questionTypes.length) return toast('Vui lòng chọn ít nhất một dạng câu hỏi.', 'bad');
 
   let loadingMessageTimer;
-  setAiLoading(true, 'Đang gửi văn bản đến Gemini...');
+  setAiLoading(true, 'Đang gửi văn bản đến AI...');
   loadingMessageTimer = setTimeout(() => {
-    setAiLoading(true, 'Gemini đang đọc văn bản và tạo bộ câu hỏi...');
+    setAiLoading(true, 'AI đang đọc văn bản và tạo bộ câu hỏi...');
   }, 700);
   try {
     const supabaseUrl = appConfig.supabase.url.replace(/\/$/, '');
@@ -1461,9 +1461,9 @@ async function submitAiSet(event) {
     }
     if (!res.ok) {
       if (res.status === 404) {
-        throw new Error('Edge Function generate-questions chưa được deploy lên Supabase. Gemini API key vẫn để trong Supabase Secrets, không cần thêm vào config.js.');
+        throw new Error('Edge Function generate-questions chưa được deploy lên Supabase.');
       }
-      throw new Error(data.error || data.message || `Yêu cầu Gemini thất bại (${res.status})`);
+      throw new Error(data.error || data.message || `Yêu cầu AI thất bại (${res.status})`);
     }
     const qs = Array.isArray(data.qs) ? data.qs : [];
     const validQuestion = (question, index) => {
@@ -1473,25 +1473,25 @@ async function submitAiSet(event) {
       return Array.isArray(question.acc) && question.acc.length > 0 && question.acc.every(answer => typeof answer === 'string' && answer.trim());
     };
     if (qs.length !== questionCount || !qs.every(validQuestion)) {
-      throw new Error(`Gemini chưa tạo đủ ${questionCount} câu hỏi đúng các dạng bạn đã chọn. Vui lòng thử lại hoặc bổ sung văn bản nguồn.`);
+      throw new Error(`AI chưa tạo đủ ${questionCount} câu hỏi đúng các dạng bạn đã chọn. Vui lòng thử lại hoặc bổ sung văn bản nguồn.`);
     }
 
     const set = {
       id: uid(),
       emo: '🤖',
-      title: data.title || 'Bộ Gemini mới',
+      title: data.title || 'Bộ câu hỏi AI mới',
       topic: data.topic || topic,
       qs
     };
     sets.unshift(set); save(); R.lib(); go('edit', set.id);
     $('#ai-dialog').close();
-    toast('Đã tạo bộ câu hỏi bằng Gemini AI!', 'ok');
+    toast('Đã tạo bộ câu hỏi bằng AI!', 'ok');
   } catch (e) {
     console.error(e);
     const message = e instanceof TypeError && e.message === 'Failed to fetch'
       ? 'Không kết nối được Edge Function. Kiểm tra function generate-questions đã được deploy lên đúng project Supabase và thử lại.'
       : e.message || 'Lỗi không xác định';
-    toast(`Tạo bộ câu hỏi bằng Gemini thất bại: ${message}`, 'bad');
+    toast(`Tạo bộ câu hỏi bằng AI thất bại: ${message}`, 'bad');
   } finally {
     clearTimeout(loadingMessageTimer);
     setAiLoading(false);

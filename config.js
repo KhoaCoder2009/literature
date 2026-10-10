@@ -9,7 +9,7 @@ window.APP_CONFIG = {
   },
   ai: {
     enabled: true,
-    provider: 'gemini',
-    model: 'gemini-3.8-flash',
+    provider: 'openrouter',
+    model: 'google/gemini-2.5-flash',
   }
 };
