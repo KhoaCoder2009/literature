@@ -444,14 +444,18 @@ label { display: block; font-size: 14px; font-weight: 700; color: var(--ink); ma
   filter: drop-shadow(3px 3px 0 var(--stroke));
   animation: floatAnim 3s infinite ease-in-out;
 }
+#boss .boss-dragon {
+  filter: grayscale(var(--boss-damage, 0%)) drop-shadow(3px 3px 0 var(--stroke));
+  transition: filter 0.45s ease;
+}
 @keyframes floatAnim {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-8px) rotate(4deg); }
 }
-#boss.hit .face { animation: bossHit 0.5s ease; }
+#boss.hit .face { animation: bossHit 0.75s ease; }
 @keyframes bossHit {
   0% { transform: scale(1) rotate(0deg); }
-  20% { transform: scale(1.3) rotate(-15deg); filter: hue-rotate(90deg); }
+  25% { transform: scale(1.3) rotate(-15deg); filter: grayscale(var(--boss-damage, 0%)) drop-shadow(3px 3px 0 var(--stroke)) hue-rotate(150deg) brightness(1.35); }
   40% { transform: scale(0.8) rotate(15deg); }
   100% { transform: scale(1) rotate(0deg); }
 }
@@ -516,6 +520,22 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
   max-width: none;
   max-height: calc(100vh - 32px);
   overflow-y: auto;
+}
+#prompt-dialog .prompt-dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+#prompt-dialog .prompt-dialog-header h2 { margin: 0; }
+#prompt-dialog .prompt-dialog-close {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  font-size: 20px;
+  line-height: 1;
 }
 #feedback-dialog {
   width: min(640px, calc(100vw - 32px));
@@ -884,7 +904,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
         </div>
         <div class="bar hp" style="margin:6px 0;"><i id="hpb" style="width:100%"></i></div>
       </div>
-      <span class="face">🐉</span>
+      <span class="face boss-dragon">🐉</span>
     </div>
 
     <!-- QUESTION CARD -->
@@ -931,7 +951,11 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
 </dialog>
 
 <dialog id="prompt-dialog">
-  <h2 style="margin-top:0;">🪄 Tạo bộ câu hỏi bằng prompt</h2>
+  <div class="prompt-dialog-header">
+    <h2>🪄 Tạo bộ câu hỏi bằng prompt</h2>
+    <button class="btn gh sm prompt-dialog-close" type="button"
+      onclick="$('#prompt-dialog').close()" aria-label="Đóng cửa sổ tạo bộ câu hỏi" title="Đóng">×</button>
+  </div>
   <p class="mut">Tạo prompt ở đây, sao chép sang ChatGPT, Claude hoặc Gemini. Sau đó dán kết quả JSON vào để nhập bộ câu hỏi. Nội dung không được gửi tự động đi đâu cả.</p>
   <label for="prompt-topic">Chủ đề / bài học</label>
   <input id="prompt-topic" type="text" maxlength="500"
@@ -1217,8 +1241,8 @@ async function loadSetsFromSupabase() {
     });
     if (!res.ok) throw new Error('Supabase request failed');
     const rows = await res.json();
-    if (Array.isArray(rows) && rows.length) {
-      sets = rows.map(row => ({
+    if (Array.isArray(rows)) {
+      sets = rows.filter(row => row.status !== 'deleted').map(row => ({
         id: String(row.id),
         emo: row.emo || '📖',
         title: row.title || 'Bộ câu hỏi',
@@ -1226,12 +1250,45 @@ async function loadSetsFromSupabase() {
         status: row.status || 'draft',
         qs: Array.isArray(row.qs) ? row.qs : []
       }));
-      return true;
+      return rows.length > 0;
     }
   } catch (e) {
     console.warn('Supabase load failed, fallback localStorage:', e);
   }
   return false;
+}
+
+async function archiveQuestionSetInSupabase(id) {
+  if (!isSupabaseConfigured()) return;
+  const table = appConfig.supabase.table || 'question_sets';
+  const query = new URLSearchParams({ id: `eq.${String(id)}` });
+  const url = `${appConfig.supabase.url.replace(/\/$/, '')}/rest/v1/${table}?${query}`;
+  const res = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      'apikey': appConfig.supabase.anonKey,
+      'Authorization': 'Bearer ' + appConfig.supabase.anonKey,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    },
+    body: JSON.stringify({ status: 'deleted' })
+  });
+  if (!res.ok) {
+    const details = await res.text();
+    throw new Error(details || `Supabase delete failed (${res.status})`);
+  }
+  const archivedRows = await res.json();
+  if (!Array.isArray(archivedRows) || !archivedRows.some(row => String(row.id) === String(id))) {
+    throw new Error('Không tìm thấy bộ câu hỏi trên Supabase hoặc bạn không có quyền xóa.');
+  }
+}
+
+async function archiveQuestionSets(ids) {
+  const results = await Promise.allSettled(ids.map(id => archiveQuestionSetInSupabase(id)));
+  return results.map((result, index) => ({
+    id: String(ids[index]),
+    error: result.status === 'rejected' ? result.reason : null
+  }));
 }
 
 async function syncSetsToSupabase() {
@@ -1465,13 +1522,21 @@ function setSetSelected(id, selected) {
 function deleteSelectedSets() {
   const ids = new Set(selectedSetIds);
   if (!ids.size) return;
-  ask(`Bạn có chắc chắn muốn xóa ${ids.size} bộ câu hỏi đã chọn?`, () => {
-    sets = sets.filter(set => !ids.has(String(set.id)));
+  ask(`Bạn có chắc chắn muốn xóa ${ids.size} bộ câu hỏi đã chọn?`, async () => {
+    const results = await archiveQuestionSets([...ids]);
+    const deletedIds = new Set(results.filter(result => !result.error).map(result => result.id));
+    sets = sets.filter(set => !deletedIds.has(String(set.id)));
     selectedSetIds.clear();
     bulkDeleteMode = false;
-    save();
+    if (deletedIds.size) save();
     R.lib();
-    toast(`Đã xóa ${ids.size} bộ câu hỏi.`, 'ok');
+    const failed = results.filter(result => result.error);
+    if (failed.length) {
+      failed.forEach(result => console.error(`Could not delete question set ${result.id}:`, result.error));
+      toast(`Đã xóa ${deletedIds.size}/${ids.size} bộ. ${failed.length} bộ chưa xóa được; hãy thử lại.`, 'bad');
+    } else {
+      toast(`Đã xóa ${deletedIds.size} bộ câu hỏi.`, 'ok');
+    }
   });
 }
 
@@ -1640,10 +1705,17 @@ function dup(id) {
 }
 
 function del(id) {
-  ask('Bạn có chắc chắn muốn xóa bộ câu hỏi này?', () => {
-    sets = sets.filter(x => x.id != id);
+  ask('Bạn có chắc chắn muốn xóa bộ câu hỏi này?', async () => {
+    const [result] = await archiveQuestionSets([id]);
+    if (result.error) {
+      console.error(`Could not delete question set ${result.id}:`, result.error);
+      toast('Không xóa được bộ câu hỏi đã lưu trên máy chủ. Vui lòng kiểm tra kết nối rồi thử lại.', 'bad');
+      return;
+    }
+    sets = sets.filter(x => String(x.id) !== String(id));
     selectedSetIds.delete(String(id));
     save(); R.lib();
+    toast('Đã xóa bộ câu hỏi.', 'ok');
   });
 }
 
@@ -1829,6 +1901,7 @@ function hud() {
   $('#pb').style.width = (G.i / G.qs.length * 100) + '%';
   $('#boss').hidden = G.m != 'boss';
   $('#hpb').style.width = G.hp + '\%'; $('#hpt').textContent = 'HP: ' + G.hp + '/100';
+  $('#boss').style.setProperty('--boss-damage', (100 - G.hp) + '%');
 }
 
 function tick() { $('#ht').textContent = '⏱ ' + G.tl + 's'; }
@@ -1898,9 +1971,9 @@ function mr(j) {
 
 function pick(i) { fin(i == G.qs[G.i].a ? 1 : 0, i); }
 function sub() {
-  const v = N($('#ans').value);
-  if (!v) return toast('Vui lòng nhập câu trả lời', 'bad');
-  fin(G.qs[G.i].acc.some(a => N(a) == v) ? 1 : 0, v);
+  const answer = $('#ans').value.trim();
+  if (!N(answer)) return toast('Vui lòng nhập câu trả lời', 'bad');
+  fin(G.qs[G.i].acc.some(a => N(a) == N(answer)) ? 1 : 0, answer);
 }
 
 function fin(r, u) {
@@ -1917,8 +1990,14 @@ function fin(r, u) {
     pts = Math.round(100 * r); G.bad++; G.cb = 0; st = 'bad'; playSound('wrong');
   }
 
-  G.sc += pts; G.log.push({ q, st, pts });
-  const ans = q.type == 'match' ? q.p.map(p => p[0] + ' → ' + p[1]).join('; ') : q.acc ? q.acc[0] : opts(q)[q.a];
+  G.sc += pts;
+  const ans = q.type == 'match'
+    ? q.p.map(p => p[0] + ' → ' + p[1]).join('; ')
+    : q.acc ? q.acc.join(' / ') : opts(q)[q.a];
+  const submittedAnswer = q.type == 'match'
+    ? q.p.map((pair, index) => `${pair[0]} → ${q.p[G.pr[index]]?.[1] || 'Chưa ghép'}`).join('; ')
+    : typeof u == 'number' ? opts(q)[u] : typeof u == 'string' && u ? u : 'Chưa trả lời';
+  G.log.push({ q, st, pts, submittedAnswer, correctAnswer: ans });
   
   document.querySelectorAll('#q .opt, #q input, #q .btn').forEach(b => b.disabled = true);
   if (q.o || q.type == 'tf') {
@@ -1931,6 +2010,7 @@ function fin(r, u) {
   $('#fb').innerHTML = `
     <div class="card fb ${st}">
       <b>${{ ok: '🎉 Tuyệt vời! Chính xác +' + pts + ' điểm', bad: '😅 Chưa chính xác (+' + pts + ' điểm)', no: '⏰ Hết giờ mất rồi!' }[st]}</b>
+      <p style="margin:8px 0;">Bạn đã trả lời: <b>${esc(submittedAnswer)}</b></p>
       <p style="margin:8px 0;">Đáp án đúng: <b>${esc(ans)}</b></p>
       <p class="mut">${esc(q.e || 'Không có giải thích bổ sung.')}</p>
       <button class="btn au" style="margin-top:12px;" onclick="advanceAfterFeedback()">${last ? '📊 Xem kết quả' : 'Câu tiếp theo ➔'}</button>
@@ -2003,7 +2083,11 @@ async function end() {
 
   $('#rv').innerHTML = G.log.map(l => `
     <div class="row">
-      <div><b>${l.st == 'ok' ? '✅' : l.st == 'no' ? '⏰' : '❌'} ${esc(l.q.c)}</b><br><span class="mut">${esc(l.q.e || '')}</span></div>
+      <div>
+        <b>${l.st == 'ok' ? '✅' : l.st == 'no' ? '⏰' : '❌'} ${esc(l.q.c)}</b><br>
+        <span class="mut">Bạn trả lời: ${esc(l.submittedAnswer || 'Chưa trả lời')} · Đáp án: ${esc(l.correctAnswer)}</span><br>
+        <span class="mut">${esc(l.q.e || '')}</span>
+      </div>
       <span class="tag">+${l.pts}</span>
     </div>`).join('');
 
