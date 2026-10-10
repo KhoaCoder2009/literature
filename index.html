@@ -139,6 +139,8 @@ nav a.on {
   box-shadow: 0 4px 0 var(--stroke);
 }
 
+.mobile-menu-toggle, .mobile-menu-backdrop, .mobile-sidebar { display: none; }
+
 /* Sections & Layout */
 .scr { display: none; }
 .scr.on { display: block; animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
@@ -177,8 +179,8 @@ h2 { margin: .4em 0 .6em; font-size: clamp(20px, 4vw, 26px); }
 h3 { margin: 0 0 12px; font-size: 20px; }
 .mut { color: var(--mut); font-family: 'Be Vietnam Pro', sans-serif; font-weight: 500; }
 
-.g2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
-.g3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
+.g2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 16px; }
+.g3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); gap: 16px; }
 
 /* Cartoon Buttons */
 .btn {
@@ -548,8 +550,64 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
 
 @media(max-width: 560px) {
   .mt { grid-template-columns: 1fr; }
-  nav { padding: 10px; }
+  nav { flex-wrap: nowrap; gap: 8px; padding: 8px 10px; }
+  .mobile-menu-toggle { display: inline-flex; order: -2; flex: 0 0 42px; width: 42px; padding: 0; }
+  .brand-wrap { order: -1; margin-right: auto; }
+  .brand-logo { width: clamp(72px, 22vw, 112px); height: 48px; }
+  nav a { display: none; }
+  nav .btn { order: 1; flex: 0 0 40px; width: 40px; padding: 0; }
   nav b { font-size: 18px; }
+  .mobile-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 29;
+    display: block;
+    background: rgba(15, 23, 42, 0.48);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease;
+  }
+  .mobile-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 30;
+    display: flex;
+    width: min(300px, 84vw);
+    flex-direction: column;
+    gap: 8px;
+    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+    overflow-y: auto;
+    background: var(--bg-card);
+    border-right: 4px solid var(--stroke);
+    box-shadow: 8px 0 24px var(--shadow-color);
+    transform: translateX(-105%);
+    transition: transform 0.22s ease;
+  }
+  .mobile-sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; font-size: 20px; font-weight: 800; }
+  .mobile-sidebar a {
+    padding: 13px 14px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .mobile-sidebar a.on { background: var(--yellow); border-color: var(--stroke); color: #1e293b; }
+  .mobile-menu-open { overflow: hidden; }
+  .mobile-menu-open .mobile-sidebar { transform: translateX(0); }
+  .mobile-menu-open .mobile-menu-backdrop { opacity: 1; pointer-events: auto; }
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-sidebar, .mobile-menu-backdrop { transition: none; }
+  }
+  .wrap { padding: 14px 12px 40px; }
+  .card { padding: 16px; border-radius: 18px; }
+  .hero { padding: 22px 12px 16px; border-radius: 20px; }
+  .row { flex-direction: column; align-items: stretch; }
+  .ac { flex-wrap: wrap; justify-content: flex-end; }
+  .btn { min-height: 44px; }
+  .btn.sm { min-height: 40px; }
+  dialog { max-width: calc(100vw - 24px); padding: 18px; }
+  #toast { max-width: calc(100vw - 24px); text-align: center; }
   .hud { font-size: 15px; }
   .question-list-card { position: static !important; max-height: none !important; }
   #el { max-height: 38vh !important; }
@@ -724,6 +782,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
 <canvas id="bg-canvas"></canvas>
 
 <nav>
+  <button class="btn sm gh mobile-menu-toggle" type="button" onclick="toggleMobileMenu()" aria-label="Mở menu" aria-controls="mobile-sidebar" aria-expanded="false">☰</button>
   <a data-g="home" onclick="go('home')">Trang chủ</a>
   <a data-g="setup" onclick="go('setup')">Ôn tập</a>
   <a data-g="lib" onclick="go('lib')">Thư viện</a>
@@ -733,6 +792,16 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
   <button class="btn sm gh" id="sound-toggle" type="button" onclick="toggleSound()" aria-pressed="true" title="Tắt âm thanh">🔊</button>
   <button class="btn sm gh" onclick="toggleTheme()">🌗</button>
 </nav>
+<div class="mobile-menu-backdrop" onclick="closeMobileMenu()" aria-hidden="true"></div>
+<aside class="mobile-sidebar" id="mobile-sidebar" aria-label="Menu chính" aria-hidden="true">
+  <div class="mobile-sidebar-header">
+    <span>Điều hướng</span>
+    <button class="btn sm gh" type="button" onclick="closeMobileMenu()" aria-label="Đóng menu">✕</button>
+  </div>
+  <a data-g="home" onclick="go('home')">🏠 Trang chủ</a>
+  <a data-g="setup" onclick="go('setup')">📖 Ôn tập</a>
+  <a data-g="lib" onclick="go('lib')">📚 Thư viện</a>
+</aside>
 
 <!-- SCREEN 1: HOME -->
 <section id="s-home" class="scr">
@@ -1143,8 +1212,9 @@ function stopBackgroundMusic() {
 document.addEventListener('pointerdown', () => {
   if (soundEnabled) startBackgroundMusic();
 });
-document.addEventListener('keydown', () => {
+document.addEventListener('keydown', event => {
   if (soundEnabled) startBackgroundMusic();
+  if (event.key === 'Escape') closeMobileMenu();
 });
 
 let lastCardHoverSoundAt = 0;
@@ -1250,7 +1320,7 @@ async function loadSetsFromSupabase() {
         status: row.status || 'draft',
         qs: Array.isArray(row.qs) ? row.qs : []
       }));
-      return rows.length > 0;
+      return true;
     }
   } catch (e) {
     console.warn('Supabase load failed, fallback localStorage:', e);
@@ -1321,12 +1391,12 @@ async function syncSetsToSupabase() {
   }
 }
 
-(async function initPersistedData() {
+async function initPersistedData() {
   const fromSupabase = await loadSetsFromSupabase();
   if (!fromSupabase) {
     try { const x = JSON.parse(localStorage.vq_cartoon); if (Array.isArray(x) && x.length) sets = x; } catch (e) {}
   }
-})();
+}
 const save = () => { 
   try { localStorage.vq_cartoon = JSON.stringify(sets); } catch (e) {} 
   syncSetsToSupabase();
@@ -1336,6 +1406,7 @@ let tt, T, G, CS, EQ, ET = 'mc', IMG;
 let feedbackTimeout, feedbackCountdown;
 const selectedSetIds = new Set();
 let bulkDeleteMode = false;
+let currentScreen = 'home';
 const R = {};
 
 function toggleTheme() {
@@ -1371,6 +1442,31 @@ function toggleSoundButtonState() {
   button.setAttribute('aria-pressed', String(soundEnabled));
 }
 
+function toggleMobileMenu() {
+  if (document.body.classList.contains('mobile-menu-open')) {
+    closeMobileMenu();
+    return;
+  }
+  document.body.classList.add('mobile-menu-open');
+  $('.mobile-menu-toggle').setAttribute('aria-expanded', 'true');
+  $('.mobile-menu-toggle').setAttribute('aria-label', 'Đóng menu');
+  $('.mobile-sidebar').setAttribute('aria-hidden', 'false');
+  $('.mobile-sidebar').inert = false;
+  $('.mobile-sidebar a').focus();
+}
+
+function closeMobileMenu() {
+  const wasOpen = document.body.classList.contains('mobile-menu-open');
+  document.body.classList.remove('mobile-menu-open');
+  const toggle = $('.mobile-menu-toggle');
+  const sidebar = $('.mobile-sidebar');
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.setAttribute('aria-label', 'Mở menu');
+  sidebar.setAttribute('aria-hidden', 'true');
+  sidebar.inert = true;
+  if (wasOpen) toggle.focus();
+}
+
 function toast(m, k) {
   const t = $('#toast');
   t.textContent = m;
@@ -1388,8 +1484,17 @@ function ask(m, f) {
 function go(n, p) {
   playSound('pop');
   const sc = n == 'edit' ? 'lib' : n;
+  currentScreen = sc;
+  if (['home', 'lib', 'setup'].includes(sc)) {
+    try {
+      sessionStorage.setItem('vq_current_screen', sc);
+    } catch (error) {
+      console.warn('Could not save current screen:', error);
+    }
+  }
+  closeMobileMenu();
   document.querySelectorAll('.scr').forEach(s => s.classList.toggle('on', s.id == 's-' + sc));
-  document.querySelectorAll('nav a').forEach(a => a.classList.toggle('on', a.dataset.g == sc));
+  document.querySelectorAll('nav a, .mobile-sidebar a').forEach(a => a.classList.toggle('on', a.dataset.g == sc));
   clearInterval(T);
   clearTimeout(feedbackTimeout);
   clearInterval(feedbackCountdown);
@@ -2109,7 +2214,17 @@ async function end() {
 
 function replay() { go('setup', G.s.id); }
 
-R.home(); go('home');
+let initialScreen = 'home';
+try {
+  const savedScreen = sessionStorage.getItem('vq_current_screen');
+  if (['home', 'lib', 'setup'].includes(savedScreen)) initialScreen = savedScreen;
+} catch (error) {
+  console.warn('Could not restore current screen:', error);
+}
+go(initialScreen);
+initPersistedData().then(() => {
+  if (currentScreen === 'lib') R.lib();
+});
 </script>
 </body>
 </html>
