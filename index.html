@@ -973,11 +973,27 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
     <label for="ai-topic">Chủ đề / bài học</label>
     <input id="ai-topic" type="text" maxlength="500" required
       placeholder="Ví dụ: Truyện ngắn Vợ nhặt - Ngữ văn 12">
+    <label for="ai-question-count" style="margin-top:14px;">Số câu hỏi muốn tạo</label>
+    <select id="ai-question-count">
+      <option value="5">5 câu</option>
+      <option value="10">10 câu</option>
+      <option value="15">15 câu</option>
+      <option value="20">20 câu</option>
+    </select>
+    <fieldset id="ai-type-options" style="margin-top:14px; padding:12px; border:2px solid var(--stroke); border-radius:14px;">
+      <legend style="padding:0 6px; font-weight:700;">Dạng câu hỏi (chọn một hoặc nhiều)</legend>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <label><input type="checkbox" name="ai-question-type" value="mc" checked style="width:auto;"> Trắc nghiệm</label>
+        <label><input type="checkbox" name="ai-question-type" value="short" checked style="width:auto;"> Trả lời ngắn</label>
+        <label><input type="checkbox" name="ai-question-type" value="fill" checked style="width:auto;"> Điền từ</label>
+        <label><input type="checkbox" name="ai-question-type" value="tf" checked style="width:auto;"> Đúng / Sai</label>
+      </div>
+    </fieldset>
     <label for="ai-source" style="margin-top:14px;">Nội dung văn bản nguồn</label>
     <textarea id="ai-source" maxlength="20000" required
       placeholder="Dán đoạn văn bản hoặc nội dung bài học để Gemini tạo câu hỏi dựa trên tài liệu này..."
       style="min-height:220px;"></textarea>
-    <p class="mut" style="font-size:13px;">Tối đa 20.000 ký tự. Gemini sẽ tạo 4–8 câu hỏi trắc nghiệm dựa trên nội dung bạn cung cấp.</p>
+    <p class="mut" style="font-size:13px;">Tối đa 20.000 ký tự. Gemini sẽ chia đều các dạng đã chọn và tạo đúng số câu yêu cầu.</p>
     <div id="ai-loading" role="status" aria-live="polite" aria-atomic="true" hidden>
       <span class="ai-spinner" aria-hidden="true"></span>
       <div class="ai-loading-copy">
@@ -1148,7 +1164,6 @@ async function syncSetsToSupabase() {
   try {
     const rows = sets.map(s => ({
       id: String(s.id),
-      emo: s.emo || '📖',
       title: s.title,
       topic: s.topic || '',
       status: s.status || 'draft',
@@ -1392,7 +1407,14 @@ async function submitAiSet(event) {
   if ($('#ai-dialog').dataset.loading === 'true') return;
   const topic = $('#ai-topic').value.trim();
   const sourceText = $('#ai-source').value.trim();
+  const questionCount = Number($('#ai-question-count').value);
+  const questionTypes = [...document.querySelectorAll('input[name="ai-question-type"]:checked')]
+    .map(input => input.value);
   if (!topic || !sourceText) return toast('Vui lòng nhập cả chủ đề và nội dung văn bản.', 'bad');
+  if (![5, 10, 15, 20].includes(questionCount)) {
+    return toast('Vui lòng chọn 5, 10, 15 hoặc 20 câu hỏi.', 'bad');
+  }
+  if (!questionTypes.length) return toast('Vui lòng chọn ít nhất một dạng câu hỏi.', 'bad');
 
   let loadingMessageTimer;
   setAiLoading(true, 'Đang gửi văn bản đến Gemini...');
@@ -1408,7 +1430,7 @@ async function submitAiSet(event) {
         'apikey': appConfig.supabase.anonKey,
         'Authorization': `Bearer ${appConfig.supabase.anonKey}`,
       },
-      body: JSON.stringify({ topic, sourceText })
+      body: JSON.stringify({ topic, sourceText, questionCount, questionTypes })
     });
     clearTimeout(loadingMessageTimer);
     setAiLoading(true, 'AI đã phản hồi, đang kiểm tra câu hỏi...');
@@ -1426,7 +1448,15 @@ async function submitAiSet(event) {
       throw new Error(data.error || data.message || `Yêu cầu Gemini thất bại (${res.status})`);
     }
     const qs = Array.isArray(data.qs) ? data.qs : [];
-    if (qs.length < 4 || qs.length > 8) throw new Error('Gemini không trả về từ 4 đến 8 câu hỏi hợp lệ');
+    const validQuestion = (question, index) => {
+      if (!question || question.type !== questionTypes[index % questionTypes.length] || typeof question.c !== 'string' || !question.c.trim()) return false;
+      if (question.type === 'mc') return Array.isArray(question.o) && question.o.length === 4 && question.o.every(option => typeof option === 'string' && option.trim()) && Number.isInteger(question.a) && question.a >= 0 && question.a < 4;
+      if (question.type === 'tf') return Number.isInteger(question.a) && (question.a === 0 || question.a === 1);
+      return Array.isArray(question.acc) && question.acc.length > 0 && question.acc.every(answer => typeof answer === 'string' && answer.trim());
+    };
+    if (qs.length !== questionCount || !qs.every(validQuestion)) {
+      throw new Error(`Gemini chưa tạo đủ ${questionCount} câu hỏi đúng các dạng bạn đã chọn. Vui lòng thử lại hoặc bổ sung văn bản nguồn.`);
+    }
 
     const set = {
       id: uid(),
