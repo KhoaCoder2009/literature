@@ -517,6 +517,14 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
   max-height: calc(100vh - 32px);
   overflow-y: auto;
 }
+#feedback-dialog {
+  width: min(640px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+}
+#feedback-dialog .fb { margin: 0; }
+#feedback-dialog .feedback-countdown { margin: 12px 0 0; font-size: 13px; }
 
 @media(max-width: 560px) {
   .mt { grid-template-columns: 1fr; }
@@ -702,6 +710,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
   <div class="brand-wrap" onclick="go('home')" aria-label="Về Trang chủ">
     <img class="brand-logo" src="./assets/logo-nguvan.png" alt="Logo Ngữ Văn">
   </div>
+  <button class="btn sm gh" id="sound-toggle" type="button" onclick="toggleSound()" aria-pressed="true" title="Tắt âm thanh">🔊</button>
   <button class="btn sm gh" onclick="toggleTheme()">🌗</button>
 </nav>
 
@@ -881,10 +890,12 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
     <!-- QUESTION CARD -->
     <div class="card" id="q"></div>
     
-    <!-- FEEDBACK CARD -->
-    <div id="fb"></div>
   </div>
 </section>
+
+<dialog id="feedback-dialog" aria-live="polite">
+  <div id="fb"></div>
+</dialog>
 
 <!-- SCREEN 5: RESULTS -->
 <section id="s-res" class="scr">
@@ -970,8 +981,19 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
 /* WEB AUDIO SYNTHESIZER FOR CARTOON SOUND EFFECTS */
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let audioCtx;
+let musicGain;
+let musicTimer;
+let musicNoteIndex = 0;
+const musicNotes = [523.25, 659.25, 783.99, 659.25, 587.33, 698.46, 880, 698.46, 523.25, 659.25, 783.99, 1046.5, 880, 783.99, 659.25, 523.25];
+let soundEnabled = true;
+try {
+  soundEnabled = localStorage.getItem('vq_sound_enabled') !== 'false';
+} catch (error) {
+  console.warn('Could not load sound preference:', error);
+}
 
 function playSound(type) {
+  if (!soundEnabled || !AudioCtx) return;
   try {
     if (!audioCtx) audioCtx = new AudioCtx();
     if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -1032,6 +1054,75 @@ function playSound(type) {
   } catch(e) {}
 }
 
+function startBackgroundMusic() {
+  if (!soundEnabled || !AudioCtx) return;
+  try {
+    if (!audioCtx) audioCtx = new AudioCtx();
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume().catch(error => console.warn('Could not start background music:', error));
+    }
+    if (musicTimer) return;
+
+    musicGain = audioCtx.createGain();
+    musicGain.gain.setValueAtTime(0.55, audioCtx.currentTime);
+    musicGain.connect(audioCtx.destination);
+    musicTimer = setInterval(() => {
+      if (!soundEnabled || !audioCtx || !musicGain) return;
+      const now = audioCtx.currentTime;
+      const note = audioCtx.createOscillator();
+      const volume = audioCtx.createGain();
+      note.type = 'triangle';
+      note.frequency.setValueAtTime(musicNotes[musicNoteIndex], now);
+      volume.gain.setValueAtTime(0.001, now);
+      volume.gain.linearRampToValueAtTime(0.045, now + 0.025);
+      volume.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+      note.connect(volume);
+      volume.connect(musicGain);
+      note.start(now);
+      note.stop(now + 0.3);
+
+      if (musicNoteIndex % 4 === 0) {
+        const bass = audioCtx.createOscillator();
+        const bassVolume = audioCtx.createGain();
+        bass.type = 'sine';
+        bass.frequency.setValueAtTime([130.81, 146.83, 110, 130.81][Math.floor(musicNoteIndex / 4)], now);
+        bassVolume.gain.setValueAtTime(0.001, now);
+        bassVolume.gain.linearRampToValueAtTime(0.025, now + 0.03);
+        bassVolume.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+        bass.connect(bassVolume);
+        bassVolume.connect(musicGain);
+        bass.start(now);
+        bass.stop(now + 0.28);
+      }
+      musicNoteIndex = (musicNoteIndex + 1) % musicNotes.length;
+    }, 320);
+  } catch (error) {
+    console.warn('Could not start background music:', error);
+    stopBackgroundMusic();
+  }
+}
+
+function stopBackgroundMusic() {
+  clearInterval(musicTimer);
+  musicTimer = null;
+  musicNoteIndex = 0;
+  if (!musicGain || !audioCtx) return;
+  const gain = musicGain;
+  musicGain = null;
+  const now = audioCtx.currentTime;
+  gain.gain.cancelScheduledValues(now);
+  gain.gain.setValueAtTime(gain.gain.value, now);
+  gain.gain.linearRampToValueAtTime(0, now + 0.12);
+  setTimeout(() => gain.disconnect(), 150);
+}
+
+document.addEventListener('pointerdown', () => {
+  if (soundEnabled) startBackgroundMusic();
+});
+document.addEventListener('keydown', () => {
+  if (soundEnabled) startBackgroundMusic();
+});
+
 let lastCardHoverSoundAt = 0;
 document.addEventListener('pointerover', event => {
   if (event.pointerType !== 'mouse') return;
@@ -1041,6 +1132,20 @@ document.addEventListener('pointerover', event => {
   if (now - lastCardHoverSoundAt < 120) return;
   lastCardHoverSoundAt = now;
   playSound('hover');
+});
+
+document.addEventListener('click', event => {
+  const control = event.target.closest?.('button, nav a');
+  if (!control || control.closest('#q')) return;
+  const action = control.getAttribute('onclick') || '';
+  if (
+    control.matches('nav a') ||
+    action.includes('go(') ||
+    action.includes('toggleTheme(') ||
+    action.includes('toggleSound(') ||
+    action.includes('advanceAfterFeedback(')
+  ) return;
+  playSound('pop');
 });
 
 /* CARTOON CLOUD BACKGROUND CANVAS */
@@ -1171,6 +1276,7 @@ const save = () => {
 };
 
 let tt, T, G, CS, EQ, ET = 'mc', IMG;
+let feedbackTimeout, feedbackCountdown;
 const selectedSetIds = new Set();
 let bulkDeleteMode = false;
 const R = {};
@@ -1180,6 +1286,32 @@ function toggleTheme() {
   const next = current === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
   playSound('pop');
+}
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  toggleSoundButtonState();
+  try {
+    localStorage.setItem('vq_sound_enabled', String(soundEnabled));
+  } catch (error) {
+    console.warn('Could not save sound preference:', error);
+  }
+  if (soundEnabled) {
+    playSound('pop');
+    startBackgroundMusic();
+  } else {
+    stopBackgroundMusic();
+  }
+}
+
+toggleSoundButtonState();
+
+function toggleSoundButtonState() {
+  const button = $('#sound-toggle');
+  button.textContent = soundEnabled ? '🔊' : '🔇';
+  button.title = soundEnabled ? 'Tắt âm thanh và nhạc nền' : 'Bật âm thanh và nhạc nền';
+  button.setAttribute('aria-label', soundEnabled ? 'Tắt âm thanh và nhạc nền' : 'Bật âm thanh và nhạc nền');
+  button.setAttribute('aria-pressed', String(soundEnabled));
 }
 
 function toast(m, k) {
@@ -1202,6 +1334,9 @@ function go(n, p) {
   document.querySelectorAll('.scr').forEach(s => s.classList.toggle('on', s.id == 's-' + sc));
   document.querySelectorAll('nav a').forEach(a => a.classList.toggle('on', a.dataset.g == sc));
   clearInterval(T);
+  clearTimeout(feedbackTimeout);
+  clearInterval(feedbackCountdown);
+  if ($('#feedback-dialog').open) $('#feedback-dialog').close();
   R[n] && R[n](p);
   scrollTo(0, 0);
 }
@@ -1698,8 +1833,28 @@ function hud() {
 
 function tick() { $('#ht').textContent = '⏱ ' + G.tl + 's'; }
 
+function advanceAfterFeedback() {
+  clearTimeout(feedbackTimeout);
+  clearInterval(feedbackCountdown);
+  if ($('#feedback-dialog').open) $('#feedback-dialog').close();
+  if (!G) return;
+  G.i++;
+  nextQ();
+}
+
+$('#feedback-dialog').addEventListener('keydown', event => {
+  if (event.key !== 'Enter' || event.repeat) return;
+  event.preventDefault();
+  advanceAfterFeedback();
+});
+
+$('#feedback-dialog').addEventListener('cancel', event => event.preventDefault());
+
 function nextQ() {
   if (G.i >= G.qs.length || (G.m == 'boss' && G.hp <= 0)) return end();
+  clearTimeout(feedbackTimeout);
+  clearInterval(feedbackCountdown);
+  if ($('#feedback-dialog').open) $('#feedback-dialog').close();
   const q = G.qs[G.i]; G.lock = 0; $('#fb').innerHTML = ''; hud();
   
   let h = `<span class="tag">${T_[q.type]}</span> <span class="tag">${q.d || 'Dễ'}</span>
@@ -1778,8 +1933,19 @@ function fin(r, u) {
       <b>${{ ok: '🎉 Tuyệt vời! Chính xác +' + pts + ' điểm', bad: '😅 Chưa chính xác (+' + pts + ' điểm)', no: '⏰ Hết giờ mất rồi!' }[st]}</b>
       <p style="margin:8px 0;">Đáp án đúng: <b>${esc(ans)}</b></p>
       <p class="mut">${esc(q.e || 'Không có giải thích bổ sung.')}</p>
-      <button class="btn au" style="margin-top:12px;" onclick="G.i++;nextQ()">${last ? '📊 Xem kết quả' : 'Câu tiếp theo ➔'}</button>
+      <button class="btn au" style="margin-top:12px;" onclick="advanceAfterFeedback()">${last ? '📊 Xem kết quả' : 'Câu tiếp theo ➔'}</button>
+      <p class="mut feedback-countdown">Nhấn Enter để tiếp tục · Tự chuyển sau <b id="feedback-seconds">20</b> giây</p>
     </div>`;
+  $('#feedback-dialog').showModal();
+  $('#feedback-dialog button').focus();
+  let secondsLeft = 20;
+  feedbackCountdown = setInterval(() => {
+    secondsLeft--;
+    const seconds = $('#feedback-seconds');
+    if (seconds) seconds.textContent = secondsLeft;
+    if (secondsLeft <= 0) advanceAfterFeedback();
+  }, 1000);
+  feedbackTimeout = setTimeout(advanceAfterFeedback, 20000);
   
   hud();
   if (G.m == 'boss') {
