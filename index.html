@@ -1011,6 +1011,14 @@ function playSound(type) {
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
       osc.start(now);
       osc.stop(now + 0.06);
+    } else if (type === 'hover') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(660, now);
+      osc.frequency.exponentialRampToValueAtTime(880, now + 0.04);
+      gain.gain.setValueAtTime(0.07, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+      osc.start(now);
+      osc.stop(now + 0.05);
     } else if (type === 'boss') {
       // Impact Hit
       osc.type = 'square';
@@ -1023,6 +1031,17 @@ function playSound(type) {
     }
   } catch(e) {}
 }
+
+let lastCardHoverSoundAt = 0;
+document.addEventListener('pointerover', event => {
+  if (event.pointerType !== 'mouse') return;
+  const card = event.target.closest?.('.card');
+  if (!card || card.contains(event.relatedTarget)) return;
+  const now = performance.now();
+  if (now - lastCardHoverSoundAt < 120) return;
+  lastCardHoverSoundAt = now;
+  playSound('hover');
+});
 
 /* CARTOON CLOUD BACKGROUND CANVAS */
 const canvas = document.getElementById('bg-canvas');
