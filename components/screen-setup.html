@@ -1,21 +1,80 @@
-<!-- SCREEN 3: SETUP GAME -->
+<!-- SCREEN 3: SETUP & LESSONS (BÀI HỌC) -->
 <section id="s-setup" class="scr">
   <div class="wrap">
-    <h1>🚀 Chuẩn bị ôn tập</h1>
-    <div class="card">
-      <div class="g2">
-        <label>Chọn bộ câu hỏi<select id="ss" onchange="updateSetupQuestionCount()"></select></label>
-        <label>Biệt danh người chơi<input id="nick" maxlength="20" placeholder="Tên của bạn..."></label>
-        <label>Lớp (không bắt buộc)<input id="class-name" maxlength="30" placeholder="Ví dụ: 11A1"></label>
-        <label>Số lượng câu hỏi
-          <input id="cnt-display" type="text" readonly value="0 câu hỏi (Tự động theo bộ đề)" style="background: rgba(148, 163, 184, 0.12); font-weight: 800; cursor: default;">
-        </label>
-      </div>
-
-      <div style="margin-top:24px;">
-        <button class="btn au" style="width:100%; font-size:18px;" onclick="begin()">✍️ Bắt đầu trả lời câu hỏi</button>
-        <p class="mut" style="text-align:center;margin-top:12px;font-size:13px;">Nhấn <kbd class="kbd">1</kbd>–<kbd class="kbd">4</kbd> để chọn đáp án · <kbd class="kbd">Enter</kbd> để tiếp tục · <kbd class="kbd">Esc</kbd> để đóng menu</p>
+    <!-- Hero Banner -->
+    <div class="cartoon-lib-banner setup-hero-banner">
+      <div class="lib-banner-content">
+        <h1 style="font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;">Phòng bài học trắc nghiệm</h1>
+        <p class="mut" style="margin:0; font-size:14.5px;">Chọn bộ đề bài học bên dưới để bắt đầu luyện tập và thử thách kiến thức</p>
       </div>
     </div>
+
+    <!-- Search & Topic Filter Card -->
+    <div class="lib-search-filter-card" style="margin: 0 0 16px;">
+      <div class="lib-search-bar-row">
+        <div class="lib-search-input-box">
+          <span class="lib-search-lead-icon">🔍</span>
+          <input id="setup-search" type="text" placeholder="Tìm kiếm bộ đề bài học theo tên, tác phẩm, chủ đề…" oninput="onSetupSearchInput()" autocomplete="off">
+        </div>
+      </div>
+      <div class="topic-filter-row" style="margin-top:10px;">
+        <div class="topic-filter-meta">
+          <span class="topic-filter-title">Lọc theo chủ đề bài học:</span>
+          <span id="setup-topic-summary" class="topic-filter-summary"></span>
+        </div>
+        <div id="setup-topic-chips" class="topic-chips-bar" role="tablist" aria-label="Bộ lọc chủ đề bài học"></div>
+      </div>
+    </div>
+
+    <!-- Hidden compatibility elements for existing logic -->
+    <input type="hidden" id="nick" value="">
+    <input type="hidden" id="class-name" value="">
+    <select id="ss" style="display:none;" onchange="updateSetupQuestionCount()"></select>
+    <input id="cnt-display" type="hidden" value="0">
+
+    <!-- Grid of sets matching the user image -->
+    <div id="setup-sets-grid" class="setup-sets-grid"></div>
+
+    <!-- MODAL: HỎI TÊN VÀ LỚP KHI NHẤP VÀO BỘ CÂU HỎI -->
+    <dialog id="start-quiz-dialog" class="writing-modal setup-start-modal">
+      <div class="writing-modal-header">
+        <div class="writing-modal-title">
+          <h3 id="start-dialog-heading">Thông tin người học</h3>
+        </div>
+        <button class="btn sm gh" type="button" onclick="closeStartQuizModal()" aria-label="Đóng">✕</button>
+      </div>
+      
+      <form id="start-quiz-form" onsubmit="handleStartQuizSubmit(event)" class="writing-modal-form-wrap">
+        <input type="hidden" id="start-quiz-set-id">
+        
+        <div class="writing-modal-body" style="padding: 20px 24px;">
+          <!-- Thông tin bộ đề đang chọn -->
+          <div class="setup-modal-set-preview" id="start-modal-preview">
+            <span class="setup-modal-pill" id="start-modal-set-badge">10 câu</span>
+            <h4 id="start-modal-set-title" style="margin: 6px 0 0; font-size: 18px; font-weight: 800; line-height: 1.35;"></h4>
+            <span id="start-modal-set-topic" class="mut" style="font-size: 13px; font-weight: 600; display: block; margin-top: 4px;"></span>
+          </div>
+
+          <div style="margin-top: 18px;">
+            <label for="start-nick" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 14px;">
+              Tên học sinh / Biệt danh <span style="color:var(--red)">*</span>
+            </label>
+            <input type="text" id="start-nick" required maxlength="20" placeholder="Nhập tên của bạn..." style="font-size: 15px; padding: 11px 14px; width: 100%;">
+          </div>
+
+          <div style="margin-top: 14px;">
+            <label for="start-class-name" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 14px;">
+              Lớp (không bắt buộc)
+            </label>
+            <input type="text" id="start-class-name" maxlength="30" placeholder="Ví dụ: 11A1, 10A2..." style="font-size: 15px; padding: 11px 14px; width: 100%;">
+          </div>
+        </div>
+
+        <div class="writing-modal-footer">
+          <button type="button" class="btn gh" onclick="closeStartQuizModal()">Hủy</button>
+          <button type="submit" class="btn au" style="font-weight: 800;">▶ Bắt đầu làm bài</button>
+        </div>
+      </form>
+    </dialog>
   </div>
 </section>

@@ -47,7 +47,7 @@ function go(n, p) {
   if (typeof playSound === 'function') playSound('pop');
   const sc = n == 'edit' ? 'lib' : n;
   currentScreen = sc;
-  if (['home', 'lib', 'setup'].includes(sc)) {
+  if (['home', 'lib', 'setup', 'writing', 'reading'].includes(sc)) {
     try {
       sessionStorage.setItem('vq_current_screen', sc);
     } catch (error) {

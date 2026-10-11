@@ -70,7 +70,7 @@ function toggleMobileMenu() {
   }
   document.body.classList.add('mobile-menu-open');
   $('.mobile-menu-toggle')?.setAttribute('aria-expanded', 'true');
-  $('.mobile-menu-toggle')?.setAttribute('aria-label', 'Đóng menu');
+  $('.mobile-menu-toggle')?.setAttribute('aria-label', 'Đóng danh mục');
   const sidebar = $('.mobile-sidebar');
   if (sidebar) {
     sidebar.setAttribute('aria-hidden', 'false');
@@ -86,7 +86,7 @@ function closeMobileMenu() {
   const sidebar = $('.mobile-sidebar');
   if (toggle) {
     toggle.setAttribute('aria-expanded', 'false');
-    toggle.setAttribute('aria-label', 'Mở menu');
+    toggle.setAttribute('aria-label', 'Mở danh mục');
     if (wasOpen) toggle.focus();
   }
   if (sidebar) {
@@ -135,7 +135,7 @@ if (backToTopBtn) {
 let initialScreen = 'home';
 try {
   const savedScreen = sessionStorage.getItem('vq_current_screen');
-  if (savedScreen && ['home', 'lib', 'setup'].includes(savedScreen)) {
+  if (savedScreen && ['home', 'lib', 'setup', 'writing', 'reading'].includes(savedScreen)) {
     initialScreen = savedScreen;
   }
 } catch (error) {
@@ -154,7 +154,12 @@ async function initPersistedData() {
   if (!fromSupabase) {
     try { const x = JSON.parse(localStorage.vq_cartoon); if (Array.isArray(x) && x.length) sets = x; } catch (e) {}
   }
-  sets = sets.filter(s => !String(s.id).startsWith('set_'));
+  sets = sets.filter(s => {
+    if (String(s.id).startsWith('set_')) return false;
+    const t = (String(s.title) + ' ' + String(s.topic) + ' ' + String(s.id)).toLowerCase();
+    if (t.includes('ielts') || t.includes('english') || t.includes('tiếng anh')) return false;
+    return true;
+  });
   save();
   if (typeof renderHomeSets === 'function') renderHomeSets();
 }
@@ -162,6 +167,9 @@ async function initPersistedData() {
 initPersistedData().then(() => {
   if (currentScreen === 'lib') R.lib();
   if (currentScreen === 'home') R.home();
+  if (currentScreen === 'setup' && typeof R.setup === 'function') R.setup();
+  if (currentScreen === 'writing' && typeof R.writing === 'function') R.writing();
+  if (currentScreen === 'reading' && typeof R.reading === 'function') R.reading();
 });
 
 // Clean up any legacy SGK theme attributes

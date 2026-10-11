@@ -2,6 +2,218 @@
    8. GAMEPLAY & STUDENT QUIZ ENGINE
    ========================================================================= */
 
+let currentSetupTopic = 'all';
+let setupSearchQuery = '';
+
+const SETUP_PALETTES = [
+  'linear-gradient(135deg, #f43f5e 0%, #e11d48 100%)', // 1. Red / Coral (Ngữ văn)
+  'linear-gradient(135deg, #fb923c 0%, #ea580c 100%)', // 2. Orange (Toán)
+  'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', // 3. Amber / Gold
+  'linear-gradient(135deg, #10b981 0%, #059669 100%)', // 4. Emerald / Dark Green
+  'linear-gradient(135deg, #84cc16 0%, #65a30d 100%)', // 5. Lime / Light Green
+  'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)', // 6. Teal / Olive
+  'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)', // 7. Navy / Dark Blue
+  'linear-gradient(135deg, #3b82f6 0%, #0284c7 100%)', // 8. Medium Blue
+  'linear-gradient(135deg, #06b6d4 0%, #0284c7 100%)'  // 9. Cyan / Light Blue
+];
+
+function onPlayerInfoChange() {
+  const nick = $('#nick')?.value.trim();
+  const className = $('#class-name')?.value.trim();
+  try {
+    if (nick) localStorage.setItem('vq_player_nick', nick);
+    if (className) localStorage.setItem('vq_player_class', className);
+  } catch (e) {}
+}
+
+function onSetupSearchInput() {
+  setupSearchQuery = ($('#setup-search')?.value || '').trim().toLowerCase();
+  renderSetupSetsGrid();
+}
+
+function setSetupTopicFilter(topic) {
+  currentSetupTopic = topic;
+  renderSetupSetsGrid();
+}
+
+function selectAndStartSetupQuiz(id) {
+  openStartQuizModal(id);
+}
+
+function openStartQuizModal(id) {
+  const s = sets.find(x => String(x.id) === String(id));
+  if (!s) return;
+
+  const setIdInput = $('#start-quiz-set-id');
+  if (setIdInput) setIdInput.value = s.id;
+
+  const titleEl = $('#start-modal-set-title');
+  if (titleEl) titleEl.textContent = s.title;
+
+  const badgeEl = $('#start-modal-set-badge');
+  if (badgeEl) badgeEl.textContent = (s.qs ? s.qs.length : 0) + ' câu hỏi';
+
+  const topicEl = $('#start-modal-set-topic');
+  if (topicEl) topicEl.textContent = s.topic ? 'Chủ đề: ' + s.topic : '';
+
+  // Pre-fill with last saved nickname / class
+  try {
+    const savedNick = localStorage.getItem('vq_player_nick') || '';
+    const savedClass = localStorage.getItem('vq_player_class') || '';
+    const nickInput = $('#start-nick');
+    const classInput = $('#start-class-name');
+    if (nickInput && savedNick) nickInput.value = savedNick;
+    if (classInput && savedClass) classInput.value = savedClass;
+  } catch (e) {}
+
+  const dlg = $('#start-quiz-dialog');
+  if (dlg) {
+    if (!dlg._hasBackdropListener) {
+      dlg._hasBackdropListener = true;
+      dlg.addEventListener('click', (e) => {
+        const rect = dlg.getBoundingClientRect();
+        const isInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height
+          && rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
+        if (!isInDialog) closeStartQuizModal();
+      });
+    }
+    dlg.showModal();
+    setTimeout(() => {
+      const input = $('#start-nick');
+      if (input) {
+        input.focus();
+        input.select();
+      }
+    }, 50);
+  }
+}
+
+function closeStartQuizModal() {
+  const dlg = $('#start-quiz-dialog');
+  if (dlg && dlg.open) dlg.close();
+}
+
+function handleStartQuizSubmit(e) {
+  if (e) e.preventDefault();
+  const id = $('#start-quiz-set-id')?.value;
+  const nick = ($('#start-nick')?.value || '').trim();
+  const className = ($('#start-class-name')?.value || '').trim();
+
+  if (!nick) {
+    return toast('Vui lòng nhập tên học sinh!', 'bad');
+  }
+
+  // Save to localStorage
+  try {
+    localStorage.setItem('vq_player_nick', nick);
+    if (className) localStorage.setItem('vq_player_class', className);
+    else localStorage.removeItem('vq_player_class');
+  } catch (err) {}
+
+  // Sync to hidden inputs
+  if ($('#nick')) $('#nick').value = nick;
+  if ($('#class-name')) $('#class-name').value = className;
+  if ($('#ss')) $('#ss').value = id;
+
+  updateSetupQuestionCount();
+  closeStartQuizModal();
+
+  // Launch quiz
+  begin();
+}
+
+function renderSetupSetsGrid(selectedId) {
+  const container = $('#setup-sets-grid');
+  if (!container) return;
+
+  const validSets = (sets || []).filter(s => !String(s.id).startsWith('set_'));
+
+  // 1. Render Topic Chips
+  const chipsContainer = $('#setup-topic-chips');
+  const summaryEl = $('#setup-topic-summary');
+  if (chipsContainer) {
+    const topicMap = new Map();
+    validSets.forEach(s => {
+      const top = (s.topic || 'Chưa phân loại').trim();
+      topicMap.set(top, (topicMap.get(top) || 0) + 1);
+    });
+
+    const isAll = currentSetupTopic === 'all';
+    let chipsHtml = `
+      <button class="topic-chip ${isAll ? 'active' : ''}" type="button" onclick="setSetupTopicFilter('all')">
+        Tất cả <span class="chip-count">(${validSets.length})</span>
+      </button>
+    `;
+
+    topicMap.forEach((count, top) => {
+      const isActive = currentSetupTopic === top;
+      chipsHtml += `
+        <button class="topic-chip ${isActive ? 'active' : ''}" type="button" onclick="setSetupTopicFilter('${esc(top)}')">
+          ${esc(top)} <span class="chip-count">(${count})</span>
+        </button>
+      `;
+    });
+
+    chipsContainer.innerHTML = chipsHtml;
+    if (summaryEl) {
+      summaryEl.textContent = isAll ? `(${validSets.length} bộ đề)` : `(Lọc theo "${currentSetupTopic}")`;
+    }
+  }
+
+  // 2. Filter Sets
+  const filteredSets = validSets.filter(s => {
+    if (currentSetupTopic !== 'all' && (s.topic || 'Chưa phân loại').trim() !== currentSetupTopic) {
+      return false;
+    }
+    if (setupSearchQuery) {
+      const t = (String(s.title) + ' ' + String(s.topic)).toLowerCase();
+      if (!t.includes(setupSearchQuery)) return false;
+    }
+    return true;
+  });
+
+  if (!filteredSets.length) {
+    container.innerHTML = `
+      <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+        <span style="font-size: 48px; display: block; margin-bottom: 12px;">📚</span>
+        <h3 style="margin: 0 0 8px;">Không tìm thấy bộ đề bài học phù hợp</h3>
+        <p class="mut" style="margin: 0;">Hãy thử tìm kiếm với từ khóa khác hoặc tạo thêm câu hỏi tại mục Thư viện.</p>
+      </div>
+    `;
+    return;
+  }
+
+  // 3. Render Cards matching the user's reference image
+  container.innerHTML = filteredSets.map((s, idx) => {
+    const bg = SETUP_PALETTES[idx % SETUP_PALETTES.length];
+    const qCount = Array.isArray(s.qs) ? s.qs.length : 0;
+    const isSelected = selectedId && String(s.id) === String(selectedId);
+
+    return `
+      <div class="setup-grid-card ${isSelected ? 'selected-card' : ''}" onclick="selectAndStartSetupQuiz('${esc(s.id)}')">
+        <div class="setup-card-banner" style="background: ${bg};">
+          <div class="setup-card-top-info">
+            <span class="setup-card-count-pill">${qCount} câu</span>
+          </div>
+          <h3 class="setup-card-title">${esc(s.title)}</h3>
+          <span class="setup-card-watermark">${s.emo || '📖'}</span>
+        </div>
+        <div class="setup-card-body">
+          <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); selectAndStartSetupQuiz('${esc(s.id)}')">
+            <span class="btn-setup-icon">▶</span>
+            <span>Vào bài học</span>
+          </button>
+          <div class="setup-card-meta">
+            <span class="setup-card-topic" title="${esc(s.topic || 'Chưa phân loại')}">
+              🏷️ ${esc(s.topic || 'Ngữ văn')}
+            </span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
 function updateSetupQuestionCount() {
   const s = sets.find(x => x.id == $('#ss')?.value);
   const cntDisplay = $('#cnt-display');
@@ -11,18 +223,28 @@ function updateSetupQuestionCount() {
 }
 
 R.setup = id => {
-  $('#ss').innerHTML = sets.filter(s => !String(s.id).startsWith('set_')).map(s => `<option value="${s.id}" ${s.id==id?'selected':''}>${esc(s.title)} (${s.qs.length} câu)</option>`).join('');
+  const validSets = sets.filter(s => !String(s.id).startsWith('set_'));
+  const ss = $('#ss');
+  if (ss) {
+    ss.innerHTML = validSets.map(s => `<option value="${s.id}" ${s.id == id ? 'selected' : ''}>${esc(s.title)} (${s.qs.length} câu)</option>`).join('');
+    if (id) ss.value = id;
+  }
   updateSetupQuestionCount();
   try {
     const savedNick = localStorage.getItem('vq_player_nick');
     const savedClass = localStorage.getItem('vq_player_class');
-    if (savedNick && !$('#nick').value) $('#nick').value = savedNick;
-    if (savedClass && !$('#class-name').value) $('#class-name').value = savedClass;
+    if (savedNick && $('#nick') && !$('#nick').value) $('#nick').value = savedNick;
+    if (savedClass && $('#class-name') && !$('#class-name').value) $('#class-name').value = savedClass;
   } catch (e) {}
+
+  renderSetupSetsGrid(id);
 };
 
 function begin() {
-  const s = sets.find(x => x.id == $('#ss').value), nm = $('#nick').value.trim();
+  onPlayerInfoChange();
+  const selectedId = $('#start-quiz-set-id')?.value || $('#ss')?.value;
+  const s = sets.find(x => String(x.id) === String(selectedId)) || sets.find(x => x.id == $('#ss')?.value);
+  const nm = ($('#nick')?.value || '').trim();
   if (!nm) return toast('Vui lòng nhập biệt danh!', 'bad');
   if (!s || !s.qs.length) return toast('Bộ câu hỏi này chưa có dữ liệu!', 'bad');
   if (s.qs.some(q => {
@@ -69,7 +291,7 @@ function hud() {
 function tick() {
   const timerEl = $('#ht');
   if (!timerEl) return;
-  timerEl.textContent = '⏱ ' + G.tl + 's';
+  timerEl.textContent = '⏱ ' + G.tl + ' giây';
   timerEl.classList.toggle('timer-urgent', G.tl <= Math.ceil(G.sec * 0.25));
   timerEl.classList.toggle('timer-warning', G.tl > Math.ceil(G.sec * 0.25) && G.tl <= Math.ceil(G.sec * 0.5));
 }
@@ -377,7 +599,7 @@ async function end() {
   $('#rs').innerHTML = [
     ['Tổng điểm', G.sc], ['Trả lời đúng', G.ok], ['Trả lời sai', G.bad],
     ['Bỏ qua', G.no], ['Độ chính xác', (n ? Math.round(G.ok / n * 100) : 0) + '%'],
-    ['Chuỗi Combo', G.best], ['Thời gian', dt + 's']
+    ['Chuỗi đúng liên tiếp', G.best], ['Thời gian', dt + ' giây']
   ].map(x => `<div class="card stat"><b>${x[1]}</b>${x[0]}</div>`).join('');
 
   $('#rv').innerHTML = G.log.map((l, idx) => `

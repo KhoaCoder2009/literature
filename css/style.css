@@ -1898,33 +1898,30 @@ label.card:has(input[type=radio]:checked) {
 .cartoon-lib-banner {
   background: linear-gradient(135deg, #fef3c7 0%, #dbeafe 50%, #fce7f3 100%);
   border: 3.5px solid var(--stroke);
-  border-radius: 26px;
-  padding: 28px 32px;
-  box-shadow: 0 8px 0 var(--stroke);
-  margin-bottom: 22px;
+  border-radius: 24px;
+  padding: 20px 26px;
+  box-shadow: 0 6px 0 var(--stroke);
+  margin-bottom: 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
 }
 [data-theme="dark"] .cartoon-lib-banner {
   background: linear-gradient(135deg, #1e293b 0%, #1e1b4b 100%);
 }
+.lib-banner-content h1,
 .lib-banner-content h2 {
-  font-size: clamp(22px, 3.5vw, 30px);
-  margin: 4px 0 0;
-  font-weight: 900;
+  font-size: clamp(20px, 3vw, 26px);
+  margin: 0 0 4px;
+  font-weight: 800;
+  color: var(--ink);
 }
 .lib-banner-content p {
   margin: 0;
-  font-size: 15px;
+  font-size: 14.5px;
   color: var(--mut);
   max-width: 600px;
-}
-.lib-banner-stickers {
-  font-size: 42px;
-  display: flex;
-  gap: 12px;
 }
 
 /* LIBRARY SEARCH & TOPIC TAG FILTER CARD */
@@ -2725,4 +2722,305 @@ body.projector-mode .hud-pill {
     align-items: center;
     text-align: center;
   }
+}
+
+/* =========================================================================
+   SETUP / PRACTICE ROOM COLORFUL CARDS (MATCHING REFERENCE UI)
+   ========================================================================= */
+
+.setup-hero-banner {
+  margin-bottom: 16px;
+}
+
+.setup-control-card {
+  padding: 16px 20px;
+  margin-bottom: 14px;
+}
+
+.setup-controls-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.setup-input-wrap {
+  flex: 1;
+  min-width: 180px;
+}
+
+.setup-input-wrap label {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+
+.setup-class-wrap {
+  flex: 0 0 160px;
+  min-width: 130px;
+}
+
+.setup-search-wrap {
+  flex: 1.5;
+  min-width: 220px;
+}
+
+.setup-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.setup-search-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 15px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.setup-search-box input#setup-search {
+  width: 100%;
+  padding-left: 40px;
+}
+
+.setup-topic-row {
+  margin: 12px 0 16px;
+}
+
+/* CARDS GRID */
+.setup-sets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 18px;
+  margin-top: 14px;
+  margin-bottom: 40px;
+}
+
+.setup-grid-card {
+  background: var(--bg-card);
+  border: 3.5px solid var(--stroke);
+  border-radius: 22px;
+  box-shadow: 0 7px 0 var(--stroke);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+  position: relative;
+}
+
+.setup-grid-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 0 var(--stroke);
+}
+
+.setup-grid-card.selected-card {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary), 0 8px 0 var(--stroke);
+}
+
+.setup-card-banner {
+  min-height: 112px;
+  padding: 14px 18px 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  user-select: none;
+}
+
+.setup-card-top-info {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.setup-card-count-pill {
+  font-size: 12px;
+  font-weight: 800;
+  color: #ffffff;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(4px);
+  letter-spacing: 0.02em;
+}
+
+.setup-card-title {
+  margin: 8px 0 0;
+  font-size: 19px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.35;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.setup-card-watermark {
+  position: absolute;
+  right: 12px;
+  bottom: -10px;
+  font-size: 68px;
+  opacity: 0.18;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.setup-card-body {
+  padding: 12px 18px;
+  background: var(--bg-card);
+  border-top: 2.5px solid var(--stroke);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.btn-setup-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 15px;
+  background: var(--bg-base);
+  border: 2px solid var(--stroke);
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.setup-grid-card:hover .btn-setup-action,
+.btn-setup-action:hover {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--stroke);
+  box-shadow: 0 3px 0 var(--stroke);
+  transform: translateY(-1px);
+}
+
+.btn-setup-icon {
+  font-size: 11px;
+}
+
+.setup-card-meta {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--mut);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@keyframes inputPopHighlight {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  50% { transform: scale(1.02); box-shadow: 0 0 0 5px rgba(239, 68, 68, 0.3); border-color: var(--red); }
+  100% { transform: scale(1); }
+}
+
+.input-highlight {
+  animation: inputPopHighlight 0.6s ease;
+  border-color: var(--red) !important;
+}
+
+/* SETUP START QUIZ MODAL */
+.setup-start-modal {
+  max-width: 480px;
+  width: calc(100% - 32px);
+  border-radius: 24px;
+}
+
+.setup-modal-set-preview {
+  padding: 14px 16px;
+  background: rgba(148, 163, 184, 0.08);
+  border: 2px dashed rgba(148, 163, 184, 0.35);
+  border-radius: 16px;
+}
+
+.setup-modal-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 800;
+  border-radius: 99px;
+  background: var(--yellow);
+  color: #1e293b;
+  border: 1.5px solid var(--stroke);
+}
+
+/* =========================================================================
+   LIBRARY 3-SECTION TABS (BÀI HỌC, ĐỌC HIỂU, VIẾT)
+   ========================================================================= */
+
+.lib-tabs-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 22px;
+  border-bottom: 3.5px solid var(--stroke);
+  padding-bottom: 14px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.lib-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 3px solid var(--stroke);
+  border-radius: 16px;
+  background: var(--bg-card);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--stroke);
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.lib-tab-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--stroke);
+}
+
+.lib-tab-btn.active {
+  background: var(--yellow);
+  color: #1e293b;
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--stroke);
+}
+
+.lib-tab-badge {
+  font-size: 12px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.lib-tab-pane {
+  display: none;
+}
+
+.lib-tab-pane.active {
+  display: block;
 }

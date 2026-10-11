@@ -1,0 +1,227 @@
+<!-- SCREEN: READING COMPREHENSION (ĐỌC HIỂU NGỮ VĂN) -->
+<section id="s-reading" class="scr">
+  <div class="wrap reading-wrap">
+
+    <!-- VIEW 1: DANH SÁCH BỘ ĐỀ ĐỌC HIỂU -->
+    <div id="reading-list-view">
+      <!-- Cartoon Hero Banner -->
+      <div class="reading-hero-banner">
+        <div class="reading-hero-content">
+          <h1 style="font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;">Luyện Đọc hiểu Ngữ Văn</h1>
+          <p class="reading-hero-desc">Rèn luyện kỹ năng đọc hiểu văn bản, nhận diện phương thức biểu đạt, biện pháp nghệ thuật và phát triển tư duy phản biện.</p>
+        </div>
+      </div>
+
+      <!-- Action & Filters Bar -->
+      <div class="reading-control-bar card">
+        <div class="reading-control-top">
+          <div class="reading-search-box">
+            <span class="reading-search-icon">🔍</span>
+            <input type="text" id="reading-search-input" placeholder="Tìm kiếm bộ đề đọc hiểu theo tên bài, tác giả hoặc thể loại..." oninput="onReadingSearchInput()">
+          </div>
+        </div>
+
+        <div class="reading-category-filter">
+          <div class="reading-filter-chips-wrap">
+            <span class="reading-filter-label">Chủ đề:</span>
+            <div class="reading-category-chips" id="reading-category-chips"></div>
+          </div>
+          <div class="reading-category-actions">
+            <button class="btn cy sm" type="button" onclick="promptAddNewReadingCategory()" title="Tạo thêm chủ đề mới">
+              + Thêm chủ đề
+            </button>
+            <button class="btn no sm" type="button" onclick="promptDeleteCurrentReadingCategory()" title="Xóa chủ đề">
+              ✕ Xóa chủ đề
+            </button>
+            <button class="btn au sm" type="button" onclick="openCreateReadingSetModal()" title="Tạo đề đọc hiểu mới">
+              + Thêm đề mới
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container danh sách các bộ đề đọc hiểu (sắp xếp theo chủ đề) -->
+      <div id="reading-sets-container"></div>
+    </div>
+
+    <!-- VIEW 2: PHÒNG ĐỌC HIỂU & LÀM BÀI (SPLIT SCREEN WORKSPACE) -->
+    <div id="reading-workspace-view" style="display:none;">
+      <!-- Workspace Navigation Bar -->
+      <div class="reading-workspace-nav">
+        <button class="btn gh sm" onclick="exitReadingWorkspace()">
+          <span>←</span> <span>Trở về danh sách đề</span>
+        </button>
+        <div class="reading-workspace-title-box">
+          <h3 id="reading-workspace-set-title">Đề bài đọc hiểu</h3>
+          <span id="reading-workspace-set-badge" class="tag cy">Thơ hiện đại</span>
+        </div>
+        <div class="reading-workspace-actions">
+          <button class="btn gh sm" onclick="toggleReadingAnswersGuide()" id="btn-toggle-reading-answers" title="Bật/Tắt hiển thị đáp án gợi ý">
+            <span>💡</span> <span>Xem gợi ý đáp án</span>
+          </button>
+          <button class="btn gh sm" onclick="resetCurrentReadingDraft()" title="Xóa toàn bộ câu trả lời để làm lại từ đầu">
+            <span>🔄</span> <span>Làm lại</span>
+          </button>
+          <button class="btn cy sm" onclick="openEditReadingSetModal(currentReadingSetId)" title="Chỉnh sửa đề bài này">
+            <span>✏️</span> <span>Sửa đề</span>
+          </button>
+          <button class="btn no sm" onclick="deleteCurrentOpenedReadingSet()" title="Xóa đề này khỏi danh sách">
+            <span>🗑️</span> <span>Xóa đề</span>
+          </button>
+          <button class="btn au sm" onclick="submitReadingAnswers()" title="Nộp bài và xem đánh giá chi tiết">
+            <span>✅</span> <span>Nộp bài làm</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Split Layout Container -->
+      <div class="reading-split-container" id="reading-split-container">
+        <!-- Cột trái: Văn bản / Ngữ liệu đọc hiểu -->
+        <div class="reading-passage-panel card">
+          <div class="reading-panel-header">
+            <div class="reading-panel-title">
+              <span class="reading-panel-icon">📜</span>
+              <h4>Văn bản / Ngữ liệu đọc hiểu</h4>
+            </div>
+            <div class="reading-text-tools">
+              <button class="btn gh sm btn-icon-only" type="button" onclick="changePassageFontSize(-1)" title="Giảm cỡ chữ">A-</button>
+              <button class="btn gh sm btn-icon-only" type="button" onclick="changePassageFontSize(1)" title="Tăng cỡ chữ">A+</button>
+            </div>
+          </div>
+          
+          <div class="reading-passage-content-wrap" id="reading-passage-scroll">
+            <div class="reading-passage-meta" id="reading-passage-meta">
+              <span class="reading-meta-tag" id="reading-passage-genre"></span>
+              <span class="reading-meta-author" id="reading-passage-author"></span>
+            </div>
+            <article class="reading-passage-body" id="reading-passage-text">
+              <!-- Nội dung văn bản đọc hiểu -->
+            </article>
+            <div class="reading-passage-source" id="reading-passage-source">
+              <!-- Nguồn trích dẫn -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Cột phải: Hệ thống câu hỏi & Trả lời -->
+        <div class="reading-questions-panel card">
+          <div class="reading-panel-header">
+            <div class="reading-panel-title">
+              <span class="reading-panel-icon">✍️</span>
+              <h4>Hệ thống câu hỏi (<span id="reading-q-count">0</span> câu)</h4>
+            </div>
+            <span class="reading-save-status" id="reading-save-status">💾 Tự động lưu</span>
+          </div>
+
+          <div class="reading-questions-list" id="reading-questions-list">
+            <!-- Danh sách câu hỏi render bởi JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: TẠO / SỬA ĐỀ ĐỌC HIỂU -->
+    <dialog id="reading-edit-modal" class="writing-modal reading-modal">
+      <div class="writing-modal-header">
+        <div class="writing-modal-title">
+          <h3 id="reading-modal-title">Thêm bộ đề đọc hiểu mới</h3>
+        </div>
+        <button class="btn sm gh" type="button" onclick="closeReadingEditModal()" aria-label="Đóng">✕</button>
+      </div>
+
+      <form id="reading-edit-form" onsubmit="handleReadingFormSubmit(event)" class="writing-modal-form-wrap">
+        <input type="hidden" id="reading-form-id">
+
+        <div class="writing-modal-body">
+          <!-- Hàng 1: Tên đề bài & Chủ đề -->
+          <div class="g2" style="margin-bottom:14px;">
+            <div>
+              <label for="reading-form-title" style="font-weight:700; display:block; margin-bottom:5px;">
+                Tên đề bài / Tác phẩm <span style="color:var(--red)">*</span>
+              </label>
+              <input type="text" id="reading-form-title" required placeholder="Ví dụ: Đất Nước, Bếp lửa, Bức thư gửi con..." style="width:100%;">
+            </div>
+            <div>
+              <label for="reading-form-category" style="font-weight:700; display:block; margin-bottom:5px;">
+                Chủ đề / Dạng bài <span style="color:var(--red)">*</span>
+              </label>
+              <select id="reading-form-category" required style="width:100%;"></select>
+            </div>
+          </div>
+
+          <!-- Hàng 2: Tác giả & Thể loại -->
+          <div class="g2" style="margin-bottom:14px;">
+            <div>
+              <label for="reading-form-author" style="font-weight:700; display:block; margin-bottom:5px;">
+                Tác giả / Xuất xứ
+              </label>
+              <input type="text" id="reading-form-author" placeholder="Ví dụ: Nguyễn Khoa Điềm, Báo Tuổi Trẻ..." style="width:100%;">
+            </div>
+            <div>
+              <label for="reading-form-genre" style="font-weight:700; display:block; margin-bottom:5px;">
+                Thể loại văn bản
+              </label>
+              <input type="text" id="reading-form-genre" placeholder="Ví dụ: Thơ tự do, Truyện ngắn, Văn bản thông tin..." style="width:100%;">
+            </div>
+          </div>
+
+          <!-- Ngữ liệu đọc hiểu -->
+          <div style="margin-bottom:16px;">
+            <label for="reading-form-passage" style="font-weight:700; display:block; margin-bottom:5px;">
+              Văn bản / Ngữ liệu đọc hiểu <span style="color:var(--red)">*</span>
+            </label>
+            <textarea id="reading-form-passage" required rows="9" placeholder="Dán hoặc nhập toàn bộ đoạn trích / văn bản đọc hiểu vào đây..." style="width:100%; font-family:inherit; line-height:1.6;"></textarea>
+          </div>
+
+          <!-- Nguồn trích dẫn -->
+          <div style="margin-bottom:18px;">
+            <label for="reading-form-source" style="font-weight:700; display:block; margin-bottom:5px;">
+              Ghi chú nguồn trích dẫn
+            </label>
+            <input type="text" id="reading-form-source" placeholder="(Trích 'Tên tác phẩm', NXB Văn học, 2020, tr. 45)" style="width:100%;">
+          </div>
+
+          <!-- Danh sách câu hỏi đọc hiểu -->
+          <div class="reading-form-questions-section">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <h4 style="margin:0; font-size:16px; font-weight:800;">Hệ thống câu hỏi đọc hiểu</h4>
+              <button type="button" class="btn cy sm" onclick="addQuestionToReadingForm()">+ Thêm câu hỏi</button>
+            </div>
+            <div id="reading-form-questions-list"></div>
+          </div>
+        </div>
+
+        <div class="writing-modal-footer">
+          <button type="button" class="btn gh" onclick="closeReadingEditModal()">Hủy</button>
+          <button type="submit" class="btn au" style="font-weight:800;">💾 Lưu đề đọc hiểu</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- MODAL: KẾT QUẢ / ĐÁP ÁN THAM KHẢO KHI NỘP BÀI -->
+    <dialog id="reading-result-modal" class="writing-modal reading-modal">
+      <div class="writing-modal-header">
+        <div class="writing-modal-title">
+          <h3>Kết quả bài làm &amp; Đáp án tham khảo</h3>
+        </div>
+        <button class="btn sm gh" type="button" onclick="closeReadingResultModal()" aria-label="Đóng">✕</button>
+      </div>
+
+      <div class="writing-modal-body" style="padding:20px 24px;">
+        <div class="reading-result-hero">
+          <div style="font-size:36px; margin-bottom:6px;">🎉</div>
+          <h3 style="margin:0 0 6px; font-weight:800;">Đã hoàn thành bài đọc hiểu!</h3>
+          <p class="mut" style="margin:0; font-size:14px;">Dưới đây là phần so sánh giữa câu trả lời của bạn và đáp án/gợi ý chuẩn.</p>
+        </div>
+
+        <div id="reading-result-comparison-list" style="margin-top:20px;"></div>
+      </div>
+
+      <div class="writing-modal-footer">
+        <button type="button" class="btn gh" onclick="closeReadingResultModal()">Đóng</button>
+        <button type="button" class="btn au" onclick="copyReadingStudentAnswers()">📋 Sao chép bài làm</button>
+      </div>
+    </dialog>
+
+  </div>
+</section>

@@ -1,0 +1,260 @@
+<!-- SCREEN 5: WRITING PRACTICE (LUYỆN VIẾT) -->
+<section id="s-writing" class="scr">
+  <div class="wrap writing-wrap">
+
+    <!-- VIEW 1: DANH SÁCH BỘ ĐỀ LUYỆN VIẾT -->
+    <div id="writing-list-view">
+      <!-- Cartoon Hero Banner -->
+      <div class="writing-hero-banner">
+        <div class="writing-hero-content">
+          <h1 style="font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;">Luyện viết văn theo dàn ý</h1>
+          <p class="writing-hero-desc">Rèn luyện kỹ năng viết văn theo cấu trúc mở bài, thân bài, kết bài và các dạng đề chuẩn.</p>
+        </div>
+      </div>
+
+      <!-- Action & Filters Bar -->
+      <div class="writing-control-bar card">
+        <div class="writing-control-top">
+          <div class="writing-search-box" style="flex:1;">
+            <span class="writing-search-icon">🔍</span>
+            <input type="text" id="writing-search-input" placeholder="Tìm kiếm bộ đề theo tên, dạng đề hoặc chủ đề..." oninput="onWritingSearchInput()">
+          </div>
+        </div>
+
+        <div class="writing-category-filter">
+          <div class="writing-filter-chips-wrap">
+            <span class="writing-filter-label">Chủ đề:</span>
+            <div class="writing-category-chips" id="writing-category-chips"></div>
+          </div>
+          <div class="writing-category-actions">
+            <button class="btn cy sm" type="button" onclick="promptAddNewCategory()" title="Tạo thêm chủ đề mới">
+              + Thêm chủ đề
+            </button>
+            <button class="btn no sm" type="button" onclick="promptDeleteCurrentCategory()" title="Xóa chủ đề (có xác nhận)">
+              ✕ Xóa chủ đề
+            </button>
+            <button class="btn au sm" type="button" onclick="openCreateWritingSetModal()" title="Tạo bộ đề mới">
+              + Thêm bộ mới
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container danh sách các bộ đề (sắp xếp và gom nhóm theo chủ đề) -->
+      <div id="writing-sets-container"></div>
+    </div>
+
+    <!-- VIEW 2: PHÒNG LUYỆN VIẾT (SPLIT SCREEN WORKSPACE) -->
+    <div id="writing-workspace-view" style="display:none;">
+      <!-- Workspace Navigation Bar -->
+      <div class="writing-workspace-nav">
+        <button class="btn gh sm" onclick="exitWritingWorkspace()">
+          <span>←</span> <span>Trở về danh sách đề</span>
+        </button>
+        <div class="writing-workspace-title-box">
+          <h3 id="workspace-set-title">Đề bài luyện viết</h3>
+          <span id="workspace-set-badge" class="tag ok">Nghị luận xã hội</span>
+        </div>
+        <div class="writing-workspace-actions">
+          <button class="btn no sm" onclick="deleteCurrentOpenedSet()" title="Xóa bộ đề này khỏi danh sách">
+            <span>🗑️</span> <span>Xóa đề này</span>
+          </button>
+          <button class="btn gh sm" onclick="resetCurrentWritingDraft()" title="Xóa nội dung đang viết để làm lại từ đầu">
+            <span>🔄</span> <span>Xóa viết lại</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Split Layout Container -->
+      <div class="writing-split-container" id="writing-split-container">
+        
+        <!-- LEFT PANEL: Đề bài & Dàn ý ngữ liệu -->
+        <div class="writing-left-panel" id="writing-left-panel">
+          <div class="writing-panel-scroll">
+            
+            <!-- Hộp đề bài -->
+            <div class="writing-prompt-card">
+              <div class="writing-prompt-header">
+                <span class="writing-prompt-tag">Đề bài</span>
+              </div>
+              <div class="writing-prompt-text-wrapper">
+                <p id="workspace-prompt-text" class="writing-prompt-text"></p>
+                <button type="button" id="workspace-prompt-toggle-btn" class="writing-prompt-toggle" onclick="togglePromptExpand()">Xem thêm</button>
+              </div>
+            </div>
+
+            <!-- Hộp gợi ý dàn ý / Luận điểm tham khảo -->
+            <div class="writing-outline-card" id="workspace-outline-card">
+              <div class="writing-outline-header">
+                <span>Dàn ý định hướng</span>
+              </div>
+              <div class="writing-outline-content" id="workspace-outline-content"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RESIZE SPLITTER / DIVIDER -->
+        <div class="writing-splitter" id="writing-splitter" title="Kéo để thay đổi độ rộng 2 cột">
+          <div class="writing-splitter-handle"></div>
+        </div>
+
+        <!-- RIGHT PANEL: Không gian viết bài theo từng phần dàn ý -->
+        <div class="writing-right-panel" id="writing-right-panel">
+          
+          <!-- Header thanh công cụ phải -->
+          <div class="writing-editor-header">
+            <div class="writing-sample-toggle-wrap">
+              <span class="writing-sample-label">Bài văn mẫu tham khảo</span>
+              <label class="writing-switch">
+                <input type="checkbox" id="writing-sample-toggle" onchange="toggleSampleDisplay(this.checked)">
+                <span class="writing-slider"></span>
+              </label>
+            </div>
+            <div class="writing-word-count-badge">
+              Tổng số từ: <b id="workspace-total-words">0</b>
+            </div>
+          </div>
+
+          <!-- Danh sách các ô viết theo từng phần của Dàn ý -->
+          <div class="writing-sections-list" id="writing-sections-list"></div>
+
+          <!-- Bottom Sticky Action Bar -->
+          <div class="writing-bottom-bar">
+            <div class="writing-timer-box">
+              <span class="writing-timer-icon">⏱️</span>
+              <span class="writing-timer-label">Thời gian:</span>
+              <b class="writing-timer-value" id="workspace-timer-display">00:00:00</b>
+              <button class="writing-timer-btn" id="workspace-timer-btn" onclick="toggleWritingTimer()" title="Tạm dừng / Tiếp tục">⏸</button>
+            </div>
+
+            <div class="writing-bottom-buttons">
+              <button class="writing-btn-clear" type="button" onclick="resetCurrentWritingDraft()" title="Xóa toàn bộ nội dung đang viết">
+                <span>Xóa bài làm</span>
+              </button>
+              <button class="writing-btn-save" type="button" onclick="saveCurrentWritingDraft(true)">
+                <span>Lưu bài viết</span>
+              </button>
+              <button class="writing-btn-review" type="button" onclick="openWritingReviewModal()">
+                <span>Xem &amp; Xuất bài</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MODAL 1: TẠO / CHỈNH SỬA BỘ ĐỀ LUYỆN VIẾT -->
+<dialog id="writing-set-dialog" class="writing-modal writing-set-modal-large">
+  <div class="writing-modal-header">
+    <div class="writing-modal-title">
+      <h3 id="writing-dialog-heading">Tạo bộ đề luyện viết</h3>
+    </div>
+    <button class="btn sm gh" type="button" onclick="closeCreateWritingSetModal()" aria-label="Đóng">✕</button>
+  </div>
+  
+  <form id="writing-set-form" onsubmit="handleSaveWritingSet(event)" class="writing-modal-form-wrap">
+    <input type="hidden" id="edit-writing-set-id">
+
+    <div class="writing-modal-body">
+      <div class="g2">
+        <div>
+          <label for="input-set-title">Tên bộ đề / Tiêu đề <span style="color:var(--red)">*</span></label>
+          <input type="text" id="input-set-title" required placeholder="Ví dụ: Nghị luận xã hội về ý nghĩa của sự sẻ chia...">
+        </div>
+        <div>
+          <label for="input-set-category">Chủ đề / Dạng đề <span style="color:var(--red)">*</span></label>
+          <select id="input-set-category" onchange="onCategorySelectChange(this.value)">
+            <option value="nl-xh">Nghị luận xã hội (200 chữ / Bài văn ngắn)</option>
+            <option value="nl-vh">Nghị luận văn học (Phân tích thơ, văn xuôi)</option>
+            <option value="cam-thu">Đọc hiểu &amp; Đoạn văn cảm thụ</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <label for="input-set-prompt">Nội dung đề bài chi tiết <span style="color:var(--red)">*</span></label>
+        <textarea id="input-set-prompt" required placeholder="Dán nội dung đề bài, câu hỏi yêu cầu tại đây..."></textarea>
+      </div>
+
+      <!-- Dàn ý và các phần viết -->
+      <div style="margin-top:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+          <label style="margin:0; font-size:15px; font-weight:700;">
+            Dàn ý &amp; các phần bài viết (<span id="modal-section-count">3</span> phần)
+          </label>
+          <div style="display:flex; gap:8px;">
+            <button type="button" class="btn gh sm" onclick="applyQuickOutlineTemplate()">Nạp dàn ý mẫu</button>
+            <button type="button" class="btn cy sm" onclick="addNewOutlineSectionRow()">+ Thêm phần</button>
+          </div>
+        </div>
+        <p class="mut" style="font-size:13px; margin:0 0 12px;">Cấu trúc chuẩn 3 phần (Mở bài, Thân bài, Kết bài) kèm hướng dẫn nội dung chi tiết.</p>
+        
+        <div id="modal-sections-editor" class="modal-sections-editor-list"></div>
+      </div>
+    </div>
+
+    <div class="writing-modal-footer">
+      <button type="button" class="btn gh" onclick="closeCreateWritingSetModal()">Hủy</button>
+      <button type="submit" class="btn au">Lưu bộ đề</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- MODAL 2: XEM BÀI HOÀN CHỈNH & XUẤT BÀI -->
+<dialog id="writing-review-dialog" class="writing-modal review-modal">
+  <div class="writing-modal-header review-header">
+    <div class="writing-modal-title">
+      <h3>Tổng quan bài viết</h3>
+    </div>
+    <button class="btn sm gh" type="button" onclick="closeWritingReviewModal()">✕</button>
+  </div>
+
+  <div class="writing-modal-body review-body">
+    <!-- Stat metrics cards -->
+    <div class="review-stats-grid">
+      <div class="review-stat-card">
+        <span class="stat-num" id="review-stat-words">0</span>
+        <span class="stat-label">Tổng số từ</span>
+      </div>
+      <div class="review-stat-card">
+        <span class="stat-num" id="review-stat-paragraphs">0</span>
+        <span class="stat-label">Số đoạn văn</span>
+      </div>
+      <div class="review-stat-card">
+        <span class="stat-num" id="review-stat-time">00:00:00</span>
+        <span class="stat-label">Thời gian làm</span>
+      </div>
+      <div class="review-stat-card">
+        <span class="stat-num" id="review-stat-wpm">0</span>
+        <span class="stat-label">Tốc độ (từ / phút)</span>
+      </div>
+    </div>
+
+    <!-- Combined essay text -->
+    <div class="review-essay-box">
+      <div class="review-essay-meta">
+        <h4 id="review-essay-topic">Đề bài luyện viết</h4>
+        <span class="tag ok" id="review-essay-tag">Hoàn tất</span>
+      </div>
+      <div class="review-essay-text" id="review-essay-combined-content"></div>
+    </div>
+
+    <!-- Feedback suggestions box -->
+    <div class="review-feedback-box">
+      <div class="review-feedback-title">Nhận xét sơ bộ:</div>
+      <div id="review-feedback-content" class="review-feedback-list"></div>
+    </div>
+  </div>
+
+  <div class="writing-modal-footer review-footer">
+    <button class="btn gh" type="button" onclick="copyCombinedEssayToClipboard()">Sao chép bài viết</button>
+    <button class="btn cy" type="button" onclick="downloadCombinedEssayAsText()">Tải tệp .txt</button>
+    <button class="btn au" type="button" onclick="closeWritingReviewModal()">Đóng</button>
+  </div>
+</dialog>

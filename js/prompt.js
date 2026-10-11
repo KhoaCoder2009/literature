@@ -35,7 +35,7 @@ function updatePromptSumIndicator() {
     indicator.style.background = 'rgba(16, 185, 129, 0.12)';
     indicator.style.color = '#065f46';
     indicator.style.border = '1px solid #10b981';
-    indicator.innerHTML = `<span>✅ <b>Tổng các dạng:</b> ${sum}/${total} câu (Đã khớp hoàn hảo với bộ đề)</span>`;
+    indicator.innerHTML = `<span><b>Tổng các dạng:</b> ${sum}/${total} câu (Khớp với số câu bộ đề)</span>`;
     if (badge) {
       badge.textContent = `Khớp ${sum}/${total} câu`;
       badge.style.background = '#d1fae5';
@@ -47,8 +47,8 @@ function updatePromptSumIndicator() {
     indicator.style.color = '#92400e';
     indicator.style.border = '1px solid #f59e0b';
     indicator.innerHTML = `
-      <span>⚠️ <b>Tổng các dạng:</b> ${sum}/${total} câu (Còn thiếu ${diff} câu)</span>
-      <button type="button" class="btn gh sm" onclick="autoDistributePromptTypes()" style="padding:2px 8px; font-size:11px; height:24px;">⚡ Bù đủ ${diff} câu</button>
+      <span><b>Tổng các dạng:</b> ${sum}/${total} câu (Thiếu ${diff} câu)</span>
+      <button type="button" class="btn gh sm" onclick="autoDistributePromptTypes()" style="padding:2px 8px; font-size:11px; height:24px;">Bù ${diff} câu</button>
     `;
     if (badge) {
       badge.textContent = `Thiếu ${diff} câu`;
@@ -61,8 +61,8 @@ function updatePromptSumIndicator() {
     indicator.style.color = '#991b1b';
     indicator.style.border = '1px solid #ef4444';
     indicator.innerHTML = `
-      <span>⚠️ <b>Tổng các dạng:</b> ${sum}/${total} câu (Vượt quá ${diff} câu)</span>
-      <button type="button" class="btn gh sm" onclick="autoDistributePromptTypes()" style="padding:2px 8px; font-size:11px; height:24px;">⚡ Cân bằng lại</button>
+      <span><b>Tổng các dạng:</b> ${sum}/${total} câu (Thừa ${diff} câu)</span>
+      <button type="button" class="btn gh sm" onclick="autoDistributePromptTypes()" style="padding:2px 8px; font-size:11px; height:24px;">Cân bằng lại</button>
     `;
     if (badge) {
       badge.textContent = `Thừa ${diff} câu`;
@@ -231,7 +231,7 @@ function openExternalAI(tool) {
     name = 'Claude AI';
   }
   window.open(url, '_blank');
-  toast(`Đang mở ${name}! Bạn hãy dán (Ctrl + V) prompt vào ô chat.`, 'ok');
+  toast(`Đang mở ${name}! Bạn hãy dán (Ctrl + V) câu lệnh vào ô trò chuyện.`, 'ok');
 }
 
 function buildQuestionPrompt() {
@@ -348,26 +348,26 @@ ${contextSection}`;
     $('#prompt-output').value = promptText;
     $('#prompt-output').focus();
     copyQuestionPrompt(true);
-    toast('Đã tạo prompt chi tiết và tự động sao chép! Hãy dán sang ChatGPT / Gemini.', 'ok');
+    toast('Đã tạo câu lệnh chi tiết và tự động sao chép! Hãy dán sang ChatGPT / Gemini.', 'ok');
   } catch (error) {
-    toast(error.message || 'Không tạo được prompt.', 'bad');
+    toast(error.message || 'Không tạo được câu lệnh.', 'bad');
   }
 }
 
 async function copyQuestionPrompt(silent = false) {
   const prompt = $('#prompt-output')?.value || '';
-  if (!prompt) return !silent && toast('Hãy tạo prompt trước khi sao chép.', 'bad');
+  if (!prompt) return !silent && toast('Hãy tạo câu lệnh trước khi sao chép.', 'bad');
   try {
     if (navigator.clipboard?.writeText) {
       await navigator.clipboard.writeText(prompt);
-      if (!silent) toast('Đã sao chép prompt thành công!', 'ok');
+      if (!silent) toast('Đã sao chép câu lệnh thành công!', 'ok');
     } else {
       throw new Error('Clipboard API unavailable');
     }
   } catch (error) {
     $('#prompt-output')?.focus();
     $('#prompt-output')?.select();
-    if (!silent) toast('Prompt đã được chọn, hãy nhấn Ctrl+C để sao chép.', 'bad');
+    if (!silent) toast('Câu lệnh đã được chọn, hãy nhấn Ctrl+C để sao chép.', 'bad');
   }
 }
 
