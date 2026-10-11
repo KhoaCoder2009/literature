@@ -3,23 +3,193 @@
    ========================================================================= */
 
 const QUESTION_TYPE_LABELS = {
-  mc: 'trắc nghiệm', short: 'trả lời ngắn', fill: 'điền từ', tf: 'đúng / sai'
+  mc: 'trắc nghiệm (4 lựa chọn)', short: 'trả lời ngắn', fill: 'điền từ vào chỗ trống', tf: 'đúng / sai (4 ý)'
 };
+
+const PROMPT_ALL_TYPES = ['mc', 'tf', 'short', 'fill'];
+
+function getPromptTypeCounts() {
+  const counts = {};
+  PROMPT_ALL_TYPES.forEach(t => {
+    const cb = $(`#prompt-type-cb-${t}`);
+    const input = $(`#prompt-count-${t}`);
+    if (cb && cb.checked && input) {
+      counts[t] = Math.max(0, parseInt(input.value) || 0);
+    } else {
+      counts[t] = 0;
+    }
+  });
+  return counts;
+}
+
+function updatePromptSumIndicator() {
+  const total = Number($('#prompt-question-count')?.value) || 10;
+  const counts = getPromptTypeCounts();
+  const sum = Object.values(counts).reduce((a, b) => a + b, 0);
+
+  const indicator = $('#prompt-sum-indicator');
+  const badge = $('#prompt-count-status-badge');
+  if (!indicator) return sum;
+
+  if (sum === total) {
+    indicator.style.background = 'rgba(16, 185, 129, 0.12)';
+    indicator.style.color = '#065f46';
+    indicator.style.border = '1px solid #10b981';
+    indicator.innerHTML = `<span>✅ <b>Tổng các dạng:</b> ${sum}/${total} câu (Đã khớp hoàn hảo với bộ đề)</span>`;
+    if (badge) {
+      badge.textContent = `Khớp ${sum}/${total} câu`;
+      badge.style.background = '#d1fae5';
+      badge.style.color = '#065f46';
+    }
+  } else if (sum < total) {
+    const diff = total - sum;
+    indicator.style.background = 'rgba(245, 158, 11, 0.12)';
+    indicator.style.color = '#92400e';
+    indicator.style.border = '1px solid #f59e0b';
+    indicator.innerHTML = `
+      <span>⚠️ <b>Tổng các dạng:</b> ${sum}/${total} câu (Còn thiếu ${diff} câu)</span>
+      <button type="button" class="btn gh sm" onclick="autoDistributePromptTypes()" style="padding:2px 8px; font-size:11px; height:24px;">⚡ Bù đủ ${diff} câu</button>
+    `;
+    if (badge) {
+      badge.textContent = `Thiếu ${diff} câu`;
+      badge.style.background = '#fef3c7';
+      badge.style.color = '#92400e';
+    }
+  } else {
+    const diff = sum - total;
+    indicator.style.background = 'rgba(239, 68, 68, 0.12)';
+    indicator.style.color = '#991b1b';
+    indicator.style.border = '1px solid #ef4444';
+    indicator.innerHTML = `
+      <span>⚠️ <b>Tổng các dạng:</b> ${sum}/${total} câu (Vượt quá ${diff} câu)</span>
+      <button type="button" class="btn gh sm" onclick="autoDistributePromptTypes()" style="padding:2px 8px; font-size:11px; height:24px;">⚡ Cân bằng lại</button>
+    `;
+    if (badge) {
+      badge.textContent = `Thừa ${diff} câu`;
+      badge.style.background = '#fee2e2';
+      badge.style.color = '#991b1b';
+    }
+  }
+  return sum;
+}
+
+function onPromptTotalCountChange() {
+  autoDistributePromptTypes();
+}
+
+function autoDistributePromptTypes() {
+  const total = Number($('#prompt-question-count')?.value) || 10;
+  const activeTypes = PROMPT_ALL_TYPES.filter(t => {
+    const cb = $(`#prompt-type-cb-${t}`);
+    return cb && cb.checked;
+  });
+
+  if (!activeTypes.length) {
+    const mcCb = $('#prompt-type-cb-mc');
+    if (mcCb) mcCb.checked = true;
+    activeTypes.push('mc');
+  }
+
+  const base = Math.floor(total / activeTypes.length);
+  let rem = total % activeTypes.length;
+
+  PROMPT_ALL_TYPES.forEach(t => {
+    const input = $(`#prompt-count-${t}`);
+    if (activeTypes.includes(t)) {
+      const val = base + (rem > 0 ? 1 : 0);
+      if (rem > 0) rem--;
+      if (input) {
+        input.value = val;
+        input.disabled = false;
+      }
+    } else {
+      if (input) {
+        input.value = 0;
+        input.disabled = true;
+      }
+    }
+  });
+
+  updatePromptSumIndicator();
+}
+
+function onPromptTypeToggle(type) {
+  const cb = $(`#prompt-type-cb-${type}`);
+  const input = $(`#prompt-count-${type}`);
+  if (!cb || !input) return;
+
+  if (cb.checked) {
+    input.disabled = false;
+    if (parseInt(input.value) <= 0) {
+      input.value = 1;
+    }
+  } else {
+    input.value = 0;
+    input.disabled = true;
+  }
+  updatePromptSumIndicator();
+}
+
+function adjustPromptTypeCount(type, delta) {
+  const cb = $(`#prompt-type-cb-${type}`);
+  const input = $(`#prompt-count-${type}`);
+  if (!input) return;
+
+  let current = Math.max(0, parseInt(input.value) || 0);
+  let next = Math.max(0, current + delta);
+  input.value = next;
+
+  if (cb) {
+    if (next > 0) {
+      cb.checked = true;
+      input.disabled = false;
+    } else {
+      cb.checked = false;
+      input.disabled = true;
+    }
+  }
+  updatePromptSumIndicator();
+}
+
+function onPromptTypeCountInput(type) {
+  const cb = $(`#prompt-type-cb-${type}`);
+  const input = $(`#prompt-count-${type}`);
+  if (!input) return;
+
+  let val = Math.max(0, parseInt(input.value) || 0);
+  input.value = val;
+  if (cb) {
+    cb.checked = val > 0;
+    input.disabled = val === 0 && !cb.checked;
+  }
+  updatePromptSumIndicator();
+}
 
 function getPromptOptions() {
   const topic = $('#prompt-topic')?.value?.trim() || '';
   const sourceText = $('#prompt-source')?.value?.trim() || '';
-  const questionCount = Number($('#prompt-question-count')?.value) || 5;
-  const questionTypes = [...document.querySelectorAll('input[name="prompt-question-type"]:checked')].map(input => input.value);
+  const questionCount = Number($('#prompt-question-count')?.value) || 10;
+  const counts = getPromptTypeCounts();
+  const sum = Object.values(counts).reduce((a, b) => a + b, 0);
+
   if (!topic) throw new Error('Vui lòng nhập chủ đề hoặc bài học (Ví dụ: Ông già và biển cả, Vợ nhặt...).');
-  if (!questionTypes.length) throw new Error('Vui lòng chọn ít nhất một dạng câu hỏi.');
-  return { topic, sourceText, questionCount, questionTypes };
+  if (sum === 0) throw new Error('Vui lòng chọn ít nhất một dạng câu hỏi với số lượng > 0.');
+  if (sum !== questionCount) {
+    throw new Error(`Tổng số câu theo các dạng (${sum} câu) phải bằng số câu của bộ đề (${questionCount} câu)! Hãy điều chỉnh hoặc nhấn nút "⚡ Chia đều số câu".`);
+  }
+
+  const activeTypes = Object.keys(counts).filter(t => counts[t] > 0);
+  return { topic, sourceText, questionCount, counts, activeTypes };
 }
 
 function openPromptDialog() {
   if ($('#prompt-topic')) $('#prompt-topic').value = '';
-  if ($('#prompt-question-count')) $('#prompt-question-count').value = '5';
-  document.querySelectorAll('input[name="prompt-question-type"]').forEach(input => { input.checked = true; });
+  if ($('#prompt-question-count')) $('#prompt-question-count').value = '10';
+  PROMPT_ALL_TYPES.forEach(t => {
+    const cb = $(`#prompt-type-cb-${t}`);
+    if (cb) cb.checked = true;
+  });
+  autoDistributePromptTypes();
   if ($('#prompt-source')) $('#prompt-source').value = '';
   if ($('#prompt-output')) $('#prompt-output').value = '';
   if ($('#prompt-result')) $('#prompt-result').value = '';
@@ -66,13 +236,21 @@ function openExternalAI(tool) {
 
 function buildQuestionPrompt() {
   try {
-    const { topic, sourceText, questionCount, questionTypes } = getPromptOptions();
-    const typePlan = Array.from({ length: questionCount }, (_, index) => questionTypes[index % questionTypes.length]);
+    const { topic, sourceText, questionCount, counts, activeTypes } = getPromptOptions();
+
+    // Xây dựng danh sách phân bổ dạng câu hỏi chuẩn theo số lượng từng dạng
+    const typePlan = [];
+    activeTypes.forEach(type => {
+      for (let i = 0; i < counts[type]; i++) {
+        typePlan.push(type);
+      }
+    });
+
     const hasSource = Boolean(sourceText && sourceText.length > 0);
 
     const typeExamples = [];
-    if (questionTypes.includes('mc')) {
-      typeExamples.push(`[DẠNG TRẮC NGHIỆM 4 PHƯƠNG ÁN - "type": "mc"]
+    if (counts.mc > 0) {
+      typeExamples.push(`[DẠNG TRẮC NGHIỆM 4 PHƯƠNG ÁN - "type": "mc" (Tạo đúng ${counts.mc} câu)]
 {
   "type": "mc",
   "c": "Nội dung câu hỏi kiến thức / đọc hiểu rõ ràng?",
@@ -84,8 +262,8 @@ function buildQuestionPrompt() {
 * Quy tắc: "o" gồm đúng 4 phương án dạng chuỗi (KHÔNG tự viết thêm tiền tố "A.", "B.", "C.", "D."). "a" là số nguyên từ 0 đến 3 (0 là đáp án đầu tiên).`);
     }
 
-    if (questionTypes.includes('tf')) {
-      typeExamples.push(`[DẠNG ĐÚNG / SAI 4 Ý - "type": "tf"]
+    if (counts.tf > 0) {
+      typeExamples.push(`[DẠNG ĐÚNG / SAI 4 Ý - "type": "tf" (Tạo đúng ${counts.tf} câu)]
 {
   "type": "tf",
   "c": "Phát biểu sau đây là đúng?",
@@ -102,8 +280,8 @@ function buildQuestionPrompt() {
 * Quy tắc: "items" có đúng 4 nhận định (ý a, b, c, d). "correct" BẮT BUỘC là boolean true hoặc false.`);
     }
 
-    if (questionTypes.includes('short')) {
-      typeExamples.push(`[DẠNG TRẢ LỜI NGẮN - "type": "short"]
+    if (counts.short > 0) {
+      typeExamples.push(`[DẠNG TRẢ LỜI NGẮN - "type": "short" (Tạo đúng ${counts.short} câu)]
 {
   "type": "short",
   "c": "Câu hỏi ngắn gọn yêu cầu người học tự điền đáp án ngắn (tên nhân vật, năm, sự kiện, chi tiết...)?",
@@ -114,8 +292,8 @@ function buildQuestionPrompt() {
 * Quy tắc: "acc" là mảng các cách diễn đạt đáp án đúng được chấp nhận.`);
     }
 
-    if (questionTypes.includes('fill')) {
-      typeExamples.push(`[DẠNG ĐIỀN TỪ VÀO CHỖ TRỐNG - "type": "fill"]
+    if (counts.fill > 0) {
+      typeExamples.push(`[DẠNG ĐIỀN TỪ VÀO CHỖ TRỐNG - "type": "fill" (Tạo đúng ${counts.fill} câu)]
 {
   "type": "fill",
   "c": "Câu văn trích dẫn có đúng một vị trí chỗ trống ký hiệu bằng đúng 5 dấu gạch dưới: _____ ",
@@ -125,6 +303,10 @@ function buildQuestionPrompt() {
 }
 * Quy tắc: Trong "c" bắt buộc phải có ký hiệu _____ để biểu thị vị trí cần điền.`);
     }
+
+    const typeBreakdownLines = activeTypes.map(t => {
+      return `+ Dạng ${QUESTION_TYPE_LABELS[t]}: đúng ${counts[t]} câu`;
+    }).join('\n');
 
     const contextSection = hasSource
       ? `=== VĂN BẢN NGUỒN CĂN CỨ ===\n<source_text>\n${sourceText}\n</source_text>`
@@ -138,8 +320,9 @@ function buildQuestionPrompt() {
 
 === THÔNG TIN BỘ CÂU HỎI ===
 - Chủ đề / Bài học: ${topic}
-- Số lượng câu hỏi cần tạo: ${questionCount} câu.
-- Thứ tự phân bổ dạng câu hỏi: ${typePlan.map(type => QUESTION_TYPE_LABELS[type]).join(' → ')}.
+- Tổng số lượng câu hỏi cần tạo: đúng ${questionCount} câu.
+- Phân bổ chính xác số lượng từng dạng câu hỏi (BẮT BUỘC TUÂN THỦ ĐÚNG SỐ LƯỢNG NÀY):
+${typeBreakdownLines}
 
 === NGUYÊN TẮC BẮT BUỘC ===
 ${authenticityRule}
@@ -156,7 +339,7 @@ ${typeExamples.join('\n\n')}
   "title": "Tên bộ câu hỏi ngắn gọn, trang trọng",
   "topic": ${JSON.stringify(topic)},
   "qs": [
-    // Danh sách đúng ${questionCount} câu hỏi theo cấu trúc mẫu ở trên
+    // Danh sách đúng ${questionCount} câu hỏi (gồm đúng ${activeTypes.map(t => `${counts[t]} câu ${QUESTION_TYPE_LABELS[t]}`).join(', ')}) theo cấu trúc mẫu ở trên
   ]
 }
 

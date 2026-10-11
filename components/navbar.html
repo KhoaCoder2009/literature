@@ -4,9 +4,7 @@
   <button class="btn sm gh mobile-menu-toggle" type="button" onclick="toggleMobileMenu()" aria-label="Mở menu điều hướng" aria-controls="mobile-sidebar" aria-expanded="false" title="Menu điều hướng">
     <span>☰</span> <span class="nav-btn-label">Menu</span>
   </button>
-  <button class="btn sm gh nav-settings-btn" type="button" onclick="openSettingsDialog()" aria-label="Cài đặt hệ thống" title="Cài đặt âm thanh và giao diện">
-    <span>⚙️</span> <span class="nav-btn-label">Cài đặt</span>
-  </button>
+
   <div class="brand-wrap" onclick="go('home')" aria-label="Về Trang chủ">
     <img class="brand-logo" src="./assets/logo-nguvan.png" alt="Logo Ngữ Văn">
   </div>
@@ -29,6 +27,9 @@
     </a>
     <a data-g="lib" onclick="go('lib'); closeMobileMenu();">
       <span class="sidebar-icon">📚</span> <span>Thư viện</span>
+    </a>
+    <a onclick="closeMobileMenu(); openSettingsDialog();">
+      <span class="sidebar-icon">⚙️</span> <span>Cài đặt</span>
     </a>
   </div>
 </aside>

@@ -38,30 +38,98 @@
     <input id="prompt-topic" type="text" maxlength="500"
       placeholder="Ví dụ: Ông già và biển cả, Vợ nhặt, Tây Tiến, Chí Phèo...">
 
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px;">
+    <!-- TỔNG SỐ CÂU HỎI & CHIA ĐỀU -->
+    <div style="display:grid; grid-template-columns: 1fr auto; gap:12px; margin-top:12px; align-items:end;">
       <div>
-        <label for="prompt-question-count" style="font-weight:600;">Số câu hỏi muốn tạo</label>
-        <select id="prompt-question-count">
+        <label for="prompt-question-count" style="font-weight:600;">Tổng số câu hỏi của bộ đề</label>
+        <select id="prompt-question-count" onchange="onPromptTotalCountChange()">
+          <option value="4">4 câu</option>
           <option value="5">5 câu</option>
-          <option value="10">10 câu</option>
+          <option value="6">6 câu</option>
+          <option value="8">8 câu</option>
+          <option value="10" selected>10 câu</option>
+          <option value="12">12 câu</option>
           <option value="15">15 câu</option>
+          <option value="16">16 câu</option>
           <option value="20">20 câu</option>
+          <option value="25">25 câu</option>
+          <option value="30">30 câu</option>
         </select>
       </div>
       <div>
-        <label style="font-weight:600;">Chuẩn chương trình</label>
-        <div style="font-size:13px; color:var(--mut); padding:8px 0;">GDPT 2018 (Dễ, Trung bình, Khó)</div>
+        <button class="btn gh sm" type="button" onclick="autoDistributePromptTypes()" title="Chia đều số câu theo các dạng đang chọn" style="height:42px; padding:0 12px; font-weight:700;">
+          ⚡ Chia đều số câu
+        </button>
       </div>
     </div>
 
-    <fieldset style="margin-top:12px; padding:10px 12px; border:1px solid var(--stroke); border-radius:10px; background:var(--bg);">
-      <legend style="padding:0 6px; font-weight:700; font-size:12px; color:var(--mut);">DẠNG CÂU HỎI (CHỌN MỘT HOẶC NHIỀU)</legend>
-      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:4px;">
-        <label style="cursor:pointer;"><input type="checkbox" name="prompt-question-type" value="mc" checked style="width:auto;"> Trắc nghiệm 4 lựa chọn</label>
-        <label style="cursor:pointer;"><input type="checkbox" name="prompt-question-type" value="tf" checked style="width:auto;"> Đúng / Sai (4 ý)</label>
-        <label style="cursor:pointer;"><input type="checkbox" name="prompt-question-type" value="short" checked style="width:auto;"> Trả lời ngắn</label>
-        <label style="cursor:pointer;"><input type="checkbox" name="prompt-question-type" value="fill" checked style="width:auto;"> Điền từ</label>
+    <!-- PHÂN BỔ SỐ CÂU THEO TỪNG DẠNG -->
+    <fieldset style="margin-top:12px; padding:12px 14px; border:1px solid var(--stroke); border-radius:12px; background:var(--bg);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+        <legend style="padding:0 6px; font-weight:700; font-size:12px; color:var(--mut); margin:0;">PHÂN BỔ SỐ CÂU THEO TỪNG DẠNG</legend>
+        <span id="prompt-count-status-badge" style="font-size:11.5px; font-weight:700; padding:2px 8px; border-radius:6px;"></span>
       </div>
+
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <!-- Dạng 1: Trắc nghiệm -->
+        <div class="prompt-type-item" style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;">
+          <label style="margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;">
+            <input type="checkbox" id="prompt-type-cb-mc" name="prompt-question-type" value="mc" checked onchange="onPromptTypeToggle('mc')" style="width:auto; margin:0;">
+            <span>📝 Trắc nghiệm (4 lựa chọn)</span>
+          </label>
+          <div style="display:flex; align-items:center; gap:4px;">
+            <button type="button" class="btn gh sm" onclick="adjustPromptTypeCount('mc', -1)" style="width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;">-</button>
+            <input id="prompt-count-mc" type="number" min="0" max="50" value="4" oninput="onPromptTypeCountInput('mc')" style="width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;">
+            <button type="button" class="btn gh sm" onclick="adjustPromptTypeCount('mc', 1)" style="width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;">+</button>
+            <span style="font-size:12px; color:var(--mut); min-width:22px;">câu</span>
+          </div>
+        </div>
+
+        <!-- Dạng 2: Đúng / Sai -->
+        <div class="prompt-type-item" style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;">
+          <label style="margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;">
+            <input type="checkbox" id="prompt-type-cb-tf" name="prompt-question-type" value="tf" checked onchange="onPromptTypeToggle('tf')" style="width:auto; margin:0;">
+            <span>✅ Đúng / Sai (4 ý chuẩn GDPT)</span>
+          </label>
+          <div style="display:flex; align-items:center; gap:4px;">
+            <button type="button" class="btn gh sm" onclick="adjustPromptTypeCount('tf', -1)" style="width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;">-</button>
+            <input id="prompt-count-tf" type="number" min="0" max="50" value="2" oninput="onPromptTypeCountInput('tf')" style="width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;">
+            <button type="button" class="btn gh sm" onclick="adjustPromptTypeCount('tf', 1)" style="width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;">+</button>
+            <span style="font-size:12px; color:var(--mut); min-width:22px;">câu</span>
+          </div>
+        </div>
+
+        <!-- Dạng 3: Trả lời ngắn -->
+        <div class="prompt-type-item" style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;">
+          <label style="margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;">
+            <input type="checkbox" id="prompt-type-cb-short" name="prompt-question-type" value="short" checked onchange="onPromptTypeToggle('short')" style="width:auto; margin:0;">
+            <span>✏️ Trả lời ngắn (tự luận ngắn)</span>
+          </label>
+          <div style="display:flex; align-items:center; gap:4px;">
+            <button type="button" class="btn gh sm" onclick="adjustPromptTypeCount('short', -1)" style="width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;">-</button>
+            <input id="prompt-count-short" type="number" min="0" max="50" value="2" oninput="onPromptTypeCountInput('short')" style="width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;">
+            <button type="button" class="btn gh sm" onclick="adjustPromptTypeCount('short', 1)" style="width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;">+</button>
+            <span style="font-size:12px; color:var(--mut); min-width:22px;">câu</span>
+          </div>
+        </div>
+
+        <!-- Dạng 4: Điền từ -->
+        <div class="prompt-type-item" style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;">
+          <label style="margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;">
+            <input type="checkbox" id="prompt-type-cb-fill" name="prompt-question-type" value="fill" checked onchange="onPromptTypeToggle('fill')" style="width:auto; margin:0;">
+            <span>🔤 Điền từ vào chỗ trống</span>
+          </label>
+          <div style="display:flex; align-items:center; gap:4px;">
+            <button type="button" class="btn gh sm" onclick="adjustPromptTypeCount('fill', -1)" style="width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;">-</button>
+            <input id="prompt-count-fill" type="number" min="0" max="50" value="2" oninput="onPromptTypeCountInput('fill')" style="width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;">
+            <button type="button" class="btn gh sm" onclick="adjustPromptTypeCount('fill', 1)" style="width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;">+</button>
+            <span style="font-size:12px; color:var(--mut); min-width:22px;">câu</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TỔNG KẾT & CẢNH BÁO TỔNG SỐ CÂU -->
+      <div id="prompt-sum-indicator" style="margin-top:10px; font-size:12.5px; padding:7px 12px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; font-weight:600;"></div>
     </fieldset>
 
     <label for="prompt-source" style="margin-top:12px; font-weight:600;">
