@@ -3,6 +3,7 @@
    ========================================================================= */
 
 const DEFAULT_READING_CATEGORIES = [
+  'Nghị luận & Kỹ năng sống',
   'Thơ hiện đại',
   'Văn xuôi & Tản văn',
   'Nghị luận & Thông tin'
@@ -10,8 +11,111 @@ const DEFAULT_READING_CATEGORIES = [
 
 const DEFAULT_READING_SETS = [
   {
+    id: 'reading_preset_inamori',
+    title: 'Sống hết mình cho thời khắc hiện tại',
+    work: 'Cách sống: từ bình thường trở nên phi thường',
+    category: 'Nghị luận & Kỹ năng sống',
+    genre: 'Văn bản nghị luận',
+    author: 'Inamori Kazuo',
+    source: '(Trích Cách sống: từ bình thường trở nên phi thường, Inamori Kazuo, NXB Lao động, 2020, tr. 103-104)',
+    passage: `Không cần ngôn ngữ, mọi sự sống nhỏ nhoi trong tự nhiên đều dạy cho loài người chứng kiến tầm quan trọng của việc "sống hết mình ở thời khắc này". Chẳng hạn tại vùng Tsunoda thuộc Bắc cực, giữa mùa hè ngắn ngủi, các loại thực vật đua nhau nảy mầm, nở thật nhiều hoa, kết hạt, chen chúc vươn mình trong khoảng không với mảnh đời thật ngắn ngủi. Có lẽ chúng chuẩn bị sẵn sàng để đối phó với mùa đông dài khắc nghiệt sắp tới và phó thác sinh mạng mình cho tự nhiên. Rõ ràng là chúng thực sự sống hết mình cho hiện tại, không ảo tưởng, không phân tâm.
+
+Ngay cả ở vùng sa mạc khô cằn Sahara, nơi mà mỗi năm chỉ có một hai cơn mưa, nhưng mỗi khi có những giọt nước mưa hiếm hoi trút xuống thì các loài thực vật lại vội vã nảy mầm và nở hoa. Và trong khoảng thời gian từ một đến hai tuần ngắn ngủi, chúng ra hạt, oằn mình chịu đựng trong cát, trong cái nóng như thiêu như đốt, tiếp tục sống chờ đến trận mưa sau để nòi giống của chúng sẽ lại trỗi dậy... Quả thật là muôn loài trong tự nhiên đều sống hết mình, sống nghiêm túc trong từng khoảnh khắc, trong suốt khoảng thời gian sống được hạn định.
+
+Sống hết mình cho hiện tại sẽ đưa sự sống, dù nhỏ bé, vươn đến ngày mai. Vậy thì loài người chúng ta lại càng phải biết trân trọng cuộc sống mỗi ngày để không thua kém cỏ cây muông thú.`,
+    questions: [
+      {
+        id: 'q1',
+        level: 'nhan-biet',
+        levelName: 'Nhận biết (Câu 1)',
+        text: 'Xác định phương thức biểu đạt chính được sử dụng trong đoạn trích.',
+        guide: '- Phương thức biểu đạt chính: Nghị luận.\n- Phương thức kết hợp: Miêu tả, biểu cảm.'
+      },
+      {
+        id: 'q2',
+        level: 'nhan-biet',
+        levelName: 'Nhận biết (Câu 2)',
+        text: 'Theo đoạn trích, các loài thực vật ở vùng Tsunoda thuộc Bắc cực sinh trưởng như thế nào giữa mùa hè ngắn ngủi?',
+        guide: '- Theo đoạn trích, giữa mùa hè ngắn ngủi, các loài thực vật ở vùng Tsunoda thuộc Bắc cực: "đua nhau nảy mầm, nở thật nhiều hoa, kết hạt, chen chúc vươn mình trong khoảng không với mảnh đời thật ngắn ngủi".'
+      },
+      {
+        id: 'q3',
+        level: 'thong-hieu',
+        levelName: 'Thông hiểu (Câu 3)',
+        text: 'Chỉ ra những điểm tương đồng về sự sống của các loài thực vật ở vùng Tsunoda thuộc Bắc cực và ở vùng sa mạc Sahara trong đoạn trích.',
+        guide: '- Những điểm tương đồng về sự sống của thực vật ở hai vùng:\n+ Đều sinh tồn trong môi trường tự nhiên khắc nghiệt, thử thách sinh tử (mùa đông giá lạnh dài ngày ở Bắc cực và nắng nóng thiêu đốt, khô cằn ở sa mạc Sahara).\n+ Đều tận dụng tối đa khoảng thời gian thuận lợi ngắn ngủi (mùa hè ngắn ngủi hoặc những giọt nước mưa hiếm hoi) để vội vã nảy mầm, nở hoa, ra hạt duy trì sự sống.\n+ Đều sống hết mình, sống nghiêm túc trong từng khoảnh khắc được hạn định, không ảo tưởng, không phân tâm.'
+      },
+      {
+        id: 'q4',
+        level: 'thong-hieu',
+        levelName: 'Thông hiểu (Câu 4)',
+        text: 'Anh/ Chị có đồng tình với nhận định của tác giả: “Sống hết mình cho hiện tại sẽ đưa sự sống, dù nhỏ bé, vươn đến ngày mai”? Vì sao?',
+        guide: '- Bày tỏ quan điểm rõ ràng: Đồng tình (hoặc đồng tình phần lớn với lý lẽ thuyết phục).\n- Lý giải thuyết phục:\n+ Hiện tại là nền tảng trực tiếp kiến tạo nên tương lai; khi dốc hết tâm sức sống trọn vẹn ở thời khắc này, ta tích lũy giá trị nội lực và tôi luyện ý chí kiên cường.\n+ Dù cá nhân hay sự sống có nhỏ bé trước vũ trụ bao la, thái độ sống nhiệt huyết, kiên trì sẽ mở ra cơ hội sinh tồn và phát triển bền vững cho ngày mai.\n+ Sống hết mình cho hiện tại giúp con người không phải hối tiếc về quá khứ và vững vàng, tự tin bước tới tương lai.'
+      },
+      {
+        id: 'q5',
+        level: 'van-dung',
+        levelName: 'Vận dụng (Đoạn văn ~200 chữ)',
+        text: 'Từ nội dung đoạn trích ở phần đọc hiểu, anh/chị hãy viết một đoạn văn (khoảng 200 chữ) trình bày suy nghĩ của bản thân về sự cần thiết phải trân trọng cuộc sống mỗi ngày.',
+        guide: '1. Yêu cầu hình thức:\n- Viết đúng hình thức một đoạn văn nghị luận xã hội dung lượng khoảng 200 chữ.\n- Diễn đạt trôi chảy, lập luận chặt chẽ, không mắc lỗi chính tả, dùng từ.\n\n2. Yêu cầu nội dung:\n- Mở đoạn: Dẫn dắt vấn đề từ ngữ liệu đọc hiểu: Sự cần thiết phải trân trọng cuộc sống mỗi ngày.\n- Thân đoạn:\n  + Giải thích: Trân trọng cuộc sống mỗi ngày là thái độ sống tích cực, biết quý giá trị thời gian, sống có ý nghĩa và nỗ lực hết mình trong từng khoảnh khắc.\n  + Vì sao cần trân trọng: Đời người là hữu hạn, mỗi ngày trôi qua không bao giờ trở lại; sống trọn vẹn giúp ta hoàn thiện bản thân, lan tỏa yêu thương và tạo dựng nền tảng vững chắc cho tương lai.\n  + Dẫn chứng: Cỏ cây nơi Bắc cực hay sa mạc Sahara dù gặp nghịch cảnh vẫn sống kiên cường; con người càng cần nỗ lực không ngừng nghỉ.\n  + Phản đề: Phê phán những người sống thờ ơ, lãng phí thời gian vào mạng xã hội hay chìm đắm trong ảo tưởng, lo âu viển vông.\n- Kết đoạn & Liên hệ bản thân: Bài học nhận thức và hành động: Bản thân mỗi học sinh cần sống có lý tưởng, học tập chăm chỉ và trân quý từng ngày được sống, được cống hiến.'
+      }
+    ]
+  },
+  {
+    id: 'reading_preset_rosie',
+    title: 'Khát vọng dấn thân và giá trị của trải nghiệm',
+    work: 'Tuổi trẻ đáng giá bao nhiêu?',
+    category: 'Nghị luận & Kỹ năng sống',
+    genre: 'Văn bản nghị luận',
+    author: 'Rosie Nguyễn',
+    source: '(Trích "Tuổi trẻ đáng giá bao nhiêu?", Rosie Nguyễn, NXB Nhã Nam & Hội Nhà văn, 2018, tr. 85-86)',
+    passage: `Thế giới là một cuốn sách mở, và những người không bước ra ngoài khám phá chỉ mới đọc được một trang duy nhất. Tuổi trẻ là tài sản quý giá nhất của đời người, không phải vì ta có sức khỏe dẻo dai hay thời gian dồi dào, mà bởi đây là thời điểm ta có quyền được thử, được sai và được bắt đầu lại mà không sợ hãi. Nếu bạn chọn sống một cuộc đời an nhàn, lặp đi lặp lại những lối mòn cũ kỹ từ ngày này qua ngày khác, bạn đang tự biến tuổi thanh xuân rực rỡ của mình thành một vùng ao tù phẳng lặng.
+
+Nghịch cảnh và những va vấp không sinh ra để vùi dập con người, mà để tôi luyện bản lĩnh và mài giũa ý chí. Giống như loài đại bàng chỉ bay vút lên bầu trời cao rộng khi đối mặt với những cơn giông bão dữ dội, người trẻ chỉ thực sự trưởng thành khi dám bước ra khỏi vùng an toàn, dấn thân vào những thử thách mới và chịu trách nhiệm với cuộc đời mình. Đừng sợ thất bại, bởi thất bại chỉ là một điểm dừng chân tạm thời để bạn học lại bài học về lòng kiên trì. Thứ đáng sợ nhất của tuổi trẻ không phải là vấp ngã, mà là sự hèn nhát, buông xuôi và sống một cuộc đời vô vị, mờ nhạt.
+
+Hãy sống như một dòng sông cuồn cuộn chảy ra biển lớn, vượt qua ghềnh thác để vươn tới đại dương mênh mông, thay vì chấp nhận làm vũng nước đọng khô cạn dưới ánh mặt trời.`,
+    questions: [
+      {
+        id: 'q1',
+        level: 'nhan-biet',
+        levelName: 'Nhận biết (Câu 1)',
+        text: 'Xác định phương thức biểu đạt chính được sử dụng trong đoạn trích trên.',
+        guide: '- Phương thức biểu đạt chính: Nghị luận.\n- Phương thức kết hợp: Miêu tả, biểu cảm.'
+      },
+      {
+        id: 'q2',
+        level: 'nhan-biet',
+        levelName: 'Nhận biết (Câu 2)',
+        text: 'Theo đoạn trích, vì sao tuổi trẻ lại được coi là tài sản quý giá nhất của đời người?',
+        guide: '- Theo đoạn trích, tuổi trẻ là tài sản quý giá nhất của đời người: "không phải vì ta có sức khỏe dẻo dai hay thời gian dồi dào, mà bởi đây là thời điểm ta có quyền được thử, được sai và được bắt đầu lại mà không sợ hãi".'
+      },
+      {
+        id: 'q3',
+        level: 'thong-hieu',
+        levelName: 'Thông hiểu (Câu 3)',
+        text: 'Chỉ ra và nêu tác dụng của hình ảnh so sánh, đối lập: "Hãy sống như một dòng sông cuồn cuộn chảy ra biển lớn... thay vì chấp nhận làm vũng nước đọng khô cạn" trong đoạn trích.',
+        guide: '- Phân tích hình ảnh: Tác giả đối lập giữa "dòng sông cuồn cuộn chảy ra biển lớn" (tượng trưng cho tinh thần dấn thân, khát khao khám phá, vượt qua khó khăn để cống hiến và vươn tới tầm vóc lớn lao) với "vũng nước đọng khô cạn" (tượng trưng cho lối sống an phận, khép kín, thụ động và tàn lụi theo thời gian).\n- Tác dụng: Làm tăng sức gợi cảm, truyền tải thông điệp mạnh mẽ thức tỉnh người trẻ sống có hoài bão, bản lĩnh và không ngừng tiến về phía trước.'
+      },
+      {
+        id: 'q4',
+        level: 'thong-hieu',
+        levelName: 'Thông hiểu (Câu 4)',
+        text: 'Anh/ Chị có đồng tình với nhận định của tác giả: “Thứ đáng sợ nhất của tuổi trẻ không phải là vấp ngã, mà là sự hèn nhát, buông xuôi và sống một cuộc đời vô vị, mờ nhạt”? Vì sao?',
+        guide: '- Thí sinh bày tỏ quan điểm rõ ràng: Đồng tình (hoặc đồng tình phần lớn với lý giải thuyết phục).\n- Lý giải hợp lý:\n+ Vấp ngã là quy luật tất yếu giúp con người rút ra bài học kinh nghiệm, trưởng thành và tôi luyện bản lĩnh; sau vấp ngã người ta vẫn có thể đứng dậy làm lại.\n+ Sự hèn nhát, buông xuôi sẽ triệt tiêu ý chí phấn đấu, biến cuộc đời thành chuỗi ngày tẻ nhạt, lãng phí thanh xuân quý giá và không đóng góp được giá trị cho cộng đồng.\n+ Sống không dám dấn thân đồng nghĩa với việc tự tước bỏ cơ hội phát triển của chính mình.'
+      },
+      {
+        id: 'q5',
+        level: 'van-dung',
+        levelName: 'Vận dụng (Đoạn văn ~200 chữ)',
+        text: 'Từ nội dung đoạn trích ở phần đọc hiểu, anh/chị hãy viết một đoạn văn (khoảng 200 chữ) trình bày suy nghĩ của bản thân về ý nghĩa của việc dám bước ra khỏi "vùng an toàn" đối với thế hệ trẻ hôm nay.',
+        guide: '1. Yêu cầu hình thức:\n- Viết đúng một đoạn văn nghị luận xã hội dung lượng khoảng 200 chữ.\n- Diễn đạt trôi chảy, lập luận chặt chẽ, không sai chính tả, dùng từ.\n\n2. Yêu cầu nội dung:\n- Mở đoạn: Dẫn dắt thông điệp từ đoạn trích và nêu vấn đề: Ý nghĩa của việc dám bước ra khỏi "vùng an toàn".\n- Thân đoạn:\n  + Giải thích: "Vùng an toàn" là nơi quen thuộc, ít rủi ro và thiếu thử thách; bước ra khỏi vùng an toàn là dám đương đầu với cái mới, thử thách bản thân và chịu trách nhiệm với lựa chọn của mình.\n  + Vì sao cần bước ra: Giúp người trẻ khám phá tiềm năng ẩn giấu, tích lũy kinh nghiệm phong phú, rèn luyện bản lĩnh kiên cường trước biến động thời đại.\n  + Dẫn chứng: Những tấm gương khởi nghiệp sáng tạo, thanh niên dấn thân vào các dự án cộng đồng khó khăn.\n  + Phản đề: Phê phán lối sống an phận thủ thường, sợ thất bại, sống thụ động và ỷ lại vào gia đình.\n- Kết đoạn & Liên hệ bản thân: Bài học nhận thức và hành động: Bản thân mỗi học sinh cần không ngừng học tập, chủ động rèn luyện kỹ năng mới và tự tin dấn thân theo đuổi ước mơ.'
+      }
+    ]
+  },
+  {
     id: 'reading_preset_1',
     title: 'Đất Nước và cội nguồn yêu thương',
+    work: 'Mặt đường khát vọng',
     category: 'Thơ hiện đại',
     genre: 'Thơ tự do',
     author: 'Nguyễn Khoa Điềm',
@@ -39,36 +143,44 @@ Không gian mênh mông
       {
         id: 'q1',
         level: 'nhan-biet',
-        levelName: 'Nhận biết',
+        levelName: 'Nhận biết (Câu 1)',
         text: 'Chỉ ra thể thơ và phương thức biểu đạt chính của đoạn trích trên.',
         guide: '- Thể thơ: Thơ tự do (không bị gò bó về số chữ trong câu).\n- Phương thức biểu đạt chính: Biểu cảm kết hợp miêu tả và tự sự.'
       },
       {
         id: 'q2',
         level: 'nhan-biet',
-        levelName: 'Nhận biết',
+        levelName: 'Nhận biết (Câu 2)',
         text: 'Theo tác giả, Đất Nước có từ khi nào và gắn liền với những hình ảnh thân thuộc nào?',
         guide: '- Đất Nước có từ những nét văn hóa, phong tục cổ truyền: câu chuyện cổ tích mẹ kể, miếng trầu bà ăn, phong tục bới tóc sau đầu, truyền thống đánh giặc cứu nước bằng tre làng, đạo lý thủy chung gừng cay muối mặn, cây lúa hạt gạo lao động vất vả.'
       },
       {
         id: 'q3',
         level: 'thong-hieu',
-        levelName: 'Thông hiểu',
+        levelName: 'Thông hiểu (Câu 3)',
         text: 'Anh/chị hiểu như thế nào về hình ảnh: "Cha mẹ thương nhau bằng gừng cay muối mặn"? Nêu tác dụng của hình ảnh này.',
         guide: '- "Gừng cay muối mặn" mượn từ ca dao xưa, tượng trưng cho tình nghĩa thủy chung son sắt, cùng nhau vượt qua thăng trầm, gian khó.\n- Tác dụng: Khắc họa vẻ đẹp tâm hồn người Việt, khẳng định cội nguồn Đất Nước được xây đắp từ tình cảm gia đình bền chặt và đạo nghĩa truyền thống thiêng liêng.'
       },
       {
         id: 'q4',
+        level: 'thong-hieu',
+        levelName: 'Thông hiểu (Câu 4)',
+        text: 'Phân tích ý nghĩa biểu tượng của không gian Đất Nước trong các dòng thơ: "Đất là nơi anh đến trường / Nước là nơi em tắm / Đất Nước là nơi ta hò hẹn...".',
+        guide: '- Tác giả tách từ "Đất Nước" thành hai thành tố "Đất" và "Nước" gắn với không gian sinh hoạt, kỷ niệm tuổi thơ và tình yêu lứa đôi riêng tư của mỗi cá nhân.\n- Sau đó hợp nhất thành "Đất Nước" - không gian hò hẹn, nơi hội tụ yêu thương thiêng liêng và gắn bó máu thịt với đời sống con người.'
+      },
+      {
+        id: 'q5',
         level: 'van-dung',
-        levelName: 'Vận dụng',
-        text: 'Từ thông điệp của đoạn trích, hãy nêu suy nghĩ của anh/chị về trách nhiệm của thế hệ trẻ đối với quê hương, đất nước hôm nay.',
-        guide: '- Thế hệ trẻ cần biết trân trọng những giá trị văn hóa truyền thống, cội nguồn lịch sử.\n- Nỗ lực học tập, rèn luyện tri thức, sống có lý tưởng cống hiến.\n- Chung tay xây dựng, phát triển kinh tế đất nước và bảo vệ chủ quyền thiêng liêng của Tổ quốc.'
+        levelName: 'Vận dụng (Đoạn văn ~200 chữ)',
+        text: 'Từ thông điệp của đoạn trích, hãy viết một đoạn văn (khoảng 200 chữ) nêu suy nghĩ của anh/chị về trách nhiệm của thế hệ trẻ đối với quê hương, đất nước hôm nay.',
+        guide: '1. Hình thức: Đoạn văn khoảng 200 chữ, hành văn lưu loát, lập luận chặt chẽ.\n2. Nội dung:\n- Mở đoạn: Trách nhiệm của thế hệ trẻ đối với Tổ quốc.\n- Thân đoạn:\n  + Biết trân trọng và phát huy các giá trị văn hóa truyền thống, cội nguồn lịch sử dân tộc.\n  + Ra sức học tập, tu dưỡng đạo đức, làm chủ khoa học công nghệ để cống hiến cho công cuộc hiện đại hóa đất nước.\n  + Sẵn sàng cống hiến và bảo vệ chủ quyền biên giới, biển đảo thiêng liêng.\n  + Phê phán lối sống vô cảm, lười biếng, lai căng mất gốc.\n- Kết đoạn: Bài học hành động và quyết tâm của bản thân.'
       }
     ]
   },
   {
     id: 'reading_preset_2',
     title: 'Thói quen đọc sách và sự trưởng thành tinh thần',
+    work: 'Bàn về đọc sách',
     category: 'Nghị luận & Thông tin',
     genre: 'Văn bản nghị luận',
     author: 'Chu Quang Tiềm',
@@ -82,36 +194,44 @@ Tuy nhiên, đọc sách không cốt lấy nhiều mà cốt lấy tinh. Đọc
       {
         id: 'q1',
         level: 'nhan-biet',
-        levelName: 'Nhận biết',
+        levelName: 'Nhận biết (Câu 1)',
         text: 'Theo đoạn trích, vì sao đọc sách là con đường quan trọng của học vấn?',
-        guide: '- Vì học vấn là thành quả tích lũy của nhân loại, và những tri thức quý báu nhất đều được ghi chép, lưu giữ lại qua các trang sách.'
+        guide: '- Vì học vấn là thành quả tích lũy của toàn thể nhân loại, và những tri thức quý báu nhất đều được ghi chép, lưu giữ lại qua các trang sách.'
       },
       {
         id: 'q2',
+        level: 'nhan-biet',
+        levelName: 'Nhận biết (Câu 2)',
+        text: 'Tác giả chỉ ra hậu quả gì đối với con người nếu không đọc sách?',
+        guide: '- Nếu không đọc sách, con người sẽ phải bắt đầu mọi thứ lại từ con số không, và sự tiến hóa của trí tuệ nhân loại sẽ bị chậm lại vô tận.'
+      },
+      {
+        id: 'q3',
         level: 'thong-hieu',
-        levelName: 'Thông hiểu',
+        levelName: 'Thông hiểu (Câu 3)',
         text: 'Tác giả quan niệm thế nào về việc "đọc sách không cốt lấy nhiều mà cốt lấy tinh"?',
         guide: '- Tác giả nhấn mạnh chất lượng hơn số lượng: Đọc sách cần sự tập trung, thấu hiểu tường tận bản chất vấn đề, nghiền ngẫm sâu sắc thay vì chỉ đọc lướt qua loa theo số lượng bề nổi.'
       },
       {
-        id: 'q3',
-        level: 'van-dung',
-        levelName: 'Vận dụng',
-        text: 'Anh/chị hãy chỉ ra một thách thức lớn đối với văn hóa đọc của giới trẻ trong kỷ nguyên internet và mạng xã hội hiện nay.',
-        guide: '- Sự bùng nổ của thông tin nhanh, mạng xã hội (video ngắn, tin tức giải trí mì ăn liền) dễ khiến người trẻ phân tán tập trung, lười đọc sách sâu, thiếu kiên nhẫn khi đọc các văn bản dài và giàu chiều sâu tư tưởng.'
+        id: 'q4',
+        level: 'thong-hieu',
+        levelName: 'Thông hiểu (Câu 4)',
+        text: 'Anh/chị hiểu như thế nào về hình ảnh: "Đọc sách có phương pháp chính là chiếc chìa khóa vàng mở ra kho tàng tri thức bao la của cuộc đời"?',
+        guide: '- Hình ảnh so sánh "chiếc chìa khóa vàng" khẳng định vai trò quyết định của phương pháp đọc đúng đắn. Phương pháp đọc sách khoa học giúp con người tiếp thu tri thức hiệu quả, biến tri thức thành năng lực và phát triển trí tuệ bản thân.'
       },
       {
-        id: 'q4',
-        level: 'van-dung-cao',
-        levelName: 'Vận dụng cao',
-        text: 'Anh/chị hãy đề xuất một giải pháp thiết thực để duy trì và phát triển thói quen đọc sách mỗi ngày cho bản thân.',
-        guide: '- Lên kế hoạch đọc sách cố định: Dành 15-30 phút mỗi ngày trước khi đi ngủ hoặc buổi sáng sớm.\n- Chọn sách phù hợp với sở thích và nhu cầu phát triển bản thân.\n- Ghi chép (take note) lại những câu nói tâm đắc và chia sẻ cùng bạn bè, câu lạc bộ sách.'
+        id: 'q5',
+        level: 'van-dung',
+        levelName: 'Vận dụng (Đoạn văn ~200 chữ)',
+        text: 'Từ ý kiến của Chu Quang Tiềm, hãy viết một đoạn văn (khoảng 200 chữ) rút ra bài học về tầm quan trọng của việc phát triển văn hóa đọc cho giới trẻ trong thời đại số.',
+        guide: '1. Hình thức: Đoạn văn chuẩn khoảng 200 chữ.\n2. Nội dung:\n- Khẳng định giá trị của văn hóa đọc giữa thời đại công nghệ số.\n- Phân tích: Đọc sách bồi đắp tư duy phản biện, làm sâu sắc cảm xúc và rèn luyện tính kiên nhẫn; giúp người trẻ không bị cuốn theo các trào lưu thông tin mì ăn liền hời hợt trên mạng xã hội.\n- Đề xuất giải pháp và liên hệ bản thân: Tạo thói quen đọc mỗi ngày 15-30 phút, chọn sách tinh hoa, ghi chép và áp dụng bài học vào thực tế.'
       }
     ]
   },
   {
     id: 'reading_preset_3',
     title: 'Nơi chốn bình yên trong ký ức của mẹ',
+    work: 'Khói trời buông tỏa',
     category: 'Văn xuôi & Tản văn',
     genre: 'Tản văn',
     author: 'Nguyễn Ngọc Tư',
@@ -125,30 +245,37 @@ Bây giờ về phố, sống giữa những căn bếp hiện đại, sạch b�
       {
         id: 'q1',
         level: 'nhan-biet',
-        levelName: 'Nhận biết',
+        levelName: 'Nhận biết (Câu 1)',
         text: 'Tìm những chi tiết, hình ảnh miêu tả căn bếp và hình bóng người mẹ trong đoạn văn.',
         guide: '- Căn bếp: Mái lá đơn sơ, vách đất bùn trộn rơm, ấm sực mùi khói củi, lửa đỏ bập bùng, mùi cơm sôi thơm nức, mùi cá kho tiêu.\n- Người mẹ: Mái tóc lấm tấm sợi bạc khẽ rung, ngồi bên bếp lửa thổi ống nứa, tần tảo sớm hôm.'
       },
       {
         id: 'q2',
-        level: 'thong-hieu',
-        levelName: 'Thông hiểu',
-        text: 'Nêu cảm xúc của nhân vật "tôi" khi nhớ về căn bếp xưa và bóng dáng mẹ hiền.',
-        guide: '- Cảm giác ấm áp, bình yên và an lòng khi ở bên mẹ.\n- Nỗi nhớ thương da diết, lòng biết ơn sâu sắc đối với sự hy sinh thầm lặng, chịu thương chịu khó của người mẹ.'
+        level: 'nhan-biet',
+        levelName: 'Nhận biết (Câu 2)',
+        text: 'Xác định phương thức biểu đạt chính và ngôi kể của đoạn trích trên.',
+        guide: '- Phương thức biểu đạt chính: Biểu cảm kết hợp miêu tả và tự sự.\n- Ngôi kể: Ngôi thứ nhất (nhân vật xưng "tôi").'
       },
       {
         id: 'q3',
-        level: 'van-dung',
-        levelName: 'Vận dụng',
-        text: 'Phân tích ý nghĩa của hình ảnh "mùi khói củi" trong đoạn trích.',
-        guide: '- "Mùi khói củi" không chỉ là mùi vị giác quan chân thực của bếp quê mộc mạc, mà đã trở thành biểu tượng nghệ thuật thiêng liêng cho tình mẫu tử, cho ký ức tuổi thơ êm đềm và tổ ấm gia đình bình yên không gì thay thế được.'
+        level: 'thong-hieu',
+        levelName: 'Thông hiểu (Câu 3)',
+        text: 'Nêu cảm xúc và tâm trạng của nhân vật "tôi" khi nhớ về căn bếp xưa và bóng dáng mẹ hiền.',
+        guide: '- Cảm giác ấm áp, bình yên và an lòng khi được sà vào lòng mẹ.\n- Nỗi nhớ thương da diết, lòng biết ơn sâu sắc đối với sự hy sinh thầm lặng, chịu thương chịu khó của người mẹ.'
       },
       {
         id: 'q4',
-        level: 'van-dung-cao',
-        levelName: 'Vận dụng cao',
-        text: 'Đoạn trích gợi cho anh/chị bài học gì về việc gìn giữ tình cảm gia đình giữa nhịp sống hiện đại hối hả?',
-        guide: '- Giữa cuộc sống bận rộn nhiều cám dỗ, cần luôn hướng về nguồn cội, biết trân trọng những phút giây sum họp bên gia đình.\n- Yêu thương, quan tâm và phụng dưỡng cha mẹ khi họ còn ở bên ta, không để sự thờ ơ làm nguội lạnh mái ấm.'
+        level: 'thong-hieu',
+        levelName: 'Thông hiểu (Câu 4)',
+        text: 'Phân tích ý nghĩa biểu tượng của hình ảnh "mùi khói củi" trong đoạn trích.',
+        guide: '- "Mùi khói củi" không chỉ là mùi vị giác quan chân thực của bếp quê mộc mạc, mà đã trở thành biểu tượng nghệ thuật thiêng liêng cho tình mẫu tử, cho ký ức tuổi thơ êm đềm và tổ ấm gia đình bình yên không gì thay thế được.'
+      },
+      {
+        id: 'q5',
+        level: 'van-dung',
+        levelName: 'Vận dụng (Đoạn văn ~200 chữ)',
+        text: 'Từ tình cảm của nhân vật "tôi" dành cho má, hãy viết một đoạn văn (khoảng 200 chữ) trình bày suy nghĩ về ý nghĩa của gia đình đối với mỗi con người giữa nhịp sống hiện đại hối hả.',
+        guide: '1. Hình thức: Đoạn văn khoảng 200 chữ, diễn đạt cảm xúc chân thành.\n2. Nội dung:\n- Khẳng định: Gia đình là điểm tựa tinh thần vững chắc nhất của đời người.\n- Phân tích: Giữa áp lực xô bồ của cuộc sống hiện đại, gia đình là nơi chốn bình yên che chở ta khỏi bão giông, nơi có tình yêu thương vô điều kiện của cha mẹ.\n- Trách nhiệm: Biết trân trọng giây phút sum vầy, dành thời gian quan tâm, chăm sóc cha mẹ khi còn có thể.\n- Phê phán những ai mải mê chạy theo danh lợi mà thờ ơ, lạnh nhạt với mái ấm gia đình.'
       }
     ]
   }
@@ -173,19 +300,48 @@ function loadReadingData() {
   try {
     const savedCategories = localStorage.getItem('vq_reading_categories_v1');
     if (savedCategories) {
-      readingCategories = JSON.parse(savedCategories);
-    } else {
-      readingCategories = [...DEFAULT_READING_CATEGORIES];
-      localStorage.setItem('vq_reading_categories_v1', JSON.stringify(readingCategories));
+      try { readingCategories = JSON.parse(savedCategories); } catch (e) { readingCategories = []; }
     }
+    if (!Array.isArray(readingCategories) || !readingCategories.length) {
+      readingCategories = [...DEFAULT_READING_CATEGORIES];
+    } else {
+      DEFAULT_READING_CATEGORIES.forEach(cat => {
+        if (!readingCategories.includes(cat)) readingCategories.push(cat);
+      });
+    }
+    localStorage.setItem('vq_reading_categories_v1', JSON.stringify(readingCategories));
 
     const savedSets = localStorage.getItem('vq_reading_sets_v1');
+    let loaded = [];
     if (savedSets) {
-      readingSets = JSON.parse(savedSets);
-    } else {
-      readingSets = JSON.parse(JSON.stringify(DEFAULT_READING_SETS));
-      localStorage.setItem('vq_reading_sets_v1', JSON.stringify(readingSets));
+      try { loaded = JSON.parse(savedSets); } catch (e) { loaded = []; }
     }
+    if (!Array.isArray(loaded)) loaded = [];
+
+    // Tách riêng các bộ đề do giáo viên / người dùng tự tạo (id dạng reading_user_ hoặc reading_copy_)
+    const userSets = loaded.filter(s => s && s.id && (String(s.id).startsWith('reading_user_') || String(s.id).startsWith('reading_copy_')));
+
+    // Đảm bảo tất cả bộ đề chuẩn (DEFAULT_READING_SETS) luôn đầy đủ nội dung mới nhất
+    const presetMap = new Map();
+    DEFAULT_READING_SETS.forEach(p => presetMap.set(p.id, JSON.parse(JSON.stringify(p))));
+
+    // Thứ tự hiển thị ưu tiên:
+    // 1. Rosie Nguyễn: Khát vọng dấn thân (Đề chuẩn 5 câu)
+    // 2. Inamori Kazuo: Sống hết mình (Đề chuẩn 5 câu)
+    // 3. Các đề mẫu còn lại
+    const pinnedOrder = ['reading_preset_rosie', 'reading_preset_inamori', 'reading_preset_1', 'reading_preset_2', 'reading_preset_3'];
+    const mergedPresets = [];
+    pinnedOrder.forEach(pid => {
+      if (presetMap.has(pid)) {
+        mergedPresets.push(presetMap.get(pid));
+        presetMap.delete(pid);
+      }
+    });
+    presetMap.forEach(p => mergedPresets.push(p));
+
+    // Bộ đề người dùng tự tạo luôn ưu tiên xuất hiện trước nhất, tiếp theo là 2 đề chuẩn ma trận
+    readingSets = [...userSets, ...mergedPresets];
+    localStorage.setItem('vq_reading_sets_v1', JSON.stringify(readingSets));
   } catch (err) {
     console.error('Lỗi khi tải dữ liệu đọc hiểu:', err);
     readingCategories = [...DEFAULT_READING_CATEGORIES];
@@ -218,8 +374,7 @@ function initReadingDialogDismissals() {
 }
 
 // ROUTING HOOK
-if (!window.R) window.R = {};
-window.R.reading = function(setId) {
+const setReadingRoute = function(setId) {
   initReadingModule();
   if (setId) {
     openReadingSet(setId);
@@ -227,6 +382,11 @@ window.R.reading = function(setId) {
     exitReadingWorkspace();
   }
 };
+if (typeof R !== 'undefined') R.reading = setReadingRoute;
+if (typeof window !== 'undefined') {
+  if (!window.R) window.R = typeof R !== 'undefined' ? R : {};
+  window.R.reading = setReadingRoute;
+}
 
 // VIEW SWITCHING
 function exitReadingWorkspace() {
@@ -356,7 +516,7 @@ function renderReadingSetsGrid() {
             <span>🏷️ ${esc(cat)}</span>
             <span class="reading-group-count">${items.length} đề</span>
           </div>
-          <div class="setup-sets-grid">
+          <div class="reading-horizontal-list">
             ${items.map(s => renderSingleReadingCard(s, globalIdx++)).join('')}
           </div>
         </div>
@@ -365,7 +525,7 @@ function renderReadingSetsGrid() {
     container.innerHTML = groupsHtml;
   } else {
     container.innerHTML = `
-      <div class="setup-sets-grid">
+      <div class="reading-horizontal-list">
         ${filteredSets.map((s, idx) => renderSingleReadingCard(s, idx)).join('')}
       </div>
     `;
@@ -374,28 +534,79 @@ function renderReadingSetsGrid() {
 
 function renderSingleReadingCard(s, idx = 0) {
   const bg = READING_PALETTES[idx % READING_PALETTES.length];
-  const qCount = Array.isArray(s.questions) ? s.questions.length : 0;
+  const qList = Array.isArray(s.questions) ? s.questions : [];
+  const qCount = qList.length;
   const topic = s.genre || s.category || 'Đọc hiểu';
+  const author = (s.author || '').trim();
+  const work = (s.work || '').trim();
   const watermark = s.emo || '📖';
 
+  const nbCount = qList.filter(q => q.level === 'nhan-biet' || (q.levelName && q.levelName.includes('Nhận biết'))).length;
+  const thCount = qList.filter(q => q.level === 'thong-hieu' || (q.levelName && q.levelName.includes('Thông hiểu'))).length;
+  const vdCount = qList.filter(q => q.level === 'van-dung' || (q.levelName && q.levelName.includes('Vận dụng'))).length;
+
+  const isStandard5 = nbCount === 2 && thCount === 2 && vdCount === 1;
+  const isUserCreated = String(s.id).startsWith('reading_user_');
+
+  // Snippet
+  const snippet = (s.passage || '').trim().replace(/\r?\n+/g, ' ');
+  const cleanSnippet = snippet.length > 170 ? snippet.slice(0, 170) + '…' : snippet;
+
   return `
-    <div class="setup-grid-card" onclick="openReadingSet('${esc(s.id)}')">
-      <div class="setup-card-banner" style="background: ${bg};">
-        <div class="setup-card-top-info">
-          <span class="setup-card-count-pill">${qCount} câu hỏi</span>
-        </div>
-        <h3 class="setup-card-title">${esc(s.title)}</h3>
-        <span class="setup-card-watermark">${watermark}</span>
+    <div class="reading-h-card ${isStandard5 ? 'card-standard-matrix' : ''}" onclick="openReadingSet('${esc(s.id)}')">
+      <!-- Cột trái: Card Banner nổi bật dạng bìa sách/thẻ -->
+      <div class="reading-h-banner" style="background: ${bg};">
+        <div class="reading-h-banner-watermark">${watermark}</div>
+        <span class="reading-h-count-pill">${qCount} câu hỏi</span>
+        ${isStandard5 ? '<span class="reading-h-matrix-tag">⭐ Chuẩn 5 câu</span>' : ''}
+        ${isUserCreated ? '<span class="reading-h-user-tag">✏️ Đề tự tạo</span>' : ''}
+        <span class="reading-h-topic-pill" title="${esc(topic)}">${esc(topic)}</span>
       </div>
-      <div class="setup-card-body">
-        <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); openReadingSet('${esc(s.id)}')">
-          <span class="btn-setup-icon">▶</span>
-          <span>Vào đọc hiểu</span>
+
+      <!-- Cột giữa: Toàn bộ thông tin chính của đề -->
+      <div class="reading-h-body">
+        <div class="reading-h-title-row">
+          <h3 class="reading-h-title">${esc(s.title)}</h3>
+        </div>
+
+        ${(author || work) ? `
+          <div class="reading-h-meta-tags">
+            ${author ? `<span class="reading-h-meta-item">👤 <b>${esc(author)}</b></span>` : ''}
+            ${work ? `<span class="reading-h-meta-item">📖 <i>${esc(work)}</i></span>` : ''}
+          </div>
+        ` : ''}
+
+        <!-- Ma trận cấp độ chuẩn 5 câu -->
+        <div class="reading-h-breakdown">
+          ${nbCount ? `<span class="lib-pill pill-nb" title="${nbCount} câu Nhận biết">🟢 ${nbCount} Nhận biết</span>` : ''}
+          ${thCount ? `<span class="lib-pill pill-th" title="${thCount} câu Thông hiểu">🟡 ${thCount} Thông hiểu</span>` : ''}
+          ${vdCount ? `<span class="lib-pill pill-vd" title="${vdCount} câu Vận dụng (Đoạn văn ~200 chữ)">🟣 ${vdCount} Vận dụng</span>` : ''}
+        </div>
+
+        ${cleanSnippet ? `
+          <div class="reading-h-snippet" title="${esc(snippet)}">
+            <span class="reading-h-snippet-quote">“</span>${esc(cleanSnippet)}
+          </div>
+        ` : ''}
+      </div>
+
+      <!-- Cột phải: Khối nút thao tác thẻ -->
+      <div class="reading-h-actions" onclick="event.stopPropagation()">
+        <button class="btn au reading-h-btn-enter" type="button" onclick="openReadingSet('${esc(s.id)}')">
+          <span>▶ Vào đọc hiểu</span>
         </button>
-        <div class="setup-card-meta">
-          <span class="setup-card-topic" title="${esc(topic)}">
-            🏷️ ${esc(topic)}
-          </span>
+        <div class="reading-h-mini-row">
+          <button class="reading-h-mini-btn" type="button" title="Chỉnh sửa đề thi" onclick="openEditReadingSetModal('${esc(s.id)}')">
+            <span>✏️ Sửa</span>
+          </button>
+          <button class="reading-h-mini-btn" type="button" title="Nhân bản đề này" onclick="duplicateReadingSet('${esc(s.id)}')">
+            <span>📋 Sao</span>
+          </button>
+          ${isUserCreated ? `
+            <button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề này" onclick="deleteReadingSet('${esc(s.id)}')">
+              <span>🗑️</span>
+            </button>
+          ` : ''}
         </div>
       </div>
     </div>
@@ -413,11 +624,20 @@ function renderReadingWorkspace(set) {
   // Left Panel: Passage
   const genreEl = document.getElementById('reading-passage-genre');
   const authorEl = document.getElementById('reading-passage-author');
+  const workEl = document.getElementById('reading-passage-work');
   const textEl = document.getElementById('reading-passage-text');
   const sourceEl = document.getElementById('reading-passage-source');
 
-  if (genreEl) genreEl.textContent = set.category || 'Đọc hiểu';
+  if (genreEl) genreEl.textContent = set.genre || set.category || 'Đọc hiểu';
   if (authorEl) authorEl.textContent = set.author ? `Tác giả: ${set.author}` : '';
+  if (workEl) {
+    if (set.work) {
+      workEl.textContent = `Tác phẩm: ${set.work}`;
+      workEl.style.display = 'inline-block';
+    } else {
+      workEl.style.display = 'none';
+    }
+  }
   if (textEl) {
     textEl.textContent = set.passage || '';
     textEl.style.fontSize = passageFontSize + 'px';
@@ -438,9 +658,20 @@ function renderReadingWorkspace(set) {
       const levelClass = getLevelClass(q.level);
       const levelTitle = q.levelName || getLevelTitle(q.level);
       const answerVal = savedAnswers[q.id || idx] || '';
+      const isParagraphQuestion = q.level === 'van-dung' || (q.text && /đoạn văn|200 chữ|bài học cuộc sống|thông điệp/i.test(q.text));
+      const words = (answerVal.trim().match(/\S+/g) || []).length;
+      let wcClass = 'wc-low';
+      let wcNote = '(Đoạn văn tiêu chuẩn khoảng 200 chữ)';
+      if (words >= 180 && words <= 230) {
+        wcClass = 'wc-ideal';
+        wcNote = '✓ Đạt chuẩn dung lượng (~200 chữ)';
+      } else if (words > 230) {
+        wcClass = 'wc-high';
+        wcNote = '⚠️ Đoạn văn hơi dài (>230 chữ)';
+      }
 
       return `
-        <div class="reading-question-card" id="card-q-${idx}">
+        <div class="reading-question-card ${isParagraphQuestion ? 'reading-q-essay-card' : ''}" id="card-q-${idx}">
           <div class="reading-q-header">
             <span class="reading-q-number">Câu ${idx + 1}</span>
             <span class="reading-q-level ${levelClass}">${esc(levelTitle)}</span>
@@ -448,10 +679,21 @@ function renderReadingWorkspace(set) {
           <div class="reading-q-text">${esc(q.text)}</div>
           <div class="reading-answer-box">
             <textarea
-              class="reading-answer-textarea"
-              placeholder="Nhập câu trả lời của bạn..."
-              oninput="handleReadingAnswerInput('${esc(set.id)}', '${esc(q.id || idx)}', this.value)"
+              class="reading-answer-textarea ${isParagraphQuestion ? 'reading-essay-textarea' : ''}"
+              rows="${isParagraphQuestion ? 7 : 3}"
+              placeholder="${isParagraphQuestion ? 'Viết đoạn văn khoảng 200 chữ tại đây (rút ra thông điệp hoặc liên hệ bài học cuộc sống)...' : 'Nhập câu trả lời của bạn...'}"
+              oninput="handleReadingAnswerInput('${esc(set.id)}', '${esc(q.id || idx)}', this.value, ${idx}, ${isParagraphQuestion ? 'true' : 'false'})"
             >${esc(answerVal)}</textarea>
+            ${isParagraphQuestion ? `
+              <div class="reading-word-counter ${wcClass}" id="reading-wc-${idx}">
+                <span>📝 Đếm từ:</span>
+                <span class="wc-num">${words}</span> từ
+                <span class="wc-note">${wcNote}</span>
+              </div>
+              <div class="reading-q-tip">
+                💡 <b>Mẹo làm bài Câu 5 (Đoạn văn):</b> Viết một đoạn văn hoàn chỉnh (khoảng 200 chữ). Cấu trúc gồm: <b>Mở đoạn</b> (dẫn dắt & nêu thông điệp), <b>Thân đoạn</b> (giải thích, vì sao cần trân trọng/thực hiện, dẫn chứng thực tế), <b>Kết đoạn</b> (bài học nhận thức và liên hệ bản thân).
+              </div>
+            ` : ''}
           </div>
           
           <div class="reading-guide-box" id="guide-box-${idx}" style="display: ${showReadingAnswers ? 'block' : 'none'};">
@@ -482,7 +724,7 @@ function getLevelTitle(lvl) {
   switch (String(lvl).toLowerCase()) {
     case 'nhan-biet': return 'Nhận biết';
     case 'thong-hieu': return 'Thông hiểu';
-    case 'van-dung': return 'Vận dụng';
+    case 'van-dung': return 'Vận dụng (Đoạn văn)';
     case 'van-dung-cao': return 'Vận dụng cao';
     default: return 'Nhận biết';
   }
@@ -530,7 +772,28 @@ function getSavedReadingDraft(setId) {
 }
 
 let autoSaveTimer = null;
-function handleReadingAnswerInput(setId, qId, val) {
+function handleReadingAnswerInput(setId, qId, val, idx, isParagraph) {
+  if (isParagraph && typeof idx === 'number') {
+    const wcEl = document.getElementById(`reading-wc-${idx}`);
+    if (wcEl) {
+      const words = (val.trim().match(/\S+/g) || []).length;
+      const numEl = wcEl.querySelector('.wc-num');
+      const noteEl = wcEl.querySelector('.wc-note');
+      if (numEl) numEl.textContent = words;
+      wcEl.classList.remove('wc-low', 'wc-ideal', 'wc-high');
+      if (words >= 180 && words <= 230) {
+        wcEl.classList.add('wc-ideal');
+        if (noteEl) noteEl.textContent = '✓ Đạt chuẩn dung lượng (~200 chữ)';
+      } else if (words > 230) {
+        wcEl.classList.add('wc-high');
+        if (noteEl) noteEl.textContent = '⚠️ Đoạn văn hơi dài (>230 chữ)';
+      } else {
+        wcEl.classList.add('wc-low');
+        if (noteEl) noteEl.textContent = '(Đoạn văn tiêu chuẩn khoảng 200 chữ)';
+      }
+    }
+  }
+
   const statusEl = document.getElementById('reading-save-status');
   if (statusEl) statusEl.textContent = '⏳ Đang lưu...';
 
@@ -599,6 +862,41 @@ function submitReadingAnswers() {
 
   const modal = document.getElementById('reading-result-modal');
   if (modal) modal.showModal();
+
+  // Lưu vào lịch sử bài làm
+  try {
+    if (typeof saveQuizAttemptToHistory === 'function') {
+      const pName = (localStorage.getItem('vq_player_nick') || '').trim() || 'Học sinh';
+      const cName = (localStorage.getItem('vq_player_class') || '').trim();
+      saveQuizAttemptToHistory({
+        id: 'hist_' + uid(),
+        timestamp: Date.now(),
+        dateStr: new Date().toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' }),
+        type: 'reading',
+        playerName: pName,
+        className: cName,
+        setId: String(set.id),
+        setTitle: set.title,
+        setTopic: set.genre || set.category || 'Đọc hiểu',
+        setEmo: set.emo || '📑',
+        score: 0,
+        answeredCount,
+        totalQuestions: questions.length,
+        elapsedSeconds: 0,
+        details: questions.map((q, idx) => ({
+          questionText: q.text,
+          questionType: 'reading',
+          userAnswer: (draft[q.id || idx] || '').trim(),
+          correctAnswer: q.guide || 'Chưa có đáp án gợi ý',
+          status: 'saved',
+          points: 0,
+          explanation: ''
+        }))
+      });
+    }
+  } catch (e) {
+    console.error('Save reading history error:', e);
+  }
 }
 
 function closeReadingResultModal() {
@@ -644,6 +942,8 @@ function openCreateReadingSetModal() {
   document.getElementById('reading-modal-title').textContent = 'Thêm bộ đề đọc hiểu mới';
   document.getElementById('reading-form-id').value = '';
   document.getElementById('reading-form-title').value = '';
+  const workEl = document.getElementById('reading-form-work');
+  if (workEl) workEl.value = '';
   document.getElementById('reading-form-author').value = '';
   document.getElementById('reading-form-genre').value = '';
   document.getElementById('reading-form-passage').value = '';
@@ -652,16 +952,8 @@ function openCreateReadingSetModal() {
   const catSelect = document.getElementById('reading-form-category');
   populateCategorySelect(catSelect, currentReadingCategory !== 'all' ? currentReadingCategory : readingCategories[0]);
 
-  // Default questions
-  const qList = document.getElementById('reading-form-questions-list');
-  if (qList) {
-    qList.innerHTML = '';
-    // Add 4 standard blank questions
-    addQuestionToReadingForm({ level: 'nhan-biet', text: '', guide: '' });
-    addQuestionToReadingForm({ level: 'thong-hieu', text: '', guide: '' });
-    addQuestionToReadingForm({ level: 'van-dung', text: '', guide: '' });
-    addQuestionToReadingForm({ level: 'van-dung-cao', text: '', guide: '' });
-  }
+  // Khởi tạo sẵn khung chuẩn 5 câu hỏi (2 Nhận biết • 2 Thông hiểu • 1 Vận dụng / Đoạn văn)
+  applyStandard5QuestionTemplate(false);
 
   modal.showModal();
 }
@@ -676,6 +968,8 @@ function openEditReadingSetModal(id) {
   document.getElementById('reading-modal-title').textContent = 'Chỉnh sửa bộ đề đọc hiểu';
   document.getElementById('reading-form-id').value = set.id;
   document.getElementById('reading-form-title').value = set.title || '';
+  const workEl = document.getElementById('reading-form-work');
+  if (workEl) workEl.value = set.work || '';
   document.getElementById('reading-form-author').value = set.author || '';
   document.getElementById('reading-form-genre').value = set.genre || '';
   document.getElementById('reading-form-passage').value = set.passage || '';
@@ -699,6 +993,184 @@ function closeReadingEditModal() {
   if (modal && modal.open) modal.close();
 }
 
+// KHUNG CHUẨN 5 CÂU HỎI THEO MA TRẬN ĐỀ THI
+function applyStandard5QuestionTemplate(confirmBeforeReplace = true) {
+  const qList = document.getElementById('reading-form-questions-list');
+  if (!qList) return;
+
+  if (confirmBeforeReplace && qList.children.length > 0) {
+    if (!confirm('Bạn có muốn đặt lại danh sách câu hỏi theo Khung chuẩn 5 câu (2 Nhận biết • 2 Thông hiểu • 1 Vận dụng - Đoạn văn)?')) {
+      return;
+    }
+  }
+
+  qList.innerHTML = '';
+
+  // Câu 1 & 2: Mức độ Nhận biết
+  addQuestionToReadingForm({
+    level: 'nhan-biet',
+    text: 'Xác định phương thức biểu đạt chính / thể thơ được sử dụng trong đoạn trích.',
+    guide: '- Phương thức biểu đạt chính: Nghị luận / Tự sự / Miêu tả / Biểu cảm...\n- Thể thơ: Tự do / Bảy chữ / Lục bát...'
+  });
+  addQuestionToReadingForm({
+    level: 'nhan-biet',
+    text: 'Theo đoạn trích, [chi tiết / hình ảnh / sự việc] sinh trưởng / diễn ra như thế nào?',
+    guide: '- Căn cứ trực tiếp vào câu chữ trong văn bản để trả lời ngắn gọn, chính xác.'
+  });
+
+  // Câu 3 & 4: Mức độ Thông hiểu
+  addQuestionToReadingForm({
+    level: 'thong-hieu',
+    text: 'Chỉ ra những điểm tương đồng / hiểu như thế nào về câu văn: "[trích dẫn cụm từ/câu văn]"?',
+    guide: '- Ý nghĩa trực tiếp của câu nói / hình ảnh.\n- Ý nghĩa biểu tượng và thông điệp mà tác giả muốn gửi gắm.'
+  });
+  addQuestionToReadingForm({
+    level: 'thong-hieu',
+    text: 'Anh/chị có đồng tình với nhận định của tác giả: "[trích nhận định]"? Vì sao?',
+    guide: '- Bày tỏ rõ quan điểm: Đồng tình / Không đồng tình.\n- Đưa ra 2-3 lý lẽ thuyết phục để lý giải vì sao.'
+  });
+
+  // Câu 5: Mức độ Vận dụng (Rút ra thông điệp hoặc liên hệ bài học cuộc sống)(Đoạn văn)
+  addQuestionToReadingForm({
+    level: 'van-dung',
+    text: 'Từ nội dung đoạn trích ở phần đọc hiểu, anh/chị hãy viết một đoạn văn (khoảng 200 chữ) trình bày suy nghĩ của bản thân về sự cần thiết phải [rút ra thông điệp / liên hệ bài học cuộc sống].',
+    guide: '1. Yêu cầu hình thức: Đoạn văn khoảng 200 chữ, diễn đạt mạch lạc, không xuống dòng.\n2. Yêu cầu nội dung:\n- Mở đoạn: Dẫn dắt vấn đề nghị luận từ ngữ liệu.\n- Thân đoạn: Giải thích ngắn gọn; phân tích vì sao; dẫn chứng thực tế; phản đề phê phán.\n- Kết đoạn: Bài học nhận thức và hành động của bản thân.'
+  });
+
+  renumberReadingFormQuestions();
+  if (confirmBeforeReplace) {
+    toast('Đã nạp khung chuẩn 5 câu hỏi thành công!', 'ok');
+  }
+}
+
+// DÁN NHANH TOÀN BỘ ĐỀ THI (QUICK IMPORT)
+function openQuickImportModal() {
+  const modal = document.getElementById('reading-quick-import-modal');
+  if (modal) {
+    const txtArea = document.getElementById('reading-quick-import-text');
+    if (txtArea) txtArea.value = '';
+    modal.showModal();
+  }
+}
+
+function closeQuickImportModal() {
+  const modal = document.getElementById('reading-quick-import-modal');
+  if (modal && modal.open) modal.close();
+}
+
+function handleQuickImportSubmit() {
+  const raw = (document.getElementById('reading-quick-import-text')?.value || '').trim();
+  if (!raw) {
+    return toast('Vui lòng dán nội dung đề thi vào ô văn bản!', 'bad');
+  }
+
+  // Bóc tách nguồn trích dẫn
+  let source = '';
+  const sourceMatch = raw.match(/\(Trích[^\)]+\)/i) || raw.match(/\([^\)]*(?:NXB|trang|tr\.)[^\)]*\)/i);
+  if (sourceMatch) {
+    source = sourceMatch[0].trim();
+  }
+
+  // Tác giả và tác phẩm từ nguồn trích dẫn nếu có
+  let author = '';
+  let work = '';
+  if (source) {
+    const afterTrich = source.replace(/^\(Trích\s*/i, '').replace(/\)$/, '');
+    const parts = afterTrich.split(/,|–|-/).map(p => p.trim());
+    if (parts.length >= 1) work = parts[0].replace(/["“”'']/g, '');
+    if (parts.length >= 2) author = parts[1];
+  }
+
+  // Tách câu hỏi
+  // Tìm các vị trí: Câu 1, Câu 2, Câu 3, Câu 4, Câu 5 hoặc II. Làm văn
+  const questionRegex = /(?:Câu\s*([1-5])\s*[:\.]|(?:II|2)\s*[\.\:]\s*LÀM\s*VĂN[^\n]*\n*Câu\s*1\s*(?:\([^\)]*\))?[:\.])/gi;
+  let firstQIndex = raw.search(/(?:Câu\s*1\s*[:\.]|Thực hiện các yêu cầu)/i);
+  if (firstQIndex === -1) firstQIndex = raw.search(/Câu\s*1/i);
+
+  let passage = '';
+  if (firstQIndex !== -1) {
+    passage = raw.slice(0, firstQIndex).trim();
+  } else {
+    passage = raw;
+  }
+
+  // Làm sạch phần mở đầu của đoạn trích (bỏ "I. PHẦN ĐỌC HIỂU", "Đọc đoạn trích:")
+  passage = passage.replace(/^[^\n]*PHẦN\s*ĐỌC\s*HIỂU[^\n]*\n+/i, '');
+  passage = passage.replace(/^[^\n]*Đọc\s*đoạn\s*trích[^\n]*\n+/i, '');
+  if (source && passage.includes(source)) {
+    passage = passage.replace(source, '').trim();
+  }
+
+  // Bóc tách danh sách câu hỏi
+  const questions = [];
+  const qBlocks = [];
+  const lines = raw.split('\n');
+  let currentQNum = null;
+  let currentQText = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const match = line.match(/^\s*Câu\s*([1-5])\s*[:\.]\s*(.*)$/i) || line.match(/LÀM\s*VĂN[^\n]*\n*Câu\s*1\s*(?:\([^\)]*\))?[:\.]\s*(.*)$/i);
+    const essayMatch = line.match(/^\s*(?:II|2)\s*[\.\:]\s*LÀM\s*VĂN/i);
+
+    if (match) {
+      if (currentQNum !== null && currentQText.length) {
+        qBlocks.push({ num: currentQNum, text: currentQText.join('\n').trim() });
+      }
+      currentQNum = match[1] ? parseInt(match[1]) : 5;
+      currentQText = [match[2] || ''];
+    } else if (essayMatch) {
+      // Chuyển sang câu làm văn (thường là câu 5 hoặc câu đoạn văn)
+      if (currentQNum !== null && currentQText.length) {
+        qBlocks.push({ num: currentQNum, text: currentQText.join('\n').trim() });
+      }
+      currentQNum = 5;
+      currentQText = [];
+    } else if (currentQNum !== null) {
+      currentQText.push(line);
+    }
+  }
+  if (currentQNum !== null && currentQText.length) {
+    qBlocks.push({ num: currentQNum, text: currentQText.join('\n').trim() });
+  }
+
+  // Điền vào form
+  const titleInput = document.getElementById('reading-form-title');
+  if (titleInput && !titleInput.value) {
+    titleInput.value = work ? `Đọc hiểu: ${work}` : 'Bài đọc hiểu mới';
+  }
+  const workInput = document.getElementById('reading-form-work');
+  if (workInput && work) workInput.value = work;
+  const authorInput = document.getElementById('reading-form-author');
+  if (authorInput && author) authorInput.value = author;
+  const passageInput = document.getElementById('reading-form-passage');
+  if (passageInput && passage) passageInput.value = passage;
+  const sourceInput = document.getElementById('reading-form-source');
+  if (sourceInput && source) sourceInput.value = source;
+
+  // Render câu hỏi bóc tách được
+  const qList = document.getElementById('reading-form-questions-list');
+  if (qList && qBlocks.length) {
+    qList.innerHTML = '';
+    qBlocks.forEach((qb, idx) => {
+      let level = 'nhan-biet';
+      if (idx === 0 || idx === 1) level = 'nhan-biet';
+      else if (idx === 2 || idx === 3) level = 'thong-hieu';
+      else level = 'van-dung';
+
+      addQuestionToReadingForm({
+        level,
+        text: qb.text,
+        guide: ''
+      });
+    });
+    renumberReadingFormQuestions();
+  }
+
+  closeQuickImportModal();
+  toast('Đã tự động bóc tách đề thi thành công!', 'ok');
+}
+
 function addQuestionToReadingForm(data = { level: 'nhan-biet', text: '', guide: '' }) {
   const qList = document.getElementById('reading-form-questions-list');
   if (!qList) return;
@@ -712,19 +1184,19 @@ function addQuestionToReadingForm(data = { level: 'nhan-biet', text: '', guide: 
       <span style="font-weight:800; font-size:14.5px;">Câu hỏi ${count + 1}</span>
       <div style="display:flex; gap:8px; align-items:center;">
         <select class="q-level-input" style="font-size:13px; padding:4px 8px; border-radius:8px;">
-          <option value="nhan-biet" ${data.level === 'nhan-biet' ? 'selected' : ''}>Nhận biết</option>
-          <option value="thong-hieu" ${data.level === 'thong-hieu' ? 'selected' : ''}>Thông hiểu</option>
-          <option value="van-dung" ${data.level === 'van-dung' ? 'selected' : ''}>Vận dụng</option>
-          <option value="van-dung-cao" ${data.level === 'van-dung-cao' ? 'selected' : ''}>Vận dụng cao</option>
+          <option value="nhan-biet" ${data.level === 'nhan-biet' ? 'selected' : ''}>🟢 Nhận biết (Câu 1, 2)</option>
+          <option value="thong-hieu" ${data.level === 'thong-hieu' ? 'selected' : ''}>🟡 Thông hiểu (Câu 3, 4)</option>
+          <option value="van-dung" ${data.level === 'van-dung' ? 'selected' : ''}>🟣 Vận dụng - Đoạn văn (Câu 5)</option>
+          <option value="van-dung-cao" ${data.level === 'van-dung-cao' ? 'selected' : ''}>🔴 Vận dụng cao (Mở rộng)</option>
         </select>
         <button type="button" class="btn no sm btn-icon-only" onclick="this.closest('.reading-modal-question-item').remove(); renumberReadingFormQuestions();" title="Xóa câu hỏi này">✕</button>
       </div>
     </div>
     <div style="margin-bottom:8px;">
-      <textarea class="q-text-input" rows="2" placeholder="Nội dung câu hỏi..." style="width:100%;" required>${esc(data.text || '')}</textarea>
+      <textarea class="q-text-input" rows="2" placeholder="Nội dung câu hỏi..." style="width:100%; font-family:inherit;" required>${esc(data.text || '')}</textarea>
     </div>
     <div>
-      <textarea class="q-guide-input" rows="2" placeholder="Gợi ý đáp án / Thang điểm..." style="width:100%; font-size:13.5px;">${esc(data.guide || '')}</textarea>
+      <textarea class="q-guide-input" rows="2" placeholder="Gợi ý đáp án / Thang điểm / Hướng dẫn chấm..." style="width:100%; font-size:13.5px; font-family:inherit;">${esc(data.guide || '')}</textarea>
     </div>
   `;
 
@@ -735,7 +1207,11 @@ function renumberReadingFormQuestions() {
   const items = document.querySelectorAll('#reading-form-questions-list .reading-modal-question-item');
   items.forEach((item, idx) => {
     const numEl = item.querySelector('.reading-modal-question-header span');
-    if (numEl) numEl.textContent = `Câu hỏi ${idx + 1}`;
+    let label = `Câu ${idx + 1}`;
+    if (idx === 0 || idx === 1) label += ' [Nhận biết]';
+    else if (idx === 2 || idx === 3) label += ' [Thông hiểu]';
+    else if (idx === 4) label += ' [Vận dụng - Đoạn văn]';
+    if (numEl) numEl.textContent = label;
   });
 }
 
@@ -744,6 +1220,7 @@ function handleReadingFormSubmit(e) {
 
   const id = document.getElementById('reading-form-id').value;
   const title = (document.getElementById('reading-form-title').value || '').trim();
+  const work = (document.getElementById('reading-form-work')?.value || '').trim();
   const category = (document.getElementById('reading-form-category').value || '').trim();
   const author = (document.getElementById('reading-form-author').value || '').trim();
   const genre = (document.getElementById('reading-form-genre').value || '').trim();
@@ -776,6 +1253,11 @@ function handleReadingFormSubmit(e) {
     return toast('Vui lòng thêm ít nhất 1 câu hỏi đọc hiểu!', 'bad');
   }
 
+  if (category && !readingCategories.includes(category)) {
+    readingCategories.push(category);
+  }
+
+  let targetSetId = id;
   if (id) {
     // Edit existing
     const idx = readingSets.findIndex(s => String(s.id) === String(id));
@@ -783,9 +1265,10 @@ function handleReadingFormSubmit(e) {
       readingSets[idx] = {
         ...readingSets[idx],
         title,
-        category,
+        work,
+        category: category || 'Nghị luận & Kỹ năng sống',
         author,
-        genre: genre || category,
+        genre: genre || category || 'Đọc hiểu',
         passage,
         source,
         questions
@@ -794,26 +1277,37 @@ function handleReadingFormSubmit(e) {
     }
   } else {
     // Create new
-    const newId = 'reading_user_' + Date.now();
+    targetSetId = 'reading_user_' + Date.now();
     const newSet = {
-      id: newId,
+      id: targetSetId,
       title,
-      category,
+      work,
+      category: category || 'Nghị luận & Kỹ năng sống',
       author,
-      genre: genre || category,
+      genre: genre || category || 'Đọc hiểu',
       passage,
       source,
       questions
     };
     readingSets.unshift(newSet);
-    toast('Đã tạo bộ đề đọc hiểu mới thành công!', 'ok');
+    toast('🎉 Đã tạo bộ đề đọc hiểu mới thành công!', 'ok');
   }
+
+  // Luôn reset bộ lọc để bộ đề mới tạo lập tức hiện lên đầu trang
+  currentReadingCategory = 'all';
+  readingSearchQuery = '';
+  const searchInput = document.getElementById('reading-search-input');
+  if (searchInput) searchInput.value = '';
 
   saveReadingData();
   closeReadingEditModal();
 
-  if (currentReadingSetId) {
-    const updated = readingSets.find(s => String(s.id) === String(currentReadingSetId));
+  // Đồng bộ cả giao diện Thư viện (Kho học liệu) nếu đang mở
+  if (typeof updateLibTabsUI === 'function') updateLibTabsUI();
+  if (typeof renderLibReadingPane === 'function') renderLibReadingPane();
+
+  if (currentReadingSetId && currentReadingSetId === targetSetId) {
+    const updated = readingSets.find(s => String(s.id) === String(targetSetId));
     if (updated) renderReadingWorkspace(updated);
   } else {
     renderReadingListView();
@@ -890,4 +1384,10 @@ function promptDeleteCurrentReadingCategory() {
   saveReadingData();
   toast(`Đã xóa chủ đề "${catToDelete}"`, 'ok');
   renderReadingListView();
+}
+
+// Tự động khởi tạo dữ liệu đọc hiểu ngay khi nạp script
+initReadingModule();
+if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
+  exitReadingWorkspace();
 }

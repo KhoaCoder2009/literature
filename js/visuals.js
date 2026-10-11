@@ -146,50 +146,50 @@ const HERO_STUDY_QUOTES = [
     quote: '“Non sông Việt Nam có trở nên tươi đẹp hay không, dân tộc Việt Nam có bước tới đài vinh quang để sánh vai với các cường quốc năm châu được hay không, chính là nhờ một phần lớn ở công học tập của các em.”',
     author: '— Chủ tịch Hồ Chí Minh —',
     img: './assets/bac-ho.jpg',
-    accent: '#f59e0b',
+    accent: '#b45309',
     border: '#f59e0b',
-    bgLight: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)',
-    bgDark: 'linear-gradient(135deg, #451a03 0%, #78350f 100%)'
+    bgLight: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 45%, #fffdf5 100%)',
+    bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   },
   {
     tag: '💡 TRI THỨC LÀ SỨC MẠNH',
     quote: '“Học, học nữa, học mãi.”',
     author: '— V.I. Lê-nin —',
     img: './assets/lenin.jpg',
-    accent: '#ef4444',
+    accent: '#dc2626',
     border: '#ef4444',
-    bgLight: 'linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%)',
-    bgDark: 'linear-gradient(135deg, #450a0a 0%, #7f1d1d 100%)'
+    bgLight: 'linear-gradient(135deg, #fef2f2 0%, #fee2e2 45%, #fffdf8 100%)',
+    bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   },
   {
     tag: '🌟 BẢN LĨNH TRI THỨC',
     quote: '“Giáo dục là vũ khí mạnh nhất mà bạn có thể dùng để thay đổi thế giới.”',
     author: '— Nelson Mandela —',
     img: './assets/mandela.jpg',
-    accent: '#10b981',
+    accent: '#059669',
     border: '#10b981',
-    bgLight: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
-    bgDark: 'linear-gradient(135deg, #022c22 0%, #064e3b 100%)'
+    bgLight: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 45%, #fafffd 100%)',
+    bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   },
   {
     tag: '✨ ÁNH SÁNG TÂM HỒN',
     quote: '“Văn học là nhân đạo hóa con người.”',
     author: '— Victor Hugo —',
     img: './assets/victor-hugo.jpg',
-    accent: '#8b5cf6',
+    accent: '#7c3aed',
     border: '#8b5cf6',
-    bgLight: 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)',
-    bgDark: 'linear-gradient(135deg, #2e1065 0%, #4c1d95 100%)'
+    bgLight: 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 45%, #fcfaff 100%)',
+    bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   },
   {
     tag: '📚 ĐAM MÊ KHÁM PHÁ',
     quote: '“Học tập không bao giờ làm cạn kiệt trí óc.”',
     author: '— Leonardo da Vinci —',
     img: './assets/aristotle.jpg',
-    accent: '#06b6d4',
+    accent: '#0891b2',
     border: '#06b6d4',
-    bgLight: 'linear-gradient(135deg, #ecfeff 0%, #cffafe 100%)',
-    bgDark: 'linear-gradient(135deg, #083344 0%, #164e63 100%)'
+    bgLight: 'linear-gradient(135deg, #ecfeff 0%, #cffafe 45%, #fafffd 100%)',
+    bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   }
 ];
 
@@ -200,8 +200,10 @@ function applyHeroQuote(idx, animate = true) {
   const item = HERO_STUDY_QUOTES[idx];
   if (!item) return;
 
+  const showcase = document.querySelector('#hero-showcase');
   const card = document.querySelector('#hero-study-card');
   const img = document.querySelector('#study-img');
+  const imgWrap = document.querySelector('#study-img-wrap');
   const tag = document.querySelector('#study-tag');
   const quote = document.querySelector('#study-quote');
   const author = document.querySelector('#study-author');
@@ -211,9 +213,9 @@ function applyHeroQuote(idx, animate = true) {
   const updateContent = () => {
     img.src = item.img;
     img.alt = item.author;
-    tag.textContent = item.tag;
+    if (tag) tag.textContent = item.tag;
     quote.textContent = item.quote;
-    author.textContent = item.author;
+    if (author) author.textContent = item.author;
 
     // Apply font size adjustment for long quotes
     if (item.quote.length > 90) {
@@ -223,23 +225,41 @@ function applyHeroQuote(idx, animate = true) {
     }
 
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    card.style.background = isDark ? item.bgDark : item.bgLight;
-    card.style.borderColor = item.border;
-    tag.style.color = item.accent;
+    
+    // Đảm bảo thẻ con hero-study-card luôn trong suốt, không bao giờ tạo khối chữ nhật cắt vụn:
+    card.style.background = 'transparent';
+    card.style.border = 'none';
+    card.style.boxShadow = 'none';
+
+    // Đổi màu nền mượt mà trực tiếp trên toàn bộ khung hero-showcase lớn:
+    if (showcase) {
+      showcase.style.background = isDark ? item.bgDark : item.bgLight;
+    }
+    if (tag) {
+      tag.style.color = item.accent;
+    }
+    if (author) {
+      author.style.color = isDark ? '#fde047' : item.accent;
+    }
+    if (imgWrap) {
+      imgWrap.style.boxShadow = isDark
+        ? `0 12px 28px rgba(0, 0, 0, 0.5), 0 0 0 2.5px ${item.accent}66`
+        : `0 12px 28px rgba(0, 0, 0, 0.12), 0 0 0 2.5px ${item.accent}55`;
+    }
   };
 
   if (animate && typeof gsap !== 'undefined') {
     gsap.to(card, {
       opacity: 0,
-      scale: 0.98,
-      duration: 0.25,
+      y: 6,
+      duration: 0.2,
       ease: 'power2.in',
       onComplete: () => {
         updateContent();
         gsap.to(card, {
           opacity: 1,
-          scale: 1,
-          duration: 0.4,
+          y: 0,
+          duration: 0.35,
           ease: 'power2.out'
         });
       }

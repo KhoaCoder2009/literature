@@ -75,3 +75,84 @@ with check (
   and game_mode in ('quiz', 'timed', 'boss')
   and elapsed_seconds >= 0
 );
+
+-- ============================================================================
+-- 3. BẢNG LỊCH SỬ BÀI LÀM (QUIZ_SUBMISSIONS)
+-- ============================================================================
+create table if not exists public.quiz_submissions (
+  id text primary key,
+  user_id text default '',
+  type text not null default 'quiz', -- 'quiz' hoặc 'reading'
+  player_name text not null default 'Học sinh',
+  class_name text default '',
+  set_id text not null,
+  set_title text not null,
+  set_topic text default '',
+  set_emo text default '📖',
+  score integer not null default 0,
+  correct_count integer not null default 0,
+  wrong_count integer not null default 0,
+  saved_short_count integer not null default 0,
+  total_questions integer not null default 0,
+  accuracy numeric(5, 2) not null default 0,
+  elapsed_seconds integer not null default 0,
+  details jsonb not null default '[]'::jsonb,
+  created_at timestamptz not null default now()
+);
+
+alter table public.quiz_submissions enable row level security;
+
+drop policy if exists "Public read access for quiz submissions" on public.quiz_submissions;
+create policy "Public read access for quiz submissions"
+on public.quiz_submissions for select
+using (true);
+
+drop policy if exists "Public insert access for quiz submissions" on public.quiz_submissions;
+create policy "Public insert access for quiz submissions"
+on public.quiz_submissions for insert
+with check (true);
+
+drop policy if exists "Public update access for quiz submissions" on public.quiz_submissions;
+create policy "Public update access for quiz submissions"
+on public.quiz_submissions for update
+using (true)
+with check (true);
+
+drop policy if exists "Public delete access for quiz submissions" on public.quiz_submissions;
+create policy "Public delete access for quiz submissions"
+on public.quiz_submissions for delete
+using (true);
+
+-- ============================================================================
+-- 4. BẢNG TÀI KHOẢN NGƯỜI DÙNG (USER_ACCOUNTS - DÀNH CHO TÍNH NĂNG ĐĂNG NHẬP)
+-- ============================================================================
+create table if not exists public.user_accounts (
+  id text primary key,
+  username text unique not null,
+  password_hash text not null,
+  full_name text not null,
+  class_name text default '',
+  role text not null default 'student', -- 'student' (học sinh), 'teacher' (giáo viên), 'admin'
+  avatar text default '👤',
+  created_at timestamptz not null default now(),
+  last_login timestamptz default now()
+);
+
+alter table public.user_accounts enable row level security;
+
+drop policy if exists "Public read access for user accounts" on public.user_accounts;
+create policy "Public read access for user accounts"
+on public.user_accounts for select
+using (true);
+
+drop policy if exists "Public insert access for user accounts" on public.user_accounts;
+create policy "Public insert access for user accounts"
+on public.user_accounts for insert
+with check (true);
+
+drop policy if exists "Public update access for user accounts" on public.user_accounts;
+create policy "Public update access for user accounts"
+on public.user_accounts for update
+using (true)
+with check (true);
+

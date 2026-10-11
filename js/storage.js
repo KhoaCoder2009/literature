@@ -334,3 +334,668 @@ async function saveScoreToLeaderboard() {
     G.scoreSavePending = false;
   }
 }
+
+// =========================================================================
+// QUIZ & SUBMISSION HISTORY SYSTEM (LỊCH SỬ BÀI LÀM - CLOUD + LOCAL)
+// =========================================================================
+
+const QUIZ_HISTORY_KEY = 'vq_quiz_history_v1';
+let currentHistorySearchQuery = '';
+let isSyncingQuizHistory = false;
+
+function getQuizHistory() {
+  try {
+    const raw = localStorage.getItem(QUIZ_HISTORY_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    console.error('Failed to parse quiz history:', e);
+    return [];
+  }
+}
+
+function mapSupabaseRowToHistory(row) {
+  const d = new Date(row.created_at || Date.now());
+  return {
+    id: String(row.id),
+    userId: row.user_id || '',
+    timestamp: d.getTime(),
+    dateStr: d.toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' }),
+    type: row.type || 'quiz',
+    playerName: row.player_name || 'Học sinh',
+    className: row.class_name || '',
+    setId: row.set_id || '',
+    setTitle: row.set_title || 'Bài làm',
+    setTopic: row.set_topic || '',
+    setEmo: row.set_emo || '📖',
+    score: Number(row.score) || 0,
+    correctCount: Number(row.correct_count) || 0,
+    wrongCount: Number(row.wrong_count) || 0,
+    savedShortCount: Number(row.saved_short_count) || 0,
+    answeredCount: Number(row.saved_short_count) || 0,
+    totalQuestions: Number(row.total_questions) || 0,
+    accuracy: Number(row.accuracy) || 0,
+    elapsedSeconds: Number(row.elapsed_seconds) || 0,
+    details: Array.isArray(row.details) ? row.details : []
+  };
+}
+
+async function saveQuizAttemptToSupabase(entry) {
+  if (!isSupabaseConfigured()) return;
+  try {
+    const table = appConfig.supabase.historyTable || 'quiz_submissions';
+    const url = `${appConfig.supabase.url.replace(/\/$/, '')}/rest/v1/${table}`;
+    const row = {
+      id: String(entry.id),
+      user_id: localStorage.getItem('vq_user_id') || '',
+      type: entry.type || 'quiz',
+      player_name: String(entry.playerName || 'Học sinh').trim().slice(0, 50),
+      class_name: String(entry.className || '').trim().slice(0, 30),
+      set_id: String(entry.setId || ''),
+      set_title: String(entry.setTitle || 'Bài làm').slice(0, 100),
+      set_topic: String(entry.setTopic || '').slice(0, 100),
+      set_emo: String(entry.setEmo || '📖').slice(0, 10),
+      score: Math.max(0, Number(entry.score) || 0),
+      correct_count: Math.max(0, Number(entry.correctCount) || 0),
+      wrong_count: Math.max(0, Number(entry.wrongCount) || 0),
+      saved_short_count: Math.max(0, Number(entry.savedShortCount || entry.answeredCount) || 0),
+      total_questions: Math.max(0, Number(entry.totalQuestions) || 0),
+      accuracy: Math.min(100, Math.max(0, Number(entry.accuracy) || 0)),
+      elapsed_seconds: Math.max(0, Number(entry.elapsedSeconds) || 0),
+      details: Array.isArray(entry.details) ? entry.details : [],
+      created_at: new Date(entry.timestamp || Date.now()).toISOString()
+    };
+
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'apikey': appConfig.supabase.anonKey,
+        'Authorization': `Bearer ${appConfig.supabase.anonKey}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify(row)
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      console.warn('Supabase history save note:', res.status, errText);
+    }
+  } catch (err) {
+    console.warn('Supabase history sync error:', err);
+  }
+}
+
+async function loadQuizHistoryFromSupabase(forceNotice) {
+  if (!isSupabaseConfigured() || isSyncingQuizHistory) return;
+  const indicator = document.getElementById('history-sync-indicator');
+  const pageBadge = document.getElementById('history-sync-badge-page');
+  const setIndicatorText = (txt, cls) => {
+    if (indicator) indicator.textContent = txt;
+    if (pageBadge) {
+      pageBadge.textContent = txt;
+      pageBadge.className = 'sync-badge ' + (cls || '');
+    }
+  };
+  setIndicatorText('☁️ Đang đồng bộ...');
+  isSyncingQuizHistory = true;
+
+  try {
+    const table = appConfig.supabase.historyTable || 'quiz_submissions';
+    const url = `${appConfig.supabase.url.replace(/\/$/, '')}/rest/v1/${table}?select=*&order=created_at.desc&limit=100`;
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'apikey': appConfig.supabase.anonKey,
+        'Authorization': `Bearer ${appConfig.supabase.anonKey}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (res.ok) {
+      const rows = await res.json();
+      if (Array.isArray(rows) && rows.length > 0) {
+        const cloudEntries = rows.map(mapSupabaseRowToHistory);
+        const localList = getQuizHistory();
+        const mergedMap = new Map();
+        cloudEntries.forEach(item => mergedMap.set(String(item.id), item));
+        localList.forEach(item => {
+          if (!mergedMap.has(String(item.id))) {
+            mergedMap.set(String(item.id), item);
+          }
+        });
+        const mergedList = Array.from(mergedMap.values())
+          .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
+          .slice(0, 100);
+
+        localStorage.setItem(QUIZ_HISTORY_KEY, JSON.stringify(mergedList));
+        renderHistoryList();
+        if (typeof renderHistoryPage === 'function') renderHistoryPage();
+        setIndicatorText('☁️ Đã đồng bộ Database', 'saved');
+        if (forceNotice) toast('Đã đồng bộ lịch sử bài làm từ máy chủ!', 'ok');
+      } else {
+        setIndicatorText('☁️ Đã kết nối Database', 'saved');
+      }
+    } else {
+      setIndicatorText('💾 Lưu trên máy', '');
+    }
+  } catch (err) {
+    console.warn('Load history from Supabase failed:', err);
+    setIndicatorText('💾 Lưu trên máy', '');
+  } finally {
+    isSyncingQuizHistory = false;
+  }
+}
+
+function saveQuizAttemptToHistory(entry) {
+  try {
+    const history = getQuizHistory();
+    history.unshift(entry);
+    if (history.length > 100) history.length = 100;
+    localStorage.setItem(QUIZ_HISTORY_KEY, JSON.stringify(history));
+
+    saveQuizAttemptToSupabase(entry);
+    return true;
+  } catch (e) {
+    console.error('Failed to save quiz attempt to history:', e);
+    return false;
+  }
+}
+
+function deleteHistoryItem(id) {
+  if (!confirm('Bạn có chắc chắn muốn xóa bản ghi lịch sử này?')) return;
+  try {
+    let history = getQuizHistory();
+    history = history.filter(item => String(item.id) !== String(id));
+    localStorage.setItem(QUIZ_HISTORY_KEY, JSON.stringify(history));
+    renderHistoryList();
+    if (typeof renderHistoryPage === 'function') renderHistoryPage();
+    toast('Đã xóa lượt làm bài khỏi lịch sử.', 'ok');
+
+    if (isSupabaseConfigured()) {
+      const table = appConfig.supabase.historyTable || 'quiz_submissions';
+      const url = `${appConfig.supabase.url.replace(/\/$/, '')}/rest/v1/${table}?id=eq.${encodeURIComponent(String(id))}`;
+      fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'apikey': appConfig.supabase.anonKey,
+          'Authorization': `Bearer ${appConfig.supabase.anonKey}`
+        }
+      }).catch(e => console.warn('Supabase history delete failed:', e));
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function clearAllQuizHistory() {
+  const history = getQuizHistory();
+  if (!history.length) return toast('Lịch sử hiện đang trống.', 'bad');
+  if (!confirm(`Bạn có chắc muốn xóa toàn bộ ${history.length} lượt làm bài trong lịch sử trên máy này?`)) return;
+  try {
+    localStorage.removeItem(QUIZ_HISTORY_KEY);
+    renderHistoryList();
+    if (typeof renderHistoryPage === 'function') renderHistoryPage();
+    toast('Đã xóa toàn bộ lịch sử bài làm trên máy này.', 'ok');
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+// =========================================================================
+// DEDICATED HISTORY PAGE ROUTING & RENDERING (TRANG LỊCH SỬ RIÊNG BIỆT)
+// =========================================================================
+
+let currentHistoryTypeFilter = 'all'; // 'all' | 'quiz' | 'reading'
+let historyPageSearchQuery = '';
+let historyPageSetFilter = '';
+
+R.history = (targetSetId) => {
+  if (targetSetId) {
+    historyPageSetFilter = String(targetSetId);
+  }
+  const searchInput = document.getElementById('history-page-search');
+  if (searchInput && !targetSetId) {
+    historyPageSearchQuery = searchInput.value.trim().toLowerCase();
+  } else if (searchInput && targetSetId) {
+    searchInput.value = '';
+    historyPageSearchQuery = '';
+  }
+
+  updateHistoryPageSetDropdown();
+  renderHistoryPage();
+
+  if (isSupabaseConfigured()) {
+    loadQuizHistoryFromSupabase(false);
+  }
+};
+
+function setHistoryTypeFilter(type) {
+  currentHistoryTypeFilter = type || 'all';
+  document.querySelectorAll('#s-history .topic-chip').forEach(btn => {
+    btn.classList.toggle('active', btn.id === `hist-chip-${type}`);
+  });
+  renderHistoryPage();
+}
+
+function onHistoryPageSearchInput() {
+  const input = document.getElementById('history-page-search');
+  historyPageSearchQuery = (input ? input.value : '').trim().toLowerCase();
+  renderHistoryPage();
+}
+
+function onHistoryPageSetFilterChange() {
+  const select = document.getElementById('history-page-set-filter');
+  historyPageSetFilter = select ? select.value : '';
+  renderHistoryPage();
+}
+
+function clearHistoryPageSetFilter() {
+  historyPageSetFilter = '';
+  historyPageSearchQuery = '';
+  const searchInput = document.getElementById('history-page-search');
+  if (searchInput) searchInput.value = '';
+  const select = document.getElementById('history-page-set-filter');
+  if (select) select.value = '';
+  renderHistoryPage();
+}
+
+function updateHistoryPageSetDropdown() {
+  const select = document.getElementById('history-page-set-filter');
+  if (!select) return;
+  const allHistory = getQuizHistory();
+  const setMap = new Map();
+  allHistory.forEach(item => {
+    const sId = String(item.setId || '');
+    if (sId && !setMap.has(sId)) {
+      setMap.set(sId, { id: sId, title: item.setTitle || 'Bộ đề', emo: item.setEmo || '📖', count: 1 });
+    } else if (sId && setMap.has(sId)) {
+      setMap.get(sId).count++;
+    }
+  });
+
+  const curVal = historyPageSetFilter || '';
+  let html = `<option value="">📚 Tất cả bộ đề (${allHistory.length})</option>`;
+  Array.from(setMap.values()).forEach(s => {
+    const sel = s.id === curVal ? 'selected' : '';
+    html += `<option value="${esc(s.id)}" ${sel}>${s.emo} ${esc(s.title)} (${s.count} lượt)</option>`;
+  });
+  select.innerHTML = html;
+}
+
+function renderHistoryPage() {
+  const container = document.getElementById('history-page-list-container');
+  if (!container) return;
+
+  const allHistory = getQuizHistory();
+  updateHistoryPageSetDropdown();
+
+  // 1. Stats calculation
+  const totalAttempts = allHistory.length;
+  let totalAcc = 0;
+  let accCount = 0;
+  let totalSavedShort = 0;
+  let totalSecs = 0;
+
+  allHistory.forEach(h => {
+    if (h.type === 'quiz' || !h.type) {
+      if (h.accuracy !== undefined) {
+        totalAcc += Number(h.accuracy) || 0;
+        accCount++;
+      }
+      totalSavedShort += Number(h.savedShortCount) || 0;
+      totalSecs += Number(h.elapsedSeconds) || 0;
+    } else if (h.type === 'reading') {
+      totalSavedShort += Number(h.answeredCount) || 0;
+    }
+  });
+
+  const avgAcc = accCount ? Math.round(totalAcc / accCount) : 0;
+  const totalMins = Math.round(totalSecs / 60);
+
+  const statAttemptsEl = document.getElementById('stat-total-attempts');
+  const statAvgAccEl = document.getElementById('stat-avg-accuracy');
+  const statSavedShortEl = document.getElementById('stat-total-saved-short');
+  const statTotalTimeEl = document.getElementById('stat-total-time');
+
+  if (statAttemptsEl) statAttemptsEl.textContent = totalAttempts;
+  if (statAvgAccEl) statAvgAccEl.textContent = `${avgAcc}%`;
+  if (statSavedShortEl) statSavedShortEl.textContent = totalSavedShort;
+  if (statTotalTimeEl) statTotalTimeEl.textContent = totalMins > 60 ? `${Math.floor(totalMins/60)}h ${totalMins%60}p` : `${totalMins}p`;
+
+  const countAllEl = document.getElementById('hist-count-all');
+  const countQuizEl = document.getElementById('hist-count-quiz');
+  const countReadingEl = document.getElementById('hist-count-reading');
+  if (countAllEl) countAllEl.textContent = `(${allHistory.length})`;
+  if (countQuizEl) countQuizEl.textContent = `(${allHistory.filter(h => h.type === 'quiz' || !h.type).length})`;
+  if (countReadingEl) countReadingEl.textContent = `(${allHistory.filter(h => h.type === 'reading').length})`;
+
+  // 2. Filter records
+  let filtered = allHistory;
+  if (currentHistoryTypeFilter && currentHistoryTypeFilter !== 'all') {
+    filtered = filtered.filter(h => {
+      const isQuiz = h.type === 'quiz' || !h.type;
+      return currentHistoryTypeFilter === 'quiz' ? isQuiz : h.type === 'reading';
+    });
+  }
+
+  if (historyPageSetFilter) {
+    filtered = filtered.filter(h => String(h.setId) === String(historyPageSetFilter));
+  }
+
+  if (historyPageSearchQuery) {
+    filtered = filtered.filter(h => {
+      const hay = (String(h.setTitle) + ' ' + String(h.playerName) + ' ' + String(h.className) + ' ' + String(h.setTopic || '')).toLowerCase();
+      return hay.includes(historyPageSearchQuery);
+    });
+  }
+
+  // Active filter badge update
+  const badgeWrap = document.getElementById('history-page-active-filter-badge');
+  const badgeText = document.getElementById('history-page-filter-badge-text');
+  if (badgeWrap && badgeText) {
+    if (historyPageSetFilter) {
+      const targetItem = allHistory.find(h => String(h.setId) === String(historyPageSetFilter));
+      const targetTitle = targetItem ? targetItem.setTitle : 'Bộ câu hỏi đã chọn';
+      badgeText.innerHTML = `🔍 Đang xem lịch sử bộ đề: <b>${esc(targetTitle)}</b> (${filtered.length} lượt)`;
+      badgeWrap.style.display = 'flex';
+    } else {
+      badgeWrap.style.display = 'none';
+    }
+  }
+
+  if (!filtered.length) {
+    container.innerHTML = `
+      <div class="card empty-history-box" style="text-align:center; padding:50px 20px; border-radius:24px;">
+        <span class="empty-history-icon" style="font-size:52px; display:block; margin-bottom:12px;">📜</span>
+        <h3 style="margin:0 0 8px; font-weight:800; font-size:20px;">Chưa có lịch sử làm bài phù hợp</h3>
+        <p class="mut" style="margin:0 auto; max-width:520px; font-size:14.5px;">
+          ${allHistory.length ? 'Không tìm thấy lượt làm bài nào phù hợp với bộ lọc hoặc từ khóa tìm kiếm.' : 'Sau khi bạn hoàn thành ôn tập hoặc đọc hiểu, toàn bộ bài làm và câu trả lời sẽ tự động lưu lại tại đây và đồng bộ lên Database.'}
+        </p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(item => {
+    const isQuiz = item.type === 'quiz' || !item.type;
+    const typeIcon = item.type === 'reading' ? '📑' : '📖';
+    const typeName = item.type === 'reading' ? 'Đọc hiểu' : 'Bài học';
+
+    let statsHtml = '';
+    if (isQuiz) {
+      statsHtml = `
+        <span class="history-pill pill-score">🏆 ${item.score || 0} điểm</span>
+        <span class="history-pill pill-acc">🎯 ${item.accuracy || 0}% (${item.correctCount || 0}/${item.totalQuestions || 0} đúng)</span>
+        ${item.savedShortCount ? `<span class="history-pill pill-short">📝 ${item.savedShortCount} tự luận đã lưu</span>` : ''}
+        <span class="history-pill pill-time">⏱️ ${item.elapsedSeconds ? Math.floor(item.elapsedSeconds / 60) + 'p ' + (item.elapsedSeconds % 60) + 's' : '—'}</span>
+      `;
+    } else if (item.type === 'reading') {
+      statsHtml = `
+        <span class="history-pill pill-score">📑 ${item.answeredCount || 0}/${item.totalQuestions || 0} câu đã trả lời</span>
+        <span class="history-pill pill-time">⏱️ ${item.dateStr || ''}</span>
+      `;
+    }
+
+    return `
+      <div class="history-item-card">
+        <div class="history-item-top">
+          <div class="history-item-title-box">
+            <span class="history-item-badge">${typeIcon} ${typeName}</span>
+            <h4 class="history-item-title" onclick="openHistoryForSet('${esc(item.setId)}', '${esc(item.setTitle)}')" style="cursor:pointer;" title="Nhấp để chỉ xem các bài làm của bộ đề này">
+              ${esc(item.setTitle || 'Bài làm')}
+            </h4>
+          </div>
+          <span class="history-item-date">${item.dateStr || ''}</span>
+        </div>
+
+        <div class="history-item-meta">
+          <span>👤 Học sinh: <b>${esc(item.playerName || 'Học sinh')}</b></span>
+          ${item.className ? `<span>· Lớp: <b>${esc(item.className)}</b></span>` : ''}
+          ${item.setTopic ? `<span>· Chủ đề: <b>${esc(item.setTopic)}</b></span>` : ''}
+        </div>
+
+        <div class="history-item-stats">
+          ${statsHtml}
+        </div>
+
+        <div class="history-item-footer">
+          <button class="btn au sm" type="button" onclick="viewHistoryDetail('${esc(item.id)}')">
+            👁️ Xem chi tiết bài làm
+          </button>
+          <button class="btn no sm btn-icon-only" type="button" onclick="deleteHistoryItem('${esc(item.id)}')" title="Xóa lượt này">
+            🗑️
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openHistoryForSet(setId, setTitle) {
+  go('history', setId);
+}
+
+function openHistoryModal(setId = '') {
+  go('history', setId);
+}
+
+function closeHistoryModal() {
+  const dialog = document.getElementById('quiz-history-dialog');
+  if (dialog && dialog.open) dialog.close();
+}
+
+function onHistorySearchInput() {
+  const input = document.getElementById('history-search-input');
+  currentHistorySearchQuery = (input ? input.value : '').trim().toLowerCase();
+  renderHistoryList();
+}
+
+function renderHistoryList() {
+  const container = document.getElementById('history-list-container');
+  const countBadge = document.getElementById('history-total-count');
+  if (!container) return;
+
+  const allHistory = getQuizHistory();
+  updateHistorySetFilterDropdown();
+
+  let filtered = allHistory;
+  if (currentHistorySetFilter) {
+    filtered = filtered.filter(h => String(h.setId) === String(currentHistorySetFilter));
+  }
+  if (currentHistorySearchQuery) {
+    filtered = filtered.filter(h => {
+      const hay = (String(h.setTitle) + ' ' + String(h.playerName) + ' ' + String(h.className) + ' ' + String(h.setTopic || '')).toLowerCase();
+      return hay.includes(currentHistorySearchQuery);
+    });
+  }
+
+  if (countBadge) {
+    countBadge.textContent = currentHistorySetFilter 
+      ? `${filtered.length}/${allHistory.length} lượt bài này`
+      : `${allHistory.length} lượt làm bài`;
+  }
+
+  // Update active filter badge
+  const badgeWrap = document.getElementById('history-active-filter-badge');
+  const badgeText = document.getElementById('history-filter-badge-text');
+  if (badgeWrap && badgeText) {
+    if (currentHistorySetFilter) {
+      const targetItem = allHistory.find(h => String(h.setId) === String(currentHistorySetFilter));
+      const targetTitle = targetItem ? targetItem.setTitle : 'Bộ câu hỏi đã chọn';
+      badgeText.innerHTML = `🔍 Lọc theo bộ đề: <b>${esc(targetTitle)}</b> (${filtered.length} lượt làm)`;
+      badgeWrap.style.display = 'flex';
+    } else {
+      badgeWrap.style.display = 'none';
+    }
+  }
+
+  if (!filtered.length) {
+    container.innerHTML = `
+      <div class="empty-history-box">
+        <span class="empty-history-icon">📜</span>
+        <h3 style="margin:8px 0 4px; font-weight:800;">Chưa có lịch sử bài làm nào</h3>
+        <p class="mut" style="margin:0; font-size:14px;">
+          ${allHistory.length ? 'Không tìm thấy lượt làm bài nào cho bộ đề hoặc từ khóa này.' : 'Sau khi bạn hoàn thành bài học hoặc đọc hiểu, kết quả và câu trả lời sẽ tự động được lưu lại tại đây.'}
+        </p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(item => {
+    const isQuiz = item.type === 'quiz' || !item.type;
+    const typeIcon = item.type === 'reading' ? '📑' : '📖';
+    const typeName = item.type === 'reading' ? 'Đọc hiểu' : 'Bài học';
+
+    let statsHtml = '';
+    if (isQuiz) {
+      statsHtml = `
+        <span class="history-pill pill-score">🏆 ${item.score || 0} điểm</span>
+        <span class="history-pill pill-acc">🎯 ${item.accuracy || 0}% (${item.correctCount || 0}/${item.totalQuestions || 0} câu đúng)</span>
+        ${item.savedShortCount ? `<span class="history-pill pill-short">📝 ${item.savedShortCount} câu tự luận đã lưu</span>` : ''}
+        <span class="history-pill pill-time">⏱️ ${item.elapsedSeconds ? Math.floor(item.elapsedSeconds / 60) + 'p ' + (item.elapsedSeconds % 60) + 's' : '—'}</span>
+      `;
+    } else if (item.type === 'reading') {
+      statsHtml = `
+        <span class="history-pill pill-score">📑 ${item.answeredCount || 0}/${item.totalQuestions || 0} câu đã trả lời</span>
+        <span class="history-pill pill-time">⏱️ ${item.dateStr || ''}</span>
+      `;
+    }
+
+    return `
+      <div class="history-item-card">
+        <div class="history-item-top">
+          <div class="history-item-title-box">
+            <span class="history-item-badge">${typeIcon} ${typeName}</span>
+            <h4 class="history-item-title" onclick="openHistoryForSet('${esc(item.setId)}', '${esc(item.setTitle)}')" style="cursor:pointer;" title="Nhấp để chỉ xem các bài làm của bộ đề này">${esc(item.setTitle || 'Bài làm')}</h4>
+          </div>
+          <span class="history-item-date">${item.dateStr || ''}</span>
+        </div>
+
+        <div class="history-item-meta">
+          <span>👤 <b>${esc(item.playerName || 'Học sinh')}</b></span>
+          ${item.className ? `<span>· Lớp: <b>${esc(item.className)}</b></span>` : ''}
+          ${item.setTopic ? `<span>· Chủ đề: <b>${esc(item.setTopic)}</b></span>` : ''}
+        </div>
+
+        <div class="history-item-stats">
+          ${statsHtml}
+        </div>
+
+        <div class="history-item-footer">
+          <button class="btn au sm" type="button" onclick="viewHistoryDetail('${esc(item.id)}')">
+            👁️ Xem chi tiết bài làm
+          </button>
+          <button class="btn no sm btn-icon-only" type="button" onclick="deleteHistoryItem('${esc(item.id)}')" title="Xóa lượt này">
+            🗑️
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function viewHistoryDetail(id) {
+  const history = getQuizHistory();
+  const item = history.find(h => String(h.id) === String(id));
+  if (!item) return toast('Không tìm thấy bài làm trong lịch sử.', 'bad');
+
+  const titleEl = document.getElementById('history-detail-title');
+  const metaEl = document.getElementById('history-detail-meta');
+  const listEl = document.getElementById('history-detail-questions-list');
+  const dialog = document.getElementById('history-detail-dialog');
+
+  if (titleEl) titleEl.textContent = `${item.setTitle || 'Chi tiết bài làm'}`;
+  if (metaEl) {
+    metaEl.innerHTML = `
+      <div style="display:flex; flex-wrap:wrap; gap:12px; font-size:13.5px; margin-bottom:14px; background:var(--bg-base); border:2px solid var(--stroke); border-radius:14px; padding:12px 16px;">
+        <span>👤 Học sinh: <b>${esc(item.playerName || 'Học sinh')}</b></span>
+        ${item.className ? `<span>· Lớp: <b>${esc(item.className)}</b></span>` : ''}
+        <span>· Ngày làm: <b>${item.dateStr || ''}</b></span>
+        ${item.score !== undefined ? `<span>· Điểm số: <b>${item.score}</b> pts</span>` : ''}
+        ${item.accuracy !== undefined ? `<span>· Độ chính xác: <b>${item.accuracy}%</b></span>` : ''}
+        ${item.savedShortCount ? `<span>· Tự luận: <b>${item.savedShortCount} câu đã lưu</b></span>` : ''}
+      </div>
+    `;
+  }
+
+  if (listEl) {
+    const details = Array.isArray(item.details) ? item.details : [];
+    if (!details.length) {
+      listEl.innerHTML = '<p class="mut">Không có dữ liệu chi tiết cho bài làm này.</p>';
+    } else {
+      listEl.innerHTML = details.map((d, idx) => {
+        let badgeCls = 'bad';
+        let badgeTxt = '❌ Chưa chính xác';
+        if (d.status === 'ok') {
+          badgeCls = 'ok';
+          badgeTxt = '✅ Đúng';
+        } else if (d.status === 'saved') {
+          badgeCls = 'cy';
+          badgeTxt = '📝 Tự luận đã lưu (Chờ chấm)';
+        } else if (d.status === 'no') {
+          badgeCls = 'gh';
+          badgeTxt = '⏰ Bỏ qua';
+        }
+
+        return `
+          <div class="history-detail-q-card">
+            <div class="history-detail-q-head">
+              <span class="history-detail-q-num">Câu ${idx + 1}</span>
+              <span class="tag ${badgeCls}">${badgeTxt}</span>
+            </div>
+            <div class="history-detail-q-body">
+              <p class="history-detail-q-text"><b>${esc(d.questionText)}</b></p>
+              <div class="history-detail-ans-row">
+                <span class="history-detail-ans-label">Câu trả lời của bạn:</span>
+                <span class="history-detail-ans-val ${d.status === 'ok' ? 'correct' : d.status === 'saved' ? 'saved' : 'wrong'}">
+                  ${esc(d.userAnswer || '(Để trống)')}
+                </span>
+              </div>
+              ${d.correctAnswer ? `
+                <div class="history-detail-ans-row">
+                  <span class="history-detail-ans-label">${d.status === 'saved' ? 'Gợi ý / Hướng dẫn trả lời:' : 'Đáp án đúng:'}</span>
+                  <span class="history-detail-ans-val guide">${esc(d.correctAnswer)}</span>
+                </div>
+              ` : ''}
+              ${d.explanation ? `
+                <div class="history-detail-explanation">
+                  💡 <b>Giải thích chi tiết:</b> ${esc(d.explanation)}
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  if (dialog) dialog.showModal();
+}
+
+function closeHistoryDetailModal() {
+  const dialog = document.getElementById('history-detail-dialog');
+  if (dialog && dialog.open) dialog.close();
+}
+
+function copyHistoryDetailText() {
+  const titleEl = document.getElementById('history-detail-title');
+  const listEl = document.getElementById('history-detail-questions-list');
+  if (!listEl) return;
+  const cards = listEl.querySelectorAll('.history-detail-q-card');
+  const lines = [
+    `=== LỊCH SỬ BÀI LÀM: ${titleEl ? titleEl.textContent : ''} ===`,
+    ''
+  ];
+  cards.forEach(card => {
+    const num = card.querySelector('.history-detail-q-num')?.textContent || '';
+    const qText = card.querySelector('.history-detail-q-text')?.textContent || '';
+    const ans = card.querySelector('.history-detail-ans-val')?.textContent || '';
+    lines.push(`${num}: ${qText}`);
+    lines.push(`- Trả lời: ${ans}`);
+    lines.push('');
+  });
+  navigator.clipboard.writeText(lines.join('\n')).then(() => {
+    toast('Đã sao chép nội dung bài làm vào clipboard!', 'ok');
+  }).catch(() => {
+    toast('Không thể sao chép tự động.', 'bad');
+  });
+}

@@ -194,6 +194,75 @@
   </div>
 </dialog>
 
+<!-- QUIZ HISTORY LIST MODAL -->
+<dialog id="quiz-history-dialog" class="history-dialog">
+  <div class="history-modal-header">
+    <div class="history-header-title-box">
+      <h2 style="margin:0; font-size:22px; font-weight:800; display:flex; align-items:center; gap:8px;">
+        <span>📜</span> <span>Lịch sử bài làm</span>
+      </h2>
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <span class="history-total-badge" id="history-total-count">0 lượt làm bài</span>
+        <span id="history-sync-indicator" style="font-size:12px; font-weight:600; color:var(--mut);"></span>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <button class="btn gh sm" type="button" onclick="loadQuizHistoryFromSupabase(true)" title="Tải lại từ máy chủ" style="padding:0 8px; height:32px;">
+        🔄
+      </button>
+      <button class="btn no sm" type="button" onclick="clearAllQuizHistory()" title="Xóa toàn bộ lịch sử">
+        🗑️ Xóa tất cả
+      </button>
+      <button class="btn gh sm" type="button" onclick="closeHistoryModal()" aria-label="Đóng">✕</button>
+    </div>
+  </div>
+
+  <div class="history-search-bar" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+    <div style="flex:1; min-width:180px; position:relative; display:flex; align-items:center;">
+      <span class="history-search-icon">🔍</span>
+      <input id="history-search-input" type="text" placeholder="Tìm theo học sinh, lớp, từ khóa..." oninput="onHistorySearchInput()" style="width:100%;">
+    </div>
+    <select id="history-set-filter" onchange="onHistorySetFilterChange()" style="height:44px; border-radius:12px; border:2px solid var(--stroke); padding:0 12px; font-weight:700; font-size:13px; background:var(--bg-card); color:var(--ink); max-width:260px;" title="Lọc theo bộ câu hỏi">
+      <option value="">📚 Tất cả bộ đề</option>
+    </select>
+  </div>
+  <div id="history-active-filter-badge" style="display:none; margin:8px 0 4px; padding:6px 12px; background:rgba(217, 169, 79, 0.15); border:1.5px solid var(--gold); border-radius:10px; font-size:13px; font-weight:700; align-items:center; justify-content:space-between;">
+    <span id="history-filter-badge-text"></span>
+    <button class="btn gh sm" type="button" onclick="clearHistorySetFilter()" style="padding:2px 8px; font-size:12px; height:24px;">✕ Xem tất cả</button>
+  </div>
+
+  <div class="history-list-wrap" id="history-list-container">
+    <!-- Rendered by JS -->
+  </div>
+
+  <div class="history-modal-footer">
+    <button class="btn gh" type="button" onclick="closeHistoryModal()">Đóng</button>
+  </div>
+</dialog>
+
+<!-- QUIZ HISTORY DETAIL MODAL -->
+<dialog id="history-detail-dialog" class="history-dialog history-detail-modal">
+  <div class="history-modal-header">
+    <div class="history-header-title-box">
+      <h2 style="margin:0; font-size:20px; font-weight:800;" id="history-detail-title">
+        Chi tiết bài làm
+      </h2>
+    </div>
+    <button class="btn gh sm" type="button" onclick="closeHistoryDetailModal()" aria-label="Đóng">✕</button>
+  </div>
+
+  <div class="history-detail-content-wrap">
+    <div id="history-detail-meta"></div>
+    <h3 style="margin:16px 0 10px; font-size:16px; font-weight:800;">Danh sách câu hỏi &amp; Bài làm:</h3>
+    <div id="history-detail-questions-list"></div>
+  </div>
+
+  <div class="history-modal-footer">
+    <button class="btn cy sm" type="button" onclick="copyHistoryDetailText()">📋 Sao chép bài làm</button>
+    <button class="btn gh" type="button" onclick="closeHistoryDetailModal()">Đóng</button>
+  </div>
+</dialog>
+
 <!-- TOAST & BACK TO TOP -->
 <div id="toast" role="status"></div>
 <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Về đầu trang" title="Về đầu trang">↑</button>

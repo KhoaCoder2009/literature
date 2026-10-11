@@ -470,13 +470,50 @@ function pick(i) { fin(i == G.qs[G.i].a ? 1 : 0, i); }
 
 function sub() {
   const answer = $('#ans').value.trim();
-  const acc = (G.qs[G.i].acc || []).map(N);
-  fin(acc.includes(N(answer)) ? 1 : 0, answer);
+  fin('short', answer);
 }
 
 function fin(r, u) {
   if (G.lock) return; G.lock = 1; clearInterval(T);
   const q = G.qs[G.i]; let pts = 0, st;
+
+  if (r === 'short') {
+    const answer = u || '';
+    const ans = (q.acc && q.acc.length) ? q.acc.join(' / ') : '';
+    st = 'saved';
+    pts = 0;
+    playSound('pop');
+
+    G.log.push({
+      q,
+      st: 'saved',
+      pts: 0,
+      submittedAnswer: answer || '(Chưa nhập)',
+      correctAnswer: ans || 'Chờ giáo viên chấm / đối chiếu'
+    });
+    hud();
+
+    const last = G.i + 1 >= G.qs.length;
+    $('#fb').innerHTML = `
+      <div style="font-size:20px; font-weight:800; color:var(--primary); margin-bottom:8px;">
+        📝 Đã lưu câu trả lời tự luận!
+      </div>
+      <div style="background:var(--bg-base); border:2px dashed var(--stroke); border-radius:14px; padding:12px 16px; margin:12px 0; text-align:left;">
+        <p style="margin:0 0 6px; font-size:14px;"><b>Câu hỏi:</b> ${esc(q.c)}</p>
+        <p style="margin:0; font-size:14px; color:var(--primary);"><b>Câu trả lời của bạn:</b> <i>${esc(answer || '(Để trống)')}</i></p>
+      </div>
+      <p class="mut" style="font-size:13px; margin:8px 0;">
+        ℹ️ Câu hỏi tự luận đã được lưu lại để giáo viên chấm điểm và đối chiếu sau (không chấm liền).
+      </p>
+      ${q.e ? `<p class="mut" style="font-size:13px; margin:8px 0; background:rgba(0,0,0,0.03); padding:8px 12px; border-radius:10px;">💡 <b>Gợi ý tham khảo:</b> ${esc(q.e)}</p>` : ''}
+      <div style="margin-top:16px;">
+        <button class="btn au lg" style="width:100%; font-size:17px;" onclick="advanceAfterFeedback()">
+          ${last ? '🏁 Hoàn thành bài làm' : 'Tiếp tục câu tiếp theo →'}
+        </button>
+      </div>`;
+    $('#feedback-dialog').showModal();
+    return;
+  }
 
   if (r === 'tf') {
     let correctCount = 0;
@@ -594,23 +631,94 @@ async function end() {
   clearInterval(T); const n = G.log.length, dt = Math.round((Date.now() - G.t0) / 1000);
   go('res');
   $('#rt').textContent = '🎉 HOÀN THÀNH BÀI LÀM!';
-  $('#rn').textContent = 'Người chơi: ' + G.nm + ' | ' + G.s.title;
+  $('#rn').textContent = 'Người chơi: ' + G.nm + (G.className ? ' (' + G.className + ')' : '') + ' | ' + G.s.title;
   
-  $('#rs').innerHTML = [
-    ['Tổng điểm', G.sc], ['Trả lời đúng', G.ok], ['Trả lời sai', G.bad],
-    ['Bỏ qua', G.no], ['Độ chính xác', (n ? Math.round(G.ok / n * 100) : 0) + '%'],
-    ['Chuỗi đúng liên tiếp', G.best], ['Thời gian', dt + ' giây']
-  ].map(x => `<div class="card stat"><b>${x[1]}</b>${x[0]}</div>`).join('');
+  const savedCount = G.log.filter(x => x.st === 'saved').length;
+  const gradedCount = G.log.filter(x => x.st !== 'saved').length;
+  const accuracy = gradedCount ? Math.round(G.ok / gradedCount * 100) : 100;
 
-  $('#rv').innerHTML = G.log.map((l, idx) => `
-    <div class="row result-row-anim" style="animation-delay:${idx * 0.05}s">
-      <div>
-        <b>${l.st == 'ok' ? '✅' : l.st == 'no' ? '⏰' : '❌'} ${esc(l.q.c)}</b><br>
-        <span class="mut">Bạn trả lời: ${esc(l.submittedAnswer || 'Chưa trả lời')} · Đáp án: ${esc(l.correctAnswer)}</span><br>
-        <span class="mut">${esc(l.q.e || '')}</span>
-      </div>
-      <span class="tag ${l.st === 'ok' ? 'ok' : ''}">${l.st === 'ok' ? '+' : ''}${l.pts}</span>
-    </div>`).join('');
+  const statItems = [
+    ['Tổng điểm TN', G.sc],
+    ['Trả lời đúng', G.ok],
+    ['Trả lời sai', G.bad]
+  ];
+  if (savedCount > 0) {
+    statItems.push(['Tự luận đã lưu', `${savedCount} câu`]);
+  }
+  statItems.push(
+    ['Độ chính xác TN', accuracy + '%'],
+    ['Chuỗi đúng liên tiếp', G.best],
+    ['Thời gian', dt + ' giây']
+  );
+
+  $('#rs').innerHTML = statItems.map(x => `<div class="card stat"><b>${x[1]}</b>${x[0]}</div>`).join('');
+
+  $('#rv').innerHTML = G.log.map((l, idx) => {
+    let icon = '❌';
+    let tagCls = 'bad';
+    let tagTxt = `+${l.pts}`;
+    if (l.st === 'ok') {
+      icon = '✅';
+      tagCls = 'ok';
+    } else if (l.st === 'saved') {
+      icon = '📝';
+      tagCls = 'cy';
+      tagTxt = 'Tự luận đã lưu';
+    } else if (l.st === 'no') {
+      icon = '⏰';
+      tagCls = 'gh';
+      tagTxt = 'Bỏ qua';
+    }
+
+    return `
+      <div class="row result-row-anim" style="animation-delay:${idx * 0.05}s">
+        <div>
+          <b>${icon} ${esc(l.q.c || l.q.text || '')}</b><br>
+          <span class="mut"><b>Bạn trả lời:</b> ${esc(l.submittedAnswer || 'Chưa trả lời')}</span><br>
+          ${l.st === 'saved' ? `
+            <span class="mut" style="color:var(--primary);">ℹ️ <i>Câu hỏi tự luận đã lưu vào lịch sử bài làm để chấm/đối chiếu sau.</i></span>
+            ${l.correctAnswer && l.correctAnswer !== 'Chờ giáo viên chấm / đối chiếu' ? `<br><span class="mut"><b>Gợi ý đáp án:</b> ${esc(l.correctAnswer)}</span>` : ''}
+          ` : `
+            <span class="mut"><b>Đáp án đúng:</b> ${esc(l.correctAnswer)}</span>
+          `}
+          ${l.q.e ? `<br><span class="mut">💡 ${esc(l.q.e)}</span>` : ''}
+        </div>
+        <span class="tag ${tagCls}">${tagTxt}</span>
+      </div>`;
+  }).join('');
+
+  // LƯU VÀO HỆ THỐNG LỊCH SỬ BÀI LÀM (LOCALSTORAGE)
+  const historyEntry = {
+    id: 'hist_' + uid(),
+    timestamp: Date.now(),
+    dateStr: new Date().toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' }),
+    type: 'quiz',
+    playerName: G.nm,
+    className: G.className || '',
+    setId: String(G.s.id),
+    setTitle: G.s.title,
+    setTopic: G.s.topic || 'Chưa phân loại',
+    setEmo: G.s.emo || '📖',
+    score: G.sc,
+    correctCount: G.ok,
+    wrongCount: G.bad,
+    savedShortCount: savedCount,
+    totalQuestions: n,
+    accuracy: accuracy,
+    elapsedSeconds: dt,
+    details: G.log.map(item => ({
+      questionText: item.q.c || item.q.text || '',
+      questionType: item.q.type,
+      userAnswer: item.submittedAnswer || '',
+      correctAnswer: item.correctAnswer || '',
+      status: item.st,
+      points: item.pts,
+      explanation: item.q.e || ''
+    }))
+  };
+  if (typeof saveQuizAttemptToHistory === 'function') {
+    saveQuizAttemptToHistory(historyEntry);
+  }
 
   G.scoreEntry = {
     id: uid(),
@@ -621,7 +729,7 @@ async function end() {
     score: G.sc,
     correct_count: G.ok,
     question_count: Math.max(1, n),
-    accuracy: n ? Math.round(G.ok / n * 10000) / 100 : 0,
+    accuracy: accuracy,
     game_mode: G.m,
     elapsed_seconds: dt
   };

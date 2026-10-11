@@ -81,7 +81,7 @@
           <div class="reading-panel-header">
             <div class="reading-panel-title">
               <span class="reading-panel-icon">📜</span>
-              <h4>Văn bản / Ngữ liệu đọc hiểu</h4>
+              <h4>I. PHẦN ĐỌC HIỂU (3,0 điểm)</h4>
             </div>
             <div class="reading-text-tools">
               <button class="btn gh sm btn-icon-only" type="button" onclick="changePassageFontSize(-1)" title="Giảm cỡ chữ">A-</button>
@@ -93,7 +93,9 @@
             <div class="reading-passage-meta" id="reading-passage-meta">
               <span class="reading-meta-tag" id="reading-passage-genre"></span>
               <span class="reading-meta-author" id="reading-passage-author"></span>
+              <span class="reading-meta-work" id="reading-passage-work" style="display:none;"></span>
             </div>
+            <div class="reading-passage-lead-text"><b>Đọc đoạn trích:</b></div>
             <article class="reading-passage-body" id="reading-passage-text">
               <!-- Nội dung văn bản đọc hiểu -->
             </article>
@@ -108,7 +110,7 @@
           <div class="reading-panel-header">
             <div class="reading-panel-title">
               <span class="reading-panel-icon">✍️</span>
-              <h4>Hệ thống câu hỏi (<span id="reading-q-count">0</span> câu)</h4>
+              <h4>Thực hiện các yêu cầu sau: (<span id="reading-q-count">0</span> câu)</h4>
             </div>
             <span class="reading-save-status" id="reading-save-status">💾 Tự động lưu</span>
           </div>
@@ -137,9 +139,9 @@
           <div class="g2" style="margin-bottom:14px;">
             <div>
               <label for="reading-form-title" style="font-weight:700; display:block; margin-bottom:5px;">
-                Tên đề bài / Tác phẩm <span style="color:var(--red)">*</span>
+                Tựa bài / Tên đề đọc hiểu <span style="color:var(--red)">*</span>
               </label>
-              <input type="text" id="reading-form-title" required placeholder="Ví dụ: Đất Nước, Bếp lửa, Bức thư gửi con..." style="width:100%;">
+              <input type="text" id="reading-form-title" required placeholder="Ví dụ: Sống hết mình cho thời khắc hiện tại..." style="width:100%;">
             </div>
             <div>
               <label for="reading-form-category" style="font-weight:700; display:block; margin-bottom:5px;">
@@ -149,26 +151,32 @@
             </div>
           </div>
 
-          <!-- Hàng 2: Tác giả & Thể loại -->
-          <div class="g2" style="margin-bottom:14px;">
+          <!-- Hàng 2: Tác phẩm, Tác giả & Thể loại -->
+          <div class="g3" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:14px;">
+            <div>
+              <label for="reading-form-work" style="font-weight:700; display:block; margin-bottom:5px;">
+                Tên tác phẩm
+              </label>
+              <input type="text" id="reading-form-work" placeholder="Ví dụ: Cách sống: từ bình thường trở nên phi thường..." style="width:100%;">
+            </div>
             <div>
               <label for="reading-form-author" style="font-weight:700; display:block; margin-bottom:5px;">
-                Tác giả / Xuất xứ
+                Tác giả
               </label>
-              <input type="text" id="reading-form-author" placeholder="Ví dụ: Nguyễn Khoa Điềm, Báo Tuổi Trẻ..." style="width:100%;">
+              <input type="text" id="reading-form-author" placeholder="Ví dụ: Inamori Kazuo" style="width:100%;">
             </div>
             <div>
               <label for="reading-form-genre" style="font-weight:700; display:block; margin-bottom:5px;">
                 Thể loại văn bản
               </label>
-              <input type="text" id="reading-form-genre" placeholder="Ví dụ: Thơ tự do, Truyện ngắn, Văn bản thông tin..." style="width:100%;">
+              <input type="text" id="reading-form-genre" placeholder="Ví dụ: Văn bản nghị luận, Thơ tự do..." style="width:100%;">
             </div>
           </div>
 
           <!-- Ngữ liệu đọc hiểu -->
           <div style="margin-bottom:16px;">
             <label for="reading-form-passage" style="font-weight:700; display:block; margin-bottom:5px;">
-              Văn bản / Ngữ liệu đọc hiểu <span style="color:var(--red)">*</span>
+              Văn bản / Ngữ liệu đọc hiểu (Đoạn trích) <span style="color:var(--red)">*</span>
             </label>
             <textarea id="reading-form-passage" required rows="9" placeholder="Dán hoặc nhập toàn bộ đoạn trích / văn bản đọc hiểu vào đây..." style="width:100%; font-family:inherit; line-height:1.6;"></textarea>
           </div>
@@ -176,16 +184,23 @@
           <!-- Nguồn trích dẫn -->
           <div style="margin-bottom:18px;">
             <label for="reading-form-source" style="font-weight:700; display:block; margin-bottom:5px;">
-              Ghi chú nguồn trích dẫn
+              Ghi chú nguồn trích dẫn tác phẩm, tác giả, NXB, năm, trang
             </label>
-            <input type="text" id="reading-form-source" placeholder="(Trích 'Tên tác phẩm', NXB Văn học, 2020, tr. 45)" style="width:100%;">
+            <input type="text" id="reading-form-source" placeholder="(Trích Cách sống: từ bình thường trở nên phi thường, Inamori Kazuo, NXB Lao động, 2020, tr. 103-104)" style="width:100%;">
           </div>
 
           <!-- Danh sách câu hỏi đọc hiểu -->
           <div class="reading-form-questions-section">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-              <h4 style="margin:0; font-size:16px; font-weight:800;">Hệ thống câu hỏi đọc hiểu</h4>
-              <button type="button" class="btn cy sm" onclick="addQuestionToReadingForm()">+ Thêm câu hỏi</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+              <div>
+                <h4 style="margin:0; font-size:16px; font-weight:800;">Hệ thống câu hỏi đọc hiểu</h4>
+                <span class="mut" style="font-size:12.5px;">Chuẩn: Câu 1,2: Nhận biết • Câu 3,4: Thông hiểu • Câu 5: Vận dụng (Đoạn văn)</span>
+              </div>
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button type="button" class="btn au sm" onclick="applyStandard5QuestionTemplate()" title="Tự động nạp khung chuẩn 5 câu: 2 Nhận biết • 2 Thông hiểu • 1 Vận dụng (Đoạn văn)">⚡ Mẫu chuẩn 5 câu</button>
+                <button type="button" class="btn gh sm" onclick="openQuickImportModal()" title="Dán nhanh toàn bộ đề thi để tự động trích xuất">📋 Dán nhanh đề thi</button>
+                <button type="button" class="btn cy sm" onclick="addQuestionToReadingForm()">+ Thêm câu hỏi</button>
+              </div>
             </div>
             <div id="reading-form-questions-list"></div>
           </div>
@@ -196,6 +211,37 @@
           <button type="submit" class="btn au" style="font-weight:800;">💾 Lưu đề đọc hiểu</button>
         </div>
       </form>
+    </dialog>
+
+    <!-- MODAL: DÁN NHANH TOÀN BỘ ĐỀ THI (QUICK IMPORT) -->
+    <dialog id="reading-quick-import-modal" class="writing-modal" style="max-width:680px;">
+      <div class="writing-modal-header">
+        <div class="writing-modal-title">
+          <h3>📋 Dán nhanh toàn bộ đề thi Đọc hiểu</h3>
+        </div>
+        <button class="btn sm gh" type="button" onclick="closeQuickImportModal()" aria-label="Đóng">✕</button>
+      </div>
+      <div class="writing-modal-body" style="padding:18px 22px;">
+        <p class="mut" style="margin:0 0 12px; font-size:13.5px; line-height:1.5;">
+          Dán nguyên văn đề thi (gồm đoạn trích, nguồn <i>(Trích ...)</i> và các <b>Câu 1, 2, 3, 4, 5</b> hoặc phần Làm văn). Hệ thống sẽ tự động bóc tách và điền vào các ô cho bạn!
+        </p>
+        <textarea id="reading-quick-import-text" rows="12" placeholder="Ví dụ:
+I. PHẦN ĐỌC HIỂU (3,0 điểm)
+Đọc đoạn trích:
+Không cần ngôn ngữ, mọi sự sống nhỏ nhoi trong tự nhiên...
+(Trích Cách sống: từ bình thường trở nên phi thường, Inamori Kazuo, NXB Lao động, 2020)
+
+Thực hiện các yêu cầu sau:
+Câu 1: Xác định phương thức biểu đạt chính...
+Câu 2: Theo đoạn trích...
+Câu 3: Chỉ ra điểm tương đồng...
+Câu 4: Anh/chị có đồng tình...
+Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-family:inherit; font-size:13.5px; line-height:1.6;"></textarea>
+      </div>
+      <div class="writing-modal-footer">
+        <button type="button" class="btn gh" onclick="closeQuickImportModal()">Hủy</button>
+        <button type="button" class="btn au" onclick="handleQuickImportSubmit()" style="font-weight:800;">⚡ Tự động bóc tách &amp; Áp dụng</button>
+      </div>
     </dialog>
 
     <!-- MODAL: KẾT QUẢ / ĐÁP ÁN THAM KHẢO KHI NỘP BÀI -->

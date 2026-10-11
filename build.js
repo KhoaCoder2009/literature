@@ -18,6 +18,7 @@ const files = [
   { name: 'screen-res', file: 'screen-res.html' },
   { name: 'screen-writing', file: 'screen-writing.html' },
   { name: 'screen-reading', file: 'screen-reading.html' },
+  { name: 'screen-history', file: 'screen-history.html' },
   { name: 'dialogs', file: 'dialogs.html' }
 ];
 
