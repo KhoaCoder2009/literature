@@ -9,69 +9,208 @@ let currentLibWritingTopic = '';
 let libReadingSearchQuery = '';
 let libWritingSearchQuery = '';
 
-const cardHtml = s => {
-  const qCount = s.qs.length;
-  const mcCount = s.qs.filter(q => q.type === 'mc' || q.type === 'img').length;
-  const shortCount = s.qs.filter(q => q.type === 'short' || q.type === 'fill').length;
-  const tfCount = s.qs.filter(q => q.type === 'tf').length;
-  const matchCount = s.qs.filter(q => q.type === 'match').length;
-  const statParts = [];
-  if (mcCount) statParts.push(`📝 ${mcCount} trắc nghiệm`);
-  if (shortCount) statParts.push(`✏️ ${shortCount} tự luận`);
-  if (tfCount) statParts.push(`✅ ${tfCount} đúng/sai`);
-  if (matchCount) statParts.push(`🔗 ${matchCount} nối cặp`);
+const LIB_CARD_PALETTES = [
+  'linear-gradient(135deg, #f43f5e 0%, #e11d48 100%)', // 1. Red / Coral
+  'linear-gradient(135deg, #fb923c 0%, #ea580c 100%)', // 2. Orange
+  'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', // 3. Amber / Gold
+  'linear-gradient(135deg, #10b981 0%, #059669 100%)', // 4. Emerald
+  'linear-gradient(135deg, #84cc16 0%, #65a30d 100%)', // 5. Lime
+  'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)', // 6. Teal
+  'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)', // 7. Navy Blue
+  'linear-gradient(135deg, #3b82f6 0%, #0284c7 100%)', // 8. Medium Blue
+  'linear-gradient(135deg, #06b6d4 0%, #0284c7 100%)'  // 9. Cyan
+];
+
+const cardHtml = (s, idx = 0) => {
+  const bg = LIB_CARD_PALETTES[idx % LIB_CARD_PALETTES.length];
+  const qList = Array.isArray(s.qs) ? s.qs : [];
+  const qCount = qList.length;
+  const mcCount = qList.filter(q => q.type === 'mc' || q.type === 'img').length;
+  const shortCount = qList.filter(q => q.type === 'short' || q.type === 'fill').length;
+  const tfCount = qList.filter(q => q.type === 'tf').length;
+  const matchCount = qList.filter(q => q.type === 'match').length;
+
+  const easyCount = qList.filter(q => q.diff === 'Dễ').length;
+  const medCount = qList.filter(q => q.diff === 'Trung bình').length;
+  const hardCount = qList.filter(q => q.diff === 'Khó').length;
+
+  const topicName = (s.topic && s.topic.trim()) ? s.topic.trim() : 'Chưa phân loại';
+
+  const pills = [];
+  if (mcCount) pills.push(`<span class="lib-pill pill-mc">📝 ${mcCount} trắc nghiệm</span>`);
+  if (shortCount) pills.push(`<span class="lib-pill pill-short">✏️ ${shortCount} tự luận</span>`);
+  if (tfCount) pills.push(`<span class="lib-pill pill-tf">✅ ${tfCount} đúng/sai</span>`);
+  if (matchCount) pills.push(`<span class="lib-pill pill-match">🔗 ${matchCount} nối cặp</span>`);
+  if (!pills.length) pills.push(`<span class="lib-pill pill-empty">⚠️ Chưa có câu hỏi</span>`);
+
+  let diffSummary = '';
+  if (easyCount || medCount || hardCount) {
+    const parts = [];
+    if (easyCount) parts.push(`🟢 ${easyCount} dễ`);
+    if (medCount) parts.push(`🟡 ${medCount} TB`);
+    if (hardCount) parts.push(`🔴 ${hardCount} khó`);
+    diffSummary = `<span class="lib-diff-summary" title="Phân bố độ khó">${parts.join(' · ')}</span>`;
+  }
+
+  const isSelected = selectedSetIds.has(String(s.id));
+  const cardOnClick = bulkDeleteMode 
+    ? `toggleSetFromCard(event, '${esc(s.id)}')`
+    : `go('edit', '${esc(s.id)}')`;
+
   return `
-<div class="card set ${bulkDeleteMode ? `bulk-selectable${selectedSetIds.has(String(s.id)) ? ' selected' : ''}` : ''}" onclick="toggleSetFromCard(event, '${esc(s.id)}')">
-  ${bulkDeleteMode ? `<label class="set-select"><input type="checkbox" data-set-id="${esc(s.id)}" ${selectedSetIds.has(String(s.id)) ? 'checked' : ''} onchange="toggleSetSelection(this)"> Chọn xóa</label>` : ''}
-  <div class="cov">${s.emo || '📜'}</div>
-  <h3>${esc(s.title)}</h3>
-  <span class="tag clickable-topic-tag" title="Nhấp để lọc theo thẻ: ${esc(s.topic || 'Chưa phân loại')}" onclick="event.stopPropagation(); setTopicFilter('${esc(s.topic || 'Chưa phân loại')}')">🏷️ ${esc(s.topic || 'Chưa phân loại')}</span>
-  <div class="card-stats">${qCount} câu hỏi${statParts.length ? ' · ' + statParts.join(' · ') : ''}</div>
-  <div class="ac" style="flex-wrap:wrap; margin-top:12px;">
-    <button class="btn cy sm" onclick="go('edit','${s.id}')">✏️ Sửa</button>
-    <button class="btn gh sm" onclick="dup('${s.id}')">📋 Sao chép</button>
-    <button class="btn no sm" onclick="del('${s.id}')">🗑️ Xóa</button>
+<div class="setup-grid-card lib-detailed-card set ${bulkDeleteMode ? 'bulk-selectable' : ''}${isSelected ? ' selected' : ''}" onclick="${cardOnClick}">
+  <div class="setup-card-banner lib-card-banner" style="background: ${bg};">
+    <div class="setup-card-top-info">
+      ${bulkDeleteMode ? `<label class="set-select lib-set-select" onclick="event.stopPropagation()"><input type="checkbox" data-set-id="${esc(s.id)}" ${isSelected ? 'checked' : ''} onchange="toggleSetSelection(this)"> Chọn xóa</label>` : ''}
+      <span class="setup-card-count-pill">${qCount} câu hỏi</span>
+    </div>
+    <h3 class="setup-card-title">${esc(s.title)}</h3>
+    <span class="setup-card-watermark">${s.emo || '📖'}</span>
+  </div>
+
+  <div class="lib-card-details">
+    <div class="lib-card-meta-row">
+      <span class="clickable-topic-tag" title="Nhấp để lọc theo thẻ: ${esc(topicName)}" onclick="event.stopPropagation(); setTopicFilter('${esc(topicName)}')">🏷️ ${esc(topicName)}</span>
+      ${diffSummary}
+    </div>
+
+    <div class="lib-card-breakdown">
+      ${pills.join('')}
+    </div>
+  </div>
+
+  <div class="lib-card-actions-bar">
+    <div class="lib-actions-left">
+      <button class="btn cy sm" type="button" onclick="event.stopPropagation(); go('edit','${esc(s.id)}')" title="Sửa nội dung câu hỏi">✏️ Sửa</button>
+      <button class="btn gh sm" type="button" onclick="event.stopPropagation(); dup('${esc(s.id)}')" title="Nhân bản bộ đề">📋 Sao chép</button>
+      <button class="btn no sm" type="button" onclick="event.stopPropagation(); del('${esc(s.id)}')" title="Xóa bộ đề">🗑️ Xóa</button>
+    </div>
+    <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('setup', '${esc(s.id)}')">
+      <span class="btn-setup-icon">▶</span>
+      <span>Vào học</span>
+    </button>
   </div>
 </div>`;
 };
 
-const readingLibCardHtml = s => {
-  const qCount = Array.isArray(s.questions) ? s.questions.length : 0;
-  const preview = (s.passage || '').replace(/\s+/g, ' ').slice(0, 110) + '...';
+const readingLibCardHtml = (s, idx = 0) => {
+  const bg = LIB_CARD_PALETTES[idx % LIB_CARD_PALETTES.length];
+  const qList = Array.isArray(s.questions) ? s.questions : [];
+  const qCount = qList.length;
+  const topic = (s.genre || s.category || 'Đọc hiểu').trim();
+  const author = (s.author || '').trim() || 'Khuyết danh';
+
+  const nbCount = qList.filter(q => q.level === 'nhan-biet' || (q.levelName && q.levelName.includes('Nhận biết'))).length;
+  const thCount = qList.filter(q => q.level === 'thong-hieu' || (q.levelName && q.levelName.includes('Thông hiểu'))).length;
+  const vdCount = qList.filter(q => q.level === 'van-dung' || (q.levelName && q.levelName.includes('Vận dụng'))).length;
+
+  const pills = [];
+  if (nbCount) pills.push(`<span class="lib-pill pill-nb">🟢 ${nbCount} Nhận biết</span>`);
+  if (thCount) pills.push(`<span class="lib-pill pill-th">🟡 ${thCount} Thông hiểu</span>`);
+  if (vdCount) pills.push(`<span class="lib-pill pill-vd">🔴 ${vdCount} Vận dụng</span>`);
+  if (!pills.length) pills.push(`<span class="lib-pill pill-empty">📝 ${qCount} câu hỏi đọc hiểu</span>`);
+
+  const passageSnippet = (s.passage || '').trim().replace(/\r?\n+/g, ' / ');
+
   return `
-<div class="card set">
-  <div class="cov">📑</div>
-  <h3>${esc(s.title)}</h3>
-  <span class="tag clickable-topic-tag" title="Lọc theo thẻ: ${esc(s.genre || s.category || 'Đọc hiểu')}" onclick="event.stopPropagation(); setLibReadingTopicFilter('${esc(s.genre || s.category || 'Đọc hiểu')}')">🏷️ ${esc(s.genre || s.category || 'Đọc hiểu')}</span>
-  <div class="card-stats">Tác giả: <i>${esc(s.author || 'Khuyết danh')}</i> · <b>${qCount} câu hỏi</b></div>
-  <p style="font-size:13px; color:var(--mut); margin:8px 0 12px; line-height:1.5; display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
-    ${esc(preview)}
-  </p>
-  <div class="ac" style="flex-wrap:wrap; margin-top:auto; gap:6px;">
-    <button class="btn cy sm" onclick="openEditReadingSetModal('${esc(s.id)}')">✏️ Sửa đề</button>
-    <button class="btn no sm" onclick="deleteReadingSet('${esc(s.id)}'); R.lib();">🗑️ Xóa</button>
-    <button class="btn au sm" onclick="go('reading', '${esc(s.id)}')">📖 Làm bài</button>
+<div class="setup-grid-card lib-detailed-card" onclick="openEditReadingSetModal('${esc(s.id)}')">
+  <div class="setup-card-banner lib-card-banner" style="background: ${bg};">
+    <div class="setup-card-top-info">
+      <span class="setup-card-count-pill">${qCount} câu hỏi</span>
+    </div>
+    <h3 class="setup-card-title">${esc(s.title)}</h3>
+    <span class="setup-card-watermark">${s.emo || '📑'}</span>
+  </div>
+
+  <div class="lib-card-details">
+    <div class="lib-card-meta-row">
+      <span class="clickable-topic-tag" title="Nhấp để lọc theo chủ đề: ${esc(topic)}" onclick="event.stopPropagation(); setLibReadingTopicFilter('${esc(topic)}')">🏷️ ${esc(topic)}</span>
+      <span class="lib-meta-author" title="Tác giả">👤 ${esc(author)}</span>
+    </div>
+
+    <div class="lib-card-breakdown">
+      ${pills.join('')}
+    </div>
+
+    ${passageSnippet ? `
+      <div class="lib-card-preview-box lib-quote-box" title="${esc(passageSnippet)}">
+        <span class="lib-quote-icon">“</span>${esc(passageSnippet.slice(0, 95))}${passageSnippet.length > 95 ? '…' : ''}
+      </div>
+    ` : `
+      <div class="lib-card-preview-box mut">
+        <i>💡 Nhấp "Sửa" để bổ sung ngữ liệu trích đoạn.</i>
+      </div>
+    `}
+  </div>
+
+  <div class="lib-card-actions-bar">
+    <div class="lib-actions-left">
+      <button class="btn cy sm" type="button" onclick="event.stopPropagation(); openEditReadingSetModal('${esc(s.id)}')" title="Sửa thông tin đề đọc hiểu">✏️ Sửa</button>
+      <button class="btn gh sm" type="button" onclick="event.stopPropagation(); duplicateReadingSet('${esc(s.id)}'); R.lib();" title="Nhân bản đề đọc hiểu">📋 Sao chép</button>
+      <button class="btn no sm" type="button" onclick="event.stopPropagation(); deleteReadingSet('${esc(s.id)}'); R.lib();" title="Xóa đề đọc hiểu">🗑️ Xóa</button>
+    </div>
+    <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('reading', '${esc(s.id)}')">
+      <span class="btn-setup-icon">▶</span>
+      <span>Đọc hiểu</span>
+    </button>
   </div>
 </div>`;
 };
 
-const writingLibCardHtml = s => {
-  const secCount = Array.isArray(s.sections) ? s.sections.length : 0;
-  const preview = (s.prompt || '').replace(/\s+/g, ' ').slice(0, 110) + '...';
+const writingLibCardHtml = (s, idx = 0) => {
+  const bg = LIB_CARD_PALETTES[idx % LIB_CARD_PALETTES.length];
+  const secList = Array.isArray(s.sections) ? s.sections : [];
+  const secCount = secList.length;
+  const topic = (s.categoryName || s.category || 'Luyện viết').trim();
+  const promptSnippet = (s.prompt || '').trim();
+
+  const outlineStepsHtml = secList.length ? `
+    <div class="lib-outline-stepper">
+      ${secList.map((sec, i) => `<span class="lib-step-pill">${i === 0 ? '🟢' : i === 1 ? '🟡' : '🔴'} ${esc(sec.title || 'Phần ' + (i+1))}</span>`).join('<span class="lib-step-arrow">→</span>')}
+    </div>
+  ` : `<span class="lib-pill pill-empty">✍️ ${secCount} phần dàn ý</span>`;
+
   return `
-<div class="card set">
-  <div class="cov">${s.icon || '✍️'}</div>
-  <h3>${esc(s.title)}</h3>
-  <span class="tag clickable-topic-tag" title="Lọc theo thẻ: ${esc(s.categoryName || s.category || 'Luyện viết')}" onclick="event.stopPropagation(); setLibWritingTopicFilter('${esc(s.categoryName || s.category || 'Luyện viết')}')">🏷️ ${esc(s.categoryName || s.category || 'Luyện viết')}</span>
-  <div class="card-stats">Dàn ý: <b>${secCount} phần</b> (Mở bài, Thân bài, Kết bài)</div>
-  <p style="font-size:13px; color:var(--mut); margin:8px 0 12px; line-height:1.5; display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
-    ${esc(preview)}
-  </p>
-  <div class="ac" style="flex-wrap:wrap; margin-top:auto; gap:6px;">
-    <button class="btn cy sm" onclick="editWritingSet('${esc(s.id)}')">✏️ Sửa đề</button>
-    <button class="btn gh sm" onclick="duplicateWritingSet('${esc(s.id)}'); R.lib();">📋 Sao chép</button>
-    <button class="btn no sm" onclick="deleteWritingSet('${esc(s.id)}'); setTimeout(() => R.lib(), 100);">🗑️ Xóa</button>
-    <button class="btn au sm" onclick="go('writing', '${esc(s.id)}')">✍️ Luyện viết</button>
+<div class="setup-grid-card lib-detailed-card" onclick="editWritingSet('${esc(s.id)}')">
+  <div class="setup-card-banner lib-card-banner" style="background: ${bg};">
+    <div class="setup-card-top-info">
+      <span class="setup-card-count-pill">${secCount} phần dàn ý</span>
+    </div>
+    <h3 class="setup-card-title">${esc(s.title)}</h3>
+    <span class="setup-card-watermark">${s.icon || '✍️'}</span>
+  </div>
+
+  <div class="lib-card-details">
+    <div class="lib-card-meta-row">
+      <span class="clickable-topic-tag" title="Nhấp để lọc theo chủ đề: ${esc(topic)}" onclick="event.stopPropagation(); setLibWritingTopicFilter('${esc(topic)}')">🏷️ ${esc(topic)}</span>
+      <span class="lib-meta-note">📑 Dàn ý 3 phần chuẩn</span>
+    </div>
+
+    <div class="lib-card-breakdown">
+      ${outlineStepsHtml}
+    </div>
+
+    ${promptSnippet ? `
+      <div class="lib-card-preview-box lib-prompt-box" title="${esc(promptSnippet)}">
+        <span class="lib-preview-lead">Đề bài:</span> ${esc(promptSnippet.slice(0, 95))}${promptSnippet.length > 95 ? '…' : ''}
+      </div>
+    ` : `
+      <div class="lib-card-preview-box mut">
+        <i>💡 Nhấp "Sửa" để soạn đề bài và dàn ý mẫu.</i>
+      </div>
+    `}
+  </div>
+
+  <div class="lib-card-actions-bar">
+    <div class="lib-actions-left">
+      <button class="btn cy sm" type="button" onclick="event.stopPropagation(); editWritingSet('${esc(s.id)}')" title="Sửa đề và dàn ý">✏️ Sửa</button>
+      <button class="btn gh sm" type="button" onclick="event.stopPropagation(); duplicateWritingSet('${esc(s.id)}'); R.lib();" title="Nhân bản đề luyện viết">📋 Sao chép</button>
+      <button class="btn no sm" type="button" onclick="event.stopPropagation(); deleteWritingSet('${esc(s.id)}'); setTimeout(() => R.lib(), 100);" title="Xóa đề">🗑️ Xóa</button>
+    </div>
+    <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('writing', '${esc(s.id)}')">
+      <span class="btn-setup-icon">▶</span>
+      <span>Luyện viết</span>
+    </button>
   </div>
 </div>`;
 };
@@ -477,7 +616,7 @@ function renderLibReadingPane() {
     return;
   }
 
-  container.innerHTML = filtered.map(readingLibCardHtml).join('');
+  container.innerHTML = filtered.map((s, idx) => readingLibCardHtml(s, idx)).join('');
 }
 
 // --- WRITING PANE LOGIC ---
@@ -556,5 +695,5 @@ function renderLibWritingPane() {
     return;
   }
 
-  container.innerHTML = filtered.map(writingLibCardHtml).join('');
+  container.innerHTML = filtered.map((s, idx) => writingLibCardHtml(s, idx)).join('');
 }

@@ -405,6 +405,18 @@ function onWritingSearchInput() {
   renderWritingSetsGrid();
 }
 
+const WRITING_PALETTES = [
+  'linear-gradient(135deg, #ef4444 0%, #f87171 100%)', // Red / Coral
+  'linear-gradient(135deg, #f97316 0%, #fb923c 100%)', // Orange
+  'linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)', // Amber / Gold
+  'linear-gradient(135deg, #15803d 0%, #22c55e 100%)', // Dark green
+  'linear-gradient(135deg, #84cc16 0%, #a3e635 100%)', // Light green / Lime
+  'linear-gradient(135deg, #14b8a6 0%, #2dd4bf 100%)', // Teal
+  'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)', // Dark blue
+  'linear-gradient(135deg, #0284c7 0%, #38bdf8 100%)', // Sky / Medium Blue
+  'linear-gradient(135deg, #06b6d4 0%, #67e8f9 100%)', // Cyan
+];
+
 function renderWritingSetsGrid() {
   const container = $('#writing-sets-container') || $('#writing-sets-grid');
   if (!container) return;
@@ -412,41 +424,30 @@ function renderWritingSetsGrid() {
   const query = ($('#writing-search-input')?.value || '').trim().toLowerCase();
   const cats = getWritingCategories();
 
-  const renderCard = s => {
-    const draftKey = 'vq_writing_draft_' + s.id;
-    let draftMeta = null;
-    try {
-      const d = JSON.parse(localStorage.getItem(draftKey));
-      if (d && d.totalWords > 0) draftMeta = d;
-    } catch (e) {}
-
+  const renderCard = (s, idx = 0) => {
+    const bg = WRITING_PALETTES[idx % WRITING_PALETTES.length];
     const sectionCount = s.sections ? s.sections.length : 0;
+    const topic = s.categoryName || s.category || 'Luyện viết';
+    const watermark = s.icon || '✍️';
 
     return `
-      <div class="writing-set-card">
-        <div>
-          <div class="writing-set-header">
-            <div class="writing-set-icon">${s.icon || '✍️'}</div>
-            <div class="writing-set-title-group" style="flex:1;">
-              <h4 class="writing-set-title">${esc(s.title)}</h4>
-              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:6px;">
-                <span class="writing-card-cat-badge">${s.icon || '🏷️'} ${esc(s.categoryName || s.category)}</span>
-                ${draftMeta ? `<span class="tag" style="background:#dcfce7; color:#15803d; font-size:12px;">💾 Đã viết ${draftMeta.totalWords} từ</span>` : ''}
-              </div>
-            </div>
+      <div class="setup-grid-card" onclick="openWritingWorkspaceById('${esc(s.id)}')">
+        <div class="setup-card-banner" style="background: ${bg};">
+          <div class="setup-card-top-info">
+            <span class="setup-card-count-pill">${sectionCount} phần dàn ý</span>
           </div>
-          
-          <div class="writing-set-prompt-preview">
-            "${esc(s.prompt)}"
-          </div>
+          <h3 class="setup-card-title">${esc(s.title)}</h3>
+          <span class="setup-card-watermark">${watermark}</span>
         </div>
-
-        <div class="writing-set-meta-row">
-          <span class="writing-set-outline-count">📋 ${sectionCount} phần dàn ý</span>
-          <div class="writing-set-actions">
-            <button class="btn gh sm" onclick="editWritingSet('${s.id}')" title="Chỉnh sửa bộ đề">✏️ Sửa</button>
-            <button class="btn no sm" onclick="deleteWritingSet('${s.id}')" title="Xóa bộ đề này khỏi danh sách">🗑️ Xóa</button>
-            <button class="btn au sm" onclick="openWritingWorkspaceById('${s.id}')">✍️ Luyện viết</button>
+        <div class="setup-card-body">
+          <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); openWritingWorkspaceById('${esc(s.id)}')">
+            <span class="btn-setup-icon">▶</span>
+            <span>Vào luyện viết</span>
+          </button>
+          <div class="setup-card-meta">
+            <span class="setup-card-topic" title="${esc(topic)}">
+              🏷️ ${esc(topic)}
+            </span>
           </div>
         </div>
       </div>
@@ -515,8 +516,8 @@ function renderWritingSetsGrid() {
           </button>
         </div>
       </div>
-      <div class="writing-sets-grid">
-        ${filtered.map(renderCard).join('')}
+      <div class="setup-sets-grid">
+        ${filtered.map((s, i) => renderCard(s, i)).join('')}
       </div>
     `;
     return;
@@ -553,8 +554,8 @@ function renderWritingSetsGrid() {
   });
 
   container.innerHTML = `
-    <div class="writing-sets-grid">
-      ${sorted.map(renderCard).join('')}
+    <div class="setup-sets-grid">
+      ${sorted.map((s, i) => renderCard(s, i)).join('')}
     </div>
   `;
 }

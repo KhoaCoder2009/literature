@@ -298,6 +298,18 @@ function onReadingSearchInput() {
   renderReadingSetsGrid();
 }
 
+const READING_PALETTES = [
+  'linear-gradient(135deg, #ef4444 0%, #f87171 100%)', // Red / Coral
+  'linear-gradient(135deg, #f97316 0%, #fb923c 100%)', // Orange
+  'linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)', // Amber / Gold
+  'linear-gradient(135deg, #15803d 0%, #22c55e 100%)', // Dark green
+  'linear-gradient(135deg, #84cc16 0%, #a3e635 100%)', // Light green / Lime
+  'linear-gradient(135deg, #14b8a6 0%, #2dd4bf 100%)', // Teal
+  'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)', // Dark blue
+  'linear-gradient(135deg, #0284c7 0%, #38bdf8 100%)', // Sky / Medium Blue
+  'linear-gradient(135deg, #06b6d4 0%, #67e8f9 100%)', // Cyan
+];
+
 function renderReadingSetsGrid() {
   const container = document.getElementById('reading-sets-container');
   if (!container) return;
@@ -336,6 +348,7 @@ function renderReadingSetsGrid() {
     });
 
     let groupsHtml = '';
+    let globalIdx = 0;
     groups.forEach((items, cat) => {
       groupsHtml += `
         <div class="reading-category-group">
@@ -343,8 +356,8 @@ function renderReadingSetsGrid() {
             <span>🏷️ ${esc(cat)}</span>
             <span class="reading-group-count">${items.length} đề</span>
           </div>
-          <div class="reading-sets-grid">
-            ${items.map(renderSingleReadingCard).join('')}
+          <div class="setup-sets-grid">
+            ${items.map(s => renderSingleReadingCard(s, globalIdx++)).join('')}
           </div>
         </div>
       `;
@@ -352,39 +365,37 @@ function renderReadingSetsGrid() {
     container.innerHTML = groupsHtml;
   } else {
     container.innerHTML = `
-      <div class="reading-sets-grid">
-        ${filteredSets.map(renderSingleReadingCard).join('')}
+      <div class="setup-sets-grid">
+        ${filteredSets.map((s, idx) => renderSingleReadingCard(s, idx)).join('')}
       </div>
     `;
   }
 }
 
-function renderSingleReadingCard(s) {
+function renderSingleReadingCard(s, idx = 0) {
+  const bg = READING_PALETTES[idx % READING_PALETTES.length];
   const qCount = Array.isArray(s.questions) ? s.questions.length : 0;
-  const previewText = (s.passage || '').replace(/\s+/g, ' ').slice(0, 140) + '...';
+  const topic = s.genre || s.category || 'Đọc hiểu';
+  const watermark = s.emo || '📖';
 
   return `
-    <div class="reading-set-card" onclick="openReadingSet('${esc(s.id)}')">
-      <div>
-        <div class="reading-card-header">
-          <span class="reading-card-genre">${esc(s.genre || s.category || 'Văn bản')}</span>
-          <span class="reading-card-q-badge">${qCount} câu hỏi</span>
+    <div class="setup-grid-card" onclick="openReadingSet('${esc(s.id)}')">
+      <div class="setup-card-banner" style="background: ${bg};">
+        <div class="setup-card-top-info">
+          <span class="setup-card-count-pill">${qCount} câu hỏi</span>
         </div>
-        <h3 class="reading-card-title">${esc(s.title)}</h3>
-        <div class="reading-card-author">Tác giả: ${esc(s.author || 'Khuyết danh')}</div>
-        <div class="reading-card-preview">${esc(previewText)}</div>
+        <h3 class="setup-card-title">${esc(s.title)}</h3>
+        <span class="setup-card-watermark">${watermark}</span>
       </div>
-      <div class="reading-card-footer">
-        <button class="btn au sm" type="button" onclick="event.stopPropagation(); openReadingSet('${esc(s.id)}')">
-          📖 Vào đọc hiểu
+      <div class="setup-card-body">
+        <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); openReadingSet('${esc(s.id)}')">
+          <span class="btn-setup-icon">▶</span>
+          <span>Vào đọc hiểu</span>
         </button>
-        <div class="reading-card-actions" onclick="event.stopPropagation()">
-          <button class="btn cy sm" type="button" onclick="openEditReadingSetModal('${esc(s.id)}')" title="Chỉnh sửa">
-            ✏️
-          </button>
-          <button class="btn no sm" type="button" onclick="deleteReadingSet('${esc(s.id)}')" title="Xóa đề này">
-            🗑️
-          </button>
+        <div class="setup-card-meta">
+          <span class="setup-card-topic" title="${esc(topic)}">
+            🏷️ ${esc(topic)}
+          </span>
         </div>
       </div>
     </div>
@@ -824,6 +835,18 @@ function deleteReadingSet(id) {
   saveReadingData();
   toast('Đã xóa bộ đề đọc hiểu!', 'ok');
   renderReadingListView();
+}
+
+function duplicateReadingSet(id) {
+  const set = readingSets.find(s => String(s.id) === String(id));
+  if (!set) return;
+  const clone = JSON.parse(JSON.stringify(set));
+  clone.id = 'reading_copy_' + uid();
+  clone.title = clone.title + ' (Bản sao)';
+  readingSets.unshift(clone);
+  saveReadingData();
+  renderReadingListView();
+  toast('Đã nhân bản bộ đề đọc hiểu thành công!', 'ok');
 }
 
 function deleteCurrentOpenedReadingSet() {
