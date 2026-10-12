@@ -404,6 +404,9 @@ if (typeof window !== 'undefined') {
 function exitReadingWorkspace() {
   currentReadingSetId = null;
   if (typeof window !== 'undefined') window.currentReadingSetId = null;
+  if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
+    window.__SECURITY_SHIELD.endExam(false);
+  }
   const listView = document.getElementById('reading-list-view');
   const workView = document.getElementById('reading-workspace-view');
   if (listView) listView.style.display = 'block';
@@ -427,6 +430,9 @@ function openReadingSet(id) {
   const workView = document.getElementById('reading-workspace-view');
   if (listView) listView.style.display = 'none';
   if (workView) workView.style.display = 'block';
+  if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.startExam === 'function') {
+    window.__SECURITY_SHIELD.startExam('reading');
+  }
 
   renderReadingWorkspace(set);
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -926,6 +932,9 @@ function submitReadingAnswers() {
           explanation: ''
         }))
       });
+      if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
+        window.__SECURITY_SHIELD.endExam(true);
+      }
       toast('🎉 Nộp bài thành công! Bài làm đọc hiểu đã được lưu vào Lịch sử.', 'ok');
     }
   } catch (e) {

@@ -363,14 +363,17 @@ window.COMPONENTS = {
 
   // Đối tượng bẫy để phát hiện DevTools ngay cả khi mở ở cửa sổ riêng biệt (Undocked)
   let devtoolsGetterTriggered = false;
-  const detectorImg = new Image();
+  let detectorImg = null;
   try {
-    Object.defineProperty(detectorImg, 'id', {
-      get: function() {
-        devtoolsGetterTriggered = true;
-        return 'sec-detect-token';
-      }
-    });
+    if (typeof Image !== 'undefined') {
+      detectorImg = new Image();
+      Object.defineProperty(detectorImg, 'id', {
+        get: function() {
+          devtoolsGetterTriggered = true;
+          return 'sec-detect-token';
+        }
+      });
+    }
   } catch (_) {}
 
   function checkDevToolsState(isManual) {
@@ -407,16 +410,172 @@ window.COMPONENTS = {
     }
   }
 
-  // Giám sát liên tục mỗi 350ms và mỗi khi resize cửa sổ
-  setInterval(() => checkDevToolsState(false), 350);
-  window.addEventListener('resize', () => checkDevToolsState(false), { passive: true });
+  // 8. BẢO MẬT QUY CHẾ THI: BẮT BUỘC CHẾ ĐỘ TOÀN MÀN HÌNH (FULLSCREEN) ĐẾN KHI NỘP BÀI
+  let activeExamMode = null; // 'quiz' | 'writing' | 'reading' | null
+  let isExamSubmitted = false;
+  let isFsCurtainActive = false;
+
+  function isFullscreen() {
+    return Boolean(
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement
+    );
+  }
+
+  function isExamActive() {
+    if (isExamSubmitted) return false;
+
+    const cur = window.currentScreen || (typeof currentScreen !== 'undefined' ? currentScreen : '');
+
+    if (activeExamMode) {
+      if (activeExamMode === 'quiz') {
+        const scrGame = document.getElementById('s-game');
+        if (scrGame && scrGame.classList && typeof scrGame.classList.contains === 'function' && scrGame.classList.contains('on')) return true;
+        if (cur === 'game') return true;
+      }
+      if (activeExamMode === 'writing') {
+        const ws = document.getElementById('writing-workspace-view');
+        if (ws && ws.style.display !== 'none') return true;
+      }
+      if (activeExamMode === 'reading') {
+        const ws = document.getElementById('reading-workspace-view');
+        if (ws && ws.style.display !== 'none') return true;
+      }
+      return true;
+    }
+
+    // Tự động nhận diện khi người dùng đang ở giao diện làm bài
+    const scrGame = document.getElementById('s-game');
+    if (scrGame && scrGame.classList && typeof scrGame.classList.contains === 'function' && scrGame.classList.contains('on')) return true;
+    if (cur === 'game') return true;
+
+    const wsWriting = document.getElementById('writing-workspace-view');
+    if (wsWriting && wsWriting.style.display === 'block') return true;
+
+    const wsReading = document.getElementById('reading-workspace-view');
+    if (wsReading && wsReading.style.display === 'block') return true;
+
+    return false;
+  }
+
+  function setFullscreenLockdown(locked) {
+    if (isFsCurtainActive === locked) return;
+    isFsCurtainActive = locked;
+
+    let curtain = document.getElementById('fullscreen-exam-curtain');
+    if (locked) {
+      if (!curtain) {
+        curtain = document.createElement('div');
+        curtain.id = 'fullscreen-exam-curtain';
+        curtain.innerHTML = `
+          <div class="fs-curtain-card">
+            <div class="fs-curtain-icon">🖥️</div>
+            <h2 class="fs-curtain-title">YÊU CẦU CHẾ ĐỘ TOÀN MÀN HÌNH</h2>
+            <p class="fs-curtain-desc">
+              Theo quy chế thi cử, bạn <b>bắt buộc phải duy trì chế độ Toàn màn hình (Full Screen)</b> trong suốt quá trình làm bài cho đến khi nộp bài.
+            </p>
+            <div class="fs-curtain-badge">🔒 BÀI LÀM ĐANG TẠM KHÓA ĐỂ ĐẢM BẢO MINH BẠCH</div>
+            <p class="fs-curtain-note">
+              Nội dung bài làm đã được làm mờ và khóa thao tác. Vui lòng nhấn nút bên dưới để bật Toàn màn hình và tiếp tục làm bài.
+            </p>
+            <button type="button" class="fs-curtain-btn" onclick="window.__SECURITY_SHIELD && window.__SECURITY_SHIELD.requestFullscreen()">
+              🖥️ BẬT TOÀN MÀN HÌNH ĐỂ TIẾP TỤC
+            </button>
+          </div>
+        `;
+        document.body.appendChild(curtain);
+      }
+      curtain.style.display = 'flex';
+      document.body.classList.add('exam-fullscreen-locked');
+      showSecurityNotice('⚠️ Quy chế thi: Bài làm bắt buộc ở chế độ Toàn màn hình đến khi nộp bài!');
+    } else {
+      if (curtain) curtain.style.display = 'none';
+      document.body.classList.remove('exam-fullscreen-locked');
+    }
+  }
+
+  function requestExamFullscreen() {
+    const el = document.documentElement;
+    const rfs = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+    if (rfs) {
+      try {
+        const p = rfs.call(el);
+        if (p && typeof p.then === 'function') {
+          p.then(() => {
+            updateFullscreenEnforcement();
+          }).catch(err => {
+            console.warn('Fullscreen request blocked or dismissed:', err);
+            updateFullscreenEnforcement();
+          });
+        } else {
+          updateFullscreenEnforcement();
+        }
+      } catch (err) {
+        console.warn('Fullscreen invocation error:', err);
+        updateFullscreenEnforcement();
+      }
+    }
+  }
+
+  function updateFullscreenEnforcement() {
+    const examActive = isExamActive();
+    if (!examActive) {
+      setFullscreenLockdown(false);
+      return;
+    }
+    const inFs = isFullscreen();
+    setFullscreenLockdown(!inFs);
+  }
+
+  function startExamSession(mode) {
+    isExamSubmitted = false;
+    activeExamMode = mode || 'exam';
+    requestExamFullscreen();
+    setTimeout(updateFullscreenEnforcement, 120);
+  }
+
+  function endExamSession(submitted = false) {
+    if (submitted) {
+      isExamSubmitted = true;
+      activeExamMode = null;
+      setFullscreenLockdown(false);
+      if (isFullscreen()) {
+        try {
+          if (document.exitFullscreen) document.exitFullscreen();
+          else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+          else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+          else if (document.msExitFullscreen) document.msExitFullscreen();
+        } catch (_) {}
+      }
+      showSecurityNotice('✅ Đã nộp bài thành công! Kết thúc chế độ toàn màn hình.');
+    } else {
+      activeExamMode = null;
+      setFullscreenLockdown(false);
+    }
+  }
+
+  // Lắng nghe sự kiện thay đổi fullscreen của trình duyệt (Esc, F11, click...)
+  ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(ev => {
+    document.addEventListener(ev, updateFullscreenEnforcement, true);
+    window.addEventListener(ev, updateFullscreenEnforcement, true);
+  });
+
+  // Giám sát định kỳ chế độ fullscreen trong khi làm bài
+  setInterval(updateFullscreenEnforcement, 350);
 
   const shield = {
     freezeGlobal: freezeGlobalFunction,
     freezeObject: freezeGlobalObject,
     sign: createSubmissionSignature,
     verify: verifySubmissionIntegrity,
-    checkDevTools: checkDevToolsState
+    checkDevTools: checkDevToolsState,
+    startExam: startExamSession,
+    endExam: endExamSession,
+    requestFullscreen: requestExamFullscreen,
+    isExamActive: isExamActive,
+    checkFullscreen: updateFullscreenEnforcement
   };
   Object.freeze(shield);
 
@@ -453,6 +612,7 @@ let feedbackTimeout, feedbackCountdown;
 const selectedSetIds = new Set();
 let bulkDeleteMode = false;
 let currentScreen = 'home';
+window.currentScreen = 'home';
 const R = window.R = (window.R || {});
 
 // =========================================================================
@@ -516,11 +676,17 @@ function go(n, p) {
   if (typeof playSound === 'function') playSound('pop');
   const sc = n == 'edit' ? 'lib' : n;
   currentScreen = sc;
+  window.currentScreen = sc;
   if (['home', 'lib', 'setup', 'writing', 'reading', 'history'].includes(sc)) {
     try {
       sessionStorage.setItem('vq_current_screen', sc);
     } catch (error) {
       console.warn('Could not save current screen:', error);
+    }
+  }
+  if (sc !== 'game' && sc !== 'writing' && sc !== 'reading') {
+    if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
+      window.__SECURITY_SHIELD.endExam(false);
     }
   }
   if (typeof closeMobileMenu === 'function') closeMobileMenu();
@@ -5047,6 +5213,9 @@ function begin() {
     log: [], sec: 0
   };
   go('game'); nextQ();
+  if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.startExam === 'function') {
+    window.__SECURITY_SHIELD.startExam('quiz');
+  }
 }
 
 const opts = q => q.o || [];
@@ -5411,6 +5580,9 @@ function fin(r, u) {
 
 async function end() {
   clearInterval(T); const n = G.log.length, dt = Math.round((Date.now() - G.t0) / 1000);
+  if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
+    window.__SECURITY_SHIELD.endExam(true);
+  }
   go('res');
   $('#rt').textContent = '🎉 HOÀN THÀNH BÀI LÀM!';
   $('#rn').textContent = 'Người chơi: ' + G.nm + (G.className ? ' (' + G.className + ')' : '') + ' | ' + G.s.title;
@@ -6096,6 +6268,9 @@ function openWritingWorkspace(set) {
   if (typeof window !== 'undefined') window.currentWritingSetId = set.id;
   if ($('#writing-list-view')) $('#writing-list-view').style.display = 'none';
   if ($('#writing-workspace-view')) $('#writing-workspace-view').style.display = 'block';
+  if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.startExam === 'function') {
+    window.__SECURITY_SHIELD.startExam('writing');
+  }
 
   // Set Nav Title & Badge
   $('#workspace-set-title').textContent = set.title;
@@ -6160,6 +6335,9 @@ function exitWritingWorkspace() {
   clearInterval(autoSaveDraftTimer);
   currentWritingSet = null;
   if (typeof window !== 'undefined') window.currentWritingSetId = null;
+  if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
+    window.__SECURITY_SHIELD.endExam(false);
+  }
   showWritingListView();
 }
 
@@ -6938,6 +7116,10 @@ function submitWritingEssay() {
       localStorage.setItem(historyKey, JSON.stringify(hist));
     }
 
+    if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
+      window.__SECURITY_SHIELD.endExam(true);
+    }
+
     // 1. Đóng modal xem bài nếu đang mở
     if (typeof closeWritingReviewModal === 'function') {
       closeWritingReviewModal();
@@ -7377,6 +7559,9 @@ if (typeof window !== 'undefined') {
 function exitReadingWorkspace() {
   currentReadingSetId = null;
   if (typeof window !== 'undefined') window.currentReadingSetId = null;
+  if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
+    window.__SECURITY_SHIELD.endExam(false);
+  }
   const listView = document.getElementById('reading-list-view');
   const workView = document.getElementById('reading-workspace-view');
   if (listView) listView.style.display = 'block';
@@ -7400,6 +7585,9 @@ function openReadingSet(id) {
   const workView = document.getElementById('reading-workspace-view');
   if (listView) listView.style.display = 'none';
   if (workView) workView.style.display = 'block';
+  if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.startExam === 'function') {
+    window.__SECURITY_SHIELD.startExam('reading');
+  }
 
   renderReadingWorkspace(set);
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -7899,6 +8087,9 @@ function submitReadingAnswers() {
           explanation: ''
         }))
       });
+      if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
+        window.__SECURITY_SHIELD.endExam(true);
+      }
       toast('🎉 Nộp bài thành công! Bài làm đọc hiểu đã được lưu vào Lịch sử.', 'ok');
     }
   } catch (e) {

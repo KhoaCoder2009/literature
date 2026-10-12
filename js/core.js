@@ -17,6 +17,7 @@ let feedbackTimeout, feedbackCountdown;
 const selectedSetIds = new Set();
 let bulkDeleteMode = false;
 let currentScreen = 'home';
+window.currentScreen = 'home';
 const R = window.R = (window.R || {});
 
 // =========================================================================
@@ -80,11 +81,17 @@ function go(n, p) {
   if (typeof playSound === 'function') playSound('pop');
   const sc = n == 'edit' ? 'lib' : n;
   currentScreen = sc;
+  window.currentScreen = sc;
   if (['home', 'lib', 'setup', 'writing', 'reading', 'history'].includes(sc)) {
     try {
       sessionStorage.setItem('vq_current_screen', sc);
     } catch (error) {
       console.warn('Could not save current screen:', error);
+    }
+  }
+  if (sc !== 'game' && sc !== 'writing' && sc !== 'reading') {
+    if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
+      window.__SECURITY_SHIELD.endExam(false);
     }
   }
   if (typeof closeMobileMenu === 'function') closeMobileMenu();

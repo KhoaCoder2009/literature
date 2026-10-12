@@ -4597,4 +4597,135 @@ body.devtools-locked main {
   pointer-events: none !important;
   user-select: none !important;
   -webkit-user-select: none !important;
+}
+
+/* =========================================================================
+   FULLSCREEN EXAM PROCTORING CURTAIN (BẮT BUỘC TOÀN MÀN HÌNH KHI LÀM BÀI)
+   ========================================================================= */
+#fullscreen-exam-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483640;
+  background: rgba(10, 15, 29, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeInFsCurtain 0.25s ease;
+}
+
+@keyframes fadeInFsCurtain {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.fs-curtain-card {
+  max-width: 540px;
+  width: 100%;
+  background: #111827;
+  border: 2px solid #3b82f6;
+  box-shadow: 0 0 60px rgba(59, 130, 246, 0.35), 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+  border-radius: 24px;
+  padding: 36px 30px;
+  text-align: center;
+  color: #fff;
+  font-family: inherit;
+  animation: pulseFsCardGlow 3s infinite ease-in-out;
+}
+
+@keyframes pulseFsCardGlow {
+  0%, 100% { box-shadow: 0 0 45px rgba(59, 130, 246, 0.3), 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
+  50% { box-shadow: 0 0 65px rgba(59, 130, 246, 0.5), 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
+}
+
+.fs-curtain-icon {
+  font-size: 64px;
+  margin-bottom: 12px;
+  display: inline-block;
+  filter: drop-shadow(0 4px 16px rgba(59, 130, 246, 0.6));
+  animation: bounceFsIcon 2s infinite ease-in-out;
+}
+
+@keyframes bounceFsIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.fs-curtain-title {
+  margin: 0 0 12px;
+  font-size: 22px;
+  font-weight: 900;
+  color: #60a5fa;
+  letter-spacing: -0.5px;
+}
+
+.fs-curtain-desc {
+  margin: 0 0 16px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #cbd5e1;
+}
+
+.fs-curtain-badge {
+  display: inline-block;
+  background: rgba(59, 130, 246, 0.18);
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  color: #93c5fd;
+  font-size: 12.5px;
+  font-weight: 800;
+  padding: 8px 18px;
+  border-radius: 999px;
+  margin-bottom: 18px;
+}
+
+.fs-curtain-note {
+  margin: 0 0 22px;
+  font-size: 13.5px;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+.fs-curtain-btn {
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
+  font-weight: 800;
+  border-radius: 14px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.fs-curtain-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.6);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.fs-curtain-btn:active {
+  transform: translateY(1px);
+}
+
+body.exam-fullscreen-locked .scr,
+body.exam-fullscreen-locked nav,
+body.exam-fullscreen-locked .mobile-sidebar,
+body.exam-fullscreen-locked .modal-overlay,
+body.exam-fullscreen-locked .modal-box,
+body.exam-fullscreen-locked #prompt-dialog,
+body.exam-fullscreen-locked #settings-dialog,
+body.exam-fullscreen-locked header,
+body.exam-fullscreen-locked main {
+  filter: blur(28px) !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
 }

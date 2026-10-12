@@ -573,6 +573,9 @@ function openWritingWorkspace(set) {
   if (typeof window !== 'undefined') window.currentWritingSetId = set.id;
   if ($('#writing-list-view')) $('#writing-list-view').style.display = 'none';
   if ($('#writing-workspace-view')) $('#writing-workspace-view').style.display = 'block';
+  if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.startExam === 'function') {
+    window.__SECURITY_SHIELD.startExam('writing');
+  }
 
   // Set Nav Title & Badge
   $('#workspace-set-title').textContent = set.title;
@@ -637,6 +640,9 @@ function exitWritingWorkspace() {
   clearInterval(autoSaveDraftTimer);
   currentWritingSet = null;
   if (typeof window !== 'undefined') window.currentWritingSetId = null;
+  if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
+    window.__SECURITY_SHIELD.endExam(false);
+  }
   showWritingListView();
 }
 
@@ -1413,6 +1419,10 @@ function submitWritingEssay() {
       const hist = raw ? JSON.parse(raw) : [];
       hist.unshift(entry);
       localStorage.setItem(historyKey, JSON.stringify(hist));
+    }
+
+    if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
+      window.__SECURITY_SHIELD.endExam(true);
     }
 
     // 1. Đóng modal xem bài nếu đang mở

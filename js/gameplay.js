@@ -265,6 +265,9 @@ function begin() {
     log: [], sec: 0
   };
   go('game'); nextQ();
+  if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.startExam === 'function') {
+    window.__SECURITY_SHIELD.startExam('quiz');
+  }
 }
 
 const opts = q => q.o || [];
@@ -629,6 +632,9 @@ function fin(r, u) {
 
 async function end() {
   clearInterval(T); const n = G.log.length, dt = Math.round((Date.now() - G.t0) / 1000);
+  if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
+    window.__SECURITY_SHIELD.endExam(true);
+  }
   go('res');
   $('#rt').textContent = '🎉 HOÀN THÀNH BÀI LÀM!';
   $('#rn').textContent = 'Người chơi: ' + G.nm + (G.className ? ' (' + G.className + ')' : '') + ' | ' + G.s.title;
