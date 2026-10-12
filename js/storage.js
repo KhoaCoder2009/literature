@@ -341,7 +341,15 @@ let isSyncingQuizHistory = false;
 function getQuizHistory() {
   try {
     const raw = localStorage.getItem(QUIZ_HISTORY_KEY);
-    return raw ? JSON.parse(raw) : [];
+    const list = raw ? JSON.parse(raw) : [];
+    if (Array.isArray(list) && window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.verify === 'function') {
+      list.forEach(item => {
+        if (item && item._secSig && !window.__SECURITY_SHIELD.verify(item)) {
+          item.isTampered = true;
+        }
+      });
+    }
+    return list;
   } catch (e) {
     console.error('Failed to parse quiz history:', e);
     return [];
@@ -572,6 +580,9 @@ async function loadQuizHistoryFromSupabase(forceNotice) {
 
 function saveQuizAttemptToHistory(entry) {
   try {
+    if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.sign === 'function') {
+      entry._secSig = window.__SECURITY_SHIELD.sign(entry);
+    }
     const history = getQuizHistory();
     history.unshift(entry);
     if (history.length > 100) history.length = 100;
@@ -847,7 +858,12 @@ function renderHistoryItemCardHtml(item) {
   const rawScore = item.score !== undefined && item.score !== null ? parseFloat(item.score) : 0;
   const formattedScore = (Math.round(rawScore * 100) / 100).toFixed(2).replace(/\.?0+$/, '') + 'đ';
 
-  if (isGraded) {
+  if (item.isTampered) {
+    scoreBoxClass = 'score-box-waiting';
+    scoreValue = 'Vô hiệu';
+    scoreSub = '⚠️ CAN THIỆP';
+    scoreTooltip = 'Phát hiện dữ liệu bài làm bị sửa đổi bất thường qua Console hoặc LocalStorage!';
+  } else if (isGraded) {
     scoreBoxClass = 'score-box-graded';
     scoreValue = formattedScore;
     scoreSub = '✅ ĐÃ CHẤM';

@@ -14,10 +14,11 @@ try {
 }
 
 function initAudioContext() {
+  if (!AudioCtx) return;
   if (!audioCtx) {
     audioCtx = new AudioCtx();
   }
-  if (audioCtx.state === 'suspended') {
+  if (audioCtx && audioCtx.state === 'suspended') {
     audioCtx.resume();
   }
 }

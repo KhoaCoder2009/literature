@@ -132,21 +132,25 @@ if (backToTopBtn) {
 }
 
 // App startup
-let initialScreen = 'home';
 try {
-  const savedScreen = sessionStorage.getItem('vq_current_screen');
-  if (savedScreen && ['home', 'lib', 'setup', 'writing', 'reading'].includes(savedScreen)) {
-    initialScreen = savedScreen;
+  let initialScreen = 'home';
+  try {
+    const savedScreen = sessionStorage.getItem('vq_current_screen');
+    if (savedScreen && ['home', 'lib', 'setup', 'writing', 'reading'].includes(savedScreen)) {
+      initialScreen = savedScreen;
+    }
+  } catch (error) {
+    console.warn('Could not read saved screen:', error);
   }
-} catch (error) {
-  console.warn('Could not read saved screen:', error);
-}
 
-go(initialScreen);
-updateSettingsUI();
-if (typeof applyHeroQuote === 'function') applyHeroQuote(0, false);
-if (initialScreen === 'home' && typeof startHeroQuoteRotation === 'function') {
-  startHeroQuoteRotation();
+  go(initialScreen);
+  updateSettingsUI();
+  if (typeof applyHeroQuote === 'function') applyHeroQuote(0, false);
+  if (initialScreen === 'home' && typeof startHeroQuoteRotation === 'function') {
+    startHeroQuoteRotation();
+  }
+} catch (err) {
+  console.warn('App startup warning:', err);
 }
 
 async function initPersistedData() {
