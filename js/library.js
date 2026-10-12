@@ -83,7 +83,6 @@ const cardHtml = (s, idx = 0) => {
     <div class="lib-actions-left">
       <button class="btn cy sm" type="button" onclick="event.stopPropagation(); go('edit','${esc(s.id)}')" title="Sửa nội dung câu hỏi">✏️ Sửa</button>
       <button class="btn gh sm" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử làm bài của bộ đề này">📜 Lịch sử</button>
-      <button class="btn gh sm" type="button" onclick="event.stopPropagation(); dup('${esc(s.id)}')" title="Nhân bản bộ đề">📋 Sao chép</button>
       <button class="btn no sm" type="button" onclick="event.stopPropagation(); del('${esc(s.id)}')" title="Xóa bộ đề">🗑️ Xóa</button>
     </div>
     <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('setup', '${esc(s.id)}')">
@@ -148,7 +147,6 @@ const readingLibCardHtml = (s, idx = 0) => {
     <div class="lib-actions-left">
       <button class="btn cy sm" type="button" onclick="event.stopPropagation(); openEditReadingSetModal('${esc(s.id)}')" title="Sửa thông tin đề đọc hiểu">✏️ Sửa</button>
       <button class="btn gh sm" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử làm bài của đề đọc hiểu này">📜 Lịch sử</button>
-      <button class="btn gh sm" type="button" onclick="event.stopPropagation(); duplicateReadingSet('${esc(s.id)}'); R.lib();" title="Nhân bản đề đọc hiểu">📋 Sao chép</button>
       <button class="btn no sm" type="button" onclick="event.stopPropagation(); deleteReadingSet('${esc(s.id)}'); R.lib();" title="Xóa đề đọc hiểu">🗑️ Xóa</button>
     </div>
     <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('reading', '${esc(s.id)}')">
@@ -206,7 +204,6 @@ const writingLibCardHtml = (s, idx = 0) => {
   <div class="lib-card-actions-bar">
     <div class="lib-actions-left">
       <button class="btn cy sm" type="button" onclick="event.stopPropagation(); editWritingSet('${esc(s.id)}')" title="Sửa đề và dàn ý">✏️ Sửa</button>
-      <button class="btn gh sm" type="button" onclick="event.stopPropagation(); duplicateWritingSet('${esc(s.id)}'); R.lib();" title="Nhân bản đề luyện viết">📋 Sao chép</button>
       <button class="btn no sm" type="button" onclick="event.stopPropagation(); deleteWritingSet('${esc(s.id)}'); setTimeout(() => R.lib(), 100);" title="Xóa đề">🗑️ Xóa</button>
     </div>
     <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('writing', '${esc(s.id)}')">

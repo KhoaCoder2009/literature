@@ -266,8 +266,268 @@
 
   <div class="history-modal-footer">
     <button class="btn au sm" id="btn-save-grading-footer" type="button" onclick="saveManualGrading()" style="display:none; font-weight:800;">💾 Lưu kết quả chấm</button>
-    <button class="btn cy sm" type="button" onclick="copyHistoryDetailText()">📋 Sao chép bài làm</button>
     <button class="btn gh" type="button" onclick="closeHistoryDetailModal()">Đóng</button>
+  </div>
+</dialog>
+
+<!-- WRITING MODAL 1: TẠO / CHỈNH SỬA BỘ ĐỀ LUYỆN VIẾT -->
+<dialog id="writing-set-dialog" class="writing-modal writing-set-modal-large">
+  <div class="writing-modal-header">
+    <div class="writing-modal-title">
+      <h3 id="writing-dialog-heading">Tạo bộ đề luyện viết</h3>
+    </div>
+    <button class="btn sm gh" type="button" onclick="closeCreateWritingSetModal()" aria-label="Đóng">✕</button>
+  </div>
+  
+  <form id="writing-set-form" onsubmit="handleSaveWritingSet(event)" class="writing-modal-form-wrap">
+    <input type="hidden" id="edit-writing-set-id">
+
+    <div class="writing-modal-body">
+      <div class="g2">
+        <div>
+          <label for="input-set-title">Tên bộ đề / Tiêu đề <span style="color:var(--red)">*</span></label>
+          <input type="text" id="input-set-title" required placeholder="Ví dụ: Nghị luận xã hội về ý nghĩa của sự sẻ chia...">
+        </div>
+        <div>
+          <label for="input-set-category">Chủ đề / Dạng đề <span style="color:var(--red)">*</span></label>
+          <select id="input-set-category" onchange="onCategorySelectChange(this.value)">
+            <option value="nl-xh">Nghị luận xã hội (200 chữ / Bài văn ngắn)</option>
+            <option value="nl-vh">Nghị luận văn học (Phân tích thơ, văn xuôi)</option>
+            <option value="cam-thu">Đọc hiểu &amp; Đoạn văn cảm thụ</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <label for="input-set-prompt">Nội dung đề bài chi tiết <span style="color:var(--red)">*</span></label>
+        <textarea id="input-set-prompt" required placeholder="Dán nội dung đề bài, câu hỏi yêu cầu tại đây..."></textarea>
+      </div>
+
+      <!-- Các phần viết -->
+      <div style="margin-top:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+          <label style="margin:0; font-size:15px; font-weight:700;">
+            Các phần bài viết (<span id="modal-section-count">3</span> phần)
+          </label>
+          <div style="display:flex; gap:8px;">
+            <button type="button" class="btn gh sm" onclick="applyQuickOutlineTemplate()">Nạp cấu trúc mẫu</button>
+            <button type="button" class="btn cy sm" onclick="addNewOutlineSectionRow()">+ Thêm phần</button>
+          </div>
+        </div>
+        <p class="mut" style="font-size:13px; margin:0 0 12px;">Cấu trúc chuẩn 3 phần (Mở bài, Thân bài, Kết bài).</p>
+        
+        <div id="modal-sections-editor" class="modal-sections-editor-list"></div>
+      </div>
+    </div>
+
+    <div class="writing-modal-footer">
+      <button type="button" class="btn gh" onclick="closeCreateWritingSetModal()">Hủy</button>
+      <button type="submit" class="btn au">Lưu bộ đề</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- WRITING MODAL 2: XEM BÀI HOÀN CHỈNH & XUẤT BÀI -->
+<dialog id="writing-review-dialog" class="writing-modal review-modal">
+  <div class="writing-modal-header review-header">
+    <div class="writing-modal-title">
+      <h3>Tổng quan bài viết</h3>
+    </div>
+    <button class="btn sm gh" type="button" onclick="closeWritingReviewModal()">✕</button>
+  </div>
+
+  <div class="writing-modal-body review-body">
+    <!-- Stat metrics cards -->
+    <div class="review-stats-grid">
+      <div class="review-stat-card">
+        <span class="stat-num" id="review-stat-words">0</span>
+        <span class="stat-label">Tổng số từ</span>
+      </div>
+      <div class="review-stat-card">
+        <span class="stat-num" id="review-stat-paragraphs">0</span>
+        <span class="stat-label">Số đoạn văn</span>
+      </div>
+      <div class="review-stat-card">
+        <span class="stat-num" id="review-stat-time">00:00:00</span>
+        <span class="stat-label">Thời gian làm</span>
+      </div>
+      <div class="review-stat-card">
+        <span class="stat-num" id="review-stat-wpm">0</span>
+        <span class="stat-label">Tốc độ (từ / phút)</span>
+      </div>
+    </div>
+
+    <!-- Combined essay text -->
+    <div class="review-essay-box">
+      <div class="review-essay-meta">
+        <h4 id="review-essay-topic">Đề bài luyện viết</h4>
+        <span class="tag ok" id="review-essay-tag">Hoàn tất</span>
+      </div>
+      <div class="review-essay-text" id="review-essay-combined-content"></div>
+    </div>
+
+    <!-- Feedback suggestions box -->
+    <div class="review-feedback-box">
+      <div class="review-feedback-title">Nhận xét sơ bộ:</div>
+      <div id="review-feedback-content" class="review-feedback-list"></div>
+    </div>
+  </div>
+
+  <div class="writing-modal-footer review-footer">
+    <button class="btn gh" type="button" onclick="copyCombinedEssayToClipboard()">Sao chép bài viết</button>
+    <button class="btn cy" type="button" onclick="downloadCombinedEssayAsText()">Tải tệp .txt</button>
+    <button class="btn au" type="button" onclick="closeWritingReviewModal()">Đóng</button>
+  </div>
+</dialog>
+
+<!-- READING MODAL 1: TẠO / SỬA ĐỀ ĐỌC HIỂU -->
+<dialog id="reading-edit-modal" class="writing-modal reading-modal">
+  <div class="writing-modal-header">
+    <div class="writing-modal-title">
+      <h3 id="reading-modal-title">Thêm bộ đề đọc hiểu mới</h3>
+    </div>
+    <button class="btn sm gh" type="button" onclick="closeReadingEditModal()" aria-label="Đóng">✕</button>
+  </div>
+
+  <form id="reading-edit-form" onsubmit="handleReadingFormSubmit(event)" class="writing-modal-form-wrap">
+    <input type="hidden" id="reading-form-id">
+
+    <div class="writing-modal-body">
+      <!-- Hàng 1: Tên đề bài & Chủ đề -->
+      <div class="g2" style="margin-bottom:14px;">
+        <div>
+          <label for="reading-form-title" style="font-weight:700; display:block; margin-bottom:5px;">
+            Tựa bài / Tên đề đọc hiểu <span style="color:var(--red)">*</span>
+          </label>
+          <input type="text" id="reading-form-title" required placeholder="Ví dụ: Sống hết mình cho thời khắc hiện tại..." style="width:100%;">
+        </div>
+        <div>
+          <label for="reading-form-category" style="font-weight:700; display:block; margin-bottom:5px;">
+            Chủ đề / Dạng bài <span style="color:var(--red)">*</span>
+          </label>
+          <select id="reading-form-category" required style="width:100%;"></select>
+        </div>
+      </div>
+
+      <!-- Hàng 2: Tác phẩm, Tác giả & Thể loại -->
+      <div class="g3" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:14px;">
+        <div>
+          <label for="reading-form-work" style="font-weight:700; display:block; margin-bottom:5px;">
+            Tên tác phẩm
+          </label>
+          <input type="text" id="reading-form-work" placeholder="Ví dụ: Cách sống: từ bình thường trở nên phi thường..." style="width:100%;">
+        </div>
+        <div>
+          <label for="reading-form-author" style="font-weight:700; display:block; margin-bottom:5px;">
+            Tác giả
+          </label>
+          <input type="text" id="reading-form-author" placeholder="Ví dụ: Inamori Kazuo" style="width:100%;">
+        </div>
+        <div>
+          <label for="reading-form-genre" style="font-weight:700; display:block; margin-bottom:5px;">
+            Thể loại văn bản
+          </label>
+          <input type="text" id="reading-form-genre" placeholder="Ví dụ: Văn bản nghị luận, Thơ tự do..." style="width:100%;">
+        </div>
+      </div>
+
+      <!-- Ngữ liệu đọc hiểu -->
+      <div style="margin-bottom:16px;">
+        <label for="reading-form-passage" style="font-weight:700; display:block; margin-bottom:5px;">
+          Văn bản / Ngữ liệu đọc hiểu (Đoạn trích) <span style="color:var(--red)">*</span>
+        </label>
+        <textarea id="reading-form-passage" required rows="9" placeholder="Dán hoặc nhập toàn bộ đoạn trích / văn bản đọc hiểu vào đây..." style="width:100%; font-family:inherit; line-height:1.6;"></textarea>
+      </div>
+
+      <!-- Nguồn trích dẫn -->
+      <div style="margin-bottom:18px;">
+        <label for="reading-form-source" style="font-weight:700; display:block; margin-bottom:5px;">
+          Ghi chú nguồn trích dẫn tác phẩm, tác giả, NXB, năm, trang
+        </label>
+        <input type="text" id="reading-form-source" placeholder="(Trích Cách sống: từ bình thường trở nên phi thường, Inamori Kazuo, NXB Lao động, 2020, tr. 103-104)" style="width:100%;">
+      </div>
+
+      <!-- Danh sách câu hỏi đọc hiểu -->
+      <div class="reading-form-questions-section">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+          <div>
+            <h4 style="margin:0; font-size:16px; font-weight:800; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <span>Hệ thống câu hỏi đọc hiểu</span>
+              <span class="tag cy" style="font-size:12.5px; font-weight:800; padding:3px 10px;">
+                🎯 Tổng điểm: <b id="reading-modal-total-score">6.0đ</b> / 6.0 điểm
+              </span>
+            </h4>
+            <span class="mut" style="font-size:12.5px;">Chuẩn thang 6đ: Câu 1,2: Nhận biết (1đ) • Câu 3,4: Thông hiểu (1đ) • Câu 5: Vận dụng (2đ)</span>
+          </div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button type="button" class="btn au sm" onclick="applyStandard5QuestionTemplate()" title="Tự động nạp khung chuẩn 5 câu: 2 Nhận biết • 2 Thông hiểu • 1 Vận dụng (Đoạn văn)">⚡ Mẫu chuẩn 5 câu</button>
+            <button type="button" class="btn gh sm" onclick="openQuickImportModal()" title="Dán nhanh toàn bộ đề thi để tự động trích xuất">📋 Dán nhanh đề thi</button>
+            <button type="button" class="btn cy sm" onclick="addQuestionToReadingForm()">+ Thêm câu hỏi</button>
+          </div>
+        </div>
+        <div id="reading-form-questions-list"></div>
+      </div>
+    </div>
+
+    <div class="writing-modal-footer">
+      <button type="button" class="btn gh" onclick="closeReadingEditModal()">Hủy</button>
+      <button type="submit" class="btn au" style="font-weight:800;">💾 Lưu đề đọc hiểu</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- READING MODAL 2: DÁN NHANH TOÀN BỘ ĐỀ THI (QUICK IMPORT) -->
+<dialog id="reading-quick-import-modal" class="writing-modal" style="max-width:680px;">
+  <div class="writing-modal-header">
+    <div class="writing-modal-title">
+      <h3>📋 Dán nhanh toàn bộ đề thi Đọc hiểu</h3>
+    </div>
+    <button class="btn sm gh" type="button" onclick="closeQuickImportModal()" aria-label="Đóng">✕</button>
+  </div>
+  <div class="writing-modal-body" style="padding:18px 22px;">
+    <p class="mut" style="margin:0 0 12px; font-size:13.5px; line-height:1.5;">
+      Dán nguyên văn đề thi (gồm đoạn trích, nguồn <i>(Trích ...)</i> và các <b>Câu 1, 2, 3, 4, 5</b> hoặc phần Làm văn). Hệ thống sẽ tự động bóc tách và điền vào các ô cho bạn!
+    </p>
+    <textarea id="reading-quick-import-text" rows="12" placeholder="Ví dụ:
+I. PHẦN ĐỌC HIỂU (3,0 điểm)
+Đọc đoạn trích:
+Không cần ngôn ngữ, mọi sự sống nhỏ nhoi trong tự nhiên...
+(Trích Cách sống: từ bình thường trở nên phi thường, Inamori Kazuo, NXB Lao động, 2020)
+
+Thực hiện các yêu cầu sau:
+Câu 1: Xác định phương thức biểu đạt chính...
+Câu 2: Theo đoạn trích...
+Câu 3: Chỉ ra điểm tương đồng...
+Câu 4: Anh/chị có đồng tình...
+Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-family:inherit; font-size:13.5px; line-height:1.6;"></textarea>
+  </div>
+  <div class="writing-modal-footer">
+    <button type="button" class="btn gh" onclick="closeQuickImportModal()">Hủy</button>
+    <button type="button" class="btn au" onclick="handleQuickImportSubmit()" style="font-weight:800;">⚡ Tự động bóc tách &amp; Áp dụng</button>
+  </div>
+</dialog>
+
+<!-- READING MODAL 3: KẾT QUẢ / ĐÁP ÁN THAM KHẢO KHI NỘP BÀI -->
+<dialog id="reading-result-modal" class="writing-modal reading-modal">
+  <div class="writing-modal-header">
+    <div class="writing-modal-title">
+      <h3>Kết quả bài làm &amp; Đáp án tham khảo</h3>
+    </div>
+    <button class="btn sm gh" type="button" onclick="closeReadingResultModal()" aria-label="Đóng">✕</button>
+  </div>
+
+  <div class="writing-modal-body" style="padding:20px 24px;">
+    <div class="reading-result-hero">
+      <div style="font-size:36px; margin-bottom:6px;">🎉</div>
+      <h3 style="margin:0 0 6px; font-weight:800;">Đã hoàn thành bài đọc hiểu!</h3>
+      <p class="mut" style="margin:0; font-size:14px;">Dưới đây là phần so sánh giữa câu trả lời của bạn và đáp án/gợi ý chuẩn.</p>
+    </div>
+
+    <div id="reading-result-comparison-list" style="margin-top:20px;"></div>
+  </div>
+
+  <div class="writing-modal-footer">
+    <button type="button" class="btn gh" onclick="closeReadingResultModal()">Đóng</button>
   </div>
 </dialog>
 

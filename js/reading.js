@@ -28,6 +28,7 @@ Sống hết mình cho hiện tại sẽ đưa sự sống, dù nhỏ bé, vươ
         id: 'q1',
         level: 'nhan-biet',
         levelName: 'Nhận biết (Câu 1)',
+        maxScore: 1.0,
         text: 'Xác định phương thức biểu đạt chính được sử dụng trong đoạn trích.',
         guide: '- Phương thức biểu đạt chính: Nghị luận.\n- Phương thức kết hợp: Miêu tả, biểu cảm.'
       },
@@ -35,6 +36,7 @@ Sống hết mình cho hiện tại sẽ đưa sự sống, dù nhỏ bé, vươ
         id: 'q2',
         level: 'nhan-biet',
         levelName: 'Nhận biết (Câu 2)',
+        maxScore: 1.0,
         text: 'Theo đoạn trích, các loài thực vật ở vùng Tsunoda thuộc Bắc cực sinh trưởng như thế nào giữa mùa hè ngắn ngủi?',
         guide: '- Theo đoạn trích, giữa mùa hè ngắn ngủi, các loài thực vật ở vùng Tsunoda thuộc Bắc cực: "đua nhau nảy mầm, nở thật nhiều hoa, kết hạt, chen chúc vươn mình trong khoảng không với mảnh đời thật ngắn ngủi".'
       },
@@ -42,6 +44,7 @@ Sống hết mình cho hiện tại sẽ đưa sự sống, dù nhỏ bé, vươ
         id: 'q3',
         level: 'thong-hieu',
         levelName: 'Thông hiểu (Câu 3)',
+        maxScore: 1.0,
         text: 'Chỉ ra những điểm tương đồng về sự sống của các loài thực vật ở vùng Tsunoda thuộc Bắc cực và ở vùng sa mạc Sahara trong đoạn trích.',
         guide: '- Những điểm tương đồng về sự sống của thực vật ở hai vùng:\n+ Đều sinh tồn trong môi trường tự nhiên khắc nghiệt, thử thách sinh tử (mùa đông giá lạnh dài ngày ở Bắc cực và nắng nóng thiêu đốt, khô cằn ở sa mạc Sahara).\n+ Đều tận dụng tối đa khoảng thời gian thuận lợi ngắn ngủi (mùa hè ngắn ngủi hoặc những giọt nước mưa hiếm hoi) để vội vã nảy mầm, nở hoa, ra hạt duy trì sự sống.\n+ Đều sống hết mình, sống nghiêm túc trong từng khoảnh khắc được hạn định, không ảo tưởng, không phân tâm.'
       },
@@ -49,6 +52,7 @@ Sống hết mình cho hiện tại sẽ đưa sự sống, dù nhỏ bé, vươ
         id: 'q4',
         level: 'thong-hieu',
         levelName: 'Thông hiểu (Câu 4)',
+        maxScore: 1.0,
         text: 'Anh/ Chị có đồng tình với nhận định của tác giả: “Sống hết mình cho hiện tại sẽ đưa sự sống, dù nhỏ bé, vươn đến ngày mai”? Vì sao?',
         guide: '- Bày tỏ quan điểm rõ ràng: Đồng tình (hoặc đồng tình phần lớn với lý lẽ thuyết phục).\n- Lý giải thuyết phục:\n+ Hiện tại là nền tảng trực tiếp kiến tạo nên tương lai; khi dốc hết tâm sức sống trọn vẹn ở thời khắc này, ta tích lũy giá trị nội lực và tôi luyện ý chí kiên cường.\n+ Dù cá nhân hay sự sống có nhỏ bé trước vũ trụ bao la, thái độ sống nhiệt huyết, kiên trì sẽ mở ra cơ hội sinh tồn và phát triển bền vững cho ngày mai.\n+ Sống hết mình cho hiện tại giúp con người không phải hối tiếc về quá khứ và vững vàng, tự tin bước tới tương lai.'
       },
@@ -56,6 +60,7 @@ Sống hết mình cho hiện tại sẽ đưa sự sống, dù nhỏ bé, vươ
         id: 'q5',
         level: 'van-dung',
         levelName: 'Vận dụng (Đoạn văn ~200 chữ)',
+        maxScore: 2.0,
         text: 'Từ nội dung đoạn trích ở phần đọc hiểu, anh/chị hãy viết một đoạn văn (khoảng 200 chữ) trình bày suy nghĩ của bản thân về sự cần thiết phải trân trọng cuộc sống mỗi ngày.',
         guide: '1. Yêu cầu hình thức:\n- Viết đúng hình thức một đoạn văn nghị luận xã hội dung lượng khoảng 200 chữ.\n- Diễn đạt trôi chảy, lập luận chặt chẽ, không mắc lỗi chính tả, dùng từ.\n\n2. Yêu cầu nội dung:\n- Mở đoạn: Dẫn dắt vấn đề từ ngữ liệu đọc hiểu: Sự cần thiết phải trân trọng cuộc sống mỗi ngày.\n- Thân đoạn:\n  + Giải thích: Trân trọng cuộc sống mỗi ngày là thái độ sống tích cực, biết quý giá trị thời gian, sống có ý nghĩa và nỗ lực hết mình trong từng khoảnh khắc.\n  + Vì sao cần trân trọng: Đời người là hữu hạn, mỗi ngày trôi qua không bao giờ trở lại; sống trọn vẹn giúp ta hoàn thiện bản thân, lan tỏa yêu thương và tạo dựng nền tảng vững chắc cho tương lai.\n  + Dẫn chứng: Cỏ cây nơi Bắc cực hay sa mạc Sahara dù gặp nghịch cảnh vẫn sống kiên cường; con người càng cần nỗ lực không ngừng nghỉ.\n  + Phản đề: Phê phán những người sống thờ ơ, lãng phí thời gian vào mạng xã hội hay chìm đắm trong ảo tưởng, lo âu viển vông.\n- Kết đoạn & Liên hệ bản thân: Bài học nhận thức và hành động: Bản thân mỗi học sinh cần sống có lý tưởng, học tập chăm chỉ và trân quý từng ngày được sống, được cống hiến.'
       }
@@ -79,6 +84,7 @@ Hãy sống như một dòng sông cuồn cuộn chảy ra biển lớn, vượt
         id: 'q1',
         level: 'nhan-biet',
         levelName: 'Nhận biết (Câu 1)',
+        maxScore: 1.0,
         text: 'Xác định phương thức biểu đạt chính được sử dụng trong đoạn trích trên.',
         guide: '- Phương thức biểu đạt chính: Nghị luận.\n- Phương thức kết hợp: Miêu tả, biểu cảm.'
       },
@@ -86,6 +92,7 @@ Hãy sống như một dòng sông cuồn cuộn chảy ra biển lớn, vượt
         id: 'q2',
         level: 'nhan-biet',
         levelName: 'Nhận biết (Câu 2)',
+        maxScore: 1.0,
         text: 'Theo đoạn trích, vì sao tuổi trẻ lại được coi là tài sản quý giá nhất của đời người?',
         guide: '- Theo đoạn trích, tuổi trẻ là tài sản quý giá nhất của đời người: "không phải vì ta có sức khỏe dẻo dai hay thời gian dồi dào, mà bởi đây là thời điểm ta có quyền được thử, được sai và được bắt đầu lại mà không sợ hãi".'
       },
@@ -93,6 +100,7 @@ Hãy sống như một dòng sông cuồn cuộn chảy ra biển lớn, vượt
         id: 'q3',
         level: 'thong-hieu',
         levelName: 'Thông hiểu (Câu 3)',
+        maxScore: 1.0,
         text: 'Chỉ ra và nêu tác dụng của hình ảnh so sánh, đối lập: "Hãy sống như một dòng sông cuồn cuộn chảy ra biển lớn... thay vì chấp nhận làm vũng nước đọng khô cạn" trong đoạn trích.',
         guide: '- Phân tích hình ảnh: Tác giả đối lập giữa "dòng sông cuồn cuộn chảy ra biển lớn" (tượng trưng cho tinh thần dấn thân, khát khao khám phá, vượt qua khó khăn để cống hiến và vươn tới tầm vóc lớn lao) với "vũng nước đọng khô cạn" (tượng trưng cho lối sống an phận, khép kín, thụ động và tàn lụi theo thời gian).\n- Tác dụng: Làm tăng sức gợi cảm, truyền tải thông điệp mạnh mẽ thức tỉnh người trẻ sống có hoài bão, bản lĩnh và không ngừng tiến về phía trước.'
       },
@@ -100,6 +108,7 @@ Hãy sống như một dòng sông cuồn cuộn chảy ra biển lớn, vượt
         id: 'q4',
         level: 'thong-hieu',
         levelName: 'Thông hiểu (Câu 4)',
+        maxScore: 1.0,
         text: 'Anh/ Chị có đồng tình với nhận định của tác giả: “Thứ đáng sợ nhất của tuổi trẻ không phải là vấp ngã, mà là sự hèn nhát, buông xuôi và sống một cuộc đời vô vị, mờ nhạt”? Vì sao?',
         guide: '- Thí sinh bày tỏ quan điểm rõ ràng: Đồng tình (hoặc đồng tình phần lớn với lý giải thuyết phục).\n- Lý giải hợp lý:\n+ Vấp ngã là quy luật tất yếu giúp con người rút ra bài học kinh nghiệm, trưởng thành và tôi luyện bản lĩnh; sau vấp ngã người ta vẫn có thể đứng dậy làm lại.\n+ Sự hèn nhát, buông xuôi sẽ triệt tiêu ý chí phấn đấu, biến cuộc đời thành chuỗi ngày tẻ nhạt, lãng phí thanh xuân quý giá và không đóng góp được giá trị cho cộng đồng.\n+ Sống không dám dấn thân đồng nghĩa với việc tự tước bỏ cơ hội phát triển của chính mình.'
       },
@@ -107,6 +116,7 @@ Hãy sống như một dòng sông cuồn cuộn chảy ra biển lớn, vượt
         id: 'q5',
         level: 'van-dung',
         levelName: 'Vận dụng (Đoạn văn ~200 chữ)',
+        maxScore: 2.0,
         text: 'Từ nội dung đoạn trích ở phần đọc hiểu, anh/chị hãy viết một đoạn văn (khoảng 200 chữ) trình bày suy nghĩ của bản thân về ý nghĩa của việc dám bước ra khỏi "vùng an toàn" đối với thế hệ trẻ hôm nay.',
         guide: '1. Yêu cầu hình thức:\n- Viết đúng một đoạn văn nghị luận xã hội dung lượng khoảng 200 chữ.\n- Diễn đạt trôi chảy, lập luận chặt chẽ, không sai chính tả, dùng từ.\n\n2. Yêu cầu nội dung:\n- Mở đoạn: Dẫn dắt thông điệp từ đoạn trích và nêu vấn đề: Ý nghĩa của việc dám bước ra khỏi "vùng an toàn".\n- Thân đoạn:\n  + Giải thích: "Vùng an toàn" là nơi quen thuộc, ít rủi ro và thiếu thử thách; bước ra khỏi vùng an toàn là dám đương đầu với cái mới, thử thách bản thân và chịu trách nhiệm với lựa chọn của mình.\n  + Vì sao cần bước ra: Giúp người trẻ khám phá tiềm năng ẩn giấu, tích lũy kinh nghiệm phong phú, rèn luyện bản lĩnh kiên cường trước biến động thời đại.\n  + Dẫn chứng: Những tấm gương khởi nghiệp sáng tạo, thanh niên dấn thân vào các dự án cộng đồng khó khăn.\n  + Phản đề: Phê phán lối sống an phận thủ thường, sợ thất bại, sống thụ động và ỷ lại vào gia đình.\n- Kết đoạn & Liên hệ bản thân: Bài học nhận thức và hành động: Bản thân mỗi học sinh cần không ngừng học tập, chủ động rèn luyện kỹ năng mới và tự tin dấn thân theo đuổi ước mơ.'
       }
@@ -318,29 +328,31 @@ function loadReadingData() {
     }
     if (!Array.isArray(loaded)) loaded = [];
 
-    // Tách riêng các bộ đề do giáo viên / người dùng tự tạo (id dạng reading_user_ hoặc reading_copy_)
-    const userSets = loaded.filter(s => s && s.id && (String(s.id).startsWith('reading_user_') || String(s.id).startsWith('reading_copy_')));
+    if (loaded.length > 0) {
+      // Đảm bảo tất cả câu hỏi trong các bộ đề đều có maxScore
+      loaded.forEach(s => {
+        if (Array.isArray(s.questions)) {
+          s.questions.forEach((q, idx) => {
+            if (q.maxScore === undefined || q.maxScore === null || isNaN(q.maxScore)) {
+              q.maxScore = idx === 4 ? 2.0 : 1.0;
+            } else {
+              q.maxScore = Number(q.maxScore);
+            }
+          });
+        }
+      });
 
-    // Đảm bảo tất cả bộ đề chuẩn (DEFAULT_READING_SETS) luôn đầy đủ nội dung mới nhất
-    const presetMap = new Map();
-    DEFAULT_READING_SETS.forEach(p => presetMap.set(p.id, JSON.parse(JSON.stringify(p))));
-
-    // Thứ tự hiển thị ưu tiên:
-    // 1. Rosie Nguyễn: Khát vọng dấn thân (Đề chuẩn 5 câu)
-    // 2. Inamori Kazuo: Sống hết mình (Đề chuẩn 5 câu)
-    // 3. Các đề mẫu còn lại
-    const pinnedOrder = ['reading_preset_rosie', 'reading_preset_inamori', 'reading_preset_1', 'reading_preset_2', 'reading_preset_3'];
-    const mergedPresets = [];
-    pinnedOrder.forEach(pid => {
-      if (presetMap.has(pid)) {
-        mergedPresets.push(presetMap.get(pid));
-        presetMap.delete(pid);
-      }
-    });
-    presetMap.forEach(p => mergedPresets.push(p));
-
-    // Bộ đề người dùng tự tạo luôn ưu tiên xuất hiện trước nhất, tiếp theo là 2 đề chuẩn ma trận
-    readingSets = [...userSets, ...mergedPresets];
+      // Bổ sung các bộ đề mặc định nếu chưa có trong danh sách
+      const existingIds = new Set(loaded.map(s => String(s.id)));
+      DEFAULT_READING_SETS.forEach(def => {
+        if (!existingIds.has(String(def.id))) {
+          loaded.push(JSON.parse(JSON.stringify(def)));
+        }
+      });
+      readingSets = loaded;
+    } else {
+      readingSets = JSON.parse(JSON.stringify(DEFAULT_READING_SETS));
+    }
     localStorage.setItem('vq_reading_sets_v1', JSON.stringify(readingSets));
   } catch (err) {
     console.error('Lỗi khi tải dữ liệu đọc hiểu:', err);
@@ -391,6 +403,7 @@ if (typeof window !== 'undefined') {
 // VIEW SWITCHING
 function exitReadingWorkspace() {
   currentReadingSetId = null;
+  if (typeof window !== 'undefined') window.currentReadingSetId = null;
   const listView = document.getElementById('reading-list-view');
   const workView = document.getElementById('reading-workspace-view');
   if (listView) listView.style.display = 'block';
@@ -407,6 +420,7 @@ function openReadingSet(id) {
   }
 
   currentReadingSetId = set.id;
+  if (typeof window !== 'undefined') window.currentReadingSetId = set.id;
   showReadingAnswers = false;
 
   const listView = document.getElementById('reading-list-view');
@@ -597,9 +611,6 @@ function renderSingleReadingCard(s, idx = 0) {
           <button class="reading-h-mini-btn" type="button" title="Chỉnh sửa đề thi" onclick="openEditReadingSetModal('${esc(s.id)}')">
             <span>✏️ Sửa</span>
           </button>
-          <button class="reading-h-mini-btn" type="button" title="Nhân bản đề này" onclick="duplicateReadingSet('${esc(s.id)}')">
-            <span>📋 Sao</span>
-          </button>
           ${isUserCreated ? `
             <button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề này" onclick="deleteReadingSet('${esc(s.id)}')">
               <span>🗑️</span>
@@ -648,6 +659,13 @@ function renderReadingWorkspace(set) {
   const questions = Array.isArray(set.questions) ? set.questions : [];
   if (qCountEl) qCountEl.textContent = questions.length;
 
+  // Cập nhật tiêu đề điểm tổng của phần đọc hiểu ở cột trái
+  const totalScore = questions.reduce((sum, q) => sum + (Number(q.maxScore) || 1.0), 0);
+  const passageTitleH4 = document.querySelector('.reading-passage-panel .reading-panel-title h4');
+  if (passageTitleH4) {
+    passageTitleH4.textContent = `I. PHẦN ĐỌC HIỂU (${totalScore.toFixed(1).replace('.', ',')} điểm)`;
+  }
+
   // Retrieve saved answers
   const savedAnswers = getSavedReadingDraft(set.id);
 
@@ -655,6 +673,7 @@ function renderReadingWorkspace(set) {
     qListEl.innerHTML = questions.map((q, idx) => {
       const levelClass = getLevelClass(q.level);
       const levelTitle = q.levelName || getLevelTitle(q.level);
+      const maxPts = (q.maxScore !== undefined && q.maxScore !== null) ? Number(q.maxScore) : (idx === 4 ? 2.0 : 1.0);
       const answerVal = savedAnswers[q.id || idx] || '';
       const lvlStr = String(q.level || '').toLowerCase();
       const isNonEssayLevel = lvlStr === 'nhan-biet' || lvlStr === 'thong-hieu';
@@ -676,9 +695,12 @@ function renderReadingWorkspace(set) {
 
       return `
         <div class="reading-question-card ${isParagraphQuestion ? 'reading-q-essay-card' : ''}" id="card-q-${idx}">
-          <div class="reading-q-header">
-            <span class="reading-q-number">Câu ${idx + 1}</span>
-            <span class="reading-q-level ${levelClass}">${esc(levelTitle)}</span>
+          <div class="reading-q-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="reading-q-number">Câu ${idx + 1}</span>
+              <span class="reading-q-level ${levelClass}">${esc(levelTitle)}</span>
+            </div>
+            <span class="tag cy" style="font-weight:800; font-size:12px; padding:2px 8px;">🎯 ${maxPts} điểm</span>
           </div>
           <div class="reading-q-text">${esc(q.text)}</div>
           <div class="reading-answer-box">
@@ -890,6 +912,7 @@ function submitReadingAnswers() {
         details: questions.map((q, idx) => ({
           questionText: q.text,
           questionType: 'reading',
+          maxScore: Number(q.maxScore || (idx === 4 ? 2.0 : 1.0)),
           userAnswer: (draft[q.id || idx] || '').trim(),
           correctAnswer: q.guide || 'Chưa có đáp án gợi ý',
           status: 'saved',
@@ -963,8 +986,12 @@ function openCreateReadingSetModal() {
 }
 
 function openEditReadingSetModal(id) {
-  const set = readingSets.find(s => String(s.id) === String(id));
-  if (!set) return;
+  const targetId = id || currentReadingSetId || (typeof window !== 'undefined' ? window.currentReadingSetId : null);
+  const set = readingSets.find(s => String(s.id) === String(targetId));
+  if (!set) {
+    toast('Không tìm thấy bộ đề đọc hiểu để chỉnh sửa!', 'bad');
+    return;
+  }
 
   const modal = document.getElementById('reading-edit-modal');
   if (!modal) return;
@@ -985,8 +1012,10 @@ function openEditReadingSetModal(id) {
   const qList = document.getElementById('reading-form-questions-list');
   if (qList) {
     qList.innerHTML = '';
-    const qs = Array.isArray(set.questions) && set.questions.length ? set.questions : [{ level: 'nhan-biet', text: '', guide: '' }];
+    const qs = Array.isArray(set.questions) && set.questions.length ? set.questions : [{ level: 'nhan-biet', text: '', guide: '', maxScore: 1.0 }];
     qs.forEach(q => addQuestionToReadingForm(q));
+    renumberReadingFormQuestions();
+    updateReadingModalTotalScore();
   }
 
   modal.showModal();
@@ -997,53 +1026,59 @@ function closeReadingEditModal() {
   if (modal && modal.open) modal.close();
 }
 
-// KHUNG CHUẨN 5 CÂU HỎI THEO MA TRẬN ĐỀ THI
+// KHUNG CHUẨN 5 CÂU HỎI THEO MA TRẬN ĐỀ THI (THANG ĐIỂM 6,0)
 function applyStandard5QuestionTemplate(confirmBeforeReplace = true) {
   const qList = document.getElementById('reading-form-questions-list');
   if (!qList) return;
 
   if (confirmBeforeReplace && qList.children.length > 0) {
-    if (!confirm('Bạn có muốn đặt lại danh sách câu hỏi theo Khung chuẩn 5 câu (2 Nhận biết • 2 Thông hiểu • 1 Vận dụng - Đoạn văn)?')) {
+    if (!confirm('Bạn có muốn đặt lại danh sách câu hỏi theo Khung chuẩn 5 câu (Tổng 6,0 điểm: 2 Nhận biết • 2 Thông hiểu • 1 Vận dụng)?')) {
       return;
     }
   }
 
   qList.innerHTML = '';
 
-  // Câu 1 & 2: Mức độ Nhận biết
+  // Câu 1 & 2: Mức độ Nhận biết (1.0đ mỗi câu)
   addQuestionToReadingForm({
     level: 'nhan-biet',
+    maxScore: 1.0,
     text: 'Xác định phương thức biểu đạt chính / thể thơ được sử dụng trong đoạn trích.',
     guide: '- Phương thức biểu đạt chính: Nghị luận / Tự sự / Miêu tả / Biểu cảm...\n- Thể thơ: Tự do / Bảy chữ / Lục bát...'
   });
   addQuestionToReadingForm({
     level: 'nhan-biet',
+    maxScore: 1.0,
     text: 'Theo đoạn trích, [chi tiết / hình ảnh / sự việc] sinh trưởng / diễn ra như thế nào?',
     guide: '- Căn cứ trực tiếp vào câu chữ trong văn bản để trả lời ngắn gọn, chính xác.'
   });
 
-  // Câu 3 & 4: Mức độ Thông hiểu
+  // Câu 3 & 4: Mức độ Thông hiểu (1.0đ mỗi câu)
   addQuestionToReadingForm({
     level: 'thong-hieu',
+    maxScore: 1.0,
     text: 'Chỉ ra những điểm tương đồng / hiểu như thế nào về câu văn: "[trích dẫn cụm từ/câu văn]"?',
     guide: '- Ý nghĩa trực tiếp của câu nói / hình ảnh.\n- Ý nghĩa biểu tượng và thông điệp mà tác giả muốn gửi gắm.'
   });
   addQuestionToReadingForm({
     level: 'thong-hieu',
+    maxScore: 1.0,
     text: 'Anh/chị có đồng tình với nhận định của tác giả: "[trích nhận định]"? Vì sao?',
     guide: '- Bày tỏ rõ quan điểm: Đồng tình / Không đồng tình.\n- Đưa ra 2-3 lý lẽ thuyết phục để lý giải vì sao.'
   });
 
-  // Câu 5: Mức độ Vận dụng (Rút ra thông điệp hoặc liên hệ bài học cuộc sống)(Đoạn văn)
+  // Câu 5: Mức độ Vận dụng (Rút ra thông điệp hoặc liên hệ bài học cuộc sống)(Đoạn văn - 2.0đ)
   addQuestionToReadingForm({
     level: 'van-dung',
+    maxScore: 2.0,
     text: 'Từ nội dung đoạn trích ở phần đọc hiểu, anh/chị hãy viết một đoạn văn (khoảng 200 chữ) trình bày suy nghĩ của bản thân về sự cần thiết phải [rút ra thông điệp / liên hệ bài học cuộc sống].',
     guide: '1. Yêu cầu hình thức: Đoạn văn khoảng 200 chữ, diễn đạt mạch lạc, không xuống dòng.\n2. Yêu cầu nội dung:\n- Mở đoạn: Dẫn dắt vấn đề nghị luận từ ngữ liệu.\n- Thân đoạn: Giải thích ngắn gọn; phân tích vì sao; dẫn chứng thực tế; phản đề phê phán.\n- Kết đoạn: Bài học nhận thức và hành động của bản thân.'
   });
 
   renumberReadingFormQuestions();
+  updateReadingModalTotalScore();
   if (confirmBeforeReplace) {
-    toast('Đã nạp khung chuẩn 5 câu hỏi thành công!', 'ok');
+    toast('Đã nạp khung chuẩn 5 câu hỏi (Tổng 6,0 điểm) thành công!', 'ok');
   }
 }
 
@@ -1175,7 +1210,20 @@ function handleQuickImportSubmit() {
   toast('Đã tự động bóc tách đề thi thành công!', 'ok');
 }
 
-function addQuestionToReadingForm(data = { level: 'nhan-biet', text: '', guide: '' }) {
+function updateReadingModalTotalScore() {
+  const inputs = document.querySelectorAll('#reading-form-questions-list .q-score-input');
+  let total = 0;
+  inputs.forEach(inp => {
+    const val = parseFloat(inp.value) || 0;
+    total += val;
+  });
+  const totalEl = document.getElementById('reading-modal-total-score');
+  if (totalEl) {
+    totalEl.textContent = (Math.round(total * 100) / 100).toFixed(2).replace(/\.?0+$/, '') + 'đ';
+  }
+}
+
+function addQuestionToReadingForm(data = { level: 'nhan-biet', text: '', guide: '', maxScore: 1.0 }) {
   const qList = document.getElementById('reading-form-questions-list');
   if (!qList) return;
 
@@ -1183,17 +1231,26 @@ function addQuestionToReadingForm(data = { level: 'nhan-biet', text: '', guide: 
   const item = document.createElement('div');
   item.className = 'reading-modal-question-item';
 
+  const defaultScore = (data.maxScore !== undefined && data.maxScore !== null && !isNaN(data.maxScore))
+    ? Number(data.maxScore)
+    : (count === 4 ? 2.0 : 1.0);
+
   item.innerHTML = `
-    <div class="reading-modal-question-header">
+    <div class="reading-modal-question-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
       <span style="font-weight:800; font-size:14.5px;">Câu hỏi ${count + 1}</span>
-      <div style="display:flex; gap:8px; align-items:center;">
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <label style="margin:0; font-size:13px; font-weight:700; display:flex; align-items:center; gap:5px;">
+          <span>🎯 Điểm tối đa:</span>
+          <input type="number" class="q-score-input" step="0.25" min="0.25" max="10" value="${defaultScore}" oninput="updateReadingModalTotalScore()" style="width:68px; text-align:center; font-weight:800; font-size:13.5px; border-radius:8px; padding:3px 6px;">
+          <span style="font-size:12px; font-weight:600; color:var(--mut);">đ</span>
+        </label>
         <select class="q-level-input" style="font-size:13px; padding:4px 8px; border-radius:8px;">
           <option value="nhan-biet" ${data.level === 'nhan-biet' ? 'selected' : ''}>🟢 Nhận biết (Câu 1, 2)</option>
           <option value="thong-hieu" ${data.level === 'thong-hieu' ? 'selected' : ''}>🟡 Thông hiểu (Câu 3, 4)</option>
           <option value="van-dung" ${data.level === 'van-dung' ? 'selected' : ''}>🟣 Vận dụng - Đoạn văn (Câu 5)</option>
           <option value="van-dung-cao" ${data.level === 'van-dung-cao' ? 'selected' : ''}>🔴 Vận dụng cao (Mở rộng)</option>
         </select>
-        <button type="button" class="btn no sm btn-icon-only" onclick="this.closest('.reading-modal-question-item').remove(); renumberReadingFormQuestions();" title="Xóa câu hỏi này">✕</button>
+        <button type="button" class="btn no sm btn-icon-only" onclick="this.closest('.reading-modal-question-item').remove(); renumberReadingFormQuestions(); updateReadingModalTotalScore();" title="Xóa câu hỏi này">✕</button>
       </div>
     </div>
     <div style="margin-bottom:8px;">
@@ -1205,6 +1262,7 @@ function addQuestionToReadingForm(data = { level: 'nhan-biet', text: '', guide: 
   `;
 
   qList.appendChild(item);
+  updateReadingModalTotalScore();
 }
 
 function renumberReadingFormQuestions() {
@@ -1242,13 +1300,16 @@ function handleReadingFormSubmit(e) {
     const lvl = el.querySelector('.q-level-input')?.value || 'nhan-biet';
     const txt = (el.querySelector('.q-text-input')?.value || '').trim();
     const gde = (el.querySelector('.q-guide-input')?.value || '').trim();
+    const scoreVal = parseFloat(el.querySelector('.q-score-input')?.value);
+    const maxScore = (!isNaN(scoreVal) && scoreVal > 0) ? scoreVal : (idx === 4 ? 2.0 : 1.0);
     if (txt) {
       questions.push({
         id: 'q_' + (idx + 1) + '_' + Date.now(),
         level: lvl,
         levelName: getLevelTitle(lvl),
         text: txt,
-        guide: gde
+        guide: gde,
+        maxScore
       });
     }
   });

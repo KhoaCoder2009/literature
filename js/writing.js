@@ -138,6 +138,7 @@ let writingTimerSeconds = 0;
 let isWritingTimerRunning = false;
 let isPromptExpanded = false;
 let autoSaveDraftTimer = null;
+let editingSections = [];
 
 // =========================================================================
 // DATA PERSISTENCE & INITIALIZATION
@@ -165,26 +166,13 @@ function loadWritingSets() {
           return s;
         });
 
-        // Hợp nhất và chuẩn hóa các bộ đề mặc định sang 3 phần (Mở bài, Thân bài, Kết bài)
-        const defMap = new Map(DEFAULT_WRITING_SETS.map(d => [d.id, d]));
-        const merged = parsed.map(s => {
-          if (defMap.has(s.id)) {
-            const def = defMap.get(s.id);
-            // Đồng bộ sang 3 phần nếu bộ đề mẫu vẫn còn cấu trúc cũ > 3 phần
-            if (s.sections && s.sections.length !== 3) {
-              s.sections = JSON.parse(JSON.stringify(def.sections));
-            }
-          }
-          return s;
-        });
-
-        const existingIds = new Set(merged.map(s => s.id));
+        const existingIds = new Set(parsed.map(s => s.id));
         for (const def of DEFAULT_WRITING_SETS) {
           if (!existingIds.has(def.id)) {
-            merged.push(def);
+            parsed.push(def);
           }
         }
-        writingSets = merged;
+        writingSets = parsed;
         saveWritingSets();
         return;
       }
@@ -203,6 +191,9 @@ function saveWritingSets() {
     console.error('Không thể lưu vq_writing_sets vào localStorage:', err);
   }
 }
+
+// Tự động nạp dữ liệu đề luyện viết ngay khi khởi chạy
+loadWritingSets();
 
 // Router hook
 R.writing = function(setId) {
@@ -432,19 +423,28 @@ function renderWritingSetsGrid() {
 
     return `
       <div class="setup-grid-card" onclick="openWritingWorkspaceById('${esc(s.id)}')">
-        <div class="setup-card-banner" style="background: ${bg};">
-          <div class="setup-card-top-info">
+        <div class="setup-card-banner" style="background: ${bg}; position:relative;">
+          <div class="setup-card-top-info" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
             <span class="setup-card-count-pill">${sectionCount} phần dàn ý</span>
+            <div style="display:flex; gap:4px; position:relative; z-index:2;" onclick="event.stopPropagation()">
+              <button class="reading-h-mini-btn" type="button" title="Chỉnh sửa đề bài" onclick="event.stopPropagation(); editWritingSet('${esc(s.id)}')">✏️</button>
+              <button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề bài" onclick="event.stopPropagation(); deleteWritingSet('${esc(s.id)}')">🗑️</button>
+            </div>
           </div>
           <h3 class="setup-card-title">${esc(s.title)}</h3>
           <span class="setup-card-watermark">${watermark}</span>
         </div>
         <div class="setup-card-body">
-          <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); openWritingWorkspaceById('${esc(s.id)}')">
-            <span class="btn-setup-icon">▶</span>
-            <span>Vào luyện viết</span>
-          </button>
-          <div class="setup-card-meta">
+          <div style="display:flex; gap:8px; width:100%;">
+            <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); openWritingWorkspaceById('${esc(s.id)}')" style="flex:1;">
+              <span class="btn-setup-icon">▶</span>
+              <span>Vào luyện viết</span>
+            </button>
+            <button class="btn cy sm" type="button" onclick="event.stopPropagation(); editWritingSet('${esc(s.id)}')" title="Sửa đề và dàn ý" style="font-weight:700; padding:0 12px; height:38px; border-radius:10px;">
+              ✏️ Sửa
+            </button>
+          </div>
+          <div class="setup-card-meta" style="margin-top:6px;">
             <span class="setup-card-topic" title="${esc(topic)}">
               🏷️ ${esc(topic)}
             </span>
@@ -571,6 +571,7 @@ function openWritingWorkspaceById(setId) {
 
 function openWritingWorkspace(set) {
   currentWritingSet = set;
+  if (typeof window !== 'undefined') window.currentWritingSetId = set.id;
   if ($('#writing-list-view')) $('#writing-list-view').style.display = 'none';
   if ($('#writing-workspace-view')) $('#writing-workspace-view').style.display = 'block';
 
@@ -584,30 +585,32 @@ function openWritingWorkspace(set) {
   isPromptExpanded = false;
   promptEl.classList.add('collapsed');
   const toggleBtn = $('#workspace-prompt-toggle-btn');
-  if (set.prompt && set.prompt.length > 120) {
+  if (set.prompt && set.prompt.length > 150) {
     toggleBtn.style.display = 'inline-block';
     toggleBtn.textContent = 'Xem thêm';
   } else {
     toggleBtn.style.display = 'none';
   }
 
-
-
-  // Set Outline Hints Card
+  // Set Outline Card under Prompt
   const outlineContent = $('#workspace-outline-content');
-  if (set.sections && set.sections.length > 0) {
-    outlineContent.innerHTML = set.sections.map((sec, idx) => `
-      <div class="writing-outline-item">
-        <b style="display:flex; align-items:center; gap:6px; font-size:14.5px; color:var(--primary);">
-          <span>📌</span> <span>${idx + 1}. ${esc(sec.title)}</span>
-        </b>
-        <div class="writing-outline-text" style="color:var(--ink); margin-top:6px; line-height:1.6; white-space:pre-line;">
-          ${esc(sec.guide || 'Chưa có văn bản dàn ý cho phần này.')}
+  if (outlineContent) {
+    if (set.sections && set.sections.length > 0) {
+      outlineContent.innerHTML = set.sections.map((sec, idx) => `
+        <div class="writing-outline-item">
+          <b style="display:flex; align-items:center; gap:6px; font-size:14px; color:var(--primary);">
+            <span>📌</span> <span>${idx + 1}. ${esc(sec.title)}</span>
+          </b>
+          ${sec.guide ? `
+            <div class="writing-outline-text" style="color:var(--ink); margin-top:5px; line-height:1.6; font-size:13.5px; white-space:pre-line;">
+              ${esc(sec.guide)}
+            </div>
+          ` : ''}
         </div>
-      </div>
-    `).join('');
-  } else {
-    outlineContent.innerHTML = '<p class="mut">Chưa có gợi ý dàn ý cho đề này.</p>';
+      `).join('');
+    } else {
+      outlineContent.innerHTML = '<p class="mut">Chưa có dàn ý cho đề này.</p>';
+    }
   }
 
   // Load existing draft
@@ -615,13 +618,6 @@ function openWritingWorkspace(set) {
 
   // Render Section Inputs in Right Panel
   renderWritingSections();
-
-  // Initialize Sample Toggle (off by default)
-  const sampleToggle = $('#writing-sample-toggle');
-  if (sampleToggle) {
-    sampleToggle.checked = false;
-    toggleSampleDisplay(false);
-  }
 
   // Start Timer
   startWritingTimer();
@@ -640,6 +636,8 @@ function exitWritingWorkspace() {
   saveCurrentWritingDraft(false);
   stopWritingTimer();
   clearInterval(autoSaveDraftTimer);
+  currentWritingSet = null;
+  if (typeof window !== 'undefined') window.currentWritingSetId = null;
   showWritingListView();
 }
 
@@ -681,27 +679,12 @@ function renderWritingSections() {
           </div>
         </div>
 
-        ${sec.guide ? `
-          <div class="writing-section-guide-hint">
-            <span style="font-size:12px; font-weight:800; color:var(--primary); text-transform:uppercase;">💡 Dàn ý định hướng:</span>
-            <div style="margin-top:4px; font-size:13.5px; line-height:1.6; color:var(--ink); white-space:pre-line;">${esc(sec.guide)}</div>
-          </div>
-        ` : ''}
-
         <textarea 
           id="sec-input-${sec.id}"
           class="writing-textarea" 
           placeholder="${esc(sec.placeholder || 'Nhập phần viết ' + sec.title + ' của bạn ở đây...')}"
           oninput="onSectionInput('${sec.id}', this)"
         >${esc(savedText)}</textarea>
-
-        <!-- Sample paragraph box (hidden until toggle is checked) -->
-        <div class="writing-sample-box" id="sec-sample-${sec.id}" style="display:none;">
-          <div class="writing-sample-box-title">
-            <span>✨</span> <span>Đoạn văn mẫu tham khảo:</span>
-          </div>
-          <div style="white-space:pre-line; line-height:1.7;">${esc(sec.sample || 'Chưa có đoạn văn mẫu cho phần này.')}</div>
-        </div>
       </div>
     `;
   }).join('');
@@ -721,11 +704,7 @@ function onSectionInput(secId, textareaEl) {
 }
 
 function toggleSampleDisplay(isShown) {
-  if (!currentWritingSet || !currentWritingSet.sections) return;
-  currentWritingSet.sections.forEach(sec => {
-    const box = $(`#sec-sample-${sec.id}`);
-    if (box) box.style.display = isShown ? 'block' : 'none';
-  });
+  // Bài văn mẫu tham khảo đã được gỡ bỏ theo yêu cầu
 }
 
 function countWords(str) {
@@ -953,8 +932,10 @@ function openCreateWritingSetModal(presetCat) {
 }
 
 function editWritingSet(id) {
-  const set = writingSets.find(s => s.id === id);
-  if (!set) return;
+  if (!writingSets || !writingSets.length) loadWritingSets();
+  const targetId = id || (currentWritingSet && currentWritingSet.id) || (typeof window !== 'undefined' ? window.currentWritingSetId : null);
+  const set = writingSets.find(s => String(s.id) === String(targetId));
+  if (!set) return toast('Không tìm thấy bộ đề luyện viết này!', 'bad');
 
   const dlg = $('#writing-set-dialog');
   if (!dlg) return;
@@ -970,6 +951,8 @@ function editWritingSet(id) {
 
   dlg.showModal();
 }
+window.editWritingSet = editWritingSet;
+window.openEditWritingSetModal = editWritingSet;
 
 function closeCreateWritingSetModal() {
   const dlg = $('#writing-set-dialog');
@@ -1070,7 +1053,7 @@ function addNewOutlineSectionRow() {
 
 function removeModalSectionRow(idx) {
   if (editingSections.length <= 1) {
-    toast('Bộ đề cần có ít nhất 1 phần dàn ý!', 'no');
+    toast('Bộ đề cần có ít nhất 1 phần bài viết!', 'no');
     return;
   }
   editingSections.splice(idx, 1);
@@ -1096,19 +1079,12 @@ function renderModalSectionsEditor() {
         <button type="button" class="btn no sm" onclick="removeModalSectionRow(${idx})" title="Xóa phần này">✕</button>
       </div>
       <div class="modal-section-inputs">
-        <div class="modal-field-col">
-          <label class="modal-sub-label">💡 Gợi ý dàn ý / Luận điểm cần viết:</label>
+        <div class="modal-field-col" style="flex:1;">
+          <label class="modal-sub-label">💡 Dàn ý cho phần này (hiển thị dưới đề bài):</label>
           <textarea 
-            placeholder="Nêu ý chính, định hướng luận cứ cần triển khai trong phần này..." 
+            placeholder="Nêu ý chính, định hướng luận cứ cần triển khai cho phần này..." 
             oninput="editingSections[${idx}].guide = this.value"
           >${esc(sec.guide || '')}</textarea>
-        </div>
-        <div class="modal-field-col">
-          <label class="modal-sub-label">📖 Đoạn văn mẫu tham khảo (không bắt buộc):</label>
-          <textarea 
-            placeholder="Nội dung văn mẫu tương ứng với phần này (học sinh có thể bật để tham khảo)..." 
-            oninput="editingSections[${idx}].sample = this.value"
-          >${esc(sec.sample || '')}</textarea>
         </div>
       </div>
     </div>
@@ -1116,12 +1092,11 @@ function renderModalSectionsEditor() {
 }
 
 function handleSaveWritingSet(e) {
-  e.preventDefault();
+  if (e) e.preventDefault();
   const editId = $('#edit-writing-set-id').value;
   const title = $('#input-set-title').value.trim();
   const category = $('#input-set-category').value;
   const prompt = $('#input-set-prompt').value.trim();
-
 
   if (!title || !prompt) {
     toast('Vui lòng nhập tên bộ đề và nội dung đề bài!', 'no');
@@ -1129,7 +1104,7 @@ function handleSaveWritingSet(e) {
   }
 
   if (editingSections.length === 0) {
-    toast('Vui lòng tạo ít nhất 1 phần dàn ý!', 'no');
+    toast('Vui lòng tạo ít nhất 1 phần bài viết!', 'no');
     return;
   }
 
@@ -1140,18 +1115,22 @@ function handleSaveWritingSet(e) {
     icons[c.id] = c.icon;
   });
 
+  let targetSet = null;
   if (editId) {
-    const existing = writingSets.find(s => s.id === editId);
-    if (existing) {
-      existing.title = title;
-      existing.category = category;
-      existing.categoryName = categoryNames[category] || category;
-      existing.icon = icons[category] || '✍️';
-      existing.prompt = prompt;
-
-      existing.sections = JSON.parse(JSON.stringify(editingSections));
+    const idx = writingSets.findIndex(s => String(s.id) === String(editId));
+    if (idx !== -1) {
+      writingSets[idx] = {
+        ...writingSets[idx],
+        title,
+        category,
+        categoryName: categoryNames[category] || category,
+        icon: icons[category] || '✍️',
+        prompt,
+        sections: JSON.parse(JSON.stringify(editingSections))
+      };
+      targetSet = writingSets[idx];
+      toast('Đã cập nhật bộ đề luyện viết thành công!', 'ok');
     }
-    toast('Đã cập nhật bộ đề luyện viết!', 'ok');
   } else {
     const newSet = {
       id: 'ws_' + uid(),
@@ -1160,18 +1139,41 @@ function handleSaveWritingSet(e) {
       categoryName: categoryNames[category] || category,
       icon: icons[category] || '✍️',
       prompt,
-
       sections: JSON.parse(JSON.stringify(editingSections))
     };
     writingSets.unshift(newSet);
+    targetSet = newSet;
     toast('Đã tạo bộ đề mới thành công!', 'ok');
   }
 
   saveWritingSets();
   closeCreateWritingSetModal();
-  renderCategoryFilterBar();
-  renderWritingSetsGrid();
+
+  // Nếu đang mở phòng luyện viết đúng đề này -> cập nhật ngay giao diện phòng viết
+  if (currentWritingSet && targetSet && String(currentWritingSet.id) === String(targetSet.id)) {
+    openWritingWorkspace(targetSet);
+  } else {
+    renderCategoryFilterBar();
+    renderWritingSetsGrid();
+  }
+
+  // Đồng bộ giao diện Thư viện (Kho học liệu) nếu đang mở
+  if (typeof renderLibWritingPane === 'function') renderLibWritingPane();
+  if (typeof updateLibTabsUI === 'function') updateLibTabsUI();
 }
+
+function deleteCurrentOpenedWritingSet() {
+  if (!currentWritingSet) return;
+  const id = currentWritingSet.id;
+  ask(`Bạn có chắc muốn xóa đề luyện viết "${currentWritingSet.title}" này không?`, () => {
+    writingSets = writingSets.filter(s => String(s.id) !== String(id));
+    try { localStorage.removeItem('vq_writing_draft_' + id); } catch (e) {}
+    saveWritingSets();
+    exitWritingWorkspace();
+    toast('Đã xóa bộ đề luyện viết!', 'ok');
+  });
+}
+window.deleteCurrentOpenedWritingSet = deleteCurrentOpenedWritingSet;
 
 function deleteWritingSet(id) {
   ask('Bạn có chắc muốn xóa bộ đề luyện viết này không?', () => {
@@ -1236,7 +1238,7 @@ function openWritingReviewModal() {
   const suggestions = [];
 
   if (totalWords === 0) {
-    suggestions.push('⚠️ Bạn chưa viết từ nào. Hãy dành thời gian phác thảo từng phần theo dàn ý gợi ý nhé.');
+    suggestions.push('⚠️ Bạn chưa viết từ nào. Hãy dành thời gian hoàn thiện các phần của bài viết nhé.');
   } else {
     if (currentWritingSet.category === 'nl-xh') {
       if (totalWords < 180) {
@@ -1261,9 +1263,9 @@ function openWritingReviewModal() {
     }
 
     if (paragraphs.length < sections.length) {
-      suggestions.push(`💡 Bạn còn ${sections.length - paragraphs.length} phần trong dàn ý chưa hoàn thành.`);
+      suggestions.push(`💡 Bạn còn ${sections.length - paragraphs.length} phần của bài viết chưa hoàn thành.`);
     } else {
-      suggestions.push(`🎉 Bạn đã hoàn thành đầy đủ cả ${sections.length} phần theo cấu trúc dàn ý! Bố cục mạch lạc và đồng đều.`);
+      suggestions.push(`🎉 Bạn đã hoàn thành đầy đủ cả ${sections.length} phần của bài viết! Bố cục mạch lạc và đồng đều.`);
     }
   }
 

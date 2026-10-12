@@ -487,6 +487,10 @@ h3 { margin: 0 0 12px; font-size: 20px; }
   gap: 8px;
   user-select: none;
 }
+.btn > *,
+.reading-h-mini-btn > * {
+  pointer-events: none;
+}
 .btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 9px 0 var(--stroke);
@@ -3874,3 +3878,507 @@ body.projector-mode .hud-pill {
 [data-theme="dark"] .history-rank-badge.rank-kha { background: #075985; color: #bae6fd; }
 [data-theme="dark"] .history-rank-badge.rank-tb { background: #92400e; color: #fde68a; }
 [data-theme="dark"] .history-rank-badge.rank-yeu { background: #991b1b; color: #fecaca; }
+
+/* Student Essay Box & Rubric Box */
+.student-essay-box {
+  line-height: 1.6;
+  white-space: pre-wrap;
+  background: rgba(0, 0, 0, 0.02);
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--stroke);
+  font-size: 14px;
+}
+[data-theme="dark"] .student-essay-box {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rubric-guide-box {
+  line-height: 1.6;
+  white-space: pre-wrap;
+  font-size: 13.5px;
+  background: rgba(14, 165, 233, 0.08);
+  border: 1.5px dashed rgba(14, 165, 233, 0.35);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: var(--ink);
+}
+[data-theme="dark"] .rubric-guide-box {
+  background: rgba(14, 165, 233, 0.15);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+/* Quick feedback chips */
+.history-quick-feedback-chip {
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid var(--stroke);
+  background: var(--bg-card);
+  color: var(--mut);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.history-quick-feedback-chip:hover {
+  background: var(--yellow);
+  color: #1e293b;
+  border-color: var(--stroke);
+  transform: translateY(-1px);
+}
+
+.quick-template-btn {
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+}
+
+
+/* =========================================================================
+   HỆ THỐNG AUTHENTICATION, OTP & PHÂN QUYỀN HỌC SINH / GIÁO VIÊN
+   ========================================================================= */
+
+/* 1. Navbar & Sidebar Auth Elements */
+.nav-auth-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  order: 5;
+}
+
+.nav-auth-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 14px;
+  box-shadow: 2px 2px 0px var(--stroke);
+  transition: all 0.18s ease;
+  cursor: pointer;
+}
+.nav-auth-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 4px 0px var(--stroke);
+}
+.nav-auth-btn:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0px var(--stroke);
+}
+
+.nav-user-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px 4px 6px;
+  background: var(--bg-card);
+  border: 2px solid var(--stroke);
+  border-radius: 99px;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px var(--stroke);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+}
+.nav-user-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 4px 0px var(--stroke);
+  background: var(--glow-yellow);
+}
+
+.user-avatar-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--yellow-light);
+  border: 1.5px solid var(--stroke);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.user-text-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.user-display-name {
+  font-size: 13px;
+  font-weight: 800;
+  max-width: 110px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--ink);
+}
+
+.user-role-tag {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 1px 6px;
+  border-radius: 6px;
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 1px;
+}
+.user-role-tag.badge-student {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #10b981;
+}
+.user-role-tag.badge-teacher {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #f59e0b;
+}
+
+[data-theme="dark"] .user-role-tag.badge-student { background: #064e3b; color: #6ee7b7; border-color: #059669; }
+[data-theme="dark"] .user-role-tag.badge-teacher { background: #78350f; color: #fde68a; border-color: #d97706; }
+
+/* Sidebar Auth Cards */
+.sidebar-auth-guest-card,
+.sidebar-auth-user-card {
+  background: var(--bg-card);
+  border: 2px solid var(--stroke);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 2px 2px 0px var(--stroke);
+}
+.sidebar-auth-user-card {
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.sidebar-auth-user-card:hover {
+  transform: translateY(-2px);
+}
+
+/* 2. Auth Dialogs (Modal Styles) */
+.auth-dialog {
+  border: 3px solid var(--stroke);
+  border-radius: 22px;
+  background: var(--bg-card);
+  color: var(--ink);
+  padding: 0;
+  box-shadow: 8px 8px 0px var(--stroke);
+  width: 92%;
+  max-width: 460px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.auth-dialog::backdrop {
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+}
+
+.auth-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px 14px;
+  border-bottom: 2px solid var(--stroke);
+  background: var(--bg-base);
+  position: relative;
+}
+
+.auth-header-icon-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--yellow-light);
+  border: 2px solid var(--stroke);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 2px 2px 0px var(--stroke);
+  flex-shrink: 0;
+}
+
+.auth-modal-close {
+  margin-left: auto;
+  font-size: 16px;
+  font-weight: 800;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-modal-body {
+  padding: 20px;
+}
+
+.auth-error-banner {
+  background: #fef2f2;
+  border: 2px solid #ef4444;
+  color: #b91c1c;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+[data-theme="dark"] .auth-error-banner {
+  background: #450a0a;
+  border-color: #f87171;
+  color: #fecaca;
+}
+
+.auth-form-group {
+  margin-bottom: 14px;
+}
+.auth-form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+.auth-form-group label .req {
+  color: var(--red);
+  font-weight: 800;
+}
+
+.auth-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.auth-input-icon {
+  position: absolute;
+  left: 12px;
+  font-size: 16px;
+  color: var(--mut);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.auth-input-wrapper input {
+  width: 100%;
+  height: 44px;
+  padding: 0 42px 0 38px;
+  border: 2px solid var(--stroke);
+  border-radius: 12px;
+  background: var(--bg-card);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+.auth-input-wrapper input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+.auth-pwd-toggle {
+  position: absolute;
+  right: 6px;
+  height: 32px;
+  width: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.auth-hint-text {
+  font-size: 11.5px;
+  color: var(--mut);
+  margin-top: 4px;
+}
+
+.auth-link-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  font-size: 13px;
+  text-decoration: underline;
+}
+.auth-link-btn:hover {
+  color: var(--primary-hover);
+}
+
+.auth-switch-prompt {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 13.5px;
+  color: var(--mut);
+}
+
+/* 3. OTP Code Input Box */
+.otp-input-center-box {
+  margin: 12px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.otp-code-large-input {
+  width: 220px;
+  height: 58px;
+  font-size: 30px;
+  font-weight: 900;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 12px;
+  text-align: center;
+  padding-left: 14px;
+  border: 3px solid var(--stroke);
+  border-radius: 16px;
+  background: var(--bg-base);
+  color: var(--ink);
+  box-shadow: 3px 3px 0px var(--stroke);
+  transition: all 0.2s ease;
+}
+.otp-code-large-input:focus {
+  outline: none;
+  border-color: var(--yellow);
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.25);
+  transform: scale(1.02);
+}
+
+/* 4. User Profile Dialog Specifics */
+.auth-profile-dialog {
+  max-width: 520px;
+}
+
+.profile-header-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--glow-yellow);
+  border: 2.5px solid var(--stroke);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+  box-shadow: 2px 2px 0px var(--stroke);
+}
+
+.role-badge {
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.role-badge.teacher {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1.5px solid #f59e0b;
+}
+.role-badge.student {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1.5px solid #10b981;
+}
+
+.profile-meta-card {
+  background: var(--bg-base);
+  border: 1.5px solid var(--stroke);
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+}
+.profile-meta-card .meta-label {
+  font-size: 11px;
+  color: var(--mut);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.profile-meta-card .meta-val {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-teacher-box {
+  background: rgba(245, 158, 11, 0.1);
+  border: 2px dashed var(--yellow);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+/* 5. Grade Audit Log Elements */
+.audit-log-item {
+  background: var(--bg-card);
+  border: 2px solid var(--stroke);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  box-shadow: 2px 2px 0px var(--stroke);
+}
+.audit-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  border-bottom: 1px dashed var(--stroke);
+  padding-bottom: 6px;
+}
+.audit-teacher-name {
+  font-weight: 800;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+.audit-date {
+  font-size: 11.5px;
+  color: var(--mut);
+}
+.audit-score-diff {
+  margin: 4px 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+.audit-score-diff .old-score {
+  color: var(--mut);
+  text-decoration: line-through;
+}
+.audit-score-diff .new-score {
+  color: var(--green);
+  font-weight: 800;
+  font-size: 14px;
+}
+.audit-reason {
+  font-size: 12.5px;
+  color: var(--mut);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* Spinner helper */
+.spinner-sm {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
