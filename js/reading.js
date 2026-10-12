@@ -920,6 +920,7 @@ function submitReadingAnswers() {
           explanation: ''
         }))
       });
+      toast('🎉 Nộp bài thành công! Bài làm đọc hiểu đã được lưu vào Lịch sử.', 'ok');
     }
   } catch (e) {
     console.error('Save reading history error:', e);

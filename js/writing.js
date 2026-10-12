@@ -1407,7 +1407,23 @@ function submitWritingEssay() {
       localStorage.setItem(historyKey, JSON.stringify(hist));
     }
 
-    toast(`🎉 Đã nộp bài viết thành công! (${totalWords} từ • Thang điểm 10.0đ). Đã lưu vào Lịch sử bài làm.`, 'ok');
+    // 1. Đóng modal xem bài nếu đang mở
+    if (typeof closeWritingReviewModal === 'function') {
+      closeWritingReviewModal();
+    }
+
+    // 2. Thoát khỏi phòng viết văn và dọn dẹp bộ đếm
+    if (typeof exitWritingWorkspace === 'function') {
+      exitWritingWorkspace();
+    }
+
+    // 3. Chuyển ngay ra Trang chủ
+    if (typeof go === 'function') {
+      go('home');
+    }
+
+    // 4. Hiển thị thông báo nộp bài thành công
+    toast(`🎉 Nộp bài thành công! Bài làm (${totalWords} từ) đã được gửi và lưu vào Lịch sử bài làm.`, 'ok');
   } catch (err) {
     console.error('Submit writing error:', err);
     toast('Lỗi khi lưu bài viết vào lịch sử.', 'bad');
