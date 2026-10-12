@@ -656,7 +656,13 @@ function renderReadingWorkspace(set) {
       const levelClass = getLevelClass(q.level);
       const levelTitle = q.levelName || getLevelTitle(q.level);
       const answerVal = savedAnswers[q.id || idx] || '';
-      const isParagraphQuestion = q.level === 'van-dung' || (q.text && /đoạn văn|200 chữ|bài học cuộc sống|thông điệp/i.test(q.text));
+      const lvlStr = String(q.level || '').toLowerCase();
+      const isNonEssayLevel = lvlStr === 'nhan-biet' || lvlStr === 'thong-hieu';
+      const isParagraphQuestion = !isNonEssayLevel && (
+        Boolean(q.isParagraph) ||
+        /viết\s*(một\s*)?đoạn\s*văn|viết\s*đoạn|khoảng\s*\d+\s*chữ|\b\d+\s*chữ\b/i.test(q.text || '') ||
+        (lvlStr === 'van-dung' && /đoạn\s*văn/i.test(q.levelName || '') && /viết/i.test(q.text || ''))
+      );
       const words = (answerVal.trim().match(/\S+/g) || []).length;
       let wcClass = 'wc-low';
       let wcNote = '(Đoạn văn tiêu chuẩn khoảng 200 chữ)';
@@ -689,7 +695,7 @@ function renderReadingWorkspace(set) {
                 <span class="wc-note">${wcNote}</span>
               </div>
               <div class="reading-q-tip">
-                💡 <b>Mẹo làm bài Câu 5 (Đoạn văn):</b> Viết một đoạn văn hoàn chỉnh (khoảng 200 chữ). Cấu trúc gồm: <b>Mở đoạn</b> (dẫn dắt & nêu thông điệp), <b>Thân đoạn</b> (giải thích, vì sao cần trân trọng/thực hiện, dẫn chứng thực tế), <b>Kết đoạn</b> (bài học nhận thức và liên hệ bản thân).
+                💡 <b>Mẹo làm bài Câu ${idx + 1} (Đoạn văn):</b> Viết một đoạn văn hoàn chỉnh (khoảng 200 chữ). Cấu trúc gồm: <b>Mở đoạn</b> (dẫn dắt & nêu thông điệp), <b>Thân đoạn</b> (giải thích, vì sao cần trân trọng/thực hiện, dẫn chứng thực tế), <b>Kết đoạn</b> (bài học nhận thức và liên hệ bản thân).
               </div>
             ` : ''}
           </div>
