@@ -1425,28 +1425,59 @@ function promptAddNewReadingCategory() {
   readingCategories.push(trimmed);
   saveReadingData();
   toast(`Đã thêm chủ đề "${trimmed}"`, 'ok');
-  renderReadingListView();
+  if (typeof renderReadingListView === 'function') renderReadingListView();
+  if (typeof R !== 'undefined' && typeof R.lib === 'function') R.lib();
 }
 
 function promptDeleteCurrentReadingCategory() {
-  if (currentReadingCategory === 'all') {
-    return toast('Vui lòng chọn một chủ đề cụ thể để xóa!', 'bad');
+  let catToDelete = '';
+
+  // 1. Nếu đang lọc một chủ đề trong Thư viện hoặc màn hình Đọc hiểu
+  if (typeof currentLibReadingTopic !== 'undefined' && currentLibReadingTopic) {
+    catToDelete = currentLibReadingTopic;
+  } else if (currentReadingCategory && currentReadingCategory !== 'all') {
+    catToDelete = currentReadingCategory;
   }
 
-  const catToDelete = currentReadingCategory;
+  // 2. Nếu chưa chọn chủ đề cụ thể nào, hiển thị danh sách cho chọn
+  if (!catToDelete) {
+    const validCats = (readingCategories || []).filter(c => c && c !== 'Chưa phân loại' && c !== 'all');
+    if (!validCats.length) {
+      return toast('Không có chủ đề đọc hiểu nào để xóa!', 'bad');
+    }
+    const catList = validCats.map((c, i) => `${i + 1}. ${c}`).join('\n');
+    const chosen = prompt(`Nhập số thứ tự của chủ đề đọc hiểu bạn muốn xóa:\n\n${catList}`);
+    if (!chosen || !chosen.trim()) return;
+    const idx = parseInt(chosen.trim(), 10) - 1;
+    if (isNaN(idx) || idx < 0 || idx >= validCats.length) {
+      return toast('Số thứ tự không hợp lệ!', 'bad');
+    }
+    catToDelete = validCats[idx];
+  }
+
   if (!confirm(`Bạn có chắc chắn muốn xóa chủ đề "${catToDelete}" không? Các bộ đề thuộc chủ đề này sẽ được chuyển sang "Chưa phân loại".`)) {
     return;
   }
 
   readingCategories = readingCategories.filter(c => c !== catToDelete);
   readingSets.forEach(s => {
-    if (s.category === catToDelete) s.category = 'Chưa phân loại';
+    if (s.genre === catToDelete || s.category === catToDelete) {
+      s.genre = 'Chưa phân loại';
+      s.category = 'Chưa phân loại';
+    }
   });
 
   currentReadingCategory = 'all';
+  if (typeof currentLibReadingTopic !== 'undefined') currentLibReadingTopic = '';
   saveReadingData();
   toast(`Đã xóa chủ đề "${catToDelete}"`, 'ok');
-  renderReadingListView();
+  if (typeof renderReadingListView === 'function') renderReadingListView();
+  if (typeof R !== 'undefined' && typeof R.lib === 'function') R.lib();
+}
+
+if (typeof window !== 'undefined') {
+  window.promptAddNewReadingCategory = promptAddNewReadingCategory;
+  window.promptDeleteCurrentReadingCategory = promptDeleteCurrentReadingCategory;
 }
 
 // Tự động khởi tạo dữ liệu đọc hiểu ngay khi nạp script

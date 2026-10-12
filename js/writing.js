@@ -288,7 +288,8 @@ function promptAddNewCategory() {
   saveWritingCategories(cats);
 
   toast(`Đã thêm chủ đề mới: "${cleanName}"!`, 'ok');
-  filterWritingCategory(id);
+  if (typeof filterWritingCategory === 'function') filterWritingCategory(id);
+  if (typeof R !== 'undefined' && typeof R.lib === 'function') R.lib();
 }
 
 function promptDeleteCategory(catId) {
@@ -334,13 +335,24 @@ function promptDeleteCategory(catId) {
     renderWritingSetsGrid();
     updateModalCategorySelect();
     toast(`Đã xóa chủ đề "${cat.name}" thành công!`, 'ok');
+    if (typeof R !== 'undefined' && typeof R.lib === 'function') R.lib();
   });
 }
 
 function promptDeleteCurrentCategory() {
   const cats = getWritingCategories();
-  if (currentWritingCategory !== 'all') {
-    promptDeleteCategory(currentWritingCategory);
+
+  let targetCatId = null;
+  if (typeof currentLibWritingTopic !== 'undefined' && currentLibWritingTopic) {
+    const match = cats.find(c => c.name.toLowerCase() === currentLibWritingTopic.toLowerCase() || c.id === currentLibWritingTopic);
+    if (match) targetCatId = match.id;
+  }
+  if (!targetCatId && currentWritingCategory !== 'all') {
+    targetCatId = currentWritingCategory;
+  }
+
+  if (targetCatId) {
+    promptDeleteCategory(targetCatId);
     return;
   }
 
@@ -1429,5 +1441,8 @@ function submitWritingEssay() {
 if (typeof window !== 'undefined') {
   window.submitWritingEssay = submitWritingEssay;
   window.getWritingSectionMaxScore = getWritingSectionMaxScore;
+  window.promptAddNewCategory = promptAddNewCategory;
+  window.promptDeleteCurrentCategory = promptDeleteCurrentCategory;
+  window.promptDeleteCategory = promptDeleteCategory;
 }
 

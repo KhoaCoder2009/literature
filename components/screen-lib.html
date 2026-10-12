@@ -63,9 +63,10 @@
 
       <!-- PANE 2: BỘ ĐỀ ĐỌC HIỂU -->
       <div id="lib-pane-reading" class="lib-tab-pane">
-        <div class="hud" style="justify-content:flex-end;">
-          <button class="btn au" onclick="openCreateReadingSetModal()">+ Thêm đề đọc hiểu mới</button>
-          <button class="btn cy" onclick="promptAddNewReadingCategory()">+ Thêm chủ đề</button>
+        <div class="hud" style="justify-content:flex-end; gap:8px;">
+          <button class="btn cy" type="button" onclick="promptAddNewReadingCategory()" title="Tạo thêm chủ đề mới">+ Thêm chủ đề</button>
+          <button class="btn no" type="button" onclick="promptDeleteCurrentReadingCategory()" title="Xóa chủ đề">✕ Xóa chủ đề</button>
+          <button class="btn au" type="button" onclick="openCreateReadingSetModal()" title="Tạo đề đọc hiểu mới">+ Thêm đề mới</button>
         </div>
         <div class="lib-search-filter-card">
           <div class="lib-search-bar-row">
@@ -87,9 +88,10 @@
 
       <!-- PANE 3: BỘ ĐỀ VIẾT -->
       <div id="lib-pane-writing" class="lib-tab-pane">
-        <div class="hud" style="justify-content:flex-end;">
-          <button class="btn au" onclick="openCreateWritingSetModal()">+ Thêm đề viết mới</button>
-          <button class="btn cy" onclick="promptAddNewCategory()">+ Thêm chủ đề</button>
+        <div class="hud" style="justify-content:flex-end; gap:8px;">
+          <button class="btn cy" type="button" onclick="promptAddNewCategory()" title="Tạo thêm chủ đề mới">+ Thêm chủ đề</button>
+          <button class="btn no" type="button" onclick="promptDeleteCurrentCategory()" title="Xóa chủ đề (có xác nhận)">✕ Xóa chủ đề</button>
+          <button class="btn au" type="button" onclick="openCreateWritingSetModal()" title="Tạo bộ đề mới">+ Thêm bộ mới</button>
         </div>
         <div class="lib-search-filter-card">
           <div class="lib-search-bar-row">
