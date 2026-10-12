@@ -3626,3 +3626,251 @@ body.projector-mode .hud-pill {
 [data-theme="dark"] .history-detail-explanation {
   background: rgba(255, 255, 255, 0.05);
 }
+
+/* =========================================================================
+   MANUAL GRADING SYSTEM (CHẤM BÀI THỦ CÔNG CHO LỊCH SỬ BÀI LÀM)
+   ========================================================================= */
+
+.history-pill.pill-graded {
+  background: rgba(34, 197, 94, 0.15);
+  color: #15803d;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  font-weight: 800;
+}
+[data-theme="dark"] .history-pill.pill-graded {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  border-color: rgba(74, 222, 128, 0.4);
+}
+
+.history-pill.pill-ungraded {
+  background: rgba(245, 158, 11, 0.15);
+  color: #b45309;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  font-weight: 800;
+}
+[data-theme="dark"] .history-pill.pill-ungraded {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+/* Grading Toolbar */
+.history-grading-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  background: rgba(217, 169, 79, 0.12);
+  border: 1.5px solid var(--gold);
+  border-radius: 12px;
+  font-size: 13.5px;
+}
+
+.history-grading-toolbar-title {
+  font-weight: 800;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Question Grading Panel */
+.history-manual-grading-panel {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px dashed var(--gold);
+  background: rgba(217, 169, 79, 0.06);
+  transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .history-manual-grading-panel {
+  background: rgba(217, 169, 79, 0.1);
+  border-color: rgba(217, 169, 79, 0.5);
+}
+
+.grading-panel-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.grading-panel-label {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.grading-quick-status-btns {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.grading-quick-status-btn {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  border: 1px solid var(--stroke);
+  background: var(--bg-card);
+  color: var(--mut);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.grading-quick-status-btn:hover {
+  transform: translateY(-1px);
+}
+
+.grading-quick-status-btn.active-ok {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+  box-shadow: 0 2px 6px rgba(34, 197, 94, 0.3);
+}
+
+.grading-quick-status-btn.active-partial {
+  background: #f59e0b;
+  color: #fff;
+  border-color: #f59e0b;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);
+}
+
+.grading-quick-status-btn.active-bad {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+}
+
+.grading-inputs-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.grading-points-input-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.grading-points-input-box label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.grading-quick-pills {
+  display: flex;
+  gap: 4px;
+}
+
+.grading-quick-pills button {
+  padding: 2px 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  border-radius: 6px;
+}
+
+.grade-comment-input {
+  width: 100%;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1px solid var(--stroke);
+  background: var(--bg-card);
+  color: var(--ink);
+  padding: 7px 10px;
+  transition: border-color 0.2s ease;
+}
+
+.grade-comment-input:focus {
+  border-color: var(--gold);
+  outline: none;
+}
+
+/* Graded Result View Box (in View Mode) */
+.history-graded-result-box {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1.5px solid rgba(34, 197, 94, 0.25);
+  font-size: 13.5px;
+}
+
+[data-theme="dark"] .history-graded-result-box {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(74, 222, 128, 0.35);
+}
+
+.history-teacher-comment {
+  margin-top: 6px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.03);
+  font-size: 13px;
+  color: var(--ink);
+}
+
+[data-theme="dark"] .history-teacher-comment {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Overall Grading Card */
+.history-overall-grading-card {
+  margin-top: 20px;
+  padding: 18px 22px;
+  border-radius: 18px;
+  border: 2px solid var(--gold);
+  background: rgba(217, 169, 79, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .history-overall-grading-card {
+  background: rgba(217, 169, 79, 0.12);
+  border-color: rgba(217, 169, 79, 0.6);
+}
+
+.history-rank-badge {
+  font-weight: 800;
+  font-size: 13.5px;
+  padding: 6px 14px;
+  border-radius: 99px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.history-rank-badge.rank-gioi {
+  background: #dcfce7;
+  color: #15803d;
+}
+.history-rank-badge.rank-kha {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+.history-rank-badge.rank-tb {
+  background: #fef3c7;
+  color: #b45309;
+}
+.history-rank-badge.rank-yeu {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+[data-theme="dark"] .history-rank-badge.rank-gioi { background: #166534; color: #bbf7d0; }
+[data-theme="dark"] .history-rank-badge.rank-kha { background: #075985; color: #bae6fd; }
+[data-theme="dark"] .history-rank-badge.rank-tb { background: #92400e; color: #fde68a; }
+[data-theme="dark"] .history-rank-badge.rank-yeu { background: #991b1b; color: #fecaca; }

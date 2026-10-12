@@ -248,16 +248,24 @@
         Chi tiết bài làm
       </h2>
     </div>
-    <button class="btn gh sm" type="button" onclick="closeHistoryDetailModal()" aria-label="Đóng">✕</button>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <button class="btn cy sm" id="btn-toggle-grading-mode" type="button" onclick="toggleHistoryGradingMode()" title="Chuyển đổi giữa chế độ xem và chế độ chấm bài">
+        ✏️ Chấm bài thủ công
+      </button>
+      <button class="btn gh sm" type="button" onclick="closeHistoryDetailModal()" aria-label="Đóng">✕</button>
+    </div>
   </div>
 
   <div class="history-detail-content-wrap">
     <div id="history-detail-meta"></div>
-    <h3 style="margin:16px 0 10px; font-size:16px; font-weight:800;">Danh sách câu hỏi &amp; Bài làm:</h3>
+    <div id="history-detail-grading-toolbar" style="display:none;"></div>
+    <h3 style="margin:16px 0 10px; font-size:16px; font-weight:800;" id="history-detail-section-heading">Danh sách câu hỏi &amp; Bài làm:</h3>
     <div id="history-detail-questions-list"></div>
+    <div id="history-detail-grading-summary"></div>
   </div>
 
   <div class="history-modal-footer">
+    <button class="btn au sm" id="btn-save-grading-footer" type="button" onclick="saveManualGrading()" style="display:none; font-weight:800;">💾 Lưu kết quả chấm</button>
     <button class="btn cy sm" type="button" onclick="copyHistoryDetailText()">📋 Sao chép bài làm</button>
     <button class="btn gh" type="button" onclick="closeHistoryDetailModal()">Đóng</button>
   </div>
