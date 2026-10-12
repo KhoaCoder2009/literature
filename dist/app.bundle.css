@@ -4506,6 +4506,104 @@ input, textarea {
 }
 
 /* =========================================================================
+   DEVTOOLS SECURITY CURTAIN (KHÓA MÀN HÌNH KHI MỞ DEVTOOLS TỪ CÔNG CỤ KHÁC)
+   ========================================================================= */
+#devtools-security-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeInCurtain 0.25s ease;
+}
+
+@keyframes fadeInCurtain {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.sec-curtain-card {
+  max-width: 520px;
+  width: 100%;
+  background: #1e293b;
+  border: 2px solid #ef4444;
+  box-shadow: 0 0 50px rgba(239, 68, 68, 0.35), 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  border-radius: 24px;
+  padding: 32px 28px;
+  text-align: center;
+  color: #fff;
+  font-family: inherit;
+}
+
+.sec-curtain-icon {
+  font-size: 64px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 4px 12px rgba(239, 68, 68, 0.5));
+}
+
+.sec-curtain-title {
+  margin: 0 0 12px;
+  font-size: 21px;
+  font-weight: 900;
+  color: #ef4444;
+  letter-spacing: -0.5px;
+}
+
+.sec-curtain-desc {
+  margin: 0 0 16px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #cbd5e1;
+}
+
+.sec-curtain-badge {
+  display: inline-block;
+  background: rgba(239, 68, 68, 0.18);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+  font-size: 12.5px;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.sec-curtain-note {
+  margin: 0 0 20px;
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+.sec-curtain-retry-btn {
+  height: 42px;
+  padding: 0 24px;
+  font-weight: 800;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+body.devtools-locked .scr,
+body.devtools-locked nav,
+body.devtools-locked .mobile-sidebar,
+body.devtools-locked .modal-overlay,
+body.devtools-locked .modal-box,
+body.devtools-locked #prompt-dialog,
+body.devtools-locked #settings-dialog,
+body.devtools-locked header,
+body.devtools-locked main {
+  filter: blur(28px) !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+/* =========================================================================
    WRITING PRACTICE MODULE STYLES (LUYỆN VIẾT)
    ========================================================================= */
 

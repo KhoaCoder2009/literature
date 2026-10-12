@@ -42,60 +42,109 @@ window.COMPONENTS = {
 (function initSecurityShield() {
   'use strict';
 
-  // 1. CHẶN CÁC PHÍM TẮT MỞ DEVTOOLS, VIEW SOURCE & SAVE PAGE
-  const BLOCKED_KEYS = [
-    { key: 'F12' },
-    { key: 'I', ctrl: true, shift: true },
-    { key: 'I', meta: true, alt: true },
-    { key: 'J', ctrl: true, shift: true },
-    { key: 'J', meta: true, alt: true },
-    { key: 'C', ctrl: true, shift: true },
-    { key: 'C', meta: true, alt: true },
-    { key: 'U', ctrl: true },
-    { key: 'U', meta: true },
-    { key: 'S', ctrl: true },
-    { key: 'S', meta: true },
-    { key: 'F10', shift: true }
-  ];
-
+  // 0. THÔNG BÁO BẢO MẬT GIAO DIỆN
   function showSecurityNotice(msg) {
-    if (typeof toast === 'function') {
-      toast(msg, 'bad');
+    if (typeof window.toast === 'function') {
+      window.toast(msg, 'bad');
     } else {
       const existing = document.getElementById('sec-warning-toast');
       if (existing) existing.remove();
       const div = document.createElement('div');
       div.id = 'sec-warning-toast';
       div.textContent = msg;
-      div.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#ef4444;color:#fff;padding:12px 24px;border-radius:12px;font-family:sans-serif;font-weight:700;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,0.3);z-index:999999;transition:all 0.3s ease;';
-      document.body.appendChild(div);
-      setTimeout(() => div.remove(), 2800);
+      div.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#ef4444;color:#fff;padding:12px 24px;border-radius:12px;font-family:sans-serif;font-weight:700;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,0.3);z-index:2147483647;transition:all 0.3s ease;';
+      if (document.body) {
+        document.body.appendChild(div);
+      } else if (document.documentElement) {
+        document.documentElement.appendChild(div);
+      }
+      setTimeout(() => {
+        try { div.remove(); } catch (_) {}
+      }, 2800);
     }
   }
 
-  window.addEventListener('keydown', function handleSecurityHotkeys(e) {
+  // 1. CHẶN TRIỆT ĐỂ CÁC TỔ HỢP PHÍM TẮT DEVTOOLS (CTRL+SHIFT+I, F12,...)
+  function isDevToolsShortcut(e) {
     const key = (e.key || '').toUpperCase();
-    const ctrl = e.ctrlKey;
-    const meta = e.metaKey;
-    const shift = e.shiftKey;
-    const alt = e.altKey;
+    const code = e.code || '';
+    const keyCode = e.keyCode || e.which || 0;
+    const ctrlOrMeta = Boolean(e.ctrlKey || e.metaKey);
+    const shift = Boolean(e.shiftKey);
+    const alt = Boolean(e.altKey);
 
-    for (let i = 0; i < BLOCKED_KEYS.length; i++) {
-      const b = BLOCKED_KEYS[i];
-      const matchKey = key === b.key;
-      const matchCtrl = b.ctrl ? (ctrl || (b.meta && meta)) : (!b.ctrl ? !ctrl : true);
-      const matchShift = b.shift ? shift : (!b.shift ? !shift : true);
-      const matchAlt = b.alt ? alt : true;
-
-      if (matchKey && (b.ctrl ? (ctrl || meta) : true) && (b.shift ? shift : true) && (b.alt ? alt : true)) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        showSecurityNotice('⚠️ Thao tác kiểm tra mã nguồn (F12/Inspect/Console) đã bị vô hiệu hóa!');
-        return false;
-      }
+    // F12 (Phím mở DevTools trực tiếp)
+    if (key === 'F12' || code === 'F12' || keyCode === 123) {
+      return true;
     }
-  }, true);
+
+    // Ctrl + Shift + I hoặc Cmd + Option + I (Công cụ cho nhà phát triển)
+    const isI = key === 'I' || code === 'KeyI' || keyCode === 73;
+    if ((ctrlOrMeta && shift && isI) || (ctrlOrMeta && alt && isI)) {
+      return true;
+    }
+
+    // Ctrl + Shift + J hoặc Cmd + Option + J (Mở trực tiếp Console)
+    const isJ = key === 'J' || code === 'KeyJ' || keyCode === 74;
+    if ((ctrlOrMeta && shift && isJ) || (ctrlOrMeta && alt && isJ)) {
+      return true;
+    }
+
+    // Ctrl + Shift + C hoặc Cmd + Option + C (Inspect Element / Soi phần tử)
+    const isC = key === 'C' || code === 'KeyC' || keyCode === 67;
+    if ((ctrlOrMeta && shift && isC) || (ctrlOrMeta && alt && isC)) {
+      return true;
+    }
+
+    // Ctrl + Shift + K (Web Console Firefox)
+    const isK = key === 'K' || code === 'KeyK' || keyCode === 75;
+    if (ctrlOrMeta && shift && isK) {
+      return true;
+    }
+
+    // Ctrl + Shift + E (Network Tab Firefox)
+    const isE = key === 'E' || code === 'KeyE' || keyCode === 69;
+    if (ctrlOrMeta && shift && isE) {
+      return true;
+    }
+
+    // Ctrl + U hoặc Cmd + Option + U (Xem mã nguồn trang / View Source)
+    const isU = key === 'U' || code === 'KeyU' || keyCode === 85;
+    if (ctrlOrMeta && isU) {
+      return true;
+    }
+
+    // Ctrl + S (Lưu trang web)
+    const isS = key === 'S' || code === 'KeyS' || keyCode === 83;
+    if (ctrlOrMeta && isS) {
+      return true;
+    }
+
+    // Shift + F10 (Phím mở menu chuột phải Windows)
+    if (shift && (key === 'F10' || code === 'F10' || keyCode === 121)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  function handleSecurityHotkeys(e) {
+    if (isDevToolsShortcut(e)) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (typeof e.stopImmediatePropagation === 'function') {
+        e.stopImmediatePropagation();
+      }
+      e.returnValue = false;
+      showSecurityNotice('⚠️ Thao tác mở DevTools (Ctrl+Shift+I / F12) đã bị vô hiệu hóa hoàn toàn!');
+      return false;
+    }
+  }
+
+  ['keydown', 'keyup'].forEach(eventType => {
+    window.addEventListener(eventType, handleSecurityHotkeys, true);
+    document.addEventListener(eventType, handleSecurityHotkeys, true);
+  });
 
   // 2. CHẶN TRIỆT ĐỂ MENU NGỮ CẢNH (CONTEXTMENU, CHUỘT PHẢI, MICROSOFT EDITOR)
   function blockContextMenuEvent(e) {
@@ -273,24 +322,101 @@ window.COMPONENTS = {
     return data._secSig === createSubmissionSignature(data);
   }
 
-  // 7. PHÁT HIỆN DEVTOOLS DỰA TRÊN KÍCH THƯỚC CỬA SỔ
-  let devtoolsDetected = false;
-  setInterval(function detectDevToolsOpen() {
-    const widthDiff = window.outerWidth - window.innerWidth > 160;
-    const heightDiff = window.outerHeight - window.innerHeight > 160;
-    if ((widthDiff || heightDiff) && !devtoolsDetected) {
-      devtoolsDetected = true;
+  // 7. PHÁT HIỆN & KHÓA TOÀN MÀN HÌNH KHI MỞ DEVTOOLS QUA "CÔNG CỤ KHÁC" HOẶC PHÍM TẮT
+  let isDevToolsCurtainActive = false;
+
+  function setDevToolsLockdown(locked) {
+    if (isDevToolsCurtainActive === locked) return;
+    isDevToolsCurtainActive = locked;
+
+    let curtain = document.getElementById('devtools-security-curtain');
+    if (locked) {
+      if (!curtain) {
+        curtain = document.createElement('div');
+        curtain.id = 'devtools-security-curtain';
+        curtain.innerHTML = `
+          <div class="sec-curtain-card">
+            <div class="sec-curtain-icon">⛔</div>
+            <h2 class="sec-curtain-title">PHÁT HIỆN CÔNG CỤ NHÀ PHÁT TRIỂN (DEVTOOLS)</h2>
+            <p class="sec-curtain-desc">
+              Hệ thống phát hiện bạn vừa mở <b>Công cụ cho nhà phát triển / DevTools</b> (từ menu Công cụ khác hoặc phím tắt).
+            </p>
+            <div class="sec-curtain-badge">🔒 TOÀN BỘ MÀN HÌNH ĐÃ TỰ ĐỘNG KHÓA ĐỂ BẢO VỆ BÀI THI</div>
+            <p class="sec-curtain-note">
+              Để tiếp tục làm bài, vui lòng <b>ĐÓNG DEVTOOLS</b> (nhấn nút ✕ trên cửa sổ kiểm tra mã)!
+            </p>
+            <button type="button" class="btn cy sm sec-curtain-retry-btn" onclick="window.__SECURITY_SHIELD && window.__SECURITY_SHIELD.checkDevTools(true)">
+              🔄 Tôi đã đóng DevTools (Kiểm tra lại)
+            </button>
+          </div>
+        `;
+        document.body.appendChild(curtain);
+      }
+      curtain.style.display = 'flex';
+      document.body.classList.add('devtools-locked');
       try { console.clear(); warningBanner(); } catch (_) {}
-    } else if (!widthDiff && !heightDiff) {
-      devtoolsDetected = false;
+    } else {
+      if (curtain) curtain.style.display = 'none';
+      document.body.classList.remove('devtools-locked');
     }
-  }, 2000);
+  }
+
+  // Đối tượng bẫy để phát hiện DevTools ngay cả khi mở ở cửa sổ riêng biệt (Undocked)
+  let devtoolsGetterTriggered = false;
+  const detectorImg = new Image();
+  try {
+    Object.defineProperty(detectorImg, 'id', {
+      get: function() {
+        devtoolsGetterTriggered = true;
+        return 'sec-detect-token';
+      }
+    });
+  } catch (_) {}
+
+  function checkDevToolsState(isManual) {
+    try {
+      const threshold = 160;
+      const widthDiff = (window.outerWidth - window.innerWidth) > threshold;
+      const heightDiff = (window.outerHeight - window.innerHeight) > threshold;
+      let isOpen = Boolean(widthDiff || heightDiff);
+
+      // Kiểm tra bổ sung bằng bẫy getter (hữu hiệu cả khi mở cửa sổ rời)
+      if (!isOpen) {
+        devtoolsGetterTriggered = false;
+        try {
+          console.log('%c', detectorImg);
+          console.clear();
+        } catch (_) {}
+        if (devtoolsGetterTriggered) {
+          isOpen = true;
+        }
+      }
+
+      setDevToolsLockdown(isOpen);
+
+      if (isManual) {
+        if (!isOpen) {
+          showSecurityNotice('✅ Đã đóng DevTools thành công. Bạn có thể tiếp tục làm bài!');
+        } else {
+          showSecurityNotice('⚠️ Cửa sổ DevTools vẫn đang mở. Vui lòng đóng DevTools trước!');
+        }
+      }
+      return isOpen;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  // Giám sát liên tục mỗi 350ms và mỗi khi resize cửa sổ
+  setInterval(() => checkDevToolsState(false), 350);
+  window.addEventListener('resize', () => checkDevToolsState(false), { passive: true });
 
   const shield = {
     freezeGlobal: freezeGlobalFunction,
     freezeObject: freezeGlobalObject,
     sign: createSubmissionSignature,
-    verify: verifySubmissionIntegrity
+    verify: verifySubmissionIntegrity,
+    checkDevTools: checkDevToolsState
   };
   Object.freeze(shield);
 
