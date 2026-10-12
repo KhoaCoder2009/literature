@@ -3440,13 +3440,20 @@ body.projector-mode .hud-pill {
 
 .history-item-top {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
+  gap: 14px;
 }
 
-.history-item-title-box {
+.history-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.history-item-title-row {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -3468,19 +3475,119 @@ body.projector-mode .hud-pill {
   font-size: 16px;
   font-weight: 800;
   color: var(--ink);
-}
-
-.history-item-date {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--mut);
+  line-height: 1.35;
 }
 
 .history-item-meta {
   font-size: 13px;
   color: var(--mut);
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
+  align-items: center;
+}
+
+/* Ô ĐIỂM GÓC PHẢI THẺ LỊCH SỬ BÀI LÀM */
+.history-card-score-box {
+  min-width: 96px;
+  padding: 6px 14px;
+  border-radius: 14px;
+  border: 2.5px solid var(--stroke);
+  box-shadow: 0 4px 0 var(--stroke);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-shrink: 0;
+  user-select: none;
+  transition: transform 0.15s ease;
+}
+
+.history-card-score-box:hover {
+  transform: scale(1.04);
+}
+
+.history-score-main {
+  font-size: 21px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.history-score-sub {
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-top: 3px;
+  white-space: nowrap;
+}
+
+/* Đã chấm điểm: Màu xanh lá */
+.score-box-graded {
+  background: #dcfce7;
+  color: #15803d;
+}
+.score-box-graded .history-score-main {
+  color: #15803d;
+}
+.score-box-graded .history-score-sub {
+  color: #166534;
+}
+
+/* Trắc nghiệm tự động: Màu vàng gold */
+.score-box-quiz {
+  background: #fef3c7;
+  color: #b45309;
+}
+.score-box-quiz .history-score-main {
+  color: #b45309;
+}
+.score-box-quiz .history-score-sub {
+  color: #92400e;
+}
+
+/* Chờ chấm tự luận: Màu vàng cam */
+.score-box-waiting {
+  background: #fef08a;
+  color: #854d0e;
+}
+.score-box-waiting .history-score-main {
+  font-size: 15px;
+  font-weight: 900;
+  color: #854d0e;
+}
+.score-box-waiting .history-score-sub {
+  color: #a16207;
+}
+
+/* Dark mode */
+[data-theme="dark"] .score-box-graded {
+  background: rgba(34, 197, 94, 0.22);
+  color: #4ade80;
+}
+[data-theme="dark"] .score-box-graded .history-score-main,
+[data-theme="dark"] .score-box-graded .history-score-sub {
+  color: #4ade80;
+}
+
+[data-theme="dark"] .score-box-quiz {
+  background: rgba(234, 179, 8, 0.22);
+  color: #fde047;
+}
+[data-theme="dark"] .score-box-quiz .history-score-main,
+[data-theme="dark"] .score-box-quiz .history-score-sub {
+  color: #fde047;
+}
+
+[data-theme="dark"] .score-box-waiting {
+  background: rgba(245, 158, 11, 0.22);
+  color: #fbbf24;
+}
+[data-theme="dark"] .score-box-waiting .history-score-main,
+[data-theme="dark"] .score-box-waiting .history-score-sub {
+  color: #fbbf24;
 }
 
 .history-item-stats {

@@ -827,46 +827,77 @@ function renderHistoryItemCardHtml(item) {
   const isGraded = Boolean(item.isGraded);
   const hasUngradedShort = !isGraded && (item.type === 'reading' || item.savedShortCount > 0 || (Array.isArray(item.details) && item.details.some(d => d.status === 'saved')));
 
+  // Thiết lập ô điểm hiển thị nổi bật ở góc phải thẻ
+  let scoreBoxClass = 'score-box-quiz';
+  let scoreValue = '0đ';
+  let scoreSub = 'ĐIỂM SỐ';
+  let scoreTooltip = 'Điểm số bài làm';
+
+  const rawScore = item.score !== undefined && item.score !== null ? parseFloat(item.score) : 0;
+  const formattedScore = (Math.round(rawScore * 100) / 100).toFixed(2).replace(/\.?0+$/, '') + 'đ';
+
+  if (isGraded) {
+    scoreBoxClass = 'score-box-graded';
+    scoreValue = formattedScore;
+    scoreSub = '✅ ĐÃ CHẤM';
+    scoreTooltip = `Bài làm đã được chấm điểm: ${formattedScore}`;
+  } else if (hasUngradedShort) {
+    scoreBoxClass = 'score-box-waiting';
+    scoreValue = 'Chờ chấm';
+    scoreSub = '⏳ ĐỢI CHẤM';
+    scoreTooltip = 'Bài làm có câu tự luận đang chờ giáo viên chấm điểm';
+  } else {
+    scoreBoxClass = 'score-box-quiz';
+    scoreValue = formattedScore;
+    scoreSub = (item.accuracy !== undefined && item.accuracy !== null) ? `🎯 ${item.accuracy}% ĐÚNG` : '🏆 ĐIỂM SỐ';
+    scoreTooltip = `Điểm bài làm: ${formattedScore} (${item.accuracy || 0}% đúng)`;
+  }
+
   let statsHtml = '';
   if (isQuiz) {
     statsHtml = `
-      <span class="history-pill pill-score">🏆 ${item.score || 0} điểm</span>
       <span class="history-pill pill-acc">🎯 ${item.accuracy || 0}% (${item.correctCount || 0}/${item.totalQuestions || 0} đúng)</span>
       ${item.savedShortCount ? `<span class="history-pill pill-short">📝 ${item.savedShortCount} tự luận</span>` : ''}
       <span class="history-pill pill-time">⏱️ ${item.elapsedSeconds ? Math.floor(item.elapsedSeconds / 60) + 'p ' + (item.elapsedSeconds % 60) + 's' : '—'}</span>
     `;
   } else if (item.type === 'reading') {
     statsHtml = `
-      <span class="history-pill pill-score">📑 ${item.answeredCount || 0}/${item.totalQuestions || 0} câu đã trả lời</span>
-      <span class="history-pill pill-time">⏱️ ${item.dateStr || ''}</span>
+      <span class="history-pill pill-score">📑 ${item.answeredCount || 0}/${item.totalQuestions || 0} câu đã làm</span>
     `;
   }
 
   if (isGraded) {
-    statsHtml += `<span class="history-pill pill-graded">✅ Đã chấm: <b>${item.score || 0}</b>đ</span>`;
     if (item.teacherFeedback) {
-      statsHtml += `<span class="history-pill pill-short" title="${esc(item.teacherFeedback)}">💬 Có lời phê</span>`;
+      statsHtml += `<span class="history-pill pill-short" title="${esc(item.teacherFeedback)}">💬 Lời phê: "${esc(item.teacherFeedback.slice(0, 35))}${item.teacherFeedback.length > 35 ? '…' : ''}"</span>`;
     }
   } else if (hasUngradedShort) {
-    statsHtml += `<span class="history-pill pill-ungraded">⏳ Chờ chấm điểm</span>`;
+    statsHtml += `<span class="history-pill pill-ungraded">⏳ Chờ chấm tự luận</span>`;
   }
 
   return `
     <div class="history-item-card">
       <div class="history-item-top">
-        <div class="history-item-title-box">
-          <span class="history-item-badge">${typeIcon} ${typeName}</span>
-          <h4 class="history-item-title" onclick="openHistoryForSet('${esc(item.setId)}', '${esc(item.setTitle)}')" style="cursor:pointer;" title="Nhấp để chỉ xem các bài làm của bộ đề này">
-            ${esc(item.setTitle || 'Bài làm')}
-          </h4>
-        </div>
-        <span class="history-item-date">${item.dateStr || ''}</span>
-      </div>
+        <div class="history-item-left">
+          <div class="history-item-title-row">
+            <span class="history-item-badge">${typeIcon} ${typeName}</span>
+            <h4 class="history-item-title" onclick="openHistoryForSet('${esc(item.setId)}', '${esc(item.setTitle)}')" style="cursor:pointer;" title="Nhấp để chỉ xem các bài làm của bộ đề này">
+              ${esc(item.setTitle || 'Bài làm')}
+            </h4>
+          </div>
 
-      <div class="history-item-meta">
-        <span>👤 Học sinh: <b>${esc(item.playerName || 'Học sinh')}</b></span>
-        ${item.className ? `<span>· Lớp: <b>${esc(item.className)}</b></span>` : ''}
-        ${item.setTopic ? `<span>· Chủ đề: <b>${esc(item.setTopic)}</b></span>` : ''}
+          <div class="history-item-meta">
+            <span>👤 Học sinh: <b>${esc(item.playerName || 'Học sinh')}</b></span>
+            ${item.className ? `<span>· Lớp: <b>${esc(item.className)}</b></span>` : ''}
+            ${item.setTopic ? `<span>· Chủ đề: <b>${esc(item.setTopic)}</b></span>` : ''}
+            <span>· 📅 ${item.dateStr || ''}</span>
+          </div>
+        </div>
+
+        <!-- GÓC PHẢI THẺ: HIỂN THỊ SCORE / KẾT QUẢ NỔI BẬT DỄ NHÌN -->
+        <div class="history-card-score-box ${scoreBoxClass}" title="${esc(scoreTooltip)}">
+          <span class="history-score-main">${scoreValue}</span>
+          <span class="history-score-sub">${scoreSub}</span>
+        </div>
       </div>
 
       <div class="history-item-stats">
@@ -879,14 +910,14 @@ function renderHistoryItemCardHtml(item) {
             ✏️ Sửa điểm / Chấm lại
           </button>
           <button class="btn gh sm" type="button" onclick="viewHistoryDetail('${esc(item.id)}', false)">
-            👁️ Xem kết quả (${item.score}đ)
+            👁️ Xem chi tiết bài làm
           </button>
         ` : `
           <button class="btn au sm" type="button" onclick="viewHistoryDetail('${esc(item.id)}', true)" style="font-weight:800;">
             ✏️ Chấm bài ngay
           </button>
           <button class="btn gh sm" type="button" onclick="viewHistoryDetail('${esc(item.id)}', false)">
-            👁️ Xem bài làm
+            👁️ Xem chi tiết bài làm
           </button>
         `}
         <button class="btn no sm btn-icon-only" type="button" onclick="deleteHistoryItem('${esc(item.id)}')" title="Xóa lượt này">
