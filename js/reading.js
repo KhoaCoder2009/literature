@@ -607,16 +607,13 @@ function renderSingleReadingCard(s, idx = 0) {
         <button class="btn au reading-h-btn-enter" type="button" onclick="openReadingSet('${esc(s.id)}')">
           <span>▶ Vào đọc hiểu</span>
         </button>
-        <div class="reading-h-mini-row">
-          <button class="reading-h-mini-btn" type="button" title="Chỉnh sửa đề thi" onclick="openEditReadingSetModal('${esc(s.id)}')">
-            <span>✏️ Sửa</span>
-          </button>
-          ${isUserCreated ? `
+        ${isUserCreated ? `
+          <div class="reading-h-mini-row">
             <button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề này" onclick="deleteReadingSet('${esc(s.id)}')">
-              <span>🗑️</span>
+              <span>🗑️ Xóa đề</span>
             </button>
-          ` : ''}
-        </div>
+          </div>
+        ` : ''}
       </div>
     </div>
   `;

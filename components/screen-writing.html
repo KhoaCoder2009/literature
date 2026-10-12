@@ -59,9 +59,6 @@
           <button class="btn au sm" onclick="submitWritingEssay()" title="Nộp bài viết để lưu vào Lịch sử và giáo viên chấm điểm" style="font-weight:800;">
             <span>✅</span> <span>Nộp bài viết</span>
           </button>
-          <button class="btn cy sm" onclick="editWritingSet(window.currentWritingSetId || (currentWritingSet && currentWritingSet.id))" title="Chỉnh sửa đề bài và dàn ý">
-            <span>✏️</span> <span>Sửa đề</span>
-          </button>
           <button class="btn no sm" onclick="deleteCurrentOpenedWritingSet()" title="Xóa đề này khỏi danh sách">
             <span>🗑️</span> <span>Xóa đề</span>
           </button>
@@ -77,11 +74,8 @@
             
             <!-- Hộp đề bài -->
             <div class="writing-prompt-card">
-              <div class="writing-prompt-header" style="display:flex; justify-content:space-between; align-items:center;">
+              <div class="writing-prompt-header">
                 <span class="writing-prompt-tag">Đề bài</span>
-                <button type="button" class="btn cy sm" onclick="editWritingSet(window.currentWritingSetId || (currentWritingSet && currentWritingSet.id))" title="Chỉnh sửa nội dung đề bài" style="padding:2px 8px; font-size:12px; height:26px;">
-                  ✏️ Sửa đề
-                </button>
               </div>
               <div class="writing-prompt-text-wrapper">
                 <p id="workspace-prompt-text" class="writing-prompt-text"></p>

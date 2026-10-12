@@ -427,7 +427,6 @@ function renderWritingSetsGrid() {
           <div class="setup-card-top-info" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
             <span class="setup-card-count-pill">${sectionCount} phần dàn ý</span>
             <div style="display:flex; gap:4px; position:relative; z-index:2;" onclick="event.stopPropagation()">
-              <button class="reading-h-mini-btn" type="button" title="Chỉnh sửa đề bài" onclick="event.stopPropagation(); editWritingSet('${esc(s.id)}')">✏️</button>
               <button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề bài" onclick="event.stopPropagation(); deleteWritingSet('${esc(s.id)}')">🗑️</button>
             </div>
           </div>
@@ -439,9 +438,6 @@ function renderWritingSetsGrid() {
             <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); openWritingWorkspaceById('${esc(s.id)}')" style="flex:1;">
               <span class="btn-setup-icon">▶</span>
               <span>Vào luyện viết</span>
-            </button>
-            <button class="btn cy sm" type="button" onclick="event.stopPropagation(); editWritingSet('${esc(s.id)}')" title="Sửa đề và dàn ý" style="font-weight:700; padding:0 12px; height:38px; border-radius:10px;">
-              ✏️ Sửa
             </button>
           </div>
           <div class="setup-card-meta" style="margin-top:6px;">
