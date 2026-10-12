@@ -545,7 +545,6 @@ function renderSingleReadingCard(s, idx = 0) {
   const thCount = qList.filter(q => q.level === 'thong-hieu' || (q.levelName && q.levelName.includes('Thông hiểu'))).length;
   const vdCount = qList.filter(q => q.level === 'van-dung' || (q.levelName && q.levelName.includes('Vận dụng'))).length;
 
-  const isStandard5 = nbCount === 2 && thCount === 2 && vdCount === 1;
   const isUserCreated = String(s.id).startsWith('reading_user_');
 
   // Snippet
@@ -553,12 +552,11 @@ function renderSingleReadingCard(s, idx = 0) {
   const cleanSnippet = snippet.length > 170 ? snippet.slice(0, 170) + '…' : snippet;
 
   return `
-    <div class="reading-h-card ${isStandard5 ? 'card-standard-matrix' : ''}" onclick="openReadingSet('${esc(s.id)}')">
+    <div class="reading-h-card" onclick="openReadingSet('${esc(s.id)}')">
       <!-- Cột trái: Card Banner nổi bật dạng bìa sách/thẻ -->
       <div class="reading-h-banner" style="background: ${bg};">
         <div class="reading-h-banner-watermark">${watermark}</div>
         <span class="reading-h-count-pill">${qCount} câu hỏi</span>
-        ${isStandard5 ? '<span class="reading-h-matrix-tag">⭐ Chuẩn 5 câu</span>' : ''}
         ${isUserCreated ? '<span class="reading-h-user-tag">✏️ Đề tự tạo</span>' : ''}
         <span class="reading-h-topic-pill" title="${esc(topic)}">${esc(topic)}</span>
       </div>
