@@ -63,17 +63,97 @@
     }
   }, true);
 
-  // 2. CHẶN MENU CHUỘT PHẢI (CONTEXTMENU)
-  document.addEventListener('contextmenu', function disableContextMenu(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    showSecurityNotice('⚠️ Chuột phải đã bị khóa để bảo mật nội dung và kết quả học tập!');
+  // 2. CHẶN TRIỆT ĐỂ MENU NGỮ CẢNH (CONTEXTMENU, CHUỘT PHẢI, MICROSOFT EDITOR)
+  function blockContextMenuEvent(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (typeof e.stopImmediatePropagation === 'function') {
+        e.stopImmediatePropagation();
+      }
+    }
     return false;
+  }
+
+  // Khóa cứng contextmenu ở mọi tầng (window, document, capture & bubble)
+  window.addEventListener('contextmenu', blockContextMenuEvent, true);
+  document.addEventListener('contextmenu', blockContextMenuEvent, true);
+  window.oncontextmenu = blockContextMenuEvent;
+  document.oncontextmenu = blockContextMenuEvent;
+
+  // Chặn các nút chuột phụ (chuột phải, nút giữa) trên mousedown, mouseup, pointerdown, auxclick
+  ['mousedown', 'mouseup', 'pointerdown', 'pointerup', 'auxclick'].forEach(eventType => {
+    document.addEventListener(eventType, function(e) {
+      if (e.button === 2 || e.which === 3) {
+        blockContextMenuEvent(e);
+        return false;
+      }
+    }, true);
+  });
+
+  // 3. VÔ HIỆU HÓA HOÀN TOÀN MICROSOFT EDITOR & KIỂM TRA CHÍNH TẢ (CHỐNG BUNG MENU KHI NHẤN CHUỘT TRÁI)
+  function disableEditorAndSpellcheck(el) {
+    if (!el || el.nodeType !== 1) return;
+    try {
+      el.spellcheck = false;
+      el.setAttribute('spellcheck', 'false');
+      el.setAttribute('data-ms-editor', 'false');
+      el.setAttribute('autocomplete', 'off');
+      el.setAttribute('autocorrect', 'off');
+      el.setAttribute('autocapitalize', 'off');
+      el.oncontextmenu = blockContextMenuEvent;
+    } catch (_) {}
+  }
+
+  function sanitizeAllInputs() {
+    try {
+      document.querySelectorAll('input, textarea, [contenteditable]').forEach(disableEditorAndSpellcheck);
+      if (document.documentElement) {
+        document.documentElement.setAttribute('data-ms-editor', 'false');
+        document.documentElement.setAttribute('spellcheck', 'false');
+      }
+      if (document.body) {
+        document.body.setAttribute('data-ms-editor', 'false');
+        document.body.setAttribute('spellcheck', 'false');
+      }
+    } catch (_) {}
+  }
+
+  // Chạy ngay và theo dõi mọi element mới sinh ra qua MutationObserver
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', sanitizeAllInputs);
+  } else {
+    sanitizeAllInputs();
+  }
+
+  try {
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(m => {
+        m.addedNodes.forEach(node => {
+          if (node.nodeType === 1) {
+            if (node.matches && node.matches('input, textarea, [contenteditable]')) {
+              disableEditorAndSpellcheck(node);
+            }
+            if (node.querySelectorAll) {
+              node.querySelectorAll('input, textarea, [contenteditable]').forEach(disableEditorAndSpellcheck);
+            }
+          }
+        });
+      });
+    });
+    observer.observe(document.documentElement || document.body, { childList: true, subtree: true });
+  } catch (_) {}
+
+  // Đảm bảo khi focus/click chuột trái vào bất kỳ ô nhập liệu nào cũng luôn tắt spellcheck
+  document.addEventListener('focusin', function(e) {
+    if (e.target && (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT')) {
+      disableEditorAndSpellcheck(e.target);
+    }
   }, true);
 
-  // 3. CHỐNG KÉO THẢ SOURCE & CHỐNG CHỌN TOÀN BỘ TRANG BẰNG CTRL+A KHI KHÔNG TRONG VĂN BẢN
+  // 4. CHỐNG KÉO THẢ SOURCE & CHỐNG KÉO ẢNH
   document.addEventListener('dragstart', function(e) {
-    if (e.target && e.target.nodeName === 'IMG') {
+    if (e.target && (e.target.nodeName === 'IMG' || e.target.classList?.contains('writing-textarea'))) {
       e.preventDefault();
     }
   }, true);

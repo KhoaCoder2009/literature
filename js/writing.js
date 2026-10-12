@@ -686,6 +686,12 @@ function renderWritingSections() {
           onpaste="preventPasteCopy(event, 'paste')"
           oncopy="preventPasteCopy(event, 'copy')"
           oncut="preventPasteCopy(event, 'cut')"
+          oncontextmenu="return false;"
+          spellcheck="false"
+          data-ms-editor="false"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
         >${esc(savedText)}</textarea>
       </div>
     `;

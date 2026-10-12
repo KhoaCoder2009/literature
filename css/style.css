@@ -4488,4 +4488,15 @@ body.projector-mode .hud-pill {
 }
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* =========================================================================
+   CHỐNG HIỆN TRÌNH ĐƠN NGỮ CẢNH (MICROSOFT EDITOR & SPELLCHECK MENU)
+   ========================================================================= */
+input, textarea {
+  -webkit-user-modify: read-write-plaintext-only;
+}
+
+::selection {
+  background: rgba(217, 169, 79, 0.28);
 }

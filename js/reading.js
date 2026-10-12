@@ -709,6 +709,12 @@ function renderReadingWorkspace(set) {
               onpaste="preventPasteCopy(event, 'paste')"
               oncopy="preventPasteCopy(event, 'copy')"
               oncut="preventPasteCopy(event, 'cut')"
+              oncontextmenu="return false;"
+              spellcheck="false"
+              data-ms-editor="false"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
             >${esc(answerVal)}</textarea>
             ${isParagraphQuestion ? `
               <div class="reading-word-counter ${wcClass}" id="reading-wc-${idx}">

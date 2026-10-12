@@ -4495,6 +4495,17 @@ body.projector-mode .hud-pill {
 }
 
 /* =========================================================================
+   CHỐNG HIỆN TRÌNH ĐƠN NGỮ CẢNH (MICROSOFT EDITOR & SPELLCHECK MENU)
+   ========================================================================= */
+input, textarea {
+  -webkit-user-modify: read-write-plaintext-only;
+}
+
+::selection {
+  background: rgba(217, 169, 79, 0.28);
+}
+
+/* =========================================================================
    WRITING PRACTICE MODULE STYLES (LUYỆN VIẾT)
    ========================================================================= */
 
