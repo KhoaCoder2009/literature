@@ -108,7 +108,6 @@ console.log(`\n📦 Đã xuất CSS bundle: dist/app.bundle.css (${(bundleCssCon
 // ---------------------------------------------------------------------------
 const jsOrder = [
   path.join(jsDir, 'security.js'),
-  path.join(rootDir, 'config.js'),
   path.join(jsDir, 'core.js'),
   path.join(jsDir, 'audio.js'),
   path.join(jsDir, 'visuals.js'),
@@ -153,7 +152,6 @@ const securityLockdownSnippet = `
   const freezeObj = window.__SECURITY_SHIELD.freezeObject;
 
   // 1. Đóng băng cấu hình và bộ đối tượng
-  if (window.APP_CONFIG) freezeObj('APP_CONFIG', window.APP_CONFIG);
   if (window.COMPONENTS) freezeObj('COMPONENTS', window.COMPONENTS);
   if (typeof T_ !== 'undefined') freezeObj('T_', T_);
   if (window.R) freezeObj('R', window.R);

@@ -19,7 +19,40 @@ let bulkDeleteMode = false;
 let currentScreen = 'home';
 const R = window.R = (window.R || {});
 
-const appConfig = window.APP_CONFIG || {};
+// =========================================================================
+// INTERNAL SECURE CONFIGURATION (Giải mã an toàn trong bộ nhớ - Ẩn khỏi window)
+// =========================================================================
+const _0xkey = 0x5a;
+function _0xdec(b64) {
+  try {
+    const fnAtob = (typeof atob === 'function')
+      ? atob
+      : ((typeof window !== 'undefined' && typeof window.atob === 'function') ? window.atob : null);
+    const raw = fnAtob
+      ? fnAtob(b64)
+      : (typeof Buffer !== 'undefined' ? Buffer.from(b64, 'base64').toString('binary') : '');
+    let out = '';
+    for (let i = 0; i < raw.length; i++) {
+      out += String.fromCharCode(raw.charCodeAt(i) ^ _0xkey);
+    }
+    return out;
+  } catch (_) {
+    return '';
+  }
+}
+
+const appConfig = Object.freeze({
+  appName: 'Ngữ Văn',
+  supabase: Object.freeze({
+    enabled: true,
+    url: _0xdec('Mi4uKilgdXU3PTE1Lio/PjEiLy8yMTcuLjsiP3QpLyo7ODspP3Q5NQ=='),
+    anonKey: _0xdec('PyMQMjgdOTMVMxATDyATaxQzEykTNAhvORkTbBMxKgIMGRBjdD8jECo5aRczFTMQID4CGDIDNxwgAAkTKRM0EDYAMxNsEzdrNDtoY2o5HQwxO2kyaz4NMig4AghqAwIyNhMzLTM5N2MpAAkTbBM3HC84aG4zFhkQKgMCCzMVMB9pFQ4faxQOH2oUHg8pEzcMbjkZE2wXMB8tFCAfIxQgC2oUAmp0A3cYYhBraTlvEBg2EzYPag4QNyNuEggWMC4SaCgNLgoOK24yDGhpIDsRNQ=='),
+    table: _0xdec('Ky8/KS4zNTQFKT8uKQ=='),
+    leaderboardTable: _0xdec('Nj87Pj8oODU7KD4FPzQuKDM/KQ=='),
+    historyTable: _0xdec('Ky8zIAUpLzg3MykpMzU0KQ==')
+  })
+});
+
 const hasSupabaseCredentials = () => !!(appConfig.supabase && appConfig.supabase.url && appConfig.supabase.anonKey);
 const isSupabaseConfigured = () => !!(appConfig.supabase && appConfig.supabase.enabled && hasSupabaseCredentials());
 
