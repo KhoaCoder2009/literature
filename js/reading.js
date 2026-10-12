@@ -706,6 +706,9 @@ function renderReadingWorkspace(set) {
               rows="${isParagraphQuestion ? 7 : 3}"
               placeholder="${isParagraphQuestion ? 'Viết đoạn văn khoảng 200 chữ tại đây (rút ra thông điệp hoặc liên hệ bài học cuộc sống)...' : 'Nhập câu trả lời của bạn...'}"
               oninput="handleReadingAnswerInput('${esc(set.id)}', '${esc(q.id || idx)}', this.value, ${idx}, ${isParagraphQuestion ? 'true' : 'false'})"
+              onpaste="preventPasteCopy(event, 'paste')"
+              oncopy="preventPasteCopy(event, 'copy')"
+              oncut="preventPasteCopy(event, 'cut')"
             >${esc(answerVal)}</textarea>
             ${isParagraphQuestion ? `
               <div class="reading-word-counter ${wcClass}" id="reading-wc-${idx}">

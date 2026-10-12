@@ -395,7 +395,7 @@ function nextQ() {
     h += '<div class="mt"><div id="ml"></div><div id="mr"></div></div>';
   } else if (q.type == 'short' || q.type == 'fill') {
     h += `<h2 style="margin:12px 0;">${esc(q.c)}</h2>`;
-    h += '<input id="ans" autocomplete="off" placeholder="Nhập câu trả lời của bạn..." onkeydown="event.key==\'Enter\'&&sub()"><br><br><button class="btn au" onclick="sub()">Gửi đáp án</button>';
+    h += '<input id="ans" autocomplete="off" placeholder="Nhập câu trả lời của bạn..." onkeydown="event.key==\'Enter\'&&sub()" onpaste="preventPasteCopy(event, \'paste\')" oncopy="preventPasteCopy(event, \'copy\')" oncut="preventPasteCopy(event, \'cut\')"><br><br><button class="btn au" onclick="sub()">Gửi đáp án</button>';
   } else {
     h += `<h2 style="margin:12px 0;">${esc(q.c)}</h2>`;
     h += opts(q).map((x, i) => `<button class="opt" onclick="pick(${i})"><b>${'ABCDEF'[i]}</b>${esc(x)}</button>`).join('');

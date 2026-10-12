@@ -683,6 +683,9 @@ function renderWritingSections() {
           class="writing-textarea" 
           placeholder="${esc(sec.placeholder || 'Nhập phần viết ' + sec.title + ' của bạn ở đây...')}"
           oninput="onSectionInput('${sec.id}', this)"
+          onpaste="preventPasteCopy(event, 'paste')"
+          oncopy="preventPasteCopy(event, 'copy')"
+          oncut="preventPasteCopy(event, 'cut')"
         >${esc(savedText)}</textarea>
       </div>
     `;
