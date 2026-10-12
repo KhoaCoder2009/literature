@@ -264,7 +264,6 @@ function renderCategoryFilterBar() {
       <button type="button" class="w-chip ${currentWritingCategory === c.id ? 'on' : ''}" data-cat="${c.id}" onclick="filterWritingCategory('${c.id}')">
         <span>${c.icon || '🏷️'} ${esc(c.name)}</span>
         <span class="w-chip-count">${count}</span>
-        <span class="w-chip-del" onclick="event.stopPropagation(); promptDeleteCategory('${c.id}')" title="Xóa chủ đề '${esc(c.name)}'" aria-label="Xóa chủ đề">✕</span>
       </button>
     `;
   });
@@ -311,32 +310,37 @@ function promptDeleteCategory(catId) {
     confirmMsg += `\n(${affectedSets.length} bộ đề thuộc chủ đề này sẽ được chuyển sang "${fallbackCat.name}")`;
   }
 
-  ask(confirmMsg, () => {
-    // 1. Chuyển các bộ đề thuộc chủ đề này sang fallbackCat
-    writingSets.forEach(s => {
-      if (s.category === cat.id) {
-        s.category = fallbackCat.id;
-        s.categoryName = fallbackCat.name;
-        s.icon = fallbackCat.icon || '✍️';
-      }
-    });
-    saveWritingSets();
+  if (!confirm(confirmMsg)) {
+    return;
+  }
 
-    // 2. Cập nhật và lưu danh sách chủ đề
-    saveWritingCategories(remainingCats);
-
-    // 3. Nếu đang xem chủ đề này, chuyển về 'all'
-    if (currentWritingCategory === cat.id) {
-      currentWritingCategory = 'all';
+  // 1. Chuyển các bộ đề thuộc chủ đề này sang fallbackCat
+  writingSets.forEach(s => {
+    if (s.category === cat.id) {
+      s.category = fallbackCat.id;
+      s.categoryName = fallbackCat.name;
+      s.icon = fallbackCat.icon || '✍️';
     }
-
-    // 4. Đồng bộ giao diện
-    renderCategoryFilterBar();
-    renderWritingSetsGrid();
-    updateModalCategorySelect();
-    toast(`Đã xóa chủ đề "${cat.name}" thành công!`, 'ok');
-    if (typeof R !== 'undefined' && typeof R.lib === 'function') R.lib();
   });
+  saveWritingSets();
+
+  // 2. Cập nhật và lưu danh sách chủ đề
+  saveWritingCategories(remainingCats);
+
+  // 3. Nếu đang xem chủ đề này, chuyển về 'all'
+  if (currentWritingCategory === cat.id) {
+    currentWritingCategory = 'all';
+  }
+  if (typeof currentLibWritingTopic !== 'undefined' && (currentLibWritingTopic.toLowerCase() === cat.name.toLowerCase() || currentLibWritingTopic === cat.id)) {
+    currentLibWritingTopic = '';
+  }
+
+  // 4. Đồng bộ giao diện
+  renderCategoryFilterBar();
+  renderWritingSetsGrid();
+  updateModalCategorySelect();
+  toast(`Đã xóa chủ đề "${cat.name}" thành công!`, 'ok');
+  if (typeof R !== 'undefined' && typeof R.lib === 'function') R.lib();
 }
 
 function promptDeleteCurrentCategory() {
@@ -487,19 +491,14 @@ function renderWritingSetsGrid() {
               <span class="mut" style="font-size: 12.5px;">Chưa có bộ đề nào trong chủ đề này</span>
             </div>
           </div>
-          <div class="writing-cat-header-actions">
-            <button class="btn no sm" type="button" onclick="promptDeleteCategory('${activeCat.id}')" title="Xóa chủ đề này">
-              <span>🗑️</span> <span>Xóa chủ đề này</span>
-            </button>
-          </div>
         </div>
         <div style="text-align:center; padding: 40px 20px;" class="card">
           <span style="font-size: 40px;">📝</span>
           <h3 style="margin: 12px 0 6px;">Chưa có bộ đề nào thuộc chủ đề "${esc(activeCat.name)}"</h3>
-          <p class="mut">Hãy bấm nút bên dưới để tạo ngay bộ đề luyện viết hoặc xóa chủ đề nếu không dùng nữa!</p>
+          <p class="mut">Chưa có bộ đề nào trong chủ đề này. Bạn có thể chọn chủ đề khác hoặc vào Thư viện để quản lý.</p>
           <div style="display:flex; justify-content:center; gap:10px; margin-top:16px;">
-            <button class="btn au sm" onclick="openCreateWritingSetModal('${currentWritingCategory}')">➕ Thêm bộ mới</button>
-            <button class="btn no sm" onclick="promptDeleteCategory('${activeCat.id}')">🗑️ Xóa chủ đề này</button>
+            <button class="btn gh sm" onclick="filterWritingCategory('all')">← Xem tất cả bộ đề</button>
+            <button class="btn au sm" onclick="go('lib')">📚 Mở Thư viện quản lý</button>
           </div>
         </div>
       `;
@@ -514,14 +513,6 @@ function renderWritingSetsGrid() {
             <h3 style="margin: 0; font-size: 17px; font-weight: 800;">Chủ đề: ${esc(activeCat.name)}</h3>
             <span class="mut" style="font-size: 12.5px;">Đang hiển thị ${filtered.length} bộ đề</span>
           </div>
-        </div>
-        <div class="writing-cat-header-actions">
-          <button class="btn au sm" onclick="openCreateWritingSetModal('${currentWritingCategory}')">
-            <span>➕</span> <span>Thêm bộ mới</span>
-          </button>
-          <button class="btn no sm" type="button" onclick="promptDeleteCategory('${activeCat.id}')" title="Xóa chủ đề '${esc(activeCat.name)}'">
-            <span>🗑️</span> <span>Xóa chủ đề này</span>
-          </button>
         </div>
       </div>
       <div class="setup-sets-grid">
