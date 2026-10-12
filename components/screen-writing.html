@@ -56,6 +56,9 @@
           <span id="workspace-set-badge" class="tag ok">Nghị luận xã hội</span>
         </div>
         <div class="writing-workspace-actions" style="display:flex; align-items:center; gap:8px;">
+          <button class="btn au sm" onclick="submitWritingEssay()" title="Nộp bài viết để lưu vào Lịch sử và giáo viên chấm điểm" style="font-weight:800;">
+            <span>✅</span> <span>Nộp bài viết</span>
+          </button>
           <button class="btn cy sm" onclick="editWritingSet(window.currentWritingSetId || (currentWritingSet && currentWritingSet.id))" title="Chỉnh sửa đề bài và dàn ý">
             <span>✏️</span> <span>Sửa đề</span>
           </button>
@@ -125,9 +128,12 @@
               <button class="writing-timer-btn" id="workspace-timer-btn" onclick="toggleWritingTimer()" title="Tạm dừng / Tiếp tục">⏸</button>
             </div>
 
-            <div class="writing-bottom-buttons">
+            <div class="writing-bottom-buttons" style="display:flex; align-items:center; gap:8px;">
               <button class="writing-btn-review" type="button" onclick="openWritingReviewModal()">
-                <span>Xem &amp; Xuất bài</span>
+                <span>👁️ Xem &amp; Xuất bài</span>
+              </button>
+              <button class="btn au sm" type="button" onclick="submitWritingEssay()" title="Nộp bài viết vào Lịch sử" style="font-weight:800; height:42px; padding:0 18px; border-radius:12px;">
+                <span>✅ Nộp bài viết</span>
               </button>
             </div>
           </div>

@@ -1305,3 +1305,117 @@ function downloadCombinedEssayAsText() {
   URL.revokeObjectURL(a.href);
   toast('Đã tải xuống tệp bài viết!', 'ok');
 }
+
+// =========================================================================
+// NỘP BÀI VIẾT VÀO LỊCH SỬ ĐỂ CHẤM ĐIỂM (THANG 10Đ CHUẨN)
+// =========================================================================
+
+function getWritingSectionMaxScore(sec, idx, totalSecs) {
+  if (totalSecs === 3) {
+    const lowerTitle = (sec?.title || '').toLowerCase();
+    if (lowerTitle.includes('mở')) return 2.0;
+    if (lowerTitle.includes('kết')) return 2.0;
+    if (lowerTitle.includes('thân')) return 6.0;
+    return idx === 1 ? 6.0 : 2.0;
+  }
+  return Math.round((10.0 / Math.max(1, totalSecs)) * 10) / 10;
+}
+
+function submitWritingEssay() {
+  if (!currentWritingSet) {
+    toast('Không tìm thấy thông tin bộ đề luyện viết hiện tại!', 'bad');
+    return;
+  }
+
+  saveCurrentWritingDraft(false);
+
+  const totalWords = updateTotalWordsDisplay();
+  const sections = currentWritingSet.sections || [];
+
+  if (totalWords === 0) {
+    toast('Vui lòng viết nội dung bài làm trước khi nộp bài!', 'bad');
+    return;
+  }
+
+  const answeredSections = sections.filter(sec => {
+    const text = (currentWritingDraft.sections?.[sec.id] || '').trim();
+    return text.length > 0;
+  });
+
+  const confirmMsg = answeredSections.length < sections.length
+    ? `Bạn mới viết ${answeredSections.length}/${sections.length} phần của bài viết (${totalWords} từ). Bạn có chắc chắn muốn nộp bài chấm điểm không?`
+    : `Xác nhận nộp bài viết "${currentWritingSet.title}" (${totalWords} từ) để lưu vào lịch sử và gửi giáo viên chấm điểm?`;
+
+  if (!confirm(confirmMsg)) return;
+
+  const pName = (localStorage.getItem('vq_player_nick') || localStorage.getItem('vq_player_name') || '').trim() || 'Học sinh';
+  const cName = (localStorage.getItem('vq_player_class') || '').trim();
+
+  const details = sections.map((sec, idx) => {
+    const text = (currentWritingDraft.sections?.[sec.id] || '').trim();
+    const words = countWords(text);
+    const maxScore = getWritingSectionMaxScore(sec, idx, sections.length);
+    return {
+      questionNumber: idx + 1,
+      questionText: sec.title || `Phần ${idx + 1}`,
+      questionType: 'Luyện viết',
+      sectionId: sec.id,
+      sectionTitle: sec.title || `Phần ${idx + 1}`,
+      sectionGuide: sec.guide || '',
+      userAnswer: text,
+      words: words,
+      maxScore: maxScore,
+      points: 0,
+      gradeStatus: 'saved',
+      status: 'saved',
+      isGraded: false,
+      teacherComment: ''
+    };
+  });
+
+  const entry = {
+    id: 'hist_' + uid(),
+    timestamp: Date.now(),
+    dateStr: new Date().toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' }),
+    type: 'writing',
+    playerName: pName,
+    className: cName,
+    setId: String(currentWritingSet.id),
+    setTitle: currentWritingSet.title || 'Luyện viết văn',
+    setTopic: currentWritingSet.categoryName || 'Luyện viết',
+    setEmo: currentWritingSet.icon || '✍️',
+    score: 0,
+    totalWords: totalWords,
+    totalQuestions: sections.length,
+    answeredCount: answeredSections.length,
+    savedShortCount: totalWords,
+    elapsedSeconds: writingTimerSeconds,
+    isGraded: false,
+    teacherFeedback: '',
+    teacherName: '',
+    details: details
+  };
+
+  try {
+    if (typeof saveQuizAttemptToHistory === 'function') {
+      saveQuizAttemptToHistory(entry);
+    } else {
+      const historyKey = typeof QUIZ_HISTORY_KEY !== 'undefined' ? QUIZ_HISTORY_KEY : 'vq_quiz_history_v1';
+      const raw = localStorage.getItem(historyKey);
+      const hist = raw ? JSON.parse(raw) : [];
+      hist.unshift(entry);
+      localStorage.setItem(historyKey, JSON.stringify(hist));
+    }
+
+    toast(`🎉 Đã nộp bài viết thành công! (${totalWords} từ • Thang điểm 10.0đ). Đã lưu vào Lịch sử bài làm.`, 'ok');
+  } catch (err) {
+    console.error('Submit writing error:', err);
+    toast('Lỗi khi lưu bài viết vào lịch sử.', 'bad');
+  }
+}
+
+if (typeof window !== 'undefined') {
+  window.submitWritingEssay = submitWritingEssay;
+  window.getWritingSectionMaxScore = getWritingSectionMaxScore;
+}
+

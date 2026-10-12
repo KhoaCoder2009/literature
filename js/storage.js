@@ -366,12 +366,13 @@ function mapSupabaseRowToHistory(row) {
     setId: row.set_id || '',
     setTitle: row.set_title || 'Bài làm',
     setTopic: row.set_topic || '',
-    setEmo: row.set_emo || '📖',
+    setEmo: row.set_emo || (row.type === 'writing' ? '✍️' : (row.type === 'reading' ? '📑' : '📖')),
     score: parseFloat(row.score) || 0,
     correctCount: Number(row.correct_count) || 0,
     wrongCount: Number(row.wrong_count) || 0,
     savedShortCount: Number(row.saved_short_count) || 0,
     answeredCount: Number(row.saved_short_count) || 0,
+    totalWords: Number(row.saved_short_count) || (details.reduce((acc, d) => acc + (d.words || (d.userAnswer ? d.userAnswer.trim().split(/\s+/).filter(Boolean).length : 0)), 0)),
     totalQuestions: Number(row.total_questions) || 0,
     accuracy: Number(row.accuracy) || 0,
     elapsedSeconds: Number(row.elapsed_seconds) || 0,
@@ -729,6 +730,9 @@ function renderHistoryPage() {
       totalSecs += Number(h.elapsedSeconds) || 0;
     } else if (h.type === 'reading') {
       totalSavedShort += Number(h.answeredCount) || 0;
+    } else if (h.type === 'writing') {
+      totalSavedShort += Number(h.answeredCount || h.totalQuestions) || 0;
+      totalSecs += Number(h.elapsedSeconds) || 0;
     }
   });
 
@@ -748,12 +752,14 @@ function renderHistoryPage() {
   const countAllEl = document.getElementById('hist-count-all');
   const countQuizEl = document.getElementById('hist-count-quiz');
   const countReadingEl = document.getElementById('hist-count-reading');
+  const countWritingEl = document.getElementById('hist-count-writing');
   const countUngradedEl = document.getElementById('hist-count-ungraded');
   const countGradedEl = document.getElementById('hist-count-graded');
   if (countAllEl) countAllEl.textContent = `(${allHistory.length})`;
   if (countQuizEl) countQuizEl.textContent = `(${allHistory.filter(h => h.type === 'quiz' || !h.type).length})`;
   if (countReadingEl) countReadingEl.textContent = `(${allHistory.filter(h => h.type === 'reading').length})`;
-  if (countUngradedEl) countUngradedEl.textContent = `(${allHistory.filter(h => !h.isGraded && (h.type === 'reading' || h.savedShortCount > 0 || (Array.isArray(h.details) && h.details.some(d => d.status === 'saved')))).length})`;
+  if (countWritingEl) countWritingEl.textContent = `(${allHistory.filter(h => h.type === 'writing').length})`;
+  if (countUngradedEl) countUngradedEl.textContent = `(${allHistory.filter(h => !h.isGraded && (h.type === 'reading' || h.type === 'writing' || h.savedShortCount > 0 || (Array.isArray(h.details) && h.details.some(d => d.status === 'saved')))).length})`;
   if (countGradedEl) countGradedEl.textContent = `(${allHistory.filter(h => h.isGraded).length})`;
 
   // 2. Filter records
@@ -763,8 +769,9 @@ function renderHistoryPage() {
       const isQuiz = h.type === 'quiz' || !h.type;
       if (currentHistoryTypeFilter === 'quiz') return isQuiz;
       if (currentHistoryTypeFilter === 'reading') return h.type === 'reading';
+      if (currentHistoryTypeFilter === 'writing') return h.type === 'writing';
       if (currentHistoryTypeFilter === 'ungraded') {
-        return !h.isGraded && (h.type === 'reading' || h.savedShortCount > 0 || (Array.isArray(h.details) && h.details.some(d => d.status === 'saved')));
+        return !h.isGraded && (h.type === 'reading' || h.type === 'writing' || h.savedShortCount > 0 || (Array.isArray(h.details) && h.details.some(d => d.status === 'saved')));
       }
       if (currentHistoryTypeFilter === 'graded') {
         return Boolean(h.isGraded);
@@ -804,12 +811,15 @@ function renderHistoryPage() {
         <span class="empty-history-icon" style="font-size:52px; display:block; margin-bottom:12px;">📜</span>
         <h3 style="margin:0 0 8px; font-weight:800; font-size:20px;">Chưa có lịch sử làm bài phù hợp</h3>
         <p class="mut" style="margin:0 auto; max-width:520px; font-size:14.5px;">
-          ${allHistory.length ? 'Không tìm thấy lượt làm bài nào phù hợp với bộ lọc hoặc từ khóa tìm kiếm.' : 'Sau khi bạn hoàn thành ôn tập hoặc đọc hiểu, toàn bộ bài làm và câu trả lời sẽ tự động lưu lại tại đây và đồng bộ lên Database.'}
+          ${allHistory.length ? 'Không tìm thấy lượt làm bài nào phù hợp với bộ lọc hoặc từ khóa tìm kiếm.' : 'Sau khi bạn hoàn thành bài học, đọc hiểu hoặc luyện viết, toàn bộ bài làm và câu trả lời sẽ tự động lưu lại tại đây và đồng bộ lên Database.'}
         </p>
         ${!allHistory.length ? `
-          <div style="margin-top:16px;">
-            <button class="btn au" type="button" onclick="createSampleQuizSubmissionForGrading()" style="font-weight:800; padding:10px 22px;">
-              ✨ Nạp bài làm mẫu để thử nghiệm chấm điểm
+          <div style="margin-top:16px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+            <button class="btn au" type="button" onclick="createSampleQuizSubmissionForGrading()" style="font-weight:800; padding:10px 18px;">
+              📑 Nạp bài đọc hiểu mẫu (6đ)
+            </button>
+            <button class="btn cy" type="button" onclick="createSampleWritingSubmissionForGrading()" style="font-weight:800; padding:10px 18px;">
+              ✍️ Nạp bài viết mẫu (10đ)
             </button>
           </div>
         ` : ''}
@@ -822,10 +832,11 @@ function renderHistoryPage() {
 
 function renderHistoryItemCardHtml(item) {
   const isQuiz = item.type === 'quiz' || !item.type;
-  const typeIcon = item.type === 'reading' ? '📑' : '📖';
-  const typeName = item.type === 'reading' ? 'Đọc hiểu' : 'Bài học';
+  const isWriting = item.type === 'writing';
+  const typeIcon = isWriting ? '✍️' : (item.type === 'reading' ? '📑' : '📖');
+  const typeName = isWriting ? 'Luyện viết' : (item.type === 'reading' ? 'Đọc hiểu' : 'Bài học');
   const isGraded = Boolean(item.isGraded);
-  const hasUngradedShort = !isGraded && (item.type === 'reading' || item.savedShortCount > 0 || (Array.isArray(item.details) && item.details.some(d => d.status === 'saved')));
+  const hasUngradedShort = !isGraded && (item.type === 'reading' || item.type === 'writing' || item.savedShortCount > 0 || (Array.isArray(item.details) && item.details.some(d => d.status === 'saved')));
 
   // Thiết lập ô điểm hiển thị nổi bật ở góc phải thẻ
   let scoreBoxClass = 'score-box-quiz';
@@ -845,7 +856,7 @@ function renderHistoryItemCardHtml(item) {
     scoreBoxClass = 'score-box-waiting';
     scoreValue = 'Chờ chấm';
     scoreSub = '⏳ ĐỢI CHẤM';
-    scoreTooltip = 'Bài làm có câu tự luận đang chờ giáo viên chấm điểm';
+    scoreTooltip = isWriting ? 'Bài viết đang chờ giáo viên chấm điểm' : 'Bài làm có câu tự luận đang chờ giáo viên chấm điểm';
   } else {
     scoreBoxClass = 'score-box-quiz';
     scoreValue = formattedScore;
@@ -864,6 +875,13 @@ function renderHistoryItemCardHtml(item) {
     statsHtml = `
       <span class="history-pill pill-score">📑 ${item.answeredCount || 0}/${item.totalQuestions || 0} câu đã làm</span>
     `;
+  } else if (isWriting) {
+    const totalWords = item.totalWords || (item.details ? item.details.reduce((sum, d) => sum + (d.words || 0), 0) : 0);
+    statsHtml = `
+      <span class="history-pill pill-acc">📝 ${totalWords} từ</span>
+      <span class="history-pill pill-score">📑 ${item.answeredCount || item.totalQuestions || 3}/${item.totalQuestions || 3} phần đã viết</span>
+      <span class="history-pill pill-time">⏱️ ${item.elapsedSeconds ? Math.floor(item.elapsedSeconds / 60) + 'p ' + (item.elapsedSeconds % 60) + 's' : '—'}</span>
+    `;
   }
 
   if (isGraded) {
@@ -871,7 +889,7 @@ function renderHistoryItemCardHtml(item) {
       statsHtml += `<span class="history-pill pill-short" title="${esc(item.teacherFeedback)}">💬 Lời phê: "${esc(item.teacherFeedback.slice(0, 35))}${item.teacherFeedback.length > 35 ? '…' : ''}"</span>`;
     }
   } else if (hasUngradedShort) {
-    statsHtml += `<span class="history-pill pill-ungraded">⏳ Chờ chấm tự luận</span>`;
+    statsHtml += `<span class="history-pill pill-ungraded">⏳ Chờ chấm ${isWriting ? 'bài viết' : 'tự luận'}</span>`;
   }
 
   return `
@@ -941,6 +959,47 @@ function closeHistoryModal() {
   if (dialog && dialog.open) dialog.close();
 }
 
+let currentHistorySetFilter = '';
+
+function onHistorySetFilterChange() {
+  const select = document.getElementById('history-set-filter');
+  currentHistorySetFilter = select ? select.value : '';
+  renderHistoryList();
+}
+
+function clearHistorySetFilter() {
+  currentHistorySetFilter = '';
+  currentHistorySearchQuery = '';
+  const searchInput = document.getElementById('history-search-input');
+  if (searchInput) searchInput.value = '';
+  const select = document.getElementById('history-set-filter');
+  if (select) select.value = '';
+  renderHistoryList();
+}
+
+function updateHistorySetFilterDropdown() {
+  const select = document.getElementById('history-set-filter');
+  if (!select) return;
+  const allHistory = getQuizHistory();
+  const setMap = new Map();
+  allHistory.forEach(item => {
+    const sId = String(item.setId || '');
+    if (sId && !setMap.has(sId)) {
+      setMap.set(sId, { id: sId, title: item.setTitle || 'Bộ đề', emo: item.setEmo || '📖', count: 1 });
+    } else if (sId && setMap.has(sId)) {
+      setMap.get(sId).count++;
+    }
+  });
+
+  const curVal = currentHistorySetFilter || '';
+  let html = `<option value="">📚 Tất cả bộ đề (${allHistory.length})</option>`;
+  Array.from(setMap.values()).forEach(s => {
+    const sel = s.id === curVal ? 'selected' : '';
+    html += `<option value="${esc(s.id)}" ${sel}>${s.emo} ${esc(s.title)} (${s.count} lượt)</option>`;
+  });
+  select.innerHTML = html;
+}
+
 function onHistorySearchInput() {
   const input = document.getElementById('history-search-input');
   currentHistorySearchQuery = (input ? input.value : '').trim().toLowerCase();
@@ -992,12 +1051,15 @@ function renderHistoryList() {
         <span class="empty-history-icon">📜</span>
         <h3 style="margin:8px 0 4px; font-weight:800;">Chưa có lịch sử bài làm nào</h3>
         <p class="mut" style="margin:0; font-size:14px;">
-          ${allHistory.length ? 'Không tìm thấy lượt làm bài nào cho bộ đề hoặc từ khóa này.' : 'Sau khi bạn hoàn thành bài học hoặc đọc hiểu, kết quả và câu trả lời sẽ tự động được lưu lại tại đây để giáo viên chấm điểm.'}
+          ${allHistory.length ? 'Không tìm thấy lượt làm bài nào cho bộ đề hoặc từ khóa này.' : 'Sau khi bạn hoàn thành bài học, đọc hiểu hoặc luyện viết, kết quả và câu trả lời sẽ tự động được lưu lại tại đây để giáo viên chấm điểm.'}
         </p>
         ${!allHistory.length ? `
-          <div style="margin-top:14px;">
-            <button class="btn au" type="button" onclick="createSampleQuizSubmissionForGrading()" style="font-weight:800; padding:9px 18px;">
-              ✨ Tạo bài làm mẫu để thử nghiệm chấm điểm
+          <div style="margin-top:14px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+            <button class="btn au" type="button" onclick="createSampleQuizSubmissionForGrading()" style="font-weight:800; padding:9px 16px;">
+              📑 Nạp bài đọc hiểu mẫu (6đ)
+            </button>
+            <button class="btn cy" type="button" onclick="createSampleWritingSubmissionForGrading()" style="font-weight:800; padding:9px 16px;">
+              ✍️ Nạp bài viết mẫu (10đ)
             </button>
           </div>
         ` : ''}
@@ -1067,14 +1129,15 @@ function renderHistoryDetailModalView() {
     saveFooterBtn.style.display = isHistoryGradingMode ? 'inline-flex' : 'none';
   }
 
+  const isWriting = item.type === 'writing';
   if (headingEl) {
     headingEl.textContent = isHistoryGradingMode
-      ? 'Chấm điểm & Nhận xét từng câu hỏi:'
-      : 'Danh sách câu hỏi & Bài làm:';
+      ? (isWriting ? 'Chấm điểm & Nhận xét từng phần bài viết (Thang 10đ chuẩn):' : 'Chấm điểm & Nhận xét từng câu hỏi:')
+      : (isWriting ? 'Nội dung bài viết theo từng phần dàn ý:' : 'Danh sách câu hỏi & Bài làm:');
   }
 
   const details = Array.isArray(item.details) ? item.details : [];
-  const itemTotalMaxScore = details.reduce((sum, d) => {
+  const itemTotalMaxScore = isWriting ? 10.0 : details.reduce((sum, d) => {
     const m = (d.maxScore !== undefined && d.maxScore !== null && Number(d.maxScore) > 0)
       ? Number(d.maxScore)
       : 1.0;
@@ -1083,17 +1146,21 @@ function renderHistoryDetailModalView() {
 
   const isGraded = Boolean(item.isGraded);
   if (metaEl) {
+    const totalWords = item.totalWords || details.reduce((sum, d) => sum + (d.words || ((d.userAnswer || '').trim().split(/\s+/).filter(Boolean).length)), 0);
     metaEl.innerHTML = `
       <div style="display:flex; flex-wrap:wrap; gap:12px; font-size:13.5px; margin-bottom:14px; background:var(--bg-base); border:2px solid var(--stroke); border-radius:14px; padding:12px 16px; align-items:center;">
         <span>👤 Học sinh: <b>${esc(item.playerName || 'Học sinh')}</b></span>
         ${item.className ? `<span>· Lớp: <b>${esc(item.className)}</b></span>` : ''}
         <span>· Ngày làm: <b>${item.dateStr || ''}</b></span>
-        ${item.type === 'reading' 
-          ? `<span>· Đọc hiểu: <b>${item.answeredCount || 0}/${item.totalQuestions || 0} câu</b></span>` 
-          : `<span>· Trắc nghiệm: <b>${item.accuracy || 0}%</b> (${item.correctCount || 0}/${item.totalQuestions || 0} câu đúng)</span>`
+        ${isWriting
+          ? `<span>· Bài viết: <b>${totalWords} từ</b> • <b>${item.answeredCount || details.length}/${details.length} phần</b></span>`
+          : (item.type === 'reading' 
+              ? `<span>· Đọc hiểu: <b>${item.answeredCount || 0}/${item.totalQuestions || 0} câu</b></span>` 
+              : `<span>· Trắc nghiệm: <b>${item.accuracy || 0}%</b> (${item.correctCount || 0}/${item.totalQuestions || 0} câu đúng)</span>`
+            )
         }
         <span class="tag ${isGraded ? 'ok' : 'cy'}" style="font-weight:800;">
-          ${isGraded ? `✅ Đã chấm: ${item.score || 0}/${itemTotalMaxScore > 0 ? itemTotalMaxScore : 6.0}đ` : '⏳ Chờ chấm điểm'}
+          ${isGraded ? `✅ Đã chấm: ${item.score || 0}/${itemTotalMaxScore > 0 ? itemTotalMaxScore : (isWriting ? 10.0 : 6.0)}đ` : '⏳ Chờ chấm điểm'}
         </span>
         ${item.gradedDateStr ? `<span class="mut" style="font-size:12.5px;">(Chấm lúc: ${item.gradedDateStr})</span>` : ''}
         <span class="tag gh" style="font-size:11.5px; font-weight:700;">👨‍🏫 Chế độ Giáo viên Chấm bài</span>
@@ -1107,13 +1174,13 @@ function renderHistoryDetailModalView() {
       toolbarEl.className = 'history-grading-toolbar';
       toolbarEl.innerHTML = `
         <div class="history-grading-toolbar-title">
-          <span>✏️</span> <span>Bảng công cụ Chấm bài của Giáo viên</span>
+          <span>✏️</span> <span>Bảng công cụ Chấm bài của Giáo viên ${isWriting ? '(Thang 10đ Chuẩn)' : ''}</span>
         </div>
         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-          <button type="button" class="btn gh sm" onclick="gradeAllQuestionsQuick('ok')" title="Cho điểm tối đa từng câu" style="font-size:12px; padding:4px 10px;">
-            ⚡ Đạt tất cả (${itemTotalMaxScore > 0 ? itemTotalMaxScore : details.length}đ)
+          <button type="button" class="btn gh sm" onclick="gradeAllQuestionsQuick('ok')" title="Cho điểm tối đa từng câu / phần" style="font-size:12px; padding:4px 10px;">
+            ⚡ Đạt tất cả (${itemTotalMaxScore > 0 ? itemTotalMaxScore : (isWriting ? 10 : details.length)}đ)
           </button>
-          <button type="button" class="btn cy sm" onclick="autoCalculateTotalPoints()" title="Cộng dồn điểm từ tất cả các câu hỏi" style="font-size:12px; padding:4px 10px;">
+          <button type="button" class="btn cy sm" onclick="autoCalculateTotalPoints()" title="Cộng dồn điểm từ tất cả các phần" style="font-size:12px; padding:4px 10px;">
             ⚡ Tính tổng điểm
           </button>
           <button type="button" class="btn au sm" onclick="saveManualGrading()" style="font-size:12.5px; font-weight:800; padding:4px 14px;">
@@ -1131,9 +1198,10 @@ function renderHistoryDetailModalView() {
       listEl.innerHTML = '<p class="mut" style="padding:16px; text-align:center;">Không có dữ liệu chi tiết cho bài làm này.</p>';
     } else {
       listEl.innerHTML = details.map((d, idx) => {
+        const defaultSecMax = isWriting ? (idx === 1 ? 6.0 : 2.0) : 1.0;
         const maxPts = (d.maxScore !== undefined && d.maxScore !== null && Number(d.maxScore) > 0)
           ? Number(d.maxScore)
-          : 1.0;
+          : defaultSecMax;
         const halfPts = Math.round((maxPts / 2) * 100) / 100;
 
         let badgeCls = 'bad';
@@ -1149,7 +1217,7 @@ function renderHistoryDetailModalView() {
           badgeTxt = '❌ Chưa đạt';
         } else if (d.status === 'saved') {
           badgeCls = 'cy';
-          badgeTxt = '📝 Tự luận (Chờ chấm)';
+          badgeTxt = isWriting ? '✍️ Bài viết (Chờ chấm)' : '📝 Tự luận (Chờ chấm)';
         } else if (d.status === 'no') {
           badgeCls = 'gh';
           badgeTxt = '⏰ Bỏ qua';
@@ -1160,11 +1228,39 @@ function renderHistoryDetailModalView() {
         const curStatus = d.gradeStatus || (d.status === 'ok' ? 'ok' : d.status === 'bad' ? 'bad' : 'ok');
         const curPoints = d.points !== undefined ? d.points : (d.status === 'ok' ? maxPts : 0);
 
+        let quickPillsHtml = '';
+        if (maxPts >= 6.0) {
+          quickPillsHtml = `
+            <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 1.0)">1.0</button>
+            <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 2.0)">2.0</button>
+            <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 3.0)">3.0</button>
+            <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 4.0)">4.0</button>
+            <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 5.0)">5.0</button>
+            <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, ${maxPts})">${maxPts}đ</button>
+          `;
+        } else if (maxPts >= 2.0) {
+          quickPillsHtml = `
+            <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 0.5)">0.5</button>
+            <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 1.0)">1.0</button>
+            <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 1.5)">1.5</button>
+            <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, ${maxPts})">${maxPts}đ</button>
+          `;
+        } else {
+          quickPillsHtml = `
+            <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 0.25)">0.25</button>
+            <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 0.5)">0.5</button>
+            <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 0.75)">0.75</button>
+            <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, ${maxPts})">${maxPts}đ</button>
+          `;
+        }
+
+        const secLabel = isWriting ? (d.sectionTitle || d.questionText || `Phần ${idx + 1}`) : `Câu ${idx + 1}`;
+
         return `
           <div class="history-detail-q-card" id="hist-card-q-${idx}">
             <div class="history-detail-q-head">
               <div style="display:flex; align-items:center; gap:8px;">
-                <span class="history-detail-q-num">Câu ${idx + 1}</span>
+                <span class="history-detail-q-num">${isWriting ? `Phần ${idx + 1}: ${esc(secLabel)}` : `Câu ${idx + 1}`}</span>
                 ${d.questionType ? `<span class="tag gh" style="font-size:11px;">${esc(d.questionType)}</span>` : ''}
               </div>
               <div style="display:flex; align-items:center; gap:8px;">
@@ -1175,14 +1271,23 @@ function renderHistoryDetailModalView() {
             </div>
 
             <div class="history-detail-q-body">
-              <p class="history-detail-q-text"><b>${esc(d.questionText)}</b></p>
+              ${!isWriting ? `<p class="history-detail-q-text"><b>${esc(d.questionText)}</b></p>` : ''}
               
-              <div class="history-detail-ans-row">
-                <span class="history-detail-ans-label">Bài làm của học sinh:</span>
+              ${d.sectionGuide ? `
+                <div class="history-detail-ans-row" style="margin-top:4px;">
+                  <span class="history-detail-ans-label">📋 Dàn ý định hướng:</span>
+                </div>
+                <div class="history-detail-ans-val rubric-guide-box" style="white-space:pre-wrap; line-height:1.6; font-size:13.5px;">
+                  ${esc(d.sectionGuide)}
+                </div>
+              ` : ''}
+
+              <div class="history-detail-ans-row" style="margin-top:8px;">
+                <span class="history-detail-ans-label">${isWriting ? 'Bài viết của học sinh:' : 'Bài làm của học sinh:'}</span>
                 ${words > 0 ? `<span class="mut" style="font-size:12px;">(📝 ${words} từ)</span>` : ''}
               </div>
-              <div class="history-detail-ans-val student-essay-box ${d.status === 'ok' ? 'correct' : d.status === 'saved' ? 'saved' : 'wrong'}">
-                ${esc(userAns || '(Để trống - Học sinh chưa trả lời)')}
+              <div class="history-detail-ans-val student-essay-box ${d.status === 'ok' ? 'correct' : d.status === 'saved' ? 'saved' : 'wrong'}" style="white-space:pre-wrap; line-height:1.7; font-size:14.5px;">
+                ${esc(userAns || (isWriting ? '(Để trống - Học sinh chưa viết phần này)' : '(Để trống - Học sinh chưa trả lời)'))}
               </div>
 
               ${d.correctAnswer ? `
@@ -1204,7 +1309,7 @@ function renderHistoryDetailModalView() {
               ${isHistoryGradingMode ? `
                 <div class="history-manual-grading-panel" id="grading-panel-${idx}">
                   <div class="grading-panel-top">
-                    <span class="grading-panel-label">✏️ Đánh giá câu ${idx + 1} (Tối đa ${maxPts}đ):</span>
+                    <span class="grading-panel-label">✏️ Đánh giá ${isWriting ? `Phần ${idx + 1}` : `Câu ${idx + 1}`} (Tối đa ${maxPts}đ):</span>
                     <div class="grading-quick-status-btns">
                       <button type="button" class="grading-quick-status-btn ${curStatus === 'ok' ? 'active-ok' : ''}" onclick="setQuestionGradeStatus(${idx}, 'ok', ${maxPts})">
                         ✅ Đạt (${maxPts}đ)
@@ -1220,34 +1325,31 @@ function renderHistoryDetailModalView() {
 
                   <div class="grading-inputs-row">
                     <div class="grading-points-input-box">
-                      <label for="grade-point-${idx}">Số điểm câu này (tối đa ${maxPts}đ):</label>
+                      <label for="grade-point-${idx}">Số điểm ${isWriting ? 'phần này' : 'câu này'} (tối đa ${maxPts}đ):</label>
                       <input type="number" id="grade-point-${idx}" class="grade-point-input" step="0.25" min="0" max="${maxPts}" data-max="${maxPts}" value="${curPoints}" oninput="onQuestionPointsChanged()" style="width:74px; text-align:center; font-weight:800; font-size:15px; border-radius:8px; padding:4px 6px;">
                       <span class="mut" style="font-size:13px; font-weight:700;">/ ${maxPts} điểm</span>
                       <div class="grading-quick-pills">
-                        ${maxPts <= 1.0 ? `
-                          <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 0.25)">0.25</button>
-                          <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 0.5)">0.5</button>
-                          <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 0.75)">0.75</button>
-                          <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, ${maxPts})">${maxPts}</button>
-                        ` : `
-                          <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 0.5)">0.5</button>
-                          <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 1.0)">1.0</button>
-                          <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 1.5)">1.5</button>
-                          <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, ${maxPts})">${maxPts}</button>
-                        `}
+                        ${quickPillsHtml}
                         <button type="button" class="btn gh sm" onclick="setQuestionPointQuick(${idx}, 0)">0đ</button>
                       </div>
                     </div>
                   </div>
 
                   <div class="grading-comment-box" style="margin-top:6px;">
-                    <input type="text" id="grade-comment-${idx}" class="grade-comment-input" placeholder="Nhận xét của giáo viên cho câu này (ví dụ: Diễn đạt mạch lạc, thiếu dẫn chứng...)" value="${esc(d.teacherComment || '')}">
+                    <input type="text" id="grade-comment-${idx}" class="grade-comment-input" placeholder="Nhận xét của giáo viên cho ${isWriting ? 'phần này' : 'câu này'} (ví dụ: Diễn đạt mạch lạc, thiếu dẫn chứng...)" value="${esc(d.teacherComment || '')}">
                     <div style="display:flex; flex-wrap:wrap; gap:5px; margin-top:6px;">
                       <span style="font-size:11.5px; color:var(--mut); font-weight:700; align-self:center;">Gợi ý nhận xét:</span>
-                      <button type="button" class="history-quick-feedback-chip" onclick="appendQuickQuestionComment(${idx}, 'Diễn đạt tốt, giàu cảm xúc.')">+ Diễn đạt tốt</button>
-                      <button type="button" class="history-quick-feedback-chip" onclick="appendQuickQuestionComment(${idx}, 'Nêu đúng trọng tâm, cần bổ sung dẫn chứng.')">+ Thiếu dẫn chứng</button>
-                      <button type="button" class="history-quick-feedback-chip" onclick="appendQuickQuestionComment(${idx}, 'Cần phân tích sâu hơn.')">+ Cần phân tích sâu</button>
-                      <button type="button" class="history-quick-feedback-chip" onclick="appendQuickQuestionComment(${idx}, 'Chú ý lỗi chính tả và diễn đạt.')">+ Lỗi chính tả</button>
+                      ${isWriting ? `
+                        <button type="button" class="history-quick-feedback-chip" onclick="appendQuickQuestionComment(${idx}, 'Diễn đạt mượt mà, cảm xúc.')">+ Diễn đạt tốt</button>
+                        <button type="button" class="history-quick-feedback-chip" onclick="appendQuickQuestionComment(${idx}, 'Luận điểm rõ ràng, dẫn chứng xác đáng.')">+ Đầy đủ dẫn chứng</button>
+                        <button type="button" class="history-quick-feedback-chip" onclick="appendQuickQuestionComment(${idx}, 'Cần bổ sung thêm dẫn chứng thực tế.')">+ Thiếu dẫn chứng</button>
+                        <button type="button" class="history-quick-feedback-chip" onclick="appendQuickQuestionComment(${idx}, 'Chú ý liên kết đoạn và chính tả.')">+ Chú ý liên kết đoạn</button>
+                      ` : `
+                        <button type="button" class="history-quick-feedback-chip" onclick="appendQuickQuestionComment(${idx}, 'Diễn đạt tốt, giàu cảm xúc.')">+ Diễn đạt tốt</button>
+                        <button type="button" class="history-quick-feedback-chip" onclick="appendQuickQuestionComment(${idx}, 'Nêu đúng trọng tâm, cần bổ sung dẫn chứng.')">+ Thiếu dẫn chứng</button>
+                        <button type="button" class="history-quick-feedback-chip" onclick="appendQuickQuestionComment(${idx}, 'Cần phân tích sâu hơn.')">+ Cần phân tích sâu</button>
+                        <button type="button" class="history-quick-feedback-chip" onclick="appendQuickQuestionComment(${idx}, 'Chú ý lỗi chính tả và diễn đạt.')">+ Lỗi chính tả</button>
+                      `}
                     </div>
                   </div>
                 </div>
@@ -1255,7 +1357,7 @@ function renderHistoryDetailModalView() {
                 ${(d.isGraded || d.teacherComment || (d.points !== undefined && d.points > 0)) ? `
                   <div class="history-graded-result-box">
                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-                      <span>⭐ Điểm câu ${idx + 1}: <b>${d.points !== undefined ? d.points : 0} / ${maxPts}</b> điểm</span>
+                      <span>⭐ Điểm ${isWriting ? `Phần ${idx + 1}` : `câu ${idx + 1}`}: <b>${d.points !== undefined ? d.points : 0} / ${maxPts}</b> điểm</span>
                       <span class="tag ${curStatus === 'ok' ? 'ok' : curStatus === 'partial' ? 'cy' : 'bad'}">
                         ${curStatus === 'ok' ? '✅ Đạt' : curStatus === 'partial' ? '🟡 Đạt một phần' : '❌ Chưa đạt'}
                       </span>
@@ -1278,10 +1380,10 @@ function renderHistoryDetailModalView() {
         <div class="history-overall-grading-card">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
             <h4 style="margin:0; font-size:16px; font-weight:800; display:flex; align-items:center; gap:6px;">
-              <span>📝</span> <span>Tổng kết điểm &amp; Lời phê của Giáo viên</span>
+              <span>📝</span> <span>Tổng kết điểm &amp; Lời phê của Giáo viên ${isWriting ? '(Thang 10đ Chuẩn)' : ''}</span>
             </h4>
-            <button type="button" class="btn cy sm" onclick="autoCalculateTotalPoints()" title="Cộng dồn điểm từ tất cả các câu hỏi trên">
-              ⚡ Tự động tính tổng từ các câu
+            <button type="button" class="btn cy sm" onclick="autoCalculateTotalPoints()" title="Cộng dồn điểm từ tất cả các phần trên">
+              ⚡ Tự động tính tổng từ các phần
             </button>
           </div>
 
@@ -1292,7 +1394,7 @@ function renderHistoryDetailModalView() {
               </label>
               <div style="display:flex; align-items:center; gap:8px;">
                 <input type="number" id="grade-total-score" step="0.25" min="0" max="${itemTotalMaxScore || 10}" value="${item.score || 0}" oninput="updateGradeRankBadge(${itemTotalMaxScore})" style="width:110px; text-align:center; font-weight:900; font-size:22px; border-radius:10px; padding:6px 8px; color:var(--primary);">
-                <span style="font-weight:800; font-size:16px;">/ ${itemTotalMaxScore || 6.0} điểm</span>
+                <span style="font-weight:800; font-size:16px;">/ ${itemTotalMaxScore || (isWriting ? 10.0 : 6.0)} điểm</span>
               </div>
             </div>
             <div>
@@ -1315,15 +1417,27 @@ function renderHistoryDetailModalView() {
             
             <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;">
               <span style="font-size:12px; color:var(--mut); font-weight:700; align-self:center;">Mẫu lời phê nhanh:</span>
-              <button type="button" class="btn gh sm quick-template-btn" onclick="applyQuickGeneralFeedback('🌟 Bài làm rất tốt, nắm vững kiến thức trọng tâm, lập luận sắc bén và diễn đạt giàu cảm xúc.')">
-                🌟 Rất tốt &amp; Sắc bén
-              </button>
-              <button type="button" class="btn gh sm quick-template-btn" onclick="applyQuickGeneralFeedback('👍 Nắm vững kiến thức cơ bản, diễn đạt khá tốt, cần chú ý phân tích sâu hơn và bổ sung dẫn chứng.')">
-                👍 Đạt yêu cầu &amp; Cần bổ sung
-              </button>
-              <button type="button" class="btn gh sm quick-template-btn" onclick="applyQuickGeneralFeedback('⚠️ Cần đọc kỹ ngữ liệu và câu hỏi, rèn luyện thêm kỹ năng diễn đạt và phân tích bài làm.')">
-                ⚠️ Cần cố gắng thêm
-              </button>
+              ${isWriting ? `
+                <button type="button" class="btn gh sm quick-template-btn" onclick="applyQuickGeneralFeedback('🌟 Bài viết rất xuất sắc, bố cục 3 phần chặt chẽ, luận điểm rõ ràng, dẫn chứng thuyết phục và giàu cảm xúc.')">
+                  🌟 Xuất sắc &amp; Sắc bén
+                </button>
+                <button type="button" class="btn gh sm quick-template-btn" onclick="applyQuickGeneralFeedback('👍 Bố cục bài viết hoàn chỉnh, diễn đạt lưu loát. Cần phân tích sâu sắc hơn ở thân bài và mở rộng dẫn chứng.')">
+                  👍 Đầy đủ &amp; Cần mở rộng
+                </button>
+                <button type="button" class="btn gh sm quick-template-btn" onclick="applyQuickGeneralFeedback('⚠️ Cần chú ý phát triển ý ở thân bài, trau chuốt câu từ và khắc phục các lỗi diễn đạt, chính tả.')">
+                  ⚠️ Cần cố gắng thêm
+                </button>
+              ` : `
+                <button type="button" class="btn gh sm quick-template-btn" onclick="applyQuickGeneralFeedback('🌟 Bài làm rất tốt, nắm vững kiến thức trọng tâm, lập luận sắc bén và diễn đạt giàu cảm xúc.')">
+                  🌟 Rất tốt &amp; Sắc bén
+                </button>
+                <button type="button" class="btn gh sm quick-template-btn" onclick="applyQuickGeneralFeedback('👍 Nắm vững kiến thức cơ bản, diễn đạt khá tốt, cần chú ý phân tích sâu hơn và bổ sung dẫn chứng.')">
+                  👍 Đạt yêu cầu &amp; Cần bổ sung
+                </button>
+                <button type="button" class="btn gh sm quick-template-btn" onclick="applyQuickGeneralFeedback('⚠️ Cần đọc kỹ ngữ liệu và câu hỏi, rèn luyện thêm kỹ năng diễn đạt và phân tích bài làm.')">
+                  ⚠️ Cần cố gắng thêm
+                </button>
+              `}
             </div>
           </div>
 
@@ -1348,7 +1462,7 @@ function renderHistoryDetailModalView() {
           </div>
           <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap;">
             <span style="font-size:24px; font-weight:900; color:var(--green);">
-              ${item.score || 0} / ${itemTotalMaxScore || 6.0} điểm
+              ${item.score || 0} / ${itemTotalMaxScore || (isWriting ? 10.0 : 6.0)} điểm
             </span>
             ${getGradeRankBadge(item.score, itemTotalMaxScore)}
             ${item.gradedDateStr ? `<span class="mut" style="font-size:12.5px;">(Chấm lúc: ${item.gradedDateStr})</span>` : ''}
@@ -1512,7 +1626,8 @@ function updateGradeRankBadge(maxScore) {
     const history = getQuizHistory();
     const item = history.find(h => String(h.id) === String(currentViewingHistoryId));
     const details = (item && Array.isArray(item.details)) ? item.details : [];
-    const totalMax = maxScore || details.reduce((sum, d) => sum + (Number(d.maxScore) || 1.0), 0) || 10;
+    const isWriting = item && item.type === 'writing';
+    const totalMax = maxScore || (isWriting ? 10.0 : details.reduce((sum, d) => sum + (Number(d.maxScore) || 1.0), 0)) || 10;
     badgeWrap.innerHTML = getGradeRankBadge(parseFloat(totalInput.value) || 0, totalMax);
   }
 }
@@ -1651,6 +1766,84 @@ function createSampleQuizSubmissionForGrading() {
   renderHistoryList();
   if (typeof renderHistoryPage === 'function') renderHistoryPage();
   toast('✨ Đã nạp bài làm mẫu! Bạn có thể nhấn "Chấm bài ngay" để thử nghiệm.', 'ok');
+}
+
+function createSampleWritingSubmissionForGrading() {
+  const sample = {
+    id: 'sample_writing_' + Date.now(),
+    type: 'writing',
+    setId: 'writing_sample_nlxh_kientri',
+    setTitle: 'Nghị luận xã hội: Ý nghĩa của lòng kiên trì',
+    setTopic: 'Nghị luận xã hội',
+    playerName: 'Trần Thị Mai',
+    className: '12A2',
+    dateStr: new Date().toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' }),
+    timestamp: Date.now(),
+    totalQuestions: 3,
+    answeredCount: 3,
+    totalWords: 245,
+    savedShortCount: 245,
+    elapsedSeconds: 1250,
+    isGraded: false,
+    score: 0,
+    details: [
+      {
+        questionNumber: 1,
+        questionText: 'Mở bài',
+        sectionId: 'sec_mo_bai',
+        sectionTitle: 'Mở bài (2.0 điểm)',
+        sectionGuide: 'Dẫn dắt trực tiếp và nêu vấn đề nghị luận: Lòng kiên trì là chiếc la bàn và kim chỉ nam dẫn lối đến thành công của mỗi con người trong cuộc sống hiện đại.',
+        questionType: 'Luyện viết',
+        userAnswer: 'Trên hành trình vươn tới ước mơ và khẳng định giá trị bản thân, kiên trì chính là chiếc la bàn vững chắc và là kim chỉ nam giúp mỗi con người vượt qua mọi giông bão cuộc đời để chạm tới đỉnh vinh quang.',
+        words: 39,
+        maxScore: 2.0,
+        points: 0,
+        gradeStatus: 'saved',
+        status: 'saved',
+        teacherComment: ''
+      },
+      {
+        questionNumber: 2,
+        questionText: 'Thân bài',
+        sectionId: 'sec_than_bai',
+        sectionTitle: 'Thân bài (6.0 điểm)',
+        sectionGuide: '1. Giải thích: Kiên trì là sự bền bỉ, nhẫn nại theo đuổi mục tiêu dù gặp muôn vàn khó khăn, thử thách mà không hề bỏ cuộc giữa chừng.\n2. Bàn luận & Dẫn chứng: Lòng kiên trì rèn giũa bản lĩnh thép, biến trở ngại thành cơ hội và tích lũy tri thức. Dẫn chứng: Thomas Edison, Thầy giáo Nguyễn Ngọc Ký...\n3. Phản đề: Phê phán lối sống thiếu kiên nhẫn, "cả thèm chóng chán".',
+        questionType: 'Luyện viết',
+        userAnswer: 'Trước hết, kiên trì là sự bền bỉ, nhẫn nại theo đuổi mục tiêu đã đề ra, dẫu phải đối mặt với muôn vàn gian nan, thử thách mà không hề chùn bước hay buông xuôi giữa chừng. Lòng kiên trì tôi luyện cho ta bản lĩnh thép, biến những chông gai trên đường đời thành bệ phóng tích lũy tri thức và kinh nghiệm sống quý báu. Người có lòng kiên định luôn nhìn thấy cơ hội ngay trong nghịch cảnh; tiêu biểu như nhà bác học Thomas Edison đã trải qua hàng nghìn lần thử nghiệm thất bại trước khi thắp sáng nhân loại bằng phát minh bóng đèn điện. Ngược lại, những kẻ thiếu kiên nhẫn, "cả thèm chóng chán", hễ thấy khó khăn đã vội vàng nản chí sẽ mãi dậm chân tại chỗ và khó có thể chạm tay vào quả ngọt của thành công.',
+        words: 165,
+        maxScore: 6.0,
+        points: 0,
+        gradeStatus: 'saved',
+        status: 'saved',
+        teacherComment: ''
+      },
+      {
+        questionNumber: 3,
+        questionText: 'Kết bài',
+        sectionId: 'sec_ket_bai',
+        sectionTitle: 'Kết bài (2.0 điểm)',
+        sectionGuide: 'Khái quát lại ý nghĩa của lòng kiên trì; rút ra bài học nhận thức và phương hướng hành động cụ thể cho bản thân trong học tập và cuộc sống.',
+        questionType: 'Luyện viết',
+        userAnswer: 'Tóm lại, thành công không đến sau một đêm mà là kết tinh của chuỗi ngày bền bỉ nỗ lực. Là một học sinh đang đứng trước ngưỡng cửa tương lai, em tự nhắc nhở mình phải luôn kiên trì rèn luyện và trau dồi tri thức mỗi ngày.',
+        words: 41,
+        maxScore: 2.0,
+        points: 0,
+        gradeStatus: 'saved',
+        status: 'saved',
+        teacherComment: ''
+      }
+    ]
+  };
+
+  const history = getQuizHistory();
+  history.unshift(sample);
+  try {
+    localStorage.setItem(QUIZ_HISTORY_KEY, JSON.stringify(history));
+  } catch (e) {}
+
+  renderHistoryList();
+  if (typeof renderHistoryPage === 'function') renderHistoryPage();
+  toast('✨ Đã nạp bài viết mẫu (Thang 10đ)! Bạn có thể nhấn "Chấm bài ngay" để trải nghiệm.', 'ok');
 }
 
 function closeHistoryDetailModal() {
