@@ -8,6 +8,7 @@
   'use strict';
 
   const STORAGE_USER_KEY = 'vq_current_user_v2';
+  const STORAGE_SAVED_ACCOUNTS_KEY = 'vq_saved_accounts_v2';
   const PASSWORD_SALT = 'nguvan_sec_2026_';
 
   // -------------------------------------------------------------------------
@@ -153,6 +154,7 @@
             localStorage.removeItem('vq_player_class');
           }
           currentUser = u;
+          saveAccountToDevice(u);
           return u;
         }
       }
@@ -163,7 +165,7 @@
     return null;
   }
 
-  function saveStoredUser(user) {
+  function saveStoredUser(user, remember = true) {
     currentUser = user;
     try {
       if (user) {
@@ -186,12 +188,197 @@
         } else {
           localStorage.removeItem('vq_player_class');
         }
+
+        // Tự động ghi nhớ tài khoản trên thiết bị này
+        if (remember) {
+          saveAccountToDevice(user);
+        }
       } else {
         localStorage.removeItem(STORAGE_USER_KEY);
       }
     } catch (e) {
       console.warn('Lỗi lưu phiên người dùng:', e);
     }
+  }
+
+  // -------------------------------------------------------------------------
+  // HỆ THỐNG GHI NHỚ VÀ CHUYỂN ĐỔI NHIỀU TÀI KHOẢN (MULTI-ACCOUNT SWITCHER)
+  // -------------------------------------------------------------------------
+  function getSavedAccounts() {
+    try {
+      const raw = localStorage.getItem(STORAGE_SAVED_ACCOUNTS_KEY);
+      let list = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(list)) list = [];
+
+      // Chuẩn hóa danh sách
+      list.forEach(acc => {
+        if (acc.username === 'admin' || (acc.role === 'admin' && acc.full_name !== 'ADMIN')) {
+          acc.full_name = 'ADMIN';
+          acc.role = 'admin';
+        } else if (acc.username === 'tuanh' || acc.username === 'giaovien') {
+          acc.full_name = 'Hoàng Thị Tú Anh';
+          acc.role = 'teacher';
+        }
+        if (!acc.avatar) acc.avatar = 'ion:person';
+      });
+
+      // Nếu đang đăng nhập mà chưa có trong danh sách, thêm vào đầu
+      if (currentUser && currentUser.username) {
+        const found = list.find(a => a.username.toLowerCase() === currentUser.username.toLowerCase());
+        if (!found) {
+          list.unshift({
+            id: currentUser.id || ('usr_' + currentUser.username),
+            username: currentUser.username,
+            full_name: currentUser.full_name || currentUser.username,
+            class_name: currentUser.class_name || '',
+            role: currentUser.role || 'student',
+            avatar: 'ion:person',
+            last_active: Date.now()
+          });
+          try { localStorage.setItem(STORAGE_SAVED_ACCOUNTS_KEY, JSON.stringify(list)); } catch (_) {}
+        }
+      }
+
+      return list;
+    } catch (e) {
+      console.warn('Lỗi đọc tài khoản đã lưu:', e);
+      return [];
+    }
+  }
+
+  function saveAccountToDevice(user) {
+    if (!user || !user.username) return;
+    try {
+      const list = getSavedAccounts();
+      const cleanUsername = String(user.username).trim().toLowerCase();
+      const existingIdx = list.findIndex(a => a.username.toLowerCase() === cleanUsername);
+
+      const entry = {
+        id: user.id || ('usr_' + cleanUsername),
+        username: user.username,
+        full_name: user.full_name || user.username,
+        class_name: user.class_name || '',
+        role: user.role || 'student',
+        avatar: 'ion:person',
+        last_active: Date.now()
+      };
+
+      if (entry.username === 'admin' || entry.role === 'admin') {
+        entry.full_name = 'ADMIN';
+      } else if (entry.username === 'tuanh' || entry.username === 'giaovien') {
+        entry.full_name = 'Hoàng Thị Tú Anh';
+      }
+
+      if (existingIdx >= 0) {
+        list[existingIdx] = { ...list[existingIdx], ...entry };
+      } else {
+        list.unshift(entry);
+      }
+
+      const trimmed = list.slice(0, 25);
+      localStorage.setItem(STORAGE_SAVED_ACCOUNTS_KEY, JSON.stringify(trimmed));
+    } catch (e) {
+      console.warn('Lỗi lưu tài khoản thiết bị:', e);
+    }
+  }
+
+  function removeSavedAccountFromDevice(targetUsername, e) {
+    if (e && typeof e.stopPropagation === 'function') {
+      e.stopPropagation();
+    }
+    const cleanTarget = String(targetUsername || '').trim().toLowerCase();
+    if (!cleanTarget) return;
+
+    const list = getSavedAccounts();
+    const target = list.find(a => a.username.toLowerCase() === cleanTarget);
+    const targetName = target ? (target.full_name || target.username) : cleanTarget;
+
+    if (!confirm(`Bạn có chắc muốn gỡ tài khoản "${targetName}" (@${cleanTarget}) khỏi danh sách đã lưu trên thiết bị này?`)) {
+      return;
+    }
+
+    const filtered = list.filter(a => a.username.toLowerCase() !== cleanTarget);
+    try {
+      localStorage.setItem(STORAGE_SAVED_ACCOUNTS_KEY, JSON.stringify(filtered));
+    } catch (_) {}
+
+    // Nếu tài khoản bị gỡ đang là tài khoản đăng nhập hiện tại
+    if (currentUser && currentUser.username.toLowerCase() === cleanTarget) {
+      if (filtered.length > 0) {
+        toast(`Đã gỡ tài khoản. Đang chuyển sang tài khoản kế tiếp...`, 'ok');
+        switchAccount(filtered[0].username);
+        return;
+      } else {
+        Auth.logout();
+        toast('Đã gỡ tài khoản khỏi thiết bị.', 'ok');
+        return;
+      }
+    }
+
+    toast(`Đã gỡ tài khoản "${targetName}" khỏi thiết bị.`, 'ok');
+    if (Auth.getCurrentUser()) {
+      Auth.applyRolePermissions();
+    }
+    renderSavedAccountsInLoginDialog();
+  }
+
+  function switchAccount(targetUsername) {
+    const cleanTarget = String(targetUsername || '').trim().toLowerCase();
+    if (!cleanTarget) return;
+
+    if (currentUser && currentUser.username.toLowerCase() === cleanTarget) {
+      toast('Bạn đang sử dụng tài khoản này.', 'ok');
+      closeUserDropdown();
+      closeLoginDialog();
+      return;
+    }
+
+    const list = getSavedAccounts();
+    let target = list.find(a => a.username.toLowerCase() === cleanTarget);
+
+    if (!target) {
+      const offlineAll = getOfflineAccountsList();
+      target = offlineAll.find(a => a.username.toLowerCase() === cleanTarget);
+    }
+
+    if (!target) {
+      toast('Không tìm thấy thông tin tài khoản để chuyển đổi!', 'bad');
+      return;
+    }
+
+    // Đổi tài khoản hoạt động
+    saveStoredUser(target, true);
+    Auth.applyRolePermissions();
+
+    const roleName = target.role === 'admin' ? 'Quản trị viên' : (target.role === 'teacher' ? 'Giáo viên' : 'Học sinh');
+    toast(`Đã chuyển sang tài khoản ${roleName}: ${target.full_name || target.username}!`, 'ok');
+
+    closeUserDropdown();
+    closeLoginDialog();
+
+    // Điều hướng an toàn
+    if (typeof currentScreen !== 'undefined') {
+      if (target.role === 'student' && (currentScreen === 'accounts' || currentScreen === 'lib')) {
+        if (typeof go === 'function') go('home');
+      } else if (currentScreen === 'accounts' && (target.role === 'teacher' || target.role === 'admin')) {
+        loadAndRenderAccounts();
+      }
+    }
+  }
+
+  function logoutAllAccounts() {
+    if (!confirm('Bạn có chắc chắn muốn đăng xuất khỏi tất cả tài khoản trên thiết bị này?')) {
+      return;
+    }
+    try {
+      localStorage.removeItem(STORAGE_SAVED_ACCOUNTS_KEY);
+      localStorage.removeItem(STORAGE_USER_KEY);
+    } catch (_) {}
+    currentUser = null;
+    Auth.applyRolePermissions();
+    closeUserDropdown();
+    toast('Đã đăng xuất khỏi tất cả tài khoản trên thiết bị.', 'ok');
+    if (typeof go === 'function') go('home');
   }
 
   function getRoleAvatarInfo(u) {
@@ -396,7 +583,7 @@
     },
 
     // ĐĂNG NHẬP
-    async login(rawUsername, rawPassword) {
+    async login(rawUsername, rawPassword, remember = true) {
       const username = String(rawUsername || '').trim().toLowerCase();
       const password = String(rawPassword || '').trim();
 
@@ -439,7 +626,7 @@
                   role: userRole,
                   avatar: 'ion:person'
                 };
-                saveStoredUser(userObj);
+                saveStoredUser(userObj, remember);
 
                 // Cập nhật last_login ngầm
                 try {
@@ -475,7 +662,7 @@
           role: 'admin',
           avatar: 'ion:person'
         };
-        saveStoredUser(adminObj);
+        saveStoredUser(adminObj, remember);
         this.applyRolePermissions();
         return { success: true, user: adminObj };
       }
@@ -489,7 +676,7 @@
           role: 'teacher',
           avatar: 'ion:person'
         };
-        saveStoredUser(teacherObj);
+        saveStoredUser(teacherObj, remember);
         this.applyRolePermissions();
         return { success: true, user: teacherObj };
       }
@@ -503,7 +690,7 @@
           role: 'student',
           avatar: 'ion:person'
         };
-        saveStoredUser(studentObj);
+        saveStoredUser(studentObj, remember);
         this.applyRolePermissions();
         return { success: true, user: studentObj };
       }
@@ -523,7 +710,7 @@
           role: 'student',
           avatar: 'ion:person'
         };
-        saveStoredUser(studentObj);
+        saveStoredUser(studentObj, remember);
         this.applyRolePermissions();
         return { success: true, user: studentObj };
       }
@@ -888,6 +1075,9 @@
       const cleanClass = (u.class_name && !u.class_name.toLowerCase().includes('tổ ngữ văn')) ? u.class_name : '';
       const classText = cleanClass ? ` • ${esc(cleanClass)}` : '';
 
+      const savedAccounts = getSavedAccounts();
+      const otherAccounts = savedAccounts.filter(a => a.username.toLowerCase() !== (u.username || '').toLowerCase());
+
       container.innerHTML = `
         <div class="nav-user-pill" onclick="toggleUserDropdown(event)" title="Nhấp để xem menu tài khoản" tabindex="0" role="button" aria-haspopup="true">
           <div class="user-pill-avatar-wrap">
@@ -917,6 +1107,65 @@
                 <span class="dropdown-username">@${esc(u.username)}</span>
                 ${cleanClass ? `<span class="dropdown-class-badge">${esc(cleanClass)}</span>` : ''}
               </div>
+            </div>
+          </div>
+
+          <!-- KHỐI CHUYỂN ĐỔI TÀI KHOẢN TRÊN THIẾT BỊ -->
+          <div class="dropdown-accounts-box">
+            <div class="dropdown-accounts-bar">
+              <span class="dropdown-accounts-tag">
+                <ion-icon name="swap-horizontal-outline"></ion-icon> Tài khoản trên máy (${savedAccounts.length})
+              </span>
+              <button class="dropdown-accounts-add-btn" type="button" onclick="closeUserDropdown(); openLoginDialog(true);" title="Đăng nhập thêm tài khoản khác">
+                <ion-icon name="person-add-outline"></ion-icon> <span>Thêm</span>
+              </button>
+            </div>
+            
+            <div class="dropdown-accounts-list">
+              <!-- Tài khoản đang đăng nhập -->
+              <div class="dropdown-acc-item active" title="Tài khoản đang sử dụng">
+                <div class="dropdown-acc-avatar">
+                  ${renderAvatarMarkup(u, 'acc-avatar-mini')}
+                </div>
+                <div class="dropdown-acc-details">
+                  <div class="dropdown-acc-top">
+                    <strong class="dropdown-acc-name">${esc(u.full_name || u.username)}</strong>
+                    <span class="dropdown-active-pill"><ion-icon name="checkmark-circle"></ion-icon> Đang dùng</span>
+                  </div>
+                  <div class="dropdown-acc-sub">
+                    <span class="dropdown-acc-user">@${esc(u.username)}</span>
+                    ${roleBadgeHtml}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Các tài khoản khác đã lưu -->
+              ${otherAccounts.map(acc => {
+                let rBadge = '';
+                if (acc.role === 'admin') rBadge = '<span class="user-role-badge sm admin">Admin</span>';
+                else if (acc.role === 'teacher') rBadge = '<span class="user-role-badge sm teacher">GV</span>';
+                else rBadge = `<span class="user-role-badge sm student">${esc(acc.class_name || '12A2')}</span>`;
+
+                return `
+                  <div class="dropdown-acc-item" onclick="switchAccountQuick('${esc(acc.username)}')" title="Nhấp để chuyển sang tài khoản này">
+                    <div class="dropdown-acc-avatar">
+                      ${renderAvatarMarkup(acc, 'acc-avatar-mini')}
+                    </div>
+                    <div class="dropdown-acc-details">
+                      <div class="dropdown-acc-top">
+                        <strong class="dropdown-acc-name">${esc(acc.full_name || acc.username)}</strong>
+                      </div>
+                      <div class="dropdown-acc-sub">
+                        <span class="dropdown-acc-user">@${esc(acc.username)}</span>
+                        ${rBadge}
+                      </div>
+                    </div>
+                    <button class="dropdown-acc-del-btn" type="button" onclick="removeSavedAccountQuick('${esc(acc.username)}', event)" title="Gỡ tài khoản này khỏi máy">
+                      <ion-icon name="close-outline"></ion-icon>
+                    </button>
+                  </div>
+                `;
+              }).join('')}
             </div>
           </div>
 
@@ -954,6 +1203,13 @@
               <span class="dropdown-item-label">Đổi mật khẩu</span>
               <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
             </button>
+            <button class="dropdown-item" type="button" onclick="closeUserDropdown(); openLoginDialog(true);">
+              <span class="dropdown-item-icon icon-purple">
+                <ion-icon name="person-add-outline"></ion-icon>
+              </span>
+              <span class="dropdown-item-label">Thêm tài khoản khác</span>
+              <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
+            </button>
             <button class="dropdown-item" type="button" onclick="closeUserDropdown(); openSettingsDialog();">
               <span class="dropdown-item-icon icon-cyan">
                 <ion-icon name="settings-outline"></ion-icon>
@@ -966,8 +1222,16 @@
               <span class="dropdown-item-icon icon-red">
                 <ion-icon name="log-out-outline"></ion-icon>
               </span>
-              <span class="dropdown-item-label">Đăng xuất</span>
+              <span class="dropdown-item-label">Đăng xuất tài khoản này</span>
             </button>
+            ${savedAccounts.length > 1 ? `
+              <button class="dropdown-item danger" type="button" onclick="closeUserDropdown(); logoutAllAccounts();" style="opacity:0.85;">
+                <span class="dropdown-item-icon icon-red">
+                  <ion-icon name="power-outline"></ion-icon>
+                </span>
+                <span class="dropdown-item-label">Đăng xuất tất cả tài khoản</span>
+              </button>
+            ` : ''}
           </div>
         </div>
       `;
@@ -978,6 +1242,12 @@
       const container = document.getElementById('sidebar-user-header');
       if (container) container.innerHTML = '';
     },
+
+    getSavedAccounts() { return getSavedAccounts(); },
+    saveAccount(user) { saveAccountToDevice(user); },
+    removeSavedAccount(username, e) { removeSavedAccountFromDevice(username, e); },
+    switchAccount(username) { switchAccount(username); },
+    logoutAll() { logoutAllAccounts(); },
 
     // KHỞI ĐỘNG MODULE AUTH
     init() {
@@ -1028,13 +1298,17 @@
   });
 
   // DIALOG ĐĂNG NHẬP
-  global.openLoginDialog = function() {
+  global.openLoginDialog = function(isAddingNew = false) {
     const dlg = document.getElementById('login-dialog');
     if (!dlg) return;
     const errBox = document.getElementById('login-error-msg');
     if (errBox) errBox.style.display = 'none';
     const form = document.getElementById('login-form');
     if (form) form.reset();
+
+    // Render danh sách tài khoản đã lưu trên thiết bị
+    renderSavedAccountsInLoginDialog(isAddingNew);
+
     try {
       if (typeof dlg.showModal === 'function') {
         if (!dlg.open) dlg.showModal();
@@ -1047,6 +1321,83 @@
     setTimeout(() => {
       document.getElementById('login-username')?.focus();
     }, 100);
+  };
+
+  function renderSavedAccountsInLoginDialog(isAddingNew = false) {
+    const box = document.getElementById('login-saved-accounts-box');
+    const form = document.getElementById('login-form');
+    if (!box) return;
+
+    const savedAccounts = getSavedAccounts();
+
+    if (!savedAccounts || savedAccounts.length === 0) {
+      box.style.display = 'none';
+      if (form) form.style.display = 'block';
+      return;
+    }
+
+    box.style.display = 'block';
+    box.innerHTML = `
+      <div class="login-saved-header">
+        <span class="login-saved-title">
+          <ion-icon name="time-outline"></ion-icon> Tài khoản đã lưu trên thiết bị
+        </span>
+        <span class="badge" style="font-size:11px; font-weight:800; background:rgba(99,102,241,0.12); color:var(--primary); padding:2px 8px; border-radius:12px;">
+          ${savedAccounts.length} tài khoản
+        </span>
+      </div>
+
+      <div class="login-saved-list">
+        ${savedAccounts.map(acc => {
+          const isCurrent = currentUser && currentUser.username.toLowerCase() === acc.username.toLowerCase();
+          let rBadge = '';
+          if (acc.role === 'admin') rBadge = '<span class="user-role-badge sm admin">Quản trị viên</span>';
+          else if (acc.role === 'teacher') rBadge = '<span class="user-role-badge sm teacher">Giáo viên</span>';
+          else rBadge = `<span class="user-role-badge sm student">Lớp ${esc(acc.class_name || '12A2')}</span>`;
+
+          return `
+            <div class="login-saved-card ${isCurrent ? 'active' : ''}" onclick="switchAccountQuick('${esc(acc.username)}')" title="Nhấp để đăng nhập tài khoản này">
+              <div class="login-saved-avatar">
+                ${renderAvatarMarkup(acc, 'acc-avatar-mini')}
+              </div>
+              <div class="login-saved-info">
+                <div class="login-saved-name-row">
+                  <strong class="login-saved-name">${esc(acc.full_name || acc.username)}</strong>
+                  ${isCurrent ? '<span class="dropdown-active-pill"><ion-icon name="checkmark-circle"></ion-icon> Đang dùng</span>' : '<ion-icon name="arrow-forward-outline" class="login-saved-arrow"></ion-icon>'}
+                </div>
+                <div class="login-saved-meta">
+                  <span class="login-saved-username">@${esc(acc.username)}</span>
+                  ${rBadge}
+                </div>
+              </div>
+              <button class="login-saved-del-btn" type="button" onclick="removeSavedAccountQuick('${esc(acc.username)}', event)" title="Xóa tài khoản này khỏi thiết bị">
+                <ion-icon name="trash-outline"></ion-icon>
+              </button>
+            </div>
+          `;
+        }).join('')}
+      </div>
+
+      <div class="login-divider-text">
+        <span>${isAddingNew ? 'Điền thông tin tài khoản mới bên dưới' : 'Hoặc đăng nhập bằng tài khoản khác'}</span>
+      </div>
+    `;
+
+    if (form) {
+      form.style.display = 'block';
+    }
+  }
+
+  global.switchAccountQuick = function(username) {
+    Auth.switchAccount(username);
+  };
+
+  global.removeSavedAccountQuick = function(username, e) {
+    Auth.removeSavedAccount(username, e);
+  };
+
+  global.logoutAllAccounts = function() {
+    Auth.logoutAll();
   };
 
   global.closeLoginDialog = function() {
@@ -1097,6 +1448,8 @@
     const passInput = document.getElementById('login-password');
     const submitBtn = document.getElementById('btn-submit-login');
     const errBox = document.getElementById('login-error-msg');
+    const rememberCheckbox = document.getElementById('login-remember-me');
+    const rememberMe = rememberCheckbox ? rememberCheckbox.checked : true;
 
     const username = userInput ? userInput.value.trim() : '';
     const password = passInput ? passInput.value.trim() : '';
@@ -1116,7 +1469,7 @@
     if (errBox) errBox.style.display = 'none';
 
     try {
-      const res = await Auth.login(username, password);
+      const res = await Auth.login(username, password, rememberMe);
       if (res.success) {
         closeLoginDialog();
         const roleGreeting = (res.user.role === 'admin' ? 'Quản trị viên' : (res.user.role === 'teacher' ? 'Cô/Thầy' : 'Bạn'));

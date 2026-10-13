@@ -615,6 +615,9 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
       </div>
     </div>
 
+    <!-- Khu vực đăng nhập nhanh bằng tài khoản đã lưu trên thiết bị -->
+    <div id="login-saved-accounts-box" class="login-saved-accounts-box" style="display:none;"></div>
+
     <!-- Biểu mẫu đăng nhập -->
     <form id="login-form" onsubmit="handleLoginSubmit(event)" class="login-form-content">
       <div id="login-error-msg" class="auth-alert-error" style="display:none;"></div>
@@ -650,6 +653,14 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
             <ion-icon name="eye-outline"></ion-icon>
           </button>
         </div>
+      </div>
+
+      <!-- Tùy chọn Ghi nhớ tài khoản trên thiết bị -->
+      <div class="login-field-group" style="margin-bottom:12px;">
+        <label style="display:inline-flex; align-items:center; gap:8px; cursor:pointer; font-size:13px; font-weight:700; color:var(--ink); user-select:none;">
+          <input type="checkbox" id="login-remember-me" checked style="width:17px; height:17px; accent-color:var(--primary); cursor:pointer;">
+          <span>Ghi nhớ tài khoản trên thiết bị này</span>
+        </label>
       </div>
 
       <!-- Nút Đăng nhập -->

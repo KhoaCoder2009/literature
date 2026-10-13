@@ -5017,7 +5017,7 @@ body[data-user-role="student"] .teacher-only {
   position: absolute;
   top: calc(100% + 10px);
   right: 0;
-  width: 290px;
+  width: 325px;
   background: var(--bg-card);
   border: 2px solid var(--stroke);
   border-radius: 20px;
@@ -5050,172 +5050,313 @@ body[data-user-role="student"] .teacher-only {
   }
 }
 
-/* Dropdown Profile Header */
-.dropdown-header {
+/* =========================================================================
+   ACCOUNT SWITCHER SYSTEM (CHUYỂN ĐỔI TÀI KHOẢN TRÊN THIẾT BỊ)
+   ========================================================================= */
+.dropdown-accounts-box {
+  background: var(--bg-base);
+  border: 1.5px solid var(--stroke);
+  border-radius: 16px;
+  padding: 8px;
+  margin: 6px 0 8px;
+}
+.dropdown-accounts-bar {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 10px 12px 10px;
+  justify-content: space-between;
+  padding: 4px 6px 7px;
+  border-bottom: 1px solid var(--stroke);
+  margin-bottom: 6px;
 }
-.dropdown-avatar-box {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(245, 158, 11, 0.22));
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  display: flex;
+.dropdown-accounts-tag {
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--mut);
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  gap: 5px;
 }
-[data-theme="dark"] .dropdown-avatar-box {
-  border-color: rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.08);
-}
-.dropdown-avatar {
-  display: flex;
+.dropdown-accounts-add-btn {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--stroke);
+  background: var(--bg-card);
+  color: var(--primary);
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
-.dropdown-info {
+.dropdown-accounts-add-btn:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.dropdown-accounts-list {
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  min-width: 0;
-  flex: 1;
+  gap: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
-.dropdown-name {
-  font-size: 15px;
+.dropdown-acc-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 8px;
+  border-radius: 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  text-align: left;
+}
+.dropdown-acc-item:hover {
+  background: var(--bg-card);
+  border-color: var(--stroke);
+  transform: translateX(2px);
+}
+.dropdown-acc-item.active {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.35);
+  cursor: default;
+}
+.dropdown-acc-item.active:hover {
+  transform: none;
+}
+.dropdown-acc-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1.5px solid var(--stroke);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dropdown-acc-details {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.dropdown-acc-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.dropdown-acc-name {
+  font-size: 12.5px;
   font-weight: 800;
   color: var(--ink);
-  line-height: 1.25;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.dropdown-meta {
+.dropdown-active-pill {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #059669;
+  background: rgba(16, 185, 129, 0.15);
+  padding: 1px 6px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.dropdown-acc-sub {
   display: flex;
   align-items: center;
   gap: 6px;
   flex-wrap: wrap;
 }
-.dropdown-username {
-  font-size: 12px;
+.dropdown-acc-user {
+  font-size: 11px;
+  font-family: monospace;
   font-weight: 700;
   color: var(--mut);
-  font-family: monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 135px;
 }
-.dropdown-class-badge {
-  font-size: 11px;
-  font-weight: 800;
-  padding: 1px 6px;
+.dropdown-acc-del-btn {
+  width: 22px;
+  height: 22px;
   border-radius: 6px;
-  background: rgba(99, 102, 241, 0.1);
-  color: var(--primary);
-  border: 1px solid rgba(99, 102, 241, 0.25);
-}
-
-/* Divider */
-.dropdown-divider {
-  height: 1px;
-  background: var(--stroke);
-  margin: 6px 4px;
-  opacity: 0.8;
-}
-
-/* Dropdown Menu Items */
-.dropdown-items {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  padding: 9px 12px;
-  border-radius: 12px;
-  border: 1px solid transparent;
+  border: none;
   background: transparent;
-  color: var(--ink);
-  font-family: inherit;
-  font-size: 13.5px;
-  font-weight: 700;
+  color: var(--mut);
   cursor: pointer;
-  text-align: left;
-  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.dropdown-item:hover {
-  background: var(--bg-hover);
-  border-color: var(--stroke);
-  transform: translateX(3px);
-  color: var(--primary);
-}
-.dropdown-item-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  font-size: 14px;
+  opacity: 0;
+  transition: all 0.15s ease;
   flex-shrink: 0;
-  transition: transform 0.2s ease, background 0.2s ease;
 }
-.dropdown-item:hover .dropdown-item-icon {
-  transform: scale(1.1);
+.dropdown-acc-item:hover .dropdown-acc-del-btn {
+  opacity: 0.8;
 }
-.dropdown-item-icon.icon-purple {
-  background: rgba(99, 102, 241, 0.12);
-  color: #6366f1;
-}
-.dropdown-item-icon.icon-amber {
-  background: rgba(245, 158, 11, 0.14);
-  color: #d97706;
-}
-.dropdown-item-icon.icon-cyan {
-  background: rgba(14, 165, 233, 0.12);
-  color: #0284c7;
-}
-.dropdown-item-icon.icon-red {
-  background: rgba(239, 68, 68, 0.12);
+.dropdown-acc-del-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
   color: #ef4444;
+  opacity: 1 !important;
 }
 
-.dropdown-item-label {
+/* Saved accounts card inside Login modal */
+.login-saved-accounts-box {
+  background: var(--bg-base);
+  border: 1.5px solid var(--stroke);
+  border-radius: 18px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+.login-saved-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.login-saved-title {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--mut);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.login-saved-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.login-saved-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--stroke);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  text-align: left;
+}
+.login-saved-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+.login-saved-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1.5px solid var(--stroke);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-saved-info {
   flex: 1;
+  min-width: 0;
+}
+.login-saved-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.login-saved-name {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--ink);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.dropdown-item-chevron {
-  font-size: 16px;
+.login-saved-arrow {
+  font-size: 18px;
   color: var(--mut);
-  opacity: 0.5;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
-.dropdown-item:hover .dropdown-item-chevron {
-  opacity: 1;
-  transform: translateX(2px);
+.login-saved-card:hover .login-saved-arrow {
+  transform: translateX(3px);
   color: var(--primary);
 }
-
-/* Danger / Logout Item */
-.dropdown-item.danger {
-  color: #ef4444;
+.login-saved-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   margin-top: 2px;
+  flex-wrap: wrap;
 }
-.dropdown-item.danger:hover {
-  background: rgba(239, 68, 68, 0.08);
-  border-color: rgba(239, 68, 68, 0.25);
-  color: #dc2626;
+.login-saved-username {
+  font-size: 11.5px;
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--mut);
 }
-.dropdown-item.danger:hover .dropdown-item-icon {
-  background: rgba(239, 68, 68, 0.2);
+.login-saved-del-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--mut);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  opacity: 0.6;
+  transition: all 0.15s ease;
 }
+.login-saved-del-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  opacity: 1 !important;
+}
+.login-divider-text {
+  text-align: center;
+  position: relative;
+  margin: 16px 0 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mut);
+}
+.login-divider-text::before,
+.login-divider-text::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 20%;
+  height: 1px;
+  background: var(--stroke);
+  opacity: 0.4;
+}
+.login-divider-text::before { left: 0; }
+.login-divider-text::after { right: 0; }
 
 /* Mobile responsive */
 @media (max-width: 600px) {
@@ -5227,8 +5368,9 @@ body[data-user-role="student"] .teacher-only {
     display: none;
   }
   .user-dropdown-menu {
-    right: -10px;
-    width: 270px;
+    right: -6px;
+    width: calc(100vw - 20px);
+    max-width: 330px;
   }
 }
 

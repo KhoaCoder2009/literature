@@ -172,6 +172,7 @@ const securityLockdownSnippet = `
     'openResetPasswordModal', 'closeResetPasswordModal', 'handleResetPasswordSubmit',
     'openChangePasswordModal', 'closeChangePasswordModal', 'handleChangePasswordSubmit',
     'fillSampleAccount', 'exportAccountsList', 'deleteUserAccountById', 'toggleUserDropdown', 'closeUserDropdown',
+    'switchAccountQuick', 'removeSavedAccountQuick', 'logoutAllAccounts',
     'saveScoreToLeaderboard', 'getQuizHistory', 'saveQuizAttemptToHistory',
     'deleteHistoryItem', 'clearAllQuizHistory', 'loadQuizHistoryFromSupabase',
     'setHistoryTypeFilter', 'onHistoryPageSearchInput', 'onHistoryPageSetFilterChange',

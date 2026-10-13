@@ -154,6 +154,16 @@ Hệ thống thiết lập phân quyền 3 cấp độ (Role-Based Access Contro
   - Mật khẩu chung: `123456`
   - Danh sách 40 học sinh được quản lý đồng bộ tại tệp `danh_sach_tai_khoan_12A2.txt` và `danh_sach_tai_khoan_12A2.csv`.
 
+### 4.2. Hệ thống Lưu đăng nhập & Chuyển đổi tài khoản (Multi-Account Switcher):
+- **Tự động ghi nhớ tài khoản**: Khi đăng nhập thành công (online hoặc offline), hệ thống lưu tài khoản an toàn vào danh sách thiết bị (`vq_saved_accounts_v2`), người dùng có thể tùy chọn bật/tắt checkbox *"Ghi nhớ tài khoản trên thiết bị này"*.
+- **Chuyển đổi tài khoản 1 chạm (Instant Account Switcher)**:
+  - Trên thanh Navbar: Nhấp vào thông tin người dùng để mở Menu -> Danh sách các tài khoản đã lưu trên máy hiển thị trực quan (có Avatar, Họ tên, Tên đăng nhập và Huy hiệu vai trò). Nhấp vào bất kỳ tài khoản nào để chuyển đổi ngay lập tức mà không cần nhập lại mật khẩu.
+  - Trong hộp thoại Đăng nhập: Khi đã có tài khoản lưu trên máy, giao diện tự động hiển thị danh sách để người dùng chọn nhanh tài khoản học tập hoặc bấm *"Đăng nhập tài khoản khác"*.
+- **Thêm và Quản lý tài khoản**:
+  - Nút **"+ Thêm tài khoản khác"** cho phép đăng nhập thêm tài khoản mới vào thiết bị mà không làm mất các tài khoản cũ.
+  - Nút biểu tượng xóa (thùng rác / `x`) cho phép gỡ từng tài khoản khỏi máy bất cứ lúc nào.
+  - Hỗ trợ **"Đăng xuất tài khoản này"** hoặc **"Đăng xuất tất cả tài khoản"** trên thiết bị chỉ với một nút bấm.
+
 *Lưu ý: Hệ thống hỗ trợ đăng nhập ngoại tuyến (Offline Fallback) tự động ngay cả khi mất kết nối mạng với Supabase.*
 
 ---
