@@ -401,46 +401,46 @@
   // Đảm bảo thứ tự hiển thị luôn theo đúng danh sách giáo viên đã gửi
   // -------------------------------------------------------------------------
   const OFFICIAL_12A2_STUDENTS_LIST = [
-    { stt: 1, name: 'Nguyễn Quốc An', username: 'nguyenquocan@bpbd.vn', id: 'usr_12a2_01' },
-    { stt: 2, name: 'Nguyễn Hoàng Bảo Anh', username: 'nguyenhoangbaoanh@bpbd.vn', id: 'usr_12a2_02' },
-    { stt: 3, name: 'Huỳnh Minh Ánh', username: 'huynhminhanh@bpbd.vn', id: 'usr_12a2_03' },
-    { stt: 4, name: 'Nguyễn Bảo Châu', username: 'nguyenbaochau@bpbd.vn', id: 'usr_12a2_04' },
-    { stt: 5, name: 'Nguyễn Ngọc Minh Châu', username: 'nguyenngocminhchau@bpbd.vn', id: 'usr_12a2_05' },
-    { stt: 6, name: 'Nguyễn Thị Mỹ Duyên', username: 'nguyenthimyduyen@bpbd.vn', id: 'usr_12a2_06' },
-    { stt: 7, name: 'Nguyễn Thị Anh Đào', username: 'nguyenthianhdao@bpbd.vn', id: 'usr_12a2_07' },
-    { stt: 8, name: 'Trần Tiến Đạt', username: 'trantiendat@bpbd.vn', id: 'usr_12a2_08' },
-    { stt: 9, name: 'Võ Thanh Giang', username: 'vothanhgiang@bpbd.vn', id: 'usr_12a2_09' },
-    { stt: 10, name: 'Nguyễn Hoàng Hải', username: 'nguyenhoanghai@bpbd.vn', id: 'usr_12a2_10' },
-    { stt: 11, name: 'Mai Gia Hân', username: 'maigiahan@bpbd.vn', id: 'usr_12a2_11' },
-    { stt: 12, name: 'Bùi Quốc Huy', username: 'buiquochuy@bpbd.vn', id: 'usr_12a2_12' },
-    { stt: 13, name: 'Lê Xuân Nhật Huy', username: 'lexuannhathuy@bpbd.vn', id: 'usr_12a2_13' },
-    { stt: 14, name: 'Lê Nguyễn Đăng Khoa', username: 'lenguyendangkhoa@bpbd.vn', id: 'usr_12a2_14' },
-    { stt: 15, name: 'Trần Đăng Khoa', username: 'trandangkhoa@bpbd.vn', id: 'usr_12a2_15' },
-    { stt: 16, name: 'Nguyễn Thị Xuân Linh', username: 'nguyenthixuanlinh@bpbd.vn', id: 'usr_12a2_16' },
-    { stt: 17, name: 'Phạm Tấn Lực', username: 'phamtanluc@bpbd.vn', id: 'usr_12a2_17' },
-    { stt: 18, name: 'Trần Thị Ngọc My', username: 'tranthingocmy@bpbd.vn', id: 'usr_12a2_18' },
-    { stt: 19, name: 'Nguyễn Trung Nghĩa', username: 'nguyentrungnghia@bpbd.vn', id: 'usr_12a2_19' },
-    { stt: 20, name: 'Mai Như Ngọc', username: 'mainhungoc@bpbd.vn', id: 'usr_12a2_20' },
-    { stt: 21, name: 'Võ Hữu Ngọc', username: 'vohuungoc@bpbd.vn', id: 'usr_12a2_21' },
-    { stt: 22, name: 'Nguyễn Thị Thu Nguyệt', username: 'nguyenthithunguyet@bpbd.vn', id: 'usr_12a2_22' },
-    { stt: 23, name: 'Nguyễn Thanh Tuyết Nhi', username: 'nguyenthanhtuyetnhi@bpbd.vn', id: 'usr_12a2_23' },
-    { stt: 24, name: 'Lâm Tâm Như', username: 'lamtamnhu@bpbd.vn', id: 'usr_12a2_24' },
-    { stt: 25, name: 'Dương Chấn Phong', username: 'duongchanphong@bpbd.vn', id: 'usr_12a2_25' },
-    { stt: 26, name: 'Lâm Thiên Phúc', username: 'lamthienphuc@bpbd.vn', id: 'usr_12a2_26' },
-    { stt: 27, name: 'Từ Thị Mai Phương', username: 'tuthimaiphuong@bpbd.vn', id: 'usr_12a2_27' },
-    { stt: 28, name: 'Nguyễn Hoàng Sơn', username: 'nguyenhoangson@bpbd.vn', id: 'usr_12a2_28' },
-    { stt: 29, name: 'Nguyễn Minh Tâm', username: 'nguyenminhtam@bpbd.vn', id: 'usr_12a2_29' },
-    { stt: 30, name: 'Nguyễn Hoàng Thái', username: 'nguyenhoangthai@bpbd.vn', id: 'usr_12a2_30' },
-    { stt: 31, name: 'Trịnh Minh Thiên', username: 'trinhminhthien@bpbd.vn', id: 'usr_12a2_31' },
-    { stt: 32, name: 'Trần Thị Ngọc Thùy', username: 'tranthingocthuy@bpbd.vn', id: 'usr_12a2_32' },
-    { stt: 33, name: 'Hồ Quỳnh Kim Thủy', username: 'hoquynhkimthuy@bpbd.vn', id: 'usr_12a2_33' },
-    { stt: 34, name: 'Phạm Thị Ngọc Trâm', username: 'phamthingoctram@bpbd.vn', id: 'usr_12a2_34' },
-    { stt: 35, name: 'Quách Thị Thanh Tuyền', username: 'quachthithanhtuyen@bpbd.vn', id: 'usr_12a2_35' },
-    { stt: 36, name: 'Trần Minh Tướng', username: 'tranminhtuong@bpbd.vn', id: 'usr_12a2_36' },
-    { stt: 37, name: 'Nguyễn Thị Vi', username: 'nguyenthivi@bpbd.vn', id: 'usr_12a2_37' },
-    { stt: 38, name: 'Đinh Thị Yến Vy', username: 'dinhthiyenvy@bpbd.vn', id: 'usr_12a2_38' },
-    { stt: 39, name: 'Mai Phương Vy', username: 'maiphuongvy@bpbd.vn', id: 'usr_12a2_39' },
-    { stt: 40, name: 'Trần Trúc Vy', username: 'trantrucvy@bpbd.vn', id: 'usr_12a2_40' }
+    { stt: 1, name: 'Nguyễn Quốc An', username: 'nqa@bpbd.vn', legacyUsername: 'nguyenquocan@bpbd.vn', dob: '31/01/2009', password: '310109', id: 'usr_12a2_01' },
+    { stt: 2, name: 'Nguyễn Hoàng Bảo Anh', username: 'nhba@bpbd.vn', legacyUsername: 'nguyenhoangbaoanh@bpbd.vn', dob: '04/11/2009', password: '041109', id: 'usr_12a2_02' },
+    { stt: 3, name: 'Huỳnh Minh Ánh', username: 'hma@bpbd.vn', legacyUsername: 'huynhminhanh@bpbd.vn', dob: '27/04/2009', password: '270409', id: 'usr_12a2_03' },
+    { stt: 4, name: 'Nguyễn Bảo Châu', username: 'nbc@bpbd.vn', legacyUsername: 'nguyenbaochau@bpbd.vn', dob: '08/08/2009', password: '080809', id: 'usr_12a2_04' },
+    { stt: 5, name: 'Nguyễn Ngọc Minh Châu', username: 'nnmc@bpbd.vn', legacyUsername: 'nguyenngocminhchau@bpbd.vn', dob: '22/10/2009', password: '221009', id: 'usr_12a2_05' },
+    { stt: 6, name: 'Nguyễn Thị Mỹ Duyên', username: 'ntmd@bpbd.vn', legacyUsername: 'nguyenthimyduyen@bpbd.vn', dob: '18/04/2009', password: '180409', id: 'usr_12a2_06' },
+    { stt: 7, name: 'Nguyễn Thị Anh Đào', username: 'ntad@bpbd.vn', legacyUsername: 'nguyenthianhdao@bpbd.vn', dob: '12/02/2009', password: '120209', id: 'usr_12a2_07' },
+    { stt: 8, name: 'Trần Tiến Đạt', username: 'ttd@bpbd.vn', legacyUsername: 'trantiendat@bpbd.vn', dob: '12/06/2009', password: '120609', id: 'usr_12a2_08' },
+    { stt: 9, name: 'Võ Thanh Giang', username: 'vtg@bpbd.vn', legacyUsername: 'vothanhgiang@bpbd.vn', dob: '10/06/2009', password: '100609', id: 'usr_12a2_09' },
+    { stt: 10, name: 'Nguyễn Hoàng Hải', username: 'nhh@bpbd.vn', legacyUsername: 'nguyenhoanghai@bpbd.vn', dob: '01/03/2009', password: '010309', id: 'usr_12a2_10' },
+    { stt: 11, name: 'Mai Gia Hân', username: 'mgh@bpbd.vn', legacyUsername: 'maigiahan@bpbd.vn', dob: '09/09/2009', password: '090909', id: 'usr_12a2_11' },
+    { stt: 12, name: 'Bùi Quốc Huy', username: 'bqh@bpbd.vn', legacyUsername: 'buiquochuy@bpbd.vn', dob: '09/09/2009', password: '090909', id: 'usr_12a2_12' },
+    { stt: 13, name: 'Lê Xuân Nhật Huy', username: 'lxnh@bpbd.vn', legacyUsername: 'lexuannhathuy@bpbd.vn', dob: '11/12/2009', password: '111209', id: 'usr_12a2_13' },
+    { stt: 14, name: 'Lê Nguyễn Đăng Khoa', username: 'lndk@bpbd.vn', legacyUsername: 'lenguyendangkhoa@bpbd.vn', dob: '18/04/2009', password: '180409', id: 'usr_12a2_14' },
+    { stt: 15, name: 'Trần Đăng Khoa', username: 'tdk@bpbd.vn', legacyUsername: 'trandangkhoa@bpbd.vn', dob: '20/07/2009', password: '200709', id: 'usr_12a2_15' },
+    { stt: 16, name: 'Nguyễn Thị Xuân Linh', username: 'ntxl@bpbd.vn', legacyUsername: 'nguyenthixuanlinh@bpbd.vn', dob: '06/02/2009', password: '060209', id: 'usr_12a2_16' },
+    { stt: 17, name: 'Phạm Tấn Lực', username: 'ptl@bpbd.vn', legacyUsername: 'phamtanluc@bpbd.vn', dob: '11/11/2009', password: '111109', id: 'usr_12a2_17' },
+    { stt: 18, name: 'Trần Thị Ngọc My', username: 'ttnm@bpbd.vn', legacyUsername: 'tranthingocmy@bpbd.vn', dob: '24/10/2008', password: '241008', id: 'usr_12a2_18' },
+    { stt: 19, name: 'Nguyễn Trung Nghĩa', username: 'ntn@bpbd.vn', legacyUsername: 'nguyentrungnghia@bpbd.vn', dob: '02/07/2009', password: '020709', id: 'usr_12a2_19' },
+    { stt: 20, name: 'Mai Như Ngọc', username: 'mnn@bpbd.vn', legacyUsername: 'mainhungoc@bpbd.vn', dob: '09/07/2009', password: '090709', id: 'usr_12a2_20' },
+    { stt: 21, name: 'Võ Hữu Ngọc', username: 'vhn@bpbd.vn', legacyUsername: 'vohuungoc@bpbd.vn', dob: '22/08/2009', password: '220809', id: 'usr_12a2_21' },
+    { stt: 22, name: 'Nguyễn Thị Thu Nguyệt', username: 'nttnguyet@bpbd.vn', legacyUsername: 'nguyenthithunguyet@bpbd.vn', dob: '09/09/2009', password: '090909', id: 'usr_12a2_22' },
+    { stt: 23, name: 'Nguyễn Thanh Tuyết Nhi', username: 'nttnhi@bpbd.vn', legacyUsername: 'nguyenthanhtuyetnhi@bpbd.vn', dob: '24/10/2009', password: '241009', id: 'usr_12a2_23' },
+    { stt: 24, name: 'Lâm Tâm Như', username: 'ltn@bpbd.vn', legacyUsername: 'lamtamnhu@bpbd.vn', dob: '27/06/2009', password: '270609', id: 'usr_12a2_24' },
+    { stt: 25, name: 'Dương Chấn Phong', username: 'dcp@bpbd.vn', legacyUsername: 'duongchanphong@bpbd.vn', dob: '15/09/2009', password: '150909', id: 'usr_12a2_25' },
+    { stt: 26, name: 'Lâm Thiên Phúc', username: 'ltp@bpbd.vn', legacyUsername: 'lamthienphuc@bpbd.vn', dob: '28/09/2009', password: '280909', id: 'usr_12a2_26' },
+    { stt: 27, name: 'Từ Thị Mai Phương', username: 'ttmp@bpbd.vn', legacyUsername: 'tuthimaiphuong@bpbd.vn', dob: '17/08/2009', password: '170809', id: 'usr_12a2_27' },
+    { stt: 28, name: 'Nguyễn Hoàng Sơn', username: 'nhs@bpbd.vn', legacyUsername: 'nguyenhoangson@bpbd.vn', dob: '19/09/2009', password: '190909', id: 'usr_12a2_28' },
+    { stt: 29, name: 'Nguyễn Minh Tâm', username: 'nmt@bpbd.vn', legacyUsername: 'nguyenminhtam@bpbd.vn', dob: '05/09/2009', password: '050909', id: 'usr_12a2_29' },
+    { stt: 30, name: 'Nguyễn Hoàng Thái', username: 'nht@bpbd.vn', legacyUsername: 'nguyenhoangthai@bpbd.vn', dob: '24/02/2009', password: '240209', id: 'usr_12a2_30' },
+    { stt: 31, name: 'Trịnh Minh Thiên', username: 'tmthien@bpbd.vn', legacyUsername: 'trinhminhthien@bpbd.vn', dob: '05/06/2009', password: '050609', id: 'usr_12a2_31' },
+    { stt: 32, name: 'Trần Thị Ngọc Thùy', username: 'ttnt@bpbd.vn', legacyUsername: 'tranthingocthuy@bpbd.vn', dob: '01/01/2009', password: '010109', id: 'usr_12a2_32' },
+    { stt: 33, name: 'Hồ Quỳnh Kim Thủy', username: 'hqkt@bpbd.vn', legacyUsername: 'hoquynhkimthuy@bpbd.vn', dob: '15/09/2009', password: '150909', id: 'usr_12a2_33' },
+    { stt: 34, name: 'Phạm Thị Ngọc Trâm', username: 'ptnt@bpbd.vn', legacyUsername: 'phamthingoctram@bpbd.vn', dob: '05/01/2008', password: '050108', id: 'usr_12a2_34' },
+    { stt: 35, name: 'Quách Thị Thanh Tuyền', username: 'qttt@bpbd.vn', legacyUsername: 'quachthithanhtuyen@bpbd.vn', dob: '18/11/2009', password: '181109', id: 'usr_12a2_35' },
+    { stt: 36, name: 'Trần Minh Tướng', username: 'tmtuong@bpbd.vn', legacyUsername: 'tranminhtuong@bpbd.vn', dob: '23/07/2009', password: '230709', id: 'usr_12a2_36' },
+    { stt: 37, name: 'Nguyễn Thị Vi', username: 'ntv@bpbd.vn', legacyUsername: 'nguyenthivi@bpbd.vn', dob: '15/06/2009', password: '150609', id: 'usr_12a2_37' },
+    { stt: 38, name: 'Đinh Thị Yến Vy', username: 'dtyv@bpbd.vn', legacyUsername: 'dinhthiyenvy@bpbd.vn', dob: '18/10/2009', password: '181009', id: 'usr_12a2_38' },
+    { stt: 39, name: 'Mai Phương Vy', username: 'mpv@bpbd.vn', legacyUsername: 'maiphuongvy@bpbd.vn', dob: '09/09/2009', password: '090909', id: 'usr_12a2_39' },
+    { stt: 40, name: 'Trần Trúc Vy', username: 'ttv@bpbd.vn', legacyUsername: 'trantrucvy@bpbd.vn', dob: '12/08/2009', password: '120809', id: 'usr_12a2_40' }
   ];
 
   function getStudentOfficialStt(acc) {
@@ -452,6 +452,8 @@
     const item = OFFICIAL_12A2_STUDENTS_LIST.find(s => 
       s.username.toLowerCase() === cleanUser || 
       s.username.split('@')[0] === cleanUser ||
+      (s.legacyUsername && s.legacyUsername.toLowerCase() === cleanUser) ||
+      (s.legacyUsername && s.legacyUsername.split('@')[0] === cleanUser) ||
       (acc.full_name && s.name.toLowerCase() === acc.full_name.trim().toLowerCase())
     );
     return item ? item.stt : null;
@@ -699,9 +701,10 @@
       const matched12A2 = OFFICIAL_12A2_STUDENTS_LIST.find(s =>
         s.username.toLowerCase() === username ||
         s.username.split('@')[0].toLowerCase() === username ||
-        s.id.toLowerCase() === username
+        s.id.toLowerCase() === username ||
+        (s.legacyUsername && (s.legacyUsername.toLowerCase() === username || s.legacyUsername.split('@')[0].toLowerCase() === username))
       );
-      if (matched12A2 && password === '123456') {
+      if (matched12A2 && (password === matched12A2.password || password === '123456')) {
         const studentObj = {
           id: matched12A2.id,
           username: matched12A2.username,
@@ -1957,8 +1960,8 @@
     let content = 'DANH SÁCH TÀI KHOẢN NGƯỜI DÙNG - HỆ THỐNG NGỮ VĂN (ADMIN • GIÁO VIÊN • HỌC SINH 12A2)\n';
     content += `Ngày xuất: ${new Date().toLocaleString('vi-VN')}\n`;
     content += '-----------------------------------------------------------------------------------------\n';
-    content += 'STT   | Tên đăng nhập (Email)          | Họ và tên              | Lớp  | Vai trò        | Đăng nhập cuối\n';
-    content += '------+--------------------------------+------------------------+------+----------------+---------------------\n';
+    content += 'STT   | Tên đăng nhập (Email)    | Họ và tên              | Ngày sinh  | Lớp  | Vai trò        | Đăng nhập cuối\n';
+    content += '------+--------------------------+------------------------+------------+------+----------------+---------------------\n';
 
     sorted.forEach((acc, i) => {
       let roleText = 'Học sinh';
@@ -1971,7 +1974,10 @@
       if (acc.role === 'admin') sttText = 'ADMIN';
       else if (acc.role === 'teacher') sttText = 'GV';
 
-      content += `${sttText.padEnd(5)} | ${acc.username.padEnd(30)} | ${(acc.full_name || '').padEnd(22)} | ${(acc.class_name || '').padEnd(4)} | ${roleText.padEnd(14)} | ${lastLogin}\n`;
+      const matchedStudent = OFFICIAL_12A2_STUDENTS_LIST.find(s => s.id === acc.id || s.username === acc.username);
+      const dobText = (matchedStudent?.dob || '—').padEnd(10);
+
+      content += `${sttText.padEnd(5)} | ${acc.username.padEnd(24)} | ${(acc.full_name || '').padEnd(22)} | ${dobText} | ${(acc.class_name || '').padEnd(4)} | ${roleText.padEnd(14)} | ${lastLogin}\n`;
     });
 
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });

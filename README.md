@@ -150,9 +150,9 @@ Hệ thống thiết lập phân quyền 3 cấp độ (Role-Based Access Contro
   - Họ và tên: `Hoàng Thị Tú Anh`
   - Mật khẩu: `123456`
 - **Tài khoản Học sinh (Lớp 12A2 - 40 học sinh)**:
-  - Tên đăng nhập: Email trường `@bpbd.vn` (ví dụ: `nguyenquocan@bpbd.vn`, `nguyenhoangbaoanh@bpbd.vn`...) hoặc mã STT `12a2_01` -> `12a2_40`
-  - Mật khẩu chung: `123456`
-  - Danh sách 40 học sinh được quản lý đồng bộ tại tệp `danh_sach_tai_khoan_12A2.txt` và `danh_sach_tai_khoan_12A2.csv`.
+  - Tên đăng nhập: Các chữ cái đầu viết tắt + `@bpbd.vn` (ví dụ: `tdk@bpbd.vn`, `nqa@bpbd.vn`, `nhba@bpbd.vn`...). Hai trường hợp trùng lặp được gắn tên chính ở đuôi để phân biệt (`nttnguyet@bpbd.vn` & `nttnhi@bpbd.vn`; `tmthien@bpbd.vn` & `tmtuong@bpbd.vn`). Đồng thời vẫn hỗ trợ đăng nhập qua tên đầy đủ cũ hoặc mã STT (`12a2_01` -> `12a2_40`).
+  - Mật khẩu ban đầu: Ngày tháng đuôi năm sinh theo định dạng 6 chữ số `ddmmyy` (ví dụ: sinh ngày 20/07/2009 -> Mật khẩu là `200709`).
+  - Danh sách chi tiết được lưu trữ và đồng bộ tại [`danh_sach_tai_khoan_12A2.txt`](file:///c:/Users/hs207/Downloads/files/danh_sach_tai_khoan_12A2.txt), [`danh_sach_tai_khoan_12A2.csv`](file:///c:/Users/hs207/Downloads/files/danh_sach_tai_khoan_12A2.csv) và kịch bản nạp cơ sở dữ liệu [`supabase/seed_accounts_12a2.sql`](file:///c:/Users/hs207/Downloads/files/supabase/seed_accounts_12a2.sql).
 
 ### 4.2. Hệ thống Lưu đăng nhập & Chuyển đổi tài khoản (Multi-Account Switcher):
 - **Tự động ghi nhớ tài khoản**: Khi đăng nhập thành công (online hoặc offline), hệ thống lưu tài khoản an toàn vào danh sách thiết bị (`vq_saved_accounts_v2`), người dùng có thể tùy chọn bật/tắt checkbox *"Ghi nhớ tài khoản trên thiết bị này"*.

@@ -1,0 +1,55 @@
+-- ============================================================================
+-- SEED DATA: 40 TÀI KHOẢN HỌC SINH 12A2 + ADMIN + GIÁO VIÊN
+-- Định dạng tài khoản: Chữ cái đầu @bpbd.vn | Mật khẩu: ddmmyy (đã băm SHA-256 kèm salt)
+-- ============================================================================
+
+INSERT INTO public.user_accounts (id, username, password_hash, full_name, class_name, role, avatar)
+VALUES
+  ('usr_admin_01', 'admin', 'd9309b7dd5d806dcf4f52a6f961938947a9ed7b47b854429fab1a1e7cf84be69', 'ADMIN', '', 'admin', 'ion:person'),
+  ('usr_teacher_01', 'tuanh', '345a8f68d54919ec31bbc7f4e73727a197e2a236a320d4bbce55871e43b2d582', 'Hoàng Thị Tú Anh', '', 'teacher', 'ion:person'),
+  ('usr_12a2_01', 'nqa@bpbd.vn', '345d5f37d27ea129ad02705f90e3be5ca757f4abb5dd6e6dd40c189c23470bbc', 'Nguyễn Quốc An', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_02', 'nhba@bpbd.vn', '70239d863788a4368cdf1f84cad4967e35742fda7f463f87e3c7c8a742c1c650', 'Nguyễn Hoàng Bảo Anh', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_03', 'hma@bpbd.vn', '648f296b629f29b25db6290309d3756b5388c84f67fb8c6bdb9b12230a67bc3e', 'Huỳnh Minh Ánh', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_04', 'nbc@bpbd.vn', '7356801f93a706b9eddec295785ca6497896bb30f36391b5fc577240c64d173a', 'Nguyễn Bảo Châu', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_05', 'nnmc@bpbd.vn', '76e8ff089a91fe5b3690f8de502412af9ec97a50c3a63bf8d77302ba1517343f', 'Nguyễn Ngọc Minh Châu', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_06', 'ntmd@bpbd.vn', '65fb6e0e3651089dcdc69d22b4a859187a487b72847e196bdf17862095f6f597', 'Nguyễn Thị Mỹ Duyên', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_07', 'ntad@bpbd.vn', '0269ef7e84d074f8eace658c50483ba4ef5bd111238276bd0be92e2a153c0d1e', 'Nguyễn Thị Anh Đào', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_08', 'ttd@bpbd.vn', 'b507a116c150a5dd7db2466a27635c9a00c30a81022ef6b79eccb7a666181254', 'Trần Tiến Đạt', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_09', 'vtg@bpbd.vn', '7e557138ce4cd9de7c80ed167971637dc73cff7879cdc9561923b2901c6fdf3a', 'Võ Thanh Giang', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_10', 'nhh@bpbd.vn', '1d7b0ef15cd8d65adb396ac13dac0ba8d0d7d4c7c9b972a1333ed79e6586d231', 'Nguyễn Hoàng Hải', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_11', 'mgh@bpbd.vn', 'dd152b2f636e7090ef7995f36b0ae91db859a10968f0bf1e3f50e60a03376fcb', 'Mai Gia Hân', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_12', 'bqh@bpbd.vn', 'dd152b2f636e7090ef7995f36b0ae91db859a10968f0bf1e3f50e60a03376fcb', 'Bùi Quốc Huy', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_13', 'lxnh@bpbd.vn', '1c7e42099653f5f561f927298db08a9d4804ee50936dce2a638de0f509c0d812', 'Lê Xuân Nhật Huy', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_14', 'lndk@bpbd.vn', '65fb6e0e3651089dcdc69d22b4a859187a487b72847e196bdf17862095f6f597', 'Lê Nguyễn Đăng Khoa', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_15', 'tdk@bpbd.vn', '469b51a538d0075c1481e571b831f26cfe7761430107d02f558e8eda19b8b627', 'Trần Đăng Khoa', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_16', 'ntxl@bpbd.vn', 'b64978b5c330e36a89c269146b3563b932d2895e8108af5a3423e74c0a0269f4', 'Nguyễn Thị Xuân Linh', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_17', 'ptl@bpbd.vn', '9d9fc8ed721172942dc42475ddcc62fc3108443fc81814f1dc74324edfef7419', 'Phạm Tấn Lực', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_18', 'ttnm@bpbd.vn', 'c4125208824b5154d06b0811ddf0f6830793ddd7a48726bffcec4425eca42db0', 'Trần Thị Ngọc My', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_19', 'ntn@bpbd.vn', '1a59242b8c4dc6944d21667b7ccb1f836c12879c8f38b1b99528f23bcc75726c', 'Nguyễn Trung Nghĩa', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_20', 'mnn@bpbd.vn', 'c5e16def909d315fcf2a19c1f6e0f21a8a639e6e1cd707c4b29f854b6ac7ea78', 'Mai Như Ngọc', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_21', 'vhn@bpbd.vn', 'a59576b7083cc2d894509e4687293fcc7b90aad837bdc21fd511e672ef974c13', 'Võ Hữu Ngọc', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_22', 'nttnguyet@bpbd.vn', 'dd152b2f636e7090ef7995f36b0ae91db859a10968f0bf1e3f50e60a03376fcb', 'Nguyễn Thị Thu Nguyệt', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_23', 'nttnhi@bpbd.vn', '9252a3bc1527354eabda572a3907aac77e771856e1abc7d4a5352893b53a5211', 'Nguyễn Thanh Tuyết Nhi', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_24', 'ltn@bpbd.vn', '68cd1b28afbbf4206a54999b4c0c8cc2fa1b5b7b9f5f329d89e9ce20f2fceac2', 'Lâm Tâm Như', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_25', 'dcp@bpbd.vn', '53b74a683cbb5c0bb760192834d88af913c21d14f9e9d447f9f75682f6033bee', 'Dương Chấn Phong', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_26', 'ltp@bpbd.vn', 'a7cd4fcd839ff707113a8d26e72ba307ef76a2136a82dc5f8b50a0238106cf8e', 'Lâm Thiên Phúc', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_27', 'ttmp@bpbd.vn', '81436e29cb8130b33ae541b5110284fc2346c9c7de090cf08bb2339a4920d13f', 'Từ Thị Mai Phương', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_28', 'nhs@bpbd.vn', 'b8e0aa3258f0d0b4021b4319774221366df68fd14aba8e86e3a552b19aca124a', 'Nguyễn Hoàng Sơn', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_29', 'nmt@bpbd.vn', 'd2d2ed97f8c9b0890d91dcc1e26d6efa3974993d323d776f03d0cbfe040e2227', 'Nguyễn Minh Tâm', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_30', 'nht@bpbd.vn', 'ed13fc99ecd88e964e02504748a184a0293460518113225cb81da1130b24399d', 'Nguyễn Hoàng Thái', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_31', 'tmthien@bpbd.vn', 'd7e5765269dbf9f1daa784ff402b40316b302b65fabebfaa505b6e98ea93c4fd', 'Trịnh Minh Thiên', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_32', 'ttnt@bpbd.vn', 'af4d1a2f2166bf79efa351ef30fa25187578c553554dc3762b77afbc17f52491', 'Trần Thị Ngọc Thùy', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_33', 'hqkt@bpbd.vn', '53b74a683cbb5c0bb760192834d88af913c21d14f9e9d447f9f75682f6033bee', 'Hồ Quỳnh Kim Thủy', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_34', 'ptnt@bpbd.vn', '498b5f6439c0b3ecbf00b9b9b25d4568023fef15973938bc75a83c02fe2f41e8', 'Phạm Thị Ngọc Trâm', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_35', 'qttt@bpbd.vn', 'c47548bf017e10572e4fbccc9981c6473d804e5a75425a1fe7bafa962e44f786', 'Quách Thị Thanh Tuyền', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_36', 'tmtuong@bpbd.vn', '2a94feea9b1e7169438a6bee62e577d37ba19902a5f0f2c90a70585acf4b0f84', 'Trần Minh Tướng', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_37', 'ntv@bpbd.vn', '73548057b49bcbcd5883299f35335e6e7858f64c7c119521d00e5eb9659dffee', 'Nguyễn Thị Vi', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_38', 'dtyv@bpbd.vn', '543671c0e2870eac75d14ac643fdb87ebd926cf43d8492c975c8f6c2ae57e0bf', 'Đinh Thị Yến Vy', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_39', 'mpv@bpbd.vn', 'dd152b2f636e7090ef7995f36b0ae91db859a10968f0bf1e3f50e60a03376fcb', 'Mai Phương Vy', '12A2', 'student', 'ion:person'),
+  ('usr_12a2_40', 'ttv@bpbd.vn', 'fba9ded3445c551fcf6c6dfbf2e55254f7a1d25e8791d91c108f1f65fe56b12c', 'Trần Trúc Vy', '12A2', 'student', 'ion:person')
+ON CONFLICT (id) DO UPDATE SET
+  username = EXCLUDED.username,
+  password_hash = EXCLUDED.password_hash,
+  full_name = EXCLUDED.full_name,
+  class_name = EXCLUDED.class_name,
+  role = EXCLUDED.role;
