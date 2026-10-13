@@ -140,17 +140,19 @@ Hệ thống thiết lập phân quyền 3 cấp độ (Role-Based Access Contro
 | **Giáo viên** | `teacher` | Quản lý học sinh, tạo/sửa/xóa đề thi, chấm điểm bài làm của học sinh, xem toàn bộ lịch sử thi. |
 | **Học sinh** | `student` | Tham gia làm bài, luyện tập đọc hiểu/viết văn, xem lại bài làm và điểm số của bản thân. Không thể sửa/xóa đề hoặc can thiệp bài của người khác. |
 
-### Thông tin đăng nhập mặc định:
-- **Tài khoản Admin**:
+### Thông tin đăng nhập chuẩn:
+- **Tài khoản Quản trị viên (Admin)**:
   - Tên đăng nhập: `admin`
-  - Mật khẩu: `admin9999`
-- **Tài khoản Giáo viên**:
-  - Tên đăng nhập: `giaovien1`
+  - Họ và tên: `ADMIN`
+  - Mật khẩu: `admin9999` (hoặc `123456`)
+- **Tài khoản Giáo viên (Teacher)**:
+  - Tên đăng nhập: `tuanh` (hoặc `giaovien`)
+  - Họ và tên: `Hoàng Thị Tú Anh`
   - Mật khẩu: `123456`
 - **Tài khoản Học sinh (Lớp 12A2 - 40 học sinh)**:
-  - Tên đăng nhập: Từ `12a2_01` đến `12a2_40` (ví dụ: `12a2_01`, `12a2_02`, ...)
+  - Tên đăng nhập: Email trường `@bpbd.vn` (ví dụ: `nguyenquocan@bpbd.vn`, `nguyenhoangbaoanh@bpbd.vn`...) hoặc mã STT `12a2_01` -> `12a2_40`
   - Mật khẩu chung: `123456`
-  - Chi tiết danh sách họ tên và ngày sinh học sinh được lưu tại file `danh_sach_tai_khoan_12A2.txt` và `danh_sach_tai_khoan_12A2.csv`.
+  - Danh sách 40 học sinh được quản lý đồng bộ tại tệp `danh_sach_tai_khoan_12A2.txt` và `danh_sach_tai_khoan_12A2.csv`.
 
 *Lưu ý: Hệ thống hỗ trợ đăng nhập ngoại tuyến (Offline Fallback) tự động ngay cả khi mất kết nối mạng với Supabase.*
 

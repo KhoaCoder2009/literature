@@ -135,13 +135,17 @@
             u.class_name = '';
             try { localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(u)); } catch (e) {}
           }
-          if (u.username === 'admin@bpbd.vn' || u.username === 'admin') {
+          if (u.username === 'admin@bpbd.vn' || u.username === 'admin' || u.role === 'admin') {
             u.username = 'admin';
             u.role = 'admin';
+            u.full_name = 'ADMIN';
+            u.class_name = '';
             try { localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(u)); } catch (e) {}
-          }
-          if ((u.role === 'teacher' || u.role === 'admin') && (u.username === 'giaovien' || u.username === 'tuanh' || u.username === 'admin' || u.full_name === 'Quản trị viên Hệ thống' || u.full_name === 'Giáo viên Ngữ Văn' || u.full_name === 'ADMIN')) {
+          } else if (u.role === 'teacher' || u.username === 'giaovien' || u.username === 'tuanh') {
+            u.role = 'teacher';
             u.full_name = 'Hoàng Thị Tú Anh';
+            u.class_name = '';
+            try { localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(u)); } catch (e) {}
           }
           u.avatar = 'ion:person';
           try { localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(u)); } catch (e) {}
@@ -163,9 +167,15 @@
     currentUser = user;
     try {
       if (user) {
-        if (user.username === 'admin@bpbd.vn' || user.username === 'admin') {
+        if (user.username === 'admin@bpbd.vn' || user.username === 'admin' || user.role === 'admin') {
           user.username = 'admin';
           user.role = 'admin';
+          user.full_name = 'ADMIN';
+          user.class_name = '';
+        } else if (user.role === 'teacher' || user.username === 'tuanh' || user.username === 'giaovien') {
+          user.role = 'teacher';
+          user.full_name = 'Hoàng Thị Tú Anh';
+          user.class_name = '';
         }
         user.avatar = 'ion:person';
         localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(user));
@@ -272,6 +282,13 @@
 
   function sortAccountsByOfficialList(accounts) {
     if (!Array.isArray(accounts)) return [];
+    accounts.forEach(acc => {
+      if (acc.role === 'admin' || acc.username === 'admin') {
+        acc.full_name = 'ADMIN';
+      } else if (acc.role === 'teacher' || acc.username === 'tuanh' || acc.username === 'giaovien') {
+        acc.full_name = 'Hoàng Thị Tú Anh';
+      }
+    });
     return [...accounts].sort((a, b) => {
       // 1. Phân loại vai trò: Quản trị viên (1) -> Giáo viên (2) -> Học sinh (3)
       const getRoleRank = acc => {
@@ -319,7 +336,7 @@
 
   function getOfflineAccountsList() {
     return [
-      { id: 'usr_admin_01', username: 'admin', full_name: 'Hoàng Thị Tú Anh', class_name: '', role: 'admin', avatar: 'ion:person' },
+      { id: 'usr_admin_01', username: 'admin', full_name: 'ADMIN', class_name: '', role: 'admin', avatar: 'ion:person' },
       { id: 'usr_teacher_01', username: 'tuanh', full_name: 'Hoàng Thị Tú Anh', class_name: '', role: 'teacher', avatar: 'ion:person' },
       ...OFFICIAL_12A2_STUDENTS_LIST.map(s => ({
         id: s.id,
@@ -408,11 +425,16 @@
                 if (finalUsername === 'admin') {
                   userRole = 'admin';
                 }
-                const isStaff = userRole === 'teacher' || userRole === 'admin';
+                let userFullName = account.full_name || finalUsername;
+                if (userRole === 'admin' || finalUsername === 'admin') {
+                  userFullName = 'ADMIN';
+                } else if (userRole === 'teacher' || finalUsername === 'tuanh' || finalUsername === 'giaovien') {
+                  userFullName = 'Hoàng Thị Tú Anh';
+                }
                 const userObj = {
                   id: account.id,
                   username: finalUsername,
-                  full_name: account.full_name || finalUsername,
+                  full_name: userFullName,
                   class_name: account.class_name || '',
                   role: userRole,
                   avatar: 'ion:person'
@@ -448,7 +470,7 @@
         const adminObj = {
           id: 'usr_admin_01',
           username: 'admin',
-          full_name: 'Hoàng Thị Tú Anh',
+          full_name: 'ADMIN',
           class_name: '',
           role: 'admin',
           avatar: 'ion:person'
@@ -461,7 +483,7 @@
       if ((username === 'giaovien' || username === 'tuanh' || username === 'tuanh@bpbd.vn') && (password === '123456' || password === 'tuanh123')) {
         const teacherObj = {
           id: 'usr_teacher_offline',
-          username: 'giaovien',
+          username: 'tuanh',
           full_name: 'Hoàng Thị Tú Anh',
           class_name: '',
           role: 'teacher',
@@ -1059,10 +1081,10 @@
       userInput.value = 'admin';
       passInput.value = 'admin9999';
     } else if (role === 'teacher') {
-      userInput.value = 'giaovien';
+      userInput.value = 'tuanh';
       passInput.value = '123456';
     } else {
-      userInput.value = 'hocsinh';
+      userInput.value = 'nguyenquocan@bpbd.vn';
       passInput.value = '123456';
     }
     const errBox = document.getElementById('login-error-msg');
