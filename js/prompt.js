@@ -183,6 +183,9 @@ function getPromptOptions() {
 }
 
 function openPromptDialog() {
+  if (window.Auth && !window.Auth.canEditContent()) {
+    return toast('Học sinh không có quyền sử dụng tính năng tạo đề bằng AI! Vui lòng đăng nhập tài khoản Giáo viên.', 'bad');
+  }
   if ($('#prompt-topic')) $('#prompt-topic').value = '';
   if ($('#prompt-question-count')) $('#prompt-question-count').value = '10';
   PROMPT_ALL_TYPES.forEach(t => {
@@ -203,14 +206,14 @@ function updatePromptSourceRequirement() {
   const sourceCharacters = Array.from(sourceText).length;
   const guidanceEl = $('#prompt-source-guidance');
   const countEl = $('#prompt-source-count');
-  if (!guidanceEl || !countEl) return;
+  if (!countEl) return;
 
   if (sourceCharacters === 0) {
-    guidanceEl.textContent = '💡 Để trống: AI sẽ tự động dùng kiến thức tác phẩm/bài học chuẩn theo SGK.';
-    countEl.textContent = 'Chế độ: Tự động dùng kiến thức SGK';
+    if (guidanceEl) guidanceEl.textContent = '';
+    countEl.textContent = 'Chế độ: Kiến thức SGK';
     countEl.style.color = 'var(--cyan)';
   } else {
-    guidanceEl.textContent = 'Đã có văn bản nguồn: AI sẽ tạo câu hỏi đọc hiểu bám sát ngữ liệu này.';
+    if (guidanceEl) guidanceEl.textContent = '';
     countEl.textContent = `Độ dài văn bản: ${sourceCharacters.toLocaleString('vi-VN')} ký tự`;
     countEl.style.color = sourceCharacters >= 30 ? 'var(--green)' : 'var(--gold)';
   }
@@ -773,6 +776,9 @@ function parseRawTextQuestions(text) {
 }
 
 function importPromptQuestionSet() {
+  if (window.Auth && !window.Auth.canEditContent()) {
+    return toast('Học sinh không có quyền nhập bộ câu hỏi!', 'bad');
+  }
   try {
     const rawInput = $('#prompt-result')?.value?.trim() || '';
     if (!rawInput) throw new Error('Vui lòng dán kết quả JSON hoặc văn bản câu hỏi từ AI vào ô Bước 3.');

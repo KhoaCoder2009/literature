@@ -8,7 +8,7 @@ function toggleProjectorMode() {
   document.body.classList.toggle('projector-mode', isProjectorMode);
   const btn = $('#btn-projector-toggle');
   if (btn) {
-    btn.textContent = isProjectorMode ? '🖥️ Tắt máy chiếu' : '🖥️ Máy chiếu';
+    btn.textContent = isProjectorMode ? 'Tắt máy chiếu' : 'Máy chiếu';
     btn.classList.toggle('au', isProjectorMode);
     btn.classList.toggle('gh', !isProjectorMode);
   }
@@ -47,19 +47,38 @@ function closeSettingsDialog() {
 function updateSettingsUI() {
   const soundBtn = $('#btn-setting-sound');
   if (soundBtn) {
-    soundBtn.textContent = soundEnabled ? '🔊 Đang BẬT' : '🔇 Đang TẮT';
+    soundBtn.textContent = soundEnabled ? 'Bật' : 'Tắt';
     soundBtn.className = 'btn sm settings-action-btn ' + (soundEnabled ? 'au' : 'gh');
   }
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   const themeBtn = $('#btn-setting-theme');
   if (themeBtn) {
-    themeBtn.textContent = isDark ? '🌙 TỐI' : '☀️ SÁNG';
+    themeBtn.textContent = isDark ? 'Tối' : 'Sáng';
     themeBtn.className = 'btn sm settings-action-btn ' + (isDark ? 'cy' : 'au');
   }
   const projBtn = $('#btn-setting-projector');
   if (projBtn) {
-    projBtn.textContent = isProjectorMode ? '🖥️ BẬT' : '🖥️ TẮT';
+    projBtn.textContent = isProjectorMode ? 'Bật' : 'Tắt';
     projBtn.className = 'btn sm settings-action-btn ' + (isProjectorMode ? 'au' : 'gh');
+  }
+
+  const accDesc = $('#settings-user-desc');
+  const accBtn = $('#btn-setting-account');
+  if (accDesc && accBtn && window.Auth) {
+    const u = window.Auth.getCurrentUser();
+    if (u) {
+      let roleLabel = 'Học sinh';
+      if (u.role === 'admin') roleLabel = 'Quản trị viên';
+      else if (u.role === 'teacher') roleLabel = 'Giáo viên';
+      const cleanClass = (u.class_name && !u.class_name.toLowerCase().includes('tổ ngữ văn')) ? ` (${u.class_name})` : '';
+      accDesc.textContent = `${roleLabel}: ${u.full_name || u.username}${cleanClass}`;
+      accBtn.textContent = 'Đổi mật khẩu';
+      accBtn.className = 'btn sm gh settings-action-btn';
+    } else {
+      accDesc.textContent = 'Chưa đăng nhập hệ thống';
+      accBtn.textContent = 'Đăng nhập';
+      accBtn.className = 'btn sm au settings-action-btn';
+    }
   }
 }
 
@@ -136,8 +155,12 @@ try {
   let initialScreen = 'home';
   try {
     const savedScreen = sessionStorage.getItem('vq_current_screen');
-    if (savedScreen && ['home', 'lib', 'setup', 'writing', 'reading'].includes(savedScreen)) {
-      initialScreen = savedScreen;
+    if (savedScreen && ['home', 'lib', 'setup', 'writing', 'reading', 'history', 'accounts'].includes(savedScreen)) {
+      if (window.Auth && !window.Auth.isLoggedIn() && savedScreen !== 'home') {
+        initialScreen = 'home';
+      } else {
+        initialScreen = savedScreen;
+      }
     }
   } catch (error) {
     console.warn('Could not read saved screen:', error);

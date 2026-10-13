@@ -37,10 +37,20 @@ function setSetupTopicFilter(topic) {
 }
 
 function selectAndStartSetupQuiz(id) {
+  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
+    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
+    if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
   openStartQuizModal(id);
 }
 
 function openStartQuizModal(id) {
+  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
+    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
+    if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
   const s = sets.find(x => String(x.id) === String(id));
   if (!s) return;
 
@@ -56,15 +66,21 @@ function openStartQuizModal(id) {
   const topicEl = $('#start-modal-set-topic');
   if (topicEl) topicEl.textContent = s.topic ? 'Chủ đề: ' + s.topic : '';
 
-  // Pre-fill with last saved nickname / class
-  try {
-    const savedNick = localStorage.getItem('vq_player_nick') || '';
-    const savedClass = localStorage.getItem('vq_player_class') || '';
-    const nickInput = $('#start-nick');
-    const classInput = $('#start-class-name');
-    if (nickInput && savedNick) nickInput.value = savedNick;
-    if (classInput && savedClass) classInput.value = savedClass;
-  } catch (e) {}
+  // Điền thông tin học sinh từ tài khoản đang đăng nhập
+  const u = (typeof Auth !== 'undefined') ? Auth.getCurrentUser() : null;
+  const nickInput = $('#start-nick');
+  const classInput = $('#start-class-name');
+  if (u) {
+    if (nickInput) nickInput.value = u.full_name || u.username;
+    if (classInput) classInput.value = u.class_name || '';
+  } else {
+    try {
+      const savedNick = localStorage.getItem('vq_player_nick') || '';
+      const savedClass = localStorage.getItem('vq_player_class') || '';
+      if (nickInput && savedNick) nickInput.value = savedNick;
+      if (classInput && savedClass) classInput.value = savedClass;
+    } catch (e) {}
+  }
 
   const dlg = $('#start-quiz-dialog');
   if (dlg) {
@@ -95,6 +111,11 @@ function closeStartQuizModal() {
 
 function handleStartQuizSubmit(e) {
   if (e) e.preventDefault();
+  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
+    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
+    if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
   const id = $('#start-quiz-set-id')?.value;
   const nick = ($('#start-nick')?.value || '').trim();
   const className = ($('#start-class-name')?.value || '').trim();
@@ -223,6 +244,11 @@ function updateSetupQuestionCount() {
 }
 
 R.setup = id => {
+  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
+    if (typeof go === 'function') go('home');
+    if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
   const validSets = sets.filter(s => !String(s.id).startsWith('set_'));
   const ss = $('#ss');
   if (ss) {
@@ -241,6 +267,11 @@ R.setup = id => {
 };
 
 function begin() {
+  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
+    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
+    if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
   onPlayerInfoChange();
   const selectedId = $('#start-quiz-set-id')?.value || $('#ss')?.value;
   const s = sets.find(x => String(x.id) === String(selectedId)) || sets.find(x => x.id == $('#ss')?.value);
@@ -508,7 +539,6 @@ function fin(r, u) {
       <p class="mut" style="font-size:13px; margin:8px 0;">
         ℹ️ Câu hỏi tự luận đã được lưu lại để giáo viên chấm điểm và đối chiếu sau (không chấm liền).
       </p>
-      ${q.e ? `<p class="mut" style="font-size:13px; margin:8px 0; background:rgba(0,0,0,0.03); padding:8px 12px; border-radius:10px;">💡 <b>Gợi ý tham khảo:</b> ${esc(q.e)}</p>` : ''}
       <div style="margin-top:16px;">
         <button class="btn au lg" style="width:100%; font-size:17px;" onclick="advanceAfterFeedback()">
           ${last ? '🏁 Hoàn thành bài làm' : 'Tiếp tục câu tiếp theo →'}
@@ -577,7 +607,7 @@ function fin(r, u) {
             </div>
           `).join('')}
         </div>
-        ${q.e ? `<div class="tf-modal-explanation">💡 <b>Giải thích chi tiết:</b><br>${esc(q.e)}</div>` : ''}
+        ${q.e ? `<div class="tf-modal-explanation"><b>Giải thích chi tiết:</b><br>${esc(q.e)}</div>` : ''}
         <button class="btn au lg" style="width:100%; font-size:17px; margin-top:14px;" onclick="advanceAfterFeedback()">
           ${last ? '🏁 Xem kết quả cuộc thi' : 'Tiếp tục câu tiếp theo →'}
         </button>
@@ -621,7 +651,7 @@ function fin(r, u) {
       ${st=='ok' ? '🎉 Chính xác! +' + pts + ' điểm' : '❌ Chưa chính xác'}
     </div>
     ${st!='ok' ? `<p style="margin:10px 0;"><b>Đáp án đúng:</b> ${esc(ans)}</p>` : ''}
-    ${q.e ? `<p class="mut" style="font-size:14px; margin:10px 0;">💡 ${esc(q.e)}</p>` : ''}
+    ${q.e ? `<p class="mut" style="font-size:14px; margin:10px 0;"><b>Giải thích:</b> ${esc(q.e)}</p>` : ''}
     <div style="margin-top:16px;">
       <button class="btn au lg" style="width:100%; font-size:17px;" onclick="advanceAfterFeedback()">
         ${last ? '🏁 Xem kết quả' : 'Tiếp tục câu tiếp theo →'}
@@ -683,11 +713,11 @@ async function end() {
           <span class="mut"><b>Bạn trả lời:</b> ${esc(l.submittedAnswer || 'Chưa trả lời')}</span><br>
           ${l.st === 'saved' ? `
             <span class="mut" style="color:var(--primary);">ℹ️ <i>Câu hỏi tự luận đã lưu vào lịch sử bài làm để chấm/đối chiếu sau.</i></span>
-            ${l.correctAnswer && l.correctAnswer !== 'Chờ giáo viên chấm / đối chiếu' ? `<br><span class="mut"><b>Gợi ý đáp án:</b> ${esc(l.correctAnswer)}</span>` : ''}
+            ${l.correctAnswer && l.correctAnswer !== 'Chờ giáo viên chấm / đối chiếu' ? `<br><span class="mut"><b>Đáp án tham khảo:</b> ${esc(l.correctAnswer)}</span>` : ''}
           ` : `
             <span class="mut"><b>Đáp án đúng:</b> ${esc(l.correctAnswer)}</span>
           `}
-          ${l.q.e ? `<br><span class="mut">💡 ${esc(l.q.e)}</span>` : ''}
+          ${l.q.e ? `<br><span class="mut"><b>Giải thích:</b> ${esc(l.q.e)}</span>` : ''}
         </div>
         <span class="tag ${tagCls}">${tagTxt}</span>
       </div>`;

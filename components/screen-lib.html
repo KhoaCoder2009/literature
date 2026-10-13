@@ -8,23 +8,20 @@
           <h1 style="font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;">Kho học liệu &amp; Đề thi</h1>
           <p class="mut" style="margin:0; font-size:14.5px;">Quản lý tập trung các bộ đề Bài học, Đọc hiểu và Luyện viết</p>
         </div>
-        <span id="sync-badge" class="sync-badge" aria-live="polite">☁️ Đã đồng bộ</span>
+        <span id="sync-badge" class="sync-badge" aria-live="polite">Đã đồng bộ</span>
       </div>
 
       <!-- Segmented Tabs for 3 Sections -->
       <div class="lib-tabs-bar" role="tablist" aria-label="Phân loại kho học liệu">
         <button class="lib-tab-btn active" id="tab-btn-lessons" data-tab="lessons" type="button" onclick="switchLibTab('lessons')">
-          <span>📖</span>
           <span>Bộ đề Bài học</span>
           <span class="lib-tab-badge" id="lib-lessons-badge">0</span>
         </button>
         <button class="lib-tab-btn" id="tab-btn-reading" data-tab="reading" type="button" onclick="switchLibTab('reading')">
-          <span>📑</span>
           <span>Bộ đề Đọc hiểu</span>
           <span class="lib-tab-badge" id="lib-reading-badge">0</span>
         </button>
         <button class="lib-tab-btn" id="tab-btn-writing" data-tab="writing" type="button" onclick="switchLibTab('writing')">
-          <span>✍️</span>
           <span>Bộ đề Viết</span>
           <span class="lib-tab-badge" id="lib-writing-badge">0</span>
         </button>
@@ -32,12 +29,18 @@
 
       <!-- PANE 1: BỘ ĐỀ BÀI HỌC -->
       <div id="lib-pane-lessons" class="lib-tab-pane active">
-        <div class="hud" style="justify-content:flex-end;">
-          <button class="btn au" onclick="newSet()">+ Tạo bộ mới</button>
-          <button class="btn cy" onclick="openPromptDialog()">🪄 Tạo bằng trợ lý AI</button>
-          <button id="bulk-delete-start" class="btn no" onclick="enableBulkDeleteMode()">🗑️ Xóa nhiều</button>
+        <div class="hud teacher-only" style="justify-content:flex-end;">
+          <button class="btn au" onclick="newSet()">
+            <ion-icon name="add-outline"></ion-icon> Tạo bộ mới
+          </button>
+          <button class="btn cy" onclick="openPromptDialog()">
+            <ion-icon name="sparkles-outline"></ion-icon> Soạn đề bằng AI
+          </button>
+          <button id="bulk-delete-start" class="btn no" onclick="enableBulkDeleteMode()">
+            <ion-icon name="trash-outline"></ion-icon> Xóa nhiều
+          </button>
           <div id="bulk-delete-actions" hidden>
-            <button id="bulk-delete" class="btn no" onclick="deleteSelectedSets()" disabled>🗑️ Xóa đã chọn (0)</button>
+            <button id="bulk-delete" class="btn no" onclick="deleteSelectedSets()" disabled>Xóa đã chọn (0)</button>
             <button class="btn gh" onclick="cancelBulkDeleteMode()">Hủy</button>
           </div>
         </div>
@@ -45,9 +48,13 @@
         <div class="lib-search-filter-card">
           <div class="lib-search-bar-row">
             <div class="lib-search-input-box">
-              <span class="lib-search-lead-icon">🔍</span>
+              <span class="lib-search-lead-icon">
+                <ion-icon name="search-outline"></ion-icon>
+              </span>
               <input id="lf" type="text" placeholder="Tìm kiếm bộ đề bài học theo tên, thẻ chủ đề…" oninput="onLibSearchInput()" autocomplete="off">
-              <button id="lf-clear" class="lib-search-clear-btn" type="button" onclick="clearLibSearch()" aria-label="Xóa tìm kiếm" hidden>✕</button>
+              <button id="lf-clear" class="lib-search-clear-btn" type="button" onclick="clearLibSearch()" aria-label="Xóa tìm kiếm" hidden>
+                <ion-icon name="close-outline"></ion-icon>
+              </button>
             </div>
           </div>
           <div class="topic-filter-row">
@@ -63,15 +70,23 @@
 
       <!-- PANE 2: BỘ ĐỀ ĐỌC HIỂU -->
       <div id="lib-pane-reading" class="lib-tab-pane">
-        <div class="hud" style="justify-content:flex-end; gap:8px;">
-          <button class="btn cy" type="button" onclick="promptAddNewReadingCategory()" title="Tạo thêm chủ đề mới">+ Thêm chủ đề</button>
-          <button class="btn no" type="button" onclick="promptDeleteCurrentReadingCategory()" title="Xóa chủ đề">✕ Xóa chủ đề</button>
-          <button class="btn au" type="button" onclick="openCreateReadingSetModal()" title="Tạo đề đọc hiểu mới">+ Thêm đề mới</button>
+        <div class="hud teacher-only" style="justify-content:flex-end; gap:8px;">
+          <button class="btn cy" type="button" onclick="promptAddNewReadingCategory()" title="Tạo thêm chủ đề mới">
+            <ion-icon name="add-outline"></ion-icon> Thêm chủ đề
+          </button>
+          <button class="btn no" type="button" onclick="promptDeleteCurrentReadingCategory()" title="Xóa chủ đề">
+            <ion-icon name="trash-outline"></ion-icon> Xóa chủ đề
+          </button>
+          <button class="btn au" type="button" onclick="openCreateReadingSetModal()" title="Tạo đề đọc hiểu mới">
+            <ion-icon name="add-outline"></ion-icon> Thêm đề mới
+          </button>
         </div>
         <div class="lib-search-filter-card">
           <div class="lib-search-bar-row">
             <div class="lib-search-input-box">
-              <span class="lib-search-lead-icon">🔍</span>
+              <span class="lib-search-lead-icon">
+                <ion-icon name="search-outline"></ion-icon>
+              </span>
               <input id="lib-reading-search" type="text" placeholder="Tìm kiếm bộ đề đọc hiểu theo tên tác phẩm, tác giả..." oninput="onLibReadingSearchInput()" autocomplete="off">
             </div>
           </div>
@@ -88,15 +103,23 @@
 
       <!-- PANE 3: BỘ ĐỀ VIẾT -->
       <div id="lib-pane-writing" class="lib-tab-pane">
-        <div class="hud" style="justify-content:flex-end; gap:8px;">
-          <button class="btn cy" type="button" onclick="promptAddNewCategory()" title="Tạo thêm chủ đề mới">+ Thêm chủ đề</button>
-          <button class="btn no" type="button" onclick="promptDeleteCurrentCategory()" title="Xóa chủ đề (có xác nhận)">✕ Xóa chủ đề</button>
-          <button class="btn au" type="button" onclick="openCreateWritingSetModal()" title="Tạo bộ đề mới">+ Thêm bộ mới</button>
+        <div class="hud teacher-only" style="justify-content:flex-end; gap:8px;">
+          <button class="btn cy" type="button" onclick="promptAddNewCategory()" title="Tạo thêm chủ đề mới">
+            <ion-icon name="add-outline"></ion-icon> Thêm chủ đề
+          </button>
+          <button class="btn no" type="button" onclick="promptDeleteCurrentCategory()" title="Xóa chủ đề (có xác nhận)">
+            <ion-icon name="trash-outline"></ion-icon> Xóa chủ đề
+          </button>
+          <button class="btn au" type="button" onclick="openCreateWritingSetModal()" title="Tạo bộ đề mới">
+            <ion-icon name="add-outline"></ion-icon> Thêm bộ mới
+          </button>
         </div>
         <div class="lib-search-filter-card">
           <div class="lib-search-bar-row">
             <div class="lib-search-input-box">
-              <span class="lib-search-lead-icon">🔍</span>
+              <span class="lib-search-lead-icon">
+                <ion-icon name="search-outline"></ion-icon>
+              </span>
               <input id="lib-writing-search" type="text" placeholder="Tìm kiếm bộ đề viết theo tiêu đề, dạng đề..." oninput="onLibWritingSearchInput()" autocomplete="off">
             </div>
           </div>
@@ -114,7 +137,9 @@
 
     <!-- EDITOR VIEW -->
     <div id="ev" hidden>
-      <button class="btn gh sm" style="margin-bottom:12px;" onclick="go('lib')">← Quay lại thư viện</button>
+      <button class="btn gh sm" style="margin-bottom:12px;" onclick="go('lib')">
+        <ion-icon name="arrow-back-outline"></ion-icon> Quay lại thư viện
+      </button>
       <div class="hud">
         <h1 style="font-size:26px; margin:0;">Soạn thảo bộ câu hỏi</h1>
       </div>
@@ -133,7 +158,7 @@
       <div class="g2" style="margin-top:16px; align-items:start;">
         <div class="card question-list-card">
           <h3 style="margin-bottom:10px;">Danh sách câu hỏi (<span id="en"></span>)</h3>
-          <input id="ef" oninput="renderQs()" placeholder="🔍 Tìm câu hỏi…">
+          <input id="ef" oninput="renderQs()" placeholder="Tìm câu hỏi…">
           <div id="el" style="margin-top:12px;"></div>
         </div>
 
@@ -190,7 +215,9 @@
           </div>
           
           <div style="display:flex; gap:10px; margin-top:16px;">
-            <button id="qsave" class="btn au" onclick="saveQ()">💾 Thêm câu hỏi vào bộ</button>
+            <button id="qsave" class="btn au" onclick="saveQ()">
+              <ion-icon name="add-circle-outline"></ion-icon> Thêm câu hỏi vào bộ
+            </button>
           </div>
         </div>
       </div>

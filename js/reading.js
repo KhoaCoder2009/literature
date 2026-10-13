@@ -329,8 +329,9 @@ function loadReadingData() {
     if (!Array.isArray(loaded)) loaded = [];
 
     if (loaded.length > 0) {
-      // Đảm bảo tất cả câu hỏi trong các bộ đề đều có maxScore
+      // Đảm bảo tất cả câu hỏi trong các bộ đề đều có maxScore và status
       loaded.forEach(s => {
+        if (!s.status) s.status = 'published';
         if (Array.isArray(s.questions)) {
           s.questions.forEach((q, idx) => {
             if (q.maxScore === undefined || q.maxScore === null || isNaN(q.maxScore)) {
@@ -346,12 +347,14 @@ function loadReadingData() {
       const existingIds = new Set(loaded.map(s => String(s.id)));
       DEFAULT_READING_SETS.forEach(def => {
         if (!existingIds.has(String(def.id))) {
-          loaded.push(JSON.parse(JSON.stringify(def)));
+          const cloneDef = JSON.parse(JSON.stringify(def));
+          if (!cloneDef.status) cloneDef.status = 'published';
+          loaded.push(cloneDef);
         }
       });
       readingSets = loaded;
     } else {
-      readingSets = JSON.parse(JSON.stringify(DEFAULT_READING_SETS));
+      readingSets = JSON.parse(JSON.stringify(DEFAULT_READING_SETS)).map(s => ({ ...s, status: s.status || 'published' }));
     }
     localStorage.setItem('vq_reading_sets_v1', JSON.stringify(readingSets));
   } catch (err) {
@@ -387,6 +390,11 @@ function initReadingDialogDismissals() {
 
 // ROUTING HOOK
 const setReadingRoute = function(setId) {
+  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
+    if (typeof go === 'function') go('home');
+    if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
   initReadingModule();
   if (setId) {
     openReadingSet(setId);
@@ -401,20 +409,30 @@ if (typeof window !== 'undefined') {
 }
 
 // VIEW SWITCHING
-function exitReadingWorkspace() {
+function exitReadingWorkspace(force = false) {
+  if (!force && typeof isExamInProgress === 'function' && isExamInProgress()) {
+    toast('⚠️ Bạn đang làm bài đọc hiểu! Phải nộp bài xong mới được thoát.', 'bad');
+    return false;
+  }
   currentReadingSetId = null;
   if (typeof window !== 'undefined') window.currentReadingSetId = null;
   if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
-    window.__SECURITY_SHIELD.endExam(false);
+    window.__SECURITY_SHIELD.endExam(Boolean(force));
   }
   const listView = document.getElementById('reading-list-view');
   const workView = document.getElementById('reading-workspace-view');
   if (listView) listView.style.display = 'block';
   if (workView) workView.style.display = 'none';
   renderReadingListView();
+  return true;
 }
 
 function openReadingSet(id) {
+  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
+    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
+    if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
   const set = readingSets.find(s => String(s.id) === String(id));
   if (!set) {
     toast('Không tìm thấy bộ đề đọc hiểu này!', 'bad');
@@ -495,7 +513,12 @@ function renderReadingSetsGrid() {
   if (!container) return;
 
   // Filter sets
+  const isStudent = Boolean(window.Auth && window.Auth.isStudent());
   const filteredSets = readingSets.filter(s => {
+    // Học sinh chỉ xem bộ đề đã xuất bản (status !== 'draft')
+    if (isStudent && s.status === 'draft') {
+      return false;
+    }
     if (currentReadingCategory !== 'all' && (s.category || '').trim() !== currentReadingCategory) {
       return false;
     }
@@ -533,7 +556,7 @@ function renderReadingSetsGrid() {
       groupsHtml += `
         <div class="reading-category-group">
           <div class="reading-group-title">
-            <span>🏷️ ${esc(cat)}</span>
+            <span><ion-icon name="pricetag-outline"></ion-icon> ${esc(cat)}</span>
             <span class="reading-group-count">${items.length} đề</span>
           </div>
           <div class="reading-horizontal-list">
@@ -559,7 +582,7 @@ function renderSingleReadingCard(s, idx = 0) {
   const topic = s.genre || s.category || 'Đọc hiểu';
   const author = (s.author || '').trim();
   const work = (s.work || '').trim();
-  const watermark = s.emo || '📖';
+  const watermark = '<ion-icon name="document-text-outline"></ion-icon>';
 
   const nbCount = qList.filter(q => q.level === 'nhan-biet' || (q.levelName && q.levelName.includes('Nhận biết'))).length;
   const thCount = qList.filter(q => q.level === 'thong-hieu' || (q.levelName && q.levelName.includes('Thông hiểu'))).length;
@@ -577,7 +600,8 @@ function renderSingleReadingCard(s, idx = 0) {
       <div class="reading-h-banner" style="background: ${bg};">
         <div class="reading-h-banner-watermark">${watermark}</div>
         <span class="reading-h-count-pill">${qCount} câu hỏi</span>
-        ${isUserCreated ? '<span class="reading-h-user-tag">✏️ Đề tự tạo</span>' : ''}
+        ${s.status === 'draft' ? '<span class="reading-h-status-pill status-draft"><ion-icon name="document-text-outline"></ion-icon> Bản nháp</span>' : '<span class="reading-h-status-pill status-published"><ion-icon name="checkmark-circle-outline"></ion-icon> Đã xuất bản</span>'}
+        ${isUserCreated ? '<span class="reading-h-user-tag"><ion-icon name="create-outline"></ion-icon> Đề tự tạo</span>' : ''}
         <span class="reading-h-topic-pill" title="${esc(topic)}">${esc(topic)}</span>
       </div>
 
@@ -589,8 +613,8 @@ function renderSingleReadingCard(s, idx = 0) {
 
         ${(author || work) ? `
           <div class="reading-h-meta-tags">
-            ${author ? `<span class="reading-h-meta-item">👤 <b>${esc(author)}</b></span>` : ''}
-            ${work ? `<span class="reading-h-meta-item">📖 <i>${esc(work)}</i></span>` : ''}
+            ${author ? `<span class="reading-h-meta-item"><ion-icon name="person-outline"></ion-icon> <b>${esc(author)}</b></span>` : ''}
+            ${work ? `<span class="reading-h-meta-item"><ion-icon name="book-outline"></ion-icon> <i>${esc(work)}</i></span>` : ''}
           </div>
         ` : ''}
 
@@ -611,12 +635,12 @@ function renderSingleReadingCard(s, idx = 0) {
       <!-- Cột phải: Khối nút thao tác thẻ -->
       <div class="reading-h-actions" onclick="event.stopPropagation()">
         <button class="btn au reading-h-btn-enter" type="button" onclick="openReadingSet('${esc(s.id)}')">
-          <span>▶ Vào đọc hiểu</span>
+          <span><ion-icon name="play-outline"></ion-icon> Vào đọc hiểu</span>
         </button>
-        ${isUserCreated ? `
+        ${(isUserCreated && (!window.Auth || window.Auth.canEditContent())) ? `
           <div class="reading-h-mini-row">
             <button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề này" onclick="deleteReadingSet('${esc(s.id)}')">
-              <span>🗑️ Xóa đề</span>
+              <span><ion-icon name="trash-outline"></ion-icon> Xóa đề</span>
             </button>
           </div>
         ` : ''}
@@ -627,6 +651,12 @@ function renderSingleReadingCard(s, idx = 0) {
 
 // WORKSPACE RENDERING
 function renderReadingWorkspace(set) {
+  // Hide workspace delete button if student
+  const deleteWsBtn = document.querySelector('#reading-workspace-view button[onclick*="deleteCurrentOpenedReadingSet"]');
+  if (deleteWsBtn) {
+    deleteWsBtn.style.display = (!window.Auth || window.Auth.canEditContent()) ? '' : 'none';
+  }
+
   // Title & Badges
   const titleEl = document.getElementById('reading-workspace-set-title');
   const badgeEl = document.getElementById('reading-workspace-set-badge');
@@ -703,7 +733,7 @@ function renderReadingWorkspace(set) {
               <span class="reading-q-number">Câu ${idx + 1}</span>
               <span class="reading-q-level ${levelClass}">${esc(levelTitle)}</span>
             </div>
-            <span class="tag cy" style="font-weight:800; font-size:12px; padding:2px 8px;">🎯 ${maxPts} điểm</span>
+            <span class="tag cy" style="font-weight:800; font-size:12px; padding:2px 8px;"><ion-icon name="trophy-outline"></ion-icon> ${maxPts} điểm</span>
           </div>
           <div class="reading-q-text">${esc(q.text)}</div>
           <div class="reading-answer-box">
@@ -724,21 +754,11 @@ function renderReadingWorkspace(set) {
             >${esc(answerVal)}</textarea>
             ${isParagraphQuestion ? `
               <div class="reading-word-counter ${wcClass}" id="reading-wc-${idx}">
-                <span>📝 Đếm từ:</span>
+                <span><ion-icon name="create-outline"></ion-icon> Đếm từ:</span>
                 <span class="wc-num">${words}</span> từ
                 <span class="wc-note">${wcNote}</span>
               </div>
-              <div class="reading-q-tip">
-                💡 <b>Mẹo làm bài Câu ${idx + 1} (Đoạn văn):</b> Viết một đoạn văn hoàn chỉnh (khoảng 200 chữ). Cấu trúc gồm: <b>Mở đoạn</b> (dẫn dắt & nêu thông điệp), <b>Thân đoạn</b> (giải thích, vì sao cần trân trọng/thực hiện, dẫn chứng thực tế), <b>Kết đoạn</b> (bài học nhận thức và liên hệ bản thân).
-              </div>
             ` : ''}
-          </div>
-          
-          <div class="reading-guide-box" id="guide-box-${idx}" style="display: ${showReadingAnswers ? 'block' : 'none'};">
-            <div class="reading-guide-label">
-              <span>💡</span> <span>Gợi ý &amp; Đáp án tham khảo</span>
-            </div>
-            <div class="reading-guide-content" style="white-space:pre-wrap;">${esc(q.guide || 'Chưa có gợi ý chi tiết.')}</div>
           </div>
         </div>
       `;
@@ -777,26 +797,12 @@ function changePassageFontSize(delta) {
   }
 }
 
-// TOGGLE ANSWERS GUIDE
-function toggleReadingAnswersGuide() {
-  showReadingAnswers = !showReadingAnswers;
-  const guideBoxes = document.querySelectorAll('.reading-guide-box');
-  guideBoxes.forEach(box => {
-    box.style.display = showReadingAnswers ? 'block' : 'none';
-  });
-  updateAnswersToggleButtonState();
-  toast(showReadingAnswers ? 'Đã hiển thị gợi ý đáp án' : 'Đã ẩn gợi ý đáp án', 'ok');
-}
+// ANSWERS GUIDE (REMOVED DURING EXAM)
+function toggleReadingAnswersGuide() {}
 
 function updateAnswersToggleButtonState() {
   const btn = document.getElementById('btn-toggle-reading-answers');
-  if (btn) {
-    btn.innerHTML = showReadingAnswers 
-      ? `<span>👁️‍🗨️</span> <span>Ẩn gợi ý đáp án</span>` 
-      : `<span>💡</span> <span>Xem gợi ý đáp án</span>`;
-    btn.classList.toggle('au', showReadingAnswers);
-    btn.classList.toggle('gh', !showReadingAnswers);
-  }
+  if (btn) btn.remove();
 }
 
 // DRAFT SAVING
@@ -824,7 +830,7 @@ function handleReadingAnswerInput(setId, qId, val, idx, isParagraph) {
         if (noteEl) noteEl.textContent = '✓ Đạt chuẩn dung lượng (~200 chữ)';
       } else if (words > 230) {
         wcEl.classList.add('wc-high');
-        if (noteEl) noteEl.textContent = '⚠️ Đoạn văn hơi dài (>230 chữ)';
+        if (noteEl) noteEl.textContent = 'Đoạn văn hơi dài (>230 chữ)';
       } else {
         wcEl.classList.add('wc-low');
         if (noteEl) noteEl.textContent = '(Đoạn văn tiêu chuẩn khoảng 200 chữ)';
@@ -833,7 +839,7 @@ function handleReadingAnswerInput(setId, qId, val, idx, isParagraph) {
   }
 
   const statusEl = document.getElementById('reading-save-status');
-  if (statusEl) statusEl.textContent = '⏳ Đang lưu...';
+  if (statusEl) statusEl.innerHTML = '<ion-icon name="hourglass-outline"></ion-icon> Đang lưu...';
 
   clearTimeout(autoSaveTimer);
   autoSaveTimer = setTimeout(() => {
@@ -841,9 +847,9 @@ function handleReadingAnswerInput(setId, qId, val, idx, isParagraph) {
       const draft = getSavedReadingDraft(setId);
       draft[qId] = val;
       localStorage.setItem('vq_reading_draft_' + setId, JSON.stringify(draft));
-      if (statusEl) statusEl.textContent = '💾 Đã lưu tự động';
+      if (statusEl) statusEl.innerHTML = '<ion-icon name="cloud-done-outline"></ion-icon> Đã lưu tự động';
     } catch (e) {
-      if (statusEl) statusEl.textContent = '⚠️ Lỗi lưu trữ';
+      if (statusEl) statusEl.innerHTML = '<ion-icon name="alert-circle-outline"></ion-icon> Lỗi lưu trữ';
     }
   }, 400);
 }
@@ -864,6 +870,11 @@ function resetCurrentReadingDraft() {
 
 // SUBMIT & REVIEW
 function submitReadingAnswers() {
+  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
+    toast('Vui lòng đăng nhập tài khoản để nộp bài!', 'bad');
+    if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
   const set = readingSets.find(s => String(s.id) === String(currentReadingSetId));
   if (!set) return;
 
@@ -890,8 +901,8 @@ function submitReadingAnswers() {
             ${userAns ? esc(userAns).replace(/\n/g, '<br>') : '<i style="color:var(--mut);">Chưa trả lời câu này</i>'}
           </div>
           <div class="reading-result-guide-ans">
-            <b>Đáp án / Gợi ý chuẩn:</b><br>
-            ${esc(q.guide || 'Chưa có đáp án gợi ý.').replace(/\n/g, '<br>')}
+            <b>Đáp án chuẩn:</b><br>
+            ${esc(q.guide || 'Chưa có đáp án.').replace(/\n/g, '<br>')}
           </div>
         </div>
       `;
@@ -904,8 +915,9 @@ function submitReadingAnswers() {
   // Lưu vào lịch sử bài làm
   try {
     if (typeof saveQuizAttemptToHistory === 'function') {
-      const pName = (localStorage.getItem('vq_player_nick') || '').trim() || 'Học sinh';
-      const cName = (localStorage.getItem('vq_player_class') || '').trim();
+      const u = window.Auth ? window.Auth.getCurrentUser() : null;
+      const pName = (u && u.full_name) ? u.full_name : ((localStorage.getItem('vq_player_nick') || '').trim() || 'Học sinh');
+      const cName = (u && u.class_name) ? u.class_name : (localStorage.getItem('vq_player_class') || '').trim();
       saveQuizAttemptToHistory({
         id: 'hist_' + uid(),
         timestamp: Date.now(),
@@ -913,6 +925,7 @@ function submitReadingAnswers() {
         type: 'reading',
         playerName: pName,
         className: cName,
+        userId: u ? u.id : '',
         setId: String(set.id),
         setTitle: set.title,
         setTopic: set.genre || set.category || 'Đọc hiểu',
@@ -926,7 +939,7 @@ function submitReadingAnswers() {
           questionType: 'reading',
           maxScore: Number(q.maxScore || (idx === 4 ? 2.0 : 1.0)),
           userAnswer: (draft[q.id || idx] || '').trim(),
-          correctAnswer: q.guide || 'Chưa có đáp án gợi ý',
+          correctAnswer: q.guide || 'Chưa có đáp án chuẩn',
           status: 'saved',
           points: 0,
           explanation: ''
@@ -945,6 +958,8 @@ function submitReadingAnswers() {
 function closeReadingResultModal() {
   const modal = document.getElementById('reading-result-modal');
   if (modal && modal.open) modal.close();
+  exitReadingWorkspace(true);
+  if (typeof go === 'function') go('home');
 }
 
 function copyReadingStudentAnswers() {
@@ -979,6 +994,9 @@ function populateCategorySelect(selectEl, selectedVal) {
 }
 
 function openCreateReadingSetModal() {
+  if (window.Auth && !window.Auth.canEditContent()) {
+    return toast('Học sinh không có quyền tạo đề đọc hiểu! Vui lòng đăng nhập tài khoản Giáo viên.', 'bad');
+  }
   const modal = document.getElementById('reading-edit-modal');
   if (!modal) return;
 
@@ -995,6 +1013,9 @@ function openCreateReadingSetModal() {
   const catSelect = document.getElementById('reading-form-category');
   populateCategorySelect(catSelect, currentReadingCategory !== 'all' ? currentReadingCategory : readingCategories[0]);
 
+  const statusEl = document.getElementById('reading-form-status');
+  if (statusEl) statusEl.value = 'published';
+
   // Khởi tạo sẵn khung chuẩn 5 câu hỏi (2 Nhận biết • 2 Thông hiểu • 1 Vận dụng / Đoạn văn)
   applyStandard5QuestionTemplate(false);
 
@@ -1002,6 +1023,9 @@ function openCreateReadingSetModal() {
 }
 
 function openEditReadingSetModal(id) {
+  if (window.Auth && !window.Auth.canEditContent()) {
+    return toast('Học sinh không có quyền chỉnh sửa đề đọc hiểu! Vui lòng đăng nhập tài khoản Giáo viên.', 'bad');
+  }
   const targetId = id || currentReadingSetId || (typeof window !== 'undefined' ? window.currentReadingSetId : null);
   const set = readingSets.find(s => String(s.id) === String(targetId));
   if (!set) {
@@ -1021,6 +1045,9 @@ function openEditReadingSetModal(id) {
   document.getElementById('reading-form-genre').value = set.genre || '';
   document.getElementById('reading-form-passage').value = set.passage || '';
   document.getElementById('reading-form-source').value = set.source || '';
+
+  const editStatusEl = document.getElementById('reading-form-status');
+  if (editStatusEl) editStatusEl.value = set.status || 'published';
 
   const catSelect = document.getElementById('reading-form-category');
   populateCategorySelect(catSelect, set.category || readingCategories[0]);
@@ -1256,7 +1283,7 @@ function addQuestionToReadingForm(data = { level: 'nhan-biet', text: '', guide: 
       <span style="font-weight:800; font-size:14.5px;">Câu hỏi ${count + 1}</span>
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
         <label style="margin:0; font-size:13px; font-weight:700; display:flex; align-items:center; gap:5px;">
-          <span>🎯 Điểm tối đa:</span>
+          <span><ion-icon name="trophy-outline"></ion-icon> Điểm tối đa:</span>
           <input type="number" class="q-score-input" step="0.25" min="0.25" max="10" value="${defaultScore}" oninput="updateReadingModalTotalScore()" style="width:68px; text-align:center; font-weight:800; font-size:13.5px; border-radius:8px; padding:3px 6px;">
           <span style="font-size:12px; font-weight:600; color:var(--mut);">đ</span>
         </label>
@@ -1266,14 +1293,14 @@ function addQuestionToReadingForm(data = { level: 'nhan-biet', text: '', guide: 
           <option value="van-dung" ${data.level === 'van-dung' ? 'selected' : ''}>🟣 Vận dụng - Đoạn văn (Câu 5)</option>
           <option value="van-dung-cao" ${data.level === 'van-dung-cao' ? 'selected' : ''}>🔴 Vận dụng cao (Mở rộng)</option>
         </select>
-        <button type="button" class="btn no sm btn-icon-only" onclick="this.closest('.reading-modal-question-item').remove(); renumberReadingFormQuestions(); updateReadingModalTotalScore();" title="Xóa câu hỏi này">✕</button>
+        <button type="button" class="btn no sm btn-icon-only" onclick="this.closest('.reading-modal-question-item').remove(); renumberReadingFormQuestions(); updateReadingModalTotalScore();" title="Xóa câu hỏi này"><ion-icon name="close-outline"></ion-icon></button>
       </div>
     </div>
     <div style="margin-bottom:8px;">
       <textarea class="q-text-input" rows="2" placeholder="Nội dung câu hỏi..." style="width:100%; font-family:inherit;" required>${esc(data.text || '')}</textarea>
     </div>
     <div>
-      <textarea class="q-guide-input" rows="2" placeholder="Gợi ý đáp án / Thang điểm / Hướng dẫn chấm..." style="width:100%; font-size:13.5px; font-family:inherit;">${esc(data.guide || '')}</textarea>
+      <textarea class="q-guide-input" rows="2" placeholder="Đáp án chuẩn / Thang điểm / Hướng dẫn chấm..." style="width:100%; font-size:13.5px; font-family:inherit;">${esc(data.guide || '')}</textarea>
     </div>
   `;
 
@@ -1338,6 +1365,7 @@ function handleReadingFormSubmit(e) {
     readingCategories.push(category);
   }
 
+  const status = document.getElementById('reading-form-status')?.value || 'published';
   let targetSetId = id;
   if (id) {
     // Edit existing
@@ -1352,6 +1380,7 @@ function handleReadingFormSubmit(e) {
         genre: genre || category || 'Đọc hiểu',
         passage,
         source,
+        status,
         questions
       };
       toast('Đã cập nhật bộ đề đọc hiểu thành công!', 'ok');
@@ -1368,6 +1397,7 @@ function handleReadingFormSubmit(e) {
       genre: genre || category || 'Đọc hiểu',
       passage,
       source,
+      status,
       questions
     };
     readingSets.unshift(newSet);
@@ -1397,6 +1427,9 @@ function handleReadingFormSubmit(e) {
 
 // DELETE SET
 function deleteReadingSet(id) {
+  if (window.Auth && !window.Auth.canEditContent()) {
+    return toast('Học sinh không có quyền xóa đề đọc hiểu! Vui lòng đăng nhập tài khoản Giáo viên.', 'bad');
+  }
   const set = readingSets.find(s => String(s.id) === String(id));
   if (!set) return;
 
@@ -1413,6 +1446,9 @@ function deleteReadingSet(id) {
 }
 
 function duplicateReadingSet(id) {
+  if (window.Auth && !window.Auth.canEditContent()) {
+    return toast('Học sinh không có quyền sao chép đề đọc hiểu!', 'bad');
+  }
   const set = readingSets.find(s => String(s.id) === String(id));
   if (!set) return;
   const clone = JSON.parse(JSON.stringify(set));
@@ -1425,6 +1461,9 @@ function duplicateReadingSet(id) {
 }
 
 function deleteCurrentOpenedReadingSet() {
+  if (window.Auth && !window.Auth.canEditContent()) {
+    return toast('Học sinh không có quyền xóa đề đọc hiểu!', 'bad');
+  }
   if (!currentReadingSetId) return;
   deleteReadingSet(currentReadingSetId);
   exitReadingWorkspace();
@@ -1432,6 +1471,9 @@ function deleteCurrentOpenedReadingSet() {
 
 // CATEGORY MANAGEMENT
 function promptAddNewReadingCategory() {
+  if (window.Auth && !window.Auth.canEditContent()) {
+    return toast('Học sinh không có quyền thêm chủ đề đọc hiểu!', 'bad');
+  }
   const name = prompt('Nhập tên chủ đề / thể loại đọc hiểu mới:');
   if (!name || !name.trim()) return;
 
@@ -1448,6 +1490,9 @@ function promptAddNewReadingCategory() {
 }
 
 function promptDeleteCurrentReadingCategory() {
+  if (window.Auth && !window.Auth.canEditContent()) {
+    return toast('Học sinh không có quyền xóa chủ đề đọc hiểu!', 'bad');
+  }
   let catToDelete = '';
 
   // 1. Nếu đang lọc một chủ đề trong Thư viện hoặc màn hình Đọc hiểu

@@ -42,6 +42,7 @@ const componentFiles = [
   { name: 'screen-writing', file: 'screen-writing.html' },
   { name: 'screen-reading', file: 'screen-reading.html' },
   { name: 'screen-history', file: 'screen-history.html' },
+  { name: 'screen-accounts', file: 'screen-accounts.html' },
   { name: 'dialogs', file: 'dialogs.html' }
 ];
 
@@ -109,6 +110,7 @@ console.log(`\n📦 Đã xuất CSS bundle: dist/app.bundle.css (${(bundleCssCon
 const jsOrder = [
   path.join(jsDir, 'security.js'),
   path.join(jsDir, 'core.js'),
+  path.join(jsDir, 'auth.js'),
   path.join(jsDir, 'audio.js'),
   path.join(jsDir, 'visuals.js'),
   path.join(jsDir, 'storage.js'),
@@ -155,6 +157,7 @@ const securityLockdownSnippet = `
   if (window.COMPONENTS) freezeObj('COMPONENTS', window.COMPONENTS);
   if (typeof T_ !== 'undefined') freezeObj('T_', T_);
   if (window.R) freezeObj('R', window.R);
+  if (window.Auth) freezeObj('Auth', window.Auth);
 
   // 2. Khóa cứng toàn bộ hàm gọi từ DOM & giao diện bài làm
   const protectedFunctionList = [
@@ -163,6 +166,12 @@ const securityLockdownSnippet = `
     'toggleSound', 'playSound', 'playNote', 'toggleTheme', 'toggleProjectorMode',
     'openSettingsDialog', 'closeSettingsDialog', 'updateSettingsUI',
     'toggleMobileMenu', 'closeMobileMenu',
+    'openLoginDialog', 'closeLoginDialog', 'handleLoginSubmit', 'logoutUser',
+    'openAccountManagerModal', 'closeAccountManagerModal',
+    'openCreateAccountModal', 'closeCreateAccountModal', 'handleCreateAccountSubmit',
+    'openResetPasswordModal', 'closeResetPasswordModal', 'handleResetPasswordSubmit',
+    'openChangePasswordModal', 'closeChangePasswordModal', 'handleChangePasswordSubmit',
+    'fillSampleAccount', 'exportAccountsList', 'deleteUserAccountById', 'toggleUserDropdown', 'closeUserDropdown',
     'saveScoreToLeaderboard', 'getQuizHistory', 'saveQuizAttemptToHistory',
     'deleteHistoryItem', 'clearAllQuizHistory', 'loadQuizHistoryFromSupabase',
     'setHistoryTypeFilter', 'onHistoryPageSearchInput', 'onHistoryPageSetFilterChange',

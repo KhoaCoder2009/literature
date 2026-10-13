@@ -1,0 +1,49 @@
+========================================================================================
+DANH SÁCH TÀI KHOẢN HỌC SINH - LỚP 12A2 (HỆ THỐNG ÔN TẬP NGỮ VĂN)
+Tên miền: @bpbd.vn | Mật khẩu mặc định: 123456
+========================================================================================
+
+STT | Họ và tên              | Lớp  | Tên đăng nhập (Email)          | Mật khẩu | Vai trò
+----+------------------------+------+--------------------------------+----------+---------
+01  | Nguyễn Quốc An         | 12A2 | nguyenquocan@bpbd.vn           | 123456   | Học sinh
+02  | Nguyễn Hoàng Bảo Anh   | 12A2 | nguyenhoangbaoanh@bpbd.vn      | 123456   | Học sinh
+03  | Huỳnh Minh Ánh         | 12A2 | huynhminhanh@bpbd.vn           | 123456   | Học sinh
+04  | Nguyễn Bảo Châu        | 12A2 | nguyenbaochau@bpbd.vn          | 123456   | Học sinh
+05  | Nguyễn Ngọc Minh Châu  | 12A2 | nguyenngocminhchau@bpbd.vn     | 123456   | Học sinh
+06  | Nguyễn Thị Mỹ Duyên    | 12A2 | nguyenthimyduyen@bpbd.vn       | 123456   | Học sinh
+07  | Nguyễn Thị Anh Đào     | 12A2 | nguyenthianhdao@bpbd.vn        | 123456   | Học sinh
+08  | Trần Tiến Đạt          | 12A2 | trantiendat@bpbd.vn            | 123456   | Học sinh
+09  | Võ Thanh Giang         | 12A2 | vothanhgiang@bpbd.vn           | 123456   | Học sinh
+10  | Nguyễn Hoàng Hải       | 12A2 | nguyenhoanghai@bpbd.vn         | 123456   | Học sinh
+11  | Mai Gia Hân            | 12A2 | maigiahan@bpbd.vn              | 123456   | Học sinh
+12  | Bùi Quốc Huy           | 12A2 | buiquochuy@bpbd.vn             | 123456   | Học sinh
+13  | Lê Xuân Nhật Huy       | 12A2 | lexuannhathuy@bpbd.vn          | 123456   | Học sinh
+14  | Lê Nguyễn Đăng Khoa    | 12A2 | lenguyendangkhoa@bpbd.vn       | 123456   | Học sinh
+15  | Trần Đăng Khoa         | 12A2 | trandangkhoa@bpbd.vn           | 123456   | Học sinh
+16  | Nguyễn Thị Xuân Linh   | 12A2 | nguyenthixuanlinh@bpbd.vn      | 123456   | Học sinh
+17  | Phạm Tấn Lực           | 12A2 | phamtanluc@bpbd.vn             | 123456   | Học sinh
+18  | Trần Thị Ngọc My       | 12A2 | tranthingocmy@bpbd.vn          | 123456   | Học sinh
+19  | Nguyễn Trung Nghĩa     | 12A2 | nguyentrungnghia@bpbd.vn       | 123456   | Học sinh
+20  | Mai Như Ngọc           | 12A2 | mainhungoc@bpbd.vn             | 123456   | Học sinh
+21  | Võ Hữu Ngọc            | 12A2 | vohuungoc@bpbd.vn              | 123456   | Học sinh
+22  | Nguyễn Thị Thu Nguyệt  | 12A2 | nguyenthithunguyet@bpbd.vn     | 123456   | Học sinh
+23  | Nguyễn Thanh Tuyết Nhi | 12A2 | nguyenthanhtuyetnhi@bpbd.vn    | 123456   | Học sinh
+24  | Lâm Tâm Như            | 12A2 | lamtamnhu@bpbd.vn              | 123456   | Học sinh
+25  | Dương Chấn Phong       | 12A2 | duongchanphong@bpbd.vn         | 123456   | Học sinh
+26  | Lâm Thiên Phúc         | 12A2 | lamthienphuc@bpbd.vn           | 123456   | Học sinh
+27  | Từ Thị Mai Phương      | 12A2 | tuthimaiphuong@bpbd.vn         | 123456   | Học sinh
+28  | Nguyễn Hoàng Sơn       | 12A2 | nguyenhoangson@bpbd.vn         | 123456   | Học sinh
+29  | Nguyễn Minh Tâm        | 12A2 | nguyenminhtam@bpbd.vn          | 123456   | Học sinh
+30  | Nguyễn Hoàng Thái      | 12A2 | nguyenhoangthai@bpbd.vn        | 123456   | Học sinh
+31  | Trịnh Minh Thiên       | 12A2 | trinhminhthien@bpbd.vn         | 123456   | Học sinh
+32  | Trần Thị Ngọc Thùy     | 12A2 | tranthingocthuy@bpbd.vn        | 123456   | Học sinh
+33  | Hồ Quỳnh Kim Thủy      | 12A2 | hoquynhkimthuy@bpbd.vn         | 123456   | Học sinh
+34  | Phạm Thị Ngọc Trâm     | 12A2 | phamthingoctram@bpbd.vn        | 123456   | Học sinh
+35  | Quách Thị Thanh Tuyền  | 12A2 | quachthithanhtuyen@bpbd.vn     | 123456   | Học sinh
+36  | Trần Minh Tướng        | 12A2 | tranminhtuong@bpbd.vn          | 123456   | Học sinh
+37  | Nguyễn Thị Vi          | 12A2 | nguyenthivi@bpbd.vn            | 123456   | Học sinh
+38  | Đinh Thị Yến Vy        | 12A2 | dinhthiyenvy@bpbd.vn           | 123456   | Học sinh
+39  | Mai Phương Vy          | 12A2 | maiphuongvy@bpbd.vn            | 123456   | Học sinh
+40  | Trần Trúc Vy           | 12A2 | trantrucvy@bpbd.vn             | 123456   | Học sinh
+
+* Ghi chú: Học sinh sử dụng Tên đăng nhập và Mật khẩu trên để đăng nhập ôn tập, sau đó có thể đổi mật khẩu cá nhân.

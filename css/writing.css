@@ -507,8 +507,9 @@
   border-radius: 12px;
 }
 
-/* Hộp dàn ý gợi ý */
+/* Hộp dàn ý gợi ý (đã bỏ theo yêu cầu) */
 .writing-outline-card {
+  display: none !important;
   background: #ffffff;
   border: 2px solid #e2e8f0;
   border-radius: 18px;

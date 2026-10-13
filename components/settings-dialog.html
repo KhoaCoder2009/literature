@@ -2,16 +2,19 @@
 <dialog id="settings-dialog" class="settings-modal">
   <div class="settings-header">
     <div class="settings-title-wrap">
-      <span class="settings-icon">⚙️</span>
       <h3>Cài đặt</h3>
     </div>
-    <button class="btn sm gh" type="button" onclick="closeSettingsDialog()" aria-label="Đóng cài đặt">✕</button>
+    <button class="btn sm gh" type="button" onclick="closeSettingsDialog()" aria-label="Đóng cài đặt">
+      <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+    </button>
   </div>
   <div class="settings-body" style="overflow-y: auto; -webkit-overflow-scrolling: touch;">
     <!-- Hiệu ứng âm thanh -->
     <div class="settings-item">
       <div class="settings-item-info">
-        <div class="settings-item-icon">🔊</div>
+        <div class="settings-item-icon">
+          <ion-icon name="volume-high-outline" style="font-size: 20px;"></ion-icon>
+        </div>
         <div>
           <div class="settings-item-name">Hiệu ứng âm thanh</div>
           <div class="settings-item-desc">Âm thanh khi chọn đáp án và thao tác</div>
@@ -22,7 +25,9 @@
     <!-- Giao diện Sáng / Tối -->
     <div class="settings-item">
       <div class="settings-item-info">
-        <div class="settings-item-icon">🌗</div>
+        <div class="settings-item-icon">
+          <ion-icon name="moon-outline" style="font-size: 20px;"></ion-icon>
+        </div>
         <div>
           <div class="settings-item-name">Giao diện (Sáng / Tối)</div>
           <div class="settings-item-desc">Chuyển đổi giao diện Sáng hoặc Tối</div>
@@ -33,7 +38,9 @@
     <!-- Chế độ Máy chiếu -->
     <div class="settings-item">
       <div class="settings-item-info">
-        <div class="settings-item-icon">🖥️</div>
+        <div class="settings-item-icon">
+          <ion-icon name="tv-outline" style="font-size: 20px;"></ion-icon>
+        </div>
         <div>
           <div class="settings-item-name">Chế độ máy chiếu</div>
           <div class="settings-item-desc">Tăng kích thước chữ hiển thị trên máy chiếu</div>
@@ -41,8 +48,23 @@
       </div>
       <button class="btn sm gh" id="btn-setting-projector" onclick="toggleProjectorMode()">Tắt</button>
     </div>
+    <!-- Tài khoản người dùng -->
+    <div class="settings-item">
+      <div class="settings-item-info">
+        <div class="settings-item-icon">
+          <ion-icon name="person-outline" style="font-size: 20px;"></ion-icon>
+        </div>
+        <div>
+          <div class="settings-item-name">Tài khoản người dùng</div>
+          <div class="settings-item-desc" id="settings-user-desc">Đăng nhập để lưu tiến độ và kết quả</div>
+        </div>
+      </div>
+      <button class="btn sm cy" id="btn-setting-account" onclick="closeSettingsDialog(); if (window.Auth && window.Auth.isLoggedIn()) { openChangePasswordModal(); } else { openLoginDialog(); }">Đăng nhập</button>
+    </div>
   </div>
   <div class="settings-footer">
-    <button class="btn au" type="button" onclick="closeSettingsDialog()">Hoàn tất</button>
+    <button class="btn au" type="button" onclick="closeSettingsDialog()">
+      <ion-icon name="checkmark-outline"></ion-icon> Hoàn tất
+    </button>
   </div>
 </dialog>

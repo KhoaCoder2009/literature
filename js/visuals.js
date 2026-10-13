@@ -142,7 +142,7 @@ drawBackground();
 /* === HERO STUDY QUOTES === */
 const HERO_STUDY_QUOTES = [
   {
-    tag: '✨ LỜI DẠY CỦA BÁC HỒ',
+    tag: 'LỜI DẠY CỦA BÁC HỒ',
     quote: '“Non sông Việt Nam có trở nên tươi đẹp hay không, dân tộc Việt Nam có bước tới đài vinh quang để sánh vai với các cường quốc năm châu được hay không, chính là nhờ một phần lớn ở công học tập của các em.”',
     author: '— Chủ tịch Hồ Chí Minh —',
     img: './assets/bac-ho.jpg',
@@ -152,7 +152,7 @@ const HERO_STUDY_QUOTES = [
     bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   },
   {
-    tag: '💡 TRI THỨC LÀ SỨC MẠNH',
+    tag: 'TRI THỨC LÀ SỨC MẠNH',
     quote: '“Học, học nữa, học mãi.”',
     author: '— V.I. Lê-nin —',
     img: './assets/lenin.jpg',
@@ -162,7 +162,7 @@ const HERO_STUDY_QUOTES = [
     bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   },
   {
-    tag: '🌟 BẢN LĨNH TRI THỨC',
+    tag: 'BẢN LĨNH TRI THỨC',
     quote: '“Giáo dục là vũ khí mạnh nhất mà bạn có thể dùng để thay đổi thế giới.”',
     author: '— Nelson Mandela —',
     img: './assets/mandela.jpg',
@@ -172,7 +172,7 @@ const HERO_STUDY_QUOTES = [
     bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   },
   {
-    tag: '✨ ÁNH SÁNG TÂM HỒN',
+    tag: 'ÁNH SÁNG TÂM HỒN',
     quote: '“Văn học là nhân đạo hóa con người.”',
     author: '— Victor Hugo —',
     img: './assets/victor-hugo.jpg',
@@ -182,7 +182,7 @@ const HERO_STUDY_QUOTES = [
     bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   },
   {
-    tag: '📚 ĐAM MÊ KHÁM PHÁ',
+    tag: 'ĐAM MÊ KHÁM PHÁ',
     quote: '“Học tập không bao giờ làm cạn kiệt trí óc.”',
     author: '— Leonardo da Vinci —',
     img: './assets/aristotle.jpg',

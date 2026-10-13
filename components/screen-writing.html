@@ -7,7 +7,7 @@
       <!-- Cartoon Hero Banner -->
       <div class="writing-hero-banner">
         <div class="writing-hero-content">
-          <h1 style="font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;">Luyện viết văn theo dàn ý</h1>
+          <h1 style="font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;">Luyện viết văn</h1>
           <p class="writing-hero-desc">Rèn luyện kỹ năng viết văn theo cấu trúc mở bài, thân bài, kết bài và các dạng đề chuẩn.</p>
         </div>
       </div>
@@ -16,14 +16,16 @@
       <div class="writing-control-bar card">
         <div class="writing-control-top">
           <div class="writing-search-box" style="flex:1;">
-            <span class="writing-search-icon">🔍</span>
+            <span class="writing-search-icon">
+              <ion-icon name="search-outline"></ion-icon>
+            </span>
             <input type="text" id="writing-search-input" placeholder="Tìm kiếm bộ đề theo tên, dạng đề hoặc chủ đề..." oninput="onWritingSearchInput()">
           </div>
         </div>
 
         <div class="writing-category-filter">
           <div class="writing-filter-chips-wrap">
-            <span class="writing-filter-label">Chủ đề:</span>
+            <span class="reading-filter-label">Chủ đề:</span>
             <div class="writing-category-chips" id="writing-category-chips"></div>
           </div>
         </div>
@@ -37,19 +39,16 @@
     <div id="writing-workspace-view" style="display:none;">
       <!-- Workspace Navigation Bar -->
       <div class="writing-workspace-nav">
-        <button class="btn gh sm" onclick="exitWritingWorkspace()">
-          <span>←</span> <span>Trở về danh sách đề</span>
-        </button>
         <div class="writing-workspace-title-box">
           <h3 id="workspace-set-title">Đề bài luyện viết</h3>
           <span id="workspace-set-badge" class="tag ok">Nghị luận xã hội</span>
         </div>
         <div class="writing-workspace-actions" style="display:flex; align-items:center; gap:8px;">
-          <button class="btn au sm" onclick="submitWritingEssay()" title="Nộp bài viết để lưu vào Lịch sử và giáo viên chấm điểm" style="font-weight:800;">
-            <span>✅</span> <span>Nộp bài viết</span>
+          <button class="btn au sm" onclick="submitWritingEssay()" title="Nộp bài viết để lưu vào Lịch sử và giáo viên chấm điểm" style="font-weight:700;">
+            <ion-icon name="send-outline"></ion-icon> <span>Nộp bài viết</span>
           </button>
-          <button class="btn no sm" onclick="deleteCurrentOpenedWritingSet()" title="Xóa đề này khỏi danh sách">
-            <span>🗑️</span> <span>Xóa đề</span>
+          <button class="btn no sm teacher-only" id="btn-delete-opened-writing-set" onclick="deleteCurrentOpenedWritingSet()" title="Xóa đề này khỏi danh sách">
+            <ion-icon name="trash-outline"></ion-icon> <span>Xóa đề</span>
           </button>
         </div>
       </div>
@@ -72,14 +71,6 @@
               </div>
             </div>
 
-            <!-- Hộp Dàn ý tham khảo -->
-            <div class="writing-outline-card" id="workspace-outline-card">
-              <div class="writing-outline-header">
-                <span>Dàn ý</span>
-              </div>
-              <div class="writing-outline-content" id="workspace-outline-content"></div>
-            </div>
-
           </div>
         </div>
 
@@ -93,7 +84,7 @@
           
           <!-- Header thanh công cụ phải -->
           <div class="writing-editor-header">
-            <span style="font-size:14px; font-weight:800; color:var(--ink);">✍️ Bài làm</span>
+            <span style="font-size:14px; font-weight:700; color:var(--ink);">Bài làm</span>
             <div class="writing-word-count-badge">
               Tổng số từ: <b id="workspace-total-words">0</b>
             </div>
@@ -105,18 +96,19 @@
           <!-- Bottom Sticky Action Bar -->
           <div class="writing-bottom-bar">
             <div class="writing-timer-box">
-              <span class="writing-timer-icon">⏱️</span>
               <span class="writing-timer-label">Thời gian:</span>
               <b class="writing-timer-value" id="workspace-timer-display">00:00:00</b>
-              <button class="writing-timer-btn" id="workspace-timer-btn" onclick="toggleWritingTimer()" title="Tạm dừng / Tiếp tục">⏸</button>
+              <button class="writing-timer-btn" id="workspace-timer-btn" onclick="toggleWritingTimer()" title="Tạm dừng / Tiếp tục">
+                <ion-icon name="pause-outline"></ion-icon>
+              </button>
             </div>
 
             <div class="writing-bottom-buttons" style="display:flex; align-items:center; gap:8px;">
               <button class="writing-btn-review" type="button" onclick="openWritingReviewModal()">
-                <span>👁️ Xem &amp; Xuất bài</span>
+                <ion-icon name="document-text-outline"></ion-icon> <span>Xem &amp; Xuất bài</span>
               </button>
-              <button class="btn au sm" type="button" onclick="submitWritingEssay()" title="Nộp bài viết vào Lịch sử" style="font-weight:800; height:42px; padding:0 18px; border-radius:12px;">
-                <span>✅ Nộp bài viết</span>
+              <button class="btn au sm" type="button" onclick="submitWritingEssay()" title="Nộp bài viết vào Lịch sử" style="font-weight:700; height:42px; padding:0 18px; border-radius:10px;">
+                <ion-icon name="send-outline"></ion-icon> <span>Nộp bài viết</span>
               </button>
             </div>
           </div>

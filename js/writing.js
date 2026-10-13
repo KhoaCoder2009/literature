@@ -4,7 +4,8 @@
 
 const DEFAULT_WRITING_SETS = [
   {
-    id: 'writing_sample_nlxh_kientri',
+    id: 'writing_nlxh_kientri',
+    status: 'published',
     category: 'nl-xh',
     categoryName: 'Nghị luận xã hội',
     icon: '🌱',
@@ -35,7 +36,8 @@ const DEFAULT_WRITING_SETS = [
     ]
   },
   {
-    id: 'writing_sample_nlvh_taytien',
+    id: 'writing_nlvh_taytien',
+    status: 'published',
     category: 'nl-vh',
     categoryName: 'Nghị luận văn học',
     icon: '📜',
@@ -66,10 +68,11 @@ const DEFAULT_WRITING_SETS = [
     ]
   },
   {
-    id: 'writing_sample_nlxh_tuhoc',
+    id: 'writing_nlxh_tuhoc',
+    status: 'published',
     category: 'nl-xh',
     categoryName: 'Nghị luận xã hội',
-    icon: '💡',
+    icon: '✍️',
     title: 'Nghị luận xã hội: Tinh thần tự học trong thời đại số',
     prompt: 'Viết bài văn ngắn trình bày suy nghĩ của anh/chị về vai trò của tinh thần tự học đối với thế hệ trẻ trong kỷ nguyên bùng nổ công nghệ thông tin ngày nay.',
     sections: [
@@ -97,7 +100,8 @@ const DEFAULT_WRITING_SETS = [
     ]
   },
   {
-    id: 'writing_sample_camthu_song',
+    id: 'writing_camthu_song',
+    status: 'published',
     category: 'cam-thu',
     categoryName: 'Cảm thụ văn học',
     icon: '🌊',
@@ -163,13 +167,17 @@ function loadWritingSets() {
             s.categoryName = 'Nghị luận xã hội';
             s.icon = '🌱';
           }
+          if (String(s.id).startsWith('writing_sample_')) {
+            s.id = s.id.replace('writing_sample_', 'writing_');
+          }
+          if (!s.status) s.status = 'published';
           return s;
         });
 
         const existingIds = new Set(parsed.map(s => s.id));
         for (const def of DEFAULT_WRITING_SETS) {
           if (!existingIds.has(def.id)) {
-            parsed.push(def);
+            parsed.push(JSON.parse(JSON.stringify(def)));
           }
         }
         writingSets = parsed;
@@ -197,6 +205,11 @@ loadWritingSets();
 
 // Router hook
 R.writing = function(setId) {
+  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
+    if (typeof go === 'function') go('home');
+    if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
   loadWritingSets();
   if (setId) {
     const target = writingSets.find(s => s.id === setId);
@@ -262,7 +275,7 @@ function renderCategoryFilterBar() {
     const count = writingSets.filter(s => s.category === c.id).length;
     html += `
       <button type="button" class="w-chip ${currentWritingCategory === c.id ? 'on' : ''}" data-cat="${c.id}" onclick="filterWritingCategory('${c.id}')">
-        <span>${c.icon || '🏷️'} ${esc(c.name)}</span>
+        <span><ion-icon name="pricetag-outline"></ion-icon> ${esc(c.name)}</span>
         <span class="w-chip-count">${count}</span>
       </button>
     `;
@@ -272,6 +285,10 @@ function renderCategoryFilterBar() {
 }
 
 function promptAddNewCategory() {
+  if (typeof Auth !== 'undefined' && !Auth.canEditContent()) {
+    toast('Chỉ giáo viên mới có quyền thêm chủ đề mới!', 'bad');
+    return;
+  }
   const name = prompt('Nhập tên chủ đề / dạng đề mới (ví dụ: Đọc hiểu văn bản, Phân tích nhân vật...):');
   if (!name || !name.trim()) return;
   const cleanName = name.trim();
@@ -292,6 +309,10 @@ function promptAddNewCategory() {
 }
 
 function promptDeleteCategory(catId) {
+  if (typeof Auth !== 'undefined' && !Auth.canEditContent()) {
+    toast('Chỉ giáo viên mới có quyền xóa chủ đề!', 'bad');
+    return;
+  }
   const cats = getWritingCategories();
   const cat = cats.find(c => c.id === catId);
   if (!cat) return;
@@ -344,6 +365,10 @@ function promptDeleteCategory(catId) {
 }
 
 function promptDeleteCurrentCategory() {
+  if (typeof Auth !== 'undefined' && !Auth.canEditContent()) {
+    toast('Chỉ giáo viên mới có quyền xóa chủ đề!', 'bad');
+    return;
+  }
   const cats = getWritingCategories();
 
   let targetCatId = null;
@@ -435,7 +460,7 @@ function renderWritingSetsGrid() {
     const bg = WRITING_PALETTES[idx % WRITING_PALETTES.length];
     const sectionCount = s.sections ? s.sections.length : 0;
     const topic = s.categoryName || s.category || 'Luyện viết';
-    const watermark = s.icon || '✍️';
+    const watermark = '<ion-icon name="create-outline"></ion-icon>';
 
     return `
       <div class="setup-grid-card" onclick="openWritingWorkspaceById('${esc(s.id)}')">
@@ -443,7 +468,7 @@ function renderWritingSetsGrid() {
           <div class="setup-card-top-info" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
             <span class="setup-card-count-pill">${sectionCount} phần dàn ý</span>
             <div style="display:flex; gap:4px; position:relative; z-index:2;" onclick="event.stopPropagation()">
-              <button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề bài" onclick="event.stopPropagation(); deleteWritingSet('${esc(s.id)}')">🗑️</button>
+              <button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề bài" onclick="event.stopPropagation(); deleteWritingSet('${esc(s.id)}')"><ion-icon name="trash-outline"></ion-icon></button>
             </div>
           </div>
           <h3 class="setup-card-title">${esc(s.title)}</h3>
@@ -452,13 +477,13 @@ function renderWritingSetsGrid() {
         <div class="setup-card-body">
           <div style="display:flex; gap:8px; width:100%;">
             <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); openWritingWorkspaceById('${esc(s.id)}')" style="flex:1;">
-              <span class="btn-setup-icon">▶</span>
+              <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
               <span>Vào luyện viết</span>
             </button>
           </div>
           <div class="setup-card-meta" style="margin-top:6px;">
             <span class="setup-card-topic" title="${esc(topic)}">
-              🏷️ ${esc(topic)}
+              <ion-icon name="pricetag-outline"></ion-icon> ${esc(topic)}
             </span>
           </div>
         </div>
@@ -485,7 +510,7 @@ function renderWritingSetsGrid() {
       container.innerHTML = `
         <div class="writing-cat-header-bar">
           <div class="writing-cat-header-title">
-            <span style="font-size: 24px;">${activeCat.icon || '🏷️'}</span>
+            <span style="font-size: 24px; color: var(--mut);"><ion-icon name="pricetag-outline"></ion-icon></span>
             <div>
               <h3 style="margin: 0; font-size: 17px; font-weight: 800;">Chủ đề: ${esc(activeCat.name)}</h3>
               <span class="mut" style="font-size: 12.5px;">Chưa có bộ đề nào trong chủ đề này</span>
@@ -493,12 +518,12 @@ function renderWritingSetsGrid() {
           </div>
         </div>
         <div style="text-align:center; padding: 40px 20px;" class="card">
-          <span style="font-size: 40px;">📝</span>
+          <span style="font-size: 40px; color: var(--mut);"><ion-icon name="create-outline"></ion-icon></span>
           <h3 style="margin: 12px 0 6px;">Chưa có bộ đề nào thuộc chủ đề "${esc(activeCat.name)}"</h3>
           <p class="mut">Chưa có bộ đề nào trong chủ đề này. Bạn có thể chọn chủ đề khác hoặc vào Thư viện để quản lý.</p>
           <div style="display:flex; justify-content:center; gap:10px; margin-top:16px;">
             <button class="btn gh sm" onclick="filterWritingCategory('all')">← Xem tất cả bộ đề</button>
-            <button class="btn au sm" onclick="go('lib')">📚 Mở Thư viện quản lý</button>
+            <button class="btn au sm" onclick="go('lib')"><ion-icon name="library-outline"></ion-icon> Mở Thư viện quản lý</button>
           </div>
         </div>
       `;
@@ -508,7 +533,7 @@ function renderWritingSetsGrid() {
     container.innerHTML = `
       <div class="writing-cat-header-bar">
         <div class="writing-cat-header-title">
-          <span style="font-size: 24px;">${activeCat.icon || '🏷️'}</span>
+          <span style="font-size: 24px; color: var(--mut);"><ion-icon name="pricetag-outline"></ion-icon></span>
           <div>
             <h3 style="margin: 0; font-size: 17px; font-weight: 800;">Chủ đề: ${esc(activeCat.name)}</h3>
             <span class="mut" style="font-size: 12.5px;">Đang hiển thị ${filtered.length} bộ đề</span>
@@ -519,7 +544,7 @@ function renderWritingSetsGrid() {
         ${filtered.map((s, i) => renderCard(s, i)).join('')}
       </div>
     `;
-    return;
+      return;
   }
 
   // Case 2: "Tất cả" - Hiện HẾT tất cả các bộ đề trong một danh sách lưới chung
@@ -533,10 +558,10 @@ function renderWritingSetsGrid() {
   if (filtered.length === 0) {
     container.innerHTML = `
       <div style="text-align:center; padding: 40px 20px;" class="card">
-        <span style="font-size: 40px;">🔍</span>
+        <span style="font-size: 40px; color: var(--mut);"><ion-icon name="search-outline"></ion-icon></span>
         <h3 style="margin: 12px 0 6px;">Không tìm thấy bộ đề phù hợp</h3>
         <p class="mut">Hãy thử tìm kiếm với từ khóa khác hoặc tự tạo một bộ đề mới!</p>
-        <button class="btn au sm" onclick="openCreateWritingSetModal()">➕ Tạo bộ đề mới</button>
+        <button class="btn au sm" onclick="openCreateWritingSetModal()"><ion-icon name="add-outline"></ion-icon> Tạo bộ đề mới</button>
       </div>
     `;
     return;
@@ -564,11 +589,21 @@ function renderWritingSetsGrid() {
 // =========================================================================
 
 function openWritingWorkspaceById(setId) {
+  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
+    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
+    if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
   const set = writingSets.find(s => s.id === setId);
   if (set) openWritingWorkspace(set);
 }
 
 function openWritingWorkspace(set) {
+  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
+    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
+    if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
   currentWritingSet = set;
   if (typeof window !== 'undefined') window.currentWritingSetId = set.id;
   if ($('#writing-list-view')) $('#writing-list-view').style.display = 'none';
@@ -580,6 +615,15 @@ function openWritingWorkspace(set) {
   // Set Nav Title & Badge
   $('#workspace-set-title').textContent = set.title;
   $('#workspace-set-badge').textContent = set.categoryName || set.category;
+
+  const deleteBtn = document.getElementById('btn-delete-opened-writing-set') || document.querySelector('#writing-workspace-view button[onclick*="deleteCurrentOpenedWritingSet"]');
+  if (deleteBtn) {
+    if (typeof Auth !== 'undefined' && !Auth.canEditContent()) {
+      deleteBtn.style.display = 'none';
+    } else {
+      deleteBtn.style.display = 'inline-flex';
+    }
+  }
 
   // Set Prompt Card
   const promptEl = $('#workspace-prompt-text');
@@ -594,25 +638,10 @@ function openWritingWorkspace(set) {
     toggleBtn.style.display = 'none';
   }
 
-  // Set Outline Card under Prompt
+  // Outline card removed from student workspace (no hints shown during testing)
   const outlineContent = $('#workspace-outline-content');
   if (outlineContent) {
-    if (set.sections && set.sections.length > 0) {
-      outlineContent.innerHTML = set.sections.map((sec, idx) => `
-        <div class="writing-outline-item">
-          <b style="display:flex; align-items:center; gap:6px; font-size:14px; color:var(--primary);">
-            <span>📌</span> <span>${idx + 1}. ${esc(sec.title)}</span>
-          </b>
-          ${sec.guide ? `
-            <div class="writing-outline-text" style="color:var(--ink); margin-top:5px; line-height:1.6; font-size:13.5px; white-space:pre-line;">
-              ${esc(sec.guide)}
-            </div>
-          ` : ''}
-        </div>
-      `).join('');
-    } else {
-      outlineContent.innerHTML = '<p class="mut">Chưa có dàn ý cho đề này.</p>';
-    }
+    outlineContent.innerHTML = '';
   }
 
   // Load existing draft
@@ -634,16 +663,21 @@ function openWritingWorkspace(set) {
   setupSplitter();
 }
 
-function exitWritingWorkspace() {
+function exitWritingWorkspace(force = false) {
+  if (!force && typeof isExamInProgress === 'function' && isExamInProgress()) {
+    toast('⚠️ Bạn đang làm bài luyện viết! Phải nộp bài xong mới được thoát.', 'bad');
+    return false;
+  }
   saveCurrentWritingDraft(false);
   stopWritingTimer();
   clearInterval(autoSaveDraftTimer);
   currentWritingSet = null;
   if (typeof window !== 'undefined') window.currentWritingSetId = null;
   if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
-    window.__SECURITY_SHIELD.endExam(false);
+    window.__SECURITY_SHIELD.endExam(Boolean(force));
   }
   showWritingListView();
+  return true;
 }
 
 function togglePromptExpand() {
@@ -679,7 +713,7 @@ function renderWritingSections() {
               ${wordCount} từ
             </span>
             <button type="button" class="writing-section-clear-btn" onclick="clearSectionText('${sec.id}')" title="Xóa nội dung đoạn này">
-              ✕ Xóa đoạn
+              <ion-icon name="close-circle-outline"></ion-icon> Xóa đoạn
             </button>
           </div>
         </div>
@@ -928,6 +962,10 @@ function updateModalCategorySelect(selectedId) {
 }
 
 function openCreateWritingSetModal(presetCat) {
+  if (typeof Auth !== 'undefined' && !Auth.canEditContent()) {
+    toast('Chỉ giáo viên mới có quyền tạo bộ đề luyện viết!', 'bad');
+    return;
+  }
   const dlg = $('#writing-set-dialog');
   if (!dlg) return;
 
@@ -946,6 +984,10 @@ function openCreateWritingSetModal(presetCat) {
 }
 
 function editWritingSet(id) {
+  if (typeof Auth !== 'undefined' && !Auth.canEditContent()) {
+    toast('Chỉ giáo viên mới có quyền chỉnh sửa bộ đề!', 'bad');
+    return;
+  }
   if (!writingSets || !writingSets.length) loadWritingSets();
   const targetId = id || (currentWritingSet && currentWritingSet.id) || (typeof window !== 'undefined' ? window.currentWritingSetId : null);
   const set = writingSets.find(s => String(s.id) === String(targetId));
@@ -1094,9 +1136,9 @@ function renderModalSectionsEditor() {
       </div>
       <div class="modal-section-inputs">
         <div class="modal-field-col" style="flex:1;">
-          <label class="modal-sub-label">💡 Dàn ý cho phần này (hiển thị dưới đề bài):</label>
+          <label class="modal-sub-label">Hướng dẫn chấm / Yêu cầu cần đạt cho phần này:</label>
           <textarea 
-            placeholder="Nêu ý chính, định hướng luận cứ cần triển khai cho phần này..." 
+            placeholder="Nêu yêu cầu cần đạt, định hướng luận cứ để giáo viên chấm điểm..." 
             oninput="editingSections[${idx}].guide = this.value"
           >${esc(sec.guide || '')}</textarea>
         </div>
@@ -1177,6 +1219,10 @@ function handleSaveWritingSet(e) {
 }
 
 function deleteCurrentOpenedWritingSet() {
+  if (typeof Auth !== 'undefined' && !Auth.canEditContent()) {
+    toast('Chỉ giáo viên mới có quyền xóa bộ đề!', 'bad');
+    return;
+  }
   if (!currentWritingSet) return;
   const id = currentWritingSet.id;
   ask(`Bạn có chắc muốn xóa đề luyện viết "${currentWritingSet.title}" này không?`, () => {
@@ -1190,6 +1236,10 @@ function deleteCurrentOpenedWritingSet() {
 window.deleteCurrentOpenedWritingSet = deleteCurrentOpenedWritingSet;
 
 function deleteWritingSet(id) {
+  if (typeof Auth !== 'undefined' && !Auth.canEditContent()) {
+    toast('Chỉ giáo viên mới có quyền xóa bộ đề!', 'bad');
+    return;
+  }
   ask('Bạn có chắc muốn xóa bộ đề luyện viết này không?', () => {
     writingSets = writingSets.filter(s => s.id !== id);
     try { localStorage.removeItem('vq_writing_draft_' + id); } catch (e) {}
@@ -1201,6 +1251,10 @@ function deleteWritingSet(id) {
 }
 
 function duplicateWritingSet(id) {
+  if (typeof Auth !== 'undefined' && !Auth.canEditContent()) {
+    toast('Chỉ giáo viên mới có quyền nhân bản bộ đề!', 'bad');
+    return;
+  }
   const set = writingSets.find(s => s.id === id);
   if (!set) return;
   const clone = JSON.parse(JSON.stringify(set));
@@ -1256,30 +1310,30 @@ function openWritingReviewModal() {
   } else {
     if (currentWritingSet.category === 'nl-xh') {
       if (totalWords < 180) {
-        suggestions.push(`💡 Đoạn văn nghị luận xã hội 200 chữ thường dao động từ 180 - 250 từ. Bạn đang có ${totalWords} từ, hãy mở rộng thêm dẫn chứng thực tế.`);
+        suggestions.push(`Đoạn văn nghị luận xã hội 200 chữ thường dao động từ 180 - 250 từ. Bạn đang có ${totalWords} từ, hãy mở rộng thêm dẫn chứng thực tế.`);
       } else if (totalWords > 350) {
-        suggestions.push(`💡 Dung lượng khá dài (${totalWords} từ). Nếu là đề bài yêu cầu đoạn văn 200 chữ, bạn nên cô đọng lại các câu giải thích.`);
+        suggestions.push(`Dung lượng khá dài (${totalWords} từ). Nếu là đề bài yêu cầu đoạn văn 200 chữ, bạn nên cô đọng lại các câu giải thích.`);
       } else {
         suggestions.push(`✅ Dung lượng rất phù hợp với dung lượng đoạn văn nghị luận xã hội (${totalWords} từ).`);
       }
     } else if (currentWritingSet.category === 'nl-vh') {
       if (totalWords < 400) {
-        suggestions.push(`💡 Bài văn nghị luận văn học nên có từ 400 - 800 từ trở lên để phân tích sâu sắc cả nội dung và nghệ thuật (hiện có ${totalWords} từ).`);
+        suggestions.push(`Bài văn nghị luận văn học nên có từ 400 - 800 từ trở lên để phân tích sâu sắc cả nội dung và nghệ thuật (hiện có ${totalWords} từ).`);
       } else {
         suggestions.push(`✅ Dung lượng bài viết tương đối đầy đủ (${totalWords} từ).`);
       }
     } else if (currentWritingSet.category === 'cam-thu') {
       if (totalWords < 150) {
-        suggestions.push(`💡 Đoạn văn cảm thụ nên phát triển từ 150 - 250 từ để làm nổi bật cái hay, cái đẹp của hình tượng ngôn từ.`);
+        suggestions.push(`Đoạn văn cảm thụ nên phát triển từ 150 - 250 từ để làm nổi bật cái hay, cái đẹp của hình tượng ngôn từ.`);
       } else {
         suggestions.push(`✅ Dung lượng đoạn văn cảm thụ đạt chuẩn (${totalWords} từ).`);
       }
     }
 
     if (paragraphs.length < sections.length) {
-      suggestions.push(`💡 Bạn còn ${sections.length - paragraphs.length} phần của bài viết chưa hoàn thành.`);
+      suggestions.push(`Bạn còn ${sections.length - paragraphs.length} phần của bài viết chưa hoàn thành.`);
     } else {
-      suggestions.push(`🎉 Bạn đã hoàn thành đầy đủ cả ${sections.length} phần của bài viết! Bố cục mạch lạc và đồng đều.`);
+      suggestions.push(`Bạn đã hoàn thành đầy đủ cả ${sections.length} phần của bài viết! Bố cục mạch lạc và đồng đều.`);
     }
   }
 
@@ -1336,6 +1390,11 @@ function getWritingSectionMaxScore(sec, idx, totalSecs) {
 }
 
 function submitWritingEssay() {
+  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
+    toast('Vui lòng đăng nhập tài khoản để nộp bài!', 'bad');
+    if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
   if (!currentWritingSet) {
     toast('Không tìm thấy thông tin bộ đề luyện viết hiện tại!', 'bad');
     return;
@@ -1362,8 +1421,9 @@ function submitWritingEssay() {
 
   if (!confirm(confirmMsg)) return;
 
-  const pName = (localStorage.getItem('vq_player_nick') || localStorage.getItem('vq_player_name') || '').trim() || 'Học sinh';
-  const cName = (localStorage.getItem('vq_player_class') || '').trim();
+  const user = typeof Auth !== 'undefined' ? Auth.getCurrentUser() : null;
+  const pName = (user ? (user.full_name || user.username) : (localStorage.getItem('vq_player_nick') || localStorage.getItem('vq_player_name') || '')).trim() || 'Học sinh';
+  const cName = (user ? (user.class_name || '') : (localStorage.getItem('vq_player_class') || '')).trim();
 
   const details = sections.map((sec, idx) => {
     const text = (currentWritingDraft.sections?.[sec.id] || '').trim();
@@ -1392,6 +1452,9 @@ function submitWritingEssay() {
     timestamp: Date.now(),
     dateStr: new Date().toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' }),
     type: 'writing',
+    userId: user ? user.id : '',
+    username: user ? user.username : '',
+    userRole: user ? user.role : 'student',
     playerName: pName,
     className: cName,
     setId: String(currentWritingSet.id),
@@ -1432,7 +1495,7 @@ function submitWritingEssay() {
 
     // 2. Thoát khỏi phòng viết văn và dọn dẹp bộ đếm
     if (typeof exitWritingWorkspace === 'function') {
-      exitWritingWorkspace();
+      exitWritingWorkspace(true);
     }
 
     // 3. Chuyển ngay ra Trang chủ

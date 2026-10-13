@@ -2,10 +2,10 @@
    7. QUESTION EDITOR & EMOJI PICKER
    ========================================================================= */
 
-const EMOJIS = ['📖','📜','📚','✨','🌟','🚀','🎯',
-'🏆','🎮','🐉','🥇','🔥','⚡','🌈','👑','🛡️','⚔️',
-'🧠','💡','🔮','🇻🇳','💬','🌏','🌿','🍎','⚽','🎵',
-'🦋','🐼','🐭','🙏','👋','💚','💛','💙','💯','🌞'];
+const EMOJIS = ['📖','📜','📚','✍️','📑','🏛️','🎓',
+'🖋️','📝','✒️','🔍','🎯','🏆','🇻🇳','💬','🌏',
+'🌿','🔖','📄','🗂️','📊','📌','✨','⭐','🥇',
+'🕊️','🏫','📐','💼','📂','📰','🏷️','✏️','📘','📕'];
 
 function initEmojiPicker() {
   const picker = $('#emoji-picker');
@@ -57,6 +57,11 @@ function ensureQuestionCompatibility(question) {
 }
 
 R.edit = id => {
+  if (window.Auth && !window.Auth.canEditContent()) {
+    toast('Học sinh không có quyền chỉnh sửa bộ đề! Vui lòng đăng nhập tài khoản Giáo viên.', 'bad');
+    go('lib');
+    return;
+  }
   $('#lv').hidden = 1; $('#ev').hidden = 0;
   if (!sets.length) newSet();
   CS = sets.find(s => s.id == id) || CS || sets[0];
@@ -193,7 +198,7 @@ function renderQs() {
   <div>${esc(q.c)}</div>
   ${q.img ? `<img class="qi" src="${q.img}">` : ''}
   ${extra}
-  ${q.e ? `<div class="mut" style="font-size:12px; margin-top:6px;">💡 ${esc(q.e)}</div>` : ''}
+  ${q.e ? `<div class="mut" style="font-size:12px; margin-top:6px;"><b>Giải thích:</b> ${esc(q.e)}</div>` : ''}
 </div>`;
   }).join('') : '<p class="mut">Chưa có câu hỏi nào. Dùng form bên phải để thêm câu hỏi đầu tiên!</p>';
 }

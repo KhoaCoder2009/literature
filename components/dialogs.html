@@ -138,8 +138,7 @@
     <textarea id="prompt-source" maxlength="20000"
       placeholder="Dán đoạn trích nếu muốn câu hỏi đọc hiểu bám sát ngữ liệu riêng. Nếu để trống, AI sẽ tự động tạo câu hỏi dựa trên kiến thức tác phẩm chuẩn theo SGK..."
       style="min-height:85px;"></textarea>
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px; font-size:12px;">
-      <span id="prompt-source-guidance" class="mut" aria-live="polite">💡 Để trống nếu muốn AI tự động dùng kiến thức SGK.</span>
+    <div style="display:flex; justify-content:flex-end; align-items:center; margin-top:4px; font-size:12px;">
       <span id="prompt-source-count" class="mut" aria-live="polite"></span>
     </div>
 
@@ -162,7 +161,9 @@
       placeholder="Câu lệnh sẽ xuất hiện tại đây sau khi bạn nhấn nút ở Bước 1..."></textarea>
     
     <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; align-items:center;">
-      <button class="btn cy sm" type="button" onclick="copyQuestionPrompt()">📋 Sao chép câu lệnh</button>
+      <button class="btn cy sm" type="button" onclick="copyQuestionPrompt()">
+        <ion-icon name="copy-outline"></ion-icon> Sao chép câu lệnh
+      </button>
       <span style="font-size:12px; color:var(--mut); margin:0 4px;">Hoặc mở nhanh AI:</span>
       <button class="btn gh sm" type="button" onclick="openExternalAI('chatgpt')">Mở ChatGPT</button>
       <button class="btn gh sm" type="button" onclick="openExternalAI('gemini')">Mở Gemini</button>
@@ -199,7 +200,7 @@
   <div class="history-modal-header">
     <div class="history-header-title-box">
       <h2 style="margin:0; font-size:22px; font-weight:800; display:flex; align-items:center; gap:8px;">
-        <span>📜</span> <span>Lịch sử bài làm</span>
+        <ion-icon name="time-outline" style="font-size:24px; color:var(--gold);"></ion-icon> <span>Lịch sử bài làm</span>
       </h2>
       <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
         <span class="history-total-badge" id="history-total-count">0 lượt làm bài</span>
@@ -208,27 +209,33 @@
     </div>
     <div style="display:flex; align-items:center; gap:8px;">
       <button class="btn gh sm" type="button" onclick="loadQuizHistoryFromSupabase(true)" title="Tải lại từ máy chủ" style="padding:0 8px; height:32px;">
-        🔄
+        <ion-icon name="refresh-outline" style="font-size: 18px;"></ion-icon>
       </button>
-      <button class="btn no sm" type="button" onclick="clearAllQuizHistory()" title="Xóa toàn bộ lịch sử">
-        🗑️ Xóa tất cả
+      <button class="btn no sm teacher-only" type="button" onclick="clearAllQuizHistory()" title="Xóa toàn bộ lịch sử">
+        <ion-icon name="trash-outline"></ion-icon> <span>Xóa tất cả</span>
       </button>
-      <button class="btn gh sm" type="button" onclick="closeHistoryModal()" aria-label="Đóng">✕</button>
+      <button class="btn gh sm" type="button" onclick="closeHistoryModal()" aria-label="Đóng">
+        <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+      </button>
     </div>
   </div>
 
   <div class="history-search-bar" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
     <div style="flex:1; min-width:180px; position:relative; display:flex; align-items:center;">
-      <span class="history-search-icon">🔍</span>
+      <span class="history-search-icon">
+        <ion-icon name="search-outline"></ion-icon>
+      </span>
       <input id="history-search-input" type="text" placeholder="Tìm theo học sinh, lớp, từ khóa..." oninput="onHistorySearchInput()" style="width:100%;">
     </div>
     <select id="history-set-filter" onchange="onHistorySetFilterChange()" style="height:44px; border-radius:12px; border:2px solid var(--stroke); padding:0 12px; font-weight:700; font-size:13px; background:var(--bg-card); color:var(--ink); max-width:260px;" title="Lọc theo bộ câu hỏi">
-      <option value="">📚 Tất cả bộ đề</option>
+      <option value="">Tất cả bộ đề</option>
     </select>
   </div>
   <div id="history-active-filter-badge" style="display:none; margin:8px 0 4px; padding:6px 12px; background:rgba(217, 169, 79, 0.15); border:1.5px solid var(--gold); border-radius:10px; font-size:13px; font-weight:700; align-items:center; justify-content:space-between;">
     <span id="history-filter-badge-text"></span>
-    <button class="btn gh sm" type="button" onclick="clearHistorySetFilter()" style="padding:2px 8px; font-size:12px; height:24px;">✕ Xem tất cả</button>
+    <button class="btn gh sm" type="button" onclick="clearHistorySetFilter()" style="padding:2px 8px; font-size:12px; height:24px;">
+      <ion-icon name="close-circle-outline"></ion-icon> Xem tất cả
+    </button>
   </div>
 
   <div class="history-list-wrap" id="history-list-container">
@@ -250,9 +257,11 @@
     </div>
     <div style="display:flex; align-items:center; gap:8px;">
       <button class="btn cy sm" id="btn-toggle-grading-mode" type="button" onclick="toggleHistoryGradingMode()" title="Chuyển đổi giữa chế độ xem và chế độ chấm bài">
-        ✏️ Chấm bài thủ công
+        <ion-icon name="create-outline"></ion-icon> Chấm bài thủ công
       </button>
-      <button class="btn gh sm" type="button" onclick="closeHistoryDetailModal()" aria-label="Đóng">✕</button>
+      <button class="btn gh sm" type="button" onclick="closeHistoryDetailModal()" aria-label="Đóng">
+        <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+      </button>
     </div>
   </div>
 
@@ -265,7 +274,9 @@
   </div>
 
   <div class="history-modal-footer">
-    <button class="btn au sm" id="btn-save-grading-footer" type="button" onclick="saveManualGrading()" style="display:none; font-weight:800;">💾 Lưu kết quả chấm</button>
+    <button class="btn au sm" id="btn-save-grading-footer" type="button" onclick="saveManualGrading()" style="display:none; font-weight:800;">
+      <ion-icon name="checkmark-circle-outline"></ion-icon> Lưu kết quả chấm
+    </button>
     <button class="btn gh" type="button" onclick="closeHistoryDetailModal()">Đóng</button>
   </div>
 </dialog>
@@ -276,7 +287,9 @@
     <div class="writing-modal-title">
       <h3 id="writing-dialog-heading">Tạo bộ đề luyện viết</h3>
     </div>
-    <button class="btn sm gh" type="button" onclick="closeCreateWritingSetModal()" aria-label="Đóng">✕</button>
+    <button class="btn sm gh" type="button" onclick="closeCreateWritingSetModal()" aria-label="Đóng">
+      <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+    </button>
   </div>
   
   <form id="writing-set-form" onsubmit="handleSaveWritingSet(event)" class="writing-modal-form-wrap">
@@ -311,7 +324,9 @@
           </label>
           <div style="display:flex; gap:8px;">
             <button type="button" class="btn gh sm" onclick="applyQuickOutlineTemplate()">Nạp cấu trúc mẫu</button>
-            <button type="button" class="btn cy sm" onclick="addNewOutlineSectionRow()">+ Thêm phần</button>
+            <button type="button" class="btn cy sm" onclick="addNewOutlineSectionRow()">
+              <ion-icon name="add-outline"></ion-icon> Thêm phần
+            </button>
           </div>
         </div>
         <p class="mut" style="font-size:13px; margin:0 0 12px;">Cấu trúc chuẩn 3 phần (Mở bài, Thân bài, Kết bài).</p>
@@ -322,7 +337,9 @@
 
     <div class="writing-modal-footer">
       <button type="button" class="btn gh" onclick="closeCreateWritingSetModal()">Hủy</button>
-      <button type="submit" class="btn au">Lưu bộ đề</button>
+      <button type="submit" class="btn au">
+        <ion-icon name="save-outline"></ion-icon> Lưu bộ đề
+      </button>
     </div>
   </form>
 </dialog>
@@ -333,7 +350,9 @@
     <div class="writing-modal-title">
       <h3>Tổng quan bài viết</h3>
     </div>
-    <button class="btn sm gh" type="button" onclick="closeWritingReviewModal()">✕</button>
+    <button class="btn sm gh" type="button" onclick="closeWritingReviewModal()">
+      <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+    </button>
   </div>
 
   <div class="writing-modal-body review-body">
@@ -374,9 +393,15 @@
   </div>
 
   <div class="writing-modal-footer review-footer">
-    <button class="btn gh" type="button" onclick="copyCombinedEssayToClipboard()">Sao chép bài viết</button>
-    <button class="btn cy" type="button" onclick="downloadCombinedEssayAsText()">Tải tệp .txt</button>
-    <button class="btn au" type="button" onclick="submitWritingEssay(); closeWritingReviewModal();" style="font-weight:800;">✅ Nộp bài chấm điểm</button>
+    <button class="btn gh" type="button" onclick="copyCombinedEssayToClipboard()">
+      <ion-icon name="copy-outline"></ion-icon> Sao chép bài viết
+    </button>
+    <button class="btn cy" type="button" onclick="downloadCombinedEssayAsText()">
+      <ion-icon name="download-outline"></ion-icon> Tải tệp .txt
+    </button>
+    <button class="btn au" type="button" onclick="submitWritingEssay(); closeWritingReviewModal();" style="font-weight:800;">
+      <ion-icon name="send-outline"></ion-icon> Nộp bài chấm điểm
+    </button>
     <button class="btn gh" type="button" onclick="closeWritingReviewModal()">Đóng</button>
   </div>
 </dialog>
@@ -387,7 +412,9 @@
     <div class="writing-modal-title">
       <h3 id="reading-modal-title">Thêm bộ đề đọc hiểu mới</h3>
     </div>
-    <button class="btn sm gh" type="button" onclick="closeReadingEditModal()" aria-label="Đóng">✕</button>
+    <button class="btn sm gh" type="button" onclick="closeReadingEditModal()" aria-label="Đóng">
+      <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+    </button>
   </div>
 
   <form id="reading-edit-form" onsubmit="handleReadingFormSubmit(event)" class="writing-modal-form-wrap">
@@ -408,6 +435,17 @@
           </label>
           <select id="reading-form-category" required style="width:100%;"></select>
         </div>
+      </div>
+
+      <!-- Trạng thái xuất bản (Published / Draft) -->
+      <div style="margin-bottom:14px;">
+        <label for="reading-form-status" style="font-weight:700; display:block; margin-bottom:5px;">
+          Trạng thái bộ đề <span style="font-weight:400; color:var(--mut); font-size:12.5px;">(Chọn Đã xuất bản để học sinh nhìn thấy và làm bài)</span>
+        </label>
+        <select id="reading-form-status" style="width:100%;">
+          <option value="published">🟢 Đã xuất bản (Published - Hiển thị cho học sinh)</option>
+          <option value="draft">🟡 Bản nháp (Draft - Chỉ lưu riêng cho giáo viên)</option>
+        </select>
       </div>
 
       <!-- Hàng 2: Tác phẩm, Tác giả & Thể loại -->
@@ -455,15 +493,21 @@
             <h4 style="margin:0; font-size:16px; font-weight:800; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
               <span>Hệ thống câu hỏi đọc hiểu</span>
               <span class="tag cy" style="font-size:12.5px; font-weight:800; padding:3px 10px;">
-                🎯 Tổng điểm: <b id="reading-modal-total-score">6.0đ</b> / 6.0 điểm
+                Tổng điểm: <b id="reading-modal-total-score">6.0đ</b> / 6.0 điểm
               </span>
             </h4>
             <span class="mut" style="font-size:12.5px;">Chuẩn thang 6đ: Câu 1,2: Nhận biết (1đ) • Câu 3,4: Thông hiểu (1đ) • Câu 5: Vận dụng (2đ)</span>
           </div>
           <div style="display:flex; gap:6px; flex-wrap:wrap;">
-            <button type="button" class="btn au sm" onclick="applyStandard5QuestionTemplate()" title="Tự động nạp khung chuẩn 5 câu: 2 Nhận biết • 2 Thông hiểu • 1 Vận dụng (Đoạn văn)">⚡ Mẫu chuẩn 5 câu</button>
-            <button type="button" class="btn gh sm" onclick="openQuickImportModal()" title="Dán nhanh toàn bộ đề thi để tự động trích xuất">📋 Dán nhanh đề thi</button>
-            <button type="button" class="btn cy sm" onclick="addQuestionToReadingForm()">+ Thêm câu hỏi</button>
+            <button type="button" class="btn au sm" onclick="applyStandard5QuestionTemplate()" title="Tự động nạp khung chuẩn 5 câu: 2 Nhận biết • 2 Thông hiểu • 1 Vận dụng (Đoạn văn)">
+              <ion-icon name="flash-outline"></ion-icon> Mẫu chuẩn 5 câu
+            </button>
+            <button type="button" class="btn gh sm" onclick="openQuickImportModal()" title="Dán nhanh toàn bộ đề thi để tự động trích xuất">
+              <ion-icon name="clipboard-outline"></ion-icon> Dán nhanh đề thi
+            </button>
+            <button type="button" class="btn cy sm" onclick="addQuestionToReadingForm()">
+              <ion-icon name="add-outline"></ion-icon> Thêm câu hỏi
+            </button>
           </div>
         </div>
         <div id="reading-form-questions-list"></div>
@@ -472,7 +516,9 @@
 
     <div class="writing-modal-footer">
       <button type="button" class="btn gh" onclick="closeReadingEditModal()">Hủy</button>
-      <button type="submit" class="btn au" style="font-weight:800;">💾 Lưu đề đọc hiểu</button>
+      <button type="submit" class="btn au" style="font-weight:800;">
+        <ion-icon name="save-outline"></ion-icon> Lưu đề đọc hiểu
+      </button>
     </div>
   </form>
 </dialog>
@@ -481,9 +527,13 @@
 <dialog id="reading-quick-import-modal" class="writing-modal" style="max-width:680px;">
   <div class="writing-modal-header">
     <div class="writing-modal-title">
-      <h3>📋 Dán nhanh toàn bộ đề thi Đọc hiểu</h3>
+      <h3 style="display:flex; align-items:center; gap:8px;">
+        <ion-icon name="clipboard-outline"></ion-icon> Dán nhanh toàn bộ đề thi Đọc hiểu
+      </h3>
     </div>
-    <button class="btn sm gh" type="button" onclick="closeQuickImportModal()" aria-label="Đóng">✕</button>
+    <button class="btn sm gh" type="button" onclick="closeQuickImportModal()" aria-label="Đóng">
+      <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+    </button>
   </div>
   <div class="writing-modal-body" style="padding:18px 22px;">
     <p class="mut" style="margin:0 0 12px; font-size:13.5px; line-height:1.5;">
@@ -504,7 +554,9 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
   </div>
   <div class="writing-modal-footer">
     <button type="button" class="btn gh" onclick="closeQuickImportModal()">Hủy</button>
-    <button type="button" class="btn au" onclick="handleQuickImportSubmit()" style="font-weight:800;">⚡ Tự động bóc tách &amp; Áp dụng</button>
+    <button type="button" class="btn au" onclick="handleQuickImportSubmit()" style="font-weight:800;">
+      <ion-icon name="flash-outline"></ion-icon> Tự động bóc tách &amp; Áp dụng
+    </button>
   </div>
 </dialog>
 
@@ -514,25 +566,323 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
     <div class="writing-modal-title">
       <h3>Kết quả bài làm &amp; Đáp án tham khảo</h3>
     </div>
-    <button class="btn sm gh" type="button" onclick="closeReadingResultModal()" aria-label="Đóng">✕</button>
+    <button class="btn sm gh" type="button" onclick="closeReadingResultModal()" aria-label="Đóng">
+      <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+    </button>
   </div>
 
   <div class="writing-modal-body" style="padding:20px 24px;">
     <div class="reading-result-hero">
-      <div style="font-size:36px; margin-bottom:6px;">🎉</div>
+      <div style="font-size:36px; margin-bottom:6px; color:var(--primary);">
+        <ion-icon name="ribbon-outline"></ion-icon>
+      </div>
       <h3 style="margin:0 0 6px; font-weight:800;">Đã hoàn thành bài đọc hiểu!</h3>
-      <p class="mut" style="margin:0; font-size:14px;">Dưới đây là phần so sánh giữa câu trả lời của bạn và đáp án/gợi ý chuẩn.</p>
+      <p class="mut" style="margin:0; font-size:14px;">Dưới đây là phần so sánh giữa câu trả lời của bạn và đáp án chuẩn.</p>
     </div>
 
     <div id="reading-result-comparison-list" style="margin-top:20px;"></div>
   </div>
 
   <div class="writing-modal-footer">
-    <button type="button" class="btn au" onclick="closeReadingResultModal(); go('home'); toast('🎉 Nộp bài thành công! Bài làm đọc hiểu đã được lưu vào Lịch sử.', 'ok');" style="font-weight:800;">🏠 Về trang chủ</button>
+    <button type="button" class="btn au" onclick="closeReadingResultModal(); go('home'); toast('Nộp bài thành công! Bài làm đọc hiểu đã được lưu vào Lịch sử.', 'ok');" style="font-weight:800;">
+      <ion-icon name="home-outline"></ion-icon> Về trang chủ
+    </button>
     <button type="button" class="btn gh" onclick="closeReadingResultModal()">Đóng</button>
   </div>
 </dialog>
 
+<!-- AUTH DIALOG 1: ĐĂNG NHẬP HỆ THỐNG -->
+<dialog id="login-dialog" class="auth-modal login-modal modern-login-dialog">
+  <div class="login-dialog-card">
+    <!-- Nút đóng -->
+    <button class="login-close-btn" type="button" onclick="closeLoginDialog()" aria-label="Đóng cửa sổ đăng nhập" title="Đóng">
+      <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+    </button>
+
+    <!-- Header / Biểu trưng -->
+    <div class="login-brand-header">
+      <div class="login-brand-icon-box">
+        <img src="./assets/logo-nguvan.png" alt="Logo" class="login-brand-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <span class="login-brand-fallback-emoji" style="display:none;">
+          <ion-icon name="school-outline" style="font-size: 32px; color:var(--primary);"></ion-icon>
+        </span>
+      </div>
+      <h2 class="login-dialog-title">Đăng Nhập Hệ Thống</h2>
+      <p class="login-dialog-subtitle">Cổng học tập &amp; Ôn luyện môn Ngữ Văn</p>
+      <div class="login-info-pill">
+        <ion-icon name="school-outline"></ion-icon>
+        <span>Học sinh &amp; Giáo viên</span>
+      </div>
+    </div>
+
+    <!-- Biểu mẫu đăng nhập -->
+    <form id="login-form" onsubmit="handleLoginSubmit(event)" class="login-form-content">
+      <div id="login-error-msg" class="auth-alert-error" style="display:none;"></div>
+
+      <!-- Tên đăng nhập / Email -->
+      <div class="login-field-group">
+        <label for="login-username" class="login-field-label">
+          <span>Tên đăng nhập / Email</span>
+          <span class="req">*</span>
+        </label>
+        <div class="login-input-shell">
+          <span class="login-input-icon">
+            <ion-icon name="person-outline"></ion-icon>
+          </span>
+          <input type="text" id="login-username" class="login-field-input" required autocomplete="username" placeholder="Nhập tên đăng nhập hoặc email..." spellcheck="false" autocapitalize="none">
+        </div>
+      </div>
+
+      <!-- Mật khẩu -->
+      <div class="login-field-group">
+        <div class="login-field-header-row">
+          <label for="login-password" class="login-field-label">
+            <span>Mật khẩu</span>
+            <span class="req">*</span>
+          </label>
+        </div>
+        <div class="login-input-shell">
+          <span class="login-input-icon">
+            <ion-icon name="lock-closed-outline"></ion-icon>
+          </span>
+          <input type="password" id="login-password" class="login-field-input" required autocomplete="current-password" placeholder="Nhập mật khẩu...">
+          <button type="button" class="login-password-eye-btn" onclick="togglePasswordVisibility('login-password', this)" title="Hiện / Ẩn mật khẩu" aria-label="Hiện mật khẩu">
+            <ion-icon name="eye-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Nút Đăng nhập -->
+      <div class="login-submit-row">
+        <button type="submit" id="btn-submit-login" class="btn au login-btn-primary">
+          <ion-icon name="log-in-outline"></ion-icon> <span>Đăng nhập</span>
+        </button>
+      </div>
+
+      <!-- Hướng dẫn tài khoản -->
+      <div class="login-bottom-notice">
+        <div class="login-notice-icon">
+          <ion-icon name="information-circle-outline"></ion-icon>
+        </div>
+        <div class="login-notice-text">
+          Học sinh sử dụng tài khoản do nhà trường hoặc giáo viên bộ môn cấp. Nếu quên mật khẩu, vui lòng liên hệ giáo viên phụ trách để được đặt lại.
+        </div>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+
+<!-- AUTH DIALOG 3: CẤP TÀI KHOẢN MỚI CHO HỌC SINH / GIÁO VIÊN -->
+<dialog id="create-account-dialog" class="auth-modal create-acc-modal">
+  <div class="auth-modal-header">
+    <div class="auth-modal-title-box">
+      <span class="auth-modal-badge-icon" style="background:var(--cyan); color:#1e293b;">
+        <ion-icon name="person-add-outline"></ion-icon>
+      </span>
+      <div>
+        <h3 style="margin:0; font-size:19px; font-weight:800;">Cấp tài khoản mới</h3>
+        <p class="mut" style="margin:2px 0 0; font-size:13px;">Tài khoản sẽ được lưu trực tiếp vào cơ sở dữ liệu Supabase</p>
+      </div>
+    </div>
+    <button class="btn sm gh" type="button" onclick="closeCreateAccountModal()" aria-label="Đóng">
+      <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+    </button>
+  </div>
+
+  <form id="create-account-form" onsubmit="handleCreateAccountSubmit(event)" class="auth-modal-body">
+    <div id="create-account-error" class="auth-alert-error" style="display:none;"></div>
+
+    <div class="g2" style="margin-bottom:12px;">
+      <div class="auth-input-group">
+        <label for="new-acc-username" class="auth-label">Tên đăng nhập <span style="color:var(--red);">*</span></label>
+        <div class="auth-input-wrap">
+          <span class="auth-input-icon">
+            <ion-icon name="person-outline"></ion-icon>
+          </span>
+          <input type="text" id="new-acc-username" class="auth-input" required placeholder="ví dụ: tranvanan_12a1" spellcheck="false" autocapitalize="none">
+        </div>
+        <small class="mut" style="font-size:11.5px; margin-top:3px; display:block;">Viết liền, không dấu, ít nhất 3 ký tự</small>
+      </div>
+
+      <div class="auth-input-group">
+        <label for="new-acc-password" class="auth-label">Mật khẩu khởi tạo <span style="color:var(--red);">*</span></label>
+        <div class="auth-input-wrap">
+          <span class="auth-input-icon">
+            <ion-icon name="lock-closed-outline"></ion-icon>
+          </span>
+          <input type="text" id="new-acc-password" class="auth-input" required value="123456" placeholder="Mật khẩu ban đầu...">
+        </div>
+        <small class="mut" style="font-size:11.5px; margin-top:3px; display:block;">Mặc định: 123456 (học sinh có thể tự đổi sau)</small>
+      </div>
+    </div>
+
+    <div class="g2" style="margin-bottom:12px;">
+      <div class="auth-input-group">
+        <label for="new-acc-fullname" class="auth-label">Họ và tên học sinh / GV <span style="color:var(--red);">*</span></label>
+        <div class="auth-input-wrap">
+          <span class="auth-input-icon">
+            <ion-icon name="create-outline"></ion-icon>
+          </span>
+          <input type="text" id="new-acc-fullname" class="auth-input" required placeholder="ví dụ: Trần Văn An">
+        </div>
+      </div>
+
+      <div class="auth-input-group">
+        <label for="new-acc-class" class="auth-label">Lớp học / Đơn vị</label>
+        <div class="auth-input-wrap">
+          <span class="auth-input-icon">
+            <ion-icon name="school-outline"></ion-icon>
+          </span>
+          <input type="text" id="new-acc-class" class="auth-input" placeholder="ví dụ: 12A1, 10C2...">
+        </div>
+      </div>
+    </div>
+
+    <div class="g2" style="margin-bottom:16px;">
+      <div class="auth-input-group">
+        <label for="new-acc-role" class="auth-label">Vai trò tài khoản <span style="color:var(--red);">*</span></label>
+        <select id="new-acc-role" class="auth-select">
+          <option value="student" selected>Học sinh (Làm bài, xem kết quả - Không sửa đề/chấm)</option>
+          <option value="teacher">Giáo viên (Sửa đề &amp; chấm bài, quản lý học sinh)</option>
+          <option value="admin">Quản trị viên (Toàn quyền quản lý GV &amp; Học sinh)</option>
+        </select>
+      </div>
+
+      <div class="auth-input-group">
+        <label for="new-acc-avatar" class="auth-label">Biểu tượng / Avatar</label>
+        <select id="new-acc-avatar" class="auth-select">
+          <option value="🎓" selected>Học sinh</option>
+          <option value="🏛️">Giáo viên</option>
+          <option value="⚡">Quản trị viên</option>
+          <option value="📚">Học liệu</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="auth-modal-footer" style="padding:0; border:none; margin-top:20px;">
+      <button type="button" class="btn gh" onclick="closeCreateAccountModal()">Hủy</button>
+      <button type="submit" id="btn-submit-create-account" class="btn au" style="font-weight:800;">
+        <ion-icon name="checkmark-circle-outline"></ion-icon> Lưu &amp; Cấp tài khoản
+      </button>
+    </div>
+  </form>
+</dialog>
+
+<!-- AUTH DIALOG 4: ĐẶT LẠI MẬT KHẨU (GIÁO VIÊN RESET CHO HỌC SINH) -->
+<dialog id="reset-password-dialog" class="auth-modal" style="max-width:440px;">
+  <div class="auth-modal-header">
+    <div class="auth-modal-title-box">
+      <span class="auth-modal-badge-icon" style="background:var(--cyan); color:#1e293b;">
+        <ion-icon name="key-outline"></ion-icon>
+      </span>
+      <div>
+        <h3 style="margin:0; font-size:18px; font-weight:800;">Đặt lại mật khẩu</h3>
+        <p class="mut" style="margin:2px 0 0; font-size:12.5px;">Cập nhật mật khẩu mới cho tài khoản học sinh</p>
+      </div>
+    </div>
+    <button class="btn sm gh" type="button" onclick="closeResetPasswordModal()" aria-label="Đóng">
+      <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+    </button>
+  </div>
+
+  <form onsubmit="handleResetPasswordSubmit(event)" class="auth-modal-body">
+    <div id="reset-password-error" class="auth-alert-error" style="display:none;"></div>
+
+    <div style="padding:10px 14px; background:var(--bg); border:1px solid var(--stroke); border-radius:12px; margin-bottom:14px; font-size:13.5px;">
+      <span class="mut">Tài khoản:</span> <strong id="reset-user-target-info" style="color:var(--primary);"></strong>
+    </div>
+
+    <div class="auth-input-group">
+      <label for="reset-new-password" class="auth-label">Mật khẩu mới <span style="color:var(--red);">*</span></label>
+      <div class="auth-input-wrap">
+        <span class="auth-input-icon">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+        </span>
+        <input type="text" id="reset-new-password" class="auth-input" required value="123456" placeholder="Nhập mật khẩu mới...">
+      </div>
+      <small class="mut" style="font-size:11.5px; margin-top:3px; display:block;">Ít nhất 4 ký tự</small>
+    </div>
+
+    <div class="auth-modal-footer" style="padding:0; border:none; margin-top:20px;">
+      <button type="button" class="btn gh" onclick="closeResetPasswordModal()">Hủy</button>
+      <button type="submit" id="btn-submit-reset-password" class="btn au" style="font-weight:800;">
+        <ion-icon name="checkmark-circle-outline"></ion-icon> Đặt lại mật khẩu
+      </button>
+    </div>
+  </form>
+</dialog>
+
+<!-- AUTH DIALOG 5: TỰ ĐỔI MẬT KHẨU CÁ NHÂN (HỌC SINH / GIÁO VIÊN ĐANG ĐĂNG NHẬP) -->
+<dialog id="change-password-dialog" class="auth-modal" style="max-width:440px;">
+  <div class="auth-modal-header">
+    <div class="auth-modal-title-box">
+      <span class="auth-modal-badge-icon">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+      </span>
+      <div>
+        <h3 style="margin:0; font-size:18px; font-weight:800;">Đổi mật khẩu cá nhân</h3>
+        <p class="mut" style="margin:2px 0 0; font-size:12.5px;">Bảo mật thông tin tài khoản của bạn</p>
+      </div>
+    </div>
+    <button class="btn sm gh" type="button" onclick="closeChangePasswordModal()" aria-label="Đóng">
+      <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+    </button>
+  </div>
+
+  <form id="change-password-form" onsubmit="handleChangePasswordSubmit(event)" class="auth-modal-body">
+    <div id="change-password-error" class="auth-alert-error" style="display:none;"></div>
+
+    <div class="auth-input-group" style="margin-bottom:12px;">
+      <label for="change-old-password" class="auth-label">Mật khẩu hiện tại <span style="color:var(--red);">*</span></label>
+      <div class="auth-input-wrap">
+        <span class="auth-input-icon">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+        </span>
+        <input type="password" id="change-old-password" class="auth-input" required placeholder="Nhập mật khẩu hiện tại...">
+        <button type="button" class="auth-pwd-toggle-btn" onclick="togglePasswordVisibility('change-old-password', this)">
+          <ion-icon name="eye-outline"></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="auth-input-group" style="margin-bottom:12px;">
+      <label for="change-new-password" class="auth-label">Mật khẩu mới <span style="color:var(--red);">*</span></label>
+      <div class="auth-input-wrap">
+        <span class="auth-input-icon">
+          <ion-icon name="key-outline"></ion-icon>
+        </span>
+        <input type="password" id="change-new-password" class="auth-input" required placeholder="Nhập mật khẩu mới (tối thiểu 4 ký tự)...">
+        <button type="button" class="auth-pwd-toggle-btn" onclick="togglePasswordVisibility('change-new-password', this)">
+          <ion-icon name="eye-outline"></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="auth-input-group" style="margin-bottom:16px;">
+      <label for="change-confirm-password" class="auth-label">Xác nhận mật khẩu mới <span style="color:var(--red);">*</span></label>
+      <div class="auth-input-wrap">
+        <span class="auth-input-icon">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+        </span>
+        <input type="password" id="change-confirm-password" class="auth-input" required placeholder="Nhập lại mật khẩu mới...">
+        <button type="button" class="auth-pwd-toggle-btn" onclick="togglePasswordVisibility('change-confirm-password', this)">
+          <ion-icon name="eye-outline"></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="auth-modal-footer" style="padding:0; border:none; margin-top:20px;">
+      <button type="button" class="btn gh" onclick="closeChangePasswordModal()">Hủy</button>
+      <button type="submit" id="btn-submit-change-password" class="btn au" style="font-weight:800;">
+        <ion-icon name="checkmark-circle-outline"></ion-icon> Đổi mật khẩu
+      </button>
+    </div>
+  </form>
+</dialog>
+
 <!-- TOAST & BACK TO TOP -->
 <div id="toast" role="status"></div>
-<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Về đầu trang" title="Về đầu trang">↑</button>
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Về đầu trang" title="Về đầu trang">
+  <ion-icon name="arrow-up-outline"></ion-icon>
+</button>

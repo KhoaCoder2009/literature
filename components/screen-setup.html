@@ -4,7 +4,7 @@
     <!-- Hero Banner -->
     <div class="cartoon-lib-banner setup-hero-banner">
       <div class="lib-banner-content">
-        <h1 style="font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;">Phòng bài học trắc nghiệm</h1>
+        <h1 style="font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;">Phòng bài học</h1>
         <p class="mut" style="margin:0; font-size:14.5px;">Chọn bộ đề bài học bên dưới để bắt đầu luyện tập và thử thách kiến thức</p>
       </div>
     </div>
@@ -13,7 +13,9 @@
     <div class="lib-search-filter-card" style="margin: 0 0 16px;">
       <div class="lib-search-bar-row">
         <div class="lib-search-input-box">
-          <span class="lib-search-lead-icon">🔍</span>
+          <span class="lib-search-lead-icon">
+            <ion-icon name="search-outline"></ion-icon>
+          </span>
           <input id="setup-search" type="text" placeholder="Tìm kiếm bộ đề bài học theo tên, tác phẩm, chủ đề…" oninput="onSetupSearchInput()" autocomplete="off">
         </div>
       </div>
@@ -41,7 +43,9 @@
         <div class="writing-modal-title">
           <h3 id="start-dialog-heading">Thông tin người học</h3>
         </div>
-        <button class="btn sm gh" type="button" onclick="closeStartQuizModal()" aria-label="Đóng">✕</button>
+        <button class="btn sm gh" type="button" onclick="closeStartQuizModal()" aria-label="Đóng">
+          <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+        </button>
       </div>
       
       <form id="start-quiz-form" onsubmit="handleStartQuizSubmit(event)" class="writing-modal-form-wrap">
@@ -72,7 +76,9 @@
 
         <div class="writing-modal-footer">
           <button type="button" class="btn gh" onclick="closeStartQuizModal()">Hủy</button>
-          <button type="submit" class="btn au" style="font-weight: 800;">▶ Bắt đầu làm bài</button>
+          <button type="submit" class="btn au" style="font-weight: 800;">
+            <ion-icon name="play-outline"></ion-icon> Bắt đầu làm bài
+          </button>
         </div>
       </form>
     </dialog>

@@ -2,11 +2,17 @@
 
 <nav>
   <button class="btn sm gh mobile-menu-toggle" type="button" onclick="toggleMobileMenu()" aria-label="Mở danh mục điều hướng" aria-controls="mobile-sidebar" aria-expanded="false" title="Danh mục điều hướng">
-    <span>☰</span> <span class="nav-btn-label">Danh mục</span>
+    <ion-icon name="menu-outline" style="font-size: 20px;"></ion-icon> <span class="nav-btn-label">Danh mục</span>
   </button>
 
-  <div class="brand-wrap" onclick="go('home')" aria-label="Về Trang chủ">
-    <img class="brand-logo" src="./assets/logo-nguvan.png" alt="Biểu trưng Ngữ Văn">
+  <div class="nav-brand-wrap" onclick="go('home')" title="Về trang chủ">
+    <img src="./assets/logo-nguvan.png" alt="Biểu trưng Ngữ Văn" class="nav-brand-img">
+  </div>
+
+  <div class="nav-user-area" id="nav-user-area">
+    <div id="nav-user-widget">
+      <!-- Auth module sẽ tự động render Profile / Đăng nhập tại đây -->
+    </div>
   </div>
 </nav>
 
@@ -16,29 +22,40 @@
     <div style="display:flex;align-items:center;cursor:pointer;" onclick="go('home'); closeMobileMenu();" title="Về trang chủ">
       <img src="./assets/logo-nguvan.png" alt="Biểu trưng Ngữ Văn" class="sidebar-logo">
     </div>
-    <button class="btn sm gh" type="button" onclick="closeMobileMenu()" aria-label="Đóng danh mục">✕</button>
+    <button class="btn sm gh" type="button" onclick="closeMobileMenu()" aria-label="Đóng danh mục">
+      <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+    </button>
   </div>
+
   <div class="sidebar-links-list">
+    <div class="sidebar-section-title">Học tập & Luyện đề</div>
     <a data-g="home" onclick="go('home'); closeMobileMenu();">
-      <span class="sidebar-icon">🏠</span> <span>Trang chủ</span>
+      <span class="sidebar-icon"><ion-icon name="home-outline"></ion-icon></span> <span>Trang chủ</span>
     </a>
     <a data-g="setup" onclick="go('setup'); closeMobileMenu();">
-      <span class="sidebar-icon">📖</span> <span>Bài học</span>
+      <span class="sidebar-icon"><ion-icon name="book-outline"></ion-icon></span> <span>Bài học</span>
     </a>
     <a data-g="reading" onclick="go('reading'); closeMobileMenu();">
-      <span class="sidebar-icon">📑</span> <span>Đọc hiểu</span>
+      <span class="sidebar-icon"><ion-icon name="document-text-outline"></ion-icon></span> <span>Đọc hiểu</span>
     </a>
     <a data-g="writing" onclick="go('writing'); closeMobileMenu();">
-      <span class="sidebar-icon">✍️</span> <span>Luyện viết</span>
+      <span class="sidebar-icon"><ion-icon name="create-outline"></ion-icon></span> <span>Luyện viết</span>
     </a>
-    <a data-g="lib" onclick="go('lib'); closeMobileMenu();">
-      <span class="sidebar-icon">📚</span> <span>Thư viện</span>
+
+    <div class="sidebar-section-title">Kho dữ liệu & Hồ sơ</div>
+    <a data-g="lib" class="teacher-only" onclick="go('lib'); closeMobileMenu();">
+      <span class="sidebar-icon"><ion-icon name="library-outline"></ion-icon></span> <span>Thư viện học liệu</span>
     </a>
     <a data-g="history" onclick="go('history'); closeMobileMenu();">
-      <span class="sidebar-icon">📜</span> <span>Lịch sử bài làm</span>
+      <span class="sidebar-icon"><ion-icon name="time-outline"></ion-icon></span> <span>Lịch sử bài làm</span>
+    </a>
+
+    <div class="sidebar-section-title">Hệ thống & Cài đặt</div>
+    <a data-g="accounts" class="teacher-only" onclick="go('accounts'); closeMobileMenu();">
+      <span class="sidebar-icon"><ion-icon name="people-outline"></ion-icon></span> <span>Quản lý tài khoản</span>
     </a>
     <a onclick="closeMobileMenu(); openSettingsDialog();">
-      <span class="sidebar-icon">⚙️</span> <span>Cài đặt</span>
+      <span class="sidebar-icon"><ion-icon name="settings-outline"></ion-icon></span> <span>Cài đặt</span>
     </a>
   </div>
 </aside>

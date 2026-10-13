@@ -37,11 +37,11 @@ const cardHtml = (s, idx = 0) => {
   const topicName = (s.topic && s.topic.trim()) ? s.topic.trim() : 'Chưa phân loại';
 
   const pills = [];
-  if (mcCount) pills.push(`<span class="lib-pill pill-mc">📝 ${mcCount} trắc nghiệm</span>`);
-  if (shortCount) pills.push(`<span class="lib-pill pill-short">✏️ ${shortCount} tự luận</span>`);
-  if (tfCount) pills.push(`<span class="lib-pill pill-tf">✅ ${tfCount} đúng/sai</span>`);
-  if (matchCount) pills.push(`<span class="lib-pill pill-match">🔗 ${matchCount} nối cặp</span>`);
-  if (!pills.length) pills.push(`<span class="lib-pill pill-empty">⚠️ Chưa có câu hỏi</span>`);
+  if (mcCount) pills.push(`<span class="lib-pill pill-mc"><ion-icon name="list-outline"></ion-icon> ${mcCount} trắc nghiệm</span>`);
+  if (shortCount) pills.push(`<span class="lib-pill pill-short"><ion-icon name="create-outline"></ion-icon> ${shortCount} tự luận</span>`);
+  if (tfCount) pills.push(`<span class="lib-pill pill-tf"><ion-icon name="checkmark-circle-outline"></ion-icon> ${tfCount} đúng/sai</span>`);
+  if (matchCount) pills.push(`<span class="lib-pill pill-match"><ion-icon name="link-outline"></ion-icon> ${matchCount} nối cặp</span>`);
+  if (!pills.length) pills.push(`<span class="lib-pill pill-empty"><ion-icon name="alert-circle-outline"></ion-icon> Chưa có câu hỏi</span>`);
 
   let diffSummary = '';
   if (easyCount || medCount || hardCount) {
@@ -53,9 +53,10 @@ const cardHtml = (s, idx = 0) => {
   }
 
   const isSelected = selectedSetIds.has(String(s.id));
+  const canEdit = !window.Auth || window.Auth.canEditContent();
   const cardOnClick = bulkDeleteMode 
     ? `toggleSetFromCard(event, '${esc(s.id)}')`
-    : `go('edit', '${esc(s.id)}')`;
+    : (canEdit ? `go('edit', '${esc(s.id)}')` : `go('setup', '${esc(s.id)}')`);
 
   return `
 <div class="setup-grid-card lib-detailed-card set ${bulkDeleteMode ? 'bulk-selectable' : ''}${isSelected ? ' selected' : ''}" onclick="${cardOnClick}">
@@ -65,12 +66,12 @@ const cardHtml = (s, idx = 0) => {
       <span class="setup-card-count-pill">${qCount} câu hỏi</span>
     </div>
     <h3 class="setup-card-title">${esc(s.title)}</h3>
-    <span class="setup-card-watermark">${s.emo || '📖'}</span>
+    <span class="setup-card-watermark"><ion-icon name="book-outline"></ion-icon></span>
   </div>
 
   <div class="lib-card-details">
     <div class="lib-card-meta-row">
-      <span class="clickable-topic-tag" title="Nhấp để lọc theo thẻ: ${esc(topicName)}" onclick="event.stopPropagation(); setTopicFilter('${esc(topicName)}')">🏷️ ${esc(topicName)}</span>
+      <span class="clickable-topic-tag" title="Nhấp để lọc theo thẻ: ${esc(topicName)}" onclick="event.stopPropagation(); setTopicFilter('${esc(topicName)}')"><ion-icon name="pricetag-outline"></ion-icon> ${esc(topicName)}</span>
       ${diffSummary}
     </div>
 
@@ -81,12 +82,12 @@ const cardHtml = (s, idx = 0) => {
 
   <div class="lib-card-actions-bar">
     <div class="lib-actions-left">
-      <button class="btn cy sm" type="button" onclick="event.stopPropagation(); go('edit','${esc(s.id)}')" title="Sửa nội dung câu hỏi">✏️ Sửa</button>
-      <button class="btn gh sm" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử làm bài của bộ đề này">📜 Lịch sử</button>
-      <button class="btn no sm" type="button" onclick="event.stopPropagation(); del('${esc(s.id)}')" title="Xóa bộ đề">🗑️ Xóa</button>
+      ${canEdit ? `<button class="btn cy sm btn-edit-set" type="button" onclick="event.stopPropagation(); go('edit','${esc(s.id)}')" title="Sửa nội dung câu hỏi"><ion-icon name="create-outline"></ion-icon> Sửa</button>` : ''}
+      <button class="btn gh sm" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử làm bài của bộ đề này"><ion-icon name="time-outline"></ion-icon> Lịch sử</button>
+      ${canEdit ? `<button class="btn no sm btn-delete-set" type="button" onclick="event.stopPropagation(); del('${esc(s.id)}')" title="Xóa bộ đề"><ion-icon name="trash-outline"></ion-icon> Xóa</button>` : ''}
     </div>
     <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('setup', '${esc(s.id)}')">
-      <span class="btn-setup-icon">▶</span>
+      <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
       <span>Vào học</span>
     </button>
   </div>
@@ -108,24 +109,27 @@ const readingLibCardHtml = (s, idx = 0) => {
   if (nbCount) pills.push(`<span class="lib-pill pill-nb">🟢 ${nbCount} Nhận biết</span>`);
   if (thCount) pills.push(`<span class="lib-pill pill-th">🟡 ${thCount} Thông hiểu</span>`);
   if (vdCount) pills.push(`<span class="lib-pill pill-vd">🔴 ${vdCount} Vận dụng</span>`);
-  if (!pills.length) pills.push(`<span class="lib-pill pill-empty">📝 ${qCount} câu hỏi đọc hiểu</span>`);
+  if (!pills.length) pills.push(`<span class="lib-pill pill-empty"><ion-icon name="document-text-outline"></ion-icon> ${qCount} câu hỏi đọc hiểu</span>`);
 
   const passageSnippet = (s.passage || '').trim().replace(/\r?\n+/g, ' / ');
+  const canEdit = !window.Auth || window.Auth.canEditContent();
+  const cardOnClick = canEdit ? `openEditReadingSetModal('${esc(s.id)}')` : `go('reading', '${esc(s.id)}')`;
 
   return `
-<div class="setup-grid-card lib-detailed-card" onclick="openEditReadingSetModal('${esc(s.id)}')">
+<div class="setup-grid-card lib-detailed-card" onclick="${cardOnClick}">
   <div class="setup-card-banner lib-card-banner" style="background: ${bg};">
     <div class="setup-card-top-info">
       <span class="setup-card-count-pill">${qCount} câu hỏi</span>
+      ${s.status === 'draft' ? '<span class="lib-pill pill-draft" style="color:var(--amber); border-color:var(--amber);"><ion-icon name="document-text-outline"></ion-icon> Bản nháp</span>' : '<span class="lib-pill pill-published" style="color:var(--green); border-color:var(--green);"><ion-icon name="checkmark-circle-outline"></ion-icon> Đã xuất bản</span>'}
     </div>
     <h3 class="setup-card-title">${esc(s.title)}</h3>
-    <span class="setup-card-watermark">${s.emo || '📑'}</span>
+    <span class="setup-card-watermark"><ion-icon name="document-text-outline"></ion-icon></span>
   </div>
 
   <div class="lib-card-details">
     <div class="lib-card-meta-row">
-      <span class="clickable-topic-tag" title="Nhấp để lọc theo chủ đề: ${esc(topic)}" onclick="event.stopPropagation(); setLibReadingTopicFilter('${esc(topic)}')">🏷️ ${esc(topic)}</span>
-      <span class="lib-meta-author" title="Tác giả">👤 ${esc(author)}</span>
+      <span class="clickable-topic-tag" title="Nhấp để lọc theo chủ đề: ${esc(topic)}" onclick="event.stopPropagation(); setLibReadingTopicFilter('${esc(topic)}')"><ion-icon name="pricetag-outline"></ion-icon> ${esc(topic)}</span>
+      <span class="lib-meta-author" title="Tác giả"><ion-icon name="person-outline"></ion-icon> ${esc(author)}</span>
     </div>
 
     <div class="lib-card-breakdown">
@@ -138,19 +142,19 @@ const readingLibCardHtml = (s, idx = 0) => {
       </div>
     ` : `
       <div class="lib-card-preview-box mut">
-        <i>💡 Nhấp "Sửa" để bổ sung ngữ liệu trích đoạn.</i>
+        <span>Chưa có nội dung ngữ liệu trích đoạn.</span>
       </div>
     `}
   </div>
 
   <div class="lib-card-actions-bar">
     <div class="lib-actions-left">
-      <button class="btn cy sm" type="button" onclick="event.stopPropagation(); openEditReadingSetModal('${esc(s.id)}')" title="Sửa thông tin đề đọc hiểu">✏️ Sửa</button>
-      <button class="btn gh sm" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử làm bài của đề đọc hiểu này">📜 Lịch sử</button>
-      <button class="btn no sm" type="button" onclick="event.stopPropagation(); deleteReadingSet('${esc(s.id)}'); R.lib();" title="Xóa đề đọc hiểu">🗑️ Xóa</button>
+      ${canEdit ? `<button class="btn cy sm btn-edit-set" type="button" onclick="event.stopPropagation(); openEditReadingSetModal('${esc(s.id)}')" title="Sửa thông tin đề đọc hiểu"><ion-icon name="create-outline"></ion-icon> Sửa</button>` : ''}
+      <button class="btn gh sm" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử làm bài của đề đọc hiểu này"><ion-icon name="time-outline"></ion-icon> Lịch sử</button>
+      ${canEdit ? `<button class="btn no sm btn-delete-set" type="button" onclick="event.stopPropagation(); deleteReadingSet('${esc(s.id)}'); R.lib();" title="Xóa đề đọc hiểu"><ion-icon name="trash-outline"></ion-icon> Xóa</button>` : ''}
     </div>
     <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('reading', '${esc(s.id)}')">
-      <span class="btn-setup-icon">▶</span>
+      <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
       <span>Đọc hiểu</span>
     </button>
   </div>
@@ -168,22 +172,26 @@ const writingLibCardHtml = (s, idx = 0) => {
     <div class="lib-outline-stepper">
       ${secList.map((sec, i) => `<span class="lib-step-pill">${i === 0 ? '🟢' : i === 1 ? '🟡' : '🔴'} ${esc(sec.title || 'Phần ' + (i+1))}</span>`).join('<span class="lib-step-arrow">→</span>')}
     </div>
-  ` : `<span class="lib-pill pill-empty">✍️ ${secCount} phần dàn ý</span>`;
+  ` : `<span class="lib-pill pill-empty"><ion-icon name="create-outline"></ion-icon> ${secCount} phần dàn ý</span>`;
+
+  const canEdit = !window.Auth || window.Auth.canEditContent();
+  const cardOnClick = canEdit ? `editWritingSet('${esc(s.id)}')` : `go('writing', '${esc(s.id)}')`;
 
   return `
-<div class="setup-grid-card lib-detailed-card" onclick="editWritingSet('${esc(s.id)}')">
+<div class="setup-grid-card lib-detailed-card" onclick="${cardOnClick}">
   <div class="setup-card-banner lib-card-banner" style="background: ${bg};">
     <div class="setup-card-top-info">
-      <span class="setup-card-count-pill">${secCount} phần dàn ý</span>
+      <span class="setup-card-count-pill">${secCount} phần câu hỏi</span>
+      ${s.status === 'draft' ? '<span class="lib-pill pill-draft" style="color:var(--amber); border-color:var(--amber);"><ion-icon name="document-text-outline"></ion-icon> Bản nháp</span>' : '<span class="lib-pill pill-published" style="color:var(--green); border-color:var(--green);"><ion-icon name="checkmark-circle-outline"></ion-icon> Đã xuất bản</span>'}
     </div>
     <h3 class="setup-card-title">${esc(s.title)}</h3>
-    <span class="setup-card-watermark">${s.icon || '✍️'}</span>
+    <span class="setup-card-watermark"><ion-icon name="create-outline"></ion-icon></span>
   </div>
 
   <div class="lib-card-details">
     <div class="lib-card-meta-row">
-      <span class="clickable-topic-tag" title="Nhấp để lọc theo chủ đề: ${esc(topic)}" onclick="event.stopPropagation(); setLibWritingTopicFilter('${esc(topic)}')">🏷️ ${esc(topic)}</span>
-      <span class="lib-meta-note">📑 Dàn ý 3 phần chuẩn</span>
+      <span class="clickable-topic-tag" title="Nhấp để lọc theo chủ đề: ${esc(topic)}" onclick="event.stopPropagation(); setLibWritingTopicFilter('${esc(topic)}')"><ion-icon name="pricetag-outline"></ion-icon> ${esc(topic)}</span>
+      <span class="lib-meta-note"><ion-icon name="document-text-outline"></ion-icon> Dàn ý chuẩn</span>
     </div>
 
     <div class="lib-card-breakdown">
@@ -196,18 +204,18 @@ const writingLibCardHtml = (s, idx = 0) => {
       </div>
     ` : `
       <div class="lib-card-preview-box mut">
-        <i>💡 Nhấp "Sửa" để soạn đề bài và dàn ý mẫu.</i>
+        <span>Chưa có nội dung đề bài và dàn ý.</span>
       </div>
     `}
   </div>
 
   <div class="lib-card-actions-bar">
     <div class="lib-actions-left">
-      <button class="btn cy sm" type="button" onclick="event.stopPropagation(); editWritingSet('${esc(s.id)}')" title="Sửa đề và dàn ý">✏️ Sửa</button>
-      <button class="btn no sm" type="button" onclick="event.stopPropagation(); deleteWritingSet('${esc(s.id)}'); setTimeout(() => R.lib(), 100);" title="Xóa đề">🗑️ Xóa</button>
+      ${canEdit ? `<button class="btn cy sm btn-edit-set" type="button" onclick="event.stopPropagation(); editWritingSet('${esc(s.id)}')" title="Sửa đề và dàn ý"><ion-icon name="create-outline"></ion-icon> Sửa</button>` : ''}
+      ${canEdit ? `<button class="btn no sm btn-delete-set" type="button" onclick="event.stopPropagation(); deleteWritingSet('${esc(s.id)}'); setTimeout(() => R.lib(), 100);" title="Xóa đề"><ion-icon name="trash-outline"></ion-icon> Xóa</button>` : ''}
     </div>
     <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('writing', '${esc(s.id)}')">
-      <span class="btn-setup-icon">▶</span>
+      <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
       <span>Luyện viết</span>
     </button>
   </div>
@@ -260,7 +268,7 @@ function renderTopicChips(allSets, filteredSets) {
 
   let chipsHtml = `
     <button type="button" class="topic-chip ${!currentTopicFilter ? 'active' : ''}" onclick="setTopicFilter('')" role="tab" aria-selected="${!currentTopicFilter}">
-      <span>🏷️ Tất cả</span>
+      <span><ion-icon name="pricetag-outline"></ion-icon> Tất cả</span>
       <span class="topic-chip-count">${allSets.length}</span>
     </button>
   `;
@@ -321,12 +329,12 @@ R.lib = () => {
   } else {
     $('#lg').innerHTML = `
       <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 42px 24px;">
-        <div style="font-size: 42px; margin-bottom: 12px;">🔍</div>
+        <div style="font-size: 42px; margin-bottom: 12px; color: var(--mut);"><ion-icon name="search-outline"></ion-icon></div>
         <h3 style="margin-bottom: 8px;">Không tìm thấy bộ bài học nào</h3>
         <p style="color: var(--mut); margin-bottom: 18px; max-width: 480px; margin-left: auto; margin-right: auto;">
           ${currentTopicFilter ? `Không có bộ bài học nào thuộc thẻ "<b>${esc(currentTopicFilter)}</b>"${f ? ` với từ khóa "<b>${esc(input.value)}</b>"` : ''}.` : `Không tìm thấy bộ bài học nào khớp với từ khóa "<b>${esc(input ? input.value : '')}</b>".`}
         </p>
-        <button class="btn au sm" onclick="clearLibSearch(); setTopicFilter('');">🔄 Hiển thị tất cả bộ bài học</button>
+        <button class="btn au sm" onclick="clearLibSearch(); setTopicFilter('');"><ion-icon name="refresh-outline"></ion-icon> Hiển thị tất cả bộ bài học</button>
       </div>`;
   }
   updateBulkDeleteButton();
@@ -344,6 +352,9 @@ function updateBulkDeleteButton() {
 }
 
 function enableBulkDeleteMode() {
+  if (window.Auth && !window.Auth.canEditContent()) {
+    return toast('Học sinh không có quyền xóa bộ đề!', 'bad');
+  }
   bulkDeleteMode = true;
   R.lib();
 }
@@ -397,11 +408,17 @@ function deleteSelectedSets() {
 }
 
 function newSet() {
+  if (window.Auth && !window.Auth.canEditContent()) {
+    return toast('Học sinh không có quyền tạo bộ đề mới! Vui lòng đăng nhập tài khoản Giáo viên.', 'bad');
+  }
   const s = { id: uid(), emo: '📖', title: 'Bộ câu hỏi mới', topic: '', qs: [] };
   sets.unshift(s); save(); go('edit', s.id);
 }
 
 function dup(id) {
+  if (window.Auth && !window.Auth.canEditContent()) {
+    return toast('Học sinh không có quyền sao chép bộ đề! Vui lòng đăng nhập tài khoản Giáo viên.', 'bad');
+  }
   const s = sets.find(x => x.id == id);
   if (!s) return;
   sets.unshift({ ...JSON.parse(JSON.stringify(s)), id: uid(), title: s.title + ' (Bản sao)' });
@@ -409,6 +426,9 @@ function dup(id) {
 }
 
 function del(id) {
+  if (window.Auth && !window.Auth.canEditContent()) {
+    return toast('Học sinh không có quyền xóa bộ đề! Vui lòng đăng nhập tài khoản Giáo viên.', 'bad');
+  }
   ask('Bạn có chắc chắn muốn xóa bộ câu hỏi này?', async () => {
     const [result] = await archiveQuestionSets([id]);
     if (result.error) {
@@ -439,10 +459,10 @@ function renderHomeSets() {
   if (!validSets.length) {
     container.innerHTML = `
       <div class="empty-sets-card">
-        <span class="empty-icon">📖</span>
+        <span class="empty-icon"><ion-icon name="book-outline"></ion-icon></span>
         <h3 style="margin:8px 0;">Chưa có bộ câu hỏi nào</h3>
         <p class="mut" style="margin:0 0 16px;">Hãy tạo bộ câu hỏi đầu tiên của bạn để bắt đầu ôn tập!</p>
-        <button class="btn au" onclick="newSet()">+ Tạo bộ đề ngay</button>
+        <button class="btn au" onclick="newSet()"><ion-icon name="add-outline"></ion-icon> Tạo bộ đề ngay</button>
       </div>`;
     return;
   }
@@ -469,13 +489,13 @@ function renderHomeSets() {
       <div class="cartoon-set-card ${colorClass}" onclick="startSetStudy('${esc(s.id)}')">
         <div class="set-card-glow"></div>
         <div class="set-card-top">
-          <span class="set-card-emoji">${s.emo || '📖'}</span>
-          <span class="set-card-tag">🏷️ ${esc(s.topic || 'Chưa phân loại')}</span>
+          <span class="set-card-emoji"><ion-icon name="book-outline"></ion-icon></span>
+          <span class="set-card-tag"><ion-icon name="pricetag-outline"></ion-icon> ${esc(s.topic || 'Chưa phân loại')}</span>
         </div>
         <h3 class="set-card-title">${esc(s.title)}</h3>
-        <p class="set-card-meta">📝 <b>${qCount}</b> câu hỏi (${details})</p>
+        <p class="set-card-meta"><ion-icon name="document-text-outline"></ion-icon> <b>${qCount}</b> câu hỏi (${details})</p>
         <div class="set-card-footer">
-          <span class="set-card-btn">🚀 Vào bài học ngay →</span>
+          <span class="set-card-btn"><ion-icon name="play-outline"></ion-icon> Vào bài học ngay →</span>
         </div>
       </div>
     `;
@@ -591,7 +611,9 @@ function renderLibReadingPane() {
   }
 
   // Filter Sets
+  const isStudent = Boolean(window.Auth && window.Auth.isStudent());
   const filtered = allSets.filter(s => {
+    if (isStudent && s.status === 'draft') return false;
     const top = (s.genre || s.category || 'Chưa phân loại').trim();
     if (currentLibReadingTopic && top.toLowerCase() !== currentLibReadingTopic.toLowerCase()) {
       return false;
@@ -606,10 +628,10 @@ function renderLibReadingPane() {
   if (!filtered.length) {
     container.innerHTML = `
       <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 42px 24px;">
-        <div style="font-size: 42px; margin-bottom: 12px;">📑</div>
+        <div style="font-size: 42px; margin-bottom: 12px; color: var(--mut);"><ion-icon name="document-text-outline"></ion-icon></div>
         <h3 style="margin-bottom: 8px;">Không tìm thấy đề đọc hiểu nào</h3>
         <p style="color: var(--mut); margin-bottom: 18px;">Hãy thử tìm kiếm với từ khóa khác hoặc tạo thêm đề đọc hiểu mới.</p>
-        <button class="btn au sm" onclick="openCreateReadingSetModal()">+ Thêm đề đọc hiểu mới</button>
+        <button class="btn au sm" onclick="openCreateReadingSetModal()"><ion-icon name="add-outline"></ion-icon> Thêm đề đọc hiểu mới</button>
       </div>
     `;
     return;
@@ -685,10 +707,10 @@ function renderLibWritingPane() {
   if (!filtered.length) {
     container.innerHTML = `
       <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 42px 24px;">
-        <div style="font-size: 42px; margin-bottom: 12px;">✍️</div>
+        <div style="font-size: 42px; margin-bottom: 12px; color: var(--mut);"><ion-icon name="create-outline"></ion-icon></div>
         <h3 style="margin-bottom: 8px;">Không tìm thấy đề viết nào</h3>
         <p style="color: var(--mut); margin-bottom: 18px;">Hãy thử tìm kiếm với từ khóa khác hoặc tạo thêm đề luyện viết mới.</p>
-        <button class="btn au sm" onclick="openCreateWritingSetModal()">+ Thêm đề viết mới</button>
+        <button class="btn au sm" onclick="openCreateWritingSetModal()"><ion-icon name="add-outline"></ion-icon> Thêm đề viết mới</button>
       </div>
     `;
     return;

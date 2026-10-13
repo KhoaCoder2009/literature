@@ -16,7 +16,9 @@
       <div class="reading-control-bar card">
         <div class="reading-control-top">
           <div class="reading-search-box">
-            <span class="reading-search-icon">🔍</span>
+            <span class="reading-search-icon">
+              <ion-icon name="search-outline"></ion-icon>
+            </span>
             <input type="text" id="reading-search-input" placeholder="Tìm kiếm bộ đề đọc hiểu theo tên bài, tác giả hoặc thể loại..." oninput="onReadingSearchInput()">
           </div>
         </div>
@@ -37,25 +39,19 @@
     <div id="reading-workspace-view" style="display:none;">
       <!-- Workspace Navigation Bar -->
       <div class="reading-workspace-nav">
-        <button class="btn gh sm" onclick="exitReadingWorkspace()">
-          <span>←</span> <span>Trở về danh sách đề</span>
-        </button>
         <div class="reading-workspace-title-box">
           <h3 id="reading-workspace-set-title">Đề bài đọc hiểu</h3>
           <span id="reading-workspace-set-badge" class="tag cy">Thơ hiện đại</span>
         </div>
         <div class="reading-workspace-actions">
-          <button class="btn gh sm" onclick="toggleReadingAnswersGuide()" id="btn-toggle-reading-answers" title="Bật/Tắt hiển thị đáp án gợi ý">
-            <span>💡</span> <span>Xem gợi ý đáp án</span>
-          </button>
           <button class="btn gh sm" onclick="resetCurrentReadingDraft()" title="Xóa toàn bộ câu trả lời để làm lại từ đầu">
-            <span>🔄</span> <span>Làm lại</span>
+            <ion-icon name="refresh-outline"></ion-icon> <span>Làm lại</span>
           </button>
-          <button class="btn no sm" onclick="deleteCurrentOpenedReadingSet()" title="Xóa đề này khỏi danh sách">
-            <span>🗑️</span> <span>Xóa đề</span>
+          <button class="btn no sm teacher-only" onclick="deleteCurrentOpenedReadingSet()" title="Xóa đề này khỏi danh sách">
+            <ion-icon name="trash-outline"></ion-icon> <span>Xóa đề</span>
           </button>
           <button class="btn au sm" onclick="submitReadingAnswers()" title="Nộp bài và xem đánh giá chi tiết">
-            <span>✅</span> <span>Nộp bài làm</span>
+            <ion-icon name="checkmark-done-outline"></ion-icon> <span>Nộp bài làm</span>
           </button>
         </div>
       </div>
@@ -66,7 +62,9 @@
         <div class="reading-passage-panel card">
           <div class="reading-panel-header">
             <div class="reading-panel-title">
-              <span class="reading-panel-icon">📜</span>
+              <span class="reading-panel-icon">
+                <ion-icon name="document-text-outline" style="font-size: 20px;"></ion-icon>
+              </span>
               <h4>I. PHẦN ĐỌC HIỂU (3,0 điểm)</h4>
             </div>
             <div class="reading-text-tools">
@@ -95,10 +93,14 @@
         <div class="reading-questions-panel card">
           <div class="reading-panel-header">
             <div class="reading-panel-title">
-              <span class="reading-panel-icon">✍️</span>
+              <span class="reading-panel-icon">
+                <ion-icon name="create-outline" style="font-size: 20px;"></ion-icon>
+              </span>
               <h4>Thực hiện các yêu cầu sau: (<span id="reading-q-count">0</span> câu)</h4>
             </div>
-            <span class="reading-save-status" id="reading-save-status">💾 Tự động lưu</span>
+            <span class="reading-save-status" id="reading-save-status">
+              <ion-icon name="cloud-done-outline"></ion-icon> Tự động lưu
+            </span>
           </div>
 
           <div class="reading-questions-list" id="reading-questions-list">

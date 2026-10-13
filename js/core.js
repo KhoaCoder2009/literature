@@ -50,7 +50,8 @@ const appConfig = Object.freeze({
     anonKey: _0xdec('PyMQMjgdOTMVMxATDyATaxQzEykTNAhvORkTbBMxKgIMGRBjdD8jECo5aRczFTMQID4CGDIDNxwgAAkTKRM0EDYAMxNsEzdrNDtoY2o5HQwxO2kyaz4NMig4AghqAwIyNhMzLTM5N2MpAAkTbBM3HC84aG4zFhkQKgMCCzMVMB9pFQ4faxQOH2oUHg8pEzcMbjkZE2wXMB8tFCAfIxQgC2oUAmp0A3cYYhBraTlvEBg2EzYPag4QNyNuEggWMC4SaCgNLgoOK24yDGhpIDsRNQ=='),
     table: _0xdec('Ky8/KS4zNTQFKT8uKQ=='),
     leaderboardTable: _0xdec('Nj87Pj8oODU7KD4FPzQuKDM/KQ=='),
-    historyTable: _0xdec('Ky8zIAUpLzg3MykpMzU0KQ==')
+    historyTable: _0xdec('Ky8zIAUpLzg3MykpMzU0KQ=='),
+    usersTable: _0xdec('Lyk/KAU7OTk1LzQuKQ==')
   })
 });
 
@@ -77,12 +78,59 @@ function ask(m, f) {
   dlg.showModal();
 }
 
+function isExamInProgress() {
+  if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.isExamActive === 'function') {
+    return window.__SECURITY_SHIELD.isExamActive();
+  }
+  if (currentScreen === 'game') return true;
+  const wsWriting = document.getElementById('writing-workspace-view');
+  if (currentScreen === 'writing' && wsWriting && wsWriting.style.display === 'block') return true;
+  const wsReading = document.getElementById('reading-workspace-view');
+  if (currentScreen === 'reading' && wsReading && wsReading.style.display === 'block') return true;
+  return false;
+}
+window.isExamInProgress = isExamInProgress;
+
+window.addEventListener('beforeunload', function(e) {
+  if (typeof isExamInProgress === 'function' && isExamInProgress()) {
+    e.preventDefault();
+    e.returnValue = 'Bạn đang trong quá trình làm bài thi! Vui lòng nộp bài trước khi thoát.';
+    return e.returnValue;
+  }
+});
+
 function go(n, p) {
+  if (n !== 'res' && n !== currentScreen && isExamInProgress()) {
+    toast('⚠️ Bạn đang làm bài! Phải nộp bài xong mới được thoát.', 'bad');
+    return;
+  }
+  if (n === 'edit' && window.Auth && !window.Auth.canEditContent()) {
+    toast('Học sinh không có quyền chỉnh sửa bộ đề! Vui lòng đăng nhập tài khoản Giáo viên.', 'bad');
+    return;
+  }
+  if (n === 'lib' && window.Auth && window.Auth.isStudent()) {
+    toast('Thư viện học liệu chỉ dành cho Giáo viên quản lý bộ đề.', 'bad');
+    return;
+  }
+  if (n === 'accounts' && window.Auth && !window.Auth.isTeacher()) {
+    toast('Chỉ Giáo viên mới có quyền truy cập trang Quản lý tài khoản.', 'bad');
+    return;
+  }
+  if (n === 'history' && window.Auth && !window.Auth.isLoggedIn()) {
+    toast('Vui lòng đăng nhập để xem lịch sử bài làm!', 'bad');
+    if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
+  if (['setup', 'game', 'reading', 'writing'].includes(n) && window.Auth && !window.Auth.isLoggedIn()) {
+    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
+    if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
   if (typeof playSound === 'function') playSound('pop');
   const sc = n == 'edit' ? 'lib' : n;
   currentScreen = sc;
   window.currentScreen = sc;
-  if (['home', 'lib', 'setup', 'writing', 'reading', 'history'].includes(sc)) {
+  if (['home', 'lib', 'setup', 'writing', 'reading', 'history', 'accounts'].includes(sc)) {
     try {
       sessionStorage.setItem('vq_current_screen', sc);
     } catch (error) {
