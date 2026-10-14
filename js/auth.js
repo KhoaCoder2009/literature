@@ -1099,9 +1099,13 @@
 
         <!-- DROPDOWN MENU -->
         <div class="user-dropdown-menu" id="user-dropdown-menu" style="display:none;" onclick="event.stopPropagation()">
+          <!-- Header người dùng đang đăng nhập -->
           <div class="dropdown-header">
-            <div class="dropdown-avatar-box">
-              ${renderAvatarMarkup(u, 'dropdown-avatar-img')}
+            <div class="dropdown-avatar-wrap">
+              <div class="dropdown-avatar-box">
+                ${renderAvatarMarkup(u, 'dropdown-avatar-img')}
+              </div>
+              <span class="dropdown-online-dot" title="Đang hoạt động"></span>
             </div>
             <div class="dropdown-info">
               <strong class="dropdown-name">${esc(u.full_name || u.username)}</strong>
@@ -1113,77 +1117,54 @@
             </div>
           </div>
 
-          <!-- KHỐI CHUYỂN ĐỔI TÀI KHOẢN TRÊN THIẾT BỊ -->
-          <div class="dropdown-accounts-box">
-            <div class="dropdown-accounts-bar">
-              <span class="dropdown-accounts-tag">
-                <ion-icon name="swap-horizontal-outline"></ion-icon> Tài khoản trên máy (${savedAccounts.length})
-              </span>
-              <button class="dropdown-accounts-add-btn" type="button" onclick="closeUserDropdown(); openLoginDialog(true);" title="Đăng nhập thêm tài khoản khác">
-                <ion-icon name="person-add-outline"></ion-icon> <span>Thêm</span>
-              </button>
-            </div>
-            
-            <div class="dropdown-accounts-list">
-              <!-- Tài khoản đang đăng nhập -->
-              <div class="dropdown-acc-item active" title="Tài khoản đang sử dụng">
-                <div class="dropdown-acc-avatar">
-                  ${renderAvatarMarkup(u, 'acc-avatar-mini')}
-                </div>
-                <div class="dropdown-acc-details">
-                  <div class="dropdown-acc-top">
-                    <strong class="dropdown-acc-name">${esc(u.full_name || u.username)}</strong>
-                    <span class="dropdown-active-pill"><ion-icon name="checkmark-circle"></ion-icon> Đang dùng</span>
-                  </div>
-                  <div class="dropdown-acc-sub">
-                    <span class="dropdown-acc-user">@${esc(u.username)}</span>
-                    ${roleBadgeHtml}
-                  </div>
-                </div>
+          <!-- Khối chuyển sang tài khoản khác (chỉ hiện khi có từ 2 tài khoản trở lên) -->
+          ${otherAccounts.length > 0 ? `
+            <div class="dropdown-switch-section">
+              <div class="dropdown-switch-title">
+                <ion-icon name="swap-horizontal-outline"></ion-icon>
+                <span>Chuyển tài khoản</span>
+                <span class="dropdown-switch-count">${otherAccounts.length}</span>
               </div>
+              <div class="dropdown-accounts-list">
+                ${otherAccounts.map(acc => {
+                  let rBadge = '';
+                  if (acc.role === 'admin') rBadge = '<span class="user-role-badge sm admin">Admin</span>';
+                  else if (acc.role === 'teacher') rBadge = '<span class="user-role-badge sm teacher">GV</span>';
+                  else rBadge = `<span class="user-role-badge sm student">${esc(acc.class_name || '12A2')}</span>`;
 
-              <!-- Các tài khoản khác đã lưu -->
-              ${otherAccounts.map(acc => {
-                let rBadge = '';
-                if (acc.role === 'admin') rBadge = '<span class="user-role-badge sm admin">Admin</span>';
-                else if (acc.role === 'teacher') rBadge = '<span class="user-role-badge sm teacher">GV</span>';
-                else rBadge = `<span class="user-role-badge sm student">${esc(acc.class_name || '12A2')}</span>`;
-
-                return `
-                  <div class="dropdown-acc-item" onclick="switchAccountQuick('${esc(acc.username)}')" title="Nhấp để chuyển sang tài khoản này">
-                    <div class="dropdown-acc-avatar">
-                      ${renderAvatarMarkup(acc, 'acc-avatar-mini')}
-                    </div>
-                    <div class="dropdown-acc-details">
-                      <div class="dropdown-acc-top">
+                  return `
+                    <div class="dropdown-acc-item" onclick="switchAccountQuick('${esc(acc.username)}')" title="Chuyển sang ${esc(acc.full_name || acc.username)}">
+                      <div class="dropdown-acc-avatar">
+                        ${renderAvatarMarkup(acc, 'acc-avatar-mini')}
+                      </div>
+                      <div class="dropdown-acc-details">
                         <strong class="dropdown-acc-name">${esc(acc.full_name || acc.username)}</strong>
+                        <div class="dropdown-acc-sub">
+                          <span class="dropdown-acc-user">@${esc(acc.username)}</span>
+                          ${rBadge}
+                        </div>
                       </div>
-                      <div class="dropdown-acc-sub">
-                        <span class="dropdown-acc-user">@${esc(acc.username)}</span>
-                        ${rBadge}
-                      </div>
+                      <button class="dropdown-acc-del-btn" type="button" onclick="removeSavedAccountQuick('${esc(acc.username)}', event)" title="Gỡ tài khoản này khỏi máy">
+                        <ion-icon name="close-outline"></ion-icon>
+                      </button>
                     </div>
-                    <button class="dropdown-acc-del-btn" type="button" onclick="removeSavedAccountQuick('${esc(acc.username)}', event)" title="Gỡ tài khoản này khỏi máy">
-                      <ion-icon name="close-outline"></ion-icon>
-                    </button>
-                  </div>
-                `;
-              }).join('')}
+                  `;
+                }).join('')}
+              </div>
             </div>
-          </div>
+          ` : ''}
 
-          <div class="dropdown-divider"></div>
-
+          <!-- Danh sách thao tác chính -->
           <div class="dropdown-items">
             ${isTeacher ? `
-              <button class="dropdown-item teacher-action" type="button" onclick="closeUserDropdown(); go('accounts');">
+              <button class="dropdown-item" type="button" onclick="closeUserDropdown(); go('accounts');">
                 <span class="dropdown-item-icon icon-purple">
                   <ion-icon name="people-outline"></ion-icon>
                 </span>
                 <span class="dropdown-item-label">Quản lý tài khoản</span>
                 <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
               </button>
-              <button class="dropdown-item teacher-action" type="button" onclick="closeUserDropdown(); go('history');">
+              <button class="dropdown-item" type="button" onclick="closeUserDropdown(); go('history');">
                 <span class="dropdown-item-icon icon-cyan">
                   <ion-icon name="time-outline"></ion-icon>
                 </span>
@@ -1201,38 +1182,33 @@
             `}
             <button class="dropdown-item" type="button" onclick="closeUserDropdown(); openChangePasswordModal();">
               <span class="dropdown-item-icon icon-amber">
-                <ion-icon name="lock-closed-outline"></ion-icon>
+                <ion-icon name="key-outline"></ion-icon>
               </span>
               <span class="dropdown-item-label">Đổi mật khẩu</span>
               <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
             </button>
             <button class="dropdown-item" type="button" onclick="closeUserDropdown(); openLoginDialog(true);">
-              <span class="dropdown-item-icon icon-purple">
+              <span class="dropdown-item-icon icon-blue">
                 <ion-icon name="person-add-outline"></ion-icon>
               </span>
-              <span class="dropdown-item-label">Thêm tài khoản khác</span>
+              <span class="dropdown-item-label">Đăng nhập tài khoản khác</span>
               <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
             </button>
-            <button class="dropdown-item" type="button" onclick="closeUserDropdown(); openSettingsDialog();">
-              <span class="dropdown-item-icon icon-cyan">
-                <ion-icon name="settings-outline"></ion-icon>
-              </span>
-              <span class="dropdown-item-label">Cài đặt</span>
-              <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
-            </button>
+
             <div class="dropdown-divider"></div>
+
             <button class="dropdown-item danger" type="button" onclick="closeUserDropdown(); logoutUser();">
               <span class="dropdown-item-icon icon-red">
                 <ion-icon name="log-out-outline"></ion-icon>
               </span>
-              <span class="dropdown-item-label">Đăng xuất tài khoản này</span>
+              <span class="dropdown-item-label">Đăng xuất</span>
             </button>
             ${savedAccounts.length > 1 ? `
-              <button class="dropdown-item danger" type="button" onclick="closeUserDropdown(); logoutAllAccounts();" style="opacity:0.85;">
-                <span class="dropdown-item-icon icon-red">
+              <button class="dropdown-item sub-danger" type="button" onclick="closeUserDropdown(); logoutAllAccounts();">
+                <span class="dropdown-item-icon icon-muted">
                   <ion-icon name="power-outline"></ion-icon>
                 </span>
-                <span class="dropdown-item-label">Đăng xuất tất cả tài khoản</span>
+                <span class="dropdown-item-label">Đăng xuất tất cả (${savedAccounts.length})</span>
               </button>
             ` : ''}
           </div>
