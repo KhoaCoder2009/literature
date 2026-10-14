@@ -1302,20 +1302,55 @@
     }, 100);
   };
 
+  global.switchLoginDialogTab = function(tab) {
+    const savedBox = document.getElementById('login-saved-accounts-box');
+    const form = document.getElementById('login-form');
+    const tabSavedBtn = document.getElementById('login-tab-saved');
+    const tabFormBtn = document.getElementById('login-tab-form');
+    const backRow = document.getElementById('login-back-to-saved-row');
+
+    if (tab === 'form') {
+      if (savedBox) savedBox.style.display = 'none';
+      if (form) form.style.display = 'block';
+      if (tabSavedBtn) tabSavedBtn.classList.remove('active');
+      if (tabFormBtn) tabFormBtn.classList.add('active');
+      if (backRow) {
+        const savedAccounts = getSavedAccounts();
+        backRow.style.display = (savedAccounts && savedAccounts.length > 0) ? 'block' : 'none';
+      }
+      setTimeout(() => {
+        document.getElementById('login-username')?.focus();
+      }, 60);
+    } else {
+      if (savedBox) savedBox.style.display = 'block';
+      if (form) form.style.display = 'none';
+      if (tabSavedBtn) tabSavedBtn.classList.add('active');
+      if (tabFormBtn) tabFormBtn.classList.remove('active');
+      if (backRow) backRow.style.display = 'none';
+    }
+  };
+
   function renderSavedAccountsInLoginDialog(isAddingNew = false) {
     const box = document.getElementById('login-saved-accounts-box');
     const form = document.getElementById('login-form');
+    const tabsNav = document.getElementById('login-tabs-nav');
+    const backRow = document.getElementById('login-back-to-saved-row');
+    const savedCountEl = document.getElementById('login-tab-saved-count');
     if (!box) return;
 
     const savedAccounts = getSavedAccounts();
 
     if (!savedAccounts || savedAccounts.length === 0) {
+      if (tabsNav) tabsNav.style.display = 'none';
+      if (backRow) backRow.style.display = 'none';
       box.style.display = 'none';
       if (form) form.style.display = 'block';
       return;
     }
 
-    box.style.display = 'block';
+    if (tabsNav) tabsNav.style.display = 'flex';
+    if (savedCountEl) savedCountEl.textContent = savedAccounts.length;
+
     box.innerHTML = `
       <div class="login-saved-header">
         <span class="login-saved-title">
@@ -1357,13 +1392,27 @@
         }).join('')}
       </div>
 
-      <div class="login-divider-text">
-        <span>${isAddingNew ? 'Điền thông tin tài khoản mới bên dưới' : 'Hoặc đăng nhập bằng tài khoản khác'}</span>
+      <div style="margin-top:12px; display:flex; flex-direction:column; gap:8px;">
+        <button type="button" class="btn gh sm" onclick="switchLoginDialogTab('form')" style="width:100%; font-weight:700; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; gap:8px;">
+          <ion-icon name="person-add-outline" style="font-size:16px;"></ion-icon>
+          <span>Đăng nhập bằng tài khoản khác</span>
+        </button>
+      </div>
+
+      <div class="login-bottom-notice" style="margin-top:10px;">
+        <div class="login-notice-icon">
+          <ion-icon name="information-circle-outline"></ion-icon>
+        </div>
+        <div class="login-notice-text">
+          Chạm vào tài khoản để đăng nhập nhanh. Bấm thùng rác để gỡ tài khoản khỏi máy.
+        </div>
       </div>
     `;
 
-    if (form) {
-      form.style.display = 'block';
+    if (isAddingNew) {
+      global.switchLoginDialogTab('form');
+    } else {
+      global.switchLoginDialogTab('saved');
     }
   }
 

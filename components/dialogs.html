@@ -671,11 +671,30 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
       </div>
     </div>
 
+    <!-- Thanh chuyển đổi tab khi có tài khoản lưu -->
+    <div id="login-tabs-nav" class="login-tabs-nav" style="display:none;">
+      <button type="button" class="login-tab-btn active" id="login-tab-saved" onclick="switchLoginDialogTab('saved')">
+        <ion-icon name="time-outline"></ion-icon>
+        <span>Tài khoản trên máy (<b id="login-tab-saved-count">0</b>)</span>
+      </button>
+      <button type="button" class="login-tab-btn" id="login-tab-form" onclick="switchLoginDialogTab('form')">
+        <ion-icon name="person-add-outline"></ion-icon>
+        <span>Đăng nhập mới</span>
+      </button>
+    </div>
+
     <!-- Khu vực đăng nhập nhanh bằng tài khoản đã lưu trên thiết bị -->
     <div id="login-saved-accounts-box" class="login-saved-accounts-box" style="display:none;"></div>
 
     <!-- Biểu mẫu đăng nhập -->
     <form id="login-form" onsubmit="handleLoginSubmit(event)" class="login-form-content">
+      <div id="login-back-to-saved-row" class="login-back-to-saved-row" style="display:none;">
+        <button type="button" class="login-back-btn" onclick="switchLoginDialogTab('saved')">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          <span>Quay lại danh sách tài khoản đã lưu</span>
+        </button>
+      </div>
+
       <div id="login-error-msg" class="auth-alert-error" style="display:none;"></div>
 
       <!-- Tên đăng nhập / Email -->

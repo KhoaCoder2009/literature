@@ -5512,42 +5512,50 @@ body[data-user-role="student"] .teacher-only {
 .login-saved-accounts-box {
   background: var(--bg-base);
   border: 1.5px solid var(--stroke);
-  border-radius: 18px;
-  padding: 14px 16px;
-  margin-bottom: 18px;
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
 }
 .login-saved-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .login-saved-title {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--mut);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
 }
 .login-saved-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  max-height: 220px;
+  gap: 6px;
+  max-height: 210px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  padding-right: 2px;
+}
+.login-saved-list::-webkit-scrollbar {
+  width: 4px;
+}
+.login-saved-list::-webkit-scrollbar-thumb {
+  background: var(--stroke);
+  border-radius: 4px;
 }
 .login-saved-card {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
+  gap: 10px;
+  padding: 8px 12px;
   background: var(--bg-card);
   border: 1.5px solid var(--stroke);
-  border-radius: 14px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
@@ -5555,13 +5563,13 @@ body[data-user-role="student"] .teacher-only {
 }
 .login-saved-card:hover {
   border-color: var(--primary);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 .login-saved-avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
   overflow: hidden;
   border: 1.5px solid var(--stroke);
   flex-shrink: 0;
@@ -5577,10 +5585,10 @@ body[data-user-role="student"] .teacher-only {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 6px;
 }
 .login-saved-name {
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 800;
   color: var(--ink);
   white-space: nowrap;
@@ -5588,23 +5596,23 @@ body[data-user-role="student"] .teacher-only {
   text-overflow: ellipsis;
 }
 .login-saved-arrow {
-  font-size: 18px;
+  font-size: 16px;
   color: var(--mut);
   transition: transform 0.2s ease, color 0.2s ease;
 }
 .login-saved-card:hover .login-saved-arrow {
-  transform: translateX(3px);
+  transform: translateX(2px);
   color: var(--primary);
 }
 .login-saved-meta {
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-top: 2px;
+  margin-top: 1px;
   flex-wrap: wrap;
 }
 .login-saved-username {
-  font-size: 11.5px;
+  font-size: 11px;
   font-family: monospace;
   font-weight: 700;
   color: var(--mut);
@@ -5632,8 +5640,8 @@ body[data-user-role="student"] .teacher-only {
 .login-divider-text {
   text-align: center;
   position: relative;
-  margin: 16px 0 14px;
-  font-size: 12px;
+  margin: 12px 0 10px;
+  font-size: 11.5px;
   font-weight: 700;
   color: var(--mut);
 }
@@ -5824,10 +5832,12 @@ body[data-user-role="student"] .teacher-only {
   background: transparent;
   padding: 0;
   max-width: 440px;
-  width: calc(100vw - 32px);
+  width: min(440px, calc(100vw - 24px));
+  max-height: min(92vh, 720px);
   margin: auto;
-  border-radius: 28px;
-  overflow: visible;
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28), 0 8px 24px rgba(0, 0, 0, 0.14);
 }
 .modern-login-dialog::backdrop {
   background: rgba(15, 23, 42, 0.65);
@@ -5837,13 +5847,29 @@ body[data-user-role="student"] .teacher-only {
 .login-dialog-card {
   background: var(--bg-card);
   border: 2px solid var(--stroke);
-  border-radius: 28px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22), 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-radius: 26px;
+  max-height: min(92vh, 720px);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 22px 20px 18px;
   position: relative;
-  overflow: hidden;
-  padding: 32px 28px 26px;
   animation: modalPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+.login-dialog-card::-webkit-scrollbar {
+  width: 5px;
+}
+.login-dialog-card::-webkit-scrollbar-track {
+  background: transparent;
+}
+.login-dialog-card::-webkit-scrollbar-thumb {
+  background: var(--stroke);
+  border-radius: 6px;
+}
+
 @keyframes modalPopIn {
   0% { opacity: 0; transform: scale(0.94) translateY(12px); }
   100% { opacity: 1; transform: scale(1) translateY(0); }
@@ -5851,10 +5877,10 @@ body[data-user-role="student"] .teacher-only {
 
 .login-close-btn {
   position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 36px;
-  height: 36px;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   border: 1.5px solid var(--stroke);
   background: var(--bg-base);
@@ -5862,11 +5888,11 @@ body[data-user-role="student"] .teacher-only {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
   cursor: pointer;
   transition: all 0.15s ease;
-  z-index: 2;
+  z-index: 10;
 }
 .login-close-btn:hover {
   background: var(--red);
@@ -5880,51 +5906,52 @@ body[data-user-role="student"] .teacher-only {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 22px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
 }
 .login-brand-icon-box {
-  width: 64px;
-  height: 64px;
-  border-radius: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
   background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(217, 119, 6, 0.3));
   border: 2px solid var(--stroke);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 3px 3px 0px var(--stroke);
-  margin-bottom: 12px;
+  box-shadow: 2px 2px 0px var(--stroke);
+  margin-bottom: 6px;
   overflow: hidden;
 }
 .login-brand-logo-img {
-  width: 48px;
-  height: 48px;
+  width: 34px;
+  height: 34px;
   object-fit: contain;
 }
 .login-brand-fallback-emoji {
-  font-size: 32px;
+  font-size: 26px;
 }
 .login-dialog-title {
-  margin: 0 0 4px;
-  font-size: 22px;
+  margin: 0 0 2px;
+  font-size: 19px;
   font-weight: 900;
   color: var(--ink);
   letter-spacing: -0.3px;
 }
 .login-dialog-subtitle {
-  margin: 0 0 10px;
-  font-size: 13.5px;
+  margin: 0 0 6px;
+  font-size: 12px;
   color: var(--mut);
   font-weight: 600;
 }
 .login-info-pill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 14px;
+  gap: 5px;
+  padding: 3px 12px;
   background: rgba(99, 102, 241, 0.1);
   border: 1.5px solid rgba(99, 102, 241, 0.25);
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   color: #6366f1;
 }
@@ -5934,15 +5961,86 @@ body[data-user-role="student"] .teacher-only {
   border-color: rgba(129, 140, 248, 0.35);
 }
 
+/* Tabs switcher in login dialog */
+.login-tabs-nav {
+  display: flex;
+  background: var(--bg-base);
+  border: 1.5px solid var(--stroke);
+  border-radius: 12px;
+  padding: 3px;
+  gap: 4px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+.login-tab-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 7px 10px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mut);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+.login-tab-btn:hover {
+  color: var(--ink);
+  background: rgba(0, 0, 0, 0.04);
+}
+.login-tab-btn.active {
+  background: var(--bg-card);
+  color: var(--ink);
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--stroke);
+}
+.login-tab-btn .tab-count-badge,
+.login-tab-btn b {
+  background: rgba(99, 102, 241, 0.12);
+  color: var(--primary);
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+/* Back to saved accounts button row inside form */
+.login-back-to-saved-row {
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+.login-back-btn {
+  border: none;
+  background: transparent;
+  padding: 2px 0;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: gap 0.15s ease;
+}
+.login-back-btn:hover {
+  gap: 3px;
+  text-decoration: underline;
+}
+
 .login-form-content {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 .login-field-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
 .login-field-header-row {
   display: flex;
@@ -5950,7 +6048,7 @@ body[data-user-role="student"] .teacher-only {
   align-items: center;
 }
 .login-field-label {
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 700;
   color: var(--ink);
   display: flex;
@@ -5968,36 +6066,37 @@ body[data-user-role="student"] .teacher-only {
 }
 .login-input-icon {
   position: absolute;
-  left: 14px;
-  font-size: 17px;
+  left: 12px;
+  font-size: 16px;
   pointer-events: none;
   z-index: 1;
+  color: var(--mut);
 }
 .login-field-input {
   width: 100%;
-  height: 48px;
-  padding: 0 44px 0 42px;
-  border: 2px solid var(--stroke);
-  border-radius: 14px;
+  height: 44px;
+  padding: 0 40px 0 38px;
+  border: 1.5px solid var(--stroke);
+  border-radius: 12px;
   background: var(--bg-base);
   color: var(--ink);
-  font-size: 14.5px;
+  font-size: 14px;
   font-weight: 600;
   transition: all 0.2s ease;
-  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.04);
+  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.04);
 }
 .login-field-input:focus {
   outline: none;
   border-color: #6366f1;
   background: var(--bg-card);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.22);
 }
 .login-password-eye-btn {
   position: absolute;
   right: 8px;
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -6005,32 +6104,34 @@ body[data-user-role="student"] .teacher-only {
   align-items: center;
   justify-content: center;
   font-size: 16px;
+  color: var(--mut);
   transition: background 0.15s ease;
 }
 .login-password-eye-btn:hover {
   background: rgba(0, 0, 0, 0.06);
+  color: var(--ink);
 }
 
 .login-submit-row {
-  margin-top: 6px;
+  margin-top: 4px;
 }
 .login-btn-primary {
   width: 100%;
-  height: 50px;
-  border-radius: 14px;
-  font-size: 16px;
+  height: 46px;
+  border-radius: 12px;
+  font-size: 15px;
   font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 6px 16px rgba(217, 119, 6, 0.25), 2px 2px 0px var(--stroke);
+  box-shadow: 0 6px 16px rgba(217, 119, 6, 0.25), 1.5px 1.5px 0px var(--stroke);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .login-btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(217, 119, 6, 0.35), 2px 4px 0px var(--stroke);
+  box-shadow: 0 8px 20px rgba(217, 119, 6, 0.35), 1.5px 3px 0px var(--stroke);
 }
 .login-btn-primary:active {
   transform: translateY(1px);
@@ -6039,22 +6140,23 @@ body[data-user-role="student"] .teacher-only {
 .login-bottom-notice {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 12px 14px;
-  background: rgba(100, 116, 139, 0.08);
+  gap: 8px;
+  padding: 10px 12px;
+  background: rgba(100, 116, 139, 0.07);
   border: 1px dashed var(--stroke);
-  border-radius: 14px;
-  margin-top: 4px;
+  border-radius: 12px;
+  margin-top: 2px;
 }
 .login-notice-icon {
-  font-size: 16px;
+  font-size: 15px;
   flex-shrink: 0;
   line-height: 1.4;
+  color: var(--mut);
 }
 .login-notice-text {
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--mut);
-  line-height: 1.5;
+  line-height: 1.45;
   font-weight: 600;
 }
 

@@ -166,7 +166,7 @@ const securityLockdownSnippet = `
     'toggleSound', 'playSound', 'playNote', 'toggleTheme', 'toggleProjectorMode',
     'openSettingsDialog', 'closeSettingsDialog', 'updateSettingsUI',
     'toggleMobileMenu', 'closeMobileMenu',
-    'openLoginDialog', 'closeLoginDialog', 'handleLoginSubmit', 'logoutUser',
+    'openLoginDialog', 'closeLoginDialog', 'switchLoginDialogTab', 'handleLoginSubmit', 'logoutUser',
     'openAccountManagerModal', 'closeAccountManagerModal',
     'openCreateAccountModal', 'closeCreateAccountModal', 'handleCreateAccountSubmit',
     'openResetPasswordModal', 'closeResetPasswordModal', 'handleResetPasswordSubmit',
