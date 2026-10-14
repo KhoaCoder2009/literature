@@ -148,9 +148,25 @@
           <label>Tên bộ câu hỏi<input id="et" oninput="meta()"></label>
           <label>Chủ đề / Bài học<input id="ec" oninput="meta()"></label>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap;">
-          <span style="font-weight:700;">Biểu tượng bộ đề:</span>
-          <button class="emoji-trigger" type="button" onclick="toggleEmojiPicker()" id="emoji-trigger-btn"><span id="current-emo">📖</span> ▾ Chọn biểu tượng</button>
+        <div style="display:flex;align-items:center;gap:18px;margin-top:12px;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="font-weight:700;">Biểu tượng bộ đề:</span>
+            <button class="emoji-trigger" type="button" onclick="toggleEmojiPicker()" id="emoji-trigger-btn"><span id="current-emo">📖</span> ▾ Chọn biểu tượng</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--stroke);border-radius:10px;padding:6px 12px;">
+            <label for="set-max-attempts" style="margin:0;font-weight:700;display:flex;align-items:center;gap:6px;font-size:13px;">
+              <ion-icon name="timer-outline"></ion-icon> Giới hạn lượt làm:
+            </label>
+            <input type="number" id="set-max-attempts" min="0" max="999" value="0" class="inp" style="width:75px;text-align:center;font-weight:800;padding:4px 8px;border-radius:6px;" onchange="meta()" title="0 = Không giới hạn">
+            <span class="mut" style="font-size:12px;">lượt (0 = không giới hạn)</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--stroke);border-radius:10px;padding:6px 12px;">
+            <label for="set-deadline" style="margin:0;font-weight:700;display:flex;align-items:center;gap:6px;font-size:13px;">
+              <ion-icon name="alarm-outline"></ion-icon> Hạn nộp:
+            </label>
+            <input type="datetime-local" id="set-deadline" class="inp" style="padding:4px 8px;border-radius:6px;font-weight:700;font-size:12.5px;" onchange="meta()" title="Để trống = Không giới hạn hạn nộp">
+            <button type="button" class="btn gh sm" onclick="$('#set-deadline').value=''; meta();" title="Xóa hạn nộp" style="padding:2px 6px;height:24px;">✕</button>
+          </div>
         </div>
         <div class="emoji-picker" id="emoji-picker"></div>
       </div>

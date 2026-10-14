@@ -440,6 +440,15 @@ function openReadingSet(id) {
     return;
   }
 
+  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(set, 'reading')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(set, 'reading') : { hasSubmissions: false, message: 'Bộ đề đọc hiểu này đã bị khóa đối với bạn!' };
+    toast(info.message, 'bad');
+    if (info.hasSubmissions) {
+      openHistoryForSet(set.id, set.title);
+    }
+    return;
+  }
+
   currentReadingSetId = set.id;
   if (typeof window !== 'undefined') window.currentReadingSetId = set.id;
   showReadingAnswers = false;
@@ -594,8 +603,17 @@ function renderSingleReadingCard(s, idx = 0) {
   const snippet = (s.passage || '').trim().replace(/\r?\n+/g, ' ');
   const cleanSnippet = snippet.length > 170 ? snippet.slice(0, 170) + '…' : snippet;
 
+  const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'reading') : { blocked: false, isDeadlineExpired: false, hasSubmissions: false, message: '' };
+  const isBlocked = blockInfo.blocked;
+  const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'reading') : '';
+  const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'reading') : '';
+  const isTeacherOrAdmin = window.Auth && (window.Auth.isTeacher() || window.Auth.isAdmin());
+  const cardOnClick = isBlocked 
+    ? (blockInfo.hasSubmissions ? `openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')` : `toast('${esc(blockInfo.message)}', 'bad')`) 
+    : `openReadingSet('${esc(s.id)}')`;
+
   return `
-    <div class="reading-h-card" onclick="openReadingSet('${esc(s.id)}')">
+    <div class="reading-h-card" onclick="${cardOnClick}">
       <!-- Cột trái: Card Banner nổi bật dạng bìa sách/thẻ -->
       <div class="reading-h-banner" style="background: ${bg};">
         <div class="reading-h-banner-watermark">${watermark}</div>
@@ -620,6 +638,7 @@ function renderSingleReadingCard(s, idx = 0) {
 
         <!-- Ma trận cấp độ chuẩn 5 câu -->
         <div class="reading-h-breakdown">
+          ${(attemptBadge || deadlineBadge) ? `<div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:4px; width:100%;">${attemptBadge}${deadlineBadge}</div>` : ''}
           ${nbCount ? `<span class="lib-pill pill-nb" title="${nbCount} câu Nhận biết">🟢 ${nbCount} Nhận biết</span>` : ''}
           ${thCount ? `<span class="lib-pill pill-th" title="${thCount} câu Thông hiểu">🟡 ${thCount} Thông hiểu</span>` : ''}
           ${vdCount ? `<span class="lib-pill pill-vd" title="${vdCount} câu Vận dụng (Đoạn văn ~200 chữ)">🟣 ${vdCount} Vận dụng</span>` : ''}
@@ -634,16 +653,34 @@ function renderSingleReadingCard(s, idx = 0) {
 
       <!-- Cột phải: Khối nút thao tác thẻ -->
       <div class="reading-h-actions" onclick="event.stopPropagation()">
-        <button class="btn au reading-h-btn-enter" type="button" onclick="openReadingSet('${esc(s.id)}')">
-          <span><ion-icon name="play-outline"></ion-icon> Vào đọc hiểu</span>
-        </button>
-        ${(isUserCreated && (!window.Auth || window.Auth.canEditContent())) ? `
-          <div class="reading-h-mini-row">
-            <button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề này" onclick="deleteReadingSet('${esc(s.id)}')">
-              <span><ion-icon name="trash-outline"></ion-icon> Xóa đề</span>
+        ${isBlocked ? (blockInfo.hasSubmissions ? `
+          <button class="btn au reading-h-btn-enter lib-view-only-btn" type="button" onclick="openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')">
+            <span><ion-icon name="eye-outline"></ion-icon> Xem lại bài làm</span>
+          </button>
+        ` : `
+          <button class="btn au reading-h-btn-enter lib-locked-btn" type="button" onclick="toast('${esc(blockInfo.message)}', 'bad')" title="${esc(blockInfo.message)}">
+            <span><ion-icon name="lock-closed-outline"></ion-icon> ${blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa'}</span>
+          </button>
+        `) : `
+          <button class="btn au reading-h-btn-enter" type="button" onclick="openReadingSet('${esc(s.id)}')">
+            <span><ion-icon name="play-outline"></ion-icon> Vào đọc hiểu</span>
+          </button>
+        `}
+        <div class="reading-h-mini-row" style="margin-top:6px;">
+          <button class="reading-h-mini-btn" type="button" title="Lịch sử làm bài" onclick="openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')">
+            <ion-icon name="time-outline"></ion-icon> Lịch sử
+          </button>
+          ${isTeacherOrAdmin ? `
+            <button class="reading-h-mini-btn" type="button" title="Cài đặt giới hạn số lượt & hạn nộp bài cho học sinh" onclick="openSetAttemptLimitModal('reading', '${esc(s.id)}')">
+              <ion-icon name="timer-outline"></ion-icon> Lượt &amp; Hạn
             </button>
-          </div>
-        ` : ''}
+          ` : ''}
+          ${(isUserCreated && (!window.Auth || window.Auth.canEditContent())) ? `
+            <button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề này" onclick="deleteReadingSet('${esc(s.id)}')">
+              <ion-icon name="trash-outline"></ion-icon> Xóa đề
+            </button>
+          ` : ''}
+        </div>
       </div>
     </div>
   `;
@@ -878,6 +915,12 @@ function submitReadingAnswers() {
   const set = readingSets.find(s => String(s.id) === String(currentReadingSetId));
   if (!set) return;
 
+  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(set, 'reading')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(set, 'reading') : { message: 'Đề đọc hiểu này đã kết thúc!' };
+    toast(`⚠️ ${info.message}`, 'bad');
+    return;
+  }
+
   const draft = getSavedReadingDraft(set.id);
   const questions = Array.isArray(set.questions) ? set.questions : [];
 
@@ -1016,6 +1059,12 @@ function openCreateReadingSetModal() {
   const statusEl = document.getElementById('reading-form-status');
   if (statusEl) statusEl.value = 'published';
 
+  const maxAttemptsEl = document.getElementById('reading-form-max-attempts');
+  if (maxAttemptsEl) maxAttemptsEl.value = 0;
+
+  const deadlineEl = document.getElementById('reading-form-deadline');
+  if (deadlineEl) deadlineEl.value = '';
+
   // Khởi tạo sẵn khung chuẩn 5 câu hỏi (2 Nhận biết • 2 Thông hiểu • 1 Vận dụng / Đoạn văn)
   applyStandard5QuestionTemplate(false);
 
@@ -1048,6 +1097,16 @@ function openEditReadingSetModal(id) {
 
   const editStatusEl = document.getElementById('reading-form-status');
   if (editStatusEl) editStatusEl.value = set.status || 'published';
+
+  const maxAttemptsEl = document.getElementById('reading-form-max-attempts');
+  if (maxAttemptsEl) {
+    maxAttemptsEl.value = (typeof getSetMaxAttempts === 'function' ? getSetMaxAttempts(set, 'reading') : (set.maxAttempts || 0));
+  }
+
+  const editDeadlineEl = document.getElementById('reading-form-deadline');
+  if (editDeadlineEl) {
+    editDeadlineEl.value = (typeof getSetDeadline === 'function' ? getSetDeadline(set, 'reading') : (set.deadline || ''));
+  }
 
   const catSelect = document.getElementById('reading-form-category');
   populateCategorySelect(catSelect, set.category || readingCategories[0]);
@@ -1366,6 +1425,8 @@ function handleReadingFormSubmit(e) {
   }
 
   const status = document.getElementById('reading-form-status')?.value || 'published';
+  const maxAttempts = Math.max(0, parseInt(document.getElementById('reading-form-max-attempts')?.value, 10) || 0);
+  const deadline = (document.getElementById('reading-form-deadline')?.value || '').trim();
   let targetSetId = id;
   if (id) {
     // Edit existing
@@ -1381,8 +1442,21 @@ function handleReadingFormSubmit(e) {
         passage,
         source,
         status,
+        maxAttempts,
+        deadline,
         questions
       };
+      if (typeof getSetAttemptLimitsMap === 'function' && typeof saveSetAttemptLimitsMap === 'function') {
+        const map = getSetAttemptLimitsMap();
+        map[String(targetSetId)] = maxAttempts;
+        saveSetAttemptLimitsMap(map);
+      }
+      if (typeof getSetDeadlinesMap === 'function' && typeof saveSetDeadlinesMap === 'function') {
+        const dMap = getSetDeadlinesMap();
+        if (deadline) dMap[String(targetSetId)] = deadline;
+        else delete dMap[String(targetSetId)];
+        saveSetDeadlinesMap(dMap);
+      }
       toast('Đã cập nhật bộ đề đọc hiểu thành công!', 'ok');
     }
   } else {
@@ -1398,9 +1472,22 @@ function handleReadingFormSubmit(e) {
       passage,
       source,
       status,
+      maxAttempts,
+      deadline,
       questions
     };
     readingSets.unshift(newSet);
+    if (typeof getSetAttemptLimitsMap === 'function' && typeof saveSetAttemptLimitsMap === 'function') {
+      const map = getSetAttemptLimitsMap();
+      map[String(targetSetId)] = maxAttempts;
+      saveSetAttemptLimitsMap(map);
+    }
+    if (typeof getSetDeadlinesMap === 'function' && typeof saveSetDeadlinesMap === 'function') {
+      const dMap = getSetDeadlinesMap();
+      if (deadline) dMap[String(targetSetId)] = deadline;
+      else delete dMap[String(targetSetId)];
+      saveSetDeadlinesMap(dMap);
+    }
     toast('🎉 Đã tạo bộ đề đọc hiểu mới thành công!', 'ok');
   }
 

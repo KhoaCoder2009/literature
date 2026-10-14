@@ -461,14 +461,24 @@ function renderWritingSetsGrid() {
     const sectionCount = s.sections ? s.sections.length : 0;
     const topic = s.categoryName || s.category || 'Luyện viết';
     const watermark = '<ion-icon name="create-outline"></ion-icon>';
+    const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'writing') : { blocked: false, isDeadlineExpired: false, hasSubmissions: false, message: '' };
+    const isBlocked = blockInfo.blocked;
+    const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'writing') : '';
+    const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'writing') : '';
+    const isTeacherOrAdmin = window.Auth && (window.Auth.isTeacher() || window.Auth.isAdmin());
+    const cardOnClick = isBlocked 
+      ? (blockInfo.hasSubmissions ? `openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')` : `toast('${esc(blockInfo.message)}', 'bad')`) 
+      : `openWritingWorkspaceById('${esc(s.id)}')`;
 
     return `
-      <div class="setup-grid-card" onclick="openWritingWorkspaceById('${esc(s.id)}')">
+      <div class="setup-grid-card" onclick="${cardOnClick}">
         <div class="setup-card-banner" style="background: ${bg}; position:relative;">
           <div class="setup-card-top-info" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
             <span class="setup-card-count-pill">${sectionCount} phần dàn ý</span>
             <div style="display:flex; gap:4px; position:relative; z-index:2;" onclick="event.stopPropagation()">
-              <button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề bài" onclick="event.stopPropagation(); deleteWritingSet('${esc(s.id)}')"><ion-icon name="trash-outline"></ion-icon></button>
+              <button class="reading-h-mini-btn" type="button" title="Lịch sử bài làm" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')"><ion-icon name="time-outline"></ion-icon></button>
+              ${isTeacherOrAdmin ? `<button class="reading-h-mini-btn" type="button" title="Cài đặt lượt làm & hạn nộp bài" onclick="event.stopPropagation(); openSetAttemptLimitModal('writing', '${esc(s.id)}')"><ion-icon name="timer-outline"></ion-icon></button>` : ''}
+              ${(!window.Auth || window.Auth.canEditContent()) ? `<button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề bài" onclick="event.stopPropagation(); deleteWritingSet('${esc(s.id)}')"><ion-icon name="trash-outline"></ion-icon></button>` : ''}
             </div>
           </div>
           <h3 class="setup-card-title">${esc(s.title)}</h3>
@@ -476,11 +486,24 @@ function renderWritingSetsGrid() {
         </div>
         <div class="setup-card-body">
           <div style="display:flex; gap:8px; width:100%;">
-            <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); openWritingWorkspaceById('${esc(s.id)}')" style="flex:1;">
-              <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
-              <span>Vào luyện viết</span>
-            </button>
+            ${isBlocked ? (blockInfo.hasSubmissions ? `
+              <button class="btn-setup-action lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" style="flex:1;">
+                <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
+                <span>Xem lại bài làm</span>
+              </button>
+            ` : `
+              <button class="btn-setup-action lib-locked-btn" type="button" onclick="event.stopPropagation(); toast('${esc(blockInfo.message)}', 'bad')" style="flex:1;" title="${esc(blockInfo.message)}">
+                <span class="btn-setup-icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+                <span>${blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa'}</span>
+              </button>
+            `) : `
+              <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); openWritingWorkspaceById('${esc(s.id)}')" style="flex:1;">
+                <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
+                <span>Vào luyện viết</span>
+              </button>
+            `}
           </div>
+          ${(attemptBadge || deadlineBadge) ? `<div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:8px;">${attemptBadge}${deadlineBadge}</div>` : ''}
           <div class="setup-card-meta" style="margin-top:6px;">
             <span class="setup-card-topic" title="${esc(topic)}">
               <ion-icon name="pricetag-outline"></ion-icon> ${esc(topic)}
@@ -602,6 +625,14 @@ function openWritingWorkspace(set) {
   if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
     toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
     if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
+  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(set, 'writing')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(set, 'writing') : { hasSubmissions: false, message: 'Bộ đề luyện viết này đã khóa đối với bạn!' };
+    toast(info.message, 'bad');
+    if (info.hasSubmissions) {
+      openHistoryForSet(set.id, set.title);
+    }
     return;
   }
   currentWritingSet = set;
@@ -976,6 +1007,8 @@ function openCreateWritingSetModal(presetCat) {
   $('#input-set-title').value = '';
   updateModalCategorySelect(targetCat);
   $('#input-set-prompt').value = '';
+  if ($('#writing-form-max-attempts')) $('#writing-form-max-attempts').value = 0;
+  if ($('#writing-form-deadline')) $('#writing-form-deadline').value = '';
 
   // Nạp mẫu dàn ý theo dạng đề
   applyQuickOutlineTemplate(targetCat);
@@ -1001,6 +1034,14 @@ function editWritingSet(id) {
   $('#input-set-title').value = set.title || '';
   updateModalCategorySelect(set.category || 'nl-xh');
   $('#input-set-prompt').value = set.prompt || '';
+  const limitEl = $('#writing-form-max-attempts');
+  if (limitEl) {
+    limitEl.value = (typeof getSetMaxAttempts === 'function' ? getSetMaxAttempts(set, 'writing') : (set.maxAttempts || 0));
+  }
+  const deadlineEl = $('#writing-form-deadline');
+  if (deadlineEl) {
+    deadlineEl.value = (typeof getSetDeadline === 'function' ? getSetDeadline(set, 'writing') : (set.deadline || ''));
+  }
 
   editingSections = JSON.parse(JSON.stringify(set.sections || []));
   renderModalSectionsEditor();
@@ -1172,6 +1213,9 @@ function handleSaveWritingSet(e) {
   });
 
   let targetSet = null;
+  const maxAttempts = Math.max(0, parseInt($('#writing-form-max-attempts')?.value, 10) || 0);
+  const deadline = ($('#writing-form-deadline')?.value || '').trim();
+
   if (editId) {
     const idx = writingSets.findIndex(s => String(s.id) === String(editId));
     if (idx !== -1) {
@@ -1182,23 +1226,50 @@ function handleSaveWritingSet(e) {
         categoryName: categoryNames[category] || category,
         icon: icons[category] || '✍️',
         prompt,
+        maxAttempts,
+        deadline,
         sections: JSON.parse(JSON.stringify(editingSections))
       };
       targetSet = writingSets[idx];
+      if (typeof getSetAttemptLimitsMap === 'function' && typeof saveSetAttemptLimitsMap === 'function') {
+        const map = getSetAttemptLimitsMap();
+        map[String(editId)] = maxAttempts;
+        saveSetAttemptLimitsMap(map);
+      }
+      if (typeof getSetDeadlinesMap === 'function' && typeof saveSetDeadlinesMap === 'function') {
+        const dMap = getSetDeadlinesMap();
+        if (deadline) dMap[String(editId)] = deadline;
+        else delete dMap[String(editId)];
+        saveSetDeadlinesMap(dMap);
+      }
       toast('Đã cập nhật bộ đề luyện viết thành công!', 'ok');
     }
   } else {
+    const newId = 'ws_' + uid();
     const newSet = {
-      id: 'ws_' + uid(),
+      id: newId,
       title,
       category,
       categoryName: categoryNames[category] || category,
       icon: icons[category] || '✍️',
       prompt,
+      maxAttempts,
+      deadline,
       sections: JSON.parse(JSON.stringify(editingSections))
     };
     writingSets.unshift(newSet);
     targetSet = newSet;
+    if (typeof getSetAttemptLimitsMap === 'function' && typeof saveSetAttemptLimitsMap === 'function') {
+      const map = getSetAttemptLimitsMap();
+      map[String(newId)] = maxAttempts;
+      saveSetAttemptLimitsMap(map);
+    }
+    if (typeof getSetDeadlinesMap === 'function' && typeof saveSetDeadlinesMap === 'function') {
+      const dMap = getSetDeadlinesMap();
+      if (deadline) dMap[String(newId)] = deadline;
+      else delete dMap[String(newId)];
+      saveSetDeadlinesMap(dMap);
+    }
     toast('Đã tạo bộ đề mới thành công!', 'ok');
   }
 
@@ -1397,6 +1468,12 @@ function submitWritingEssay() {
   }
   if (!currentWritingSet) {
     toast('Không tìm thấy thông tin bộ đề luyện viết hiện tại!', 'bad');
+    return;
+  }
+
+  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(currentWritingSet, 'writing')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(currentWritingSet, 'writing') : { message: 'Đề luyện viết này đã kết thúc!' };
+    toast(`⚠️ ${info.message}`, 'bad');
     return;
   }
 

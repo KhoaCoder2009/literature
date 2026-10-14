@@ -66,6 +66,12 @@ R.edit = id => {
   if (!sets.length) newSet();
   CS = sets.find(s => s.id == id) || CS || sets[0];
   $('#et').value = CS.title; $('#ec').value = CS.topic;
+  if ($('#set-max-attempts')) {
+    $('#set-max-attempts').value = (typeof getSetMaxAttempts === 'function' ? getSetMaxAttempts(CS, 'quiz') : (CS.maxAttempts || 0));
+  }
+  if ($('#set-deadline')) {
+    $('#set-deadline').value = (typeof getSetDeadline === 'function' ? getSetDeadline(CS, 'quiz') : (CS.deadline || ''));
+  }
   const currentEmo = $('#current-emo');
   if (currentEmo) currentEmo.textContent = CS.emo || '📖';
   initEmojiPicker();

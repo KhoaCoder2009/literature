@@ -42,6 +42,15 @@ function selectAndStartSetupQuiz(id) {
     if (typeof openLoginDialog === 'function') openLoginDialog();
     return;
   }
+  const s = sets.find(x => String(x.id) === String(id));
+  if (s && typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(s, 'quiz')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { hasSubmissions: false, message: 'Bộ đề này đã khóa đối với bạn!' };
+    toast(info.message, 'bad');
+    if (info.hasSubmissions) {
+      openHistoryForSet(s.id, s.title);
+    }
+    return;
+  }
   openStartQuizModal(id);
 }
 
@@ -53,6 +62,15 @@ function openStartQuizModal(id) {
   }
   const s = sets.find(x => String(x.id) === String(id));
   if (!s) return;
+
+  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(s, 'quiz')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { hasSubmissions: false, message: 'Bộ đề này đã khóa đối với bạn!' };
+    toast(info.message, 'bad');
+    if (info.hasSubmissions) {
+      openHistoryForSet(s.id, s.title);
+    }
+    return;
+  }
 
   const setIdInput = $('#start-quiz-set-id');
   if (setIdInput) setIdInput.value = s.id;
@@ -209,9 +227,15 @@ function renderSetupSetsGrid(selectedId) {
     const bg = SETUP_PALETTES[idx % SETUP_PALETTES.length];
     const qCount = Array.isArray(s.qs) ? s.qs.length : 0;
     const isSelected = selectedId && String(s.id) === String(selectedId);
+    const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { blocked: false, isDeadlineExpired: false, hasSubmissions: false, message: '' };
+    const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'quiz') : '';
+    const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'quiz') : '';
+    const cardOnClick = blockInfo.blocked 
+      ? (blockInfo.hasSubmissions ? `openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')` : `toast('${esc(blockInfo.message)}', 'bad')`) 
+      : `selectAndStartSetupQuiz('${esc(s.id)}')`;
 
     return `
-      <div class="setup-grid-card ${isSelected ? 'selected-card' : ''}" onclick="selectAndStartSetupQuiz('${esc(s.id)}')">
+      <div class="setup-grid-card ${isSelected ? 'selected-card' : ''}" onclick="${cardOnClick}">
         <div class="setup-card-banner" style="background: ${bg};">
           <div class="setup-card-top-info">
             <span class="setup-card-count-pill">${qCount} câu</span>
@@ -220,10 +244,23 @@ function renderSetupSetsGrid(selectedId) {
           <span class="setup-card-watermark">${s.emo || '📖'}</span>
         </div>
         <div class="setup-card-body">
-          <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); selectAndStartSetupQuiz('${esc(s.id)}')">
-            <span class="btn-setup-icon">▶</span>
-            <span>Vào bài học</span>
-          </button>
+          ${blockInfo.blocked ? (blockInfo.hasSubmissions ? `
+            <button class="btn-setup-action lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')">
+              <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
+              <span>Xem lại bài làm</span>
+            </button>
+          ` : `
+            <button class="btn-setup-action lib-locked-btn" type="button" onclick="event.stopPropagation(); toast('${esc(blockInfo.message)}', 'bad')" title="${esc(blockInfo.message)}">
+              <span class="btn-setup-icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+              <span>${blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa'}</span>
+            </button>
+          `) : `
+            <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); selectAndStartSetupQuiz('${esc(s.id)}')">
+              <span class="btn-setup-icon">▶</span>
+              <span>Vào bài học</span>
+            </button>
+          `}
+          ${(attemptBadge || deadlineBadge) ? `<div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:8px;">${attemptBadge}${deadlineBadge}</div>` : ''}
           <div class="setup-card-meta">
             <span class="setup-card-topic" title="${esc(s.topic || 'Chưa phân loại')}">
               🏷️ ${esc(s.topic || 'Ngữ văn')}
@@ -278,6 +315,15 @@ function begin() {
   const nm = ($('#nick')?.value || '').trim();
   if (!nm) return toast('Vui lòng nhập biệt danh!', 'bad');
   if (!s || !s.qs.length) return toast('Bộ câu hỏi này chưa có dữ liệu!', 'bad');
+
+  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(s, 'quiz')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { hasSubmissions: false, message: 'Bộ đề này đã khóa đối với bạn!' };
+    toast(info.message, 'bad');
+    if (info.hasSubmissions) {
+      openHistoryForSet(s.id, s.title);
+    }
+    return;
+  }
   if (s.qs.some(q => {
     if (q.type === 'tf') {
       ensureQuestionCompatibility(q);

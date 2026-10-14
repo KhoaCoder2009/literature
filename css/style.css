@@ -3250,10 +3250,149 @@ body.projector-mode .hud-pill {
   border-style: dashed;
 }
 
+.lib-pill.pill-attempt-active {
+  background: #fefce8;
+  color: #a16207;
+  border-color: #fef08a;
+}
+
+.lib-pill.pill-attempt-exhausted {
+  background: #fef2f2;
+  color: #b91c1c;
+  border-color: #fca5a5;
+  font-weight: 800;
+}
+
+.lib-pill.pill-teacher-limit {
+  background: #f0fdf4;
+  color: #15803d;
+  border-color: #86efac;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lib-pill.pill-teacher-limit:hover {
+  background: #dcfce7;
+  border-color: #4ade80;
+  transform: translateY(-1px);
+}
+
+.lib-pill.pill-teacher-unlimited {
+  background: var(--bg-base);
+  color: var(--mut);
+  border-color: var(--stroke);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lib-pill.pill-teacher-unlimited:hover {
+  background: var(--bg-card);
+  color: var(--ink);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.lib-view-only-btn {
+  background: linear-gradient(135deg, #64748b 0%, #475569 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(71, 85, 105, 0.25) !important;
+}
+
+.lib-view-only-btn:hover {
+  background: linear-gradient(135deg, #475569 0%, #334155 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(71, 85, 105, 0.35) !important;
+}
+
+.preset-limit-btn {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+
+.preset-limit-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(14, 165, 233, 0.08);
+}
+
+.lib-pill.pill-deadline-active {
+  background: #f0fdfa;
+  color: #0f766e;
+  border-color: #99f6e4;
+}
+
+.lib-pill.pill-deadline-expired {
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #fca5a5;
+  font-weight: 800;
+}
+
+.lib-pill.pill-teacher-deadline {
+  background: #f8fafc;
+  color: #334155;
+  border-color: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lib-pill.pill-teacher-deadline:hover {
+  background: #f1f5f9;
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.lib-locked-btn {
+  background: #94a3b8 !important;
+  color: #ffffff !important;
+  cursor: not-allowed !important;
+  opacity: 0.85;
+}
+
 [data-theme="dark"] .lib-pill {
   background: rgba(255, 255, 255, 0.08) !important;
   border-color: rgba(255, 255, 255, 0.2) !important;
   color: var(--ink) !important;
+}
+
+[data-theme="dark"] .lib-pill.pill-attempt-active {
+  background: rgba(234, 179, 8, 0.15) !important;
+  color: #fde047 !important;
+  border-color: rgba(234, 179, 8, 0.4) !important;
+}
+
+[data-theme="dark"] .lib-pill.pill-attempt-exhausted {
+  background: rgba(239, 68, 68, 0.18) !important;
+  color: #fca5a5 !important;
+  border-color: rgba(239, 68, 68, 0.45) !important;
+}
+
+[data-theme="dark"] .lib-pill.pill-teacher-limit {
+  background: rgba(34, 197, 94, 0.15) !important;
+  color: #86efac !important;
+  border-color: rgba(34, 197, 94, 0.4) !important;
+}
+
+[data-theme="dark"] .lib-pill.pill-deadline-active {
+  background: rgba(20, 184, 166, 0.15) !important;
+  color: #5eead4 !important;
+  border-color: rgba(20, 184, 166, 0.4) !important;
+}
+
+[data-theme="dark"] .lib-pill.pill-deadline-expired {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #fca5a5 !important;
+  border-color: rgba(239, 68, 68, 0.45) !important;
+}
+
+[data-theme="dark"] .lib-pill.pill-teacher-deadline {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #e2e8f0 !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 .lib-card-preview-box {

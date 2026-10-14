@@ -10,7 +10,7 @@ window.COMPONENTS = {
   "navbar": "<canvas id=\"bg-canvas\"></canvas>\n\n<nav>\n  <button class=\"btn sm gh mobile-menu-toggle\" type=\"button\" onclick=\"toggleMobileMenu()\" aria-label=\"Mở danh mục điều hướng\" aria-controls=\"mobile-sidebar\" aria-expanded=\"false\" title=\"Danh mục điều hướng\">\n    <ion-icon name=\"menu-outline\" style=\"font-size: 20px;\"></ion-icon> <span class=\"nav-btn-label\">Danh mục</span>\n  </button>\n\n  <div class=\"nav-brand-wrap\" onclick=\"go('home')\" title=\"Về trang chủ\">\n    <img src=\"./assets/logo-nguvan.png\" alt=\"Biểu trưng Ngữ Văn\" class=\"nav-brand-img\">\n  </div>\n\n  <div class=\"nav-user-area\" id=\"nav-user-area\">\n    <div id=\"nav-user-widget\">\n      <!-- Auth module sẽ tự động render Profile / Đăng nhập tại đây -->\n    </div>\n  </div>\n</nav>\n\n<div class=\"mobile-menu-backdrop\" onclick=\"closeMobileMenu()\" aria-hidden=\"true\"></div>\n<aside class=\"mobile-sidebar\" id=\"mobile-sidebar\" aria-label=\"Danh mục điều hướng\" aria-hidden=\"true\">\n  <div class=\"mobile-sidebar-header\">\n    <div style=\"display:flex;align-items:center;cursor:pointer;\" onclick=\"go('home'); closeMobileMenu();\" title=\"Về trang chủ\">\n      <img src=\"./assets/logo-nguvan.png\" alt=\"Biểu trưng Ngữ Văn\" class=\"sidebar-logo\">\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeMobileMenu()\" aria-label=\"Đóng danh mục\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <div class=\"sidebar-links-list\">\n    <div class=\"sidebar-section-title\">Học tập & Luyện đề</div>\n    <a data-g=\"home\" onclick=\"go('home'); closeMobileMenu();\">\n      <span class=\"sidebar-icon\"><ion-icon name=\"home-outline\"></ion-icon></span> <span>Trang chủ</span>\n    </a>\n    <a data-g=\"setup\" onclick=\"go('setup'); closeMobileMenu();\">\n      <span class=\"sidebar-icon\"><ion-icon name=\"book-outline\"></ion-icon></span> <span>Bài học</span>\n    </a>\n    <a data-g=\"reading\" onclick=\"go('reading'); closeMobileMenu();\">\n      <span class=\"sidebar-icon\"><ion-icon name=\"document-text-outline\"></ion-icon></span> <span>Đọc hiểu</span>\n    </a>\n    <a data-g=\"writing\" onclick=\"go('writing'); closeMobileMenu();\">\n      <span class=\"sidebar-icon\"><ion-icon name=\"create-outline\"></ion-icon></span> <span>Luyện viết</span>\n    </a>\n\n    <div class=\"sidebar-section-title\">Kho dữ liệu & Hồ sơ</div>\n    <a data-g=\"lib\" class=\"teacher-only\" onclick=\"go('lib'); closeMobileMenu();\">\n      <span class=\"sidebar-icon\"><ion-icon name=\"library-outline\"></ion-icon></span> <span>Thư viện học liệu</span>\n    </a>\n    <a data-g=\"history\" onclick=\"go('history'); closeMobileMenu();\">\n      <span class=\"sidebar-icon\"><ion-icon name=\"time-outline\"></ion-icon></span> <span>Lịch sử bài làm</span>\n    </a>\n\n    <div class=\"sidebar-section-title\">Hệ thống & Cài đặt</div>\n    <a data-g=\"accounts\" class=\"teacher-only\" onclick=\"go('accounts'); closeMobileMenu();\">\n      <span class=\"sidebar-icon\"><ion-icon name=\"people-outline\"></ion-icon></span> <span>Quản lý tài khoản</span>\n    </a>\n    <a onclick=\"closeMobileMenu(); openSettingsDialog();\">\n      <span class=\"sidebar-icon\"><ion-icon name=\"settings-outline\"></ion-icon></span> <span>Cài đặt</span>\n    </a>\n  </div>\n</aside>",
   "settings-dialog": "<!-- SETTINGS DIALOG -->\n<dialog id=\"settings-dialog\" class=\"settings-modal\">\n  <div class=\"settings-header\">\n    <div class=\"settings-title-wrap\">\n      <h3>Cài đặt</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeSettingsDialog()\" aria-label=\"Đóng cài đặt\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n  <div class=\"settings-body\" style=\"overflow-y: auto; -webkit-overflow-scrolling: touch;\">\n    <!-- Hiệu ứng âm thanh -->\n    <div class=\"settings-item\">\n      <div class=\"settings-item-info\">\n        <div class=\"settings-item-icon\">\n          <ion-icon name=\"volume-high-outline\" style=\"font-size: 20px;\"></ion-icon>\n        </div>\n        <div>\n          <div class=\"settings-item-name\">Hiệu ứng âm thanh</div>\n          <div class=\"settings-item-desc\">Âm thanh khi chọn đáp án và thao tác</div>\n        </div>\n      </div>\n      <button class=\"btn sm\" id=\"btn-setting-sound\" onclick=\"toggleSound()\">Bật</button>\n    </div>\n    <!-- Giao diện Sáng / Tối -->\n    <div class=\"settings-item\">\n      <div class=\"settings-item-info\">\n        <div class=\"settings-item-icon\">\n          <ion-icon name=\"moon-outline\" style=\"font-size: 20px;\"></ion-icon>\n        </div>\n        <div>\n          <div class=\"settings-item-name\">Giao diện (Sáng / Tối)</div>\n          <div class=\"settings-item-desc\">Chuyển đổi giao diện Sáng hoặc Tối</div>\n        </div>\n      </div>\n      <button class=\"btn sm gh\" id=\"btn-setting-theme\" onclick=\"toggleTheme()\">Sáng</button>\n    </div>\n    <!-- Chế độ Máy chiếu -->\n    <div class=\"settings-item\">\n      <div class=\"settings-item-info\">\n        <div class=\"settings-item-icon\">\n          <ion-icon name=\"tv-outline\" style=\"font-size: 20px;\"></ion-icon>\n        </div>\n        <div>\n          <div class=\"settings-item-name\">Chế độ máy chiếu</div>\n          <div class=\"settings-item-desc\">Tăng kích thước chữ hiển thị trên máy chiếu</div>\n        </div>\n      </div>\n      <button class=\"btn sm gh\" id=\"btn-setting-projector\" onclick=\"toggleProjectorMode()\">Tắt</button>\n    </div>\n    <!-- Tài khoản người dùng -->\n    <div class=\"settings-item\">\n      <div class=\"settings-item-info\">\n        <div class=\"settings-item-icon\">\n          <ion-icon name=\"person-outline\" style=\"font-size: 20px;\"></ion-icon>\n        </div>\n        <div>\n          <div class=\"settings-item-name\">Tài khoản người dùng</div>\n          <div class=\"settings-item-desc\" id=\"settings-user-desc\">Đăng nhập để lưu tiến độ và kết quả</div>\n        </div>\n      </div>\n      <button class=\"btn sm cy\" id=\"btn-setting-account\" onclick=\"closeSettingsDialog(); if (window.Auth && window.Auth.isLoggedIn()) { openChangePasswordModal(); } else { openLoginDialog(); }\">Đăng nhập</button>\n    </div>\n  </div>\n  <div class=\"settings-footer\">\n    <button class=\"btn au\" type=\"button\" onclick=\"closeSettingsDialog()\">\n      <ion-icon name=\"checkmark-outline\"></ion-icon> Hoàn tất\n    </button>\n  </div>\n</dialog>",
   "screen-home": "<!-- SCREEN 1: HOME -->\n<section id=\"s-home\" class=\"scr\">\n  <div class=\"wrap\">\n    <!-- HERO SHOWCASE -->\n    <div class=\"hero-showcase\" id=\"hero-showcase\">\n      <div class=\"hero-study-card\" id=\"hero-study-card\">\n        <div class=\"study-card-img-wrap\" id=\"study-img-wrap\">\n          <img class=\"study-card-img\" id=\"study-img\" src=\"./assets/bac-ho.jpg\" alt=\"Chủ tịch Hồ Chí Minh\">\n        </div>\n        <div class=\"study-card-content\" id=\"study-content\">\n          <div class=\"study-quote-tag\" id=\"study-tag\">Lời dạy của Bác Hồ</div>\n          <div class=\"study-main-quote long-quote\" id=\"study-quote\">“Non sông Việt Nam có trở nên tươi đẹp hay không, dân tộc Việt Nam có bước tới đài vinh quang để sánh vai với các cường quốc năm châu được hay không, chính là nhờ một phần lớn ở công học tập của các em.”</div>\n          <div class=\"study-quote-author\" id=\"study-author\">— Chủ tịch Hồ Chí Minh —</div>\n        </div>\n      </div>\n    </div>\n\n    <!-- LEADERBOARD -->\n    <div class=\"card lb-card\" style=\"padding:24px 28px;\">\n      <div class=\"lb-header-bar\">\n        <div class=\"lb-title-wrap\">\n          <span class=\"lb-trophy-icon\">\n            <ion-icon name=\"trophy-outline\" style=\"font-size:24px; color:var(--gold);\"></ion-icon>\n          </span>\n          <div>\n            <h2 class=\"lb-heading\">Bảng Vàng Vinh Danh Học Sinh</h2>\n            <p class=\"lb-subheading\">Thành tích qua các lượt bài học và kiểm tra</p>\n          </div>\n        </div>\n        <button class=\"btn gh sm lb-filter-reset\" onclick=\"R.home()\" title=\"Làm mới bảng xếp hạng\">\n          <ion-icon name=\"refresh-outline\"></ion-icon> Làm mới\n        </button>\n      </div>\n      <div class=\"lb-filters\">\n        <div class=\"lb-search-wrap\">\n          <input id=\"lb-search\" class=\"lb-search-input\" placeholder=\"Tìm kiếm theo tên học sinh, lớp, bộ đề...\" oninput=\"renderLeaderboard()\">\n        </div>\n        <select id=\"lb-mode-filter\" class=\"lb-mode-select\" onchange=\"renderLeaderboard()\" style=\"display:none;\">\n          <option value=\"\">Tất cả kết quả</option>\n        </select>\n        <button class=\"btn gh sm lb-filter-reset\" onclick=\"resetLbFilters()\">\n          <ion-icon name=\"close-circle-outline\"></ion-icon> Xóa lọc\n        </button>\n      </div>\n      <div id=\"lb-container\"></div>\n    </div>\n  </div>\n</section>",
-  "screen-lib": "<!-- SCREEN 2: LIBRARY / EDITOR -->\r\n<section id=\"s-lib\" class=\"scr\">\r\n  <div class=\"wrap\">\r\n    <div id=\"lv\">\r\n      <!-- Library Hero Banner -->\r\n      <div class=\"cartoon-lib-banner\">\r\n        <div class=\"lib-banner-content\">\r\n          <h1 style=\"font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;\">Kho học liệu &amp; Đề thi</h1>\r\n          <p class=\"mut\" style=\"margin:0; font-size:14.5px;\">Quản lý tập trung các bộ đề Bài học, Đọc hiểu và Luyện viết</p>\r\n        </div>\r\n        <span id=\"sync-badge\" class=\"sync-badge\" aria-live=\"polite\">Đã đồng bộ</span>\r\n      </div>\r\n\r\n      <!-- Segmented Tabs for 3 Sections -->\r\n      <div class=\"lib-tabs-bar\" role=\"tablist\" aria-label=\"Phân loại kho học liệu\">\r\n        <button class=\"lib-tab-btn active\" id=\"tab-btn-lessons\" data-tab=\"lessons\" type=\"button\" onclick=\"switchLibTab('lessons')\">\r\n          <span>Bộ đề Bài học</span>\r\n          <span class=\"lib-tab-badge\" id=\"lib-lessons-badge\">0</span>\r\n        </button>\r\n        <button class=\"lib-tab-btn\" id=\"tab-btn-reading\" data-tab=\"reading\" type=\"button\" onclick=\"switchLibTab('reading')\">\r\n          <span>Bộ đề Đọc hiểu</span>\r\n          <span class=\"lib-tab-badge\" id=\"lib-reading-badge\">0</span>\r\n        </button>\r\n        <button class=\"lib-tab-btn\" id=\"tab-btn-writing\" data-tab=\"writing\" type=\"button\" onclick=\"switchLibTab('writing')\">\r\n          <span>Bộ đề Viết</span>\r\n          <span class=\"lib-tab-badge\" id=\"lib-writing-badge\">0</span>\r\n        </button>\r\n      </div>\r\n\r\n      <!-- PANE 1: BỘ ĐỀ BÀI HỌC -->\r\n      <div id=\"lib-pane-lessons\" class=\"lib-tab-pane active\">\r\n        <div class=\"hud teacher-only\" style=\"justify-content:flex-end;\">\r\n          <button class=\"btn au\" onclick=\"newSet()\">\r\n            <ion-icon name=\"add-outline\"></ion-icon> Tạo bộ mới\r\n          </button>\r\n          <button class=\"btn cy\" onclick=\"openPromptDialog()\">\r\n            <ion-icon name=\"sparkles-outline\"></ion-icon> Soạn đề bằng AI\r\n          </button>\r\n          <button id=\"bulk-delete-start\" class=\"btn no\" onclick=\"enableBulkDeleteMode()\">\r\n            <ion-icon name=\"trash-outline\"></ion-icon> Xóa nhiều\r\n          </button>\r\n          <div id=\"bulk-delete-actions\" hidden>\r\n            <button id=\"bulk-delete\" class=\"btn no\" onclick=\"deleteSelectedSets()\" disabled>Xóa đã chọn (0)</button>\r\n            <button class=\"btn gh\" onclick=\"cancelBulkDeleteMode()\">Hủy</button>\r\n          </div>\r\n        </div>\r\n        <!-- Search & Topic Tags Filter -->\r\n        <div class=\"lib-search-filter-card\">\r\n          <div class=\"lib-search-bar-row\">\r\n            <div class=\"lib-search-input-box\">\r\n              <span class=\"lib-search-lead-icon\">\r\n                <ion-icon name=\"search-outline\"></ion-icon>\r\n              </span>\r\n              <input id=\"lf\" type=\"text\" placeholder=\"Tìm kiếm bộ đề bài học theo tên, thẻ chủ đề…\" oninput=\"onLibSearchInput()\" autocomplete=\"off\">\r\n              <button id=\"lf-clear\" class=\"lib-search-clear-btn\" type=\"button\" onclick=\"clearLibSearch()\" aria-label=\"Xóa tìm kiếm\" hidden>\r\n                <ion-icon name=\"close-outline\"></ion-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n          <div class=\"topic-filter-row\">\r\n            <div class=\"topic-filter-meta\">\r\n              <span class=\"topic-filter-title\">Lọc theo thẻ chủ đề:</span>\r\n              <span id=\"topic-filter-summary\" class=\"topic-filter-summary\"></span>\r\n            </div>\r\n            <div id=\"topic-chips-bar\" class=\"topic-chips-bar\" role=\"tablist\" aria-label=\"Bộ lọc thẻ chủ đề\"></div>\r\n          </div>\r\n        </div>\r\n        <div class=\"setup-sets-grid\" id=\"lg\"></div>\r\n      </div>\r\n\r\n      <!-- PANE 2: BỘ ĐỀ ĐỌC HIỂU -->\r\n      <div id=\"lib-pane-reading\" class=\"lib-tab-pane\">\r\n        <div class=\"hud teacher-only\" style=\"justify-content:flex-end; gap:8px;\">\r\n          <button class=\"btn cy\" type=\"button\" onclick=\"promptAddNewReadingCategory()\" title=\"Tạo thêm chủ đề mới\">\r\n            <ion-icon name=\"add-outline\"></ion-icon> Thêm chủ đề\r\n          </button>\r\n          <button class=\"btn no\" type=\"button\" onclick=\"promptDeleteCurrentReadingCategory()\" title=\"Xóa chủ đề\">\r\n            <ion-icon name=\"trash-outline\"></ion-icon> Xóa chủ đề\r\n          </button>\r\n          <button class=\"btn au\" type=\"button\" onclick=\"openCreateReadingSetModal()\" title=\"Tạo đề đọc hiểu mới\">\r\n            <ion-icon name=\"add-outline\"></ion-icon> Thêm đề mới\r\n          </button>\r\n        </div>\r\n        <div class=\"lib-search-filter-card\">\r\n          <div class=\"lib-search-bar-row\">\r\n            <div class=\"lib-search-input-box\">\r\n              <span class=\"lib-search-lead-icon\">\r\n                <ion-icon name=\"search-outline\"></ion-icon>\r\n              </span>\r\n              <input id=\"lib-reading-search\" type=\"text\" placeholder=\"Tìm kiếm bộ đề đọc hiểu theo tên tác phẩm, tác giả...\" oninput=\"onLibReadingSearchInput()\" autocomplete=\"off\">\r\n            </div>\r\n          </div>\r\n          <div class=\"topic-filter-row\">\r\n            <div class=\"topic-filter-meta\">\r\n              <span class=\"topic-filter-title\">Lọc theo chủ đề:</span>\r\n              <span id=\"lib-reading-topic-summary\" class=\"topic-filter-summary\"></span>\r\n            </div>\r\n            <div id=\"lib-reading-chips-bar\" class=\"topic-chips-bar\" role=\"tablist\" aria-label=\"Bộ lọc chủ đề đọc hiểu\"></div>\r\n          </div>\r\n        </div>\r\n        <div class=\"setup-sets-grid\" id=\"lib-reading-grid\"></div>\r\n      </div>\r\n\r\n      <!-- PANE 3: BỘ ĐỀ VIẾT -->\r\n      <div id=\"lib-pane-writing\" class=\"lib-tab-pane\">\r\n        <div class=\"hud teacher-only\" style=\"justify-content:flex-end; gap:8px;\">\r\n          <button class=\"btn cy\" type=\"button\" onclick=\"promptAddNewCategory()\" title=\"Tạo thêm chủ đề mới\">\r\n            <ion-icon name=\"add-outline\"></ion-icon> Thêm chủ đề\r\n          </button>\r\n          <button class=\"btn no\" type=\"button\" onclick=\"promptDeleteCurrentCategory()\" title=\"Xóa chủ đề (có xác nhận)\">\r\n            <ion-icon name=\"trash-outline\"></ion-icon> Xóa chủ đề\r\n          </button>\r\n          <button class=\"btn au\" type=\"button\" onclick=\"openCreateWritingSetModal()\" title=\"Tạo bộ đề mới\">\r\n            <ion-icon name=\"add-outline\"></ion-icon> Thêm bộ mới\r\n          </button>\r\n        </div>\r\n        <div class=\"lib-search-filter-card\">\r\n          <div class=\"lib-search-bar-row\">\r\n            <div class=\"lib-search-input-box\">\r\n              <span class=\"lib-search-lead-icon\">\r\n                <ion-icon name=\"search-outline\"></ion-icon>\r\n              </span>\r\n              <input id=\"lib-writing-search\" type=\"text\" placeholder=\"Tìm kiếm bộ đề viết theo tiêu đề, dạng đề...\" oninput=\"onLibWritingSearchInput()\" autocomplete=\"off\">\r\n            </div>\r\n          </div>\r\n          <div class=\"topic-filter-row\">\r\n            <div class=\"topic-filter-meta\">\r\n              <span class=\"topic-filter-title\">Lọc theo chủ đề:</span>\r\n              <span id=\"lib-writing-topic-summary\" class=\"topic-filter-summary\"></span>\r\n            </div>\r\n            <div id=\"lib-writing-chips-bar\" class=\"topic-chips-bar\" role=\"tablist\" aria-label=\"Bộ lọc chủ đề viết\"></div>\r\n          </div>\r\n        </div>\r\n        <div class=\"setup-sets-grid\" id=\"lib-writing-grid\"></div>\r\n      </div>\r\n    </div>\r\n\r\n    <!-- EDITOR VIEW -->\r\n    <div id=\"ev\" hidden>\r\n      <button class=\"btn gh sm\" style=\"margin-bottom:12px;\" onclick=\"go('lib')\">\r\n        <ion-icon name=\"arrow-back-outline\"></ion-icon> Quay lại thư viện\r\n      </button>\r\n      <div class=\"hud\">\r\n        <h1 style=\"font-size:26px; margin:0;\">Soạn thảo bộ câu hỏi</h1>\r\n      </div>\r\n      <div class=\"card\">\r\n        <div class=\"g2\">\r\n          <label>Tên bộ câu hỏi<input id=\"et\" oninput=\"meta()\"></label>\r\n          <label>Chủ đề / Bài học<input id=\"ec\" oninput=\"meta()\"></label>\r\n        </div>\r\n        <div style=\"display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap;\">\r\n          <span style=\"font-weight:700;\">Biểu tượng bộ đề:</span>\r\n          <button class=\"emoji-trigger\" type=\"button\" onclick=\"toggleEmojiPicker()\" id=\"emoji-trigger-btn\"><span id=\"current-emo\">📖</span> ▾ Chọn biểu tượng</button>\r\n        </div>\r\n        <div class=\"emoji-picker\" id=\"emoji-picker\"></div>\r\n      </div>\r\n\r\n      <div class=\"g2\" style=\"margin-top:16px; align-items:start;\">\r\n        <div class=\"card question-list-card\">\r\n          <h3 style=\"margin-bottom:10px;\">Danh sách câu hỏi (<span id=\"en\"></span>)</h3>\r\n          <input id=\"ef\" oninput=\"renderQs()\" placeholder=\"Tìm câu hỏi…\">\r\n          <div id=\"el\" style=\"margin-top:12px;\"></div>\r\n        </div>\r\n\r\n        <div class=\"card\">\r\n          <h3 id=\"eh\">Thêm câu hỏi mới</h3>\r\n          <div class=\"tabs\" id=\"ty\" style=\"display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;\"></div>\r\n          \r\n          <label>Nội dung câu hỏi\r\n            <textarea id=\"fc\" placeholder=\"Nội dung câu hỏi (mặc định với dạng Đúng/Sai: Phát biểu sau đây là đúng?)\"></textarea>\r\n          </label>\r\n\r\n          <div data-t=\"tf\">\r\n            <label>Văn bản / Ngữ liệu đọc hiểu (không bắt buộc)\r\n              <textarea id=\"tf-passage\" style=\"min-height:85px;\" placeholder=\"Dán văn bản ngữ liệu, trích đoạn văn học nếu câu hỏi cần đọc hiểu...\"></textarea>\r\n            </label>\r\n            <div style=\"font-size:12.5px; color:var(--mut); margin:2px 0 10px;\">\r\n              Nếu để trống câu hỏi phía trên, hệ thống sẽ mặc định là: <b>\"Phát biểu sau đây là đúng?\"</b>\r\n            </div>\r\n            <label style=\"font-weight:700; margin-bottom:6px; display:block;\">4 phát biểu (nhấp chọn phát biểu Đúng / Sai):</label>\r\n            <div id=\"tf-items-editor\" class=\"tf-editor-container\"></div>\r\n          </div>\r\n\r\n          <div data-t=\"mc img\">\r\n            <label>4 phương án (đáp án đúng sẽ chọn sau khi thêm câu)</label>\r\n            <div id=\"fo\" class=\"option-editor\"></div>\r\n          </div>\r\n          \r\n          <div data-t=\"img\">\r\n            <label>Tải ảnh minh họa (PNG/JPG/WebP, &lt;1.5MB)\r\n              <input type=\"file\" accept=\"image/png,image/jpeg,image/webp\" onchange=\"pickImg(this)\">\r\n            </label>\r\n            <img id=\"fi\" class=\"qi\" hidden>\r\n          </div>\r\n          \r\n          <div data-t=\"short fill\">\r\n            <label>Đáp án chấp nhận (cách nhau bởi dấu |)<input id=\"fk\" placeholder=\"Hồ Chí Minh | Nguyễn Ái Quốc\"></label>\r\n          </div>\r\n          \r\n          <div data-t=\"match\">\r\n            <label>Các cặp ghép nối (mỗi dòng \"Vế 1 | Vế 2\")<textarea id=\"fp\"></textarea></label>\r\n          </div>\r\n          \r\n          <label>Lời giải thích chi tiết<textarea id=\"fe\" style=\"min-height:60px\"></textarea></label>\r\n          \r\n          <div class=\"g2\">\r\n            <label>Độ khó\r\n              <select id=\"fd\">\r\n                <option>Dễ</option>\r\n                <option>Trung bình</option>\r\n                <option>Khó</option>\r\n              </select>\r\n            </label>\r\n            <label>Nguồn trích dẫn<input id=\"fs\"></label>\r\n          </div>\r\n          \r\n          <div style=\"display:flex; gap:10px; margin-top:16px;\">\r\n            <button id=\"qsave\" class=\"btn au\" onclick=\"saveQ()\">\r\n              <ion-icon name=\"add-circle-outline\"></ion-icon> Thêm câu hỏi vào bộ\r\n            </button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>",
+  "screen-lib": "<!-- SCREEN 2: LIBRARY / EDITOR -->\r\n<section id=\"s-lib\" class=\"scr\">\r\n  <div class=\"wrap\">\r\n    <div id=\"lv\">\r\n      <!-- Library Hero Banner -->\r\n      <div class=\"cartoon-lib-banner\">\r\n        <div class=\"lib-banner-content\">\r\n          <h1 style=\"font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;\">Kho học liệu &amp; Đề thi</h1>\r\n          <p class=\"mut\" style=\"margin:0; font-size:14.5px;\">Quản lý tập trung các bộ đề Bài học, Đọc hiểu và Luyện viết</p>\r\n        </div>\r\n        <span id=\"sync-badge\" class=\"sync-badge\" aria-live=\"polite\">Đã đồng bộ</span>\r\n      </div>\r\n\r\n      <!-- Segmented Tabs for 3 Sections -->\r\n      <div class=\"lib-tabs-bar\" role=\"tablist\" aria-label=\"Phân loại kho học liệu\">\r\n        <button class=\"lib-tab-btn active\" id=\"tab-btn-lessons\" data-tab=\"lessons\" type=\"button\" onclick=\"switchLibTab('lessons')\">\r\n          <span>Bộ đề Bài học</span>\r\n          <span class=\"lib-tab-badge\" id=\"lib-lessons-badge\">0</span>\r\n        </button>\r\n        <button class=\"lib-tab-btn\" id=\"tab-btn-reading\" data-tab=\"reading\" type=\"button\" onclick=\"switchLibTab('reading')\">\r\n          <span>Bộ đề Đọc hiểu</span>\r\n          <span class=\"lib-tab-badge\" id=\"lib-reading-badge\">0</span>\r\n        </button>\r\n        <button class=\"lib-tab-btn\" id=\"tab-btn-writing\" data-tab=\"writing\" type=\"button\" onclick=\"switchLibTab('writing')\">\r\n          <span>Bộ đề Viết</span>\r\n          <span class=\"lib-tab-badge\" id=\"lib-writing-badge\">0</span>\r\n        </button>\r\n      </div>\r\n\r\n      <!-- PANE 1: BỘ ĐỀ BÀI HỌC -->\r\n      <div id=\"lib-pane-lessons\" class=\"lib-tab-pane active\">\r\n        <div class=\"hud teacher-only\" style=\"justify-content:flex-end;\">\r\n          <button class=\"btn au\" onclick=\"newSet()\">\r\n            <ion-icon name=\"add-outline\"></ion-icon> Tạo bộ mới\r\n          </button>\r\n          <button class=\"btn cy\" onclick=\"openPromptDialog()\">\r\n            <ion-icon name=\"sparkles-outline\"></ion-icon> Soạn đề bằng AI\r\n          </button>\r\n          <button id=\"bulk-delete-start\" class=\"btn no\" onclick=\"enableBulkDeleteMode()\">\r\n            <ion-icon name=\"trash-outline\"></ion-icon> Xóa nhiều\r\n          </button>\r\n          <div id=\"bulk-delete-actions\" hidden>\r\n            <button id=\"bulk-delete\" class=\"btn no\" onclick=\"deleteSelectedSets()\" disabled>Xóa đã chọn (0)</button>\r\n            <button class=\"btn gh\" onclick=\"cancelBulkDeleteMode()\">Hủy</button>\r\n          </div>\r\n        </div>\r\n        <!-- Search & Topic Tags Filter -->\r\n        <div class=\"lib-search-filter-card\">\r\n          <div class=\"lib-search-bar-row\">\r\n            <div class=\"lib-search-input-box\">\r\n              <span class=\"lib-search-lead-icon\">\r\n                <ion-icon name=\"search-outline\"></ion-icon>\r\n              </span>\r\n              <input id=\"lf\" type=\"text\" placeholder=\"Tìm kiếm bộ đề bài học theo tên, thẻ chủ đề…\" oninput=\"onLibSearchInput()\" autocomplete=\"off\">\r\n              <button id=\"lf-clear\" class=\"lib-search-clear-btn\" type=\"button\" onclick=\"clearLibSearch()\" aria-label=\"Xóa tìm kiếm\" hidden>\r\n                <ion-icon name=\"close-outline\"></ion-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n          <div class=\"topic-filter-row\">\r\n            <div class=\"topic-filter-meta\">\r\n              <span class=\"topic-filter-title\">Lọc theo thẻ chủ đề:</span>\r\n              <span id=\"topic-filter-summary\" class=\"topic-filter-summary\"></span>\r\n            </div>\r\n            <div id=\"topic-chips-bar\" class=\"topic-chips-bar\" role=\"tablist\" aria-label=\"Bộ lọc thẻ chủ đề\"></div>\r\n          </div>\r\n        </div>\r\n        <div class=\"setup-sets-grid\" id=\"lg\"></div>\r\n      </div>\r\n\r\n      <!-- PANE 2: BỘ ĐỀ ĐỌC HIỂU -->\r\n      <div id=\"lib-pane-reading\" class=\"lib-tab-pane\">\r\n        <div class=\"hud teacher-only\" style=\"justify-content:flex-end; gap:8px;\">\r\n          <button class=\"btn cy\" type=\"button\" onclick=\"promptAddNewReadingCategory()\" title=\"Tạo thêm chủ đề mới\">\r\n            <ion-icon name=\"add-outline\"></ion-icon> Thêm chủ đề\r\n          </button>\r\n          <button class=\"btn no\" type=\"button\" onclick=\"promptDeleteCurrentReadingCategory()\" title=\"Xóa chủ đề\">\r\n            <ion-icon name=\"trash-outline\"></ion-icon> Xóa chủ đề\r\n          </button>\r\n          <button class=\"btn au\" type=\"button\" onclick=\"openCreateReadingSetModal()\" title=\"Tạo đề đọc hiểu mới\">\r\n            <ion-icon name=\"add-outline\"></ion-icon> Thêm đề mới\r\n          </button>\r\n        </div>\r\n        <div class=\"lib-search-filter-card\">\r\n          <div class=\"lib-search-bar-row\">\r\n            <div class=\"lib-search-input-box\">\r\n              <span class=\"lib-search-lead-icon\">\r\n                <ion-icon name=\"search-outline\"></ion-icon>\r\n              </span>\r\n              <input id=\"lib-reading-search\" type=\"text\" placeholder=\"Tìm kiếm bộ đề đọc hiểu theo tên tác phẩm, tác giả...\" oninput=\"onLibReadingSearchInput()\" autocomplete=\"off\">\r\n            </div>\r\n          </div>\r\n          <div class=\"topic-filter-row\">\r\n            <div class=\"topic-filter-meta\">\r\n              <span class=\"topic-filter-title\">Lọc theo chủ đề:</span>\r\n              <span id=\"lib-reading-topic-summary\" class=\"topic-filter-summary\"></span>\r\n            </div>\r\n            <div id=\"lib-reading-chips-bar\" class=\"topic-chips-bar\" role=\"tablist\" aria-label=\"Bộ lọc chủ đề đọc hiểu\"></div>\r\n          </div>\r\n        </div>\r\n        <div class=\"setup-sets-grid\" id=\"lib-reading-grid\"></div>\r\n      </div>\r\n\r\n      <!-- PANE 3: BỘ ĐỀ VIẾT -->\r\n      <div id=\"lib-pane-writing\" class=\"lib-tab-pane\">\r\n        <div class=\"hud teacher-only\" style=\"justify-content:flex-end; gap:8px;\">\r\n          <button class=\"btn cy\" type=\"button\" onclick=\"promptAddNewCategory()\" title=\"Tạo thêm chủ đề mới\">\r\n            <ion-icon name=\"add-outline\"></ion-icon> Thêm chủ đề\r\n          </button>\r\n          <button class=\"btn no\" type=\"button\" onclick=\"promptDeleteCurrentCategory()\" title=\"Xóa chủ đề (có xác nhận)\">\r\n            <ion-icon name=\"trash-outline\"></ion-icon> Xóa chủ đề\r\n          </button>\r\n          <button class=\"btn au\" type=\"button\" onclick=\"openCreateWritingSetModal()\" title=\"Tạo bộ đề mới\">\r\n            <ion-icon name=\"add-outline\"></ion-icon> Thêm bộ mới\r\n          </button>\r\n        </div>\r\n        <div class=\"lib-search-filter-card\">\r\n          <div class=\"lib-search-bar-row\">\r\n            <div class=\"lib-search-input-box\">\r\n              <span class=\"lib-search-lead-icon\">\r\n                <ion-icon name=\"search-outline\"></ion-icon>\r\n              </span>\r\n              <input id=\"lib-writing-search\" type=\"text\" placeholder=\"Tìm kiếm bộ đề viết theo tiêu đề, dạng đề...\" oninput=\"onLibWritingSearchInput()\" autocomplete=\"off\">\r\n            </div>\r\n          </div>\r\n          <div class=\"topic-filter-row\">\r\n            <div class=\"topic-filter-meta\">\r\n              <span class=\"topic-filter-title\">Lọc theo chủ đề:</span>\r\n              <span id=\"lib-writing-topic-summary\" class=\"topic-filter-summary\"></span>\r\n            </div>\r\n            <div id=\"lib-writing-chips-bar\" class=\"topic-chips-bar\" role=\"tablist\" aria-label=\"Bộ lọc chủ đề viết\"></div>\r\n          </div>\r\n        </div>\r\n        <div class=\"setup-sets-grid\" id=\"lib-writing-grid\"></div>\r\n      </div>\r\n    </div>\r\n\r\n    <!-- EDITOR VIEW -->\r\n    <div id=\"ev\" hidden>\r\n      <button class=\"btn gh sm\" style=\"margin-bottom:12px;\" onclick=\"go('lib')\">\r\n        <ion-icon name=\"arrow-back-outline\"></ion-icon> Quay lại thư viện\r\n      </button>\r\n      <div class=\"hud\">\r\n        <h1 style=\"font-size:26px; margin:0;\">Soạn thảo bộ câu hỏi</h1>\r\n      </div>\r\n      <div class=\"card\">\r\n        <div class=\"g2\">\r\n          <label>Tên bộ câu hỏi<input id=\"et\" oninput=\"meta()\"></label>\r\n          <label>Chủ đề / Bài học<input id=\"ec\" oninput=\"meta()\"></label>\r\n        </div>\r\n        <div style=\"display:flex;align-items:center;gap:18px;margin-top:12px;flex-wrap:wrap;\">\r\n          <div style=\"display:flex;align-items:center;gap:10px;\">\r\n            <span style=\"font-weight:700;\">Biểu tượng bộ đề:</span>\r\n            <button class=\"emoji-trigger\" type=\"button\" onclick=\"toggleEmojiPicker()\" id=\"emoji-trigger-btn\"><span id=\"current-emo\">📖</span> ▾ Chọn biểu tượng</button>\r\n          </div>\r\n          <div style=\"display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--stroke);border-radius:10px;padding:6px 12px;\">\r\n            <label for=\"set-max-attempts\" style=\"margin:0;font-weight:700;display:flex;align-items:center;gap:6px;font-size:13px;\">\r\n              <ion-icon name=\"timer-outline\"></ion-icon> Giới hạn lượt làm:\r\n            </label>\r\n            <input type=\"number\" id=\"set-max-attempts\" min=\"0\" max=\"999\" value=\"0\" class=\"inp\" style=\"width:75px;text-align:center;font-weight:800;padding:4px 8px;border-radius:6px;\" onchange=\"meta()\" title=\"0 = Không giới hạn\">\r\n            <span class=\"mut\" style=\"font-size:12px;\">lượt (0 = không giới hạn)</span>\r\n          </div>\r\n          <div style=\"display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--stroke);border-radius:10px;padding:6px 12px;\">\r\n            <label for=\"set-deadline\" style=\"margin:0;font-weight:700;display:flex;align-items:center;gap:6px;font-size:13px;\">\r\n              <ion-icon name=\"alarm-outline\"></ion-icon> Hạn nộp:\r\n            </label>\r\n            <input type=\"datetime-local\" id=\"set-deadline\" class=\"inp\" style=\"padding:4px 8px;border-radius:6px;font-weight:700;font-size:12.5px;\" onchange=\"meta()\" title=\"Để trống = Không giới hạn hạn nộp\">\r\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"$('#set-deadline').value=''; meta();\" title=\"Xóa hạn nộp\" style=\"padding:2px 6px;height:24px;\">✕</button>\r\n          </div>\r\n        </div>\r\n        <div class=\"emoji-picker\" id=\"emoji-picker\"></div>\r\n      </div>\r\n\r\n      <div class=\"g2\" style=\"margin-top:16px; align-items:start;\">\r\n        <div class=\"card question-list-card\">\r\n          <h3 style=\"margin-bottom:10px;\">Danh sách câu hỏi (<span id=\"en\"></span>)</h3>\r\n          <input id=\"ef\" oninput=\"renderQs()\" placeholder=\"Tìm câu hỏi…\">\r\n          <div id=\"el\" style=\"margin-top:12px;\"></div>\r\n        </div>\r\n\r\n        <div class=\"card\">\r\n          <h3 id=\"eh\">Thêm câu hỏi mới</h3>\r\n          <div class=\"tabs\" id=\"ty\" style=\"display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;\"></div>\r\n          \r\n          <label>Nội dung câu hỏi\r\n            <textarea id=\"fc\" placeholder=\"Nội dung câu hỏi (mặc định với dạng Đúng/Sai: Phát biểu sau đây là đúng?)\"></textarea>\r\n          </label>\r\n\r\n          <div data-t=\"tf\">\r\n            <label>Văn bản / Ngữ liệu đọc hiểu (không bắt buộc)\r\n              <textarea id=\"tf-passage\" style=\"min-height:85px;\" placeholder=\"Dán văn bản ngữ liệu, trích đoạn văn học nếu câu hỏi cần đọc hiểu...\"></textarea>\r\n            </label>\r\n            <div style=\"font-size:12.5px; color:var(--mut); margin:2px 0 10px;\">\r\n              Nếu để trống câu hỏi phía trên, hệ thống sẽ mặc định là: <b>\"Phát biểu sau đây là đúng?\"</b>\r\n            </div>\r\n            <label style=\"font-weight:700; margin-bottom:6px; display:block;\">4 phát biểu (nhấp chọn phát biểu Đúng / Sai):</label>\r\n            <div id=\"tf-items-editor\" class=\"tf-editor-container\"></div>\r\n          </div>\r\n\r\n          <div data-t=\"mc img\">\r\n            <label>4 phương án (đáp án đúng sẽ chọn sau khi thêm câu)</label>\r\n            <div id=\"fo\" class=\"option-editor\"></div>\r\n          </div>\r\n          \r\n          <div data-t=\"img\">\r\n            <label>Tải ảnh minh họa (PNG/JPG/WebP, &lt;1.5MB)\r\n              <input type=\"file\" accept=\"image/png,image/jpeg,image/webp\" onchange=\"pickImg(this)\">\r\n            </label>\r\n            <img id=\"fi\" class=\"qi\" hidden>\r\n          </div>\r\n          \r\n          <div data-t=\"short fill\">\r\n            <label>Đáp án chấp nhận (cách nhau bởi dấu |)<input id=\"fk\" placeholder=\"Hồ Chí Minh | Nguyễn Ái Quốc\"></label>\r\n          </div>\r\n          \r\n          <div data-t=\"match\">\r\n            <label>Các cặp ghép nối (mỗi dòng \"Vế 1 | Vế 2\")<textarea id=\"fp\"></textarea></label>\r\n          </div>\r\n          \r\n          <label>Lời giải thích chi tiết<textarea id=\"fe\" style=\"min-height:60px\"></textarea></label>\r\n          \r\n          <div class=\"g2\">\r\n            <label>Độ khó\r\n              <select id=\"fd\">\r\n                <option>Dễ</option>\r\n                <option>Trung bình</option>\r\n                <option>Khó</option>\r\n              </select>\r\n            </label>\r\n            <label>Nguồn trích dẫn<input id=\"fs\"></label>\r\n          </div>\r\n          \r\n          <div style=\"display:flex; gap:10px; margin-top:16px;\">\r\n            <button id=\"qsave\" class=\"btn au\" onclick=\"saveQ()\">\r\n              <ion-icon name=\"add-circle-outline\"></ion-icon> Thêm câu hỏi vào bộ\r\n            </button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>",
   "screen-setup": "<!-- SCREEN 3: SETUP & LESSONS (BÀI HỌC) -->\r\n<section id=\"s-setup\" class=\"scr\">\r\n  <div class=\"wrap\">\r\n    <!-- Hero Banner -->\r\n    <div class=\"cartoon-lib-banner setup-hero-banner\">\r\n      <div class=\"lib-banner-content\">\r\n        <h1 style=\"font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;\">Phòng bài học</h1>\r\n        <p class=\"mut\" style=\"margin:0; font-size:14.5px;\">Chọn bộ đề bài học bên dưới để bắt đầu luyện tập và thử thách kiến thức</p>\r\n      </div>\r\n    </div>\r\n\r\n    <!-- Search & Topic Filter Card -->\r\n    <div class=\"lib-search-filter-card\" style=\"margin: 0 0 16px;\">\r\n      <div class=\"lib-search-bar-row\">\r\n        <div class=\"lib-search-input-box\">\r\n          <span class=\"lib-search-lead-icon\">\r\n            <ion-icon name=\"search-outline\"></ion-icon>\r\n          </span>\r\n          <input id=\"setup-search\" type=\"text\" placeholder=\"Tìm kiếm bộ đề bài học theo tên, tác phẩm, chủ đề…\" oninput=\"onSetupSearchInput()\" autocomplete=\"off\">\r\n        </div>\r\n      </div>\r\n      <div class=\"topic-filter-row\" style=\"margin-top:10px;\">\r\n        <div class=\"topic-filter-meta\">\r\n          <span class=\"topic-filter-title\">Lọc theo chủ đề bài học:</span>\r\n          <span id=\"setup-topic-summary\" class=\"topic-filter-summary\"></span>\r\n        </div>\r\n        <div id=\"setup-topic-chips\" class=\"topic-chips-bar\" role=\"tablist\" aria-label=\"Bộ lọc chủ đề bài học\"></div>\r\n      </div>\r\n    </div>\r\n\r\n    <!-- Hidden compatibility elements for existing logic -->\r\n    <input type=\"hidden\" id=\"nick\" value=\"\">\r\n    <input type=\"hidden\" id=\"class-name\" value=\"\">\r\n    <select id=\"ss\" style=\"display:none;\" onchange=\"updateSetupQuestionCount()\"></select>\r\n    <input id=\"cnt-display\" type=\"hidden\" value=\"0\">\r\n\r\n    <!-- Grid of sets matching the user image -->\r\n    <div id=\"setup-sets-grid\" class=\"setup-sets-grid\"></div>\r\n\r\n    <!-- MODAL: HỎI TÊN VÀ LỚP KHI NHẤP VÀO BỘ CÂU HỎI -->\r\n    <dialog id=\"start-quiz-dialog\" class=\"writing-modal setup-start-modal\">\r\n      <div class=\"writing-modal-header\">\r\n        <div class=\"writing-modal-title\">\r\n          <h3 id=\"start-dialog-heading\">Thông tin người học</h3>\r\n        </div>\r\n        <button class=\"btn sm gh\" type=\"button\" onclick=\"closeStartQuizModal()\" aria-label=\"Đóng\">\r\n          <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\r\n        </button>\r\n      </div>\r\n      \r\n      <form id=\"start-quiz-form\" onsubmit=\"handleStartQuizSubmit(event)\" class=\"writing-modal-form-wrap\">\r\n        <input type=\"hidden\" id=\"start-quiz-set-id\">\r\n        \r\n        <div class=\"writing-modal-body\" style=\"padding: 20px 24px;\">\r\n          <!-- Thông tin bộ đề đang chọn -->\r\n          <div class=\"setup-modal-set-preview\" id=\"start-modal-preview\">\r\n            <span class=\"setup-modal-pill\" id=\"start-modal-set-badge\">10 câu</span>\r\n            <h4 id=\"start-modal-set-title\" style=\"margin: 6px 0 0; font-size: 18px; font-weight: 800; line-height: 1.35;\"></h4>\r\n            <span id=\"start-modal-set-topic\" class=\"mut\" style=\"font-size: 13px; font-weight: 600; display: block; margin-top: 4px;\"></span>\r\n          </div>\r\n\r\n          <div style=\"margin-top: 18px;\">\r\n            <label for=\"start-nick\" style=\"font-weight: 700; display: block; margin-bottom: 6px; font-size: 14px;\">\r\n              Tên học sinh / Biệt danh <span style=\"color:var(--red)\">*</span>\r\n            </label>\r\n            <input type=\"text\" id=\"start-nick\" required maxlength=\"20\" placeholder=\"Nhập tên của bạn...\" style=\"font-size: 15px; padding: 11px 14px; width: 100%;\">\r\n          </div>\r\n\r\n          <div style=\"margin-top: 14px;\">\r\n            <label for=\"start-class-name\" style=\"font-weight: 700; display: block; margin-bottom: 6px; font-size: 14px;\">\r\n              Lớp (không bắt buộc)\r\n            </label>\r\n            <input type=\"text\" id=\"start-class-name\" maxlength=\"30\" placeholder=\"Ví dụ: 11A1, 10A2...\" style=\"font-size: 15px; padding: 11px 14px; width: 100%;\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"writing-modal-footer\">\r\n          <button type=\"button\" class=\"btn gh\" onclick=\"closeStartQuizModal()\">Hủy</button>\r\n          <button type=\"submit\" class=\"btn au\" style=\"font-weight: 800;\">\r\n            <ion-icon name=\"play-outline\"></ion-icon> Bắt đầu làm bài\r\n          </button>\r\n        </div>\r\n      </form>\r\n    </dialog>\r\n  </div>\r\n</section>",
   "screen-game": "<!-- SCREEN 4: GAMEPLAY -->\r\n<section id=\"s-game\" class=\"scr\">\r\n  <div class=\"wrap\">\r\n    <div class=\"hud\">\r\n      <div class=\"hud-pill\">Điểm: <b id=\"hs\">0</b></div>\r\n      <div class=\"hud-pill\">Chuỗi đúng: <b id=\"hc\">0</b></div>\r\n      <div class=\"hud-pill\" id=\"ht\" style=\"display:none;\"><ion-icon name=\"timer-outline\"></ion-icon> 20s</div>\r\n      <div class=\"hud-pill\">Câu: <b id=\"hp\">1/10</b></div>\r\n      <button class=\"btn gh sm\" id=\"btn-projector-toggle\" onclick=\"toggleProjectorMode()\" style=\"margin-left:auto;\" title=\"Chế độ máy chiếu\">\r\n        <ion-icon name=\"tv-outline\"></ion-icon> Máy chiếu\r\n      </button>\r\n    </div>\r\n\r\n    <div class=\"bar\"><i id=\"pb\"></i></div>\r\n\r\n    <div id=\"boss\" hidden style=\"display:none !important;\"></div>\r\n\r\n    <!-- QUESTION CARD -->\r\n    <div class=\"card\" id=\"q\"></div>\r\n    \r\n  </div>\r\n</section>",
   "screen-res": "<!-- SCREEN 5: RESULTS -->\r\n<section id=\"s-res\" class=\"scr\">\r\n  <div class=\"wrap\">\r\n    <div class=\"hero\">\r\n      <h1 id=\"rt\">Kết quả bài làm</h1>\r\n      <p id=\"rn\" class=\"mut\" style=\"font-size:18px;\"></p>\r\n    </div>\r\n    <div class=\"card\" style=\"text-align:center;\">\r\n      <p id=\"score-save-status\" role=\"status\" aria-live=\"polite\" style=\"margin:0 0 10px;\">Đang lưu kết quả bảng xếp hạng...</p>\r\n      <button class=\"btn gh sm\" id=\"score-save-retry\" onclick=\"saveScoreToLeaderboard()\" hidden>\r\n        <ion-icon name=\"refresh-outline\"></ion-icon> Thử lưu lại\r\n      </button>\r\n    </div>\r\n    <div class=\"g3\" id=\"rs\" style=\"margin-bottom:24px;\"></div>\r\n\r\n    <div style=\"display:flex; flex-wrap:wrap; gap:12px; justify-content:center;\">\r\n      <button class=\"btn au\" onclick=\"replay()\">\r\n        <ion-icon name=\"refresh-outline\"></ion-icon> Làm lại\r\n      </button>\r\n      <button class=\"btn cy\" onclick=\"go('history')\">\r\n        <ion-icon name=\"time-outline\"></ion-icon> Xem lịch sử bài làm\r\n      </button>\r\n      <button class=\"btn gh\" onclick=\"go('setup')\">\r\n        <ion-icon name=\"book-outline\"></ion-icon> Chọn bộ khác\r\n      </button>\r\n      <button class=\"btn gh\" onclick=\"go('home')\">\r\n        <ion-icon name=\"home-outline\"></ion-icon> Trang chủ\r\n      </button>\r\n    </div>\r\n\r\n    <h2 style=\"margin-top:32px;\">Chi tiết từng câu hỏi</h2>\r\n    <div id=\"rv\"></div>\r\n  </div>\r\n</section>",
@@ -18,7 +18,7 @@ window.COMPONENTS = {
   "screen-reading": "<!-- SCREEN: READING COMPREHENSION (ĐỌC HIỂU NGỮ VĂN) -->\n<section id=\"s-reading\" class=\"scr\">\n  <div class=\"wrap reading-wrap\">\n\n    <!-- VIEW 1: DANH SÁCH BỘ ĐỀ ĐỌC HIỂU -->\n    <div id=\"reading-list-view\">\n      <!-- Cartoon Hero Banner -->\n      <div class=\"reading-hero-banner\">\n        <div class=\"reading-hero-content\">\n          <h1 style=\"font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;\">Luyện Đọc hiểu Ngữ Văn</h1>\n          <p class=\"reading-hero-desc\">Rèn luyện kỹ năng đọc hiểu văn bản, nhận diện phương thức biểu đạt, biện pháp nghệ thuật và phát triển tư duy phản biện.</p>\n        </div>\n      </div>\n\n      <!-- Action & Filters Bar -->\n      <div class=\"reading-control-bar card\">\n        <div class=\"reading-control-top\">\n          <div class=\"reading-search-box\">\n            <span class=\"reading-search-icon\">\n              <ion-icon name=\"search-outline\"></ion-icon>\n            </span>\n            <input type=\"text\" id=\"reading-search-input\" placeholder=\"Tìm kiếm bộ đề đọc hiểu theo tên bài, tác giả hoặc thể loại...\" oninput=\"onReadingSearchInput()\">\n          </div>\n        </div>\n\n        <div class=\"reading-category-filter\">\n          <div class=\"reading-filter-chips-wrap\">\n            <span class=\"reading-filter-label\">Chủ đề:</span>\n            <div class=\"reading-category-chips\" id=\"reading-category-chips\"></div>\n          </div>\n        </div>\n      </div>\n\n      <!-- Container danh sách các bộ đề đọc hiểu (sắp xếp theo chủ đề) -->\n      <div id=\"reading-sets-container\"></div>\n    </div>\n\n    <!-- VIEW 2: PHÒNG ĐỌC HIỂU & LÀM BÀI (SPLIT SCREEN WORKSPACE) -->\n    <div id=\"reading-workspace-view\" style=\"display:none;\">\n      <!-- Workspace Navigation Bar -->\n      <div class=\"reading-workspace-nav\">\n        <div class=\"reading-workspace-title-box\">\n          <h3 id=\"reading-workspace-set-title\">Đề bài đọc hiểu</h3>\n          <span id=\"reading-workspace-set-badge\" class=\"tag cy\">Thơ hiện đại</span>\n        </div>\n        <div class=\"reading-workspace-actions\">\n          <button class=\"btn gh sm\" onclick=\"resetCurrentReadingDraft()\" title=\"Xóa toàn bộ câu trả lời để làm lại từ đầu\">\n            <ion-icon name=\"refresh-outline\"></ion-icon> <span>Làm lại</span>\n          </button>\n          <button class=\"btn no sm teacher-only\" onclick=\"deleteCurrentOpenedReadingSet()\" title=\"Xóa đề này khỏi danh sách\">\n            <ion-icon name=\"trash-outline\"></ion-icon> <span>Xóa đề</span>\n          </button>\n          <button class=\"btn au sm\" onclick=\"submitReadingAnswers()\" title=\"Nộp bài và xem đánh giá chi tiết\">\n            <ion-icon name=\"checkmark-done-outline\"></ion-icon> <span>Nộp bài làm</span>\n          </button>\n        </div>\n      </div>\n\n      <!-- Split Layout Container -->\n      <div class=\"reading-split-container\" id=\"reading-split-container\">\n        <!-- Cột trái: Văn bản / Ngữ liệu đọc hiểu -->\n        <div class=\"reading-passage-panel card\">\n          <div class=\"reading-panel-header\">\n            <div class=\"reading-panel-title\">\n              <span class=\"reading-panel-icon\">\n                <ion-icon name=\"document-text-outline\" style=\"font-size: 20px;\"></ion-icon>\n              </span>\n              <h4>I. PHẦN ĐỌC HIỂU (3,0 điểm)</h4>\n            </div>\n            <div class=\"reading-text-tools\">\n              <button class=\"btn gh sm btn-icon-only\" type=\"button\" onclick=\"changePassageFontSize(-1)\" title=\"Giảm cỡ chữ\">A-</button>\n              <button class=\"btn gh sm btn-icon-only\" type=\"button\" onclick=\"changePassageFontSize(1)\" title=\"Tăng cỡ chữ\">A+</button>\n            </div>\n          </div>\n          \n          <div class=\"reading-passage-content-wrap\" id=\"reading-passage-scroll\">\n            <div class=\"reading-passage-meta\" id=\"reading-passage-meta\">\n              <span class=\"reading-meta-tag\" id=\"reading-passage-genre\"></span>\n              <span class=\"reading-meta-author\" id=\"reading-passage-author\"></span>\n              <span class=\"reading-meta-work\" id=\"reading-passage-work\" style=\"display:none;\"></span>\n            </div>\n            <div class=\"reading-passage-lead-text\"><b>Đọc đoạn trích:</b></div>\n            <article class=\"reading-passage-body\" id=\"reading-passage-text\">\n              <!-- Nội dung văn bản đọc hiểu -->\n            </article>\n            <div class=\"reading-passage-source\" id=\"reading-passage-source\">\n              <!-- Nguồn trích dẫn -->\n            </div>\n          </div>\n        </div>\n\n        <!-- Cột phải: Hệ thống câu hỏi & Trả lời -->\n        <div class=\"reading-questions-panel card\">\n          <div class=\"reading-panel-header\">\n            <div class=\"reading-panel-title\">\n              <span class=\"reading-panel-icon\">\n                <ion-icon name=\"create-outline\" style=\"font-size: 20px;\"></ion-icon>\n              </span>\n              <h4>Thực hiện các yêu cầu sau: (<span id=\"reading-q-count\">0</span> câu)</h4>\n            </div>\n            <span class=\"reading-save-status\" id=\"reading-save-status\">\n              <ion-icon name=\"cloud-done-outline\"></ion-icon> Tự động lưu\n            </span>\n          </div>\n\n          <div class=\"reading-questions-list\" id=\"reading-questions-list\">\n            <!-- Danh sách câu hỏi render bởi JS -->\n          </div>\n        </div>\n      </div>\n    </div>\n\n  </div>\n</section>",
   "screen-history": "<!-- SCREEN: QUIZ HISTORY (LỊCH SỬ BÀI LÀM) -->\r\n<section id=\"s-history\" class=\"scr\">\r\n  <div class=\"wrap\">\r\n    <!-- Hero Banner -->\r\n    <div class=\"cartoon-lib-banner history-hero-banner\" style=\"margin-bottom:16px;\">\r\n      <div class=\"lib-banner-content\">\r\n        <h1 style=\"font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;\">\r\n          Lịch sử bài làm &amp; Tiến độ\r\n        </h1>\r\n        <p class=\"mut\" style=\"margin:0; font-size:14.5px;\">\r\n          Theo dõi kết quả làm bài, câu trả lời tự luận và tiến trình ôn tập\r\n        </p>\r\n      </div>\r\n    </div>\r\n\r\n\r\n    <!-- Filter & Search Bar Card -->\r\n    <div class=\"lib-search-filter-card\" style=\"margin: 0 0 16px;\">\r\n      <div class=\"lib-search-bar-row\" style=\"display:flex; gap:12px; align-items:center; flex-wrap:wrap;\">\r\n        <div class=\"lib-search-input-box\" style=\"flex:1; min-width:240px;\">\r\n          <input id=\"history-page-search\" type=\"text\" placeholder=\"Tìm kiếm theo tên học sinh, lớp, tác phẩm, chủ đề…\" oninput=\"onHistoryPageSearchInput()\" autocomplete=\"off\">\r\n        </div>\r\n        <div style=\"display:flex; align-items:center; gap:10px; flex-wrap:wrap;\">\r\n          <select id=\"history-page-set-filter\" onchange=\"onHistoryPageSetFilterChange()\" style=\"height:46px; border-radius:14px; border:2px solid var(--stroke); padding:0 14px; font-weight:700; font-size:13.5px; background:var(--bg-card); color:var(--ink); min-width:200px; max-width:280px;\" title=\"Lọc theo bộ câu hỏi\">\r\n            <option value=\"\">Tất cả bộ đề</option>\r\n          </select>\r\n          <button class=\"btn no sm teacher-only\" type=\"button\" onclick=\"clearAllQuizHistory()\" title=\"Xóa toàn bộ lịch sử trên máy\" style=\"height:46px; padding:0 14px; font-weight:700; border-radius:14px;\">\r\n            <ion-icon name=\"trash-outline\"></ion-icon> <span>Xóa tất cả</span>\r\n          </button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Type Filter Chips (Tất cả / Bài học / Đọc hiểu) -->\r\n      <div class=\"topic-filter-row\" style=\"margin-top:12px;\">\r\n        <div class=\"topic-filter-meta\">\r\n          <span class=\"topic-filter-title\">Loại bài làm:</span>\r\n        </div>\r\n        <div class=\"topic-chips-bar\" role=\"tablist\">\r\n          <button class=\"topic-chip active\" id=\"hist-chip-all\" type=\"button\" onclick=\"setHistoryTypeFilter('all')\">\r\n            Tất cả <span id=\"hist-count-all\" class=\"chip-count\">(0)</span>\r\n          </button>\r\n          <button class=\"topic-chip\" id=\"hist-chip-quiz\" type=\"button\" onclick=\"setHistoryTypeFilter('quiz')\">\r\n            Bài học <span id=\"hist-count-quiz\" class=\"chip-count\">(0)</span>\r\n          </button>\r\n          <button class=\"topic-chip\" id=\"hist-chip-reading\" type=\"button\" onclick=\"setHistoryTypeFilter('reading')\">\r\n            Đọc hiểu <span id=\"hist-count-reading\" class=\"chip-count\">(0)</span>\r\n          </button>\r\n          <button class=\"topic-chip\" id=\"hist-chip-writing\" type=\"button\" onclick=\"setHistoryTypeFilter('writing')\">\r\n            Luyện viết <span id=\"hist-count-writing\" class=\"chip-count\">(0)</span>\r\n          </button>\r\n          <button class=\"topic-chip\" id=\"hist-chip-ungraded\" type=\"button\" onclick=\"setHistoryTypeFilter('ungraded')\">\r\n            Chờ chấm <span id=\"hist-count-ungraded\" class=\"chip-count\">(0)</span>\r\n          </button>\r\n          <button class=\"topic-chip\" id=\"hist-chip-graded\" type=\"button\" onclick=\"setHistoryTypeFilter('graded')\">\r\n            Đã chấm <span id=\"hist-count-graded\" class=\"chip-count\">(0)</span>\r\n          </button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Active Set Filter Badge -->\r\n      <div id=\"history-page-active-filter-badge\" style=\"display:none; margin-top:12px; padding:8px 14px; background:rgba(217, 169, 79, 0.15); border:1.5px solid var(--gold); border-radius:12px; font-size:13.5px; font-weight:700; align-items:center; justify-content:space-between;\">\r\n        <span id=\"history-page-filter-badge-text\"></span>\r\n        <button class=\"btn gh sm\" type=\"button\" onclick=\"clearHistoryPageSetFilter()\" style=\"padding:2px 10px; font-size:12.5px; height:28px;\">\r\n          <ion-icon name=\"close-circle-outline\"></ion-icon> Xem tất cả bộ đề\r\n        </button>\r\n      </div>\r\n    </div>\r\n\r\n    <!-- History Items Container -->\r\n    <div id=\"history-page-list-container\" class=\"history-list-wrap\">\r\n      <!-- Rendered by JS -->\r\n    </div>\r\n  </div>\r\n</section>",
   "screen-accounts": "<!-- SCREEN: USER ACCOUNTS MANAGEMENT (QUẢN LÝ TÀI KHOẢN NGƯỜI DÙNG) -->\n<section id=\"s-accounts\" class=\"scr\">\n  <div class=\"wrap accounts-wrap\">\n\n    <!-- Hero Showcase Banner -->\n    <div class=\"cartoon-lib-banner accounts-hero-banner\" style=\"margin-bottom:18px;\">\n      <div class=\"lib-banner-content\">\n        <h1 style=\"font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;\">\n          Quản lý tài khoản người dùng\n        </h1>\n        <p class=\"mut\" style=\"margin:0; font-size:14.5px;\">\n          Cấp tài khoản mới cho học sinh, đặt lại mật khẩu và quản lý phân quyền trên toàn hệ thống\n        </p>\n      </div>\n      <div class=\"accounts-hero-actions\" style=\"display:flex; align-items:center; gap:10px; flex-wrap:wrap;\">\n        <button class=\"btn au sm\" type=\"button\" onclick=\"openCreateAccountModal()\" style=\"height:38px; padding:0 16px; font-weight:700; border-radius:10px;\">\n          <ion-icon name=\"person-add-outline\"></ion-icon> <span>Cấp tài khoản mới</span>\n        </button>\n        <button class=\"btn gh sm\" type=\"button\" onclick=\"exportAccountsList()\" title=\"Xuất danh sách tài khoản ra tệp văn bản\" style=\"height:38px; padding:0 14px; font-weight:600; border-radius:10px;\">\n          <ion-icon name=\"download-outline\"></ion-icon> <span>Xuất danh sách</span>\n        </button>\n        <button class=\"btn gh sm\" type=\"button\" onclick=\"loadAndRenderAccounts(true)\" title=\"Tải lại từ máy chủ Supabase\" style=\"height:38px; padding:0 14px; border-radius:10px; font-weight:600;\">\n          <ion-icon name=\"refresh-outline\"></ion-icon> <span>Tải lại</span>\n        </button>\n      </div>\n    </div>\n\n    <!-- Overview Metric Cards (Stats Grid) -->\n    <div class=\"accounts-stats-grid\" style=\"display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:14px; margin-bottom:18px;\">\n      <div class=\"card acc-stat-card total\" style=\"padding:16px 18px; display:flex; align-items:center; gap:14px; border-radius:16px;\">\n        <div class=\"acc-stat-icon-wrap\" style=\"width:46px; height:46px; border-radius:12px; background:rgba(99, 102, 241, 0.12); color:#6366f1; display:flex; align-items:center; justify-content:center; flex-shrink:0;\">\n          <ion-icon name=\"people-outline\" style=\"font-size: 24px;\"></ion-icon>\n        </div>\n        <div>\n          <span class=\"acc-stat-val\" id=\"acc-stat-total\" style=\"font-size:24px; font-weight:900; line-height:1.1; display:block; color:var(--ink);\">0</span>\n          <span class=\"acc-stat-lbl\" style=\"font-size:12px; font-weight:700; color:var(--mut);\">Tổng số tài khoản</span>\n        </div>\n      </div>\n\n      <div class=\"card acc-stat-card admin\" style=\"padding:16px 18px; display:flex; align-items:center; gap:14px; border-radius:16px;\">\n        <div class=\"acc-stat-icon-wrap\" style=\"width:46px; height:46px; border-radius:12px; background:rgba(139, 92, 246, 0.14); color:#8b5cf6; display:flex; align-items:center; justify-content:center; flex-shrink:0;\">\n          <ion-icon name=\"shield-checkmark-outline\" style=\"font-size: 24px;\"></ion-icon>\n        </div>\n        <div>\n          <span class=\"acc-stat-val\" id=\"acc-stat-admins\" style=\"font-size:24px; font-weight:900; line-height:1.1; display:block; color:var(--ink);\">0</span>\n          <span class=\"acc-stat-lbl\" style=\"font-size:12px; font-weight:700; color:var(--mut);\">Quản trị viên</span>\n        </div>\n      </div>\n\n      <div class=\"card acc-stat-card teacher\" style=\"padding:16px 18px; display:flex; align-items:center; gap:14px; border-radius:16px;\">\n        <div class=\"acc-stat-icon-wrap\" style=\"width:46px; height:46px; border-radius:12px; background:rgba(245, 158, 11, 0.14); color:#d97706; display:flex; align-items:center; justify-content:center; flex-shrink:0;\">\n          <ion-icon name=\"ribbon-outline\" style=\"font-size: 24px;\"></ion-icon>\n        </div>\n        <div>\n          <span class=\"acc-stat-val\" id=\"acc-stat-teachers\" style=\"font-size:24px; font-weight:900; line-height:1.1; display:block; color:var(--ink);\">0</span>\n          <span class=\"acc-stat-lbl\" style=\"font-size:12px; font-weight:700; color:var(--mut);\">Giáo viên</span>\n        </div>\n      </div>\n\n      <div class=\"card acc-stat-card student\" style=\"padding:16px 18px; display:flex; align-items:center; gap:14px; border-radius:16px;\">\n        <div class=\"acc-stat-icon-wrap\" style=\"width:46px; height:46px; border-radius:12px; background:rgba(16, 185, 129, 0.12); color:#10b981; display:flex; align-items:center; justify-content:center; flex-shrink:0;\">\n          <ion-icon name=\"school-outline\" style=\"font-size: 24px;\"></ion-icon>\n        </div>\n        <div>\n          <span class=\"acc-stat-val\" id=\"acc-stat-students\" style=\"font-size:24px; font-weight:900; line-height:1.1; display:block; color:var(--ink);\">0</span>\n          <span class=\"acc-stat-lbl\" style=\"font-size:12px; font-weight:700; color:var(--mut);\">Học sinh</span>\n        </div>\n      </div>\n    </div>\n\n    <!-- Filter & Search Toolbar Card -->\n    <div class=\"card acc-filter-card\" style=\"padding:16px 20px; border-radius:18px; margin-bottom:18px;\">\n      <div style=\"display:flex; gap:12px; align-items:center; flex-wrap:wrap;\">\n        <div class=\"lib-search-input-box\" style=\"flex:1; min-width:240px; position:relative; display:flex; align-items:center;\">\n          <input id=\"acc-search-input\" type=\"text\" placeholder=\"Tìm kiếm theo tên đăng nhập, họ tên, lớp...\" oninput=\"filterAccountsList()\" autocomplete=\"off\" style=\"width:100%; height:46px; border-radius:12px; border:1.5px solid var(--stroke); padding:0 14px; font-weight:600; font-size:13.5px; background:var(--bg-base); color:var(--ink);\">\n        </div>\n\n        <div style=\"display:flex; align-items:center; gap:10px; flex-wrap:wrap;\">\n          <select id=\"acc-filter-role\" onchange=\"filterAccountsList()\" style=\"height:46px; border-radius:12px; border:1.5px solid var(--stroke); padding:0 14px; font-weight:600; font-size:13.5px; background:var(--bg-base); color:var(--ink); min-width:160px;\" title=\"Lọc theo vai trò\">\n            <option value=\"\">Tất cả vai trò</option>\n            <option value=\"admin\">Quản trị viên (Admin)</option>\n            <option value=\"teacher\">Giáo viên</option>\n            <option value=\"student\">Học sinh</option>\n          </select>\n\n          <select id=\"acc-filter-class\" onchange=\"filterAccountsList()\" style=\"height:46px; border-radius:14px; border:2px solid var(--stroke); padding:0 14px; font-weight:700; font-size:13.5px; background:var(--bg-base); color:var(--ink); min-width:160px;\" title=\"Lọc theo lớp học\">\n            <option value=\"\">Tất cả các lớp</option>\n          </select>\n\n          <button class=\"btn gh sm\" type=\"button\" onclick=\"resetAccountFilters()\" title=\"Xóa toàn bộ bộ lọc\" style=\"height:46px; padding:0 14px; border-radius:14px; font-weight:700;\">\n            <ion-icon name=\"close-circle-outline\"></ion-icon> Xóa lọc\n          </button>\n        </div>\n      </div>\n    </div>\n\n    <!-- Main Table Card -->\n    <div class=\"card acc-main-card\" style=\"padding:0; border-radius:20px; overflow:hidden;\">\n      <div id=\"account-manager-loading\" style=\"display:none; text-align:center; padding:32px 20px; font-weight:700; color:var(--mut);\">\n        <ion-icon name=\"hourglass-outline\"></ion-icon> Đang đồng bộ danh sách tài khoản từ máy chủ Supabase...\n      </div>\n\n      <div class=\"acc-table-container\" style=\"overflow-x:auto; -webkit-overflow-scrolling:touch;\">\n        <table class=\"acc-data-table\">\n          <thead>\n            <tr>\n              <th style=\"width:65px; text-align:center;\">STT</th>\n              <th style=\"min-width:240px;\">Tên đăng nhập</th>\n              <th style=\"min-width:180px;\">Họ và tên</th>\n              <th style=\"min-width:110px; text-align:center;\">Lớp học</th>\n              <th style=\"min-width:145px; text-align:center;\">Vai trò</th>\n              <th style=\"min-width:160px; text-align:center;\">Đăng nhập cuối</th>\n              <th style=\"min-width:195px; text-align:center;\">Thao tác</th>\n            </tr>\n          </thead>\n          <tbody id=\"account-table-body\">\n            <!-- Rendered by JS -->\n          </tbody>\n        </table>\n      </div>\n    </div>\n\n  </div>\n</section>",
-  "dialogs": "<!-- FEEDBACK DIALOG -->\n<dialog id=\"feedback-dialog\" aria-live=\"polite\">\n  <div id=\"fb\"></div>\n</dialog>\n\n<!-- CONFIRM DELETE DIALOG -->\n<dialog id=\"dlg\">\n  <p id=\"dm\" style=\"font-size:16px; font-weight:600; margin-bottom:20px;\"></p>\n  <div style=\"display:flex; gap:10px; justify-content:flex-end;\">\n    <button class=\"btn gh sm\" onclick=\"dlg.close()\">Hủy</button>\n    <button class=\"btn no sm\" id=\"dy\">Xóa</button>\n  </div>\n</dialog>\n\n<!-- AI PROMPT DIALOG -->\n<dialog id=\"prompt-dialog\">\n  <div class=\"prompt-dialog-header\">\n    <div>\n      <h2 style=\"display:flex; align-items:center; gap:8px;\">Tạo bộ câu hỏi bằng trợ lý AI</h2>\n      <p class=\"mut\" style=\"margin:4px 0 0; font-size:13px;\">Tạo câu lệnh → Gửi AI → Nhập câu hỏi vào hệ thống</p>\n    </div>\n    <button class=\"btn gh sm prompt-dialog-close\" type=\"button\"\n      onclick=\"$('#prompt-dialog').close()\" aria-label=\"Đóng cửa sổ tạo bộ câu hỏi\" title=\"Đóng\">×</button>\n  </div>\n\n  <div style=\"background:rgba(217, 169, 79, 0.12); border:1px solid var(--gold); border-radius:12px; padding:9px 13px; margin-bottom:14px; font-size:13px; line-height:1.5;\">\n    Hệ thống tạo câu lệnh chuẩn để gửi sang <b>ChatGPT, Gemini hoặc Claude</b>. Sau khi AI trả lời, bạn dán kết quả vào <b>Bước 3</b> bên dưới để tự động tạo bộ câu hỏi.\n  </div>\n\n  <!-- BƯỚC 1 -->\n  <div class=\"prompt-step-box\">\n    <div class=\"prompt-step-title\">\n      <span class=\"prompt-step-badge\">1</span>\n      <span>Thiết lập nội dung & Tạo câu lệnh</span>\n    </div>\n    \n    <label for=\"prompt-topic\" style=\"font-weight:600;\">Chủ đề / Tác phẩm / Bài học <span style=\"color:var(--gold);\">*</span></label>\n    <input id=\"prompt-topic\" type=\"text\" maxlength=\"500\"\n      placeholder=\"Ví dụ: Ông già và biển cả, Vợ nhặt, Tây Tiến, Chí Phèo...\">\n\n    <!-- TỔNG SỐ CÂU HỎI & CHIA ĐỀU -->\n    <div style=\"display:grid; grid-template-columns: 1fr auto; gap:12px; margin-top:12px; align-items:end;\">\n      <div>\n        <label for=\"prompt-question-count\" style=\"font-weight:600;\">Tổng số câu hỏi của bộ đề</label>\n        <select id=\"prompt-question-count\" onchange=\"onPromptTotalCountChange()\">\n          <option value=\"4\">4 câu</option>\n          <option value=\"5\">5 câu</option>\n          <option value=\"6\">6 câu</option>\n          <option value=\"8\">8 câu</option>\n          <option value=\"10\" selected>10 câu</option>\n          <option value=\"12\">12 câu</option>\n          <option value=\"15\">15 câu</option>\n          <option value=\"16\">16 câu</option>\n          <option value=\"20\">20 câu</option>\n          <option value=\"25\">25 câu</option>\n          <option value=\"30\">30 câu</option>\n        </select>\n      </div>\n      <div>\n        <button class=\"btn gh sm\" type=\"button\" onclick=\"autoDistributePromptTypes()\" title=\"Chia đều số câu theo các dạng đang chọn\" style=\"height:42px; padding:0 12px; font-weight:700;\">\n          Chia đều số câu\n        </button>\n      </div>\n    </div>\n\n    <!-- PHÂN BỔ SỐ CÂU THEO TỪNG DẠNG -->\n    <fieldset style=\"margin-top:12px; padding:12px 14px; border:1px solid var(--stroke); border-radius:12px; background:var(--bg);\">\n      <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;\">\n        <legend style=\"padding:0 6px; font-weight:700; font-size:12px; color:var(--mut); margin:0;\">PHÂN BỔ SỐ CÂU THEO TỪNG DẠNG</legend>\n        <span id=\"prompt-count-status-badge\" style=\"font-size:11.5px; font-weight:700; padding:2px 8px; border-radius:6px;\"></span>\n      </div>\n\n      <div style=\"display:flex; flex-direction:column; gap:8px;\">\n        <!-- Dạng 1: Trắc nghiệm -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-mc\" name=\"prompt-question-type\" value=\"mc\" checked onchange=\"onPromptTypeToggle('mc')\" style=\"width:auto; margin:0;\">\n            <span>Trắc nghiệm (4 lựa chọn)</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('mc', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-mc\" type=\"number\" min=\"0\" max=\"50\" value=\"4\" oninput=\"onPromptTypeCountInput('mc')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('mc', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n\n        <!-- Dạng 2: Đúng / Sai -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-tf\" name=\"prompt-question-type\" value=\"tf\" checked onchange=\"onPromptTypeToggle('tf')\" style=\"width:auto; margin:0;\">\n            <span>Đúng / Sai (4 ý)</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('tf', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-tf\" type=\"number\" min=\"0\" max=\"50\" value=\"2\" oninput=\"onPromptTypeCountInput('tf')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('tf', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n\n        <!-- Dạng 3: Trả lời ngắn -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-short\" name=\"prompt-question-type\" value=\"short\" checked onchange=\"onPromptTypeToggle('short')\" style=\"width:auto; margin:0;\">\n            <span>Trả lời ngắn</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('short', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-short\" type=\"number\" min=\"0\" max=\"50\" value=\"2\" oninput=\"onPromptTypeCountInput('short')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('short', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n\n        <!-- Dạng 4: Điền từ -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-fill\" name=\"prompt-question-type\" value=\"fill\" checked onchange=\"onPromptTypeToggle('fill')\" style=\"width:auto; margin:0;\">\n            <span>Điền từ vào chỗ trống</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('fill', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-fill\" type=\"number\" min=\"0\" max=\"50\" value=\"2\" oninput=\"onPromptTypeCountInput('fill')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('fill', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n      </div>\n\n      <!-- TỔNG KẾT & CẢNH BÁO TỔNG SỐ CÂU -->\n      <div id=\"prompt-sum-indicator\" style=\"margin-top:10px; font-size:12.5px; padding:7px 12px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; font-weight:600;\"></div>\n    </fieldset>\n\n    <label for=\"prompt-source\" style=\"margin-top:12px; font-weight:600;\">\n      Văn bản / Ngữ liệu đọc hiểu <span style=\"font-weight:400; color:var(--mut); font-size:12px;\">(Không bắt buộc)</span>\n    </label>\n    <textarea id=\"prompt-source\" maxlength=\"20000\"\n      placeholder=\"Dán đoạn trích nếu muốn câu hỏi đọc hiểu bám sát ngữ liệu riêng. Nếu để trống, AI sẽ tự động tạo câu hỏi dựa trên kiến thức tác phẩm chuẩn theo SGK...\"\n      style=\"min-height:85px;\"></textarea>\n    <div style=\"display:flex; justify-content:flex-end; align-items:center; margin-top:4px; font-size:12px;\">\n      <span id=\"prompt-source-count\" class=\"mut\" aria-live=\"polite\"></span>\n    </div>\n\n    <div style=\"margin-top:12px;\">\n      <button class=\"btn au\" type=\"button\" onclick=\"buildQuestionPrompt()\" style=\"width:100%; justify-content:center; font-weight:700; padding:11px;\">\n        Tạo câu lệnh AI\n      </button>\n    </div>\n  </div>\n\n  <!-- BƯỚC 2 -->\n  <div class=\"prompt-step-box\">\n    <div class=\"prompt-step-title\">\n      <span class=\"prompt-step-badge\">2</span>\n      <span>Gửi câu lệnh sang AI để nhận câu hỏi</span>\n    </div>\n    \n    <label for=\"prompt-output\" style=\"font-weight:600; font-size:13px;\">Câu lệnh AI đã sẵn sàng:</label>\n    <textarea id=\"prompt-output\" readonly style=\"min-height:110px; font-size:12px; font-family:monospace;\"\n      placeholder=\"Câu lệnh sẽ xuất hiện tại đây sau khi bạn nhấn nút ở Bước 1...\"></textarea>\n    \n    <div style=\"display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; align-items:center;\">\n      <button class=\"btn cy sm\" type=\"button\" onclick=\"copyQuestionPrompt()\">\n        <ion-icon name=\"copy-outline\"></ion-icon> Sao chép câu lệnh\n      </button>\n      <span style=\"font-size:12px; color:var(--mut); margin:0 4px;\">Hoặc mở nhanh AI:</span>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"openExternalAI('chatgpt')\">Mở ChatGPT</button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"openExternalAI('gemini')\">Mở Gemini</button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"openExternalAI('claude')\">Mở Claude</button>\n    </div>\n  </div>\n\n  <!-- BƯỚC 3 -->\n  <div class=\"prompt-step-box\" style=\"margin-bottom:0;\">\n    <div class=\"prompt-step-title\">\n      <span class=\"prompt-step-badge\">3</span>\n      <span>Dán kết quả từ AI & Nhập vào hệ thống</span>\n    </div>\n    \n    <label for=\"prompt-result\" style=\"font-weight:600; font-size:13px;\">\n      Dán kết quả tại đây:\n      <span style=\"font-weight:400; color:var(--mut); font-size:12px;\">(Hỗ trợ JSON hoặc văn bản trắc nghiệm: Câu 1: A, B, C, D...)</span>\n    </label>\n    <textarea id=\"prompt-result\" maxlength=\"150000\"\n      placeholder=\"Dán câu trả lời của ChatGPT/Gemini/Claude vào đây...\"\n      style=\"min-height:110px;\"></textarea>\n\n    <div style=\"display:flex; gap:10px; justify-content:flex-end; margin-top:14px;\">\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"$('#prompt-dialog').close()\">Đóng</button>\n      <button class=\"btn au\" type=\"button\" onclick=\"importPromptQuestionSet()\" style=\"font-weight:700;\">\n        Nhập bộ câu hỏi\n      </button>\n    </div>\n  </div>\n</dialog>\n\n<!-- QUIZ HISTORY LIST MODAL -->\n<dialog id=\"quiz-history-dialog\" class=\"history-dialog\">\n  <div class=\"history-modal-header\">\n    <div class=\"history-header-title-box\">\n      <h2 style=\"margin:0; font-size:22px; font-weight:800; display:flex; align-items:center; gap:8px;\">\n        <ion-icon name=\"time-outline\" style=\"font-size:24px; color:var(--gold);\"></ion-icon> <span>Lịch sử bài làm</span>\n      </h2>\n      <div style=\"display:flex; align-items:center; gap:8px; flex-wrap:wrap;\">\n        <span class=\"history-total-badge\" id=\"history-total-count\">0 lượt làm bài</span>\n        <span id=\"history-sync-indicator\" style=\"font-size:12px; font-weight:600; color:var(--mut);\"></span>\n      </div>\n    </div>\n    <div style=\"display:flex; align-items:center; gap:8px;\">\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"loadQuizHistoryFromSupabase(true)\" title=\"Tải lại từ máy chủ\" style=\"padding:0 8px; height:32px;\">\n        <ion-icon name=\"refresh-outline\" style=\"font-size: 18px;\"></ion-icon>\n      </button>\n      <button class=\"btn no sm teacher-only\" type=\"button\" onclick=\"clearAllQuizHistory()\" title=\"Xóa toàn bộ lịch sử\">\n        <ion-icon name=\"trash-outline\"></ion-icon> <span>Xóa tất cả</span>\n      </button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"closeHistoryModal()\" aria-label=\"Đóng\">\n        <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n      </button>\n    </div>\n  </div>\n\n  <div class=\"history-search-bar\" style=\"display:flex; gap:10px; align-items:center; flex-wrap:wrap;\">\n    <div style=\"flex:1; min-width:180px; position:relative; display:flex; align-items:center;\">\n      <span class=\"history-search-icon\">\n        <ion-icon name=\"search-outline\"></ion-icon>\n      </span>\n      <input id=\"history-search-input\" type=\"text\" placeholder=\"Tìm theo học sinh, lớp, từ khóa...\" oninput=\"onHistorySearchInput()\" style=\"width:100%;\">\n    </div>\n    <select id=\"history-set-filter\" onchange=\"onHistorySetFilterChange()\" style=\"height:44px; border-radius:12px; border:2px solid var(--stroke); padding:0 12px; font-weight:700; font-size:13px; background:var(--bg-card); color:var(--ink); max-width:260px;\" title=\"Lọc theo bộ câu hỏi\">\n      <option value=\"\">Tất cả bộ đề</option>\n    </select>\n  </div>\n  <div id=\"history-active-filter-badge\" style=\"display:none; margin:8px 0 4px; padding:6px 12px; background:rgba(217, 169, 79, 0.15); border:1.5px solid var(--gold); border-radius:10px; font-size:13px; font-weight:700; align-items:center; justify-content:space-between;\">\n    <span id=\"history-filter-badge-text\"></span>\n    <button class=\"btn gh sm\" type=\"button\" onclick=\"clearHistorySetFilter()\" style=\"padding:2px 8px; font-size:12px; height:24px;\">\n      <ion-icon name=\"close-circle-outline\"></ion-icon> Xem tất cả\n    </button>\n  </div>\n\n  <div class=\"history-list-wrap\" id=\"history-list-container\">\n    <!-- Rendered by JS -->\n  </div>\n\n  <div class=\"history-modal-footer\">\n    <button class=\"btn gh\" type=\"button\" onclick=\"closeHistoryModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- QUIZ HISTORY DETAIL MODAL -->\n<dialog id=\"history-detail-dialog\" class=\"history-dialog history-detail-modal\">\n  <div class=\"history-modal-header\">\n    <div class=\"history-header-title-box\">\n      <h2 style=\"margin:0; font-size:20px; font-weight:800;\" id=\"history-detail-title\">\n        Chi tiết bài làm\n      </h2>\n    </div>\n    <div style=\"display:flex; align-items:center; gap:8px;\">\n      <button class=\"btn cy sm\" id=\"btn-toggle-grading-mode\" type=\"button\" onclick=\"toggleHistoryGradingMode()\" title=\"Chuyển đổi giữa chế độ xem và chế độ chấm bài\">\n        <ion-icon name=\"create-outline\"></ion-icon> Chấm bài thủ công\n      </button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"closeHistoryDetailModal()\" aria-label=\"Đóng\">\n        <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n      </button>\n    </div>\n  </div>\n\n  <div class=\"history-detail-content-wrap\">\n    <div id=\"history-detail-meta\"></div>\n    <div id=\"history-detail-grading-toolbar\" style=\"display:none;\"></div>\n    <h3 style=\"margin:16px 0 10px; font-size:16px; font-weight:800;\" id=\"history-detail-section-heading\">Danh sách câu hỏi &amp; Bài làm:</h3>\n    <div id=\"history-detail-questions-list\"></div>\n    <div id=\"history-detail-grading-summary\"></div>\n  </div>\n\n  <div class=\"history-modal-footer\">\n    <button class=\"btn au sm\" id=\"btn-save-grading-footer\" type=\"button\" onclick=\"saveManualGrading()\" style=\"display:none; font-weight:800;\">\n      <ion-icon name=\"checkmark-circle-outline\"></ion-icon> Lưu kết quả chấm\n    </button>\n    <button class=\"btn gh\" type=\"button\" onclick=\"closeHistoryDetailModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- WRITING MODAL 1: TẠO / CHỈNH SỬA BỘ ĐỀ LUYỆN VIẾT -->\n<dialog id=\"writing-set-dialog\" class=\"writing-modal writing-set-modal-large\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3 id=\"writing-dialog-heading\">Tạo bộ đề luyện viết</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeCreateWritingSetModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n  \n  <form id=\"writing-set-form\" onsubmit=\"handleSaveWritingSet(event)\" class=\"writing-modal-form-wrap\">\n    <input type=\"hidden\" id=\"edit-writing-set-id\">\n\n    <div class=\"writing-modal-body\">\n      <div class=\"g2\">\n        <div>\n          <label for=\"input-set-title\">Tên bộ đề / Tiêu đề <span style=\"color:var(--red)\">*</span></label>\n          <input type=\"text\" id=\"input-set-title\" required placeholder=\"Ví dụ: Nghị luận xã hội về ý nghĩa của sự sẻ chia...\">\n        </div>\n        <div>\n          <label for=\"input-set-category\">Chủ đề / Dạng đề <span style=\"color:var(--red)\">*</span></label>\n          <select id=\"input-set-category\" onchange=\"onCategorySelectChange(this.value)\">\n            <option value=\"nl-xh\">Nghị luận xã hội (200 chữ / Bài văn ngắn)</option>\n            <option value=\"nl-vh\">Nghị luận văn học (Phân tích thơ, văn xuôi)</option>\n            <option value=\"cam-thu\">Đọc hiểu &amp; Đoạn văn cảm thụ</option>\n          </select>\n        </div>\n      </div>\n\n      <div style=\"margin-top:16px;\">\n        <label for=\"input-set-prompt\">Nội dung đề bài chi tiết <span style=\"color:var(--red)\">*</span></label>\n        <textarea id=\"input-set-prompt\" required placeholder=\"Dán nội dung đề bài, câu hỏi yêu cầu tại đây...\"></textarea>\n      </div>\n\n      <!-- Các phần viết -->\n      <div style=\"margin-top:20px;\">\n        <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;\">\n          <label style=\"margin:0; font-size:15px; font-weight:700;\">\n            Các phần bài viết (<span id=\"modal-section-count\">3</span> phần)\n          </label>\n          <div style=\"display:flex; gap:8px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"applyQuickOutlineTemplate()\">Nạp cấu trúc mẫu</button>\n            <button type=\"button\" class=\"btn cy sm\" onclick=\"addNewOutlineSectionRow()\">\n              <ion-icon name=\"add-outline\"></ion-icon> Thêm phần\n            </button>\n          </div>\n        </div>\n        <p class=\"mut\" style=\"font-size:13px; margin:0 0 12px;\">Cấu trúc chuẩn 3 phần (Mở bài, Thân bài, Kết bài).</p>\n        \n        <div id=\"modal-sections-editor\" class=\"modal-sections-editor-list\"></div>\n      </div>\n    </div>\n\n    <div class=\"writing-modal-footer\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeCreateWritingSetModal()\">Hủy</button>\n      <button type=\"submit\" class=\"btn au\">\n        <ion-icon name=\"save-outline\"></ion-icon> Lưu bộ đề\n      </button>\n    </div>\n  </form>\n</dialog>\n\n<!-- WRITING MODAL 2: XEM BÀI HOÀN CHỈNH & XUẤT BÀI -->\n<dialog id=\"writing-review-dialog\" class=\"writing-modal review-modal\">\n  <div class=\"writing-modal-header review-header\">\n    <div class=\"writing-modal-title\">\n      <h3>Tổng quan bài viết</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeWritingReviewModal()\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <div class=\"writing-modal-body review-body\">\n    <!-- Stat metrics cards -->\n    <div class=\"review-stats-grid\">\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-words\">0</span>\n        <span class=\"stat-label\">Tổng số từ</span>\n      </div>\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-paragraphs\">0</span>\n        <span class=\"stat-label\">Số đoạn văn</span>\n      </div>\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-time\">00:00:00</span>\n        <span class=\"stat-label\">Thời gian làm</span>\n      </div>\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-wpm\">0</span>\n        <span class=\"stat-label\">Tốc độ (từ / phút)</span>\n      </div>\n    </div>\n\n    <!-- Combined essay text -->\n    <div class=\"review-essay-box\">\n      <div class=\"review-essay-meta\">\n        <h4 id=\"review-essay-topic\">Đề bài luyện viết</h4>\n        <span class=\"tag ok\" id=\"review-essay-tag\">Hoàn tất</span>\n      </div>\n      <div class=\"review-essay-text\" id=\"review-essay-combined-content\"></div>\n    </div>\n\n    <!-- Feedback suggestions box -->\n    <div class=\"review-feedback-box\">\n      <div class=\"review-feedback-title\">Nhận xét sơ bộ:</div>\n      <div id=\"review-feedback-content\" class=\"review-feedback-list\"></div>\n    </div>\n  </div>\n\n  <div class=\"writing-modal-footer review-footer\">\n    <button class=\"btn gh\" type=\"button\" onclick=\"copyCombinedEssayToClipboard()\">\n      <ion-icon name=\"copy-outline\"></ion-icon> Sao chép bài viết\n    </button>\n    <button class=\"btn cy\" type=\"button\" onclick=\"downloadCombinedEssayAsText()\">\n      <ion-icon name=\"download-outline\"></ion-icon> Tải tệp .txt\n    </button>\n    <button class=\"btn au\" type=\"button\" onclick=\"submitWritingEssay(); closeWritingReviewModal();\" style=\"font-weight:800;\">\n      <ion-icon name=\"send-outline\"></ion-icon> Nộp bài chấm điểm\n    </button>\n    <button class=\"btn gh\" type=\"button\" onclick=\"closeWritingReviewModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- READING MODAL 1: TẠO / SỬA ĐỀ ĐỌC HIỂU -->\n<dialog id=\"reading-edit-modal\" class=\"writing-modal reading-modal\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3 id=\"reading-modal-title\">Thêm bộ đề đọc hiểu mới</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeReadingEditModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <form id=\"reading-edit-form\" onsubmit=\"handleReadingFormSubmit(event)\" class=\"writing-modal-form-wrap\">\n    <input type=\"hidden\" id=\"reading-form-id\">\n\n    <div class=\"writing-modal-body\">\n      <!-- Hàng 1: Tên đề bài & Chủ đề -->\n      <div class=\"g2\" style=\"margin-bottom:14px;\">\n        <div>\n          <label for=\"reading-form-title\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Tựa bài / Tên đề đọc hiểu <span style=\"color:var(--red)\">*</span>\n          </label>\n          <input type=\"text\" id=\"reading-form-title\" required placeholder=\"Ví dụ: Sống hết mình cho thời khắc hiện tại...\" style=\"width:100%;\">\n        </div>\n        <div>\n          <label for=\"reading-form-category\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Chủ đề / Dạng bài <span style=\"color:var(--red)\">*</span>\n          </label>\n          <select id=\"reading-form-category\" required style=\"width:100%;\"></select>\n        </div>\n      </div>\n\n      <!-- Trạng thái xuất bản (Published / Draft) -->\n      <div style=\"margin-bottom:14px;\">\n        <label for=\"reading-form-status\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n          Trạng thái bộ đề <span style=\"font-weight:400; color:var(--mut); font-size:12.5px;\">(Chọn Đã xuất bản để học sinh nhìn thấy và làm bài)</span>\n        </label>\n        <select id=\"reading-form-status\" style=\"width:100%;\">\n          <option value=\"published\">🟢 Đã xuất bản (Published - Hiển thị cho học sinh)</option>\n          <option value=\"draft\">🟡 Bản nháp (Draft - Chỉ lưu riêng cho giáo viên)</option>\n        </select>\n      </div>\n\n      <!-- Hàng 2: Tác phẩm, Tác giả & Thể loại -->\n      <div class=\"g3\" style=\"display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:14px;\">\n        <div>\n          <label for=\"reading-form-work\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Tên tác phẩm\n          </label>\n          <input type=\"text\" id=\"reading-form-work\" placeholder=\"Ví dụ: Cách sống: từ bình thường trở nên phi thường...\" style=\"width:100%;\">\n        </div>\n        <div>\n          <label for=\"reading-form-author\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Tác giả\n          </label>\n          <input type=\"text\" id=\"reading-form-author\" placeholder=\"Ví dụ: Inamori Kazuo\" style=\"width:100%;\">\n        </div>\n        <div>\n          <label for=\"reading-form-genre\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Thể loại văn bản\n          </label>\n          <input type=\"text\" id=\"reading-form-genre\" placeholder=\"Ví dụ: Văn bản nghị luận, Thơ tự do...\" style=\"width:100%;\">\n        </div>\n      </div>\n\n      <!-- Ngữ liệu đọc hiểu -->\n      <div style=\"margin-bottom:16px;\">\n        <label for=\"reading-form-passage\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n          Văn bản / Ngữ liệu đọc hiểu (Đoạn trích) <span style=\"color:var(--red)\">*</span>\n        </label>\n        <textarea id=\"reading-form-passage\" required rows=\"9\" placeholder=\"Dán hoặc nhập toàn bộ đoạn trích / văn bản đọc hiểu vào đây...\" style=\"width:100%; font-family:inherit; line-height:1.6;\"></textarea>\n      </div>\n\n      <!-- Nguồn trích dẫn -->\n      <div style=\"margin-bottom:18px;\">\n        <label for=\"reading-form-source\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n          Ghi chú nguồn trích dẫn tác phẩm, tác giả, NXB, năm, trang\n        </label>\n        <input type=\"text\" id=\"reading-form-source\" placeholder=\"(Trích Cách sống: từ bình thường trở nên phi thường, Inamori Kazuo, NXB Lao động, 2020, tr. 103-104)\" style=\"width:100%;\">\n      </div>\n\n      <!-- Danh sách câu hỏi đọc hiểu -->\n      <div class=\"reading-form-questions-section\">\n        <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;\">\n          <div>\n            <h4 style=\"margin:0; font-size:16px; font-weight:800; display:flex; align-items:center; gap:8px; flex-wrap:wrap;\">\n              <span>Hệ thống câu hỏi đọc hiểu</span>\n              <span class=\"tag cy\" style=\"font-size:12.5px; font-weight:800; padding:3px 10px;\">\n                Tổng điểm: <b id=\"reading-modal-total-score\">6.0đ</b> / 6.0 điểm\n              </span>\n            </h4>\n            <span class=\"mut\" style=\"font-size:12.5px;\">Chuẩn thang 6đ: Câu 1,2: Nhận biết (1đ) • Câu 3,4: Thông hiểu (1đ) • Câu 5: Vận dụng (2đ)</span>\n          </div>\n          <div style=\"display:flex; gap:6px; flex-wrap:wrap;\">\n            <button type=\"button\" class=\"btn au sm\" onclick=\"applyStandard5QuestionTemplate()\" title=\"Tự động nạp khung chuẩn 5 câu: 2 Nhận biết • 2 Thông hiểu • 1 Vận dụng (Đoạn văn)\">\n              <ion-icon name=\"flash-outline\"></ion-icon> Mẫu chuẩn 5 câu\n            </button>\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"openQuickImportModal()\" title=\"Dán nhanh toàn bộ đề thi để tự động trích xuất\">\n              <ion-icon name=\"clipboard-outline\"></ion-icon> Dán nhanh đề thi\n            </button>\n            <button type=\"button\" class=\"btn cy sm\" onclick=\"addQuestionToReadingForm()\">\n              <ion-icon name=\"add-outline\"></ion-icon> Thêm câu hỏi\n            </button>\n          </div>\n        </div>\n        <div id=\"reading-form-questions-list\"></div>\n      </div>\n    </div>\n\n    <div class=\"writing-modal-footer\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeReadingEditModal()\">Hủy</button>\n      <button type=\"submit\" class=\"btn au\" style=\"font-weight:800;\">\n        <ion-icon name=\"save-outline\"></ion-icon> Lưu đề đọc hiểu\n      </button>\n    </div>\n  </form>\n</dialog>\n\n<!-- READING MODAL 2: DÁN NHANH TOÀN BỘ ĐỀ THI (QUICK IMPORT) -->\n<dialog id=\"reading-quick-import-modal\" class=\"writing-modal\" style=\"max-width:680px;\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3 style=\"display:flex; align-items:center; gap:8px;\">\n        <ion-icon name=\"clipboard-outline\"></ion-icon> Dán nhanh toàn bộ đề thi Đọc hiểu\n      </h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeQuickImportModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n  <div class=\"writing-modal-body\" style=\"padding:18px 22px;\">\n    <p class=\"mut\" style=\"margin:0 0 12px; font-size:13.5px; line-height:1.5;\">\n      Dán nguyên văn đề thi (gồm đoạn trích, nguồn <i>(Trích ...)</i> và các <b>Câu 1, 2, 3, 4, 5</b> hoặc phần Làm văn). Hệ thống sẽ tự động bóc tách và điền vào các ô cho bạn!\n    </p>\n    <textarea id=\"reading-quick-import-text\" rows=\"12\" placeholder=\"Ví dụ:\nI. PHẦN ĐỌC HIỂU (3,0 điểm)\nĐọc đoạn trích:\nKhông cần ngôn ngữ, mọi sự sống nhỏ nhoi trong tự nhiên...\n(Trích Cách sống: từ bình thường trở nên phi thường, Inamori Kazuo, NXB Lao động, 2020)\n\nThực hiện các yêu cầu sau:\nCâu 1: Xác định phương thức biểu đạt chính...\nCâu 2: Theo đoạn trích...\nCâu 3: Chỉ ra điểm tương đồng...\nCâu 4: Anh/chị có đồng tình...\nCâu 5: Viết đoạn văn (khoảng 200 chữ)...\" style=\"width:100%; font-family:inherit; font-size:13.5px; line-height:1.6;\"></textarea>\n  </div>\n  <div class=\"writing-modal-footer\">\n    <button type=\"button\" class=\"btn gh\" onclick=\"closeQuickImportModal()\">Hủy</button>\n    <button type=\"button\" class=\"btn au\" onclick=\"handleQuickImportSubmit()\" style=\"font-weight:800;\">\n      <ion-icon name=\"flash-outline\"></ion-icon> Tự động bóc tách &amp; Áp dụng\n    </button>\n  </div>\n</dialog>\n\n<!-- READING MODAL 3: KẾT QUẢ / ĐÁP ÁN THAM KHẢO KHI NỘP BÀI -->\n<dialog id=\"reading-result-modal\" class=\"writing-modal reading-modal\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3>Kết quả bài làm &amp; Đáp án tham khảo</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeReadingResultModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <div class=\"writing-modal-body\" style=\"padding:20px 24px;\">\n    <div class=\"reading-result-hero\">\n      <div style=\"font-size:36px; margin-bottom:6px; color:var(--primary);\">\n        <ion-icon name=\"ribbon-outline\"></ion-icon>\n      </div>\n      <h3 style=\"margin:0 0 6px; font-weight:800;\">Đã hoàn thành bài đọc hiểu!</h3>\n      <p class=\"mut\" style=\"margin:0; font-size:14px;\">Dưới đây là phần so sánh giữa câu trả lời của bạn và đáp án chuẩn.</p>\n    </div>\n\n    <div id=\"reading-result-comparison-list\" style=\"margin-top:20px;\"></div>\n  </div>\n\n  <div class=\"writing-modal-footer\">\n    <button type=\"button\" class=\"btn au\" onclick=\"closeReadingResultModal(); go('home'); toast('Nộp bài thành công! Bài làm đọc hiểu đã được lưu vào Lịch sử.', 'ok');\" style=\"font-weight:800;\">\n      <ion-icon name=\"home-outline\"></ion-icon> Về trang chủ\n    </button>\n    <button type=\"button\" class=\"btn gh\" onclick=\"closeReadingResultModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- AUTH DIALOG 1: ĐĂNG NHẬP HỆ THỐNG -->\n<dialog id=\"login-dialog\" class=\"auth-modal login-modal modern-login-dialog\">\n  <div class=\"login-dialog-card\">\n    <!-- Nút đóng -->\n    <button class=\"login-close-btn\" type=\"button\" onclick=\"closeLoginDialog()\" aria-label=\"Đóng cửa sổ đăng nhập\" title=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n\n    <!-- Header / Biểu trưng -->\n    <div class=\"login-brand-header\">\n      <div class=\"login-brand-icon-box\">\n        <img src=\"./assets/logo-nguvan.png\" alt=\"Logo\" class=\"login-brand-logo-img\" onerror=\"this.style.display='none'; this.nextElementSibling.style.display='block';\">\n        <span class=\"login-brand-fallback-emoji\" style=\"display:none;\">\n          <ion-icon name=\"school-outline\" style=\"font-size: 32px; color:var(--primary);\"></ion-icon>\n        </span>\n      </div>\n      <h2 class=\"login-dialog-title\">Đăng Nhập Hệ Thống</h2>\n      <p class=\"login-dialog-subtitle\">Cổng học tập &amp; Ôn luyện môn Ngữ Văn</p>\n      <div class=\"login-info-pill\">\n        <ion-icon name=\"school-outline\"></ion-icon>\n        <span>Học sinh &amp; Giáo viên</span>\n      </div>\n    </div>\n\n    <!-- Khu vực đăng nhập nhanh bằng tài khoản đã lưu trên thiết bị -->\n    <div id=\"login-saved-accounts-box\" class=\"login-saved-accounts-box\" style=\"display:none;\"></div>\n\n    <!-- Biểu mẫu đăng nhập -->\n    <form id=\"login-form\" onsubmit=\"handleLoginSubmit(event)\" class=\"login-form-content\">\n      <div id=\"login-error-msg\" class=\"auth-alert-error\" style=\"display:none;\"></div>\n\n      <!-- Tên đăng nhập / Email -->\n      <div class=\"login-field-group\">\n        <label for=\"login-username\" class=\"login-field-label\">\n          <span>Tên đăng nhập / Email</span>\n          <span class=\"req\">*</span>\n        </label>\n        <div class=\"login-input-shell\">\n          <span class=\"login-input-icon\">\n            <ion-icon name=\"person-outline\"></ion-icon>\n          </span>\n          <input type=\"text\" id=\"login-username\" class=\"login-field-input\" required autocomplete=\"username\" placeholder=\"Nhập tên đăng nhập hoặc email...\" spellcheck=\"false\" autocapitalize=\"none\">\n        </div>\n      </div>\n\n      <!-- Mật khẩu -->\n      <div class=\"login-field-group\">\n        <div class=\"login-field-header-row\">\n          <label for=\"login-password\" class=\"login-field-label\">\n            <span>Mật khẩu</span>\n            <span class=\"req\">*</span>\n          </label>\n        </div>\n        <div class=\"login-input-shell\">\n          <span class=\"login-input-icon\">\n            <ion-icon name=\"lock-closed-outline\"></ion-icon>\n          </span>\n          <input type=\"password\" id=\"login-password\" class=\"login-field-input\" required autocomplete=\"current-password\" placeholder=\"Nhập mật khẩu...\">\n          <button type=\"button\" class=\"login-password-eye-btn\" onclick=\"togglePasswordVisibility('login-password', this)\" title=\"Hiện / Ẩn mật khẩu\" aria-label=\"Hiện mật khẩu\">\n            <ion-icon name=\"eye-outline\"></ion-icon>\n          </button>\n        </div>\n      </div>\n\n      <!-- Tùy chọn Ghi nhớ tài khoản trên thiết bị -->\n      <div class=\"login-field-group\" style=\"margin-bottom:12px;\">\n        <label style=\"display:inline-flex; align-items:center; gap:8px; cursor:pointer; font-size:13px; font-weight:700; color:var(--ink); user-select:none;\">\n          <input type=\"checkbox\" id=\"login-remember-me\" checked style=\"width:17px; height:17px; accent-color:var(--primary); cursor:pointer;\">\n          <span>Ghi nhớ tài khoản trên thiết bị này</span>\n        </label>\n      </div>\n\n      <!-- Nút Đăng nhập -->\n      <div class=\"login-submit-row\">\n        <button type=\"submit\" id=\"btn-submit-login\" class=\"btn au login-btn-primary\">\n          <ion-icon name=\"log-in-outline\"></ion-icon> <span>Đăng nhập</span>\n        </button>\n      </div>\n\n      <!-- Hướng dẫn tài khoản -->\n      <div class=\"login-bottom-notice\">\n        <div class=\"login-notice-icon\">\n          <ion-icon name=\"information-circle-outline\"></ion-icon>\n        </div>\n        <div class=\"login-notice-text\">\n          Học sinh sử dụng tài khoản do nhà trường hoặc giáo viên bộ môn cấp. Nếu quên mật khẩu, vui lòng liên hệ giáo viên phụ trách để được đặt lại.\n        </div>\n      </div>\n    </form>\n  </div>\n</dialog>\n\n\n<!-- AUTH DIALOG 3: CẤP TÀI KHOẢN MỚI CHO HỌC SINH / GIÁO VIÊN -->\n<dialog id=\"create-account-dialog\" class=\"auth-modal create-acc-modal\">\n  <div class=\"auth-modal-header\">\n    <div class=\"auth-modal-title-box\">\n      <span class=\"auth-modal-badge-icon\" style=\"background:var(--cyan); color:#1e293b;\">\n        <ion-icon name=\"person-add-outline\"></ion-icon>\n      </span>\n      <div>\n        <h3 style=\"margin:0; font-size:19px; font-weight:800;\">Cấp tài khoản mới</h3>\n        <p class=\"mut\" style=\"margin:2px 0 0; font-size:13px;\">Tài khoản sẽ được lưu trực tiếp vào cơ sở dữ liệu Supabase</p>\n      </div>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeCreateAccountModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <form id=\"create-account-form\" onsubmit=\"handleCreateAccountSubmit(event)\" class=\"auth-modal-body\">\n    <div id=\"create-account-error\" class=\"auth-alert-error\" style=\"display:none;\"></div>\n\n    <div class=\"g2\" style=\"margin-bottom:12px;\">\n      <div class=\"auth-input-group\">\n        <label for=\"new-acc-username\" class=\"auth-label\">Tên đăng nhập <span style=\"color:var(--red);\">*</span></label>\n        <div class=\"auth-input-wrap\">\n          <span class=\"auth-input-icon\">\n            <ion-icon name=\"person-outline\"></ion-icon>\n          </span>\n          <input type=\"text\" id=\"new-acc-username\" class=\"auth-input\" required placeholder=\"ví dụ: tranvanan_12a1\" spellcheck=\"false\" autocapitalize=\"none\">\n        </div>\n        <small class=\"mut\" style=\"font-size:11.5px; margin-top:3px; display:block;\">Viết liền, không dấu, ít nhất 3 ký tự</small>\n      </div>\n\n      <div class=\"auth-input-group\">\n        <label for=\"new-acc-password\" class=\"auth-label\">Mật khẩu khởi tạo <span style=\"color:var(--red);\">*</span></label>\n        <div class=\"auth-input-wrap\">\n          <span class=\"auth-input-icon\">\n            <ion-icon name=\"lock-closed-outline\"></ion-icon>\n          </span>\n          <input type=\"text\" id=\"new-acc-password\" class=\"auth-input\" required value=\"123456\" placeholder=\"Mật khẩu ban đầu...\">\n        </div>\n        <small class=\"mut\" style=\"font-size:11.5px; margin-top:3px; display:block;\">Mặc định: 123456 (học sinh có thể tự đổi sau)</small>\n      </div>\n    </div>\n\n    <div class=\"g2\" style=\"margin-bottom:12px;\">\n      <div class=\"auth-input-group\">\n        <label for=\"new-acc-fullname\" class=\"auth-label\">Họ và tên học sinh / GV <span style=\"color:var(--red);\">*</span></label>\n        <div class=\"auth-input-wrap\">\n          <span class=\"auth-input-icon\">\n            <ion-icon name=\"create-outline\"></ion-icon>\n          </span>\n          <input type=\"text\" id=\"new-acc-fullname\" class=\"auth-input\" required placeholder=\"ví dụ: Trần Văn An\">\n        </div>\n      </div>\n\n      <div class=\"auth-input-group\">\n        <label for=\"new-acc-class\" class=\"auth-label\">Lớp học / Đơn vị</label>\n        <div class=\"auth-input-wrap\">\n          <span class=\"auth-input-icon\">\n            <ion-icon name=\"school-outline\"></ion-icon>\n          </span>\n          <input type=\"text\" id=\"new-acc-class\" class=\"auth-input\" placeholder=\"ví dụ: 12A1, 10C2...\">\n        </div>\n      </div>\n    </div>\n\n    <div class=\"g2\" style=\"margin-bottom:16px;\">\n      <div class=\"auth-input-group\">\n        <label for=\"new-acc-role\" class=\"auth-label\">Vai trò tài khoản <span style=\"color:var(--red);\">*</span></label>\n        <select id=\"new-acc-role\" class=\"auth-select\">\n          <option value=\"student\" selected>Học sinh (Làm bài, xem kết quả - Không sửa đề/chấm)</option>\n          <option value=\"teacher\">Giáo viên (Sửa đề &amp; chấm bài, quản lý học sinh)</option>\n          <option value=\"admin\">Quản trị viên (Toàn quyền quản lý GV &amp; Học sinh)</option>\n        </select>\n      </div>\n\n      <div class=\"auth-input-group\">\n        <label for=\"new-acc-avatar\" class=\"auth-label\">Biểu tượng / Avatar</label>\n        <select id=\"new-acc-avatar\" class=\"auth-select\">\n          <option value=\"🎓\" selected>Học sinh</option>\n          <option value=\"🏛️\">Giáo viên</option>\n          <option value=\"⚡\">Quản trị viên</option>\n          <option value=\"📚\">Học liệu</option>\n        </select>\n      </div>\n    </div>\n\n    <div class=\"auth-modal-footer\" style=\"padding:0; border:none; margin-top:20px;\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeCreateAccountModal()\">Hủy</button>\n      <button type=\"submit\" id=\"btn-submit-create-account\" class=\"btn au\" style=\"font-weight:800;\">\n        <ion-icon name=\"checkmark-circle-outline\"></ion-icon> Lưu &amp; Cấp tài khoản\n      </button>\n    </div>\n  </form>\n</dialog>\n\n<!-- AUTH DIALOG 4: ĐẶT LẠI MẬT KHẨU (GIÁO VIÊN RESET CHO HỌC SINH) -->\n<dialog id=\"reset-password-dialog\" class=\"auth-modal\" style=\"max-width:440px;\">\n  <div class=\"auth-modal-header\">\n    <div class=\"auth-modal-title-box\">\n      <span class=\"auth-modal-badge-icon\" style=\"background:var(--cyan); color:#1e293b;\">\n        <ion-icon name=\"key-outline\"></ion-icon>\n      </span>\n      <div>\n        <h3 style=\"margin:0; font-size:18px; font-weight:800;\">Đặt lại mật khẩu</h3>\n        <p class=\"mut\" style=\"margin:2px 0 0; font-size:12.5px;\">Cập nhật mật khẩu mới cho tài khoản học sinh</p>\n      </div>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeResetPasswordModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <form onsubmit=\"handleResetPasswordSubmit(event)\" class=\"auth-modal-body\">\n    <div id=\"reset-password-error\" class=\"auth-alert-error\" style=\"display:none;\"></div>\n\n    <div style=\"padding:10px 14px; background:var(--bg); border:1px solid var(--stroke); border-radius:12px; margin-bottom:14px; font-size:13.5px;\">\n      <span class=\"mut\">Tài khoản:</span> <strong id=\"reset-user-target-info\" style=\"color:var(--primary);\"></strong>\n    </div>\n\n    <div class=\"auth-input-group\">\n      <label for=\"reset-new-password\" class=\"auth-label\">Mật khẩu mới <span style=\"color:var(--red);\">*</span></label>\n      <div class=\"auth-input-wrap\">\n        <span class=\"auth-input-icon\">\n          <ion-icon name=\"lock-closed-outline\"></ion-icon>\n        </span>\n        <input type=\"text\" id=\"reset-new-password\" class=\"auth-input\" required value=\"123456\" placeholder=\"Nhập mật khẩu mới...\">\n      </div>\n      <small class=\"mut\" style=\"font-size:11.5px; margin-top:3px; display:block;\">Ít nhất 4 ký tự</small>\n    </div>\n\n    <div class=\"auth-modal-footer\" style=\"padding:0; border:none; margin-top:20px;\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeResetPasswordModal()\">Hủy</button>\n      <button type=\"submit\" id=\"btn-submit-reset-password\" class=\"btn au\" style=\"font-weight:800;\">\n        <ion-icon name=\"checkmark-circle-outline\"></ion-icon> Đặt lại mật khẩu\n      </button>\n    </div>\n  </form>\n</dialog>\n\n<!-- AUTH DIALOG 5: TỰ ĐỔI MẬT KHẨU CÁ NHÂN (HỌC SINH / GIÁO VIÊN ĐANG ĐĂNG NHẬP) -->\n<dialog id=\"change-password-dialog\" class=\"auth-modal\" style=\"max-width:440px;\">\n  <div class=\"auth-modal-header\">\n    <div class=\"auth-modal-title-box\">\n      <span class=\"auth-modal-badge-icon\">\n        <ion-icon name=\"lock-closed-outline\"></ion-icon>\n      </span>\n      <div>\n        <h3 style=\"margin:0; font-size:18px; font-weight:800;\">Đổi mật khẩu cá nhân</h3>\n        <p class=\"mut\" style=\"margin:2px 0 0; font-size:12.5px;\">Bảo mật thông tin tài khoản của bạn</p>\n      </div>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeChangePasswordModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <form id=\"change-password-form\" onsubmit=\"handleChangePasswordSubmit(event)\" class=\"auth-modal-body\">\n    <div id=\"change-password-error\" class=\"auth-alert-error\" style=\"display:none;\"></div>\n\n    <div class=\"auth-input-group\" style=\"margin-bottom:12px;\">\n      <label for=\"change-old-password\" class=\"auth-label\">Mật khẩu hiện tại <span style=\"color:var(--red);\">*</span></label>\n      <div class=\"auth-input-wrap\">\n        <span class=\"auth-input-icon\">\n          <ion-icon name=\"lock-closed-outline\"></ion-icon>\n        </span>\n        <input type=\"password\" id=\"change-old-password\" class=\"auth-input\" required placeholder=\"Nhập mật khẩu hiện tại...\">\n        <button type=\"button\" class=\"auth-pwd-toggle-btn\" onclick=\"togglePasswordVisibility('change-old-password', this)\">\n          <ion-icon name=\"eye-outline\"></ion-icon>\n        </button>\n      </div>\n    </div>\n\n    <div class=\"auth-input-group\" style=\"margin-bottom:12px;\">\n      <label for=\"change-new-password\" class=\"auth-label\">Mật khẩu mới <span style=\"color:var(--red);\">*</span></label>\n      <div class=\"auth-input-wrap\">\n        <span class=\"auth-input-icon\">\n          <ion-icon name=\"key-outline\"></ion-icon>\n        </span>\n        <input type=\"password\" id=\"change-new-password\" class=\"auth-input\" required placeholder=\"Nhập mật khẩu mới (tối thiểu 4 ký tự)...\">\n        <button type=\"button\" class=\"auth-pwd-toggle-btn\" onclick=\"togglePasswordVisibility('change-new-password', this)\">\n          <ion-icon name=\"eye-outline\"></ion-icon>\n        </button>\n      </div>\n    </div>\n\n    <div class=\"auth-input-group\" style=\"margin-bottom:16px;\">\n      <label for=\"change-confirm-password\" class=\"auth-label\">Xác nhận mật khẩu mới <span style=\"color:var(--red);\">*</span></label>\n      <div class=\"auth-input-wrap\">\n        <span class=\"auth-input-icon\">\n          <ion-icon name=\"shield-checkmark-outline\"></ion-icon>\n        </span>\n        <input type=\"password\" id=\"change-confirm-password\" class=\"auth-input\" required placeholder=\"Nhập lại mật khẩu mới...\">\n        <button type=\"button\" class=\"auth-pwd-toggle-btn\" onclick=\"togglePasswordVisibility('change-confirm-password', this)\">\n          <ion-icon name=\"eye-outline\"></ion-icon>\n        </button>\n      </div>\n    </div>\n\n    <div class=\"auth-modal-footer\" style=\"padding:0; border:none; margin-top:20px;\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeChangePasswordModal()\">Hủy</button>\n      <button type=\"submit\" id=\"btn-submit-change-password\" class=\"btn au\" style=\"font-weight:800;\">\n        <ion-icon name=\"checkmark-circle-outline\"></ion-icon> Đổi mật khẩu\n      </button>\n    </div>\n  </form>\n</dialog>\n\n<!-- TOAST & BACK TO TOP -->\n<div id=\"toast\" role=\"status\"></div>\n<button id=\"back-to-top\" onclick=\"window.scrollTo({top:0,behavior:'smooth'})\" aria-label=\"Về đầu trang\" title=\"Về đầu trang\">\n  <ion-icon name=\"arrow-up-outline\"></ion-icon>\n</button>"
+  "dialogs": "<!-- FEEDBACK DIALOG -->\n<dialog id=\"feedback-dialog\" aria-live=\"polite\">\n  <div id=\"fb\"></div>\n</dialog>\n\n<!-- CONFIRM DELETE DIALOG -->\n<dialog id=\"dlg\">\n  <p id=\"dm\" style=\"font-size:16px; font-weight:600; margin-bottom:20px;\"></p>\n  <div style=\"display:flex; gap:10px; justify-content:flex-end;\">\n    <button class=\"btn gh sm\" onclick=\"dlg.close()\">Hủy</button>\n    <button class=\"btn no sm\" id=\"dy\">Xóa</button>\n  </div>\n</dialog>\n\n<!-- AI PROMPT DIALOG -->\n<dialog id=\"prompt-dialog\">\n  <div class=\"prompt-dialog-header\">\n    <div>\n      <h2 style=\"display:flex; align-items:center; gap:8px;\">Tạo bộ câu hỏi bằng trợ lý AI</h2>\n      <p class=\"mut\" style=\"margin:4px 0 0; font-size:13px;\">Tạo câu lệnh → Gửi AI → Nhập câu hỏi vào hệ thống</p>\n    </div>\n    <button class=\"btn gh sm prompt-dialog-close\" type=\"button\"\n      onclick=\"$('#prompt-dialog').close()\" aria-label=\"Đóng cửa sổ tạo bộ câu hỏi\" title=\"Đóng\">×</button>\n  </div>\n\n  <div style=\"background:rgba(217, 169, 79, 0.12); border:1px solid var(--gold); border-radius:12px; padding:9px 13px; margin-bottom:14px; font-size:13px; line-height:1.5;\">\n    Hệ thống tạo câu lệnh chuẩn để gửi sang <b>ChatGPT, Gemini hoặc Claude</b>. Sau khi AI trả lời, bạn dán kết quả vào <b>Bước 3</b> bên dưới để tự động tạo bộ câu hỏi.\n  </div>\n\n  <!-- BƯỚC 1 -->\n  <div class=\"prompt-step-box\">\n    <div class=\"prompt-step-title\">\n      <span class=\"prompt-step-badge\">1</span>\n      <span>Thiết lập nội dung & Tạo câu lệnh</span>\n    </div>\n    \n    <label for=\"prompt-topic\" style=\"font-weight:600;\">Chủ đề / Tác phẩm / Bài học <span style=\"color:var(--gold);\">*</span></label>\n    <input id=\"prompt-topic\" type=\"text\" maxlength=\"500\"\n      placeholder=\"Ví dụ: Ông già và biển cả, Vợ nhặt, Tây Tiến, Chí Phèo...\">\n\n    <!-- TỔNG SỐ CÂU HỎI & CHIA ĐỀU -->\n    <div style=\"display:grid; grid-template-columns: 1fr auto; gap:12px; margin-top:12px; align-items:end;\">\n      <div>\n        <label for=\"prompt-question-count\" style=\"font-weight:600;\">Tổng số câu hỏi của bộ đề</label>\n        <select id=\"prompt-question-count\" onchange=\"onPromptTotalCountChange()\">\n          <option value=\"4\">4 câu</option>\n          <option value=\"5\">5 câu</option>\n          <option value=\"6\">6 câu</option>\n          <option value=\"8\">8 câu</option>\n          <option value=\"10\" selected>10 câu</option>\n          <option value=\"12\">12 câu</option>\n          <option value=\"15\">15 câu</option>\n          <option value=\"16\">16 câu</option>\n          <option value=\"20\">20 câu</option>\n          <option value=\"25\">25 câu</option>\n          <option value=\"30\">30 câu</option>\n        </select>\n      </div>\n      <div>\n        <button class=\"btn gh sm\" type=\"button\" onclick=\"autoDistributePromptTypes()\" title=\"Chia đều số câu theo các dạng đang chọn\" style=\"height:42px; padding:0 12px; font-weight:700;\">\n          Chia đều số câu\n        </button>\n      </div>\n    </div>\n\n    <!-- PHÂN BỔ SỐ CÂU THEO TỪNG DẠNG -->\n    <fieldset style=\"margin-top:12px; padding:12px 14px; border:1px solid var(--stroke); border-radius:12px; background:var(--bg);\">\n      <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;\">\n        <legend style=\"padding:0 6px; font-weight:700; font-size:12px; color:var(--mut); margin:0;\">PHÂN BỔ SỐ CÂU THEO TỪNG DẠNG</legend>\n        <span id=\"prompt-count-status-badge\" style=\"font-size:11.5px; font-weight:700; padding:2px 8px; border-radius:6px;\"></span>\n      </div>\n\n      <div style=\"display:flex; flex-direction:column; gap:8px;\">\n        <!-- Dạng 1: Trắc nghiệm -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-mc\" name=\"prompt-question-type\" value=\"mc\" checked onchange=\"onPromptTypeToggle('mc')\" style=\"width:auto; margin:0;\">\n            <span>Trắc nghiệm (4 lựa chọn)</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('mc', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-mc\" type=\"number\" min=\"0\" max=\"50\" value=\"4\" oninput=\"onPromptTypeCountInput('mc')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('mc', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n\n        <!-- Dạng 2: Đúng / Sai -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-tf\" name=\"prompt-question-type\" value=\"tf\" checked onchange=\"onPromptTypeToggle('tf')\" style=\"width:auto; margin:0;\">\n            <span>Đúng / Sai (4 ý)</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('tf', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-tf\" type=\"number\" min=\"0\" max=\"50\" value=\"2\" oninput=\"onPromptTypeCountInput('tf')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('tf', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n\n        <!-- Dạng 3: Trả lời ngắn -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-short\" name=\"prompt-question-type\" value=\"short\" checked onchange=\"onPromptTypeToggle('short')\" style=\"width:auto; margin:0;\">\n            <span>Trả lời ngắn</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('short', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-short\" type=\"number\" min=\"0\" max=\"50\" value=\"2\" oninput=\"onPromptTypeCountInput('short')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('short', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n\n        <!-- Dạng 4: Điền từ -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-fill\" name=\"prompt-question-type\" value=\"fill\" checked onchange=\"onPromptTypeToggle('fill')\" style=\"width:auto; margin:0;\">\n            <span>Điền từ vào chỗ trống</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('fill', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-fill\" type=\"number\" min=\"0\" max=\"50\" value=\"2\" oninput=\"onPromptTypeCountInput('fill')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('fill', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n      </div>\n\n      <!-- TỔNG KẾT & CẢNH BÁO TỔNG SỐ CÂU -->\n      <div id=\"prompt-sum-indicator\" style=\"margin-top:10px; font-size:12.5px; padding:7px 12px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; font-weight:600;\"></div>\n    </fieldset>\n\n    <label for=\"prompt-source\" style=\"margin-top:12px; font-weight:600;\">\n      Văn bản / Ngữ liệu đọc hiểu <span style=\"font-weight:400; color:var(--mut); font-size:12px;\">(Không bắt buộc)</span>\n    </label>\n    <textarea id=\"prompt-source\" maxlength=\"20000\"\n      placeholder=\"Dán đoạn trích nếu muốn câu hỏi đọc hiểu bám sát ngữ liệu riêng. Nếu để trống, AI sẽ tự động tạo câu hỏi dựa trên kiến thức tác phẩm chuẩn theo SGK...\"\n      style=\"min-height:85px;\"></textarea>\n    <div style=\"display:flex; justify-content:flex-end; align-items:center; margin-top:4px; font-size:12px;\">\n      <span id=\"prompt-source-count\" class=\"mut\" aria-live=\"polite\"></span>\n    </div>\n\n    <div style=\"margin-top:12px;\">\n      <button class=\"btn au\" type=\"button\" onclick=\"buildQuestionPrompt()\" style=\"width:100%; justify-content:center; font-weight:700; padding:11px;\">\n        Tạo câu lệnh AI\n      </button>\n    </div>\n  </div>\n\n  <!-- BƯỚC 2 -->\n  <div class=\"prompt-step-box\">\n    <div class=\"prompt-step-title\">\n      <span class=\"prompt-step-badge\">2</span>\n      <span>Gửi câu lệnh sang AI để nhận câu hỏi</span>\n    </div>\n    \n    <label for=\"prompt-output\" style=\"font-weight:600; font-size:13px;\">Câu lệnh AI đã sẵn sàng:</label>\n    <textarea id=\"prompt-output\" readonly style=\"min-height:110px; font-size:12px; font-family:monospace;\"\n      placeholder=\"Câu lệnh sẽ xuất hiện tại đây sau khi bạn nhấn nút ở Bước 1...\"></textarea>\n    \n    <div style=\"display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; align-items:center;\">\n      <button class=\"btn cy sm\" type=\"button\" onclick=\"copyQuestionPrompt()\">\n        <ion-icon name=\"copy-outline\"></ion-icon> Sao chép câu lệnh\n      </button>\n      <span style=\"font-size:12px; color:var(--mut); margin:0 4px;\">Hoặc mở nhanh AI:</span>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"openExternalAI('chatgpt')\">Mở ChatGPT</button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"openExternalAI('gemini')\">Mở Gemini</button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"openExternalAI('claude')\">Mở Claude</button>\n    </div>\n  </div>\n\n  <!-- BƯỚC 3 -->\n  <div class=\"prompt-step-box\" style=\"margin-bottom:0;\">\n    <div class=\"prompt-step-title\">\n      <span class=\"prompt-step-badge\">3</span>\n      <span>Dán kết quả từ AI & Nhập vào hệ thống</span>\n    </div>\n    \n    <label for=\"prompt-result\" style=\"font-weight:600; font-size:13px;\">\n      Dán kết quả tại đây:\n      <span style=\"font-weight:400; color:var(--mut); font-size:12px;\">(Hỗ trợ JSON hoặc văn bản trắc nghiệm: Câu 1: A, B, C, D...)</span>\n    </label>\n    <textarea id=\"prompt-result\" maxlength=\"150000\"\n      placeholder=\"Dán câu trả lời của ChatGPT/Gemini/Claude vào đây...\"\n      style=\"min-height:110px;\"></textarea>\n\n    <div style=\"display:flex; gap:10px; justify-content:flex-end; margin-top:14px;\">\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"$('#prompt-dialog').close()\">Đóng</button>\n      <button class=\"btn au\" type=\"button\" onclick=\"importPromptQuestionSet()\" style=\"font-weight:700;\">\n        Nhập bộ câu hỏi\n      </button>\n    </div>\n  </div>\n</dialog>\n\n<!-- QUIZ HISTORY LIST MODAL -->\n<dialog id=\"quiz-history-dialog\" class=\"history-dialog\">\n  <div class=\"history-modal-header\">\n    <div class=\"history-header-title-box\">\n      <h2 style=\"margin:0; font-size:22px; font-weight:800; display:flex; align-items:center; gap:8px;\">\n        <ion-icon name=\"time-outline\" style=\"font-size:24px; color:var(--gold);\"></ion-icon> <span>Lịch sử bài làm</span>\n      </h2>\n      <div style=\"display:flex; align-items:center; gap:8px; flex-wrap:wrap;\">\n        <span class=\"history-total-badge\" id=\"history-total-count\">0 lượt làm bài</span>\n        <span id=\"history-sync-indicator\" style=\"font-size:12px; font-weight:600; color:var(--mut);\"></span>\n      </div>\n    </div>\n    <div style=\"display:flex; align-items:center; gap:8px;\">\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"loadQuizHistoryFromSupabase(true)\" title=\"Tải lại từ máy chủ\" style=\"padding:0 8px; height:32px;\">\n        <ion-icon name=\"refresh-outline\" style=\"font-size: 18px;\"></ion-icon>\n      </button>\n      <button class=\"btn no sm teacher-only\" type=\"button\" onclick=\"clearAllQuizHistory()\" title=\"Xóa toàn bộ lịch sử\">\n        <ion-icon name=\"trash-outline\"></ion-icon> <span>Xóa tất cả</span>\n      </button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"closeHistoryModal()\" aria-label=\"Đóng\">\n        <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n      </button>\n    </div>\n  </div>\n\n  <div class=\"history-search-bar\" style=\"display:flex; gap:10px; align-items:center; flex-wrap:wrap;\">\n    <div style=\"flex:1; min-width:180px; position:relative; display:flex; align-items:center;\">\n      <span class=\"history-search-icon\">\n        <ion-icon name=\"search-outline\"></ion-icon>\n      </span>\n      <input id=\"history-search-input\" type=\"text\" placeholder=\"Tìm theo học sinh, lớp, từ khóa...\" oninput=\"onHistorySearchInput()\" style=\"width:100%;\">\n    </div>\n    <select id=\"history-set-filter\" onchange=\"onHistorySetFilterChange()\" style=\"height:44px; border-radius:12px; border:2px solid var(--stroke); padding:0 12px; font-weight:700; font-size:13px; background:var(--bg-card); color:var(--ink); max-width:260px;\" title=\"Lọc theo bộ câu hỏi\">\n      <option value=\"\">Tất cả bộ đề</option>\n    </select>\n  </div>\n  <div id=\"history-active-filter-badge\" style=\"display:none; margin:8px 0 4px; padding:6px 12px; background:rgba(217, 169, 79, 0.15); border:1.5px solid var(--gold); border-radius:10px; font-size:13px; font-weight:700; align-items:center; justify-content:space-between;\">\n    <span id=\"history-filter-badge-text\"></span>\n    <button class=\"btn gh sm\" type=\"button\" onclick=\"clearHistorySetFilter()\" style=\"padding:2px 8px; font-size:12px; height:24px;\">\n      <ion-icon name=\"close-circle-outline\"></ion-icon> Xem tất cả\n    </button>\n  </div>\n\n  <div class=\"history-list-wrap\" id=\"history-list-container\">\n    <!-- Rendered by JS -->\n  </div>\n\n  <div class=\"history-modal-footer\">\n    <button class=\"btn gh\" type=\"button\" onclick=\"closeHistoryModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- QUIZ HISTORY DETAIL MODAL -->\n<dialog id=\"history-detail-dialog\" class=\"history-dialog history-detail-modal\">\n  <div class=\"history-modal-header\">\n    <div class=\"history-header-title-box\">\n      <h2 style=\"margin:0; font-size:20px; font-weight:800;\" id=\"history-detail-title\">\n        Chi tiết bài làm\n      </h2>\n    </div>\n    <div style=\"display:flex; align-items:center; gap:8px;\">\n      <button class=\"btn cy sm\" id=\"btn-toggle-grading-mode\" type=\"button\" onclick=\"toggleHistoryGradingMode()\" title=\"Chuyển đổi giữa chế độ xem và chế độ chấm bài\">\n        <ion-icon name=\"create-outline\"></ion-icon> Chấm bài thủ công\n      </button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"closeHistoryDetailModal()\" aria-label=\"Đóng\">\n        <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n      </button>\n    </div>\n  </div>\n\n  <div class=\"history-detail-content-wrap\">\n    <div id=\"history-detail-meta\"></div>\n    <div id=\"history-detail-grading-toolbar\" style=\"display:none;\"></div>\n    <h3 style=\"margin:16px 0 10px; font-size:16px; font-weight:800;\" id=\"history-detail-section-heading\">Danh sách câu hỏi &amp; Bài làm:</h3>\n    <div id=\"history-detail-questions-list\"></div>\n    <div id=\"history-detail-grading-summary\"></div>\n  </div>\n\n  <div class=\"history-modal-footer\">\n    <button class=\"btn au sm\" id=\"btn-save-grading-footer\" type=\"button\" onclick=\"saveManualGrading()\" style=\"display:none; font-weight:800;\">\n      <ion-icon name=\"checkmark-circle-outline\"></ion-icon> Lưu kết quả chấm\n    </button>\n    <button class=\"btn gh\" type=\"button\" onclick=\"closeHistoryDetailModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- WRITING MODAL 1: TẠO / CHỈNH SỬA BỘ ĐỀ LUYỆN VIẾT -->\n<dialog id=\"writing-set-dialog\" class=\"writing-modal writing-set-modal-large\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3 id=\"writing-dialog-heading\">Tạo bộ đề luyện viết</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeCreateWritingSetModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n  \n  <form id=\"writing-set-form\" onsubmit=\"handleSaveWritingSet(event)\" class=\"writing-modal-form-wrap\">\n    <input type=\"hidden\" id=\"edit-writing-set-id\">\n\n    <div class=\"writing-modal-body\">\n      <div class=\"g2\">\n        <div>\n          <label for=\"input-set-title\">Tên bộ đề / Tiêu đề <span style=\"color:var(--red)\">*</span></label>\n          <input type=\"text\" id=\"input-set-title\" required placeholder=\"Ví dụ: Nghị luận xã hội về ý nghĩa của sự sẻ chia...\">\n        </div>\n        <div>\n          <label for=\"input-set-category\">Chủ đề / Dạng đề <span style=\"color:var(--red)\">*</span></label>\n          <select id=\"input-set-category\" onchange=\"onCategorySelectChange(this.value)\">\n            <option value=\"nl-xh\">Nghị luận xã hội (200 chữ / Bài văn ngắn)</option>\n            <option value=\"nl-vh\">Nghị luận văn học (Phân tích thơ, văn xuôi)</option>\n            <option value=\"cam-thu\">Đọc hiểu &amp; Đoạn văn cảm thụ</option>\n          </select>\n        </div>\n      </div>\n\n      <!-- Giới hạn lượt làm bài -->\n      <div style=\"margin-top:14px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"writing-form-max-attempts\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"timer-outline\"></ion-icon> Giới hạn lượt làm bài cho học sinh:\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Số lượt tối đa (0 = Không giới hạn). Học sinh đã làm đủ lượt sẽ chỉ được xem lại bài đã nộp.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"number\" id=\"writing-form-max-attempts\" min=\"0\" max=\"999\" value=\"0\" style=\"width:85px; text-align:center; font-weight:700; padding:6px 8px; border-radius:8px;\">\n          <span style=\"font-size:13px; font-weight:600; color:var(--mut);\">lượt</span>\n        </div>\n      </div>\n\n      <!-- Thời hạn nộp bài (Deadline) -->\n      <div style=\"margin-top:10px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"writing-form-deadline\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"calendar-outline\"></ion-icon> Hạn chót nộp bài (Deadline):\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Bỏ trống nếu không đặt hạn nộp. Quá hạn, học sinh chỉ có thể xem lại bài đã nộp.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"datetime-local\" id=\"writing-form-deadline\" style=\"font-weight:600; padding:6px 10px; border-radius:8px; font-size:13px;\">\n          <button type=\"button\" class=\"btn gh sm\" onclick=\"$('#writing-form-deadline').value=''\" title=\"Xóa hạn nộp\" style=\"padding:2px 8px; height:32px;\">✕</button>\n        </div>\n      </div>\n\n      <div style=\"margin-top:16px;\">\n        <label for=\"input-set-prompt\">Nội dung đề bài chi tiết <span style=\"color:var(--red)\">*</span></label>\n        <textarea id=\"input-set-prompt\" required placeholder=\"Dán nội dung đề bài, câu hỏi yêu cầu tại đây...\"></textarea>\n      </div>\n\n      <!-- Các phần viết -->\n      <div style=\"margin-top:20px;\">\n        <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;\">\n          <label style=\"margin:0; font-size:15px; font-weight:700;\">\n            Các phần bài viết (<span id=\"modal-section-count\">3</span> phần)\n          </label>\n          <div style=\"display:flex; gap:8px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"applyQuickOutlineTemplate()\">Nạp cấu trúc mẫu</button>\n            <button type=\"button\" class=\"btn cy sm\" onclick=\"addNewOutlineSectionRow()\">\n              <ion-icon name=\"add-outline\"></ion-icon> Thêm phần\n            </button>\n          </div>\n        </div>\n        <p class=\"mut\" style=\"font-size:13px; margin:0 0 12px;\">Cấu trúc chuẩn 3 phần (Mở bài, Thân bài, Kết bài).</p>\n        \n        <div id=\"modal-sections-editor\" class=\"modal-sections-editor-list\"></div>\n      </div>\n    </div>\n\n    <div class=\"writing-modal-footer\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeCreateWritingSetModal()\">Hủy</button>\n      <button type=\"submit\" class=\"btn au\">\n        <ion-icon name=\"save-outline\"></ion-icon> Lưu bộ đề\n      </button>\n    </div>\n  </form>\n</dialog>\n\n<!-- WRITING MODAL 2: XEM BÀI HOÀN CHỈNH & XUẤT BÀI -->\n<dialog id=\"writing-review-dialog\" class=\"writing-modal review-modal\">\n  <div class=\"writing-modal-header review-header\">\n    <div class=\"writing-modal-title\">\n      <h3>Tổng quan bài viết</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeWritingReviewModal()\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <div class=\"writing-modal-body review-body\">\n    <!-- Stat metrics cards -->\n    <div class=\"review-stats-grid\">\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-words\">0</span>\n        <span class=\"stat-label\">Tổng số từ</span>\n      </div>\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-paragraphs\">0</span>\n        <span class=\"stat-label\">Số đoạn văn</span>\n      </div>\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-time\">00:00:00</span>\n        <span class=\"stat-label\">Thời gian làm</span>\n      </div>\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-wpm\">0</span>\n        <span class=\"stat-label\">Tốc độ (từ / phút)</span>\n      </div>\n    </div>\n\n    <!-- Combined essay text -->\n    <div class=\"review-essay-box\">\n      <div class=\"review-essay-meta\">\n        <h4 id=\"review-essay-topic\">Đề bài luyện viết</h4>\n        <span class=\"tag ok\" id=\"review-essay-tag\">Hoàn tất</span>\n      </div>\n      <div class=\"review-essay-text\" id=\"review-essay-combined-content\"></div>\n    </div>\n\n    <!-- Feedback suggestions box -->\n    <div class=\"review-feedback-box\">\n      <div class=\"review-feedback-title\">Nhận xét sơ bộ:</div>\n      <div id=\"review-feedback-content\" class=\"review-feedback-list\"></div>\n    </div>\n  </div>\n\n  <div class=\"writing-modal-footer review-footer\">\n    <button class=\"btn gh\" type=\"button\" onclick=\"copyCombinedEssayToClipboard()\">\n      <ion-icon name=\"copy-outline\"></ion-icon> Sao chép bài viết\n    </button>\n    <button class=\"btn cy\" type=\"button\" onclick=\"downloadCombinedEssayAsText()\">\n      <ion-icon name=\"download-outline\"></ion-icon> Tải tệp .txt\n    </button>\n    <button class=\"btn au\" type=\"button\" onclick=\"submitWritingEssay(); closeWritingReviewModal();\" style=\"font-weight:800;\">\n      <ion-icon name=\"send-outline\"></ion-icon> Nộp bài chấm điểm\n    </button>\n    <button class=\"btn gh\" type=\"button\" onclick=\"closeWritingReviewModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- READING MODAL 1: TẠO / SỬA ĐỀ ĐỌC HIỂU -->\n<dialog id=\"reading-edit-modal\" class=\"writing-modal reading-modal\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3 id=\"reading-modal-title\">Thêm bộ đề đọc hiểu mới</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeReadingEditModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <form id=\"reading-edit-form\" onsubmit=\"handleReadingFormSubmit(event)\" class=\"writing-modal-form-wrap\">\n    <input type=\"hidden\" id=\"reading-form-id\">\n\n    <div class=\"writing-modal-body\">\n      <!-- Hàng 1: Tên đề bài & Chủ đề -->\n      <div class=\"g2\" style=\"margin-bottom:14px;\">\n        <div>\n          <label for=\"reading-form-title\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Tựa bài / Tên đề đọc hiểu <span style=\"color:var(--red)\">*</span>\n          </label>\n          <input type=\"text\" id=\"reading-form-title\" required placeholder=\"Ví dụ: Sống hết mình cho thời khắc hiện tại...\" style=\"width:100%;\">\n        </div>\n        <div>\n          <label for=\"reading-form-category\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Chủ đề / Dạng bài <span style=\"color:var(--red)\">*</span>\n          </label>\n          <select id=\"reading-form-category\" required style=\"width:100%;\"></select>\n        </div>\n      </div>\n\n      <!-- Trạng thái xuất bản (Published / Draft) -->\n      <div style=\"margin-bottom:14px;\">\n        <label for=\"reading-form-status\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n          Trạng thái bộ đề <span style=\"font-weight:400; color:var(--mut); font-size:12.5px;\">(Chọn Đã xuất bản để học sinh nhìn thấy và làm bài)</span>\n        </label>\n        <select id=\"reading-form-status\" style=\"width:100%;\">\n          <option value=\"published\">🟢 Đã xuất bản (Published - Hiển thị cho học sinh)</option>\n          <option value=\"draft\">🟡 Bản nháp (Draft - Chỉ lưu riêng cho giáo viên)</option>\n        </select>\n      </div>\n\n      <!-- Giới hạn lượt làm bài -->\n      <div style=\"margin-bottom:12px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"reading-form-max-attempts\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"timer-outline\"></ion-icon> Giới hạn lượt làm bài cho học sinh:\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Số lượt tối đa (0 = Không giới hạn). Học sinh đã làm đủ lượt sẽ chỉ được xem lại bài đã nộp.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"number\" id=\"reading-form-max-attempts\" min=\"0\" max=\"999\" value=\"0\" style=\"width:85px; text-align:center; font-weight:700; padding:6px 8px; border-radius:8px;\">\n          <span style=\"font-size:13px; font-weight:600; color:var(--mut);\">lượt</span>\n        </div>\n      </div>\n\n      <!-- Thời hạn nộp bài (Deadline) -->\n      <div style=\"margin-bottom:14px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"reading-form-deadline\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"calendar-outline\"></ion-icon> Hạn chót nộp bài (Deadline):\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Bỏ trống nếu không đặt hạn nộp. Quá hạn, học sinh chỉ có thể xem lại bài đã nộp.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"datetime-local\" id=\"reading-form-deadline\" style=\"font-weight:600; padding:6px 10px; border-radius:8px; font-size:13px;\">\n          <button type=\"button\" class=\"btn gh sm\" onclick=\"$('#reading-form-deadline').value=''\" title=\"Xóa hạn nộp\" style=\"padding:2px 8px; height:32px;\">✕</button>\n        </div>\n      </div>\n\n      <!-- Hàng 2: Tác phẩm, Tác giả & Thể loại -->\n      <div class=\"g3\" style=\"display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:14px;\">\n        <div>\n          <label for=\"reading-form-work\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Tên tác phẩm\n          </label>\n          <input type=\"text\" id=\"reading-form-work\" placeholder=\"Ví dụ: Cách sống: từ bình thường trở nên phi thường...\" style=\"width:100%;\">\n        </div>\n        <div>\n          <label for=\"reading-form-author\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Tác giả\n          </label>\n          <input type=\"text\" id=\"reading-form-author\" placeholder=\"Ví dụ: Inamori Kazuo\" style=\"width:100%;\">\n        </div>\n        <div>\n          <label for=\"reading-form-genre\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Thể loại văn bản\n          </label>\n          <input type=\"text\" id=\"reading-form-genre\" placeholder=\"Ví dụ: Văn bản nghị luận, Thơ tự do...\" style=\"width:100%;\">\n        </div>\n      </div>\n\n      <!-- Ngữ liệu đọc hiểu -->\n      <div style=\"margin-bottom:16px;\">\n        <label for=\"reading-form-passage\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n          Văn bản / Ngữ liệu đọc hiểu (Đoạn trích) <span style=\"color:var(--red)\">*</span>\n        </label>\n        <textarea id=\"reading-form-passage\" required rows=\"9\" placeholder=\"Dán hoặc nhập toàn bộ đoạn trích / văn bản đọc hiểu vào đây...\" style=\"width:100%; font-family:inherit; line-height:1.6;\"></textarea>\n      </div>\n\n      <!-- Nguồn trích dẫn -->\n      <div style=\"margin-bottom:18px;\">\n        <label for=\"reading-form-source\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n          Ghi chú nguồn trích dẫn tác phẩm, tác giả, NXB, năm, trang\n        </label>\n        <input type=\"text\" id=\"reading-form-source\" placeholder=\"(Trích Cách sống: từ bình thường trở nên phi thường, Inamori Kazuo, NXB Lao động, 2020, tr. 103-104)\" style=\"width:100%;\">\n      </div>\n\n      <!-- Danh sách câu hỏi đọc hiểu -->\n      <div class=\"reading-form-questions-section\">\n        <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;\">\n          <div>\n            <h4 style=\"margin:0; font-size:16px; font-weight:800; display:flex; align-items:center; gap:8px; flex-wrap:wrap;\">\n              <span>Hệ thống câu hỏi đọc hiểu</span>\n              <span class=\"tag cy\" style=\"font-size:12.5px; font-weight:800; padding:3px 10px;\">\n                Tổng điểm: <b id=\"reading-modal-total-score\">6.0đ</b> / 6.0 điểm\n              </span>\n            </h4>\n            <span class=\"mut\" style=\"font-size:12.5px;\">Chuẩn thang 6đ: Câu 1,2: Nhận biết (1đ) • Câu 3,4: Thông hiểu (1đ) • Câu 5: Vận dụng (2đ)</span>\n          </div>\n          <div style=\"display:flex; gap:6px; flex-wrap:wrap;\">\n            <button type=\"button\" class=\"btn au sm\" onclick=\"applyStandard5QuestionTemplate()\" title=\"Tự động nạp khung chuẩn 5 câu: 2 Nhận biết • 2 Thông hiểu • 1 Vận dụng (Đoạn văn)\">\n              <ion-icon name=\"flash-outline\"></ion-icon> Mẫu chuẩn 5 câu\n            </button>\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"openQuickImportModal()\" title=\"Dán nhanh toàn bộ đề thi để tự động trích xuất\">\n              <ion-icon name=\"clipboard-outline\"></ion-icon> Dán nhanh đề thi\n            </button>\n            <button type=\"button\" class=\"btn cy sm\" onclick=\"addQuestionToReadingForm()\">\n              <ion-icon name=\"add-outline\"></ion-icon> Thêm câu hỏi\n            </button>\n          </div>\n        </div>\n        <div id=\"reading-form-questions-list\"></div>\n      </div>\n    </div>\n\n    <div class=\"writing-modal-footer\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeReadingEditModal()\">Hủy</button>\n      <button type=\"submit\" class=\"btn au\" style=\"font-weight:800;\">\n        <ion-icon name=\"save-outline\"></ion-icon> Lưu đề đọc hiểu\n      </button>\n    </div>\n  </form>\n</dialog>\n\n<!-- READING MODAL 2: DÁN NHANH TOÀN BỘ ĐỀ THI (QUICK IMPORT) -->\n<dialog id=\"reading-quick-import-modal\" class=\"writing-modal\" style=\"max-width:680px;\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3 style=\"display:flex; align-items:center; gap:8px;\">\n        <ion-icon name=\"clipboard-outline\"></ion-icon> Dán nhanh toàn bộ đề thi Đọc hiểu\n      </h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeQuickImportModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n  <div class=\"writing-modal-body\" style=\"padding:18px 22px;\">\n    <p class=\"mut\" style=\"margin:0 0 12px; font-size:13.5px; line-height:1.5;\">\n      Dán nguyên văn đề thi (gồm đoạn trích, nguồn <i>(Trích ...)</i> và các <b>Câu 1, 2, 3, 4, 5</b> hoặc phần Làm văn). Hệ thống sẽ tự động bóc tách và điền vào các ô cho bạn!\n    </p>\n    <textarea id=\"reading-quick-import-text\" rows=\"12\" placeholder=\"Ví dụ:\nI. PHẦN ĐỌC HIỂU (3,0 điểm)\nĐọc đoạn trích:\nKhông cần ngôn ngữ, mọi sự sống nhỏ nhoi trong tự nhiên...\n(Trích Cách sống: từ bình thường trở nên phi thường, Inamori Kazuo, NXB Lao động, 2020)\n\nThực hiện các yêu cầu sau:\nCâu 1: Xác định phương thức biểu đạt chính...\nCâu 2: Theo đoạn trích...\nCâu 3: Chỉ ra điểm tương đồng...\nCâu 4: Anh/chị có đồng tình...\nCâu 5: Viết đoạn văn (khoảng 200 chữ)...\" style=\"width:100%; font-family:inherit; font-size:13.5px; line-height:1.6;\"></textarea>\n  </div>\n  <div class=\"writing-modal-footer\">\n    <button type=\"button\" class=\"btn gh\" onclick=\"closeQuickImportModal()\">Hủy</button>\n    <button type=\"button\" class=\"btn au\" onclick=\"handleQuickImportSubmit()\" style=\"font-weight:800;\">\n      <ion-icon name=\"flash-outline\"></ion-icon> Tự động bóc tách &amp; Áp dụng\n    </button>\n  </div>\n</dialog>\n\n<!-- READING MODAL 3: KẾT QUẢ / ĐÁP ÁN THAM KHẢO KHI NỘP BÀI -->\n<dialog id=\"reading-result-modal\" class=\"writing-modal reading-modal\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3>Kết quả bài làm &amp; Đáp án tham khảo</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeReadingResultModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <div class=\"writing-modal-body\" style=\"padding:20px 24px;\">\n    <div class=\"reading-result-hero\">\n      <div style=\"font-size:36px; margin-bottom:6px; color:var(--primary);\">\n        <ion-icon name=\"ribbon-outline\"></ion-icon>\n      </div>\n      <h3 style=\"margin:0 0 6px; font-weight:800;\">Đã hoàn thành bài đọc hiểu!</h3>\n      <p class=\"mut\" style=\"margin:0; font-size:14px;\">Dưới đây là phần so sánh giữa câu trả lời của bạn và đáp án chuẩn.</p>\n    </div>\n\n    <div id=\"reading-result-comparison-list\" style=\"margin-top:20px;\"></div>\n  </div>\n\n  <div class=\"writing-modal-footer\">\n    <button type=\"button\" class=\"btn au\" onclick=\"closeReadingResultModal(); go('home'); toast('Nộp bài thành công! Bài làm đọc hiểu đã được lưu vào Lịch sử.', 'ok');\" style=\"font-weight:800;\">\n      <ion-icon name=\"home-outline\"></ion-icon> Về trang chủ\n    </button>\n    <button type=\"button\" class=\"btn gh\" onclick=\"closeReadingResultModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- AUTH DIALOG 1: ĐĂNG NHẬP HỆ THỐNG -->\n<dialog id=\"login-dialog\" class=\"auth-modal login-modal modern-login-dialog\">\n  <div class=\"login-dialog-card\">\n    <!-- Nút đóng -->\n    <button class=\"login-close-btn\" type=\"button\" onclick=\"closeLoginDialog()\" aria-label=\"Đóng cửa sổ đăng nhập\" title=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n\n    <!-- Header / Biểu trưng -->\n    <div class=\"login-brand-header\">\n      <div class=\"login-brand-icon-box\">\n        <img src=\"./assets/logo-nguvan.png\" alt=\"Logo\" class=\"login-brand-logo-img\" onerror=\"this.style.display='none'; this.nextElementSibling.style.display='block';\">\n        <span class=\"login-brand-fallback-emoji\" style=\"display:none;\">\n          <ion-icon name=\"school-outline\" style=\"font-size: 32px; color:var(--primary);\"></ion-icon>\n        </span>\n      </div>\n      <h2 class=\"login-dialog-title\">Đăng Nhập Hệ Thống</h2>\n      <p class=\"login-dialog-subtitle\">Cổng học tập &amp; Ôn luyện môn Ngữ Văn</p>\n      <div class=\"login-info-pill\">\n        <ion-icon name=\"school-outline\"></ion-icon>\n        <span>Học sinh &amp; Giáo viên</span>\n      </div>\n    </div>\n\n    <!-- Khu vực đăng nhập nhanh bằng tài khoản đã lưu trên thiết bị -->\n    <div id=\"login-saved-accounts-box\" class=\"login-saved-accounts-box\" style=\"display:none;\"></div>\n\n    <!-- Biểu mẫu đăng nhập -->\n    <form id=\"login-form\" onsubmit=\"handleLoginSubmit(event)\" class=\"login-form-content\">\n      <div id=\"login-error-msg\" class=\"auth-alert-error\" style=\"display:none;\"></div>\n\n      <!-- Tên đăng nhập / Email -->\n      <div class=\"login-field-group\">\n        <label for=\"login-username\" class=\"login-field-label\">\n          <span>Tên đăng nhập / Email</span>\n          <span class=\"req\">*</span>\n        </label>\n        <div class=\"login-input-shell\">\n          <span class=\"login-input-icon\">\n            <ion-icon name=\"person-outline\"></ion-icon>\n          </span>\n          <input type=\"text\" id=\"login-username\" class=\"login-field-input\" required autocomplete=\"username\" placeholder=\"Nhập tên đăng nhập hoặc email...\" spellcheck=\"false\" autocapitalize=\"none\">\n        </div>\n      </div>\n\n      <!-- Mật khẩu -->\n      <div class=\"login-field-group\">\n        <div class=\"login-field-header-row\">\n          <label for=\"login-password\" class=\"login-field-label\">\n            <span>Mật khẩu</span>\n            <span class=\"req\">*</span>\n          </label>\n        </div>\n        <div class=\"login-input-shell\">\n          <span class=\"login-input-icon\">\n            <ion-icon name=\"lock-closed-outline\"></ion-icon>\n          </span>\n          <input type=\"password\" id=\"login-password\" class=\"login-field-input\" required autocomplete=\"current-password\" placeholder=\"Nhập mật khẩu...\">\n          <button type=\"button\" class=\"login-password-eye-btn\" onclick=\"togglePasswordVisibility('login-password', this)\" title=\"Hiện / Ẩn mật khẩu\" aria-label=\"Hiện mật khẩu\">\n            <ion-icon name=\"eye-outline\"></ion-icon>\n          </button>\n        </div>\n      </div>\n\n      <!-- Tùy chọn Ghi nhớ tài khoản trên thiết bị -->\n      <div class=\"login-field-group\" style=\"margin-bottom:12px;\">\n        <label style=\"display:inline-flex; align-items:center; gap:8px; cursor:pointer; font-size:13px; font-weight:700; color:var(--ink); user-select:none;\">\n          <input type=\"checkbox\" id=\"login-remember-me\" checked style=\"width:17px; height:17px; accent-color:var(--primary); cursor:pointer;\">\n          <span>Ghi nhớ tài khoản trên thiết bị này</span>\n        </label>\n      </div>\n\n      <!-- Nút Đăng nhập -->\n      <div class=\"login-submit-row\">\n        <button type=\"submit\" id=\"btn-submit-login\" class=\"btn au login-btn-primary\">\n          <ion-icon name=\"log-in-outline\"></ion-icon> <span>Đăng nhập</span>\n        </button>\n      </div>\n\n      <!-- Hướng dẫn tài khoản -->\n      <div class=\"login-bottom-notice\">\n        <div class=\"login-notice-icon\">\n          <ion-icon name=\"information-circle-outline\"></ion-icon>\n        </div>\n        <div class=\"login-notice-text\">\n          Học sinh sử dụng tài khoản do nhà trường hoặc giáo viên bộ môn cấp. Nếu quên mật khẩu, vui lòng liên hệ giáo viên phụ trách để được đặt lại.\n        </div>\n      </div>\n    </form>\n  </div>\n</dialog>\n\n\n<!-- AUTH DIALOG 3: CẤP TÀI KHOẢN MỚI CHO HỌC SINH / GIÁO VIÊN -->\n<dialog id=\"create-account-dialog\" class=\"auth-modal create-acc-modal\">\n  <div class=\"auth-modal-header\">\n    <div class=\"auth-modal-title-box\">\n      <span class=\"auth-modal-badge-icon\" style=\"background:var(--cyan); color:#1e293b;\">\n        <ion-icon name=\"person-add-outline\"></ion-icon>\n      </span>\n      <div>\n        <h3 style=\"margin:0; font-size:19px; font-weight:800;\">Cấp tài khoản mới</h3>\n        <p class=\"mut\" style=\"margin:2px 0 0; font-size:13px;\">Tài khoản sẽ được lưu trực tiếp vào cơ sở dữ liệu Supabase</p>\n      </div>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeCreateAccountModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <form id=\"create-account-form\" onsubmit=\"handleCreateAccountSubmit(event)\" class=\"auth-modal-body\">\n    <div id=\"create-account-error\" class=\"auth-alert-error\" style=\"display:none;\"></div>\n\n    <div class=\"g2\" style=\"margin-bottom:12px;\">\n      <div class=\"auth-input-group\">\n        <label for=\"new-acc-username\" class=\"auth-label\">Tên đăng nhập <span style=\"color:var(--red);\">*</span></label>\n        <div class=\"auth-input-wrap\">\n          <span class=\"auth-input-icon\">\n            <ion-icon name=\"person-outline\"></ion-icon>\n          </span>\n          <input type=\"text\" id=\"new-acc-username\" class=\"auth-input\" required placeholder=\"ví dụ: tranvanan_12a1\" spellcheck=\"false\" autocapitalize=\"none\">\n        </div>\n        <small class=\"mut\" style=\"font-size:11.5px; margin-top:3px; display:block;\">Viết liền, không dấu, ít nhất 3 ký tự</small>\n      </div>\n\n      <div class=\"auth-input-group\">\n        <label for=\"new-acc-password\" class=\"auth-label\">Mật khẩu khởi tạo <span style=\"color:var(--red);\">*</span></label>\n        <div class=\"auth-input-wrap\">\n          <span class=\"auth-input-icon\">\n            <ion-icon name=\"lock-closed-outline\"></ion-icon>\n          </span>\n          <input type=\"text\" id=\"new-acc-password\" class=\"auth-input\" required value=\"123456\" placeholder=\"Mật khẩu ban đầu...\">\n        </div>\n        <small class=\"mut\" style=\"font-size:11.5px; margin-top:3px; display:block;\">Mặc định: 123456 (học sinh có thể tự đổi sau)</small>\n      </div>\n    </div>\n\n    <div class=\"g2\" style=\"margin-bottom:12px;\">\n      <div class=\"auth-input-group\">\n        <label for=\"new-acc-fullname\" class=\"auth-label\">Họ và tên học sinh / GV <span style=\"color:var(--red);\">*</span></label>\n        <div class=\"auth-input-wrap\">\n          <span class=\"auth-input-icon\">\n            <ion-icon name=\"create-outline\"></ion-icon>\n          </span>\n          <input type=\"text\" id=\"new-acc-fullname\" class=\"auth-input\" required placeholder=\"ví dụ: Trần Văn An\">\n        </div>\n      </div>\n\n      <div class=\"auth-input-group\">\n        <label for=\"new-acc-class\" class=\"auth-label\">Lớp học / Đơn vị</label>\n        <div class=\"auth-input-wrap\">\n          <span class=\"auth-input-icon\">\n            <ion-icon name=\"school-outline\"></ion-icon>\n          </span>\n          <input type=\"text\" id=\"new-acc-class\" class=\"auth-input\" placeholder=\"ví dụ: 12A1, 10C2...\">\n        </div>\n      </div>\n    </div>\n\n    <div class=\"g2\" style=\"margin-bottom:16px;\">\n      <div class=\"auth-input-group\">\n        <label for=\"new-acc-role\" class=\"auth-label\">Vai trò tài khoản <span style=\"color:var(--red);\">*</span></label>\n        <select id=\"new-acc-role\" class=\"auth-select\">\n          <option value=\"student\" selected>Học sinh (Làm bài, xem kết quả - Không sửa đề/chấm)</option>\n          <option value=\"teacher\">Giáo viên (Sửa đề &amp; chấm bài, quản lý học sinh)</option>\n          <option value=\"admin\">Quản trị viên (Toàn quyền quản lý GV &amp; Học sinh)</option>\n        </select>\n      </div>\n\n      <div class=\"auth-input-group\">\n        <label for=\"new-acc-avatar\" class=\"auth-label\">Biểu tượng / Avatar</label>\n        <select id=\"new-acc-avatar\" class=\"auth-select\">\n          <option value=\"🎓\" selected>Học sinh</option>\n          <option value=\"🏛️\">Giáo viên</option>\n          <option value=\"⚡\">Quản trị viên</option>\n          <option value=\"📚\">Học liệu</option>\n        </select>\n      </div>\n    </div>\n\n    <div class=\"auth-modal-footer\" style=\"padding:0; border:none; margin-top:20px;\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeCreateAccountModal()\">Hủy</button>\n      <button type=\"submit\" id=\"btn-submit-create-account\" class=\"btn au\" style=\"font-weight:800;\">\n        <ion-icon name=\"checkmark-circle-outline\"></ion-icon> Lưu &amp; Cấp tài khoản\n      </button>\n    </div>\n  </form>\n</dialog>\n\n<!-- AUTH DIALOG 4: ĐẶT LẠI MẬT KHẨU (GIÁO VIÊN RESET CHO HỌC SINH) -->\n<dialog id=\"reset-password-dialog\" class=\"auth-modal\" style=\"max-width:440px;\">\n  <div class=\"auth-modal-header\">\n    <div class=\"auth-modal-title-box\">\n      <span class=\"auth-modal-badge-icon\" style=\"background:var(--cyan); color:#1e293b;\">\n        <ion-icon name=\"key-outline\"></ion-icon>\n      </span>\n      <div>\n        <h3 style=\"margin:0; font-size:18px; font-weight:800;\">Đặt lại mật khẩu</h3>\n        <p class=\"mut\" style=\"margin:2px 0 0; font-size:12.5px;\">Cập nhật mật khẩu mới cho tài khoản học sinh</p>\n      </div>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeResetPasswordModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <form onsubmit=\"handleResetPasswordSubmit(event)\" class=\"auth-modal-body\">\n    <div id=\"reset-password-error\" class=\"auth-alert-error\" style=\"display:none;\"></div>\n\n    <div style=\"padding:10px 14px; background:var(--bg); border:1px solid var(--stroke); border-radius:12px; margin-bottom:14px; font-size:13.5px;\">\n      <span class=\"mut\">Tài khoản:</span> <strong id=\"reset-user-target-info\" style=\"color:var(--primary);\"></strong>\n    </div>\n\n    <div class=\"auth-input-group\">\n      <label for=\"reset-new-password\" class=\"auth-label\">Mật khẩu mới <span style=\"color:var(--red);\">*</span></label>\n      <div class=\"auth-input-wrap\">\n        <span class=\"auth-input-icon\">\n          <ion-icon name=\"lock-closed-outline\"></ion-icon>\n        </span>\n        <input type=\"text\" id=\"reset-new-password\" class=\"auth-input\" required value=\"123456\" placeholder=\"Nhập mật khẩu mới...\">\n      </div>\n      <small class=\"mut\" style=\"font-size:11.5px; margin-top:3px; display:block;\">Ít nhất 4 ký tự</small>\n    </div>\n\n    <div class=\"auth-modal-footer\" style=\"padding:0; border:none; margin-top:20px;\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeResetPasswordModal()\">Hủy</button>\n      <button type=\"submit\" id=\"btn-submit-reset-password\" class=\"btn au\" style=\"font-weight:800;\">\n        <ion-icon name=\"checkmark-circle-outline\"></ion-icon> Đặt lại mật khẩu\n      </button>\n    </div>\n  </form>\n</dialog>\n\n<!-- AUTH DIALOG 5: TỰ ĐỔI MẬT KHẨU CÁ NHÂN (HỌC SINH / GIÁO VIÊN ĐANG ĐĂNG NHẬP) -->\n<dialog id=\"change-password-dialog\" class=\"auth-modal\" style=\"max-width:440px;\">\n  <div class=\"auth-modal-header\">\n    <div class=\"auth-modal-title-box\">\n      <span class=\"auth-modal-badge-icon\">\n        <ion-icon name=\"lock-closed-outline\"></ion-icon>\n      </span>\n      <div>\n        <h3 style=\"margin:0; font-size:18px; font-weight:800;\">Đổi mật khẩu cá nhân</h3>\n        <p class=\"mut\" style=\"margin:2px 0 0; font-size:12.5px;\">Bảo mật thông tin tài khoản của bạn</p>\n      </div>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeChangePasswordModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <form id=\"change-password-form\" onsubmit=\"handleChangePasswordSubmit(event)\" class=\"auth-modal-body\">\n    <div id=\"change-password-error\" class=\"auth-alert-error\" style=\"display:none;\"></div>\n\n    <div class=\"auth-input-group\" style=\"margin-bottom:12px;\">\n      <label for=\"change-old-password\" class=\"auth-label\">Mật khẩu hiện tại <span style=\"color:var(--red);\">*</span></label>\n      <div class=\"auth-input-wrap\">\n        <span class=\"auth-input-icon\">\n          <ion-icon name=\"lock-closed-outline\"></ion-icon>\n        </span>\n        <input type=\"password\" id=\"change-old-password\" class=\"auth-input\" required placeholder=\"Nhập mật khẩu hiện tại...\">\n        <button type=\"button\" class=\"auth-pwd-toggle-btn\" onclick=\"togglePasswordVisibility('change-old-password', this)\">\n          <ion-icon name=\"eye-outline\"></ion-icon>\n        </button>\n      </div>\n    </div>\n\n    <div class=\"auth-input-group\" style=\"margin-bottom:12px;\">\n      <label for=\"change-new-password\" class=\"auth-label\">Mật khẩu mới <span style=\"color:var(--red);\">*</span></label>\n      <div class=\"auth-input-wrap\">\n        <span class=\"auth-input-icon\">\n          <ion-icon name=\"key-outline\"></ion-icon>\n        </span>\n        <input type=\"password\" id=\"change-new-password\" class=\"auth-input\" required placeholder=\"Nhập mật khẩu mới (tối thiểu 4 ký tự)...\">\n        <button type=\"button\" class=\"auth-pwd-toggle-btn\" onclick=\"togglePasswordVisibility('change-new-password', this)\">\n          <ion-icon name=\"eye-outline\"></ion-icon>\n        </button>\n      </div>\n    </div>\n\n    <div class=\"auth-input-group\" style=\"margin-bottom:16px;\">\n      <label for=\"change-confirm-password\" class=\"auth-label\">Xác nhận mật khẩu mới <span style=\"color:var(--red);\">*</span></label>\n      <div class=\"auth-input-wrap\">\n        <span class=\"auth-input-icon\">\n          <ion-icon name=\"shield-checkmark-outline\"></ion-icon>\n        </span>\n        <input type=\"password\" id=\"change-confirm-password\" class=\"auth-input\" required placeholder=\"Nhập lại mật khẩu mới...\">\n        <button type=\"button\" class=\"auth-pwd-toggle-btn\" onclick=\"togglePasswordVisibility('change-confirm-password', this)\">\n          <ion-icon name=\"eye-outline\"></ion-icon>\n        </button>\n      </div>\n    </div>\n\n    <div class=\"auth-modal-footer\" style=\"padding:0; border:none; margin-top:20px;\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeChangePasswordModal()\">Hủy</button>\n      <button type=\"submit\" id=\"btn-submit-change-password\" class=\"btn au\" style=\"font-weight:800;\">\n        <ion-icon name=\"checkmark-circle-outline\"></ion-icon> Đổi mật khẩu\n      </button>\n    </div>\n  </form>\n</dialog>\n\n<!-- SET ATTEMPT LIMIT & DEADLINE DIALOG (GIÁO VIÊN & ADMIN) -->\n<dialog id=\"set-attempt-limit-dialog\" class=\"auth-modal\" style=\"max-width: 500px;\">\n  <div class=\"auth-modal-header\" style=\"background: linear-gradient(135deg, #0ea5e9, #0284c7);\">\n    <div class=\"auth-modal-title-group\">\n      <h3 style=\"color:#fff; display:flex; align-items:center; gap:8px; margin:0; font-size:17px; font-weight:800;\">\n        <ion-icon name=\"options-outline\"></ion-icon> Giới hạn lượt làm &amp; Hạn nộp bài\n      </h3>\n      <p style=\"color:rgba(255,255,255,0.85); margin:2px 0 0; font-size:12px;\">Quyền Giáo viên &amp; Admin • Thiết lập lượt làm và hạn chót nộp bài</p>\n    </div>\n    <button type=\"button\" class=\"auth-modal-close\" onclick=\"closeSetAttemptLimitModal()\" style=\"color:#fff;\" title=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <div class=\"auth-modal-body\" style=\"padding:18px 20px; max-height:80vh; overflow-y:auto;\">\n    <!-- Thông tin bộ đề -->\n    <div style=\"background:var(--bg); border:1px solid var(--stroke); border-radius:12px; padding:12px 14px; margin-bottom:16px;\">\n      <div style=\"font-size:12px; font-weight:700; color:var(--mut); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;\" id=\"limit-modal-type-badge\">DẠNG BÀI</div>\n      <div style=\"font-size:15px; font-weight:800; color:var(--text); line-height:1.4;\" id=\"limit-modal-title\">Tên bộ đề</div>\n    </div>\n\n    <input type=\"hidden\" id=\"limit-modal-target-type\" value=\"\">\n    <input type=\"hidden\" id=\"limit-modal-target-id\" value=\"\">\n\n    <!-- PHẦN 1: GIỚI HẠN LƯỢT LÀM -->\n    <div style=\"margin-bottom:14px;\">\n      <label for=\"limit-modal-input\" style=\"font-size:13.5px; font-weight:700; display:block; margin-bottom:6px; color:var(--text);\">\n        1. Số lượt làm tối đa cho mỗi học sinh:\n      </label>\n      <div style=\"display:flex; align-items:center; gap:10px;\">\n        <input type=\"number\" id=\"limit-modal-input\" min=\"0\" max=\"999\" step=\"1\" value=\"0\" class=\"auth-input\" style=\"font-size:18px; font-weight:800; text-align:center; width:110px; padding:8px;\" oninput=\"onLimitModalInputChange(this.value)\">\n        <span style=\"font-size:13.5px; color:var(--mut);\" id=\"limit-modal-explain\">lượt (0 = Không giới hạn)</span>\n      </div>\n      <p style=\"font-size:12px; color:var(--mut); margin:6px 0 0; line-height:1.4;\">\n        💡 Chọn <b>1 lượt</b> cho bài thi; chọn <b>2-3 lượt</b> để sửa sai; hoặc <b>0</b> để luyện tập tự do.\n      </p>\n    </div>\n\n    <!-- Nút chọn nhanh lượt làm (Presets) -->\n    <div style=\"margin-bottom:16px;\">\n      <div style=\"display:flex; flex-wrap:wrap; gap:6px;\">\n        <button type=\"button\" class=\"btn gh sm preset-limit-btn\" onclick=\"setLimitModalPreset(0)\">♾️ Không giới hạn</button>\n        <button type=\"button\" class=\"btn gh sm preset-limit-btn\" onclick=\"setLimitModalPreset(1)\">1️⃣ 1 lần</button>\n        <button type=\"button\" class=\"btn gh sm preset-limit-btn\" onclick=\"setLimitModalPreset(2)\">2️⃣ 2 lần</button>\n        <button type=\"button\" class=\"btn gh sm preset-limit-btn\" onclick=\"setLimitModalPreset(3)\">3️⃣ 3 lần</button>\n        <button type=\"button\" class=\"btn gh sm preset-limit-btn\" onclick=\"setLimitModalPreset(5)\">5️⃣ 5 lần</button>\n      </div>\n    </div>\n\n    <!-- PHẦN 2: THỜI HẠN NỘP BÀI (DEADLINE) -->\n    <div style=\"margin-top:16px; padding-top:16px; border-top:1px dashed var(--stroke); margin-bottom:14px;\">\n      <label for=\"limit-modal-deadline\" style=\"font-size:13.5px; font-weight:700; display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; color:var(--text);\">\n        <span style=\"display:flex; align-items:center; gap:6px;\">\n          <ion-icon name=\"calendar-outline\"></ion-icon> 2. Hạn chót nộp bài (Deadline):\n        </span>\n        <span id=\"limit-modal-deadline-status\" style=\"font-size:12px; font-weight:700; color:var(--mut);\">Chưa đặt hạn</span>\n      </label>\n      <div style=\"display:flex; align-items:center; gap:8px;\">\n        <input type=\"datetime-local\" id=\"limit-modal-deadline\" class=\"auth-input\" style=\"flex:1; font-weight:700; padding:8px 12px; font-size:13.5px;\" onchange=\"onLimitModalDeadlineChange(this.value)\">\n        <button type=\"button\" class=\"btn gh sm\" onclick=\"setLimitModalDeadlinePreset('none')\" title=\"Xóa hạn chót\" style=\"padding:8px 12px; height:42px; font-weight:700;\">✕ Xóa</button>\n      </div>\n      <p style=\"font-size:12px; color:var(--mut); margin:6px 0 0; line-height:1.4;\">\n        ⏱️ Quá thời điểm này, học sinh <b>không thể vào làm bài mới</b> mà chỉ được <b>xem lại bài đã nộp</b>.\n      </p>\n    </div>\n\n    <!-- Nút chọn nhanh hạn chót (Deadline Presets) -->\n    <div style=\"margin-bottom:18px;\">\n      <label style=\"font-size:12px; font-weight:700; color:var(--mut); display:block; margin-bottom:6px;\">CHỌN NHANH HẠN CHÓT:</label>\n      <div style=\"display:flex; flex-wrap:wrap; gap:6px;\">\n        <button type=\"button\" class=\"btn gh sm preset-limit-btn\" onclick=\"setLimitModalDeadlinePreset('none')\">♾️ Không đặt hạn</button>\n        <button type=\"button\" class=\"btn gh sm preset-limit-btn\" onclick=\"setLimitModalDeadlinePreset('tonight')\">🌙 Tối nay (23:59)</button>\n        <button type=\"button\" class=\"btn gh sm preset-limit-btn\" onclick=\"setLimitModalDeadlinePreset('tomorrow')\">☀️ Tối mai (23:59)</button>\n        <button type=\"button\" class=\"btn gh sm preset-limit-btn\" onclick=\"setLimitModalDeadlinePreset('3days')\">📅 3 ngày tới</button>\n        <button type=\"button\" class=\"btn gh sm preset-limit-btn\" onclick=\"setLimitModalDeadlinePreset('7days')\">🗓️ 1 tuần tới</button>\n      </div>\n    </div>\n\n    <!-- Alert cảnh báo học sinh -->\n    <div style=\"background:rgba(234, 88, 12, 0.08); border:1px solid rgba(234, 88, 12, 0.25); border-radius:10px; padding:10px 12px; font-size:12px; line-height:1.5; color:var(--text); margin-bottom:16px;\">\n      🔒 <b>Cơ chế với học sinh:</b> Khi đã hết lượt hoặc quá hạn nộp, nút làm bài sẽ tự động chuyển thành <b>👁️ Xem lại bài làm</b> và học sinh không thể nộp bài mới.\n    </div>\n\n    <!-- Footer actions -->\n    <div style=\"display:flex; justify-content:flex-end; gap:10px;\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeSetAttemptLimitModal()\">Hủy</button>\n      <button type=\"button\" class=\"btn au\" onclick=\"submitSetAttemptLimit()\" style=\"font-weight:800;\">\n        <ion-icon name=\"checkmark-circle-outline\"></ion-icon> Lưu cài đặt\n      </button>\n    </div>\n  </div>\n</dialog>\n\n<!-- TOAST & BACK TO TOP -->\n<div id=\"toast\" role=\"status\"></div>\n<button id=\"back-to-top\" onclick=\"window.scrollTo({top:0,behavior:'smooth'})\" aria-label=\"Về đầu trang\" title=\"Về đầu trang\">\n  <ion-icon name=\"arrow-up-outline\"></ion-icon>\n</button>"
 };
 
 (function renderModularComponents() {
@@ -3288,6 +3288,8 @@ async function loadSetsFromSupabase() {
         title: row.title || 'Bộ câu hỏi',
         topic: row.topic || '',
         status: row.status || 'draft',
+        maxAttempts: (typeof getSetMaxAttempts === 'function' ? getSetMaxAttempts(row.id, 'quiz') : 0),
+        deadline: (typeof getSetDeadline === 'function' ? getSetDeadline(row.id, 'quiz') : ''),
         qs: Array.isArray(row.qs) ? row.qs : []
       }));
       return true;
@@ -3640,6 +3642,485 @@ function isItemBelongToStudent(item, user) {
 
   return false;
 }
+
+/* =========================================================================
+   SET ATTEMPT LIMITS & SUBMISSION DEADLINE SYSTEM
+   (GIỚI HẠN LƯỢT LÀM BÀI & THỜI HẠN NỘP BÀI)
+   Quyền quản lý: Giáo viên & Quản trị viên
+   Áp dụng: Bài học (Trắc nghiệm), Đọc hiểu, Luyện viết
+   ========================================================================= */
+
+const SET_ATTEMPT_LIMITS_KEY = 'vq_set_attempt_limits_v1';
+const SET_DEADLINES_KEY = 'vq_set_deadlines_v1';
+
+function getSetAttemptLimitsMap() {
+  try {
+    const raw = localStorage.getItem(SET_ATTEMPT_LIMITS_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveSetAttemptLimitsMap(map) {
+  try {
+    localStorage.setItem(SET_ATTEMPT_LIMITS_KEY, JSON.stringify(map));
+  } catch (e) {}
+}
+
+function getSetDeadlinesMap() {
+  try {
+    const raw = localStorage.getItem(SET_DEADLINES_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveSetDeadlinesMap(map) {
+  try {
+    localStorage.setItem(SET_DEADLINES_KEY, JSON.stringify(map));
+  } catch (e) {}
+}
+
+function getSetMaxAttempts(setOrId, type = '') {
+  let id = '';
+  let directLimit = 0;
+  if (typeof setOrId === 'object' && setOrId !== null) {
+    id = String(setOrId.id || '');
+    if (setOrId.maxAttempts !== undefined && setOrId.maxAttempts !== null) {
+      directLimit = parseInt(setOrId.maxAttempts, 10) || 0;
+    }
+  } else {
+    id = String(setOrId || '');
+  }
+
+  const map = getSetAttemptLimitsMap();
+  const mapLimit = map[id] !== undefined ? (parseInt(map[id], 10) || 0) : 0;
+  return Math.max(0, directLimit || mapLimit || 0);
+}
+
+function getSetDeadline(setOrId, type = '') {
+  let id = '';
+  let directDeadline = '';
+  if (typeof setOrId === 'object' && setOrId !== null) {
+    id = String(setOrId.id || '');
+    if (setOrId.deadline) directDeadline = String(setOrId.deadline).trim();
+  } else {
+    id = String(setOrId || '');
+  }
+
+  const map = getSetDeadlinesMap();
+  const mapDeadline = map[id] ? String(map[id]).trim() : '';
+  return directDeadline || mapDeadline || '';
+}
+
+function isSetDeadlineExpired(setOrId, type = '') {
+  const dl = getSetDeadline(setOrId, type);
+  if (!dl) return false;
+  const time = new Date(dl).getTime();
+  if (isNaN(time)) return false;
+  return Date.now() > time;
+}
+
+function isStudentDeadlineBlocked(setOrId, type = '') {
+  if (typeof Auth === 'undefined' || !Auth.isStudent()) return false;
+  return isSetDeadlineExpired(setOrId, type);
+}
+
+function getStudentAttemptCount(setId) {
+  if (typeof Auth === 'undefined') return 0;
+  const user = Auth.getCurrentUser();
+  if (!user || user.role === 'teacher' || user.role === 'admin') return 0;
+
+  const list = (typeof getAllRawQuizHistory === 'function') ? getAllRawQuizHistory() : [];
+  const targetIdStr = String(setId);
+  return list.filter(item => {
+    if (!item || String(item.setId) !== targetIdStr) return false;
+
+    // 1. So khớp ID người dùng Supabase
+    if (item.userId && user.id && String(item.userId) === String(user.id)) return true;
+
+    // 2. So khớp username
+    if (item.username && user.username && String(item.username).toLowerCase() === String(user.username).toLowerCase()) return true;
+
+    // 3. So khớp họ tên hoặc tên người làm
+    const pName = String(item.playerName || '').trim().toLowerCase();
+    const fName = String(user.full_name || '').trim().toLowerCase();
+    const uName = String(user.username || '').trim().toLowerCase();
+    if (pName && (pName === fName || pName === uName)) return true;
+
+    return false;
+  }).length;
+}
+
+function isStudentAttemptExceeded(setOrId, type = '') {
+  if (typeof Auth === 'undefined' || !Auth.isStudent()) return false;
+  const maxAttempts = getSetMaxAttempts(setOrId, type);
+  if (!maxAttempts || maxAttempts <= 0) return false;
+  const id = typeof setOrId === 'object' && setOrId !== null ? setOrId.id : setOrId;
+  const count = getStudentAttemptCount(id);
+  return count >= maxAttempts;
+}
+
+function isStudentEntryBlocked(setOrId, type = '') {
+  if (typeof Auth === 'undefined' || !Auth.isStudent()) return false;
+  return isStudentDeadlineBlocked(setOrId, type) || isStudentAttemptExceeded(setOrId, type);
+}
+
+function getStudentBlockInfo(setOrId, type = '') {
+  if (typeof Auth === 'undefined' || !Auth.isStudent()) {
+    return { blocked: false, isDeadlineExpired: false, isAttemptExceeded: false, count: 0, maxAttempts: 0, hasSubmissions: false, message: '' };
+  }
+  const id = typeof setOrId === 'object' && setOrId !== null ? setOrId.id : setOrId;
+  const isDeadlineExpired = isStudentDeadlineBlocked(setOrId, type);
+  const isAttemptExceeded = isStudentAttemptExceeded(setOrId, type);
+  const count = getStudentAttemptCount(id);
+  const maxAttempts = getSetMaxAttempts(setOrId, type);
+  const hasSubmissions = count > 0;
+  const blocked = isDeadlineExpired || isAttemptExceeded;
+
+  let message = '';
+  if (isDeadlineExpired && isAttemptExceeded) {
+    message = `Hạn nộp bài đã kết thúc và bạn cũng đã dùng hết số lượt làm bài (${count}/${maxAttempts} lượt). Bạn chỉ có quyền xem lại kết quả đã nộp!`;
+  } else if (isDeadlineExpired) {
+    const dl = getSetDeadline(setOrId, type);
+    message = `Thời hạn nộp bài đã kết thúc (${formatDeadlineDisplay(dl)}). Bạn không thể vào làm bài mới!`;
+  } else if (isAttemptExceeded) {
+    message = `Bạn đã hoàn thành đủ số lượt làm bài cho phép (${count}/${maxAttempts} lượt). Bạn chỉ có quyền xem lại kết quả đã nộp!`;
+  }
+
+  return { blocked, isDeadlineExpired, isAttemptExceeded, count, maxAttempts, hasSubmissions, message };
+}
+
+function formatDeadlineDisplay(dlStr) {
+  if (!dlStr) return '';
+  try {
+    const d = new Date(dlStr);
+    if (isNaN(d.getTime())) return dlStr;
+    const pad = n => String(n).padStart(2, '0');
+    const timeStr = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    const dateStr = `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
+
+    const now = new Date();
+    const isToday = now.toDateString() === d.toDateString();
+    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    const isTomorrow = tomorrow.toDateString() === d.toDateString();
+
+    if (isToday) return `${timeStr} Hôm nay`;
+    if (isTomorrow) return `${timeStr} Ngày mai`;
+    return `${timeStr} ${dateStr}`;
+  } catch (e) {
+    return dlStr;
+  }
+}
+
+function updateSetAttemptLimit(type, setId, limit, deadline) {
+  if (typeof Auth !== 'undefined' && !Auth.isTeacher() && !Auth.isAdmin()) {
+    toast('Chỉ tài khoản Giáo viên và Quản trị viên mới có quyền đổi cài đặt lượt làm và hạn nộp!', 'bad');
+    return false;
+  }
+
+  const numLimit = Math.max(0, parseInt(limit, 10) || 0);
+  const targetIdStr = String(setId);
+  const deadlineStr = (deadline !== undefined && deadline !== null) ? String(deadline).trim() : '';
+
+  // 1. Lưu vào map lượt làm
+  const map = getSetAttemptLimitsMap();
+  map[targetIdStr] = numLimit;
+  saveSetAttemptLimitsMap(map);
+
+  // 2. Lưu vào map hạn nộp
+  const dMap = getSetDeadlinesMap();
+  if (deadlineStr) {
+    dMap[targetIdStr] = deadlineStr;
+  } else {
+    delete dMap[targetIdStr];
+  }
+  saveSetDeadlinesMap(dMap);
+
+  // 3. Cập nhật đối tượng bộ đề tương ứng trong bộ nhớ
+  if (type === 'quiz' || type === 'lessons' || type === 'set') {
+    if (typeof sets !== 'undefined' && Array.isArray(sets)) {
+      const target = sets.find(s => String(s.id) === targetIdStr);
+      if (target) {
+        target.maxAttempts = numLimit;
+        target.deadline = deadlineStr;
+        if (typeof save === 'function') save();
+      }
+    }
+  } else if (type === 'reading') {
+    if (typeof readingSets !== 'undefined' && Array.isArray(readingSets)) {
+      const target = readingSets.find(s => String(s.id) === targetIdStr);
+      if (target) {
+        target.maxAttempts = numLimit;
+        target.deadline = deadlineStr;
+        if (typeof saveReadingData === 'function') saveReadingData();
+      }
+    }
+  } else if (type === 'writing') {
+    if (typeof writingSets !== 'undefined' && Array.isArray(writingSets)) {
+      const target = writingSets.find(s => String(s.id) === targetIdStr);
+      if (target) {
+        target.maxAttempts = numLimit;
+        target.deadline = deadlineStr;
+        if (typeof saveWritingSets === 'function') saveWritingSets();
+      }
+    }
+  }
+
+  // 4. Render lại các danh sách đang hiển thị
+  if (typeof renderLibLessonsPane === 'function') renderLibLessonsPane();
+  if (typeof renderLibReadingPane === 'function') renderLibReadingPane();
+  if (typeof renderLibWritingPane === 'function') renderLibWritingPane();
+  if (typeof renderReadingSetsGrid === 'function') renderReadingSetsGrid();
+  if (typeof renderWritingSetsGrid === 'function') renderWritingSetsGrid();
+  if (typeof renderSetupSetsGrid === 'function') renderSetupSetsGrid();
+  if (typeof renderHomeSets === 'function') renderHomeSets();
+
+  const details = [];
+  details.push(numLimit > 0 ? `Lượt: tối đa ${numLimit} lần` : 'Lượt: không giới hạn');
+  details.push(deadlineStr ? `Hạn nộp: ${formatDeadlineDisplay(deadlineStr)}` : 'Hạn nộp: không đặt hạn');
+  toast(`Đã cập nhật cài đặt thành công! (${details.join(' • ')})`, 'ok');
+  return true;
+}
+
+function openSetAttemptLimitModal(type, setId) {
+  if (typeof Auth !== 'undefined' && !Auth.isTeacher() && !Auth.isAdmin()) {
+    toast('Chỉ Giáo viên và Quản trị viên mới có quyền cài đặt lượt làm và hạn nộp!', 'bad');
+    return;
+  }
+  const dialog = document.getElementById('set-attempt-limit-dialog');
+  if (!dialog) return;
+
+  let title = 'Bộ đề';
+  let typeLabel = 'Trắc nghiệm / Bài học';
+  let maxAttempts = 0;
+  let deadline = '';
+
+  if (type === 'quiz' || type === 'lessons' || type === 'set') {
+    type = 'quiz';
+    typeLabel = '📚 BÀI HỌC / TRẮC NGHIỆM';
+    const s = (typeof sets !== 'undefined' && Array.isArray(sets)) ? sets.find(x => String(x.id) === String(setId)) : null;
+    if (s) {
+      title = s.title;
+      maxAttempts = getSetMaxAttempts(s, 'quiz');
+      deadline = getSetDeadline(s, 'quiz');
+    }
+  } else if (type === 'reading') {
+    typeLabel = '📑 ĐỀ ĐỌC HIỂU';
+    const s = (typeof readingSets !== 'undefined' && Array.isArray(readingSets)) ? readingSets.find(x => String(x.id) === String(setId)) : null;
+    if (s) {
+      title = s.title;
+      maxAttempts = getSetMaxAttempts(s, 'reading');
+      deadline = getSetDeadline(s, 'reading');
+    }
+  } else if (type === 'writing') {
+    typeLabel = '✍️ ĐỀ LUYỆN VIẾT VĂN';
+    const s = (typeof writingSets !== 'undefined' && Array.isArray(writingSets)) ? writingSets.find(x => String(x.id) === String(setId)) : null;
+    if (s) {
+      title = s.title;
+      maxAttempts = getSetMaxAttempts(s, 'writing');
+      deadline = getSetDeadline(s, 'writing');
+    }
+  }
+
+  const typeInp = document.getElementById('limit-modal-target-type');
+  if (typeInp) typeInp.value = type;
+  const idInp = document.getElementById('limit-modal-target-id');
+  if (idInp) idInp.value = setId;
+  const badgeEl = document.getElementById('limit-modal-type-badge');
+  if (badgeEl) badgeEl.textContent = typeLabel;
+  const titleEl = document.getElementById('limit-modal-title');
+  if (titleEl) titleEl.textContent = title;
+
+  const inp = document.getElementById('limit-modal-input');
+  if (inp) {
+    inp.value = maxAttempts || 0;
+    onLimitModalInputChange(inp.value);
+  }
+
+  const deadlineInp = document.getElementById('limit-modal-deadline');
+  if (deadlineInp) {
+    deadlineInp.value = deadline || '';
+    onLimitModalDeadlineChange(deadlineInp.value);
+  }
+
+  dialog.showModal();
+}
+
+function closeSetAttemptLimitModal() {
+  const dialog = document.getElementById('set-attempt-limit-dialog');
+  if (dialog && dialog.open) dialog.close();
+}
+
+function setLimitModalPreset(val) {
+  const inp = document.getElementById('limit-modal-input');
+  if (inp) {
+    inp.value = val;
+    onLimitModalInputChange(val);
+  }
+}
+
+function onLimitModalInputChange(val) {
+  const num = parseInt(val, 10) || 0;
+  const explain = document.getElementById('limit-modal-explain');
+  if (explain) {
+    explain.textContent = num <= 0 ? 'lượt (Không giới hạn)' : `lượt (Tối đa ${num} lần)`;
+  }
+}
+
+function toLocalDateTimeString(d) {
+  const pad = n => String(n).padStart(2, '0');
+  const Y = d.getFullYear();
+  const M = pad(d.getMonth() + 1);
+  const D = pad(d.getDate());
+  const h = pad(d.getHours());
+  const m = pad(d.getMinutes());
+  return `${Y}-${M}-${D}T${h}:${m}`;
+}
+
+function setLimitModalDeadlinePreset(preset) {
+  const inp = document.getElementById('limit-modal-deadline');
+  if (!inp) return;
+
+  if (preset === 'none') {
+    inp.value = '';
+    onLimitModalDeadlineChange('');
+    return;
+  }
+
+  const now = new Date();
+  let targetDate = null;
+  if (preset === 'tonight') {
+    targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 0);
+  } else if (preset === 'tomorrow') {
+    targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 23, 59, 0);
+  } else if (preset === '3days') {
+    targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3, 23, 59, 0);
+  } else if (preset === '7days') {
+    targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7, 23, 59, 0);
+  }
+
+  if (targetDate) {
+    inp.value = toLocalDateTimeString(targetDate);
+    onLimitModalDeadlineChange(inp.value);
+  }
+}
+
+function onLimitModalDeadlineChange(val) {
+  const statusEl = document.getElementById('limit-modal-deadline-status');
+  if (!statusEl) return;
+  if (!val) {
+    statusEl.textContent = 'Chưa đặt hạn';
+    statusEl.style.color = 'var(--mut)';
+    return;
+  }
+  const time = new Date(val).getTime();
+  if (isNaN(time)) {
+    statusEl.textContent = 'Ngày không hợp lệ';
+    statusEl.style.color = 'var(--red)';
+    return;
+  }
+  const isExpired = Date.now() > time;
+  if (isExpired) {
+    statusEl.textContent = '⚠️ Đã quá hạn: ' + formatDeadlineDisplay(val);
+    statusEl.style.color = 'var(--red)';
+  } else {
+    statusEl.textContent = '🟢 Hạn chót: ' + formatDeadlineDisplay(val);
+    statusEl.style.color = 'var(--green)';
+  }
+}
+
+function submitSetAttemptLimit() {
+  const type = document.getElementById('limit-modal-target-type')?.value;
+  const id = document.getElementById('limit-modal-target-id')?.value;
+  const inp = document.getElementById('limit-modal-input');
+  const limit = parseInt(inp ? inp.value : 0, 10) || 0;
+  const deadlineInp = document.getElementById('limit-modal-deadline');
+  const deadline = (deadlineInp ? deadlineInp.value : '').trim();
+
+  if (type && id) {
+    updateSetAttemptLimit(type, id, limit, deadline);
+  }
+  closeSetAttemptLimitModal();
+}
+
+function getSetAttemptBadgeHtml(s, type = 'quiz') {
+  if (!s) return '';
+  const isTeacherOrAdmin = (typeof Auth !== 'undefined' && (Auth.isTeacher() || Auth.isAdmin()));
+  const isStudent = (typeof Auth !== 'undefined' && Auth.isStudent());
+  const maxAttempts = getSetMaxAttempts(s, type);
+
+  if (isTeacherOrAdmin) {
+    if (maxAttempts > 0) {
+      return `<button type="button" class="lib-pill pill-teacher-limit" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Nhấp để sửa giới hạn số lượt & hạn nộp bài"><ion-icon name="timer-outline"></ion-icon> Giới hạn: ${maxAttempts} lượt ⚙️</button>`;
+    } else {
+      return `<button type="button" class="lib-pill pill-teacher-unlimited" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Nhấp để đặt giới hạn số lượt & hạn nộp bài"><ion-icon name="infinite-outline"></ion-icon> Không giới hạn ⚙️</button>`;
+    }
+  }
+
+  if (isStudent && maxAttempts > 0) {
+    const count = getStudentAttemptCount(s.id);
+    if (count >= maxAttempts) {
+      return `<span class="lib-pill pill-attempt-exhausted" title="Bạn đã hoàn thành đủ số lượt cho phép (${count}/${maxAttempts}). Chỉ được xem lại bài đã nộp!"><ion-icon name="lock-closed-outline"></ion-icon> Đã hết lượt (${count}/${maxAttempts})</span>`;
+    } else {
+      return `<span class="lib-pill pill-attempt-active" title="Số lượt làm bài của bạn"><ion-icon name="hourglass-outline"></ion-icon> Đã làm: ${count}/${maxAttempts} lượt</span>`;
+    }
+  }
+
+  return '';
+}
+
+function getSetDeadlineBadgeHtml(s, type = 'quiz') {
+  if (!s) return '';
+  const dl = getSetDeadline(s, type);
+  const isTeacherOrAdmin = (typeof Auth !== 'undefined' && (Auth.isTeacher() || Auth.isAdmin()));
+  const isStudent = (typeof Auth !== 'undefined' && Auth.isStudent());
+
+  if (isTeacherOrAdmin) {
+    if (dl) {
+      const isExpired = isSetDeadlineExpired(s, type);
+      return `<button type="button" class="lib-pill pill-teacher-deadline" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Hạn nộp: ${formatDeadlineDisplay(dl)}. Nhấp để đổi hoặc xóa."><ion-icon name="calendar-outline"></ion-icon> Hạn: ${formatDeadlineDisplay(dl)}${isExpired ? ' (Hết hạn)' : ''} ⚙️</button>`;
+    }
+    return '';
+  }
+
+  if (isStudent && dl) {
+    const isExpired = isSetDeadlineExpired(s, type);
+    if (isExpired) {
+      return `<span class="lib-pill pill-deadline-expired" title="Thời hạn nộp bài đã kết thúc vào ${formatDeadlineDisplay(dl)}"><ion-icon name="alarm-outline"></ion-icon> Hết hạn: ${formatDeadlineDisplay(dl)}</span>`;
+    } else {
+      return `<span class="lib-pill pill-deadline-active" title="Hạn chót nộp bài: ${formatDeadlineDisplay(dl)}"><ion-icon name="time-outline"></ion-icon> Hạn: ${formatDeadlineDisplay(dl)}</span>`;
+    }
+  }
+
+  return '';
+}
+
+window.getSetAttemptLimitsMap = getSetAttemptLimitsMap;
+window.saveSetAttemptLimitsMap = saveSetAttemptLimitsMap;
+window.getSetDeadlinesMap = getSetDeadlinesMap;
+window.saveSetDeadlinesMap = saveSetDeadlinesMap;
+window.getSetMaxAttempts = getSetMaxAttempts;
+window.getSetDeadline = getSetDeadline;
+window.isSetDeadlineExpired = isSetDeadlineExpired;
+window.isStudentDeadlineBlocked = isStudentDeadlineBlocked;
+window.getStudentAttemptCount = getStudentAttemptCount;
+window.isStudentAttemptExceeded = isStudentAttemptExceeded;
+window.isStudentEntryBlocked = isStudentEntryBlocked;
+window.getStudentBlockInfo = getStudentBlockInfo;
+window.formatDeadlineDisplay = formatDeadlineDisplay;
+window.updateSetAttemptLimit = updateSetAttemptLimit;
+window.openSetAttemptLimitModal = openSetAttemptLimitModal;
+window.closeSetAttemptLimitModal = closeSetAttemptLimitModal;
+window.setLimitModalPreset = setLimitModalPreset;
+window.onLimitModalInputChange = onLimitModalInputChange;
+window.setLimitModalDeadlinePreset = setLimitModalDeadlinePreset;
+window.onLimitModalDeadlineChange = onLimitModalDeadlineChange;
+window.submitSetAttemptLimit = submitSetAttemptLimit;
+window.getSetAttemptBadgeHtml = getSetAttemptBadgeHtml;
+window.getSetDeadlineBadgeHtml = getSetDeadlineBadgeHtml;
 
 function getQuizHistory(forceAll = false) {
   const list = getAllRawQuizHistory();
@@ -5200,7 +5681,14 @@ const cardHtml = (s, idx = 0) => {
 
   const topicName = (s.topic && s.topic.trim()) ? s.topic.trim() : 'Chưa phân loại';
 
+  const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { blocked: false, isDeadlineExpired: false, hasSubmissions: false, message: '' };
+  const isBlocked = blockInfo.blocked;
+  const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'quiz') : '';
+  const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'quiz') : '';
+
   const pills = [];
+  if (attemptBadge) pills.push(attemptBadge);
+  if (deadlineBadge) pills.push(deadlineBadge);
   if (mcCount) pills.push(`<span class="lib-pill pill-mc"><ion-icon name="list-outline"></ion-icon> ${mcCount} trắc nghiệm</span>`);
   if (shortCount) pills.push(`<span class="lib-pill pill-short"><ion-icon name="create-outline"></ion-icon> ${shortCount} tự luận</span>`);
   if (tfCount) pills.push(`<span class="lib-pill pill-tf"><ion-icon name="checkmark-circle-outline"></ion-icon> ${tfCount} đúng/sai</span>`);
@@ -5218,9 +5706,14 @@ const cardHtml = (s, idx = 0) => {
 
   const isSelected = selectedSetIds.has(String(s.id));
   const canEdit = !window.Auth || window.Auth.canEditContent();
+  const isTeacherOrAdmin = window.Auth && (window.Auth.isTeacher() || window.Auth.isAdmin());
   const cardOnClick = bulkDeleteMode 
     ? `toggleSetFromCard(event, '${esc(s.id)}')`
-    : (canEdit ? `go('edit', '${esc(s.id)}')` : `go('setup', '${esc(s.id)}')`);
+    : (canEdit 
+        ? `go('edit', '${esc(s.id)}')` 
+        : (isBlocked 
+            ? (blockInfo.hasSubmissions ? `openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')` : `toast('${esc(blockInfo.message)}', 'bad')`) 
+            : `go('setup', '${esc(s.id)}')`));
 
   return `
 <div class="setup-grid-card lib-detailed-card set ${bulkDeleteMode ? 'bulk-selectable' : ''}${isSelected ? ' selected' : ''}" onclick="${cardOnClick}">
@@ -5248,12 +5741,25 @@ const cardHtml = (s, idx = 0) => {
     <div class="lib-actions-left">
       ${canEdit ? `<button class="btn cy sm btn-edit-set" type="button" onclick="event.stopPropagation(); go('edit','${esc(s.id)}')" title="Sửa nội dung câu hỏi"><ion-icon name="create-outline"></ion-icon> Sửa</button>` : ''}
       <button class="btn gh sm" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử làm bài của bộ đề này"><ion-icon name="time-outline"></ion-icon> Lịch sử</button>
+      ${isTeacherOrAdmin ? `<button class="btn au sm" type="button" onclick="event.stopPropagation(); openSetAttemptLimitModal('quiz', '${esc(s.id)}')" title="Cài đặt giới hạn số lượt làm bài & hạn nộp bài cho học sinh"><ion-icon name="timer-outline"></ion-icon> Đặt lượt &amp; Hạn</button>` : ''}
       ${canEdit ? `<button class="btn no sm btn-delete-set" type="button" onclick="event.stopPropagation(); del('${esc(s.id)}')" title="Xóa bộ đề"><ion-icon name="trash-outline"></ion-icon> Xóa</button>` : ''}
     </div>
-    <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('setup', '${esc(s.id)}')">
-      <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
-      <span>Vào học</span>
-    </button>
+    ${isBlocked ? (blockInfo.hasSubmissions ? `
+      <button class="btn-setup-action lib-launch-btn lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="${esc(blockInfo.message)}">
+        <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
+        <span>Xem lại bài làm</span>
+      </button>
+    ` : `
+      <button class="btn-setup-action lib-launch-btn lib-locked-btn" type="button" onclick="event.stopPropagation(); toast('${esc(blockInfo.message)}', 'bad')" title="${esc(blockInfo.message)}">
+        <span class="btn-setup-icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+        <span>${blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa'}</span>
+      </button>
+    `) : `
+      <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('setup', '${esc(s.id)}')">
+        <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
+        <span>Vào học</span>
+      </button>
+    `}
   </div>
 </div>`;
 };
@@ -5269,7 +5775,14 @@ const readingLibCardHtml = (s, idx = 0) => {
   const thCount = qList.filter(q => q.level === 'thong-hieu' || (q.levelName && q.levelName.includes('Thông hiểu'))).length;
   const vdCount = qList.filter(q => q.level === 'van-dung' || (q.levelName && q.levelName.includes('Vận dụng'))).length;
 
+  const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'reading') : { blocked: false, isDeadlineExpired: false, hasSubmissions: false, message: '' };
+  const isBlocked = blockInfo.blocked;
+  const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'reading') : '';
+  const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'reading') : '';
+
   const pills = [];
+  if (attemptBadge) pills.push(attemptBadge);
+  if (deadlineBadge) pills.push(deadlineBadge);
   if (nbCount) pills.push(`<span class="lib-pill pill-nb">🟢 ${nbCount} Nhận biết</span>`);
   if (thCount) pills.push(`<span class="lib-pill pill-th">🟡 ${thCount} Thông hiểu</span>`);
   if (vdCount) pills.push(`<span class="lib-pill pill-vd">🔴 ${vdCount} Vận dụng</span>`);
@@ -5277,7 +5790,12 @@ const readingLibCardHtml = (s, idx = 0) => {
 
   const passageSnippet = (s.passage || '').trim().replace(/\r?\n+/g, ' / ');
   const canEdit = !window.Auth || window.Auth.canEditContent();
-  const cardOnClick = canEdit ? `openEditReadingSetModal('${esc(s.id)}')` : `go('reading', '${esc(s.id)}')`;
+  const isTeacherOrAdmin = window.Auth && (window.Auth.isTeacher() || window.Auth.isAdmin());
+  const cardOnClick = canEdit 
+    ? `openEditReadingSetModal('${esc(s.id)}')` 
+    : (isBlocked 
+        ? (blockInfo.hasSubmissions ? `openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')` : `toast('${esc(blockInfo.message)}', 'bad')`) 
+        : `go('reading', '${esc(s.id)}')`);
 
   return `
 <div class="setup-grid-card lib-detailed-card" onclick="${cardOnClick}">
@@ -5315,12 +5833,25 @@ const readingLibCardHtml = (s, idx = 0) => {
     <div class="lib-actions-left">
       ${canEdit ? `<button class="btn cy sm btn-edit-set" type="button" onclick="event.stopPropagation(); openEditReadingSetModal('${esc(s.id)}')" title="Sửa thông tin đề đọc hiểu"><ion-icon name="create-outline"></ion-icon> Sửa</button>` : ''}
       <button class="btn gh sm" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử làm bài của đề đọc hiểu này"><ion-icon name="time-outline"></ion-icon> Lịch sử</button>
+      ${isTeacherOrAdmin ? `<button class="btn au sm" type="button" onclick="event.stopPropagation(); openSetAttemptLimitModal('reading', '${esc(s.id)}')" title="Cài đặt giới hạn số lượt & hạn nộp bài cho học sinh"><ion-icon name="timer-outline"></ion-icon> Đặt lượt &amp; Hạn</button>` : ''}
       ${canEdit ? `<button class="btn no sm btn-delete-set" type="button" onclick="event.stopPropagation(); deleteReadingSet('${esc(s.id)}'); R.lib();" title="Xóa đề đọc hiểu"><ion-icon name="trash-outline"></ion-icon> Xóa</button>` : ''}
     </div>
-    <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('reading', '${esc(s.id)}')">
-      <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
-      <span>Đọc hiểu</span>
-    </button>
+    ${isBlocked ? (blockInfo.hasSubmissions ? `
+      <button class="btn-setup-action lib-launch-btn lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="${esc(blockInfo.message)}">
+        <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
+        <span>Xem lại bài làm</span>
+      </button>
+    ` : `
+      <button class="btn-setup-action lib-launch-btn lib-locked-btn" type="button" onclick="event.stopPropagation(); toast('${esc(blockInfo.message)}', 'bad')" title="${esc(blockInfo.message)}">
+        <span class="btn-setup-icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+        <span>${blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa'}</span>
+      </button>
+    `) : `
+      <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('reading', '${esc(s.id)}')">
+        <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
+        <span>Đọc hiểu</span>
+      </button>
+    `}
   </div>
 </div>`;
 };
@@ -5332,6 +5863,11 @@ const writingLibCardHtml = (s, idx = 0) => {
   const topic = (s.categoryName || s.category || 'Luyện viết').trim();
   const promptSnippet = (s.prompt || '').trim();
 
+  const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'writing') : { blocked: false, isDeadlineExpired: false, hasSubmissions: false, message: '' };
+  const isBlocked = blockInfo.blocked;
+  const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'writing') : '';
+  const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'writing') : '';
+
   const outlineStepsHtml = secList.length ? `
     <div class="lib-outline-stepper">
       ${secList.map((sec, i) => `<span class="lib-step-pill">${i === 0 ? '🟢' : i === 1 ? '🟡' : '🔴'} ${esc(sec.title || 'Phần ' + (i+1))}</span>`).join('<span class="lib-step-arrow">→</span>')}
@@ -5339,7 +5875,12 @@ const writingLibCardHtml = (s, idx = 0) => {
   ` : `<span class="lib-pill pill-empty"><ion-icon name="create-outline"></ion-icon> ${secCount} phần dàn ý</span>`;
 
   const canEdit = !window.Auth || window.Auth.canEditContent();
-  const cardOnClick = canEdit ? `editWritingSet('${esc(s.id)}')` : `go('writing', '${esc(s.id)}')`;
+  const isTeacherOrAdmin = window.Auth && (window.Auth.isTeacher() || window.Auth.isAdmin());
+  const cardOnClick = canEdit 
+    ? `editWritingSet('${esc(s.id)}')` 
+    : (isBlocked 
+        ? (blockInfo.hasSubmissions ? `openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')` : `toast('${esc(blockInfo.message)}', 'bad')`) 
+        : `go('writing', '${esc(s.id)}')`);
 
   return `
 <div class="setup-grid-card lib-detailed-card" onclick="${cardOnClick}">
@@ -5357,6 +5898,8 @@ const writingLibCardHtml = (s, idx = 0) => {
       <span class="clickable-topic-tag" title="Nhấp để lọc theo chủ đề: ${esc(topic)}" onclick="event.stopPropagation(); setLibWritingTopicFilter('${esc(topic)}')"><ion-icon name="pricetag-outline"></ion-icon> ${esc(topic)}</span>
       <span class="lib-meta-note"><ion-icon name="document-text-outline"></ion-icon> Dàn ý chuẩn</span>
     </div>
+
+    ${(attemptBadge || deadlineBadge) ? `<div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;">${attemptBadge}${deadlineBadge}</div>` : ''}
 
     <div class="lib-card-breakdown">
       ${outlineStepsHtml}
@@ -5376,12 +5919,26 @@ const writingLibCardHtml = (s, idx = 0) => {
   <div class="lib-card-actions-bar">
     <div class="lib-actions-left">
       ${canEdit ? `<button class="btn cy sm btn-edit-set" type="button" onclick="event.stopPropagation(); editWritingSet('${esc(s.id)}')" title="Sửa đề và dàn ý"><ion-icon name="create-outline"></ion-icon> Sửa</button>` : ''}
+      <button class="btn gh sm" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử làm bài của đề viết này"><ion-icon name="time-outline"></ion-icon> Lịch sử</button>
+      ${isTeacherOrAdmin ? `<button class="btn au sm" type="button" onclick="event.stopPropagation(); openSetAttemptLimitModal('writing', '${esc(s.id)}')" title="Cài đặt giới hạn số lượt & hạn nộp bài cho học sinh"><ion-icon name="timer-outline"></ion-icon> Đặt lượt &amp; Hạn</button>` : ''}
       ${canEdit ? `<button class="btn no sm btn-delete-set" type="button" onclick="event.stopPropagation(); deleteWritingSet('${esc(s.id)}'); setTimeout(() => R.lib(), 100);" title="Xóa đề"><ion-icon name="trash-outline"></ion-icon> Xóa</button>` : ''}
     </div>
-    <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('writing', '${esc(s.id)}')">
-      <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
-      <span>Luyện viết</span>
-    </button>
+    ${isBlocked ? (blockInfo.hasSubmissions ? `
+      <button class="btn-setup-action lib-launch-btn lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="${esc(blockInfo.message)}">
+        <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
+        <span>Xem lại bài làm</span>
+      </button>
+    ` : `
+      <button class="btn-setup-action lib-launch-btn lib-locked-btn" type="button" onclick="event.stopPropagation(); toast('${esc(blockInfo.message)}', 'bad')" title="${esc(blockInfo.message)}">
+        <span class="btn-setup-icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+        <span>${blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa'}</span>
+      </button>
+    `) : `
+      <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('writing', '${esc(s.id)}')">
+        <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
+        <span>Luyện viết</span>
+      </button>
+    `}
   </div>
 </div>`;
 };
@@ -5611,6 +6168,27 @@ function meta() {
   if (!CS) return;
   CS.title = $('#et').value;
   CS.topic = $('#ec').value;
+  const limitInp = $('#set-max-attempts');
+  if (limitInp) {
+    const lim = Math.max(0, parseInt(limitInp.value, 10) || 0);
+    CS.maxAttempts = lim;
+    if (typeof getSetAttemptLimitsMap === 'function' && typeof saveSetAttemptLimitsMap === 'function') {
+      const map = getSetAttemptLimitsMap();
+      map[String(CS.id)] = lim;
+      saveSetAttemptLimitsMap(map);
+    }
+  }
+  const deadlineInp = $('#set-deadline');
+  if (deadlineInp) {
+    const dl = (deadlineInp.value || '').trim();
+    CS.deadline = dl;
+    if (typeof getSetDeadlinesMap === 'function' && typeof saveSetDeadlinesMap === 'function') {
+      const dMap = getSetDeadlinesMap();
+      if (dl) dMap[String(CS.id)] = dl;
+      else delete dMap[String(CS.id)];
+      saveSetDeadlinesMap(dMap);
+    }
+  }
   save();
 }
 
@@ -5649,6 +6227,10 @@ function renderHomeSets() {
     
     const colorClass = colorClasses[idx % colorClasses.length];
     
+    const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { blocked: false, isDeadlineExpired: false, hasSubmissions: false, message: '' };
+    const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'quiz') : '';
+    const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'quiz') : '';
+
     return `
       <div class="cartoon-set-card ${colorClass}" onclick="startSetStudy('${esc(s.id)}')">
         <div class="set-card-glow"></div>
@@ -5658,8 +6240,13 @@ function renderHomeSets() {
         </div>
         <h3 class="set-card-title">${esc(s.title)}</h3>
         <p class="set-card-meta"><ion-icon name="document-text-outline"></ion-icon> <b>${qCount}</b> câu hỏi (${details})</p>
+        ${(attemptBadge || deadlineBadge) ? `<div style="display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 10px;">${attemptBadge}${deadlineBadge}</div>` : ''}
         <div class="set-card-footer">
-          <span class="set-card-btn"><ion-icon name="play-outline"></ion-icon> Vào bài học ngay →</span>
+          ${blockInfo.blocked 
+            ? (blockInfo.hasSubmissions 
+                ? `<span class="set-card-btn" style="background:#475569;"><ion-icon name="eye-outline"></ion-icon> Xem lại bài làm →</span>`
+                : `<span class="set-card-btn" style="background:#94a3b8;"><ion-icon name="lock-closed-outline"></ion-icon> ${blockInfo.isDeadlineExpired ? 'Đã hết hạn nộp' : 'Đã khóa'}</span>`)
+            : `<span class="set-card-btn"><ion-icon name="play-outline"></ion-icon> Vào bài học ngay →</span>`}
         </div>
       </div>
     `;
@@ -5670,6 +6257,14 @@ function startSetStudy(id) {
   if (!id) return;
   const s = sets.find(x => String(x.id) === String(id));
   if (!s) return;
+  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(s, 'quiz')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { hasSubmissions: false, message: 'Bộ đề này đã khóa đối với bạn!' };
+    toast(info.message, 'bad');
+    if (info.hasSubmissions) {
+      openHistoryForSet(s.id, s.title);
+    }
+    return;
+  }
   go('setup', s.id);
 }
 
@@ -6775,6 +7370,12 @@ R.edit = id => {
   if (!sets.length) newSet();
   CS = sets.find(s => s.id == id) || CS || sets[0];
   $('#et').value = CS.title; $('#ec').value = CS.topic;
+  if ($('#set-max-attempts')) {
+    $('#set-max-attempts').value = (typeof getSetMaxAttempts === 'function' ? getSetMaxAttempts(CS, 'quiz') : (CS.maxAttempts || 0));
+  }
+  if ($('#set-deadline')) {
+    $('#set-deadline').value = (typeof getSetDeadline === 'function' ? getSetDeadline(CS, 'quiz') : (CS.deadline || ''));
+  }
   const currentEmo = $('#current-emo');
   if (currentEmo) currentEmo.textContent = CS.emo || '📖';
   initEmojiPicker();
@@ -7054,6 +7655,15 @@ function selectAndStartSetupQuiz(id) {
     if (typeof openLoginDialog === 'function') openLoginDialog();
     return;
   }
+  const s = sets.find(x => String(x.id) === String(id));
+  if (s && typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(s, 'quiz')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { hasSubmissions: false, message: 'Bộ đề này đã khóa đối với bạn!' };
+    toast(info.message, 'bad');
+    if (info.hasSubmissions) {
+      openHistoryForSet(s.id, s.title);
+    }
+    return;
+  }
   openStartQuizModal(id);
 }
 
@@ -7065,6 +7675,15 @@ function openStartQuizModal(id) {
   }
   const s = sets.find(x => String(x.id) === String(id));
   if (!s) return;
+
+  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(s, 'quiz')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { hasSubmissions: false, message: 'Bộ đề này đã khóa đối với bạn!' };
+    toast(info.message, 'bad');
+    if (info.hasSubmissions) {
+      openHistoryForSet(s.id, s.title);
+    }
+    return;
+  }
 
   const setIdInput = $('#start-quiz-set-id');
   if (setIdInput) setIdInput.value = s.id;
@@ -7221,9 +7840,15 @@ function renderSetupSetsGrid(selectedId) {
     const bg = SETUP_PALETTES[idx % SETUP_PALETTES.length];
     const qCount = Array.isArray(s.qs) ? s.qs.length : 0;
     const isSelected = selectedId && String(s.id) === String(selectedId);
+    const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { blocked: false, isDeadlineExpired: false, hasSubmissions: false, message: '' };
+    const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'quiz') : '';
+    const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'quiz') : '';
+    const cardOnClick = blockInfo.blocked 
+      ? (blockInfo.hasSubmissions ? `openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')` : `toast('${esc(blockInfo.message)}', 'bad')`) 
+      : `selectAndStartSetupQuiz('${esc(s.id)}')`;
 
     return `
-      <div class="setup-grid-card ${isSelected ? 'selected-card' : ''}" onclick="selectAndStartSetupQuiz('${esc(s.id)}')">
+      <div class="setup-grid-card ${isSelected ? 'selected-card' : ''}" onclick="${cardOnClick}">
         <div class="setup-card-banner" style="background: ${bg};">
           <div class="setup-card-top-info">
             <span class="setup-card-count-pill">${qCount} câu</span>
@@ -7232,10 +7857,23 @@ function renderSetupSetsGrid(selectedId) {
           <span class="setup-card-watermark">${s.emo || '📖'}</span>
         </div>
         <div class="setup-card-body">
-          <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); selectAndStartSetupQuiz('${esc(s.id)}')">
-            <span class="btn-setup-icon">▶</span>
-            <span>Vào bài học</span>
-          </button>
+          ${blockInfo.blocked ? (blockInfo.hasSubmissions ? `
+            <button class="btn-setup-action lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')">
+              <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
+              <span>Xem lại bài làm</span>
+            </button>
+          ` : `
+            <button class="btn-setup-action lib-locked-btn" type="button" onclick="event.stopPropagation(); toast('${esc(blockInfo.message)}', 'bad')" title="${esc(blockInfo.message)}">
+              <span class="btn-setup-icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+              <span>${blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa'}</span>
+            </button>
+          `) : `
+            <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); selectAndStartSetupQuiz('${esc(s.id)}')">
+              <span class="btn-setup-icon">▶</span>
+              <span>Vào bài học</span>
+            </button>
+          `}
+          ${(attemptBadge || deadlineBadge) ? `<div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:8px;">${attemptBadge}${deadlineBadge}</div>` : ''}
           <div class="setup-card-meta">
             <span class="setup-card-topic" title="${esc(s.topic || 'Chưa phân loại')}">
               🏷️ ${esc(s.topic || 'Ngữ văn')}
@@ -7290,6 +7928,15 @@ function begin() {
   const nm = ($('#nick')?.value || '').trim();
   if (!nm) return toast('Vui lòng nhập biệt danh!', 'bad');
   if (!s || !s.qs.length) return toast('Bộ câu hỏi này chưa có dữ liệu!', 'bad');
+
+  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(s, 'quiz')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { hasSubmissions: false, message: 'Bộ đề này đã khóa đối với bạn!' };
+    toast(info.message, 'bad');
+    if (info.hasSubmissions) {
+      openHistoryForSet(s.id, s.title);
+    }
+    return;
+  }
   if (s.qs.some(q => {
     if (q.type === 'tf') {
       ensureQuestionCompatibility(q);
@@ -8250,14 +8897,24 @@ function renderWritingSetsGrid() {
     const sectionCount = s.sections ? s.sections.length : 0;
     const topic = s.categoryName || s.category || 'Luyện viết';
     const watermark = '<ion-icon name="create-outline"></ion-icon>';
+    const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'writing') : { blocked: false, isDeadlineExpired: false, hasSubmissions: false, message: '' };
+    const isBlocked = blockInfo.blocked;
+    const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'writing') : '';
+    const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'writing') : '';
+    const isTeacherOrAdmin = window.Auth && (window.Auth.isTeacher() || window.Auth.isAdmin());
+    const cardOnClick = isBlocked 
+      ? (blockInfo.hasSubmissions ? `openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')` : `toast('${esc(blockInfo.message)}', 'bad')`) 
+      : `openWritingWorkspaceById('${esc(s.id)}')`;
 
     return `
-      <div class="setup-grid-card" onclick="openWritingWorkspaceById('${esc(s.id)}')">
+      <div class="setup-grid-card" onclick="${cardOnClick}">
         <div class="setup-card-banner" style="background: ${bg}; position:relative;">
           <div class="setup-card-top-info" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
             <span class="setup-card-count-pill">${sectionCount} phần dàn ý</span>
             <div style="display:flex; gap:4px; position:relative; z-index:2;" onclick="event.stopPropagation()">
-              <button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề bài" onclick="event.stopPropagation(); deleteWritingSet('${esc(s.id)}')"><ion-icon name="trash-outline"></ion-icon></button>
+              <button class="reading-h-mini-btn" type="button" title="Lịch sử bài làm" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')"><ion-icon name="time-outline"></ion-icon></button>
+              ${isTeacherOrAdmin ? `<button class="reading-h-mini-btn" type="button" title="Cài đặt lượt làm & hạn nộp bài" onclick="event.stopPropagation(); openSetAttemptLimitModal('writing', '${esc(s.id)}')"><ion-icon name="timer-outline"></ion-icon></button>` : ''}
+              ${(!window.Auth || window.Auth.canEditContent()) ? `<button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề bài" onclick="event.stopPropagation(); deleteWritingSet('${esc(s.id)}')"><ion-icon name="trash-outline"></ion-icon></button>` : ''}
             </div>
           </div>
           <h3 class="setup-card-title">${esc(s.title)}</h3>
@@ -8265,11 +8922,24 @@ function renderWritingSetsGrid() {
         </div>
         <div class="setup-card-body">
           <div style="display:flex; gap:8px; width:100%;">
-            <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); openWritingWorkspaceById('${esc(s.id)}')" style="flex:1;">
-              <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
-              <span>Vào luyện viết</span>
-            </button>
+            ${isBlocked ? (blockInfo.hasSubmissions ? `
+              <button class="btn-setup-action lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" style="flex:1;">
+                <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
+                <span>Xem lại bài làm</span>
+              </button>
+            ` : `
+              <button class="btn-setup-action lib-locked-btn" type="button" onclick="event.stopPropagation(); toast('${esc(blockInfo.message)}', 'bad')" style="flex:1;" title="${esc(blockInfo.message)}">
+                <span class="btn-setup-icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+                <span>${blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa'}</span>
+              </button>
+            `) : `
+              <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); openWritingWorkspaceById('${esc(s.id)}')" style="flex:1;">
+                <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
+                <span>Vào luyện viết</span>
+              </button>
+            `}
           </div>
+          ${(attemptBadge || deadlineBadge) ? `<div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:8px;">${attemptBadge}${deadlineBadge}</div>` : ''}
           <div class="setup-card-meta" style="margin-top:6px;">
             <span class="setup-card-topic" title="${esc(topic)}">
               <ion-icon name="pricetag-outline"></ion-icon> ${esc(topic)}
@@ -8391,6 +9061,14 @@ function openWritingWorkspace(set) {
   if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
     toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
     if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
+  }
+  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(set, 'writing')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(set, 'writing') : { hasSubmissions: false, message: 'Bộ đề luyện viết này đã khóa đối với bạn!' };
+    toast(info.message, 'bad');
+    if (info.hasSubmissions) {
+      openHistoryForSet(set.id, set.title);
+    }
     return;
   }
   currentWritingSet = set;
@@ -8765,6 +9443,8 @@ function openCreateWritingSetModal(presetCat) {
   $('#input-set-title').value = '';
   updateModalCategorySelect(targetCat);
   $('#input-set-prompt').value = '';
+  if ($('#writing-form-max-attempts')) $('#writing-form-max-attempts').value = 0;
+  if ($('#writing-form-deadline')) $('#writing-form-deadline').value = '';
 
   // Nạp mẫu dàn ý theo dạng đề
   applyQuickOutlineTemplate(targetCat);
@@ -8790,6 +9470,14 @@ function editWritingSet(id) {
   $('#input-set-title').value = set.title || '';
   updateModalCategorySelect(set.category || 'nl-xh');
   $('#input-set-prompt').value = set.prompt || '';
+  const limitEl = $('#writing-form-max-attempts');
+  if (limitEl) {
+    limitEl.value = (typeof getSetMaxAttempts === 'function' ? getSetMaxAttempts(set, 'writing') : (set.maxAttempts || 0));
+  }
+  const deadlineEl = $('#writing-form-deadline');
+  if (deadlineEl) {
+    deadlineEl.value = (typeof getSetDeadline === 'function' ? getSetDeadline(set, 'writing') : (set.deadline || ''));
+  }
 
   editingSections = JSON.parse(JSON.stringify(set.sections || []));
   renderModalSectionsEditor();
@@ -8961,6 +9649,9 @@ function handleSaveWritingSet(e) {
   });
 
   let targetSet = null;
+  const maxAttempts = Math.max(0, parseInt($('#writing-form-max-attempts')?.value, 10) || 0);
+  const deadline = ($('#writing-form-deadline')?.value || '').trim();
+
   if (editId) {
     const idx = writingSets.findIndex(s => String(s.id) === String(editId));
     if (idx !== -1) {
@@ -8971,23 +9662,50 @@ function handleSaveWritingSet(e) {
         categoryName: categoryNames[category] || category,
         icon: icons[category] || '✍️',
         prompt,
+        maxAttempts,
+        deadline,
         sections: JSON.parse(JSON.stringify(editingSections))
       };
       targetSet = writingSets[idx];
+      if (typeof getSetAttemptLimitsMap === 'function' && typeof saveSetAttemptLimitsMap === 'function') {
+        const map = getSetAttemptLimitsMap();
+        map[String(editId)] = maxAttempts;
+        saveSetAttemptLimitsMap(map);
+      }
+      if (typeof getSetDeadlinesMap === 'function' && typeof saveSetDeadlinesMap === 'function') {
+        const dMap = getSetDeadlinesMap();
+        if (deadline) dMap[String(editId)] = deadline;
+        else delete dMap[String(editId)];
+        saveSetDeadlinesMap(dMap);
+      }
       toast('Đã cập nhật bộ đề luyện viết thành công!', 'ok');
     }
   } else {
+    const newId = 'ws_' + uid();
     const newSet = {
-      id: 'ws_' + uid(),
+      id: newId,
       title,
       category,
       categoryName: categoryNames[category] || category,
       icon: icons[category] || '✍️',
       prompt,
+      maxAttempts,
+      deadline,
       sections: JSON.parse(JSON.stringify(editingSections))
     };
     writingSets.unshift(newSet);
     targetSet = newSet;
+    if (typeof getSetAttemptLimitsMap === 'function' && typeof saveSetAttemptLimitsMap === 'function') {
+      const map = getSetAttemptLimitsMap();
+      map[String(newId)] = maxAttempts;
+      saveSetAttemptLimitsMap(map);
+    }
+    if (typeof getSetDeadlinesMap === 'function' && typeof saveSetDeadlinesMap === 'function') {
+      const dMap = getSetDeadlinesMap();
+      if (deadline) dMap[String(newId)] = deadline;
+      else delete dMap[String(newId)];
+      saveSetDeadlinesMap(dMap);
+    }
     toast('Đã tạo bộ đề mới thành công!', 'ok');
   }
 
@@ -9186,6 +9904,12 @@ function submitWritingEssay() {
   }
   if (!currentWritingSet) {
     toast('Không tìm thấy thông tin bộ đề luyện viết hiện tại!', 'bad');
+    return;
+  }
+
+  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(currentWritingSet, 'writing')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(currentWritingSet, 'writing') : { message: 'Đề luyện viết này đã kết thúc!' };
+    toast(`⚠️ ${info.message}`, 'bad');
     return;
   }
 
@@ -9752,6 +10476,15 @@ function openReadingSet(id) {
     return;
   }
 
+  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(set, 'reading')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(set, 'reading') : { hasSubmissions: false, message: 'Bộ đề đọc hiểu này đã bị khóa đối với bạn!' };
+    toast(info.message, 'bad');
+    if (info.hasSubmissions) {
+      openHistoryForSet(set.id, set.title);
+    }
+    return;
+  }
+
   currentReadingSetId = set.id;
   if (typeof window !== 'undefined') window.currentReadingSetId = set.id;
   showReadingAnswers = false;
@@ -9906,8 +10639,17 @@ function renderSingleReadingCard(s, idx = 0) {
   const snippet = (s.passage || '').trim().replace(/\r?\n+/g, ' ');
   const cleanSnippet = snippet.length > 170 ? snippet.slice(0, 170) + '…' : snippet;
 
+  const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'reading') : { blocked: false, isDeadlineExpired: false, hasSubmissions: false, message: '' };
+  const isBlocked = blockInfo.blocked;
+  const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'reading') : '';
+  const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'reading') : '';
+  const isTeacherOrAdmin = window.Auth && (window.Auth.isTeacher() || window.Auth.isAdmin());
+  const cardOnClick = isBlocked 
+    ? (blockInfo.hasSubmissions ? `openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')` : `toast('${esc(blockInfo.message)}', 'bad')`) 
+    : `openReadingSet('${esc(s.id)}')`;
+
   return `
-    <div class="reading-h-card" onclick="openReadingSet('${esc(s.id)}')">
+    <div class="reading-h-card" onclick="${cardOnClick}">
       <!-- Cột trái: Card Banner nổi bật dạng bìa sách/thẻ -->
       <div class="reading-h-banner" style="background: ${bg};">
         <div class="reading-h-banner-watermark">${watermark}</div>
@@ -9932,6 +10674,7 @@ function renderSingleReadingCard(s, idx = 0) {
 
         <!-- Ma trận cấp độ chuẩn 5 câu -->
         <div class="reading-h-breakdown">
+          ${(attemptBadge || deadlineBadge) ? `<div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:4px; width:100%;">${attemptBadge}${deadlineBadge}</div>` : ''}
           ${nbCount ? `<span class="lib-pill pill-nb" title="${nbCount} câu Nhận biết">🟢 ${nbCount} Nhận biết</span>` : ''}
           ${thCount ? `<span class="lib-pill pill-th" title="${thCount} câu Thông hiểu">🟡 ${thCount} Thông hiểu</span>` : ''}
           ${vdCount ? `<span class="lib-pill pill-vd" title="${vdCount} câu Vận dụng (Đoạn văn ~200 chữ)">🟣 ${vdCount} Vận dụng</span>` : ''}
@@ -9946,16 +10689,34 @@ function renderSingleReadingCard(s, idx = 0) {
 
       <!-- Cột phải: Khối nút thao tác thẻ -->
       <div class="reading-h-actions" onclick="event.stopPropagation()">
-        <button class="btn au reading-h-btn-enter" type="button" onclick="openReadingSet('${esc(s.id)}')">
-          <span><ion-icon name="play-outline"></ion-icon> Vào đọc hiểu</span>
-        </button>
-        ${(isUserCreated && (!window.Auth || window.Auth.canEditContent())) ? `
-          <div class="reading-h-mini-row">
-            <button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề này" onclick="deleteReadingSet('${esc(s.id)}')">
-              <span><ion-icon name="trash-outline"></ion-icon> Xóa đề</span>
+        ${isBlocked ? (blockInfo.hasSubmissions ? `
+          <button class="btn au reading-h-btn-enter lib-view-only-btn" type="button" onclick="openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')">
+            <span><ion-icon name="eye-outline"></ion-icon> Xem lại bài làm</span>
+          </button>
+        ` : `
+          <button class="btn au reading-h-btn-enter lib-locked-btn" type="button" onclick="toast('${esc(blockInfo.message)}', 'bad')" title="${esc(blockInfo.message)}">
+            <span><ion-icon name="lock-closed-outline"></ion-icon> ${blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa'}</span>
+          </button>
+        `) : `
+          <button class="btn au reading-h-btn-enter" type="button" onclick="openReadingSet('${esc(s.id)}')">
+            <span><ion-icon name="play-outline"></ion-icon> Vào đọc hiểu</span>
+          </button>
+        `}
+        <div class="reading-h-mini-row" style="margin-top:6px;">
+          <button class="reading-h-mini-btn" type="button" title="Lịch sử làm bài" onclick="openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')">
+            <ion-icon name="time-outline"></ion-icon> Lịch sử
+          </button>
+          ${isTeacherOrAdmin ? `
+            <button class="reading-h-mini-btn" type="button" title="Cài đặt giới hạn số lượt & hạn nộp bài cho học sinh" onclick="openSetAttemptLimitModal('reading', '${esc(s.id)}')">
+              <ion-icon name="timer-outline"></ion-icon> Lượt &amp; Hạn
             </button>
-          </div>
-        ` : ''}
+          ` : ''}
+          ${(isUserCreated && (!window.Auth || window.Auth.canEditContent())) ? `
+            <button class="reading-h-mini-btn reading-h-btn-del" type="button" title="Xóa đề này" onclick="deleteReadingSet('${esc(s.id)}')">
+              <ion-icon name="trash-outline"></ion-icon> Xóa đề
+            </button>
+          ` : ''}
+        </div>
       </div>
     </div>
   `;
@@ -10190,6 +10951,12 @@ function submitReadingAnswers() {
   const set = readingSets.find(s => String(s.id) === String(currentReadingSetId));
   if (!set) return;
 
+  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(set, 'reading')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(set, 'reading') : { message: 'Đề đọc hiểu này đã kết thúc!' };
+    toast(`⚠️ ${info.message}`, 'bad');
+    return;
+  }
+
   const draft = getSavedReadingDraft(set.id);
   const questions = Array.isArray(set.questions) ? set.questions : [];
 
@@ -10328,6 +11095,12 @@ function openCreateReadingSetModal() {
   const statusEl = document.getElementById('reading-form-status');
   if (statusEl) statusEl.value = 'published';
 
+  const maxAttemptsEl = document.getElementById('reading-form-max-attempts');
+  if (maxAttemptsEl) maxAttemptsEl.value = 0;
+
+  const deadlineEl = document.getElementById('reading-form-deadline');
+  if (deadlineEl) deadlineEl.value = '';
+
   // Khởi tạo sẵn khung chuẩn 5 câu hỏi (2 Nhận biết • 2 Thông hiểu • 1 Vận dụng / Đoạn văn)
   applyStandard5QuestionTemplate(false);
 
@@ -10360,6 +11133,16 @@ function openEditReadingSetModal(id) {
 
   const editStatusEl = document.getElementById('reading-form-status');
   if (editStatusEl) editStatusEl.value = set.status || 'published';
+
+  const maxAttemptsEl = document.getElementById('reading-form-max-attempts');
+  if (maxAttemptsEl) {
+    maxAttemptsEl.value = (typeof getSetMaxAttempts === 'function' ? getSetMaxAttempts(set, 'reading') : (set.maxAttempts || 0));
+  }
+
+  const editDeadlineEl = document.getElementById('reading-form-deadline');
+  if (editDeadlineEl) {
+    editDeadlineEl.value = (typeof getSetDeadline === 'function' ? getSetDeadline(set, 'reading') : (set.deadline || ''));
+  }
 
   const catSelect = document.getElementById('reading-form-category');
   populateCategorySelect(catSelect, set.category || readingCategories[0]);
@@ -10678,6 +11461,8 @@ function handleReadingFormSubmit(e) {
   }
 
   const status = document.getElementById('reading-form-status')?.value || 'published';
+  const maxAttempts = Math.max(0, parseInt(document.getElementById('reading-form-max-attempts')?.value, 10) || 0);
+  const deadline = (document.getElementById('reading-form-deadline')?.value || '').trim();
   let targetSetId = id;
   if (id) {
     // Edit existing
@@ -10693,8 +11478,21 @@ function handleReadingFormSubmit(e) {
         passage,
         source,
         status,
+        maxAttempts,
+        deadline,
         questions
       };
+      if (typeof getSetAttemptLimitsMap === 'function' && typeof saveSetAttemptLimitsMap === 'function') {
+        const map = getSetAttemptLimitsMap();
+        map[String(targetSetId)] = maxAttempts;
+        saveSetAttemptLimitsMap(map);
+      }
+      if (typeof getSetDeadlinesMap === 'function' && typeof saveSetDeadlinesMap === 'function') {
+        const dMap = getSetDeadlinesMap();
+        if (deadline) dMap[String(targetSetId)] = deadline;
+        else delete dMap[String(targetSetId)];
+        saveSetDeadlinesMap(dMap);
+      }
       toast('Đã cập nhật bộ đề đọc hiểu thành công!', 'ok');
     }
   } else {
@@ -10710,9 +11508,22 @@ function handleReadingFormSubmit(e) {
       passage,
       source,
       status,
+      maxAttempts,
+      deadline,
       questions
     };
     readingSets.unshift(newSet);
+    if (typeof getSetAttemptLimitsMap === 'function' && typeof saveSetAttemptLimitsMap === 'function') {
+      const map = getSetAttemptLimitsMap();
+      map[String(targetSetId)] = maxAttempts;
+      saveSetAttemptLimitsMap(map);
+    }
+    if (typeof getSetDeadlinesMap === 'function' && typeof saveSetDeadlinesMap === 'function') {
+      const dMap = getSetDeadlinesMap();
+      if (deadline) dMap[String(targetSetId)] = deadline;
+      else delete dMap[String(targetSetId)];
+      saveSetDeadlinesMap(dMap);
+    }
     toast('🎉 Đã tạo bộ đề đọc hiểu mới thành công!', 'ok');
   }
 
