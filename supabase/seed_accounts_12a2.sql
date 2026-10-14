@@ -6,7 +6,7 @@
 INSERT INTO public.user_accounts (id, username, password_hash, full_name, class_name, role, avatar)
 VALUES
   ('usr_admin_01', 'admin', 'd9309b7dd5d806dcf4f52a6f961938947a9ed7b47b854429fab1a1e7cf84be69', 'ADMIN', '', 'admin', 'ion:person'),
-  ('usr_teacher_01', 'tuanh', '345a8f68d54919ec31bbc7f4e73727a197e2a236a320d4bbce55871e43b2d582', 'Hoàng Thị Tú Anh', '', 'teacher', 'ion:person'),
+  ('usr_teacher_01', 'tuanh', 'dd3363ec06fc8e7f1e5d5872d3178f9c90cfba01c71b5395b365f17976df59ad', 'Hoàng Thị Tú Anh', '', 'teacher', 'ion:person'),
   ('usr_12a2_01', 'nqa@bpbd.vn', '345d5f37d27ea129ad02705f90e3be5ca757f4abb5dd6e6dd40c189c23470bbc', 'Nguyễn Quốc An', '12A2', 'student', 'ion:person'),
   ('usr_12a2_02', 'nhba@bpbd.vn', '70239d863788a4368cdf1f84cad4967e35742fda7f463f87e3c7c8a742c1c650', 'Nguyễn Hoàng Bảo Anh', '12A2', 'student', 'ion:person'),
   ('usr_12a2_03', 'hma@bpbd.vn', '648f296b629f29b25db6290309d3756b5388c84f67fb8c6bdb9b12230a67bc3e', 'Huỳnh Minh Ánh', '12A2', 'student', 'ion:person'),
