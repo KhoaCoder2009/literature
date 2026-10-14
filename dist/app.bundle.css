@@ -257,6 +257,70 @@ nav a.on {
   border-radius: 9px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
+
+/* =========================================================================
+   TOP NAVIGATION BAR (DESKTOP & RESPONSIVE)
+   ========================================================================= */
+.nav-desktop-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 14px;
+}
+.nav-desktop-links a.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  background: rgba(148, 163, 184, 0.08);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+.nav-desktop-links a.nav-link ion-icon {
+  font-size: 17px;
+}
+.nav-desktop-links a.nav-link:hover {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.45);
+  color: var(--ink);
+  transform: translateY(-2px);
+}
+.nav-desktop-links a.nav-link.on {
+  background: var(--yellow);
+  border-color: var(--stroke);
+  color: #1e293b;
+  box-shadow: 0 3px 0 var(--stroke);
+  transform: translateY(0);
+}
+.nav-settings-desktop-btn {
+  display: inline-flex;
+  margin-right: 8px;
+}
+
+@media (min-width: 992px) {
+  .mobile-menu-toggle {
+    display: none !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .nav-desktop-links {
+    display: none !important;
+  }
+  .nav-settings-desktop-btn {
+    display: none !important;
+  }
+  .mobile-menu-toggle {
+    display: inline-flex !important;
+  }
+}
 .sidebar-links-list {
   display: flex;
   flex-direction: column;
@@ -2799,6 +2863,141 @@ body.projector-mode .hud-pill {
     align-items: center;
     text-align: center;
   }
+}
+
+/* =========================================================================
+   HOMEPAGE LEARNING MODULES GRID
+   ========================================================================= */
+.home-modules-section {
+  margin: 32px 0 28px;
+}
+.home-section-header {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.home-section-title {
+  margin: 0;
+  font-size: clamp(20px, 2.5vw, 24px);
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+}
+.home-section-subtitle {
+  font-size: 14.5px;
+  color: var(--mut);
+  font-weight: 600;
+}
+.home-modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+.home-module-card {
+  background: var(--bg-card);
+  border: 3.5px solid var(--stroke);
+  border-radius: 22px;
+  padding: 22px 20px 18px;
+  box-shadow: 0 8px 0 var(--stroke);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.home-module-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: var(--primary);
+  opacity: 0.95;
+}
+.home-module-card.lesson::after { background: #8b5cf6; }
+.home-module-card.reading::after { background: #06b6d4; }
+.home-module-card.writing::after { background: #10b981; }
+.home-module-card.history::after { background: #f59e0b; }
+
+.home-module-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 0 var(--stroke), 0 20px 32px var(--shadow-color);
+}
+.home-module-card:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 var(--stroke);
+}
+.module-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.module-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border: 2px solid var(--stroke);
+}
+.module-icon-box.lesson { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
+.module-icon-box.reading { background: rgba(6, 182, 212, 0.15); color: #06b6d4; }
+.module-icon-box.writing { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.module-icon-box.history { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+
+.module-badge {
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1.5px solid var(--stroke);
+}
+.module-badge.lesson { background: rgba(139, 92, 246, 0.12); color: #7c3aed; }
+.module-badge.reading { background: rgba(6, 182, 212, 0.12); color: #0891b2; }
+.module-badge.writing { background: rgba(16, 185, 129, 0.12); color: #059669; }
+.module-badge.history { background: rgba(245, 158, 11, 0.12); color: #d97706; }
+
+.module-title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.module-desc {
+  margin: 0 0 16px;
+  font-size: 13.5px;
+  color: var(--mut);
+  line-height: 1.55;
+  flex: 1;
+}
+.module-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1.5px dashed rgba(148, 163, 184, 0.3);
+  font-weight: 800;
+  font-size: 13.5px;
+  color: var(--primary);
+  transition: transform 0.2s ease;
+}
+.home-module-card.lesson .module-action { color: #8b5cf6; }
+.home-module-card.reading .module-action { color: #0891b2; }
+.home-module-card.writing .module-action { color: #059669; }
+.home-module-card.history .module-action { color: #d97706; }
+
+.home-module-card:hover .module-action ion-icon {
+  transform: translateX(4px);
 }
 
 /* =========================================================================

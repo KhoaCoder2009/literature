@@ -9,7 +9,34 @@
     <img src="./assets/logo-nguvan.png" alt="Biểu trưng Ngữ Văn" class="nav-brand-img">
   </div>
 
+  <div class="nav-desktop-links" id="nav-desktop-links">
+    <a data-g="home" onclick="go('home')" class="nav-link on">
+      <ion-icon name="home-outline"></ion-icon> <span>Trang chủ</span>
+    </a>
+    <a data-g="setup" onclick="go('setup')" class="nav-link">
+      <ion-icon name="book-outline"></ion-icon> <span>Bài học</span>
+    </a>
+    <a data-g="reading" onclick="go('reading')" class="nav-link">
+      <ion-icon name="document-text-outline"></ion-icon> <span>Đọc hiểu</span>
+    </a>
+    <a data-g="writing" onclick="go('writing')" class="nav-link">
+      <ion-icon name="create-outline"></ion-icon> <span>Luyện viết</span>
+    </a>
+    <a data-g="history" onclick="go('history')" class="nav-link">
+      <ion-icon name="time-outline"></ion-icon> <span>Lịch sử</span>
+    </a>
+    <a data-g="lib" class="nav-link teacher-only" onclick="go('lib')">
+      <ion-icon name="library-outline"></ion-icon> <span>Thư viện</span>
+    </a>
+    <a data-g="accounts" class="nav-link teacher-only" onclick="go('accounts')">
+      <ion-icon name="people-outline"></ion-icon> <span>Tài khoản</span>
+    </a>
+  </div>
+
   <div class="nav-user-area" id="nav-user-area">
+    <button class="btn sm gh nav-settings-btn nav-settings-desktop-btn" type="button" onclick="openSettingsDialog()" title="Cài đặt hệ thống" aria-label="Cài đặt">
+      <ion-icon name="settings-outline" style="font-size: 19px;"></ion-icon>
+    </button>
     <div id="nav-user-widget">
       <!-- Auth module sẽ tự động render Profile / Đăng nhập tại đây -->
     </div>
