@@ -6649,6 +6649,325 @@ ion-icon {
 
 
 /* =========================================================================
+   SET ATTEMPT LIMIT & PRIVACY MODAL (COMPACT & MODERN)
+   ========================================================================= */
+.set-cfg-dialog {
+  max-width: 520px;
+  width: 92%;
+  border-radius: 20px;
+  border: 2px solid var(--stroke);
+  box-shadow: 0 8px 0 var(--stroke), 0 20px 40px rgba(0, 0, 0, 0.25);
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg-card);
+  color: var(--ink);
+}
+
+.set-cfg-dialog::backdrop {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+}
+
+.set-cfg-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  border-bottom: 2px solid var(--stroke);
+}
+
+.set-cfg-header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.set-cfg-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.set-cfg-header-title h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.set-cfg-header-title p {
+  margin: 2px 0 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.set-cfg-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.set-cfg-close-btn:hover {
+  background: rgba(255, 255, 255, 0.32);
+  transform: scale(1.05);
+}
+
+.set-cfg-body {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: calc(85vh - 65px);
+  overflow-y: auto;
+}
+
+.set-cfg-target-card {
+  background: var(--bg-base);
+  border: 1.5px solid var(--stroke);
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+.set-cfg-target-type {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: var(--mut);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.set-cfg-target-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.set-cfg-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 480px) {
+  .set-cfg-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.set-cfg-card {
+  background: var(--bg-base);
+  border: 1.5px solid var(--stroke);
+  border-radius: 12px;
+  padding: 9px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.set-cfg-label {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+}
+
+.set-cfg-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.set-cfg-status {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.set-cfg-status.status-green {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.set-cfg-status.status-blue {
+  background: rgba(14, 165, 233, 0.12);
+  color: #0284c7;
+  border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+.set-cfg-status.status-red {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.set-cfg-status.status-gray {
+  background: rgba(148, 163, 184, 0.14);
+  color: var(--mut);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.set-cfg-select {
+  width: 100%;
+  padding: 6px 10px;
+  font-size: 12.5px;
+  font-weight: 700;
+  border-radius: 8px;
+  border: 1.5px solid var(--stroke);
+  background: var(--bg-card);
+  color: var(--ink);
+  outline: none;
+  cursor: pointer;
+  height: 36px;
+}
+
+.set-cfg-select:focus {
+  border-color: var(--primary);
+}
+
+.set-cfg-input-stepper-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.set-cfg-number-input {
+  width: 50px;
+  height: 36px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 8px;
+  border: 1.5px solid var(--stroke);
+  background: var(--bg-card);
+  color: var(--ink);
+  outline: none;
+  padding: 0 4px;
+}
+
+.set-cfg-number-input:focus {
+  border-color: var(--primary);
+}
+
+.set-cfg-chips-inline {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.set-cfg-input-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.set-cfg-datetime-input {
+  flex: 1;
+  height: 36px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 8px;
+  border: 1.5px solid var(--stroke);
+  background: var(--bg-card);
+  color: var(--ink);
+  outline: none;
+}
+
+.set-cfg-datetime-input:focus {
+  border-color: var(--primary);
+}
+
+.set-cfg-action-btn {
+  height: 36px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 8px;
+  border: 1.5px solid var(--stroke);
+  background: var(--bg-card);
+  color: var(--mut);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.set-cfg-action-btn:hover {
+  color: var(--red);
+  border-color: var(--red);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.set-cfg-chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.set-cfg-chip {
+  padding: 3px 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+  border-radius: 7px;
+  border: 1px solid var(--stroke);
+  background: var(--bg-card);
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.set-cfg-chip:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(14, 165, 233, 0.08);
+  transform: translateY(-1px);
+}
+
+.set-cfg-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1.5px solid var(--stroke);
+}
+
+
+/* =========================================================================
    WRITING PRACTICE MODULE STYLES (LUYỆN VIẾT)
    ========================================================================= */
 

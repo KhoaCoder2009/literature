@@ -853,7 +853,8 @@ function onLimitModalInputChange(val) {
   const num = parseInt(val, 10) || 0;
   const explain = document.getElementById('limit-modal-explain');
   if (explain) {
-    explain.textContent = num <= 0 ? 'lượt (Không giới hạn)' : `lượt (Tối đa ${num} lần)`;
+    explain.textContent = num <= 0 ? 'Không giới hạn' : `Tối đa ${num} lượt`;
+    explain.className = 'set-cfg-status ' + (num <= 0 ? 'status-gray' : 'status-blue');
   }
 }
 
@@ -899,24 +900,25 @@ function setLimitModalOpenAtPreset(preset) {
 function onLimitModalOpenAtChange(val) {
   const statusEl = document.getElementById('limit-modal-open-at-status');
   if (!statusEl) return;
+  statusEl.style.color = '';
   if (!val) {
-    statusEl.textContent = '🟢 Mở ngay (Làm được ngay)';
-    statusEl.style.color = 'var(--green)';
+    statusEl.textContent = '🟢 Mở ngay';
+    statusEl.className = 'set-cfg-status status-green';
     return;
   }
   const time = new Date(val).getTime();
   if (isNaN(time)) {
     statusEl.textContent = 'Ngày không hợp lệ';
-    statusEl.style.color = 'var(--red)';
+    statusEl.className = 'set-cfg-status status-red';
     return;
   }
   const isNotYet = Date.now() < time;
   if (isNotYet) {
-    statusEl.textContent = '⏳ Chưa mở • Sẽ mở lúc: ' + formatDeadlineDisplay(val);
-    statusEl.style.color = '#0284c7';
+    statusEl.textContent = '⏳ Mở lúc: ' + formatDeadlineDisplay(val);
+    statusEl.className = 'set-cfg-status status-blue';
   } else {
-    statusEl.textContent = '🟢 Đã mở từ: ' + formatDeadlineDisplay(val);
-    statusEl.style.color = 'var(--green)';
+    statusEl.textContent = '🟢 Đã mở: ' + formatDeadlineDisplay(val);
+    statusEl.className = 'set-cfg-status status-green';
   }
 }
 
@@ -951,24 +953,25 @@ function setLimitModalDeadlinePreset(preset) {
 function onLimitModalDeadlineChange(val) {
   const statusEl = document.getElementById('limit-modal-deadline-status');
   if (!statusEl) return;
+  statusEl.style.color = '';
   if (!val) {
-    statusEl.textContent = 'Chưa đặt hạn';
-    statusEl.style.color = 'var(--mut)';
+    statusEl.textContent = 'Không đặt hạn';
+    statusEl.className = 'set-cfg-status status-gray';
     return;
   }
   const time = new Date(val).getTime();
   if (isNaN(time)) {
     statusEl.textContent = 'Ngày không hợp lệ';
-    statusEl.style.color = 'var(--red)';
+    statusEl.className = 'set-cfg-status status-red';
     return;
   }
   const isExpired = Date.now() > time;
   if (isExpired) {
-    statusEl.textContent = '⚠️ Đã quá hạn: ' + formatDeadlineDisplay(val);
-    statusEl.style.color = 'var(--red)';
+    statusEl.textContent = '⚠️ Quá hạn: ' + formatDeadlineDisplay(val);
+    statusEl.className = 'set-cfg-status status-red';
   } else {
-    statusEl.textContent = '🟢 Hạn chót: ' + formatDeadlineDisplay(val);
-    statusEl.style.color = 'var(--green)';
+    statusEl.textContent = '🟢 Hạn: ' + formatDeadlineDisplay(val);
+    statusEl.className = 'set-cfg-status status-green';
   }
 }
 

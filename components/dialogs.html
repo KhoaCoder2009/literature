@@ -1010,125 +1010,111 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
 </dialog>
 
 <!-- SET ATTEMPT LIMIT, PRIVACY & DEADLINE DIALOG (GIÁO VIÊN & ADMIN) -->
-<dialog id="set-attempt-limit-dialog" class="auth-modal" style="max-width: 530px;">
-  <div class="auth-modal-header" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
-    <div class="auth-modal-title-group">
-      <h3 style="color:#fff; display:flex; align-items:center; gap:8px; margin:0; font-size:17px; font-weight:800;">
-        <ion-icon name="options-outline"></ion-icon> Cài đặt &amp; Giao bài
-      </h3>
-      <p style="color:rgba(255,255,255,0.85); margin:2px 0 0; font-size:12px;">Quyền Giáo viên &amp; Admin • Thiết lập chế độ riêng tư, lịch mở đề, số lượt và hạn nộp</p>
+<!-- SET ATTEMPT LIMIT, PRIVACY & DEADLINE DIALOG (GIÁO VIÊN & ADMIN) -->
+<dialog id="set-attempt-limit-dialog" class="set-cfg-dialog">
+  <div class="set-cfg-header">
+    <div class="set-cfg-header-title">
+      <div class="set-cfg-icon"><ion-icon name="options-outline"></ion-icon></div>
+      <div>
+        <h3>Cài đặt &amp; Giao bài</h3>
+        <p>Quyền Giáo viên &amp; Quản trị viên</p>
+      </div>
     </div>
-    <button type="button" class="auth-modal-close" onclick="closeSetAttemptLimitModal()" style="color:#fff;" title="Đóng">
-      <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+    <button type="button" class="set-cfg-close-btn" onclick="closeSetAttemptLimitModal()" title="Đóng">
+      <ion-icon name="close-outline"></ion-icon>
     </button>
   </div>
 
-  <div class="auth-modal-body" style="padding:18px 20px; max-height:80vh; overflow-y:auto;">
+  <div class="set-cfg-body">
     <!-- Thông tin bộ đề -->
-    <div style="background:var(--bg); border:1px solid var(--stroke); border-radius:12px; padding:12px 14px; margin-bottom:16px;">
-      <div style="font-size:12px; font-weight:700; color:var(--mut); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;" id="limit-modal-type-badge">DẠNG BÀI</div>
-      <div style="font-size:15px; font-weight:800; color:var(--text); line-height:1.4;" id="limit-modal-title">Tên bộ đề</div>
+    <div class="set-cfg-target-card">
+      <div class="set-cfg-target-type" id="limit-modal-type-badge">DẠNG BÀI</div>
+      <div class="set-cfg-target-title" id="limit-modal-title">Tên bộ đề</div>
     </div>
 
     <input type="hidden" id="limit-modal-target-type" value="">
     <input type="hidden" id="limit-modal-target-id" value="">
 
-    <!-- PHẦN 1: CHẾ ĐỘ HIỂN THỊ (QUYỀN RIÊNG TƯ) -->
-    <div style="margin-bottom:16px;">
-      <label for="limit-modal-privacy" style="font-size:13.5px; font-weight:700; display:flex; align-items:center; gap:6px; margin-bottom:6px; color:var(--text);">
-        <ion-icon name="eye-outline"></ion-icon> 1. Chế độ hiển thị &amp; Quyền riêng tư:
-      </label>
-      <select id="limit-modal-privacy" class="auth-input" style="width:100%; font-weight:700; padding:8px 12px; font-size:13.5px; border-radius:10px;">
-        <option value="public">🌐 Công khai (Mọi học sinh đều có thể xem và làm bài)</option>
-        <option value="private">🔒 Riêng tư (Chỉ Giáo viên/Admin thấy trong kho đề - Học sinh bị ẩn)</option>
-      </select>
-      <p style="font-size:12px; color:var(--mut); margin:6px 0 0; line-height:1.4;">
-        💡 Chọn <b>Riêng tư</b> khi đang soạn dở hoặc muốn bảo mật đề; chọn <b>Công khai</b> khi đã sẵn sàng giao cho học sinh.
-      </p>
-    </div>
-
-    <!-- PHẦN 2: LỊCH MỞ ĐỀ (NGÀY BẮT ĐẦU LÀM BÀI) -->
-    <div style="margin-top:16px; padding-top:16px; border-top:1px dashed var(--stroke); margin-bottom:16px;">
-      <label for="limit-modal-open-at" style="font-size:13.5px; font-weight:700; display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; color:var(--text);">
-        <span style="display:flex; align-items:center; gap:6px;">
-          <ion-icon name="time-outline"></ion-icon> 2. Thời gian mở đề (Bắt đầu làm bài):
-        </span>
-        <span id="limit-modal-open-at-status" style="font-size:12px; font-weight:700; color:var(--green);">🟢 Mở ngay</span>
-      </label>
-      <div style="display:flex; align-items:center; gap:8px;">
-        <input type="datetime-local" id="limit-modal-open-at" class="auth-input" style="flex:1; font-weight:700; padding:8px 12px; font-size:13.5px;" onchange="onLimitModalOpenAtChange(this.value)">
-        <button type="button" class="btn gh sm" onclick="setLimitModalOpenAtPreset('none')" title="Mở ngay" style="padding:8px 12px; height:42px; font-weight:700;">✕ Mở ngay</button>
+    <!-- CẶP CÀI ĐẶT: CHẾ ĐỘ HIỂN THỊ & SỐ LƯỢT LÀM -->
+    <div class="set-cfg-grid-2">
+      <!-- 1. Chế độ hiển thị -->
+      <div class="set-cfg-card">
+        <label for="limit-modal-privacy" class="set-cfg-label">
+          <ion-icon name="eye-outline"></ion-icon> <span>Chế độ hiển thị</span>
+        </label>
+        <select id="limit-modal-privacy" class="set-cfg-select">
+          <option value="public">🌐 Công khai</option>
+          <option value="private">🔒 Riêng tư</option>
+        </select>
       </div>
-      <p style="font-size:12px; color:var(--mut); margin:6px 0 0; line-height:1.4;">
-        ⏳ Trước thời điểm này, học sinh <b>chưa thể vào làm bài</b> mà sẽ thấy thông báo thời gian mở bài làm.
-      </p>
 
-      <!-- Presets mở đề -->
-      <div style="margin-top:8px; display:flex; flex-wrap:wrap; gap:6px;">
-        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalOpenAtPreset('none')">🚀 Mở ngay</button>
-        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalOpenAtPreset('tomorrow-8am')">🌅 8:00 Sáng mai</button>
-        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalOpenAtPreset('tomorrow-14pm')">☀️ 14:00 Chiều mai</button>
-        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalOpenAtPreset('monday-8am')">📅 Đầu tuần tới (8:00)</button>
+      <!-- 2. Giới hạn số lượt làm -->
+      <div class="set-cfg-card">
+        <div class="set-cfg-label-row">
+          <label for="limit-modal-input" class="set-cfg-label">
+            <ion-icon name="timer-outline"></ion-icon> <span>Lượt làm bài</span>
+          </label>
+          <span id="limit-modal-explain" class="set-cfg-status status-gray">Không giới hạn</span>
+        </div>
+        <div class="set-cfg-input-stepper-row">
+          <input type="number" id="limit-modal-input" min="0" max="999" step="1" value="0" class="set-cfg-number-input" oninput="onLimitModalInputChange(this.value)">
+          <div class="set-cfg-chips-inline">
+            <button type="button" class="set-cfg-chip" onclick="setLimitModalPreset(0)" title="Không giới hạn">♾️</button>
+            <button type="button" class="set-cfg-chip" onclick="setLimitModalPreset(1)" title="1 lượt">1</button>
+            <button type="button" class="set-cfg-chip" onclick="setLimitModalPreset(2)" title="2 lượt">2</button>
+            <button type="button" class="set-cfg-chip" onclick="setLimitModalPreset(3)" title="3 lượt">3</button>
+            <button type="button" class="set-cfg-chip" onclick="setLimitModalPreset(5)" title="5 lượt">5</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- PHẦN 3: GIỚI HẠN LƯỢT LÀM -->
-    <div style="margin-top:16px; padding-top:16px; border-top:1px dashed var(--stroke); margin-bottom:14px;">
-      <label for="limit-modal-input" style="font-size:13.5px; font-weight:700; display:block; margin-bottom:6px; color:var(--text);">
-        <ion-icon name="timer-outline"></ion-icon> 3. Số lượt làm tối đa cho mỗi học sinh:
-      </label>
-      <div style="display:flex; align-items:center; gap:10px;">
-        <input type="number" id="limit-modal-input" min="0" max="999" step="1" value="0" class="auth-input" style="font-size:18px; font-weight:800; text-align:center; width:110px; padding:8px;" oninput="onLimitModalInputChange(this.value)">
-        <span style="font-size:13.5px; color:var(--mut);" id="limit-modal-explain">lượt (0 = Không giới hạn)</span>
+    <!-- 3. Lịch mở đề (Thời gian bắt đầu làm) -->
+    <div class="set-cfg-card">
+      <div class="set-cfg-label-row">
+        <label for="limit-modal-open-at" class="set-cfg-label">
+          <ion-icon name="time-outline"></ion-icon> <span>Thời gian mở đề</span>
+        </label>
+        <span id="limit-modal-open-at-status" class="set-cfg-status status-green">🟢 Mở ngay</span>
       </div>
-      <p style="font-size:12px; color:var(--mut); margin:6px 0 0; line-height:1.4;">
-        💡 Chọn <b>1 lượt</b> cho bài thi; chọn <b>2-3 lượt</b> để sửa sai; hoặc <b>0</b> để luyện tập tự do.
-      </p>
-      <!-- Nút chọn nhanh lượt làm (Presets) -->
-      <div style="margin-top:8px; display:flex; flex-wrap:wrap; gap:6px;">
-        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalPreset(0)">♾️ Không giới hạn</button>
-        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalPreset(1)">1️⃣ 1 lần</button>
-        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalPreset(2)">2️⃣ 2 lần</button>
-        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalPreset(3)">3️⃣ 3 lần</button>
-        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalPreset(5)">5️⃣ 5 lần</button>
+      <div class="set-cfg-input-row">
+        <input type="datetime-local" id="limit-modal-open-at" class="set-cfg-datetime-input" onchange="onLimitModalOpenAtChange(this.value)">
+        <button type="button" class="set-cfg-action-btn" onclick="setLimitModalOpenAtPreset('none')">✕ Mở ngay</button>
+      </div>
+      <div class="set-cfg-chips-wrap">
+        <button type="button" class="set-cfg-chip" onclick="setLimitModalOpenAtPreset('none')">🚀 Mở ngay</button>
+        <button type="button" class="set-cfg-chip" onclick="setLimitModalOpenAtPreset('tomorrow-8am')">🌅 8:00 Sáng mai</button>
+        <button type="button" class="set-cfg-chip" onclick="setLimitModalOpenAtPreset('tomorrow-14pm')">☀️ 14:00 Chiều mai</button>
+        <button type="button" class="set-cfg-chip" onclick="setLimitModalOpenAtPreset('monday-8am')">📅 Đầu tuần tới (8:00)</button>
       </div>
     </div>
 
-    <!-- PHẦN 4: THỜI HẠN NỘP BÀI (DEADLINE) -->
-    <div style="margin-top:16px; padding-top:16px; border-top:1px dashed var(--stroke); margin-bottom:14px;">
-      <label for="limit-modal-deadline" style="font-size:13.5px; font-weight:700; display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; color:var(--text);">
-        <span style="display:flex; align-items:center; gap:6px;">
-          <ion-icon name="calendar-outline"></ion-icon> 4. Hạn chót nộp bài (Deadline):
-        </span>
-        <span id="limit-modal-deadline-status" style="font-size:12px; font-weight:700; color:var(--mut);">Chưa đặt hạn</span>
-      </label>
-      <div style="display:flex; align-items:center; gap:8px;">
-        <input type="datetime-local" id="limit-modal-deadline" class="auth-input" style="flex:1; font-weight:700; padding:8px 12px; font-size:13.5px;" onchange="onLimitModalDeadlineChange(this.value)">
-        <button type="button" class="btn gh sm" onclick="setLimitModalDeadlinePreset('none')" title="Xóa hạn chót" style="padding:8px 12px; height:42px; font-weight:700;">✕ Xóa</button>
+    <!-- 4. Hạn chót nộp bài (Deadline) -->
+    <div class="set-cfg-card">
+      <div class="set-cfg-label-row">
+        <label for="limit-modal-deadline" class="set-cfg-label">
+          <ion-icon name="calendar-outline"></ion-icon> <span>Hạn chót nộp bài</span>
+        </label>
+        <span id="limit-modal-deadline-status" class="set-cfg-status status-gray">Không đặt hạn</span>
       </div>
-      <p style="font-size:12px; color:var(--mut); margin:6px 0 0; line-height:1.4;">
-        ⏱️ Quá thời điểm này, học sinh <b>không thể vào làm bài mới</b> mà chỉ được <b>xem lại bài đã nộp</b>.
-      </p>
-      <!-- Nút chọn nhanh hạn chót (Deadline Presets) -->
-      <div style="margin-top:8px; display:flex; flex-wrap:wrap; gap:6px;">
-        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalDeadlinePreset('none')">♾️ Không đặt hạn</button>
-        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalDeadlinePreset('tonight')">🌙 Tối nay (23:59)</button>
-        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalDeadlinePreset('tomorrow')">☀️ Tối mai (23:59)</button>
-        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalDeadlinePreset('3days')">📅 3 ngày tới</button>
-        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalDeadlinePreset('7days')">🗓️ 1 tuần tới</button>
+      <div class="set-cfg-input-row">
+        <input type="datetime-local" id="limit-modal-deadline" class="set-cfg-datetime-input" onchange="onLimitModalDeadlineChange(this.value)">
+        <button type="button" class="set-cfg-action-btn" onclick="setLimitModalDeadlinePreset('none')">✕ Xóa hạn</button>
+      </div>
+      <div class="set-cfg-chips-wrap">
+        <button type="button" class="set-cfg-chip" onclick="setLimitModalDeadlinePreset('none')">♾️ Không hạn</button>
+        <button type="button" class="set-cfg-chip" onclick="setLimitModalDeadlinePreset('tonight')">🌙 Tối nay (23:59)</button>
+        <button type="button" class="set-cfg-chip" onclick="setLimitModalDeadlinePreset('tomorrow')">☀️ Tối mai (23:59)</button>
+        <button type="button" class="set-cfg-chip" onclick="setLimitModalDeadlinePreset('3days')">📅 3 ngày tới</button>
+        <button type="button" class="set-cfg-chip" onclick="setLimitModalDeadlinePreset('7days')">🗓️ 1 tuần tới</button>
       </div>
     </div>
 
-    <!-- Alert cảnh báo học sinh -->
-    <div style="background:rgba(234, 88, 12, 0.08); border:1px solid rgba(234, 88, 12, 0.25); border-radius:10px; padding:10px 12px; font-size:12px; line-height:1.5; color:var(--text); margin-bottom:16px;">
-      🔒 <b>Cơ chế với học sinh:</b> Bộ đề riêng tư sẽ ẩn hoàn toàn. Bộ đề chưa đến ngày mở sẽ hiển thị thời gian mở. Khi đã hết lượt hoặc quá hạn nộp, nút làm bài sẽ tự động chuyển thành <b>👁️ Xem lại bài làm</b>.
-    </div>
-
-    <!-- Footer actions -->
-    <div style="display:flex; justify-content:flex-end; gap:10px;">
+    <!-- FOOTER ACTIONS -->
+    <div class="set-cfg-footer">
       <button type="button" class="btn gh" onclick="closeSetAttemptLimitModal()">Hủy</button>
-      <button type="button" class="btn au" onclick="submitSetAttemptLimit()" style="font-weight:800;">
-        <ion-icon name="checkmark-circle-outline"></ion-icon> Lưu cài đặt
+      <button type="button" class="btn au" onclick="submitSetAttemptLimit()">
+        <ion-icon name="checkmark-circle-outline"></ion-icon> <span>Lưu cài đặt</span>
       </button>
     </div>
   </div>
