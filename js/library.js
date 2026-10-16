@@ -36,10 +36,12 @@ const cardHtml = (s, idx = 0) => {
 
   const topicName = (s.topic && s.topic.trim()) ? s.topic.trim() : 'Chưa phân loại';
 
-  const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { blocked: false, isDeadlineExpired: false, hasSubmissions: false, message: '' };
+  const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { blocked: false, isDeadlineExpired: false, isNotYetOpen: false, hasSubmissions: false, message: '' };
   const isBlocked = blockInfo.blocked;
   const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'quiz') : '';
   const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'quiz') : '';
+  const privacyBadge = (typeof getSetPrivacyBadgeHtml === 'function') ? getSetPrivacyBadgeHtml(s, 'quiz') : '';
+  const openAtBadge = (typeof getSetOpenAtBadgeHtml === 'function') ? getSetOpenAtBadgeHtml(s, 'quiz') : '';
 
   const pills = [];
   if (attemptBadge) pills.push(attemptBadge);
@@ -73,9 +75,10 @@ const cardHtml = (s, idx = 0) => {
   return `
 <div class="setup-grid-card lib-detailed-card set ${bulkDeleteMode ? 'bulk-selectable' : ''}${isSelected ? ' selected' : ''}" onclick="${cardOnClick}">
   <div class="setup-card-banner lib-card-banner" style="background: ${bg};">
-    <div class="setup-card-top-info">
+    <div class="setup-card-top-info" style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:6px;">
       ${bulkDeleteMode ? `<label class="set-select lib-set-select" onclick="event.stopPropagation()"><input type="checkbox" data-set-id="${esc(s.id)}" ${isSelected ? 'checked' : ''} onchange="toggleSetSelection(this)"> Chọn xóa</label>` : ''}
       <span class="setup-card-count-pill">${qCount} câu hỏi</span>
+      ${openAtBadge ? `<div onclick="event.stopPropagation()">${openAtBadge}</div>` : ''}
     </div>
     <h3 class="setup-card-title">${esc(s.title)}</h3>
     <span class="setup-card-watermark"><ion-icon name="book-outline"></ion-icon></span>
@@ -85,35 +88,50 @@ const cardHtml = (s, idx = 0) => {
     <div class="lib-card-meta-row">
       <span class="clickable-topic-tag" title="Nhấp để lọc theo thẻ: ${esc(topicName)}" onclick="event.stopPropagation(); setTopicFilter('${esc(topicName)}')"><ion-icon name="pricetag-outline"></ion-icon> ${esc(topicName)}</span>
       ${diffSummary}
-    </div>
+    ${(privacyBadge || attemptBadge || deadlineBadge) ? `
+      <div class="lib-card-badges-row" onclick="event.stopPropagation()">
+        ${privacyBadge}${attemptBadge}${deadlineBadge}
+      </div>
+    ` : ''}
 
     <div class="lib-card-breakdown">
       ${pills.join('')}
     </div>
   </div>
 
-  <div class="lib-card-actions-bar">
-    <div class="lib-actions-left">
-      ${canEdit ? `<button class="btn cy sm btn-edit-set" type="button" onclick="event.stopPropagation(); go('edit','${esc(s.id)}')" title="Sửa nội dung câu hỏi"><ion-icon name="create-outline"></ion-icon> Sửa</button>` : ''}
-      <button class="btn gh sm" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử làm bài của bộ đề này"><ion-icon name="time-outline"></ion-icon> Lịch sử</button>
-      ${isTeacherOrAdmin ? `<button class="btn au sm" type="button" onclick="event.stopPropagation(); openSetAttemptLimitModal('quiz', '${esc(s.id)}')" title="Cài đặt giới hạn số lượt làm bài & hạn nộp bài cho học sinh"><ion-icon name="timer-outline"></ion-icon> Đặt lượt &amp; Hạn</button>` : ''}
-      ${canEdit ? `<button class="btn no sm btn-delete-set" type="button" onclick="event.stopPropagation(); del('${esc(s.id)}')" title="Xóa bộ đề"><ion-icon name="trash-outline"></ion-icon> Xóa</button>` : ''}
+  <div class="lib-card-actions-box">
+    <div class="lib-launch-row">
+      ${isBlocked ? (blockInfo.hasSubmissions ? `
+        <button class="btn-setup-action lib-launch-btn lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')">
+          <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
+          <span>Xem lại bài làm</span>
+        </button>
+      ` : `
+        <button class="btn-setup-action lib-launch-btn lib-locked-btn" type="button" onclick="event.stopPropagation(); toast('${esc(blockInfo.message)}', 'bad')" title="${esc(blockInfo.message)}">
+          <span class="btn-setup-icon"><ion-icon name="${blockInfo.isNotYetOpen ? 'time-outline' : 'lock-closed-outline'}"></ion-icon></span>
+          <span>${blockInfo.isNotYetOpen ? 'Chưa mở' : (blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa')}</span>
+        </button>
+      `) : `
+        <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('setup', '${esc(s.id)}')">
+          <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
+          <span>Vào học bài ngay</span>
+        </button>
+      `}
     </div>
-    ${isBlocked ? (blockInfo.hasSubmissions ? `
-      <button class="btn-setup-action lib-launch-btn lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="${esc(blockInfo.message)}">
-        <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
-        <span>Xem lại bài làm</span>
-      </button>
+
+    ${(canEdit || isTeacherOrAdmin) ? `
+      <div class="lib-tools-row">
+        ${canEdit ? `<button class="lib-mini-tool-btn cy btn-edit-set" type="button" onclick="event.stopPropagation(); go('edit','${esc(s.id)}')" title="Sửa nội dung câu hỏi"><ion-icon name="create-outline"></ion-icon> <span>Sửa</span></button>` : ''}
+        <button class="lib-mini-tool-btn gh" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử làm bài của bộ đề này"><ion-icon name="time-outline"></ion-icon> <span>Lịch sử</span></button>
+        ${isTeacherOrAdmin ? `<button class="lib-mini-tool-btn au" type="button" onclick="event.stopPropagation(); openSetAttemptLimitModal('quiz', '${esc(s.id)}')" title="Cài đặt số lượt & hạn nộp bài"><ion-icon name="timer-outline"></ion-icon> <span>Lượt &amp; Hạn</span></button>` : ''}
+        ${canEdit ? `<button class="lib-mini-tool-btn no btn-delete-set" type="button" onclick="event.stopPropagation(); del('${esc(s.id)}')" title="Xóa bộ đề"><ion-icon name="trash-outline"></ion-icon> <span>Xóa</span></button>` : ''}
+      </div>
     ` : `
-      <button class="btn-setup-action lib-launch-btn lib-locked-btn" type="button" onclick="event.stopPropagation(); toast('${esc(blockInfo.message)}', 'bad')" title="${esc(blockInfo.message)}">
-        <span class="btn-setup-icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-        <span>${blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa'}</span>
-      </button>
-    `) : `
-      <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('setup', '${esc(s.id)}')">
-        <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
-        <span>Vào học</span>
-      </button>
+      <div class="lib-tools-row">
+        <button class="lib-mini-tool-btn gh" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử bài làm của bạn" style="width:100%;">
+          <ion-icon name="time-outline"></ion-icon> <span>Xem lịch sử của bạn</span>
+        </button>
+      </div>
     `}
   </div>
 </div>`;
@@ -130,10 +148,12 @@ const readingLibCardHtml = (s, idx = 0) => {
   const thCount = qList.filter(q => q.level === 'thong-hieu' || (q.levelName && q.levelName.includes('Thông hiểu'))).length;
   const vdCount = qList.filter(q => q.level === 'van-dung' || (q.levelName && q.levelName.includes('Vận dụng'))).length;
 
-  const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'reading') : { blocked: false, isDeadlineExpired: false, hasSubmissions: false, message: '' };
+  const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'reading') : { blocked: false, isDeadlineExpired: false, isNotYetOpen: false, hasSubmissions: false, message: '' };
   const isBlocked = blockInfo.blocked;
   const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'reading') : '';
   const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'reading') : '';
+  const privacyBadge = (typeof getSetPrivacyBadgeHtml === 'function') ? getSetPrivacyBadgeHtml(s, 'reading') : '';
+  const openAtBadge = (typeof getSetOpenAtBadgeHtml === 'function') ? getSetOpenAtBadgeHtml(s, 'reading') : '';
 
   const pills = [];
   if (attemptBadge) pills.push(attemptBadge);
@@ -155,9 +175,9 @@ const readingLibCardHtml = (s, idx = 0) => {
   return `
 <div class="setup-grid-card lib-detailed-card" onclick="${cardOnClick}">
   <div class="setup-card-banner lib-card-banner" style="background: ${bg};">
-    <div class="setup-card-top-info">
+    <div class="setup-card-top-info" style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:6px;">
       <span class="setup-card-count-pill">${qCount} câu hỏi</span>
-      ${s.status === 'draft' ? '<span class="lib-pill pill-draft" style="color:var(--amber); border-color:var(--amber);"><ion-icon name="document-text-outline"></ion-icon> Bản nháp</span>' : '<span class="lib-pill pill-published" style="color:var(--green); border-color:var(--green);"><ion-icon name="checkmark-circle-outline"></ion-icon> Đã xuất bản</span>'}
+      ${openAtBadge ? `<div onclick="event.stopPropagation()">${openAtBadge}</div>` : (s.status === 'draft' ? '<span class="lib-pill pill-draft" style="color:var(--amber); border-color:var(--amber);"><ion-icon name="document-text-outline"></ion-icon> Bản nháp</span>' : '')}
     </div>
     <h3 class="setup-card-title">${esc(s.title)}</h3>
     <span class="setup-card-watermark"><ion-icon name="document-text-outline"></ion-icon></span>
@@ -168,6 +188,12 @@ const readingLibCardHtml = (s, idx = 0) => {
       <span class="clickable-topic-tag" title="Nhấp để lọc theo chủ đề: ${esc(topic)}" onclick="event.stopPropagation(); setLibReadingTopicFilter('${esc(topic)}')"><ion-icon name="pricetag-outline"></ion-icon> ${esc(topic)}</span>
       <span class="lib-meta-author" title="Tác giả"><ion-icon name="person-outline"></ion-icon> ${esc(author)}</span>
     </div>
+
+    ${(privacyBadge || attemptBadge || deadlineBadge) ? `
+      <div class="lib-card-badges-row" onclick="event.stopPropagation()">
+        ${privacyBadge}${attemptBadge}${deadlineBadge}
+      </div>
+    ` : ''}
 
     <div class="lib-card-breakdown">
       ${pills.join('')}
@@ -184,28 +210,39 @@ const readingLibCardHtml = (s, idx = 0) => {
     `}
   </div>
 
-  <div class="lib-card-actions-bar">
-    <div class="lib-actions-left">
-      ${canEdit ? `<button class="btn cy sm btn-edit-set" type="button" onclick="event.stopPropagation(); openEditReadingSetModal('${esc(s.id)}')" title="Sửa thông tin đề đọc hiểu"><ion-icon name="create-outline"></ion-icon> Sửa</button>` : ''}
-      <button class="btn gh sm" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử làm bài của đề đọc hiểu này"><ion-icon name="time-outline"></ion-icon> Lịch sử</button>
-      ${isTeacherOrAdmin ? `<button class="btn au sm" type="button" onclick="event.stopPropagation(); openSetAttemptLimitModal('reading', '${esc(s.id)}')" title="Cài đặt giới hạn số lượt & hạn nộp bài cho học sinh"><ion-icon name="timer-outline"></ion-icon> Đặt lượt &amp; Hạn</button>` : ''}
-      ${canEdit ? `<button class="btn no sm btn-delete-set" type="button" onclick="event.stopPropagation(); deleteReadingSet('${esc(s.id)}'); R.lib();" title="Xóa đề đọc hiểu"><ion-icon name="trash-outline"></ion-icon> Xóa</button>` : ''}
+  <div class="lib-card-actions-box">
+    <div class="lib-launch-row">
+      ${isBlocked ? (blockInfo.hasSubmissions ? `
+        <button class="btn-setup-action lib-launch-btn lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')">
+          <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
+          <span>Xem lại bài làm</span>
+        </button>
+      ` : `
+        <button class="btn-setup-action lib-launch-btn lib-locked-btn" type="button" onclick="event.stopPropagation(); toast('${esc(blockInfo.message)}', 'bad')" title="${esc(blockInfo.message)}">
+          <span class="btn-setup-icon"><ion-icon name="${blockInfo.isNotYetOpen ? 'time-outline' : 'lock-closed-outline'}"></ion-icon></span>
+          <span>${blockInfo.isNotYetOpen ? 'Chưa mở' : (blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa')}</span>
+        </button>
+      `) : `
+        <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('reading', '${esc(s.id)}')">
+          <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
+          <span>Đọc hiểu</span>
+        </button>
+      `}
     </div>
-    ${isBlocked ? (blockInfo.hasSubmissions ? `
-      <button class="btn-setup-action lib-launch-btn lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="${esc(blockInfo.message)}">
-        <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
-        <span>Xem lại bài làm</span>
-      </button>
+
+    ${(canEdit || isTeacherOrAdmin) ? `
+      <div class="lib-tools-row">
+        ${canEdit ? `<button class="lib-mini-tool-btn cy btn-edit-set" type="button" onclick="event.stopPropagation(); openEditReadingSetModal('${esc(s.id)}')" title="Sửa thông tin đề đọc hiểu"><ion-icon name="create-outline"></ion-icon> <span>Sửa</span></button>` : ''}
+        <button class="lib-mini-tool-btn gh" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử làm bài"><ion-icon name="time-outline"></ion-icon> <span>Lịch sử</span></button>
+        ${isTeacherOrAdmin ? `<button class="lib-mini-tool-btn au" type="button" onclick="event.stopPropagation(); openSetAttemptLimitModal('reading', '${esc(s.id)}')" title="Cài đặt số lượt & hạn nộp bài"><ion-icon name="timer-outline"></ion-icon> <span>Lượt &amp; Hạn</span></button>` : ''}
+        ${canEdit ? `<button class="lib-mini-tool-btn no btn-delete-set" type="button" onclick="event.stopPropagation(); deleteReadingSet('${esc(s.id)}'); R.lib();" title="Xóa đề đọc hiểu"><ion-icon name="trash-outline"></ion-icon> <span>Xóa</span></button>` : ''}
+      </div>
     ` : `
-      <button class="btn-setup-action lib-launch-btn lib-locked-btn" type="button" onclick="event.stopPropagation(); toast('${esc(blockInfo.message)}', 'bad')" title="${esc(blockInfo.message)}">
-        <span class="btn-setup-icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-        <span>${blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa'}</span>
-      </button>
-    `) : `
-      <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('reading', '${esc(s.id)}')">
-        <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
-        <span>Đọc hiểu</span>
-      </button>
+      <div class="lib-tools-row">
+        <button class="lib-mini-tool-btn gh" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử bài làm của bạn" style="width:100%;">
+          <ion-icon name="time-outline"></ion-icon> <span>Xem lịch sử của bạn</span>
+        </button>
+      </div>
     `}
   </div>
 </div>`;
@@ -218,10 +255,12 @@ const writingLibCardHtml = (s, idx = 0) => {
   const topic = (s.categoryName || s.category || 'Luyện viết').trim();
   const promptSnippet = (s.prompt || '').trim();
 
-  const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'writing') : { blocked: false, isDeadlineExpired: false, hasSubmissions: false, message: '' };
+  const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'writing') : { blocked: false, isDeadlineExpired: false, isNotYetOpen: false, hasSubmissions: false, message: '' };
   const isBlocked = blockInfo.blocked;
   const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'writing') : '';
   const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'writing') : '';
+  const privacyBadge = (typeof getSetPrivacyBadgeHtml === 'function') ? getSetPrivacyBadgeHtml(s, 'writing') : '';
+  const openAtBadge = (typeof getSetOpenAtBadgeHtml === 'function') ? getSetOpenAtBadgeHtml(s, 'writing') : '';
 
   const outlineStepsHtml = secList.length ? `
     <div class="lib-outline-stepper">
@@ -240,9 +279,9 @@ const writingLibCardHtml = (s, idx = 0) => {
   return `
 <div class="setup-grid-card lib-detailed-card" onclick="${cardOnClick}">
   <div class="setup-card-banner lib-card-banner" style="background: ${bg};">
-    <div class="setup-card-top-info">
+    <div class="setup-card-top-info" style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:6px;">
       <span class="setup-card-count-pill">${secCount} phần câu hỏi</span>
-      ${s.status === 'draft' ? '<span class="lib-pill pill-draft" style="color:var(--amber); border-color:var(--amber);"><ion-icon name="document-text-outline"></ion-icon> Bản nháp</span>' : '<span class="lib-pill pill-published" style="color:var(--green); border-color:var(--green);"><ion-icon name="checkmark-circle-outline"></ion-icon> Đã xuất bản</span>'}
+      ${openAtBadge ? `<div onclick="event.stopPropagation()">${openAtBadge}</div>` : (s.status === 'draft' ? '<span class="lib-pill pill-draft" style="color:var(--amber); border-color:var(--amber);"><ion-icon name="document-text-outline"></ion-icon> Bản nháp</span>' : '')}
     </div>
     <h3 class="setup-card-title">${esc(s.title)}</h3>
     <span class="setup-card-watermark"><ion-icon name="create-outline"></ion-icon></span>
@@ -254,7 +293,11 @@ const writingLibCardHtml = (s, idx = 0) => {
       <span class="lib-meta-note"><ion-icon name="document-text-outline"></ion-icon> Dàn ý chuẩn</span>
     </div>
 
-    ${(attemptBadge || deadlineBadge) ? `<div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;">${attemptBadge}${deadlineBadge}</div>` : ''}
+    ${(privacyBadge || attemptBadge || deadlineBadge) ? `
+      <div class="lib-card-badges-row" onclick="event.stopPropagation()">
+        ${privacyBadge}${attemptBadge}${deadlineBadge}
+      </div>
+    ` : ''}
 
     <div class="lib-card-breakdown">
       ${outlineStepsHtml}
@@ -271,28 +314,39 @@ const writingLibCardHtml = (s, idx = 0) => {
     `}
   </div>
 
-  <div class="lib-card-actions-bar">
-    <div class="lib-actions-left">
-      ${canEdit ? `<button class="btn cy sm btn-edit-set" type="button" onclick="event.stopPropagation(); editWritingSet('${esc(s.id)}')" title="Sửa đề và dàn ý"><ion-icon name="create-outline"></ion-icon> Sửa</button>` : ''}
-      <button class="btn gh sm" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử làm bài của đề viết này"><ion-icon name="time-outline"></ion-icon> Lịch sử</button>
-      ${isTeacherOrAdmin ? `<button class="btn au sm" type="button" onclick="event.stopPropagation(); openSetAttemptLimitModal('writing', '${esc(s.id)}')" title="Cài đặt giới hạn số lượt & hạn nộp bài cho học sinh"><ion-icon name="timer-outline"></ion-icon> Đặt lượt &amp; Hạn</button>` : ''}
-      ${canEdit ? `<button class="btn no sm btn-delete-set" type="button" onclick="event.stopPropagation(); deleteWritingSet('${esc(s.id)}'); setTimeout(() => R.lib(), 100);" title="Xóa đề"><ion-icon name="trash-outline"></ion-icon> Xóa</button>` : ''}
+  <div class="lib-card-actions-box">
+    <div class="lib-launch-row">
+      ${isBlocked ? (blockInfo.hasSubmissions ? `
+        <button class="btn-setup-action lib-launch-btn lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')">
+          <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
+          <span>Xem lại bài làm</span>
+        </button>
+      ` : `
+        <button class="btn-setup-action lib-launch-btn lib-locked-btn" type="button" onclick="event.stopPropagation(); toast('${esc(blockInfo.message)}', 'bad')" title="${esc(blockInfo.message)}">
+          <span class="btn-setup-icon"><ion-icon name="${blockInfo.isNotYetOpen ? 'time-outline' : 'lock-closed-outline'}"></ion-icon></span>
+          <span>${blockInfo.isNotYetOpen ? 'Chưa mở' : (blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa')}</span>
+        </button>
+      `) : `
+        <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('writing', '${esc(s.id)}')">
+          <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
+          <span>Luyện viết ngay</span>
+        </button>
+      `}
     </div>
-    ${isBlocked ? (blockInfo.hasSubmissions ? `
-      <button class="btn-setup-action lib-launch-btn lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="${esc(blockInfo.message)}">
-        <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
-        <span>Xem lại bài làm</span>
-      </button>
+
+    ${(canEdit || isTeacherOrAdmin) ? `
+      <div class="lib-tools-row">
+        ${canEdit ? `<button class="lib-mini-tool-btn cy btn-edit-set" type="button" onclick="event.stopPropagation(); editWritingSet('${esc(s.id)}')" title="Sửa đề và dàn ý"><ion-icon name="create-outline"></ion-icon> <span>Sửa</span></button>` : ''}
+        <button class="lib-mini-tool-btn gh" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử làm bài"><ion-icon name="time-outline"></ion-icon> <span>Lịch sử</span></button>
+        ${isTeacherOrAdmin ? `<button class="lib-mini-tool-btn au" type="button" onclick="event.stopPropagation(); openSetAttemptLimitModal('writing', '${esc(s.id)}')" title="Cài đặt số lượt & hạn nộp bài"><ion-icon name="timer-outline"></ion-icon> <span>Lượt &amp; Hạn</span></button>` : ''}
+        ${canEdit ? `<button class="lib-mini-tool-btn no btn-delete-set" type="button" onclick="event.stopPropagation(); deleteWritingSet('${esc(s.id)}'); setTimeout(() => R.lib(), 100);" title="Xóa đề"><ion-icon name="trash-outline"></ion-icon> <span>Xóa</span></button>` : ''}
+      </div>
     ` : `
-      <button class="btn-setup-action lib-launch-btn lib-locked-btn" type="button" onclick="event.stopPropagation(); toast('${esc(blockInfo.message)}', 'bad')" title="${esc(blockInfo.message)}">
-        <span class="btn-setup-icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-        <span>${blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa'}</span>
-      </button>
-    `) : `
-      <button class="btn-setup-action lib-launch-btn" type="button" onclick="event.stopPropagation(); go('writing', '${esc(s.id)}')">
-        <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
-        <span>Luyện viết</span>
-      </button>
+      <div class="lib-tools-row">
+        <button class="lib-mini-tool-btn gh" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')" title="Xem lịch sử bài làm của bạn" style="width:100%;">
+          <ion-icon name="time-outline"></ion-icon> <span>Xem lịch sử của bạn</span>
+        </button>
+      </div>
     `}
   </div>
 </div>`;
@@ -391,7 +445,9 @@ R.lib = () => {
   const clearBtn = $('#lf-clear');
   if (clearBtn && input) clearBtn.hidden = !input.value.trim();
 
+  const isStudent = Boolean(window.Auth && window.Auth.isStudent());
   const l = sets.filter(s => {
+    if (isStudent && s.privacy === 'private') return false;
     const topic = (s.topic && s.topic.trim()) ? s.topic.trim() : 'Chưa phân loại';
     const matchTopic = !currentTopicFilter || topic.toLowerCase() === currentTopicFilter.toLowerCase();
     const matchText = !f || N(s.title + ' ' + (s.topic || '')).includes(f);
@@ -544,6 +600,27 @@ function meta() {
       saveSetDeadlinesMap(dMap);
     }
   }
+  const privacyInp = $('#set-privacy');
+  if (privacyInp) {
+    const priv = (privacyInp.value || 'public').trim();
+    CS.privacy = priv;
+    if (typeof getSetPrivacyMap === 'function' && typeof saveSetPrivacyMap === 'function') {
+      const pMap = getSetPrivacyMap();
+      pMap[String(CS.id)] = priv;
+      saveSetPrivacyMap(pMap);
+    }
+  }
+  const openAtInp = $('#set-open-at');
+  if (openAtInp) {
+    const oa = (openAtInp.value || '').trim();
+    CS.openAt = oa;
+    if (typeof getSetOpenAtMap === 'function' && typeof saveSetOpenAtMap === 'function') {
+      const oMap = getSetOpenAtMap();
+      if (oa) oMap[String(CS.id)] = oa;
+      else delete oMap[String(CS.id)];
+      saveSetOpenAtMap(oMap);
+    }
+  }
   save();
 }
 
@@ -551,7 +628,12 @@ function renderHomeSets() {
   const container = $('#home-sets-container');
   if (!container) return;
   
-  const validSets = (sets || []).filter(s => !String(s.id).startsWith('set_'));
+  const isStudent = (typeof Auth !== 'undefined' && Auth.isStudent());
+  const validSets = (sets || []).filter(s => {
+    if (String(s.id).startsWith('set_')) return false;
+    if (isStudent && typeof isSetPrivate === 'function' && isSetPrivate(s, 'quiz')) return false;
+    return true;
+  });
   
   if (!validSets.length) {
     container.innerHTML = `
@@ -582,9 +664,11 @@ function renderHomeSets() {
     
     const colorClass = colorClasses[idx % colorClasses.length];
     
-    const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { blocked: false, isDeadlineExpired: false, hasSubmissions: false, message: '' };
+    const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { blocked: false, isDeadlineExpired: false, isNotYetOpen: false, hasSubmissions: false, message: '' };
     const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'quiz') : '';
     const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'quiz') : '';
+    const privacyBadge = (typeof getSetPrivacyBadgeHtml === 'function') ? getSetPrivacyBadgeHtml(s, 'quiz') : '';
+    const openAtBadge = (typeof getSetOpenAtBadgeHtml === 'function') ? getSetOpenAtBadgeHtml(s, 'quiz') : '';
 
     return `
       <div class="cartoon-set-card ${colorClass}" onclick="startSetStudy('${esc(s.id)}')">
@@ -595,12 +679,12 @@ function renderHomeSets() {
         </div>
         <h3 class="set-card-title">${esc(s.title)}</h3>
         <p class="set-card-meta"><ion-icon name="document-text-outline"></ion-icon> <b>${qCount}</b> câu hỏi (${details})</p>
-        ${(attemptBadge || deadlineBadge) ? `<div style="display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 10px;">${attemptBadge}${deadlineBadge}</div>` : ''}
+        ${(privacyBadge || openAtBadge || attemptBadge || deadlineBadge) ? `<div style="display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 10px;" onclick="event.stopPropagation()">${privacyBadge}${openAtBadge}${attemptBadge}${deadlineBadge}</div>` : ''}
         <div class="set-card-footer">
           ${blockInfo.blocked 
             ? (blockInfo.hasSubmissions 
                 ? `<span class="set-card-btn" style="background:#475569;"><ion-icon name="eye-outline"></ion-icon> Xem lại bài làm →</span>`
-                : `<span class="set-card-btn" style="background:#94a3b8;"><ion-icon name="lock-closed-outline"></ion-icon> ${blockInfo.isDeadlineExpired ? 'Đã hết hạn nộp' : 'Đã khóa'}</span>`)
+                : `<span class="set-card-btn" style="background:#94a3b8;"><ion-icon name="${blockInfo.isNotYetOpen ? 'time-outline' : 'lock-closed-outline'}"></ion-icon> ${blockInfo.isNotYetOpen ? 'Chưa mở' : (blockInfo.isDeadlineExpired ? 'Đã hết hạn nộp' : 'Đã khóa')}</span>`)
             : `<span class="set-card-btn"><ion-icon name="play-outline"></ion-icon> Vào bài học ngay →</span>`}
         </div>
       </div>
@@ -728,6 +812,7 @@ function renderLibReadingPane() {
   const isStudent = Boolean(window.Auth && window.Auth.isStudent());
   const filtered = allSets.filter(s => {
     if (isStudent && s.status === 'draft') return false;
+    if (isStudent && s.privacy === 'private') return false;
     const top = (s.genre || s.category || 'Chưa phân loại').trim();
     if (currentLibReadingTopic && top.toLowerCase() !== currentLibReadingTopic.toLowerCase()) {
       return false;
@@ -806,7 +891,10 @@ function renderLibWritingPane() {
   }
 
   // Filter Sets
+  const isStudent = Boolean(window.Auth && window.Auth.isStudent());
   const filtered = allSets.filter(s => {
+    if (isStudent && s.status === 'draft') return false;
+    if (isStudent && s.privacy === 'private') return false;
     const top = (s.categoryName || s.category || 'Chưa phân loại').trim();
     if (currentLibWritingTopic && top.toLowerCase() !== currentLibWritingTopic.toLowerCase()) {
       return false;

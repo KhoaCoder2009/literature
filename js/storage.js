@@ -423,6 +423,94 @@ function saveSetDeadlinesMap(map) {
   } catch (e) {}
 }
 
+const SET_PRIVACY_MAP_KEY = 'lit_set_privacy_map';
+const SET_OPEN_AT_MAP_KEY = 'lit_set_open_at_map';
+
+function getSetPrivacyMap() {
+  try {
+    const raw = localStorage.getItem(SET_PRIVACY_MAP_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveSetPrivacyMap(map) {
+  try {
+    localStorage.setItem(SET_PRIVACY_MAP_KEY, JSON.stringify(map));
+  } catch (e) {}
+}
+
+function getSetOpenAtMap() {
+  try {
+    const raw = localStorage.getItem(SET_OPEN_AT_MAP_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveSetOpenAtMap(map) {
+  try {
+    localStorage.setItem(SET_OPEN_AT_MAP_KEY, JSON.stringify(map));
+  } catch (e) {}
+}
+
+function getSetPrivacy(setOrId, type = '') {
+  let id = '';
+  let directPrivacy = '';
+  if (typeof setOrId === 'object' && setOrId !== null) {
+    id = String(setOrId.id || '');
+    if (setOrId.privacy) directPrivacy = String(setOrId.privacy).trim();
+    else if (setOrId.status === 'draft' || setOrId.isDraft) directPrivacy = 'private';
+    else if (setOrId.status === 'published') directPrivacy = 'public';
+  } else {
+    id = String(setOrId || '');
+  }
+
+  const map = getSetPrivacyMap();
+  const mapPrivacy = map[id] ? String(map[id]).trim() : '';
+  return (directPrivacy || mapPrivacy || 'public').toLowerCase();
+}
+
+function isSetPrivate(setOrId, type = '') {
+  return getSetPrivacy(setOrId, type) === 'private';
+}
+
+function isStudentPrivacyBlocked(setOrId, type = '') {
+  if (typeof Auth === 'undefined' || !Auth.isStudent()) return false;
+  return isSetPrivate(setOrId, type);
+}
+
+function getSetOpenAt(setOrId, type = '') {
+  let id = '';
+  let directOpenAt = '';
+  if (typeof setOrId === 'object' && setOrId !== null) {
+    id = String(setOrId.id || '');
+    if (setOrId.openAt) directOpenAt = String(setOrId.openAt).trim();
+    else if (setOrId.open_at) directOpenAt = String(setOrId.open_at).trim();
+  } else {
+    id = String(setOrId || '');
+  }
+
+  const map = getSetOpenAtMap();
+  const mapOpenAt = map[id] ? String(map[id]).trim() : '';
+  return directOpenAt || mapOpenAt || '';
+}
+
+function isSetNotYetOpen(setOrId, type = '') {
+  const openAt = getSetOpenAt(setOrId, type);
+  if (!openAt) return false;
+  const time = new Date(openAt).getTime();
+  if (isNaN(time)) return false;
+  return Date.now() < time;
+}
+
+function isStudentOpenBlocked(setOrId, type = '') {
+  if (typeof Auth === 'undefined' || !Auth.isStudent()) return false;
+  return isSetNotYetOpen(setOrId, type);
+}
+
 function getSetMaxAttempts(setOrId, type = '') {
   let id = '';
   let directLimit = 0;
@@ -505,32 +593,39 @@ function isStudentAttemptExceeded(setOrId, type = '') {
 
 function isStudentEntryBlocked(setOrId, type = '') {
   if (typeof Auth === 'undefined' || !Auth.isStudent()) return false;
-  return isStudentDeadlineBlocked(setOrId, type) || isStudentAttemptExceeded(setOrId, type);
+  return isStudentPrivacyBlocked(setOrId, type) || isStudentOpenBlocked(setOrId, type) || isStudentDeadlineBlocked(setOrId, type) || isStudentAttemptExceeded(setOrId, type);
 }
 
 function getStudentBlockInfo(setOrId, type = '') {
   if (typeof Auth === 'undefined' || !Auth.isStudent()) {
-    return { blocked: false, isDeadlineExpired: false, isAttemptExceeded: false, count: 0, maxAttempts: 0, hasSubmissions: false, message: '' };
+    return { blocked: false, isPrivate: false, isNotYetOpen: false, isDeadlineExpired: false, isAttemptExceeded: false, count: 0, maxAttempts: 0, hasSubmissions: false, openAt: '', deadline: '', message: '' };
   }
   const id = typeof setOrId === 'object' && setOrId !== null ? setOrId.id : setOrId;
+  const isPrivate = isStudentPrivacyBlocked(setOrId, type);
+  const isNotYetOpen = isStudentOpenBlocked(setOrId, type);
   const isDeadlineExpired = isStudentDeadlineBlocked(setOrId, type);
   const isAttemptExceeded = isStudentAttemptExceeded(setOrId, type);
   const count = getStudentAttemptCount(id);
   const maxAttempts = getSetMaxAttempts(setOrId, type);
+  const openAt = getSetOpenAt(setOrId, type);
+  const deadline = getSetDeadline(setOrId, type);
   const hasSubmissions = count > 0;
-  const blocked = isDeadlineExpired || isAttemptExceeded;
+  const blocked = isPrivate || isNotYetOpen || isDeadlineExpired || isAttemptExceeded;
 
   let message = '';
-  if (isDeadlineExpired && isAttemptExceeded) {
+  if (isPrivate) {
+    message = 'Bộ đề này đang ở chế độ Riêng tư (ẩn), chỉ dành cho Giáo viên. Học sinh chưa thể vào làm!';
+  } else if (isNotYetOpen) {
+    message = `Bộ đề này chưa đến thời gian mở! Bài làm sẽ chính thức mở vào lúc: ${formatDeadlineDisplay(openAt)}. Vui lòng quay lại sau!`;
+  } else if (isDeadlineExpired && isAttemptExceeded) {
     message = `Hạn nộp bài đã kết thúc và bạn cũng đã dùng hết số lượt làm bài (${count}/${maxAttempts} lượt). Bạn chỉ có quyền xem lại kết quả đã nộp!`;
   } else if (isDeadlineExpired) {
-    const dl = getSetDeadline(setOrId, type);
-    message = `Thời hạn nộp bài đã kết thúc (${formatDeadlineDisplay(dl)}). Bạn không thể vào làm bài mới!`;
+    message = `Thời hạn nộp bài đã kết thúc (${formatDeadlineDisplay(deadline)}). Bạn không thể vào làm bài mới!`;
   } else if (isAttemptExceeded) {
     message = `Bạn đã hoàn thành đủ số lượt làm bài cho phép (${count}/${maxAttempts} lượt). Bạn chỉ có quyền xem lại kết quả đã nộp!`;
   }
 
-  return { blocked, isDeadlineExpired, isAttemptExceeded, count, maxAttempts, hasSubmissions, message };
+  return { blocked, isPrivate, isNotYetOpen, isDeadlineExpired, isAttemptExceeded, count, maxAttempts, hasSubmissions, openAt, deadline, message };
 }
 
 function formatDeadlineDisplay(dlStr) {
@@ -555,15 +650,17 @@ function formatDeadlineDisplay(dlStr) {
   }
 }
 
-function updateSetAttemptLimit(type, setId, limit, deadline) {
+function updateSetAttemptLimit(type, setId, limit, deadline, privacy, openAt) {
   if (typeof Auth !== 'undefined' && !Auth.isTeacher() && !Auth.isAdmin()) {
-    toast('Chỉ tài khoản Giáo viên và Quản trị viên mới có quyền đổi cài đặt lượt làm và hạn nộp!', 'bad');
+    toast('Chỉ tài khoản Giáo viên và Quản trị viên mới có quyền đổi cài đặt bộ đề!', 'bad');
     return false;
   }
 
   const numLimit = Math.max(0, parseInt(limit, 10) || 0);
   const targetIdStr = String(setId);
   const deadlineStr = (deadline !== undefined && deadline !== null) ? String(deadline).trim() : '';
+  const privacyStr = (privacy === 'private' ? 'private' : 'public');
+  const openAtStr = (openAt !== undefined && openAt !== null) ? String(openAt).trim() : '';
 
   // 1. Lưu vào map lượt làm
   const map = getSetAttemptLimitsMap();
@@ -579,13 +676,33 @@ function updateSetAttemptLimit(type, setId, limit, deadline) {
   }
   saveSetDeadlinesMap(dMap);
 
-  // 3. Cập nhật đối tượng bộ đề tương ứng trong bộ nhớ
+  // 3. Lưu vào map chế độ riêng tư
+  const pMap = getSetPrivacyMap();
+  if (privacyStr === 'private') {
+    pMap[targetIdStr] = 'private';
+  } else {
+    delete pMap[targetIdStr];
+  }
+  saveSetPrivacyMap(pMap);
+
+  // 4. Lưu vào map ngày mở đề
+  const oMap = getSetOpenAtMap();
+  if (openAtStr) {
+    oMap[targetIdStr] = openAtStr;
+  } else {
+    delete oMap[targetIdStr];
+  }
+  saveSetOpenAtMap(oMap);
+
+  // 5. Cập nhật đối tượng bộ đề tương ứng trong bộ nhớ
   if (type === 'quiz' || type === 'lessons' || type === 'set') {
     if (typeof sets !== 'undefined' && Array.isArray(sets)) {
       const target = sets.find(s => String(s.id) === targetIdStr);
       if (target) {
         target.maxAttempts = numLimit;
         target.deadline = deadlineStr;
+        target.privacy = privacyStr;
+        target.openAt = openAtStr;
         if (typeof save === 'function') save();
       }
     }
@@ -595,6 +712,9 @@ function updateSetAttemptLimit(type, setId, limit, deadline) {
       if (target) {
         target.maxAttempts = numLimit;
         target.deadline = deadlineStr;
+        target.privacy = privacyStr;
+        target.status = (privacyStr === 'private' ? 'draft' : 'published');
+        target.openAt = openAtStr;
         if (typeof saveReadingData === 'function') saveReadingData();
       }
     }
@@ -604,12 +724,14 @@ function updateSetAttemptLimit(type, setId, limit, deadline) {
       if (target) {
         target.maxAttempts = numLimit;
         target.deadline = deadlineStr;
+        target.privacy = privacyStr;
+        target.openAt = openAtStr;
         if (typeof saveWritingSets === 'function') saveWritingSets();
       }
     }
   }
 
-  // 4. Render lại các danh sách đang hiển thị
+  // 6. Render lại các danh sách đang hiển thị
   if (typeof renderLibLessonsPane === 'function') renderLibLessonsPane();
   if (typeof renderLibReadingPane === 'function') renderLibReadingPane();
   if (typeof renderLibWritingPane === 'function') renderLibWritingPane();
@@ -619,15 +741,17 @@ function updateSetAttemptLimit(type, setId, limit, deadline) {
   if (typeof renderHomeSets === 'function') renderHomeSets();
 
   const details = [];
+  details.push(privacyStr === 'private' ? 'Chế độ: 🔒 Riêng tư' : 'Chế độ: 🌐 Công khai');
+  if (openAtStr) details.push(`Mở lúc: ${formatDeadlineDisplay(openAtStr)}`);
   details.push(numLimit > 0 ? `Lượt: tối đa ${numLimit} lần` : 'Lượt: không giới hạn');
-  details.push(deadlineStr ? `Hạn nộp: ${formatDeadlineDisplay(deadlineStr)}` : 'Hạn nộp: không đặt hạn');
+  if (deadlineStr) details.push(`Hạn nộp: ${formatDeadlineDisplay(deadlineStr)}`);
   toast(`Đã cập nhật cài đặt thành công! (${details.join(' • ')})`, 'ok');
   return true;
 }
 
 function openSetAttemptLimitModal(type, setId) {
   if (typeof Auth !== 'undefined' && !Auth.isTeacher() && !Auth.isAdmin()) {
-    toast('Chỉ Giáo viên và Quản trị viên mới có quyền cài đặt lượt làm và hạn nộp!', 'bad');
+    toast('Chỉ Giáo viên và Quản trị viên mới có quyền cài đặt lượt làm, thời gian mở và hạn nộp!', 'bad');
     return;
   }
   const dialog = document.getElementById('set-attempt-limit-dialog');
@@ -637,6 +761,8 @@ function openSetAttemptLimitModal(type, setId) {
   let typeLabel = 'Trắc nghiệm / Bài học';
   let maxAttempts = 0;
   let deadline = '';
+  let privacy = 'public';
+  let openAt = '';
 
   if (type === 'quiz' || type === 'lessons' || type === 'set') {
     type = 'quiz';
@@ -646,6 +772,8 @@ function openSetAttemptLimitModal(type, setId) {
       title = s.title;
       maxAttempts = getSetMaxAttempts(s, 'quiz');
       deadline = getSetDeadline(s, 'quiz');
+      privacy = getSetPrivacy(s, 'quiz');
+      openAt = getSetOpenAt(s, 'quiz');
     }
   } else if (type === 'reading') {
     typeLabel = '📑 ĐỀ ĐỌC HIỂU';
@@ -654,6 +782,8 @@ function openSetAttemptLimitModal(type, setId) {
       title = s.title;
       maxAttempts = getSetMaxAttempts(s, 'reading');
       deadline = getSetDeadline(s, 'reading');
+      privacy = getSetPrivacy(s, 'reading');
+      openAt = getSetOpenAt(s, 'reading');
     }
   } else if (type === 'writing') {
     typeLabel = '✍️ ĐỀ LUYỆN VIẾT VĂN';
@@ -662,6 +792,8 @@ function openSetAttemptLimitModal(type, setId) {
       title = s.title;
       maxAttempts = getSetMaxAttempts(s, 'writing');
       deadline = getSetDeadline(s, 'writing');
+      privacy = getSetPrivacy(s, 'writing');
+      openAt = getSetOpenAt(s, 'writing');
     }
   }
 
@@ -674,12 +806,27 @@ function openSetAttemptLimitModal(type, setId) {
   const titleEl = document.getElementById('limit-modal-title');
   if (titleEl) titleEl.textContent = title;
 
+  // Privacy Select
+  const privacyInp = document.getElementById('limit-modal-privacy');
+  if (privacyInp) {
+    privacyInp.value = (privacy === 'private' ? 'private' : 'public');
+  }
+
+  // OpenAt Input
+  const openAtInp = document.getElementById('limit-modal-open-at');
+  if (openAtInp) {
+    openAtInp.value = openAt || '';
+    onLimitModalOpenAtChange(openAtInp.value);
+  }
+
+  // Attempts Input
   const inp = document.getElementById('limit-modal-input');
   if (inp) {
     inp.value = maxAttempts || 0;
     onLimitModalInputChange(inp.value);
   }
 
+  // Deadline Input
   const deadlineInp = document.getElementById('limit-modal-deadline');
   if (deadlineInp) {
     deadlineInp.value = deadline || '';
@@ -718,6 +865,59 @@ function toLocalDateTimeString(d) {
   const h = pad(d.getHours());
   const m = pad(d.getMinutes());
   return `${Y}-${M}-${D}T${h}:${m}`;
+}
+
+function setLimitModalOpenAtPreset(preset) {
+  const inp = document.getElementById('limit-modal-open-at');
+  if (!inp) return;
+
+  if (preset === 'none') {
+    inp.value = '';
+    onLimitModalOpenAtChange('');
+    return;
+  }
+
+  const now = new Date();
+  let targetDate = null;
+  if (preset === 'now') {
+    targetDate = new Date(now.getTime() - 60000); // 1 minute ago
+  } else if (preset === 'tomorrow-8am') {
+    targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 8, 0, 0);
+  } else if (preset === 'tomorrow-14pm') {
+    targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 14, 0, 0);
+  } else if (preset === 'monday-8am') {
+    const daysUntilMonday = ((1 + 7 - now.getDay()) % 7) || 7;
+    targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + daysUntilMonday, 8, 0, 0);
+  }
+
+  if (targetDate) {
+    inp.value = toLocalDateTimeString(targetDate);
+    onLimitModalOpenAtChange(inp.value);
+  }
+}
+
+function onLimitModalOpenAtChange(val) {
+  const statusEl = document.getElementById('limit-modal-open-at-status');
+  if (!statusEl) return;
+  if (!val) {
+    statusEl.textContent = '🟢 Mở ngay (Làm được ngay)';
+    statusEl.style.color = 'var(--green)';
+    return;
+  }
+  const time = new Date(val).getTime();
+  if (isNaN(time)) {
+    statusEl.textContent = 'Ngày không hợp lệ';
+    statusEl.style.color = 'var(--red)';
+    return;
+  }
+  const isNotYet = Date.now() < time;
+  if (isNotYet) {
+    statusEl.textContent = '⏳ Chưa mở • Sẽ mở lúc: ' + formatDeadlineDisplay(val);
+    statusEl.style.color = '#0284c7';
+  } else {
+    statusEl.textContent = '🟢 Đã mở từ: ' + formatDeadlineDisplay(val);
+    statusEl.style.color = 'var(--green)';
+  }
 }
 
 function setLimitModalDeadlinePreset(preset) {
@@ -779,11 +979,48 @@ function submitSetAttemptLimit() {
   const limit = parseInt(inp ? inp.value : 0, 10) || 0;
   const deadlineInp = document.getElementById('limit-modal-deadline');
   const deadline = (deadlineInp ? deadlineInp.value : '').trim();
+  const privacyInp = document.getElementById('limit-modal-privacy');
+  const privacy = (privacyInp ? privacyInp.value : 'public').trim();
+  const openAtInp = document.getElementById('limit-modal-open-at');
+  const openAt = (openAtInp ? openAtInp.value : '').trim();
 
   if (type && id) {
-    updateSetAttemptLimit(type, id, limit, deadline);
+    updateSetAttemptLimit(type, id, limit, deadline, privacy, openAt);
   }
   closeSetAttemptLimitModal();
+}
+
+function getSetPrivacyBadgeHtml(s, type = 'quiz') {
+  if (!s) return '';
+  const isTeacherOrAdmin = (typeof Auth !== 'undefined' && (Auth.isTeacher() || Auth.isAdmin()));
+  if (!isTeacherOrAdmin) return '';
+
+  const isPriv = isSetPrivate(s, type);
+  if (isPriv) {
+    return `<button type="button" class="lib-pill pill-privacy-private" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Chế độ Riêng tư (Học sinh bị ẩn). Nhấp để đổi sang Công khai"><ion-icon name="lock-closed-outline"></ion-icon> Riêng tư 🔒</button>`;
+  } else {
+    return `<button type="button" class="lib-pill pill-privacy-public" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Chế độ Công khai (Học sinh được xem). Nhấp để đổi sang Riêng tư"><ion-icon name="globe-outline"></ion-icon> Công khai 🌐</button>`;
+  }
+}
+
+function getSetOpenAtBadgeHtml(s, type = 'quiz') {
+  if (!s) return '';
+  const openAt = getSetOpenAt(s, type);
+  if (!openAt) return '';
+
+  const isTeacherOrAdmin = (typeof Auth !== 'undefined' && (Auth.isTeacher() || Auth.isAdmin()));
+  const isStudent = (typeof Auth !== 'undefined' && Auth.isStudent());
+  const notYetOpen = isSetNotYetOpen(s, type);
+
+  if (isTeacherOrAdmin) {
+    return `<button type="button" class="lib-pill pill-teacher-open-at" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Lịch mở bài làm: ${formatDeadlineDisplay(openAt)}. Nhấp để đổi"><ion-icon name="time-outline"></ion-icon> Mở: ${formatDeadlineDisplay(openAt)} ⚙️</button>`;
+  }
+
+  if (isStudent && notYetOpen) {
+    return `<span class="lib-pill pill-open-at-pending" title="Bộ đề sẽ mở vào lúc ${formatDeadlineDisplay(openAt)}"><ion-icon name="hourglass-outline"></ion-icon> Mở: ${formatDeadlineDisplay(openAt)}</span>`;
+  }
+
+  return '';
 }
 
 function getSetAttemptBadgeHtml(s, type = 'quiz') {
@@ -838,10 +1075,76 @@ function getSetDeadlineBadgeHtml(s, type = 'quiz') {
   return '';
 }
 
+/* =========================================================================
+   EXIT EXAM SESSION CONFIRMATION & FORCED SUBMIT HANDLERS
+   ========================================================================= */
+let pendingExitSessionType = null;
+
+function confirmExitCurrentSession(type = 'quiz') {
+  pendingExitSessionType = type;
+  const dialog = document.getElementById('exit-exam-confirm-dialog');
+  if (dialog) {
+    if (typeof dialog.showModal === 'function') {
+      dialog.showModal();
+    } else {
+      dialog.setAttribute('open', '');
+    }
+  }
+}
+
+function closeExitConfirmModal() {
+  const dialog = document.getElementById('exit-exam-confirm-dialog');
+  if (dialog) {
+    if (typeof dialog.close === 'function') {
+      dialog.close();
+    } else {
+      dialog.removeAttribute('open');
+    }
+  }
+  pendingExitSessionType = null;
+}
+
+function executeExitSessionSubmit() {
+  const type = pendingExitSessionType || 'quiz';
+  closeExitConfirmModal();
+
+  if (type === 'quiz') {
+    if (typeof forceSubmitAndExitQuiz === 'function') {
+      forceSubmitAndExitQuiz();
+    } else if (typeof end === 'function') {
+      end();
+    }
+  } else if (type === 'reading') {
+    if (typeof submitReadingAnswers === 'function') {
+      toast('Đang nộp bài đọc hiểu và kết thúc lượt làm...', 'ok');
+      submitReadingAnswers();
+    }
+  } else if (type === 'writing') {
+    if (typeof submitWritingEssay === 'function') {
+      toast('Đang nộp bài luyện viết và kết thúc lượt làm...', 'ok');
+      submitWritingEssay();
+    }
+  }
+}
+
+window.confirmExitCurrentSession = confirmExitCurrentSession;
+window.closeExitConfirmModal = closeExitConfirmModal;
+window.executeExitSessionSubmit = executeExitSessionSubmit;
+
 window.getSetAttemptLimitsMap = getSetAttemptLimitsMap;
 window.saveSetAttemptLimitsMap = saveSetAttemptLimitsMap;
 window.getSetDeadlinesMap = getSetDeadlinesMap;
 window.saveSetDeadlinesMap = saveSetDeadlinesMap;
+window.getSetPrivacyMap = getSetPrivacyMap;
+window.saveSetPrivacyMap = saveSetPrivacyMap;
+window.getSetOpenAtMap = getSetOpenAtMap;
+window.saveSetOpenAtMap = saveSetOpenAtMap;
+window.getSetPrivacy = getSetPrivacy;
+window.isSetPrivate = isSetPrivate;
+window.isStudentPrivacyBlocked = isStudentPrivacyBlocked;
+window.getSetOpenAt = getSetOpenAt;
+window.isSetNotYetOpen = isSetNotYetOpen;
+window.isStudentOpenBlocked = isStudentOpenBlocked;
 window.getSetMaxAttempts = getSetMaxAttempts;
 window.getSetDeadline = getSetDeadline;
 window.isSetDeadlineExpired = isSetDeadlineExpired;
@@ -856,9 +1159,13 @@ window.openSetAttemptLimitModal = openSetAttemptLimitModal;
 window.closeSetAttemptLimitModal = closeSetAttemptLimitModal;
 window.setLimitModalPreset = setLimitModalPreset;
 window.onLimitModalInputChange = onLimitModalInputChange;
+window.setLimitModalOpenAtPreset = setLimitModalOpenAtPreset;
+window.onLimitModalOpenAtChange = onLimitModalOpenAtChange;
 window.setLimitModalDeadlinePreset = setLimitModalDeadlinePreset;
 window.onLimitModalDeadlineChange = onLimitModalDeadlineChange;
 window.submitSetAttemptLimit = submitSetAttemptLimit;
+window.getSetPrivacyBadgeHtml = getSetPrivacyBadgeHtml;
+window.getSetOpenAtBadgeHtml = getSetOpenAtBadgeHtml;
 window.getSetAttemptBadgeHtml = getSetAttemptBadgeHtml;
 window.getSetDeadlineBadgeHtml = getSetDeadlineBadgeHtml;
 

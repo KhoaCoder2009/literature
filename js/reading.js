@@ -524,9 +524,10 @@ function renderReadingSetsGrid() {
   // Filter sets
   const isStudent = Boolean(window.Auth && window.Auth.isStudent());
   const filteredSets = readingSets.filter(s => {
-    // Học sinh chỉ xem bộ đề đã xuất bản (status !== 'draft')
-    if (isStudent && s.status === 'draft') {
-      return false;
+    // Học sinh chỉ xem bộ đề đã xuất bản (status !== 'draft') và không phải riêng tư
+    if (isStudent) {
+      if (s.status === 'draft') return false;
+      if (typeof isSetPrivate === 'function' && isSetPrivate(s, 'reading')) return false;
     }
     if (currentReadingCategory !== 'all' && (s.category || '').trim() !== currentReadingCategory) {
       return false;
@@ -607,6 +608,8 @@ function renderSingleReadingCard(s, idx = 0) {
   const isBlocked = blockInfo.blocked;
   const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'reading') : '';
   const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'reading') : '';
+  const privacyBadge = (typeof getSetPrivacyBadgeHtml === 'function') ? getSetPrivacyBadgeHtml(s, 'reading') : '';
+  const openAtBadge = (typeof getSetOpenAtBadgeHtml === 'function') ? getSetOpenAtBadgeHtml(s, 'reading') : '';
   const isTeacherOrAdmin = window.Auth && (window.Auth.isTeacher() || window.Auth.isAdmin());
   const cardOnClick = isBlocked 
     ? (blockInfo.hasSubmissions ? `openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')` : `toast('${esc(blockInfo.message)}', 'bad')`) 
@@ -636,9 +639,9 @@ function renderSingleReadingCard(s, idx = 0) {
           </div>
         ` : ''}
 
-        <!-- Ma trận cấp độ chuẩn 5 câu -->
+        <!-- Ma trận cấp độ chuẩn 5 câu & Badges -->
         <div class="reading-h-breakdown">
-          ${(attemptBadge || deadlineBadge) ? `<div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:4px; width:100%;">${attemptBadge}${deadlineBadge}</div>` : ''}
+          ${(privacyBadge || openAtBadge || attemptBadge || deadlineBadge) ? `<div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:6px; width:100%;">${privacyBadge}${openAtBadge}${attemptBadge}${deadlineBadge}</div>` : ''}
           ${nbCount ? `<span class="lib-pill pill-nb" title="${nbCount} câu Nhận biết">🟢 ${nbCount} Nhận biết</span>` : ''}
           ${thCount ? `<span class="lib-pill pill-th" title="${thCount} câu Thông hiểu">🟡 ${thCount} Thông hiểu</span>` : ''}
           ${vdCount ? `<span class="lib-pill pill-vd" title="${vdCount} câu Vận dụng (Đoạn văn ~200 chữ)">🟣 ${vdCount} Vận dụng</span>` : ''}
@@ -1065,6 +1068,9 @@ function openCreateReadingSetModal() {
   const deadlineEl = document.getElementById('reading-form-deadline');
   if (deadlineEl) deadlineEl.value = '';
 
+  const openAtEl = document.getElementById('reading-form-open-at');
+  if (openAtEl) openAtEl.value = '';
+
   // Khởi tạo sẵn khung chuẩn 5 câu hỏi (2 Nhận biết • 2 Thông hiểu • 1 Vận dụng / Đoạn văn)
   applyStandard5QuestionTemplate(false);
 
@@ -1098,6 +1104,11 @@ function openEditReadingSetModal(id) {
   const editStatusEl = document.getElementById('reading-form-status');
   if (editStatusEl) editStatusEl.value = set.status || 'published';
 
+  const editOpenAtEl = document.getElementById('reading-form-open-at');
+  if (editOpenAtEl) {
+    editOpenAtEl.value = (typeof getSetOpenAt === 'function' ? getSetOpenAt(set, 'reading') : (set.openAt || ''));
+  }
+
   const maxAttemptsEl = document.getElementById('reading-form-max-attempts');
   if (maxAttemptsEl) {
     maxAttemptsEl.value = (typeof getSetMaxAttempts === 'function' ? getSetMaxAttempts(set, 'reading') : (set.maxAttempts || 0));
@@ -1128,51 +1139,51 @@ function closeReadingEditModal() {
   if (modal && modal.open) modal.close();
 }
 
-// KHUNG CHUẨN 5 CÂU HỎI THEO MA TRẬN ĐỀ THI (THANG ĐIỂM 6,0)
+// KHUNG CHUẨN 5 CÂU HỎI THEO MA TRẬN ĐỀ THI (THANG ĐIỂM 10,0)
 function applyStandard5QuestionTemplate(confirmBeforeReplace = true) {
   const qList = document.getElementById('reading-form-questions-list');
   if (!qList) return;
 
   if (confirmBeforeReplace && qList.children.length > 0) {
-    if (!confirm('Bạn có muốn đặt lại danh sách câu hỏi theo Khung chuẩn 5 câu (Tổng 6,0 điểm: 2 Nhận biết • 2 Thông hiểu • 1 Vận dụng)?')) {
+    if (!confirm('Bạn có muốn đặt lại danh sách câu hỏi theo Khung chuẩn 5 câu (Tổng 10,0 điểm: 2 Nhận biết • 2 Thông hiểu • 1 Vận dụng)?')) {
       return;
     }
   }
 
   qList.innerHTML = '';
 
-  // Câu 1 & 2: Mức độ Nhận biết (1.0đ mỗi câu)
+  // Câu 1 & 2: Mức độ Nhận biết (1.5đ mỗi câu = 3.0đ)
   addQuestionToReadingForm({
     level: 'nhan-biet',
-    maxScore: 1.0,
+    maxScore: 1.5,
     text: 'Xác định phương thức biểu đạt chính / thể thơ được sử dụng trong đoạn trích.',
     guide: '- Phương thức biểu đạt chính: Nghị luận / Tự sự / Miêu tả / Biểu cảm...\n- Thể thơ: Tự do / Bảy chữ / Lục bát...'
   });
   addQuestionToReadingForm({
     level: 'nhan-biet',
-    maxScore: 1.0,
+    maxScore: 1.5,
     text: 'Theo đoạn trích, [chi tiết / hình ảnh / sự việc] sinh trưởng / diễn ra như thế nào?',
     guide: '- Căn cứ trực tiếp vào câu chữ trong văn bản để trả lời ngắn gọn, chính xác.'
   });
 
-  // Câu 3 & 4: Mức độ Thông hiểu (1.0đ mỗi câu)
+  // Câu 3 & 4: Mức độ Thông hiểu (2.0đ mỗi câu = 4.0đ)
   addQuestionToReadingForm({
     level: 'thong-hieu',
-    maxScore: 1.0,
+    maxScore: 2.0,
     text: 'Chỉ ra những điểm tương đồng / hiểu như thế nào về câu văn: "[trích dẫn cụm từ/câu văn]"?',
     guide: '- Ý nghĩa trực tiếp của câu nói / hình ảnh.\n- Ý nghĩa biểu tượng và thông điệp mà tác giả muốn gửi gắm.'
   });
   addQuestionToReadingForm({
     level: 'thong-hieu',
-    maxScore: 1.0,
+    maxScore: 2.0,
     text: 'Anh/chị có đồng tình với nhận định của tác giả: "[trích nhận định]"? Vì sao?',
     guide: '- Bày tỏ rõ quan điểm: Đồng tình / Không đồng tình.\n- Đưa ra 2-3 lý lẽ thuyết phục để lý giải vì sao.'
   });
 
-  // Câu 5: Mức độ Vận dụng (Rút ra thông điệp hoặc liên hệ bài học cuộc sống)(Đoạn văn - 2.0đ)
+  // Câu 5: Mức độ Vận dụng (Rút ra thông điệp hoặc liên hệ bài học cuộc sống)(Đoạn văn - 3.0đ)
   addQuestionToReadingForm({
     level: 'van-dung',
-    maxScore: 2.0,
+    maxScore: 3.0,
     text: 'Từ nội dung đoạn trích ở phần đọc hiểu, anh/chị hãy viết một đoạn văn (khoảng 200 chữ) trình bày suy nghĩ của bản thân về sự cần thiết phải [rút ra thông điệp / liên hệ bài học cuộc sống].',
     guide: '1. Yêu cầu hình thức: Đoạn văn khoảng 200 chữ, diễn đạt mạch lạc, không xuống dòng.\n2. Yêu cầu nội dung:\n- Mở đoạn: Dẫn dắt vấn đề nghị luận từ ngữ liệu.\n- Thân đoạn: Giải thích ngắn gọn; phân tích vì sao; dẫn chứng thực tế; phản đề phê phán.\n- Kết đoạn: Bài học nhận thức và hành động của bản thân.'
   });
@@ -1180,7 +1191,7 @@ function applyStandard5QuestionTemplate(confirmBeforeReplace = true) {
   renumberReadingFormQuestions();
   updateReadingModalTotalScore();
   if (confirmBeforeReplace) {
-    toast('Đã nạp khung chuẩn 5 câu hỏi (Tổng 6,0 điểm) thành công!', 'ok');
+    toast('Đã nạp khung chuẩn 5 câu hỏi (Tổng 10,0 điểm) thành công!', 'ok');
   }
 }
 
@@ -1425,6 +1436,8 @@ function handleReadingFormSubmit(e) {
   }
 
   const status = document.getElementById('reading-form-status')?.value || 'published';
+  const openAt = (document.getElementById('reading-form-open-at')?.value || '').trim();
+  const privacy = status === 'draft' ? 'private' : 'public';
   const maxAttempts = Math.max(0, parseInt(document.getElementById('reading-form-max-attempts')?.value, 10) || 0);
   const deadline = (document.getElementById('reading-form-deadline')?.value || '').trim();
   let targetSetId = id;
@@ -1442,6 +1455,8 @@ function handleReadingFormSubmit(e) {
         passage,
         source,
         status,
+        privacy,
+        openAt,
         maxAttempts,
         deadline,
         questions
@@ -1456,6 +1471,17 @@ function handleReadingFormSubmit(e) {
         if (deadline) dMap[String(targetSetId)] = deadline;
         else delete dMap[String(targetSetId)];
         saveSetDeadlinesMap(dMap);
+      }
+      if (typeof getSetOpenAtMap === 'function' && typeof saveSetOpenAtMap === 'function') {
+        const oMap = getSetOpenAtMap();
+        if (openAt) oMap[String(targetSetId)] = openAt;
+        else delete oMap[String(targetSetId)];
+        saveSetOpenAtMap(oMap);
+      }
+      if (typeof getSetPrivacyMap === 'function' && typeof saveSetPrivacyMap === 'function') {
+        const pMap = getSetPrivacyMap();
+        pMap[String(targetSetId)] = privacy;
+        saveSetPrivacyMap(pMap);
       }
       toast('Đã cập nhật bộ đề đọc hiểu thành công!', 'ok');
     }
@@ -1472,6 +1498,8 @@ function handleReadingFormSubmit(e) {
       passage,
       source,
       status,
+      privacy,
+      openAt,
       maxAttempts,
       deadline,
       questions
@@ -1487,6 +1515,17 @@ function handleReadingFormSubmit(e) {
       if (deadline) dMap[String(targetSetId)] = deadline;
       else delete dMap[String(targetSetId)];
       saveSetDeadlinesMap(dMap);
+    }
+    if (typeof getSetOpenAtMap === 'function' && typeof saveSetOpenAtMap === 'function') {
+      const oMap = getSetOpenAtMap();
+      if (openAt) oMap[String(targetSetId)] = openAt;
+      else delete oMap[String(targetSetId)];
+      saveSetOpenAtMap(oMap);
+    }
+    if (typeof getSetPrivacyMap === 'function' && typeof saveSetPrivacyMap === 'function') {
+      const pMap = getSetPrivacyMap();
+      pMap[String(targetSetId)] = privacy;
+      saveSetPrivacyMap(pMap);
     }
     toast('🎉 Đã tạo bộ đề đọc hiểu mới thành công!', 'ok');
   }

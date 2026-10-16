@@ -72,6 +72,12 @@ R.edit = id => {
   if ($('#set-deadline')) {
     $('#set-deadline').value = (typeof getSetDeadline === 'function' ? getSetDeadline(CS, 'quiz') : (CS.deadline || ''));
   }
+  if ($('#set-privacy')) {
+    $('#set-privacy').value = (typeof getSetPrivacy === 'function' ? getSetPrivacy(CS, 'quiz') : (CS.privacy || 'public'));
+  }
+  if ($('#set-open-at')) {
+    $('#set-open-at').value = (typeof getSetOpenAt === 'function' ? getSetOpenAt(CS, 'quiz') : (CS.openAt || ''));
+  }
   const currentEmo = $('#current-emo');
   if (currentEmo) currentEmo.textContent = CS.emo || '📖';
   initEmojiPicker();

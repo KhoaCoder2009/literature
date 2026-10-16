@@ -1195,6 +1195,14 @@
               <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
             </button>
 
+            <button class="dropdown-item" type="button" onclick="closeUserDropdown(); openSettingsDialog();">
+              <span class="dropdown-item-icon icon-gear">
+                <ion-icon name="settings-outline"></ion-icon>
+              </span>
+              <span class="dropdown-item-label">Cài đặt</span>
+              <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
+            </button>
+
             <div class="dropdown-divider"></div>
 
             <button class="dropdown-item danger" type="button" onclick="closeUserDropdown(); logoutUser();">

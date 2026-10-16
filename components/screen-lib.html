@@ -154,6 +154,22 @@
             <button class="emoji-trigger" type="button" onclick="toggleEmojiPicker()" id="emoji-trigger-btn"><span id="current-emo">📖</span> ▾ Chọn biểu tượng</button>
           </div>
           <div style="display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--stroke);border-radius:10px;padding:6px 12px;">
+            <label for="set-privacy" style="margin:0;font-weight:700;display:flex;align-items:center;gap:6px;font-size:13px;">
+              <ion-icon name="eye-outline"></ion-icon> Chế độ:
+            </label>
+            <select id="set-privacy" class="inp" style="padding:4px 8px;border-radius:6px;font-weight:700;font-size:12.5px;background:var(--bg-card);color:var(--ink);" onchange="meta()" title="Chọn chế độ hiển thị cho bộ đề">
+              <option value="public">🌐 Công khai</option>
+              <option value="private">🔒 Riêng tư</option>
+            </select>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--stroke);border-radius:10px;padding:6px 12px;">
+            <label for="set-open-at" style="margin:0;font-weight:700;display:flex;align-items:center;gap:6px;font-size:13px;">
+              <ion-icon name="time-outline"></ion-icon> Mở lúc:
+            </label>
+            <input type="datetime-local" id="set-open-at" class="inp" style="padding:4px 8px;border-radius:6px;font-weight:700;font-size:12.5px;" onchange="meta()" title="Để trống = Mở ngay">
+            <button type="button" class="btn gh sm" onclick="$('#set-open-at').value=''; meta();" title="Mở ngay" style="padding:2px 6px;height:24px;">✕</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--stroke);border-radius:10px;padding:6px 12px;">
             <label for="set-max-attempts" style="margin:0;font-weight:700;display:flex;align-items:center;gap:6px;font-size:13px;">
               <ion-icon name="timer-outline"></ion-icon> Giới hạn lượt làm:
             </label>

@@ -311,8 +311,36 @@
         </div>
       </div>
 
-      <!-- Giới hạn lượt làm bài -->
+      <!-- Chế độ hiển thị & Quyền riêng tư -->
       <div style="margin-top:14px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+        <div>
+          <label for="writing-form-privacy" style="font-weight:700; margin:0; display:flex; align-items:center; gap:6px;">
+            <ion-icon name="eye-outline"></ion-icon> Chế độ hiển thị bộ đề:
+          </label>
+          <span class="mut" style="font-size:12px;">Chọn Công khai để học sinh nhìn thấy và làm bài; chọn Riêng tư để tạm ẩn.</span>
+        </div>
+        <select id="writing-form-privacy" style="font-weight:700; padding:6px 12px; border-radius:8px; font-size:13px; background:var(--bg-card); color:var(--ink);">
+          <option value="public">🌐 Công khai (Hiển thị cho học sinh)</option>
+          <option value="private">🔒 Riêng tư (Chỉ lưu cho giáo viên)</option>
+        </select>
+      </div>
+
+      <!-- Thời gian mở bài làm (OpenAt) -->
+      <div style="margin-top:10px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+        <div>
+          <label for="writing-form-open-at" style="font-weight:700; margin:0; display:flex; align-items:center; gap:6px;">
+            <ion-icon name="time-outline"></ion-icon> Thời gian mở bài làm (Bắt đầu):
+          </label>
+          <span class="mut" style="font-size:12px;">Bỏ trống để mở ngay. Nếu đặt ngày/giờ, học sinh chỉ có thể vào viết từ thời điểm này.</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <input type="datetime-local" id="writing-form-open-at" style="font-weight:600; padding:6px 10px; border-radius:8px; font-size:13px;">
+          <button type="button" class="btn gh sm" onclick="$('#writing-form-open-at').value=''" title="Mở ngay" style="padding:2px 8px; height:32px;">✕</button>
+        </div>
+      </div>
+
+      <!-- Giới hạn lượt làm bài -->
+      <div style="margin-top:10px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
         <div>
           <label for="writing-form-max-attempts" style="font-weight:700; margin:0; display:flex; align-items:center; gap:6px;">
             <ion-icon name="timer-outline"></ion-icon> Giới hạn lượt làm bài cho học sinh:
@@ -476,6 +504,20 @@
         </select>
       </div>
 
+      <!-- Thời gian mở bài làm (OpenAt) -->
+      <div style="margin-bottom:12px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+        <div>
+          <label for="reading-form-open-at" style="font-weight:700; margin:0; display:flex; align-items:center; gap:6px;">
+            <ion-icon name="time-outline"></ion-icon> Thời gian mở bài làm (Bắt đầu):
+          </label>
+          <span class="mut" style="font-size:12px;">Bỏ trống để mở ngay. Nếu đặt ngày/giờ, học sinh chỉ có thể vào làm từ thời điểm này.</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <input type="datetime-local" id="reading-form-open-at" style="font-weight:600; padding:6px 10px; border-radius:8px; font-size:13px;">
+          <button type="button" class="btn gh sm" onclick="$('#reading-form-open-at').value=''" title="Mở ngay" style="padding:2px 8px; height:32px;">✕</button>
+        </div>
+      </div>
+
       <!-- Giới hạn lượt làm bài -->
       <div style="margin-bottom:12px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
         <div>
@@ -549,13 +591,13 @@
             <h4 style="margin:0; font-size:16px; font-weight:800; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
               <span>Hệ thống câu hỏi đọc hiểu</span>
               <span class="tag cy" style="font-size:12.5px; font-weight:800; padding:3px 10px;">
-                Tổng điểm: <b id="reading-modal-total-score">6.0đ</b> / 6.0 điểm
+                Tổng điểm: <b id="reading-modal-total-score">10.0đ</b> / 10.0 điểm
               </span>
             </h4>
-            <span class="mut" style="font-size:12.5px;">Chuẩn thang 6đ: Câu 1,2: Nhận biết (1đ) • Câu 3,4: Thông hiểu (1đ) • Câu 5: Vận dụng (2đ)</span>
+            <span class="mut" style="font-size:12.5px;">Chuẩn thang 10đ: Câu 1,2: Nhận biết (1.5đ) • Câu 3,4: Thông hiểu (2.0đ) • Câu 5: Vận dụng (3.0đ)</span>
           </div>
           <div style="display:flex; gap:6px; flex-wrap:wrap;">
-            <button type="button" class="btn au sm" onclick="applyStandard5QuestionTemplate()" title="Tự động nạp khung chuẩn 5 câu: 2 Nhận biết • 2 Thông hiểu • 1 Vận dụng (Đoạn văn)">
+            <button type="button" class="btn au sm" onclick="applyStandard5QuestionTemplate()" title="Tự động nạp khung chuẩn 5 câu: 2 Nhận biết • 2 Thông hiểu • 1 Vận dụng (Đoạn văn) - Chuẩn thang 10 điểm">
               <ion-icon name="flash-outline"></ion-icon> Mẫu chuẩn 5 câu
             </button>
             <button type="button" class="btn gh sm" onclick="openQuickImportModal()" title="Dán nhanh toàn bộ đề thi để tự động trích xuất">
@@ -967,14 +1009,14 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
   </form>
 </dialog>
 
-<!-- SET ATTEMPT LIMIT & DEADLINE DIALOG (GIÁO VIÊN & ADMIN) -->
-<dialog id="set-attempt-limit-dialog" class="auth-modal" style="max-width: 500px;">
+<!-- SET ATTEMPT LIMIT, PRIVACY & DEADLINE DIALOG (GIÁO VIÊN & ADMIN) -->
+<dialog id="set-attempt-limit-dialog" class="auth-modal" style="max-width: 530px;">
   <div class="auth-modal-header" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
     <div class="auth-modal-title-group">
       <h3 style="color:#fff; display:flex; align-items:center; gap:8px; margin:0; font-size:17px; font-weight:800;">
-        <ion-icon name="options-outline"></ion-icon> Giới hạn lượt làm &amp; Hạn nộp bài
+        <ion-icon name="options-outline"></ion-icon> Cài đặt &amp; Giao bài
       </h3>
-      <p style="color:rgba(255,255,255,0.85); margin:2px 0 0; font-size:12px;">Quyền Giáo viên &amp; Admin • Thiết lập lượt làm và hạn chót nộp bài</p>
+      <p style="color:rgba(255,255,255,0.85); margin:2px 0 0; font-size:12px;">Quyền Giáo viên &amp; Admin • Thiết lập chế độ riêng tư, lịch mở đề, số lượt và hạn nộp</p>
     </div>
     <button type="button" class="auth-modal-close" onclick="closeSetAttemptLimitModal()" style="color:#fff;" title="Đóng">
       <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
@@ -991,10 +1033,49 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
     <input type="hidden" id="limit-modal-target-type" value="">
     <input type="hidden" id="limit-modal-target-id" value="">
 
-    <!-- PHẦN 1: GIỚI HẠN LƯỢT LÀM -->
-    <div style="margin-bottom:14px;">
+    <!-- PHẦN 1: CHẾ ĐỘ HIỂN THỊ (QUYỀN RIÊNG TƯ) -->
+    <div style="margin-bottom:16px;">
+      <label for="limit-modal-privacy" style="font-size:13.5px; font-weight:700; display:flex; align-items:center; gap:6px; margin-bottom:6px; color:var(--text);">
+        <ion-icon name="eye-outline"></ion-icon> 1. Chế độ hiển thị &amp; Quyền riêng tư:
+      </label>
+      <select id="limit-modal-privacy" class="auth-input" style="width:100%; font-weight:700; padding:8px 12px; font-size:13.5px; border-radius:10px;">
+        <option value="public">🌐 Công khai (Mọi học sinh đều có thể xem và làm bài)</option>
+        <option value="private">🔒 Riêng tư (Chỉ Giáo viên/Admin thấy trong kho đề - Học sinh bị ẩn)</option>
+      </select>
+      <p style="font-size:12px; color:var(--mut); margin:6px 0 0; line-height:1.4;">
+        💡 Chọn <b>Riêng tư</b> khi đang soạn dở hoặc muốn bảo mật đề; chọn <b>Công khai</b> khi đã sẵn sàng giao cho học sinh.
+      </p>
+    </div>
+
+    <!-- PHẦN 2: LỊCH MỞ ĐỀ (NGÀY BẮT ĐẦU LÀM BÀI) -->
+    <div style="margin-top:16px; padding-top:16px; border-top:1px dashed var(--stroke); margin-bottom:16px;">
+      <label for="limit-modal-open-at" style="font-size:13.5px; font-weight:700; display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; color:var(--text);">
+        <span style="display:flex; align-items:center; gap:6px;">
+          <ion-icon name="time-outline"></ion-icon> 2. Thời gian mở đề (Bắt đầu làm bài):
+        </span>
+        <span id="limit-modal-open-at-status" style="font-size:12px; font-weight:700; color:var(--green);">🟢 Mở ngay</span>
+      </label>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <input type="datetime-local" id="limit-modal-open-at" class="auth-input" style="flex:1; font-weight:700; padding:8px 12px; font-size:13.5px;" onchange="onLimitModalOpenAtChange(this.value)">
+        <button type="button" class="btn gh sm" onclick="setLimitModalOpenAtPreset('none')" title="Mở ngay" style="padding:8px 12px; height:42px; font-weight:700;">✕ Mở ngay</button>
+      </div>
+      <p style="font-size:12px; color:var(--mut); margin:6px 0 0; line-height:1.4;">
+        ⏳ Trước thời điểm này, học sinh <b>chưa thể vào làm bài</b> mà sẽ thấy thông báo thời gian mở bài làm.
+      </p>
+
+      <!-- Presets mở đề -->
+      <div style="margin-top:8px; display:flex; flex-wrap:wrap; gap:6px;">
+        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalOpenAtPreset('none')">🚀 Mở ngay</button>
+        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalOpenAtPreset('tomorrow-8am')">🌅 8:00 Sáng mai</button>
+        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalOpenAtPreset('tomorrow-14pm')">☀️ 14:00 Chiều mai</button>
+        <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalOpenAtPreset('monday-8am')">📅 Đầu tuần tới (8:00)</button>
+      </div>
+    </div>
+
+    <!-- PHẦN 3: GIỚI HẠN LƯỢT LÀM -->
+    <div style="margin-top:16px; padding-top:16px; border-top:1px dashed var(--stroke); margin-bottom:14px;">
       <label for="limit-modal-input" style="font-size:13.5px; font-weight:700; display:block; margin-bottom:6px; color:var(--text);">
-        1. Số lượt làm tối đa cho mỗi học sinh:
+        <ion-icon name="timer-outline"></ion-icon> 3. Số lượt làm tối đa cho mỗi học sinh:
       </label>
       <div style="display:flex; align-items:center; gap:10px;">
         <input type="number" id="limit-modal-input" min="0" max="999" step="1" value="0" class="auth-input" style="font-size:18px; font-weight:800; text-align:center; width:110px; padding:8px;" oninput="onLimitModalInputChange(this.value)">
@@ -1003,11 +1084,8 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
       <p style="font-size:12px; color:var(--mut); margin:6px 0 0; line-height:1.4;">
         💡 Chọn <b>1 lượt</b> cho bài thi; chọn <b>2-3 lượt</b> để sửa sai; hoặc <b>0</b> để luyện tập tự do.
       </p>
-    </div>
-
-    <!-- Nút chọn nhanh lượt làm (Presets) -->
-    <div style="margin-bottom:16px;">
-      <div style="display:flex; flex-wrap:wrap; gap:6px;">
+      <!-- Nút chọn nhanh lượt làm (Presets) -->
+      <div style="margin-top:8px; display:flex; flex-wrap:wrap; gap:6px;">
         <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalPreset(0)">♾️ Không giới hạn</button>
         <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalPreset(1)">1️⃣ 1 lần</button>
         <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalPreset(2)">2️⃣ 2 lần</button>
@@ -1016,11 +1094,11 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
       </div>
     </div>
 
-    <!-- PHẦN 2: THỜI HẠN NỘP BÀI (DEADLINE) -->
+    <!-- PHẦN 4: THỜI HẠN NỘP BÀI (DEADLINE) -->
     <div style="margin-top:16px; padding-top:16px; border-top:1px dashed var(--stroke); margin-bottom:14px;">
       <label for="limit-modal-deadline" style="font-size:13.5px; font-weight:700; display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; color:var(--text);">
         <span style="display:flex; align-items:center; gap:6px;">
-          <ion-icon name="calendar-outline"></ion-icon> 2. Hạn chót nộp bài (Deadline):
+          <ion-icon name="calendar-outline"></ion-icon> 4. Hạn chót nộp bài (Deadline):
         </span>
         <span id="limit-modal-deadline-status" style="font-size:12px; font-weight:700; color:var(--mut);">Chưa đặt hạn</span>
       </label>
@@ -1031,12 +1109,8 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
       <p style="font-size:12px; color:var(--mut); margin:6px 0 0; line-height:1.4;">
         ⏱️ Quá thời điểm này, học sinh <b>không thể vào làm bài mới</b> mà chỉ được <b>xem lại bài đã nộp</b>.
       </p>
-    </div>
-
-    <!-- Nút chọn nhanh hạn chót (Deadline Presets) -->
-    <div style="margin-bottom:18px;">
-      <label style="font-size:12px; font-weight:700; color:var(--mut); display:block; margin-bottom:6px;">CHỌN NHANH HẠN CHÓT:</label>
-      <div style="display:flex; flex-wrap:wrap; gap:6px;">
+      <!-- Nút chọn nhanh hạn chót (Deadline Presets) -->
+      <div style="margin-top:8px; display:flex; flex-wrap:wrap; gap:6px;">
         <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalDeadlinePreset('none')">♾️ Không đặt hạn</button>
         <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalDeadlinePreset('tonight')">🌙 Tối nay (23:59)</button>
         <button type="button" class="btn gh sm preset-limit-btn" onclick="setLimitModalDeadlinePreset('tomorrow')">☀️ Tối mai (23:59)</button>
@@ -1047,7 +1121,7 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
 
     <!-- Alert cảnh báo học sinh -->
     <div style="background:rgba(234, 88, 12, 0.08); border:1px solid rgba(234, 88, 12, 0.25); border-radius:10px; padding:10px 12px; font-size:12px; line-height:1.5; color:var(--text); margin-bottom:16px;">
-      🔒 <b>Cơ chế với học sinh:</b> Khi đã hết lượt hoặc quá hạn nộp, nút làm bài sẽ tự động chuyển thành <b>👁️ Xem lại bài làm</b> và học sinh không thể nộp bài mới.
+      🔒 <b>Cơ chế với học sinh:</b> Bộ đề riêng tư sẽ ẩn hoàn toàn. Bộ đề chưa đến ngày mở sẽ hiển thị thời gian mở. Khi đã hết lượt hoặc quá hạn nộp, nút làm bài sẽ tự động chuyển thành <b>👁️ Xem lại bài làm</b>.
     </div>
 
     <!-- Footer actions -->
@@ -1055,6 +1129,46 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
       <button type="button" class="btn gh" onclick="closeSetAttemptLimitModal()">Hủy</button>
       <button type="button" class="btn au" onclick="submitSetAttemptLimit()" style="font-weight:800;">
         <ion-icon name="checkmark-circle-outline"></ion-icon> Lưu cài đặt
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<!-- EXIT EXAM CONFIRMATION DIALOG (CẢNH BÁO NỘP BÀI KHI THOÁT) -->
+<dialog id="exit-exam-confirm-dialog" class="writing-modal exit-confirm-modal" style="max-width:520px; border-radius:24px; border:3.5px solid var(--stroke); box-shadow:0 12px 0 var(--stroke); padding:0; overflow:hidden;">
+  <div style="background:linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); padding:20px 24px; color:#ffffff; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span style="font-size:32px; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.25)); line-height:1;"><ion-icon name="warning-outline"></ion-icon></span>
+      <div>
+        <h3 style="margin:0; font-size:19px; font-weight:800; color:#ffffff;">Xác nhận thoát bài làm?</h3>
+        <p style="margin:2px 0 0; font-size:12.5px; opacity:0.95; font-weight:600;">Hành động này sẽ nộp bài và tính 1 lượt làm</p>
+      </div>
+    </div>
+    <button type="button" class="btn gh sm" onclick="closeExitConfirmModal()" style="border:none; color:#ffffff; background:rgba(0,0,0,0.2); width:32px; height:32px; padding:0; border-radius:50%; font-size:18px;">✕</button>
+  </div>
+
+  <div style="padding:22px 24px; background:var(--bg-card);">
+    <div style="background:rgba(239, 68, 68, 0.08); border:2px dashed rgba(239, 68, 68, 0.4); border-radius:14px; padding:14px 16px; margin-bottom:18px;">
+      <p style="margin:0 0 8px; font-weight:800; color:#dc2626; font-size:14px; display:flex; align-items:center; gap:6px;">
+        <ion-icon name="alert-circle-outline" style="font-size:18px;"></ion-icon> LƯU Ý QUAN TRỌNG TRƯỚC KHI RỜI ĐI:
+      </p>
+      <ul style="margin:0; padding-left:20px; font-size:13px; line-height:1.6; color:var(--ink);">
+        <li>Hệ thống sẽ <b>tự động nộp các câu bạn đã làm</b> tính đến thời điểm này.</li>
+        <li>Hệ thống sẽ <b>tính mất 1 LƯỢT LÀM</b> của bạn trên bộ câu hỏi này.</li>
+        <li>Bài làm sẽ được lưu vào mục <b>Lịch sử</b> để giáo viên xem xét và đối chiếu.</li>
+      </ul>
+    </div>
+
+    <p style="font-size:13.5px; font-weight:600; color:var(--ink); margin:0 0 20px; text-align:center;">
+      Bạn có chắc chắn muốn kết thúc bài làm và nộp kết quả ngay bây giờ không?
+    </p>
+
+    <div style="display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap;">
+      <button type="button" class="btn gh" onclick="closeExitConfirmModal()" style="font-weight:700; flex:1; min-width:140px; justify-content:center;">
+        <ion-icon name="arrow-back-outline"></ion-icon> Tiếp tục làm bài
+      </button>
+      <button type="button" class="btn no" id="btn-confirm-exit-action" onclick="executeExitSessionSubmit()" style="font-weight:800; flex:1; min-width:160px; justify-content:center;">
+        <ion-icon name="log-out-outline"></ion-icon> Xác nhận nộp &amp; Thoát
       </button>
     </div>
   </div>

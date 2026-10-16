@@ -165,7 +165,12 @@ function renderSetupSetsGrid(selectedId) {
   const container = $('#setup-sets-grid');
   if (!container) return;
 
-  const validSets = (sets || []).filter(s => !String(s.id).startsWith('set_'));
+  const isStudent = (typeof Auth !== 'undefined' && Auth.isStudent());
+  const validSets = (sets || []).filter(s => {
+    if (String(s.id).startsWith('set_')) return false;
+    if (isStudent && typeof isSetPrivate === 'function' && isSetPrivate(s, 'quiz')) return false;
+    return true;
+  });
 
   // 1. Render Topic Chips
   const chipsContainer = $('#setup-topic-chips');
@@ -227,9 +232,12 @@ function renderSetupSetsGrid(selectedId) {
     const bg = SETUP_PALETTES[idx % SETUP_PALETTES.length];
     const qCount = Array.isArray(s.qs) ? s.qs.length : 0;
     const isSelected = selectedId && String(s.id) === String(selectedId);
-    const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { blocked: false, isDeadlineExpired: false, hasSubmissions: false, message: '' };
+    const blockInfo = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { blocked: false, isDeadlineExpired: false, isNotYetOpen: false, hasSubmissions: false, message: '' };
     const attemptBadge = (typeof getSetAttemptBadgeHtml === 'function') ? getSetAttemptBadgeHtml(s, 'quiz') : '';
     const deadlineBadge = (typeof getSetDeadlineBadgeHtml === 'function') ? getSetDeadlineBadgeHtml(s, 'quiz') : '';
+    const privacyBadge = (typeof getSetPrivacyBadgeHtml === 'function') ? getSetPrivacyBadgeHtml(s, 'quiz') : '';
+    const openAtBadge = (typeof getSetOpenAtBadgeHtml === 'function') ? getSetOpenAtBadgeHtml(s, 'quiz') : '';
+
     const cardOnClick = blockInfo.blocked 
       ? (blockInfo.hasSubmissions ? `openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')` : `toast('${esc(blockInfo.message)}', 'bad')`) 
       : `selectAndStartSetupQuiz('${esc(s.id)}')`;
@@ -237,31 +245,35 @@ function renderSetupSetsGrid(selectedId) {
     return `
       <div class="setup-grid-card ${isSelected ? 'selected-card' : ''}" onclick="${cardOnClick}">
         <div class="setup-card-banner" style="background: ${bg};">
-          <div class="setup-card-top-info">
-            <span class="setup-card-count-pill">${qCount} câu</span>
+          <div class="setup-card-top-info" style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:6px;">
+            <span class="setup-card-count-pill">${qCount} câu hỏi</span>
+            ${openAtBadge ? `<div onclick="event.stopPropagation()">${openAtBadge}</div>` : ''}
           </div>
           <h3 class="setup-card-title">${esc(s.title)}</h3>
           <span class="setup-card-watermark">${s.emo || '📖'}</span>
         </div>
         <div class="setup-card-body">
-          ${blockInfo.blocked ? (blockInfo.hasSubmissions ? `
-            <button class="btn-setup-action lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')">
-              <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
-              <span>Xem lại bài làm</span>
-            </button>
-          ` : `
-            <button class="btn-setup-action lib-locked-btn" type="button" onclick="event.stopPropagation(); toast('${esc(blockInfo.message)}', 'bad')" title="${esc(blockInfo.message)}">
-              <span class="btn-setup-icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-              <span>${blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa'}</span>
-            </button>
-          `) : `
-            <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); selectAndStartSetupQuiz('${esc(s.id)}')">
-              <span class="btn-setup-icon">▶</span>
-              <span>Vào bài học</span>
-            </button>
-          `}
-          ${(attemptBadge || deadlineBadge) ? `<div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:8px;">${attemptBadge}${deadlineBadge}</div>` : ''}
-          <div class="setup-card-meta">
+          ${(attemptBadge || deadlineBadge || privacyBadge) ? `
+            <div class="setup-card-badges-row" onclick="event.stopPropagation()" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
+              ${privacyBadge}${attemptBadge}${deadlineBadge}
+            </div>` : ''}
+          <div class="setup-card-bottom-row" style="display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%;">
+            ${blockInfo.blocked ? (blockInfo.hasSubmissions ? `
+              <button class="btn-setup-action lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')">
+                <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
+                <span>Xem lại bài làm</span>
+              </button>
+            ` : `
+              <button class="btn-setup-action lib-locked-btn" type="button" onclick="event.stopPropagation(); toast('${esc(blockInfo.message)}', 'bad')" title="${esc(blockInfo.message)}">
+                <span class="btn-setup-icon"><ion-icon name="${blockInfo.isNotYetOpen ? 'time-outline' : 'lock-closed-outline'}"></ion-icon></span>
+                <span>${blockInfo.isNotYetOpen ? 'Chưa mở' : (blockInfo.isDeadlineExpired ? 'Đã hết hạn' : 'Đã khóa')}</span>
+              </button>
+            `) : `
+              <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); selectAndStartSetupQuiz('${esc(s.id)}')">
+                <span class="btn-setup-icon">▶</span>
+                <span>Vào bài học</span>
+              </button>
+            `}
             <span class="setup-card-topic" title="${esc(s.topic || 'Chưa phân loại')}">
               🏷️ ${esc(s.topic || 'Ngữ văn')}
             </span>
@@ -349,15 +361,42 @@ function begin() {
 
 const opts = q => q.o || [];
 
+function getQuizScore10() {
+  if (!G || !G.qs || !G.qs.length) return 0;
+  const total = G.qs.length;
+  const score = (G.ok / total) * 10;
+  return Math.min(10, Math.max(0, Math.round(score * 10) / 10));
+}
+
+function forceSubmitAndExitQuiz() {
+  if (!G || !G.qs) {
+    go('setup');
+    return;
+  }
+  // Ghi nhận các câu còn lại là bỏ qua
+  for (let idx = G.i; idx < G.qs.length; idx++) {
+    const q = G.qs[idx];
+    if (q && !G.log.some(l => l.q && l.q.id === q.id)) {
+      G.bad++;
+      G.log.push({
+        q,
+        st: 'no',
+        pts: 0,
+        submittedAnswer: 'Chưa làm (Thoát bài làm)',
+        correctAnswer: q.type == 'match' ? 'Ghép nối' : (q.o ? `${'ABCD'[q.a]}` : (q.acc || []).join(' / '))
+      });
+    }
+  }
+  G.i = G.qs.length;
+  toast('Đã nộp bài và ghi nhận 1 lượt làm!', 'ok');
+  end();
+}
+window.forceSubmitAndExitQuiz = forceSubmitAndExitQuiz;
+
 function hud() {
   const scoreEl = $('#hs');
-  const prevScore = parseInt(scoreEl.textContent) || 0;
-  if (G.sc > prevScore) {
-    scoreEl.classList.remove('score-pop');
-    void scoreEl.offsetWidth;
-    scoreEl.classList.add('score-pop');
-  }
-  scoreEl.textContent = G.sc;
+  const score10 = getQuizScore10();
+  scoreEl.textContent = `${score10.toFixed(1)}/10đ`;
   const comboEl = $('#hc').parentElement;
   $('#hc').textContent = G.cb;
   if (G.cb >= 3) comboEl.classList.add('combo-hot');
@@ -719,10 +758,13 @@ async function end() {
   const gradedCount = G.log.filter(x => x.st !== 'saved').length;
   const accuracy = gradedCount ? Math.round(G.ok / gradedCount * 100) : 100;
 
+  const totalQuestions = Math.max(1, G.qs.length);
+  const score10 = getQuizScore10();
+
   const statItems = [
-    ['Tổng điểm TN', G.sc],
-    ['Trả lời đúng', G.ok],
-    ['Trả lời sai', G.bad]
+    ['Tổng điểm (Thang 10)', `${score10.toFixed(1)} / 10.0 điểm`],
+    ['Trả lời đúng', `${G.ok} / ${totalQuestions} câu`],
+    ['Trả lời sai / Bỏ qua', `${G.bad} câu`]
   ];
   if (savedCount > 0) {
     statItems.push(['Tự luận đã lưu', `${savedCount} câu`]);
@@ -781,7 +823,7 @@ async function end() {
     setTitle: G.s.title,
     setTopic: G.s.topic || 'Chưa phân loại',
     setEmo: G.s.emo || '📖',
-    score: G.sc,
+    score: score10,
     correctCount: G.ok,
     wrongCount: G.bad,
     savedShortCount: savedCount,
@@ -808,7 +850,7 @@ async function end() {
     class_name: G.className || '',
     set_id: String(G.s.id),
     set_title: G.s.title,
-    score: G.sc,
+    score: score10,
     correct_count: G.ok,
     question_count: Math.max(1, n),
     accuracy: accuracy,

@@ -6430,6 +6430,179 @@ ion-icon {
   vertical-align: -0.15em;
   margin-right: 2px;
 }
+/* =========================================================================
+   ENHANCED CARD ACTIONS & BADGES (BALANCED 2-TIER LAYOUT)
+   ========================================================================= */
+
+.dropdown-item-icon.icon-gear {
+  background: rgba(100, 116, 139, 0.14);
+  color: #475569;
+}
+[data-theme="dark"] .dropdown-item-icon.icon-gear {
+  background: rgba(148, 163, 184, 0.18);
+  color: #cbd5e1;
+}
+
+.lib-card-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 6px 0 8px;
+  width: 100%;
+}
+
+.lib-pill.pill-privacy-private {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border-color: rgba(239, 68, 68, 0.35);
+  cursor: pointer;
+  font-weight: 700;
+}
+.lib-pill.pill-privacy-private:hover {
+  background: rgba(239, 68, 68, 0.18);
+  transform: translateY(-1px);
+}
+
+.lib-pill.pill-privacy-public {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  border-color: rgba(16, 185, 129, 0.35);
+  cursor: pointer;
+  font-weight: 700;
+}
+.lib-pill.pill-privacy-public:hover {
+  background: rgba(16, 185, 129, 0.18);
+  transform: translateY(-1px);
+}
+
+.lib-pill.pill-teacher-open-at {
+  background: rgba(139, 92, 246, 0.1);
+  color: #7c3aed;
+  border-color: rgba(139, 92, 246, 0.35);
+  cursor: pointer;
+  font-weight: 700;
+}
+.lib-pill.pill-teacher-open-at:hover {
+  background: rgba(139, 92, 246, 0.18);
+  transform: translateY(-1px);
+}
+
+.lib-pill.pill-open-at-pending {
+  background: rgba(245, 158, 11, 0.12);
+  color: #b45309;
+  border-color: rgba(245, 158, 11, 0.4);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .lib-pill.pill-privacy-private {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #fca5a5 !important;
+  border-color: rgba(239, 68, 68, 0.45) !important;
+}
+[data-theme="dark"] .lib-pill.pill-privacy-public {
+  background: rgba(16, 185, 129, 0.18) !important;
+  color: #6ee7b7 !important;
+  border-color: rgba(16, 185, 129, 0.45) !important;
+}
+[data-theme="dark"] .lib-pill.pill-teacher-open-at {
+  background: rgba(139, 92, 246, 0.2) !important;
+  color: #c4b5fd !important;
+  border-color: rgba(139, 92, 246, 0.45) !important;
+}
+[data-theme="dark"] .lib-pill.pill-open-at-pending {
+  background: rgba(245, 158, 11, 0.2) !important;
+  color: #fcd34d !important;
+  border-color: rgba(245, 158, 11, 0.45) !important;
+}
+
+.lib-card-actions-box {
+  padding: 10px 12px;
+  border-top: 2.5px solid var(--stroke);
+  background: var(--bg-base);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lib-launch-row {
+  width: 100%;
+}
+
+.lib-launch-row .lib-launch-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 8px 14px !important;
+  font-size: 13.5px !important;
+  font-weight: 800 !important;
+  border-radius: 12px !important;
+}
+
+.lib-tools-row {
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+  gap: 6px;
+  width: 100%;
+}
+
+.lib-mini-tool-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 4px;
+  font-size: 11.5px;
+  font-weight: 800;
+  border-radius: 8px;
+  border: 2px solid var(--stroke);
+  cursor: pointer;
+  white-space: nowrap;
+  background: var(--bg-card);
+  color: var(--txt);
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 0 var(--stroke);
+}
+.lib-mini-tool-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 var(--stroke);
+}
+.lib-mini-tool-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 var(--stroke);
+}
+.lib-mini-tool-btn.cy {
+  background: rgba(14, 165, 233, 0.1);
+  color: #0284c7;
+  border-color: #0284c7;
+}
+.lib-mini-tool-btn.gh {
+  background: var(--bg-base);
+  color: var(--txt);
+}
+.lib-mini-tool-btn.au {
+  background: rgba(245, 158, 11, 0.12);
+  color: #d97706;
+  border-color: #d97706;
+}
+.lib-mini-tool-btn.no {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border-color: #dc2626;
+}
+[data-theme="dark"] .lib-mini-tool-btn.cy {
+  color: #38bdf8;
+  border-color: #38bdf8;
+}
+[data-theme="dark"] .lib-mini-tool-btn.au {
+  color: #fbbf24;
+  border-color: #fbbf24;
+}
+[data-theme="dark"] .lib-mini-tool-btn.no {
+  color: #f87171;
+  border-color: #f87171;
+}
+
 
 /* =========================================================================
    WRITING PRACTICE MODULE STYLES (LUYỆN VIẾT)

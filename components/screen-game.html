@@ -6,9 +6,14 @@
       <div class="hud-pill">Chuỗi đúng: <b id="hc">0</b></div>
       <div class="hud-pill" id="ht" style="display:none;"><ion-icon name="timer-outline"></ion-icon> 20s</div>
       <div class="hud-pill">Câu: <b id="hp">1/10</b></div>
-      <button class="btn gh sm" id="btn-projector-toggle" onclick="toggleProjectorMode()" style="margin-left:auto;" title="Chế độ máy chiếu">
-        <ion-icon name="tv-outline"></ion-icon> Máy chiếu
-      </button>
+      <div style="display:flex; align-items:center; gap:8px; margin-left:auto;">
+        <button class="btn gh sm" id="btn-projector-toggle" onclick="toggleProjectorMode()" title="Chế độ máy chiếu">
+          <ion-icon name="tv-outline"></ion-icon> Máy chiếu
+        </button>
+        <button class="btn no sm btn-exit-exam" type="button" onclick="confirmExitCurrentSession('quiz')" title="Thoát khỏi bài làm (Hệ thống sẽ nộp bài và tính 1 lượt làm)">
+          <ion-icon name="log-out-outline"></ion-icon> Thoát bài
+        </button>
+      </div>
     </div>
 
     <div class="bar"><i id="pb"></i></div>
