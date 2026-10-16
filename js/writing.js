@@ -477,8 +477,8 @@ function renderWritingSetsGrid() {
     return `
       <div class="setup-grid-card" onclick="${cardOnClick}">
         <div class="setup-card-banner" style="background: ${bg}; position:relative;">
-          <div class="setup-card-top-info" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-            <span class="setup-card-count-pill">${sectionCount} phần dàn ý</span>
+          <div class="setup-card-top-info">
+            <span class="setup-card-count-pill">${sectionCount} phần</span>
             <div style="display:flex; gap:4px; position:relative; z-index:2;" onclick="event.stopPropagation()">
               <button class="reading-h-mini-btn" type="button" title="Lịch sử bài làm" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')"><ion-icon name="time-outline"></ion-icon></button>
               ${isTeacherOrAdmin ? `<button class="reading-h-mini-btn" type="button" title="Cài đặt lượt làm & hạn nộp bài" onclick="event.stopPropagation(); openSetAttemptLimitModal('writing', '${esc(s.id)}')"><ion-icon name="timer-outline"></ion-icon></button>` : ''}
@@ -486,14 +486,18 @@ function renderWritingSetsGrid() {
             </div>
           </div>
           <h3 class="setup-card-title">${esc(s.title)}</h3>
-          <span class="setup-card-watermark">${watermark}</span>
         </div>
         <div class="setup-card-body">
+          <div class="setup-card-topic-row">
+            <span class="setup-card-topic" title="${esc(topic)}">
+              <ion-icon name="pricetag-outline"></ion-icon> <span>${esc(topic)}</span>
+            </span>
+          </div>
           ${(privacyBadge || openAtBadge || attemptBadge || deadlineBadge) ? `
-            <div class="setup-card-badges-row" onclick="event.stopPropagation()" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
+            <div class="setup-card-badges-row" onclick="event.stopPropagation()">
               ${privacyBadge}${openAtBadge}${attemptBadge}${deadlineBadge}
             </div>` : ''}
-          <div class="setup-card-bottom-row" style="display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%;">
+          <div class="setup-card-action-row">
             ${isBlocked ? (blockInfo.hasSubmissions ? `
               <button class="btn-setup-action lib-view-only-btn" type="button" onclick="event.stopPropagation(); openHistoryForSet('${esc(s.id)}', '${esc(s.title)}')">
                 <span class="btn-setup-icon"><ion-icon name="eye-outline"></ion-icon></span>
@@ -507,12 +511,9 @@ function renderWritingSetsGrid() {
             `) : `
               <button class="btn-setup-action" type="button" onclick="event.stopPropagation(); openWritingWorkspaceById('${esc(s.id)}')">
                 <span class="btn-setup-icon"><ion-icon name="play-outline"></ion-icon></span>
-                <span>Vào luyện viết</span>
+                <span>Vào luyện viết ngay</span>
               </button>
             `}
-            <span class="setup-card-topic" title="${esc(topic)}">
-              <ion-icon name="pricetag-outline"></ion-icon> ${esc(topic)}
-            </span>
           </div>
         </div>
       </div>

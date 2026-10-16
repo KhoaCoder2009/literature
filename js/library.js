@@ -88,6 +88,7 @@ const cardHtml = (s, idx = 0) => {
     <div class="lib-card-meta-row">
       <span class="clickable-topic-tag" title="Nhấp để lọc theo thẻ: ${esc(topicName)}" onclick="event.stopPropagation(); setTopicFilter('${esc(topicName)}')"><ion-icon name="pricetag-outline"></ion-icon> ${esc(topicName)}</span>
       ${diffSummary}
+    </div>
     ${(privacyBadge || attemptBadge || deadlineBadge) ? `
       <div class="lib-card-badges-row" onclick="event.stopPropagation()">
         ${privacyBadge}${attemptBadge}${deadlineBadge}
