@@ -820,18 +820,23 @@ async function end() {
     saveQuizAttemptToHistory(historyEntry);
   }
 
+  const sanitizedPlayerName = String(G.nm || 'Học sinh').trim().slice(0, 20) || 'Học sinh';
+  const validQuestionCount = Math.max(1, n);
+  const validCorrectCount = Math.min(validQuestionCount, Math.max(0, G.ok || 0));
+  const validGameMode = ['quiz', 'timed', 'boss'].includes(G.m) ? G.m : 'quiz';
+
   G.scoreEntry = {
     id: uid(),
-    player_name: G.nm,
-    class_name: G.className || '',
+    player_name: sanitizedPlayerName,
+    class_name: String(G.className || '').trim().slice(0, 50),
     set_id: String(G.s.id),
-    set_title: G.s.title,
-    score: score10,
-    correct_count: G.ok,
-    question_count: Math.max(1, n),
-    accuracy: accuracy,
-    game_mode: G.m,
-    elapsed_seconds: dt
+    set_title: String(G.s.title || 'Bộ đề'),
+    score: Math.max(0, Number(score10) || 0),
+    correct_count: validCorrectCount,
+    question_count: validQuestionCount,
+    accuracy: Math.min(100, Math.max(0, Number(accuracy) || 0)),
+    game_mode: validGameMode,
+    elapsed_seconds: Math.max(0, parseInt(dt, 10) || 0)
   };
   await saveScoreToLeaderboard();
 }

@@ -56,7 +56,8 @@ async function archiveQuestionSetInSupabase(id) {
   }
   const archivedRows = await res.json();
   if (!Array.isArray(archivedRows) || !archivedRows.some(row => String(row.id) === String(id))) {
-    throw new Error('Không tìm thấy bộ câu hỏi trên Supabase.');
+    console.warn('Bộ câu hỏi không tồn tại trên máy chủ hoặc chỉ tồn tại trên trình duyệt:', id);
+    return;
   }
 }
 

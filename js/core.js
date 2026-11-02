@@ -9,6 +9,11 @@ const uid = () => Math.random().toString(36).slice(2, 9);
 const N = s => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
 const lines = s => s.split('\n').map(x => x.trim()).filter(Boolean);
 
+window.$ = $;
+window.$$ = $$;
+window.esc = esc;
+window.uid = uid;
+
 const T_ = { mc: 'Trắc nghiệm', short: 'Trả lời ngắn', fill: 'Điền từ', tf: 'Đúng/Sai', img: 'Có hình ảnh', match: 'Nối cặp' };
 
 let sets = [];
@@ -66,6 +71,7 @@ function toast(m, k) {
   clearTimeout(tt);
   tt = setTimeout(() => t.className = '', 2800);
 }
+window.toast = toast;
 
 function ask(m, f) {
   const dlg = $('#dlg');
@@ -77,6 +83,7 @@ function ask(m, f) {
   $('#dy').onclick = () => { dlg.close(); f(); };
   dlg.showModal();
 }
+window.ask = ask;
 
 function isExamInProgress() {
   if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.isExamActive === 'function') {
@@ -141,6 +148,7 @@ function go(n, p) {
   scrollTo(0, 0);
   if (typeof animateScreenIn === 'function') animateScreenIn(sc);
 }
+window.go = go;
 
 /* =========================================================================
    CHẶN COPY & PASTE TRÊN CÁC PHẦN ĐIỀN CHỮ / LÀM BÀI CỦA HỌC SINH

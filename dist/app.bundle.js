@@ -604,6 +604,11 @@ const uid = () => Math.random().toString(36).slice(2, 9);
 const N = s => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
 const lines = s => s.split('\n').map(x => x.trim()).filter(Boolean);
 
+window.$ = $;
+window.$$ = $$;
+window.esc = esc;
+window.uid = uid;
+
 const T_ = { mc: 'Trắc nghiệm', short: 'Trả lời ngắn', fill: 'Điền từ', tf: 'Đúng/Sai', img: 'Có hình ảnh', match: 'Nối cặp' };
 
 let sets = [];
@@ -661,6 +666,7 @@ function toast(m, k) {
   clearTimeout(tt);
   tt = setTimeout(() => t.className = '', 2800);
 }
+window.toast = toast;
 
 function ask(m, f) {
   const dlg = $('#dlg');
@@ -672,6 +678,7 @@ function ask(m, f) {
   $('#dy').onclick = () => { dlg.close(); f(); };
   dlg.showModal();
 }
+window.ask = ask;
 
 function isExamInProgress() {
   if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.isExamActive === 'function') {
@@ -736,6 +743,7 @@ function go(n, p) {
   scrollTo(0, 0);
   if (typeof animateScreenIn === 'function') animateScreenIn(sc);
 }
+window.go = go;
 
 /* =========================================================================
    CHẶN COPY & PASTE TRÊN CÁC PHẦN ĐIỀN CHỮ / LÀM BÀI CỦA HỌC SINH
@@ -1465,7 +1473,8 @@ async function archiveQuestionSetInSupabase(id) {
   }
   const archivedRows = await res.json();
   if (!Array.isArray(archivedRows) || !archivedRows.some(row => String(row.id) === String(id))) {
-    throw new Error('Không tìm thấy bộ câu hỏi trên Supabase.');
+    console.warn('Bộ câu hỏi không tồn tại trên máy chủ hoặc chỉ tồn tại trên trình duyệt:', id);
+    return;
   }
 }
 
@@ -6932,18 +6941,23 @@ async function end() {
     saveQuizAttemptToHistory(historyEntry);
   }
 
+  const sanitizedPlayerName = String(G.nm || 'Học sinh').trim().slice(0, 20) || 'Học sinh';
+  const validQuestionCount = Math.max(1, n);
+  const validCorrectCount = Math.min(validQuestionCount, Math.max(0, G.ok || 0));
+  const validGameMode = ['quiz', 'timed', 'boss'].includes(G.m) ? G.m : 'quiz';
+
   G.scoreEntry = {
     id: uid(),
-    player_name: G.nm,
-    class_name: G.className || '',
+    player_name: sanitizedPlayerName,
+    class_name: String(G.className || '').trim().slice(0, 50),
     set_id: String(G.s.id),
-    set_title: G.s.title,
-    score: score10,
-    correct_count: G.ok,
-    question_count: Math.max(1, n),
-    accuracy: accuracy,
-    game_mode: G.m,
-    elapsed_seconds: dt
+    set_title: String(G.s.title || 'Bộ đề'),
+    score: Math.max(0, Number(score10) || 0),
+    correct_count: validCorrectCount,
+    question_count: validQuestionCount,
+    accuracy: Math.min(100, Math.max(0, Number(accuracy) || 0)),
+    game_mode: validGameMode,
+    elapsed_seconds: Math.max(0, parseInt(dt, 10) || 0)
   };
   await saveScoreToLeaderboard();
 }
