@@ -25,18 +25,15 @@
     <a data-g="history" onclick="go('history')" class="nav-link">
       <ion-icon name="time-outline"></ion-icon> <span>Lịch sử</span>
     </a>
-    <a data-g="lib" class="nav-link teacher-only" onclick="go('lib')">
+    <a data-g="lib" class="nav-link" onclick="go('lib')">
       <ion-icon name="library-outline"></ion-icon> <span>Thư viện</span>
-    </a>
-    <a data-g="accounts" class="nav-link teacher-only" onclick="go('accounts')">
-      <ion-icon name="people-outline"></ion-icon> <span>Tài khoản</span>
     </a>
   </div>
 
   <div class="nav-user-area" id="nav-user-area">
-    <div id="nav-user-widget">
-      <!-- Auth module sẽ tự động render Profile / Đăng nhập tại đây -->
-    </div>
+    <button class="btn sm gh nav-settings-btn" type="button" onclick="openSettingsDialog()" title="Cài đặt">
+      <ion-icon name="settings-outline" style="font-size: 19px;"></ion-icon> <span class="nav-btn-label">Cài đặt</span>
+    </button>
   </div>
 </nav>
 
@@ -67,7 +64,7 @@
     </a>
 
     <div class="sidebar-section-title">Kho dữ liệu & Hồ sơ</div>
-    <a data-g="lib" class="teacher-only" onclick="go('lib'); closeMobileMenu();">
+    <a data-g="lib" onclick="go('lib'); closeMobileMenu();">
       <span class="sidebar-icon"><ion-icon name="library-outline"></ion-icon></span> <span>Thư viện học liệu</span>
     </a>
     <a data-g="history" onclick="go('history'); closeMobileMenu();">
@@ -75,9 +72,6 @@
     </a>
 
     <div class="sidebar-section-title">Hệ thống & Cài đặt</div>
-    <a data-g="accounts" class="teacher-only" onclick="go('accounts'); closeMobileMenu();">
-      <span class="sidebar-icon"><ion-icon name="people-outline"></ion-icon></span> <span>Quản lý tài khoản</span>
-    </a>
     <a onclick="closeMobileMenu(); openSettingsDialog();">
       <span class="sidebar-icon"><ion-icon name="settings-outline"></ion-icon></span> <span>Cài đặt</span>
     </a>

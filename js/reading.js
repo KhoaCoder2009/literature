@@ -390,11 +390,6 @@ function initReadingDialogDismissals() {
 
 // ROUTING HOOK
 const setReadingRoute = function(setId) {
-  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
-    if (typeof go === 'function') go('home');
-    if (typeof openLoginDialog === 'function') openLoginDialog();
-    return;
-  }
   initReadingModule();
   if (setId) {
     openReadingSet(setId);
@@ -428,11 +423,6 @@ function exitReadingWorkspace(force = false) {
 }
 
 function openReadingSet(id) {
-  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
-    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
-    if (typeof openLoginDialog === 'function') openLoginDialog();
-    return;
-  }
   const set = readingSets.find(s => String(s.id) === String(id));
   if (!set) {
     toast('Không tìm thấy bộ đề đọc hiểu này!', 'bad');
@@ -910,11 +900,6 @@ function resetCurrentReadingDraft() {
 
 // SUBMIT & REVIEW
 function submitReadingAnswers() {
-  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
-    toast('Vui lòng đăng nhập tài khoản để nộp bài!', 'bad');
-    if (typeof openLoginDialog === 'function') openLoginDialog();
-    return;
-  }
   const set = readingSets.find(s => String(s.id) === String(currentReadingSetId));
   if (!set) return;
 

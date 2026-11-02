@@ -42,7 +42,6 @@ const componentFiles = [
   { name: 'screen-writing', file: 'screen-writing.html' },
   { name: 'screen-reading', file: 'screen-reading.html' },
   { name: 'screen-history', file: 'screen-history.html' },
-  { name: 'screen-accounts', file: 'screen-accounts.html' },
   { name: 'dialogs', file: 'dialogs.html' }
 ];
 

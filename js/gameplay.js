@@ -37,11 +37,6 @@ function setSetupTopicFilter(topic) {
 }
 
 function selectAndStartSetupQuiz(id) {
-  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
-    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
-    if (typeof openLoginDialog === 'function') openLoginDialog();
-    return;
-  }
   const s = sets.find(x => String(x.id) === String(id));
   if (s && typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(s, 'quiz')) {
     const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(s, 'quiz') : { hasSubmissions: false, message: 'Bộ đề này đã khóa đối với bạn!' };
@@ -55,11 +50,6 @@ function selectAndStartSetupQuiz(id) {
 }
 
 function openStartQuizModal(id) {
-  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
-    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
-    if (typeof openLoginDialog === 'function') openLoginDialog();
-    return;
-  }
   const s = sets.find(x => String(x.id) === String(id));
   if (!s) return;
 
@@ -129,11 +119,6 @@ function closeStartQuizModal() {
 
 function handleStartQuizSubmit(e) {
   if (e) e.preventDefault();
-  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
-    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
-    if (typeof openLoginDialog === 'function') openLoginDialog();
-    return;
-  }
   const id = $('#start-quiz-set-id')?.value;
   const nick = ($('#start-nick')?.value || '').trim();
   const className = ($('#start-class-name')?.value || '').trim();
@@ -294,11 +279,6 @@ function updateSetupQuestionCount() {
 }
 
 R.setup = id => {
-  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
-    if (typeof go === 'function') go('home');
-    if (typeof openLoginDialog === 'function') openLoginDialog();
-    return;
-  }
   const validSets = sets.filter(s => !String(s.id).startsWith('set_'));
   const ss = $('#ss');
   if (ss) {
@@ -317,11 +297,6 @@ R.setup = id => {
 };
 
 function begin() {
-  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
-    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
-    if (typeof openLoginDialog === 'function') openLoginDialog();
-    return;
-  }
   onPlayerInfoChange();
   const selectedId = $('#start-quiz-set-id')?.value || $('#ss')?.value;
   const s = sets.find(x => String(x.id) === String(selectedId)) || sets.find(x => x.id == $('#ss')?.value);

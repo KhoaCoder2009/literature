@@ -104,33 +104,14 @@ function go(n, p) {
     toast('⚠️ Bạn đang làm bài! Phải nộp bài xong mới được thoát.', 'bad');
     return;
   }
-  if (n === 'edit' && window.Auth && !window.Auth.canEditContent()) {
-    toast('Học sinh không có quyền chỉnh sửa bộ đề! Vui lòng đăng nhập tài khoản Giáo viên.', 'bad');
-    return;
-  }
-  if (n === 'lib' && window.Auth && window.Auth.isStudent()) {
-    toast('Thư viện học liệu chỉ dành cho Giáo viên quản lý bộ đề.', 'bad');
-    return;
-  }
-  if (n === 'accounts' && window.Auth && !window.Auth.isTeacher()) {
-    toast('Chỉ Giáo viên mới có quyền truy cập trang Quản lý tài khoản.', 'bad');
-    return;
-  }
-  if (n === 'history' && window.Auth && !window.Auth.isLoggedIn()) {
-    toast('Vui lòng đăng nhập để xem lịch sử bài làm!', 'bad');
-    if (typeof openLoginDialog === 'function') openLoginDialog();
-    return;
-  }
-  if (['setup', 'game', 'reading', 'writing'].includes(n) && window.Auth && !window.Auth.isLoggedIn()) {
-    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
-    if (typeof openLoginDialog === 'function') openLoginDialog();
-    return;
+  if (n === 'accounts') {
+    n = 'home';
   }
   if (typeof playSound === 'function') playSound('pop');
   const sc = n == 'edit' ? 'lib' : n;
   currentScreen = sc;
   window.currentScreen = sc;
-  if (['home', 'lib', 'setup', 'writing', 'reading', 'history', 'accounts'].includes(sc)) {
+  if (['home', 'lib', 'setup', 'writing', 'reading', 'history'].includes(sc)) {
     try {
       sessionStorage.setItem('vq_current_screen', sc);
     } catch (error) {

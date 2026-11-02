@@ -1173,23 +1173,7 @@ window.getSetAttemptBadgeHtml = getSetAttemptBadgeHtml;
 window.getSetDeadlineBadgeHtml = getSetDeadlineBadgeHtml;
 
 function getQuizHistory(forceAll = false) {
-  const list = getAllRawQuizHistory();
-  if (forceAll) return list;
-
-  if (typeof Auth !== 'undefined') {
-    const u = Auth.getCurrentUser();
-    if (!u) {
-      // Chưa đăng nhập -> Tuyệt đối không hiển thị lịch sử bài làm nào
-      return [];
-    }
-    if (u.role === 'student') {
-      return list.filter(item => isItemBelongToStudent(item, u));
-    }
-    if (u.role === 'teacher' || u.role === 'admin') {
-      return list;
-    }
-  }
-  return [];
+  return getAllRawQuizHistory();
 }
 
 function mapSupabaseRowToHistory(row) {
@@ -1350,7 +1334,6 @@ async function saveQuizAttemptToSupabase(entry) {
 
 async function loadQuizHistoryFromSupabase(forceNotice) {
   if (!isSupabaseConfigured() || isSyncingQuizHistory) return;
-  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) return;
 
   const indicator = document.getElementById('history-sync-indicator');
   const pageBadge = document.getElementById('history-sync-badge-page');
@@ -1582,24 +1565,6 @@ function updateHistoryPageSetDropdown() {
 function renderHistoryPage() {
   const container = document.getElementById('history-page-list-container');
   if (!container) return;
-
-  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
-    container.innerHTML = `
-      <div class="card" style="text-align:center; padding:52px 24px; border-radius:24px; margin:16px 0; border:2px dashed var(--stroke); background:var(--bg-card);">
-        <div style="font-size:48px; margin-bottom:12px;">🔒</div>
-        <h3 style="font-size:22px; font-weight:800; margin:0 0 8px; color:var(--ink);">Yêu cầu đăng nhập</h3>
-        <p class="mut" style="max-width:460px; margin:0 auto 22px; font-size:14px; line-height:1.6;">
-          Bạn cần đăng nhập tài khoản học sinh hoặc giáo viên để xem kết quả bài làm, lời nhận xét và tiến độ ôn tập.
-        </p>
-        <button class="btn au" type="button" onclick="openLoginDialog()" style="font-weight:800; padding:12px 30px; border-radius:14px; font-size:15px; box-shadow:0 6px 16px rgba(217, 119, 6, 0.25);">
-          🔑 Đăng nhập ngay
-        </button>
-      </div>
-    `;
-    const countAllEl = document.getElementById('hist-count-all');
-    if (countAllEl) countAllEl.textContent = '(0)';
-    return;
-  }
 
   const allHistory = getQuizHistory();
   updateHistoryPageSetDropdown();
@@ -1923,22 +1888,6 @@ function renderHistoryList() {
   const container = document.getElementById('history-list-container');
   const countBadge = document.getElementById('history-total-count');
   if (!container) return;
-
-  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
-    container.innerHTML = `
-      <div class="empty-history-box" style="padding:40px 20px;">
-        <span class="empty-history-icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-        <h3 style="margin:8px 0 4px; font-weight:800;">Yêu cầu đăng nhập</h3>
-        <p class="mut" style="margin:0 0 16px; font-size:14px;">
-          Bạn cần đăng nhập tài khoản để xem lịch sử bài làm và tiến độ học tập.
-        </p>
-        <button class="btn au sm" type="button" onclick="closeHistoryModal(); openLoginDialog();" style="font-weight:800; padding:8px 20px;">
-          <ion-icon name="log-in-outline"></ion-icon> Đăng nhập ngay
-        </button>
-      </div>`;
-    if (countBadge) countBadge.textContent = '0 lượt làm bài';
-    return;
-  }
 
   const allHistory = getQuizHistory();
   updateHistorySetFilterDropdown();

@@ -529,7 +529,8 @@ nav a.on {
   100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-.wrap { max-width: 960px; margin: auto; padding: 20px 16px 60px; }
+.wrap { max-width: 1240px; margin: auto; padding: 20px 20px 60px; box-sizing: border-box; }
+#s-game .wrap, #s-res .wrap { max-width: 880px; }
 
 /* Professional Cards */
 .card {
@@ -3063,24 +3064,25 @@ body.projector-mode .hud-pill {
   margin: 12px 0 16px;
 }
 
-/* CARDS GRID - COMPACT & NEAT */
+/* CARDS GRID - SPACIOUS & NEAT */
 .setup-sets-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-  gap: 16px;
-  margin-top: 14px;
-  margin-bottom: 30px;
-  align-items: start;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+  gap: 22px;
+  margin-top: 16px;
+  margin-bottom: 34px;
+  align-items: stretch;
 }
 
 .setup-grid-card {
   background: var(--bg-card);
   border: 2px solid var(--stroke);
-  border-radius: 16px;
+  border-radius: 18px;
   box-shadow: 0 4px 0 var(--stroke);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   cursor: pointer;
   transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s;
   position: relative;
@@ -3343,12 +3345,14 @@ body.projector-mode .hud-pill {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 220px;
+  min-height: 240px;
+  box-sizing: border-box;
 }
 
 .lib-card-banner {
-  min-height: 108px;
-  padding: 12px 16px 14px;
+  min-height: 100px;
+  padding: 14px 18px 14px;
+  box-sizing: border-box;
 }
 
 .lib-set-select {
@@ -3379,12 +3383,13 @@ body.projector-mode .hud-pill {
 }
 
 .lib-card-details {
-  padding: 13px 16px;
+  padding: 14px 18px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 11px;
   flex: 1;
   background: var(--bg-card);
+  box-sizing: border-box;
 }
 
 .lib-card-meta-row {
@@ -3400,11 +3405,18 @@ body.projector-mode .hud-pill {
   background: var(--bg-base);
   border: 1.5px solid var(--stroke);
   border-radius: 99px;
-  padding: 3px 10px;
-  font-size: 11.5px;
+  padding: 4px 12px;
+  font-size: 12px;
   font-weight: 800;
   color: var(--ink);
   transition: background 0.15s, transform 0.15s;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .lib-card-meta-row .clickable-topic-tag:hover {
@@ -6556,12 +6568,13 @@ ion-icon {
 }
 
 .lib-card-actions-box {
-  padding: 10px 12px;
+  padding: 12px 18px 14px;
   border-top: 2.5px solid var(--stroke);
   background: var(--bg-base);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
+  box-sizing: border-box;
 }
 
 .lib-launch-row {
@@ -6571,33 +6584,37 @@ ion-icon {
 .lib-launch-row .lib-launch-btn {
   width: 100%;
   justify-content: center;
-  padding: 8px 14px !important;
-  font-size: 13.5px !important;
+  padding: 10px 14px !important;
+  font-size: 14px !important;
   font-weight: 800 !important;
   border-radius: 12px !important;
 }
 
 .lib-tools-row {
-  display: flex;
-  align-items: center;
-  justify-content: stretch;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 6px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .lib-mini-tool-btn {
-  flex: 1;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding: 6px 4px;
-  font-size: 11.5px;
+  padding: 8px 4px;
+  font-size: 12px;
   font-weight: 800;
-  border-radius: 8px;
+  border-radius: 9px;
   border: 2px solid var(--stroke);
   cursor: pointer;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   background: var(--bg-card);
   color: var(--txt);
   transition: all 0.15s ease;

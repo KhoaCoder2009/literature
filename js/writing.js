@@ -205,11 +205,6 @@ loadWritingSets();
 
 // Router hook
 R.writing = function(setId) {
-  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
-    if (typeof go === 'function') go('home');
-    if (typeof openLoginDialog === 'function') openLoginDialog();
-    return;
-  }
   loadWritingSets();
   if (setId) {
     const target = writingSets.find(s => s.id === setId);
@@ -620,21 +615,11 @@ function renderWritingSetsGrid() {
 // =========================================================================
 
 function openWritingWorkspaceById(setId) {
-  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
-    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
-    if (typeof openLoginDialog === 'function') openLoginDialog();
-    return;
-  }
   const set = writingSets.find(s => s.id === setId);
   if (set) openWritingWorkspace(set);
 }
 
 function openWritingWorkspace(set) {
-  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
-    toast('Vui lòng đăng nhập tài khoản để vào làm bài!', 'bad');
-    if (typeof openLoginDialog === 'function') openLoginDialog();
-    return;
-  }
   if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(set, 'writing')) {
     const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(set, 'writing') : { hasSubmissions: false, message: 'Bộ đề luyện viết này đã khóa đối với bạn!' };
     toast(info.message, 'bad');
@@ -1507,11 +1492,6 @@ function getWritingSectionMaxScore(sec, idx, totalSecs) {
 }
 
 function submitWritingEssay() {
-  if (typeof Auth !== 'undefined' && !Auth.isLoggedIn()) {
-    toast('Vui lòng đăng nhập tài khoản để nộp bài!', 'bad');
-    if (typeof openLoginDialog === 'function') openLoginDialog();
-    return;
-  }
   if (!currentWritingSet) {
     toast('Không tìm thấy thông tin bộ đề luyện viết hiện tại!', 'bad');
     return;
