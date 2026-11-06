@@ -287,8 +287,12 @@ function applyHeroQuote(idx, animate = true) {
   const author = document.querySelector('#study-author');
   const oldTip = document.querySelector('#study-tip');
   if (oldTip) oldTip.remove();
+  const oldActions = document.querySelector('.study-quote-actions');
+  if (oldActions) oldActions.remove();
 
   if (!card || !img || !quote) return;
+
+  setupHeroShowcaseInteractions();
 
   const updateContent = () => {
     img.onerror = () => {
@@ -376,9 +380,23 @@ function copyCurrentHeroQuote() {
   }
 }
 
+function setupHeroShowcaseInteractions() {
+  const showcase = document.querySelector('#hero-showcase');
+  if (showcase && !showcase._hasHoverListener) {
+    showcase._hasHoverListener = true;
+    showcase.addEventListener('mouseenter', stopHeroQuoteRotation);
+    showcase.addEventListener('mouseleave', () => {
+      const homeScr = document.querySelector('#s-home');
+      if (homeScr && homeScr.classList.contains('on')) {
+        startHeroQuoteRotation();
+      }
+    });
+  }
+}
+
 function startHeroQuoteRotation() {
   stopHeroQuoteRotation();
-  heroQuoteTimer = setInterval(rotateHeroQuote, 12000);
+  heroQuoteTimer = setInterval(rotateHeroQuote, 7000);
 }
 
 function stopHeroQuoteRotation() {
@@ -386,6 +404,19 @@ function stopHeroQuoteRotation() {
     clearInterval(heroQuoteTimer);
     heroQuoteTimer = null;
   }
+}
+
+if (typeof document !== 'undefined') {
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopHeroQuoteRotation();
+    } else {
+      const homeScr = document.querySelector('#s-home');
+      if (homeScr && homeScr.classList.contains('on')) {
+        startHeroQuoteRotation();
+      }
+    }
+  });
 }
 
 function animateScreenIn(screenId) {
