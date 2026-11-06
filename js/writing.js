@@ -1357,6 +1357,7 @@ const DEFAULT_WRITING_SETS = [
 
 let writingSets = [];
 let currentWritingSet = null;
+if (typeof window !== 'undefined') window.currentWritingSet = currentWritingSet;
 let currentWritingDraft = {};
 let currentWritingCategory = 'all';
 let writingTimerInterval = null;
@@ -1474,17 +1475,32 @@ function renderCategoryFilterBar() {
   const allCount = writingSets.length;
   const isAll = currentWritingCategory === 'all';
 
-  let optionsHtml = `<option value="all" ${isAll ? 'selected' : ''}>🏷️ Tất cả chủ đề (${allCount} đề)</option>`;
+  let optionsHtml = `<option value="all" ${isAll ? 'selected' : ''}>🏷️ Tất cả bộ đề (${allCount} đề)</option>`;
 
+  optionsHtml += `<optgroup label="─── CHỦ ĐỀ CHÍNH ───">`;
   cats.forEach(c => {
     const count = writingSets.filter(s => s.category === c.id).length;
     const isActive = currentWritingCategory === c.id;
     optionsHtml += `<option value="${esc(c.id)}" ${isActive ? 'selected' : ''}>${esc(c.name)} (${count})</option>`;
   });
+  optionsHtml += `</optgroup>`;
+
+  const tpls = (typeof SCAFFOLD_TEMPLATES !== 'undefined') ? SCAFFOLD_TEMPLATES : {};
+  if (Object.keys(tpls).length > 0) {
+    optionsHtml += `<optgroup label="─── DẠNG BÀI NGHỊ LUẬN (THEO PHƯƠNG PHÁP) ───">`;
+    Object.entries(tpls).forEach(([k, tpl]) => {
+      const count = writingSets.filter(s => s.subType === k).length;
+      if (count > 0) {
+        const isActive = currentWritingCategory === ('sub_' + k);
+        optionsHtml += `<option value="sub_${esc(k)}" ${isActive ? 'selected' : ''}>${esc(tpl.name)} (${count} đề)</option>`;
+      }
+    });
+    optionsHtml += `</optgroup>`;
+  }
 
   container.innerHTML = `
     <div class="topic-dropdown-wrap">
-      <select class="topic-filter-select" id="writing-category-select" onchange="filterWritingCategory(this.value)" aria-label="Lọc theo chủ đề luyện viết">
+      <select class="topic-filter-select" id="writing-category-select" onchange="filterWritingCategory(this.value)" aria-label="Lọc theo chủ đề hoặc dạng bài luyện viết">
         ${optionsHtml}
       </select>
       ${!isAll ? `<button type="button" class="btn gh sm" onclick="filterWritingCategory('all')" title="Bỏ lọc chủ đề">✕ Xem tất cả</button>` : ''}
@@ -1692,10 +1708,15 @@ function renderWritingSetsGrid() {
           <h3 class="setup-card-title">${esc(s.title)}</h3>
         </div>
         <div class="setup-card-body">
-          <div class="setup-card-topic-row">
+          <div class="setup-card-topic-row" style="display:flex; align-items:center; flex-wrap:wrap; gap:6px;">
             <span class="setup-card-topic" title="${esc(topic)}">
               <ion-icon name="pricetag-outline"></ion-icon> <span>${esc(topic)}</span>
             </span>
+            ${s.subType && typeof SCAFFOLD_TEMPLATES !== 'undefined' && SCAFFOLD_TEMPLATES[s.subType] ? `
+              <span class="tag cy sm" style="font-size:11px; font-weight:700; padding:2px 8px; border-radius:6px;" title="Dạng bài chuẩn theo phương pháp: ${esc(SCAFFOLD_TEMPLATES[s.subType].name)}">
+                <ion-icon name="bookmarks-outline"></ion-icon> <span>${esc(SCAFFOLD_TEMPLATES[s.subType].name.split(':')[1]?.trim() || SCAFFOLD_TEMPLATES[s.subType].name)}</span>
+              </span>
+            ` : ''}
           </div>
           ${(privacyBadge || openAtBadge || attemptBadge || deadlineBadge) ? `
             <div class="setup-card-badges-row" onclick="event.stopPropagation()">
@@ -1724,20 +1745,29 @@ function renderWritingSetsGrid() {
     `;
   };
 
-  // Case 1: Lọc và sắp xếp theo một chủ đề cụ thể được chọn
+  // Case 1: Lọc và sắp xếp theo một chủ đề hoặc dạng bài cụ thể được chọn
   if (currentWritingCategory !== 'all') {
-    const activeCat = cats.find(c => c.id === currentWritingCategory) || {
-      id: currentWritingCategory,
-      name: currentWritingCategory,
-      icon: '🏷️'
-    };
+    const isSub = currentWritingCategory.startsWith('sub_');
+    const subKey = isSub ? currentWritingCategory.replace('sub_', '') : null;
+    const tpls = (typeof SCAFFOLD_TEMPLATES !== 'undefined') ? SCAFFOLD_TEMPLATES : {};
+    const tplObj = (subKey && tpls[subKey]) ? tpls[subKey] : null;
+    const activeCat = isSub
+      ? { id: currentWritingCategory, name: tplObj ? tplObj.name : subKey, icon: '📂' }
+      : (cats.find(c => c.id === currentWritingCategory) || { id: currentWritingCategory, name: currentWritingCategory, icon: '🏷️' });
 
     const filtered = writingSets.filter(s => {
-      if (s.category !== currentWritingCategory) return false;
+      if (isSub) {
+        if (s.subType !== subKey) return false;
+      } else {
+        if (s.category !== currentWritingCategory) return false;
+      }
       if (isStudent && typeof isSetPrivate === 'function' && isSetPrivate(s, 'writing')) return false;
       if (!query) return true;
+      const subName = (s.subType && tpls[s.subType]) ? tpls[s.subType].name.toLowerCase() : '';
       return (s.title && s.title.toLowerCase().includes(query)) ||
-             (s.prompt && s.prompt.toLowerCase().includes(query));
+             (s.prompt && s.prompt.toLowerCase().includes(query)) ||
+             (s.categoryName && s.categoryName.toLowerCase().includes(query)) ||
+             subName.includes(query);
     });
 
     if (filtered.length === 0) {
@@ -1782,12 +1812,15 @@ function renderWritingSetsGrid() {
   }
 
   // Case 2: "Tất cả" - Hiện HẾT tất cả các bộ đề trong một danh sách lưới chung
+  const tplsAll = (typeof SCAFFOLD_TEMPLATES !== 'undefined') ? SCAFFOLD_TEMPLATES : {};
   const filtered = writingSets.filter(s => {
     if (isStudent && typeof isSetPrivate === 'function' && isSetPrivate(s, 'writing')) return false;
     if (!query) return true;
+    const subName = (s.subType && tplsAll[s.subType]) ? tplsAll[s.subType].name.toLowerCase() : '';
     return (s.title && s.title.toLowerCase().includes(query)) ||
            (s.prompt && s.prompt.toLowerCase().includes(query)) ||
-           (s.categoryName && s.categoryName.toLowerCase().includes(query));
+           (s.categoryName && s.categoryName.toLowerCase().includes(query)) ||
+           subName.includes(query);
   });
 
   if (filtered.length === 0) {
@@ -1946,7 +1979,10 @@ function openWritingWorkspace(set, chosenMinutes = null) {
     return;
   }
   currentWritingSet = set;
-  if (typeof window !== 'undefined') window.currentWritingSetId = set.id;
+  if (typeof window !== 'undefined') {
+    window.currentWritingSet = set;
+    window.currentWritingSetId = set.id;
+  }
   if (document.body) document.body.classList.add('in-writing-workspace');
   if ($('#writing-list-view')) $('#writing-list-view').style.display = 'none';
   if ($('#writing-workspace-view')) $('#writing-workspace-view').style.display = 'block';
@@ -2040,6 +2076,7 @@ function exitWritingWorkspace(force = false) {
   stopWritingTimer();
   clearInterval(autoSaveDraftTimer);
   currentWritingSet = null;
+  if (typeof window !== 'undefined') window.currentWritingSet = null;
   if (typeof window !== 'undefined') window.currentWritingSetId = null;
   if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
     window.__SECURITY_SHIELD.endExam(Boolean(force));

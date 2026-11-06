@@ -1194,12 +1194,27 @@
   // 3B. Giàn giáo nhận thức cho Luyện viết (Toàn bài & Từng đoạn theo đúng 12 dạng bài)
   let activeWritingTemplateKey = 'nlxh_doan_ynghia';
 
-  function renderWorkspaceThinkingGuide(curSet) {
+  function onScaffoldTemplateChange(newKey) {
+    if (newKey && SCAFFOLD_TEMPLATES[newKey]) {
+      activeWritingTemplateKey = newKey;
+    }
+    const curSet = (typeof currentWritingSet !== 'undefined' && currentWritingSet) ? currentWritingSet : (typeof window !== 'undefined' ? window.currentWritingSet : null);
+    renderWorkspaceThinkingGuide(curSet, newKey);
+    const tpl = SCAFFOLD_TEMPLATES[activeWritingTemplateKey];
+    if (tpl) {
+      toast(`💡 Đã áp dụng dạng bài: ${tpl.name.split(':')[0]}`, 'ok');
+    }
+  }
+
+  function renderWorkspaceThinkingGuide(curSet, overrideKey) {
     const card = document.getElementById('workspace-thinking-card');
     const body = document.getElementById('workspace-thinking-guide-body');
     const sub = document.getElementById('workspace-thinking-card-sub');
     const btn = document.getElementById('btn-toggle-thinking-guide');
-    if (!card || !body) return;
+    if (!card) return;
+
+    if (!curSet && typeof currentWritingSet !== 'undefined' && currentWritingSet) curSet = currentWritingSet;
+    if (!curSet && typeof window !== 'undefined' && window.currentWritingSet) curSet = window.currentWritingSet;
 
     if (!curSet) {
       card.style.display = 'none';
@@ -1207,91 +1222,18 @@
       return;
     }
 
-    let guide = (curSet.thinkingGuide || '').trim();
-    if (!guide && typeof autoGenerateThinkingGuideForSet === 'function') {
-      guide = autoGenerateThinkingGuideForSet(curSet);
-    }
-
-    if (guide) {
-      card.style.display = 'block';
-      body.textContent = guide;
-      if (btn) {
-        btn.style.display = 'inline-flex';
-        btn.classList.add('active');
-        const span = btn.querySelector('span');
-        if (span) span.textContent = 'Thu gọn gợi ý';
-      }
-      if (sub) {
-        const isDoan = String(curSet.category || '').startsWith('doan-');
-        sub.textContent = isDoan
-          ? 'Định hướng 01 đoạn văn 200 chữ: Luận điểm then chốt & Thao tác lập luận'
-          : 'Định hướng toàn bài: Khung luận điểm, Thao tác phân tích & Dẫn chứng tiêu biểu';
-      }
-    } else {
-      card.style.display = 'none';
-      if (btn) btn.style.display = 'none';
-    }
-  }
-
-  function toggleWorkspaceThinkingGuide() {
-    const card = document.getElementById('workspace-thinking-card');
-    const btn = document.getElementById('btn-toggle-thinking-guide');
-    if (!card) return;
-
-    const isHidden = (card.style.display === 'none' || (typeof window !== 'undefined' && typeof window.getComputedStyle === 'function' && window.getComputedStyle(card).display === 'none'));
-    if (isHidden) {
-      const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
-      renderWorkspaceThinkingGuide(curSet);
-      card.style.display = 'block';
-      if (btn) {
-        btn.classList.add('active');
-        const span = typeof btn.querySelector === 'function' ? btn.querySelector('span') : null;
-        if (span) span.textContent = 'Thu gọn gợi ý';
-      }
-      toast('💡 Đã mở gợi ý tư duy dưới đề bài!', 'ok');
-    } else {
-      card.style.display = 'none';
-      if (btn) {
-        btn.classList.remove('active');
-        const span = typeof btn.querySelector === 'function' ? btn.querySelector('span') : null;
-        if (span) span.textContent = 'Gợi ý tư duy';
+    if (overrideKey && SCAFFOLD_TEMPLATES[overrideKey]) {
+      activeWritingTemplateKey = overrideKey;
+    } else if (!activeWritingTemplateKey || !SCAFFOLD_TEMPLATES[activeWritingTemplateKey] || (curSet && curSet.subType && activeWritingTemplateKey !== curSet.subType && !overrideKey)) {
+      if (curSet.subType && SCAFFOLD_TEMPLATES[curSet.subType]) {
+        activeWritingTemplateKey = curSet.subType;
+      } else {
+        const promptText = `${curSet.title || ''} ${curSet.prompt || ''}`;
+        activeWritingTemplateKey = detectBestTemplateKey(promptText, curSet.subType, curSet.category && curSet.category.startsWith('doan-'));
       }
     }
-  }
 
-  function initWritingScaffoldingAndTimer() {
-    const panel = document.getElementById('writing-scaffolding-panel');
-    if (panel) panel.style.display = 'none';
-
-    const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
-    const promptText = curSet ? `${curSet.title || ''} ${curSet.prompt || ''}` : '';
-    activeWritingTemplateKey = detectBestTemplateKey(promptText, curSet && curSet.subType, curSet && curSet.category && curSet.category.startsWith('doan-'));
-
-    renderWorkspaceThinkingGuide(curSet);
-    renderWritingMainScaffoldingBody(activeWritingTemplateKey);
-    initWritingPressureTimerUI(curSet);
-  }
-
-  function toggleWritingScaffoldingPanel() {
-    const panel = document.getElementById('writing-scaffolding-panel');
-    if (!panel) return;
-    if (panel.style.display === 'none') {
-      renderWritingMainScaffoldingBody(activeWritingTemplateKey);
-      panel.style.display = 'block';
-      awardCustomGamificationPoints(10, 'scaffolding');
-    } else {
-      panel.style.display = 'none';
-    }
-  }
-
-  function renderWritingMainScaffoldingBody(selectedKey) {
-    const body = document.getElementById('writing-scaffolding-body');
-    if (!body) return;
-    if (selectedKey && SCAFFOLD_TEMPLATES[selectedKey]) {
-      activeWritingTemplateKey = selectedKey;
-    }
     const tpl = SCAFFOLD_TEMPLATES[activeWritingTemplateKey] || SCAFFOLD_TEMPLATES.nlxh_doan_ynghia;
-    const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
     const promptText = document.getElementById('workspace-prompt-text')?.textContent || (curSet ? curSet.prompt : '');
     const keywords = extractSmartKeywordsFromText(promptText);
     const connectors = [
@@ -1305,7 +1247,10 @@
       'Qua đó, tác giả gửi gắm thông điệp'
     ];
 
-    const thinkingGuide = curSet && curSet.thinkingGuide ? curSet.thinkingGuide.trim() : '';
+    let thinkingGuide = (curSet.thinkingGuide || '').trim();
+    if (!thinkingGuide && typeof autoGenerateThinkingGuideForSet === 'function') {
+      thinkingGuide = autoGenerateThinkingGuideForSet(curSet);
+    }
 
     const thinkingGuideHtml = thinkingGuide ? `
       <div class="scaffold-specific-guide-card">
@@ -1335,28 +1280,36 @@
       </div>
     `;
 
-    body.innerHTML = `
-      ${thinkingGuideHtml}
-
-      <div style="margin-bottom:10px;">
-        <label class="scaffold-lbl" for="writing-main-tpl-select">📂 Chọn đúng Dạng bài Nghị luận (Theo tài liệu phương pháp):</label>
-        <select id="writing-main-tpl-select" class="qa-select" style="font-weight:700; font-size:12.5px;" onchange="renderWritingMainScaffoldingBody(this.value)">
+    const fullScaffoldHtml = `
+      <div style="margin-bottom:12px;">
+        <label class="scaffold-lbl" for="writing-main-tpl-select" style="font-weight:700; color:var(--ink); font-size:13px; display:block; margin-bottom:6px;">
+          📁 Chọn đúng Dạng bài Nghị luận (Theo tài liệu phương pháp):
+        </label>
+        <select id="writing-main-tpl-select" class="qa-select" style="font-weight:700; font-size:12.5px; width:100%; border:2px solid var(--stroke); border-radius:10px; padding:8px 12px; background:var(--bg-card); color:var(--ink);" onchange="onScaffoldTemplateChange(this.value)">
           ${buildTemplateSelectOptionsHtml(activeWritingTemplateKey)}
         </select>
       </div>
 
       <div class="scaffold-formula-banner">
-        <div style="margin-bottom:4px; color:#b45309; font-weight:800; font-size:12px;">📌 ${esc(tpl.formRule)}</div>
-        <b>📐 Quy trình các bước triển khai:</b>
+        <div style="margin-bottom:6px; color:#b45309; font-weight:800; font-size:12.5px; line-height:1.45;">
+          📌 ${esc(tpl.formRule)}
+        </div>
+        <div style="font-weight:800; font-size:12.5px; margin-bottom:6px; color:var(--ink);">
+          📐 Quy trình các bước triển khai:
+        </div>
         <div class="scaffold-steps-pills">
           ${tpl.formulaSteps.map(st => `<span class="scaffold-step-pill">${esc(st)}</span>`).join(' ➔ ')}
         </div>
       </div>
 
+      ${thinkingGuideHtml}
+
       ${tpl.referenceHtml || ''}
 
-      <div class="scaffold-keywords-section">
-        <div class="scaffold-lbl">🔑 Từ khóa gợi ý theo đề (Bấm để chèn vào phần đang viết):</div>
+      <div class="scaffold-keywords-section" style="margin-top:10px;">
+        <div class="scaffold-lbl" style="font-weight:700; font-size:12.5px; margin-bottom:6px;">
+          🔑 Từ khóa gợi ý theo đề (Bấm để chèn vào phần đang viết):
+        </div>
         <div class="scaffold-kw-list">
           ${keywords.map(kw => `
             <button type="button" class="scaffold-kw-chip" onclick="insertTextIntoActiveWritingSection('${esc(kw)}')">+ ${esc(kw)}</button>
@@ -1365,7 +1318,9 @@
       </div>
 
       <div class="scaffold-keywords-section" style="margin-top:8px;">
-        <div class="scaffold-lbl">🔗 Cụm từ dẫn luận điểm chuẩn theo tài liệu:</div>
+        <div class="scaffold-lbl" style="font-weight:700; font-size:12.5px; margin-bottom:6px;">
+          🔗 Cụm từ dẫn luận điểm chuẩn theo tài liệu:
+        </div>
         <div class="scaffold-kw-list">
           ${connectors.map(c => `
             <button type="button" class="scaffold-kw-chip connector" onclick="insertTextIntoActiveWritingSection('${esc(c)} ')">+ ${esc(c)}...</button>
@@ -1373,6 +1328,76 @@
         </div>
       </div>
     `;
+
+    if (body) {
+      body.innerHTML = fullScaffoldHtml;
+    }
+    const legacyBody = document.getElementById('writing-scaffolding-body');
+    if (legacyBody && legacyBody !== body) {
+      legacyBody.innerHTML = fullScaffoldHtml;
+    }
+
+    card.style.display = 'block';
+    if (btn) {
+      btn.style.display = 'inline-flex';
+      btn.classList.add('active');
+      const span = typeof btn.querySelector === 'function' ? btn.querySelector('span') : null;
+      if (span) span.textContent = 'Thu gọn gợi ý';
+    }
+    if (sub) {
+      sub.textContent = `[${tpl.group}] ${tpl.name}`;
+    }
+  }
+
+  function toggleWorkspaceThinkingGuide() {
+    const card = document.getElementById('workspace-thinking-card');
+    const btn = document.getElementById('btn-toggle-thinking-guide');
+    if (!card) return;
+
+    const isHidden = (card.style.display === 'none' || (typeof window !== 'undefined' && typeof window.getComputedStyle === 'function' && window.getComputedStyle(card).display === 'none'));
+    if (isHidden) {
+      const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
+      renderWorkspaceThinkingGuide(curSet);
+      card.style.display = 'block';
+      if (btn) {
+        btn.classList.add('active');
+        const span = typeof btn.querySelector === 'function' ? btn.querySelector('span') : null;
+        if (span) span.textContent = 'Thu gọn gợi ý';
+      }
+      toast('💡 Đã mở gợi ý tư duy dưới đề bài!', 'ok');
+    } else {
+      card.style.display = 'none';
+      if (btn) {
+        btn.classList.remove('active');
+        const span = typeof btn.querySelector === 'function' ? btn.querySelector('span') : null;
+        if (span) span.textContent = '💡 Gợi ý tư duy & Dạng bài';
+      }
+    }
+  }
+
+  function initWritingScaffoldingAndTimer() {
+    const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
+    if (curSet && curSet.subType && SCAFFOLD_TEMPLATES[curSet.subType]) {
+      activeWritingTemplateKey = curSet.subType;
+    } else {
+      const promptText = curSet ? `${curSet.title || ''} ${curSet.prompt || ''}` : '';
+      activeWritingTemplateKey = detectBestTemplateKey(promptText, curSet && curSet.subType, curSet && curSet.category && curSet.category.startsWith('doan-'));
+    }
+
+    renderWorkspaceThinkingGuide(curSet);
+    initWritingPressureTimerUI(curSet);
+  }
+
+  function toggleWritingScaffoldingPanel() {
+    toggleWorkspaceThinkingGuide();
+  }
+
+  function renderWritingMainScaffoldingBody(selectedKey) {
+    if (selectedKey && SCAFFOLD_TEMPLATES[selectedKey]) {
+      activeWritingTemplateKey = selectedKey;
+    }
+    const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
+    renderWorkspaceThinkingGuide(curSet);
   }
 
   function toggleWritingSectionScaffolding(secId, idx) {
@@ -1498,7 +1523,7 @@
   }
 
   function insertSetThinkingGuideToActiveSection() {
-    const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
+    const curSet = (typeof currentWritingSet !== 'undefined' && currentWritingSet) ? currentWritingSet : (typeof window !== 'undefined' ? window.currentWritingSet : null);
     if (!curSet || !curSet.thinkingGuide) {
       toast('Bộ đề này chưa có gợi ý tư duy riêng!', 'bad');
       return;
@@ -2199,6 +2224,7 @@
   global.assembleReadingScaffoldToTextarea = assembleReadingScaffoldToTextarea;
 
   global.initWritingScaffoldingAndTimer = initWritingScaffoldingAndTimer;
+  global.onScaffoldTemplateChange = onScaffoldTemplateChange;
   global.renderWorkspaceThinkingGuide = renderWorkspaceThinkingGuide;
   global.toggleWorkspaceThinkingGuide = toggleWorkspaceThinkingGuide;
   global.toggleWritingScaffoldingPanel = toggleWritingScaffoldingPanel;

@@ -224,7 +224,7 @@ const securityLockdownSnippet = `
     'openGamificationModal', 'closeGamificationModal', 'onActivityCompletedGamification',
     'awardCustomGamificationPoints', 'renderGamificationUI',
     'toggleReadingQuestionScaffolding', 'renderReadingQuestionScaffoldContent', 'insertKeywordIntoReadingAnswer', 'assembleReadingScaffoldToTextarea',
-    'initWritingScaffoldingAndTimer', 'renderWorkspaceThinkingGuide', 'toggleWorkspaceThinkingGuide', 'toggleWritingScaffoldingPanel', 'renderWritingMainScaffoldingBody', 'toggleWritingSectionScaffolding', 'renderWritingSectionScaffoldingContent',
+    'initWritingScaffoldingAndTimer', 'onScaffoldTemplateChange', 'renderWorkspaceThinkingGuide', 'toggleWorkspaceThinkingGuide', 'toggleWritingScaffoldingPanel', 'renderWritingMainScaffoldingBody', 'toggleWritingSectionScaffolding', 'renderWritingSectionScaffoldingContent',
     'insertTextIntoSpecificWritingSection', 'insertTextIntoActiveWritingSection', 'assembleWritingSectionScaffold',
     'insertSetThinkingGuideToActiveSection', 'insertScaffoldFormulaOutline', 'insertSpecificSectionGuide', 'autoGenerateThinkingGuideForModal',
     'initReadingPressureTimer', 'setReadingPressureTimer', 'toggleReadingPressureTimer', 'resetReadingPressureTimer',
@@ -278,8 +278,8 @@ if (fs.existsSync(indexPath)) {
   );
 
   // Luôn làm mới version cache-busting cho bundle CSS & JS
-  html = html.replace(/\.\/dist\/app\.bundle\.css(\?v=[^"]*)?/g, './dist/app.bundle.css?v=5.6');
-  html = html.replace(/\.\/dist\/app\.bundle\.js(\?v=[^"]*)?/g, './dist/app.bundle.js?v=5.6');
+  html = html.replace(/\.\/dist\/app\.bundle\.css(\?v=[^"]*)?/g, './dist/app.bundle.css?v=5.7');
+  html = html.replace(/\.\/dist\/app\.bundle\.js(\?v=[^"]*)?/g, './dist/app.bundle.js?v=5.7');
 
   fs.writeFileSync(indexPath, html, 'utf8');
   console.log('✓ Đã cập nhật index.html sang chế độ Bundle duy nhất (ẩn hoàn toàn các tên file nguồn)');

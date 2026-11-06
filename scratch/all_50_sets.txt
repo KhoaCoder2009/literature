@@ -1,0 +1,521 @@
+Total sets: 50
+ 1. id=doan_nlxh_01 | cat=doan-nlxh | subType=nlxh_doan_ynghia | title=[Đoạn NLXH - Đề 1] Suy nghĩ về ý kiến: "Áp lực tạo nên kim cương"
+   prompt=Viết đoạn văn (khoảng 200 chữ) trình bày suy nghĩ về ý kiến: "Áp lực tạo nên kim cương".
+   thinking=• Giải thích: Áp lực là khó khăn, thử thách; kim cương biểu tượng cho thành quả rực rỡ.
+• Bàn luận (3 ý): Thứ nhất, áp lực rèn luyện cho ta ý chí, bản lĩnh kiên cường. Thứ hai, áp lực đẩy con người đến giới hạn để khám phá năng lực tiềm ẩn của bản thân. Thứ ba, không có áp lực, con người dễ nảy sinh tâm lí ỷ lại, thụt lùi.
+• Dẫn chứng: Vận động viên thể thao rèn luyện cường độ cao để đạt huy chương vàng.
+• Bài học: Biết chấp nhận và biến áp lực thành động lực phát triển.
+
+ 2. id=doan_nlxh_02 | cat=doan-nlxh | subType=nlxh_doan_ynghia | title=[Đoạn NLXH - Đề 2] Ý nghĩa của việc tôn trọng sự khác biệt trong xã hội hiện đại
+   prompt=Viết đoạn văn (khoảng 200 chữ) bàn về ý nghĩa của việc tôn trọng sự khác biệt trong xã hội hiện đại.
+   thinking=• Bàn luận (3 ý): Thứ nhất, đối với cá nhân: giúp mỗi người tự tin phát huy thế mạnh riêng, không bị hòa tan. Thứ hai, đối với người khác: tạo ra sự thấu cảm, xóa bỏ định kiến và bạo lực ngôn từ. Thứ ba, đối với xã hội: làm cho bức tranh văn hóa đa dạng, thúc đẩy sáng tạo và đổi mới.
+• Bài học: Tránh đánh giá người khác qua lăng kính chủ quan của mình; học cách lắng nghe và bao dung.
+
+ 3. id=doan_nlxh_03 | cat=doan-nlxh | subType=nlxh_doan_giaiphap | title=[Đoạn NLXH - Đề 3] Trách nhiệm của thanh niên trong việc bảo vệ an ninh mạng
+   prompt=Viết đoạn văn (khoảng 200 chữ) trình bày suy nghĩ về trách nhiệm của thanh niên trong việc bảo vệ an ninh mạng.
+   thinking=• Hành động (3 ý): Thứ nhất, trang bị kĩ năng chọn lọc, kiểm chứng thông tin trước khi chia sẻ. Thứ hai, ứng xử văn minh, không sử dụng ngôn từ kích động, gây hấn trên không gian mạng. Thứ ba, chủ động lên tiếng tố giác các hành vi lừa đảo, phát tán tin giả.
+• Khẳng định: Không gian số lành mạnh bắt đầu từ ý thức của mỗi cá nhân.
+
+ 4. id=doan_nlxh_04 | cat=doan-nlxh | subType=nlxh_doan_tachai | title=[Đoạn NLXH - Đề 4] Tác hại của thói quen trì hoãn ở giới trẻ
+   prompt=Viết đoạn văn (khoảng 200 chữ) bàn về tác hại của thói quen trì hoãn ở giới trẻ.
+   thinking=• Bàn luận (3 ý): Thứ nhất, đánh mất những cơ hội quý giá để phát triển bản thân. Thứ hai, làm suy giảm uy tín, đánh mất sự tin tưởng của người khác. Thứ ba, tạo ra tâm lí lo âu, căng thẳng khi công việc dồn ứ sát hạn chót (deadline).
+• Bài học: Rèn luyện kỉ luật bản thân, chia nhỏ mục tiêu và hành động ngay lập tức.
+
+ 5. id=doan_nlxh_05 | cat=doan-nlxh | subType=nlxh_doan_ynghia | title=[Đoạn NLXH - Đề 5] Bàn về câu nói: "Đừng cố gắng trở thành người thành công, hãy cố gắng trở thành người có giá trị"
+   prompt=Viết đoạn văn (khoảng 200 chữ) bàn về câu nói: "Đừng cố gắng trở thành người thành công, hãy cố gắng trở thành người có giá trị".
+   thinking=• Giải thích: Thành công thường đo bằng vật chất, địa vị; giá trị đo bằng sự cống hiến, ý nghĩa mang lại cho cộng đồng.
+• Bàn luận (3 ý): 1. Người có giá trị lan tỏa năng lượng tích cực, giúp đỡ người khác. 2. Giá trị tạo ra sự tôn trọng bền vững hơn những thành tích bề nổi. 3. Khi bạn nỗ lực tạo ra giá trị đích thực, thành công chân chính sẽ tự khắc đến.
+• Bài học: Tập trung hoàn thiện nhân cách và chia sẻ với xã hội.
+
+ 6. id=doan_nlxh_06 | cat=doan-nlxh | subType=nlxh_doan_ynghia | title=[Đoạn NLXH - Đề 6] Sự cần thiết của kĩ năng làm việc nhóm đối với học sinh
+   prompt=Viết đoạn văn (khoảng 200 chữ) trình bày suy nghĩ về sự cần thiết của kĩ năng làm việc nhóm đối với học sinh.
+   thinking=• Bàn luận (3 ý): Thứ nhất, làm việc nhóm giúp bổ khuyết điểm yếu, phát huy thế mạnh của từng cá nhân. Thứ hai, tăng hiệu suất và chất lượng công việc so với làm độc lập. Thứ ba, môi trường nhóm rèn luyện kĩ năng lắng nghe, thấu cảm và giải quyết xung đột.
+• Bài học: Vượt qua cái tôi cá nhân, xây dựng tinh thần trách nhiệm tập thể.
+
+ 7. id=doan_nlxh_07 | cat=doan-nlxh | subType=nlxh_doan_giaiphap | title=[Đoạn NLXH - Đề 7] Những việc học sinh cần làm để xây dựng trường học hạnh phúc
+   prompt=Viết đoạn văn (khoảng 200 chữ) bàn về những việc học sinh cần làm để xây dựng trường học hạnh phúc.
+   thinking=• Hành động (3 ý): Đối với cá nhân: Tích cực học tập, chan hòa và mở lòng với bạn bè. Đối với tập thể: Tôn trọng thầy cô, tham gia xây dựng không gian lớp học xanh - sạch - đẹp. Tuyệt đối nói không với bạo lực học đường, cô lập và tẩy chay bạn bè.
+• Khẳng định: Hạnh phúc bắt nguồn từ sự quan tâm và tình thân ái mỗi ngày.
+
+ 8. id=doan_nlxh_08 | cat=doan-nlxh | subType=nlxh_doan_ynghia | title=[Đoạn NLXH - Đề 8] Bàn về ý kiến: "Biển lặng không tạo nên thủy thủ tài ba"
+   prompt=Viết đoạn văn (khoảng 200 chữ) bàn về ý kiến: "Biển lặng không tạo nên thủy thủ tài ba".
+   thinking=• Giải thích: Biển lặng là hoàn cảnh thuận lợi, êm ả; thủy thủ tài ba là người có bản lĩnh xuất chúng, giàu kinh nghiệm.
+• Bàn luận (3 ý): Nghịch cảnh là phép thử lớn nhất cho lòng kiên nhẫn và ý chí. Khó khăn kích thích trí sáng tạo để tìm ra hướng đi mới. Vượt qua sóng gió giúp con người tích lũy bài học và trưởng thành sâu sắc hơn.
+• Dẫn chứng: Những tấm gương khởi nghiệp vượt qua khủng hoảng.
+
+ 9. id=doan_nlxh_09 | cat=doan-nlxh | subType=nlxh_doan_ynghia | title=[Đoạn NLXH - Đề 9] Bài học về lòng biết ơn trong cuộc sống (từ phần Đọc hiểu)
+   prompt=Viết đoạn văn (khoảng 200 chữ) rút ra bài học về lòng biết ơn (được gợi ra từ phần Đọc hiểu).
+   thinking=• Khái quát: Nêu 1 câu khẳng định vai trò của lòng biết ơn trong cuộc sống.
+• Bàn luận (3 ý): Biết ơn giúp con người hoàn thiện nhân cách, sống tình nghĩa và khiêm nhường. Biết ơn cội nguồn, cha mẹ giúp gắn kết gia đình bền chặt. Biết ơn những người giúp đỡ mình lan tỏa vòng tròn tử tế và lòng trắc ẩn trong xã hội.
+• Bài học: Thể hiện lòng biết ơn bằng lời nói chân thành và hành động đền ơn thiết thực.
+
+10. id=doan_nlxh_10 | cat=doan-nlxh | subType=nlxh_doan_ynghia | title=[Đoạn NLXH - Đề 10] Giá trị của sự tự học trong thời đại công nghệ số
+   prompt=Viết đoạn văn (khoảng 200 chữ) bàn về giá trị của sự tự học trong thời đại công nghệ số.
+   thinking=• Bàn luận (3 ý): Tự học giúp tiếp cận kho tàng tri thức khổng lồ không giới hạn qua Internet. Tự học rèn luyện tư duy phản biện, giúp chủ động chọn lọc thông tin, không bị lệ thuộc một cách thụ động vào máy móc (AI). Tự học là chìa khóa then chốt để không bị đào thải trong thị trường lao động luôn thay đổi nhanh chóng.
+• Bài học: Xây dựng kế hoạch tự học có kỉ luật và kiên trì.
+
+11. id=bai_nlxh_01 | cat=bai-nlxh | subType=nlxh_bai_tutuong | title=[Bài NLXH - Đề 1] "Cái rễ của học hành thì đắng cay nhưng quả của nó thì ngọt ngào"
+   prompt=Trình bày suy nghĩ về câu nói: "Cái rễ của học hành thì đắng cay nhưng quả của nó thì ngọt ngào" (Bài văn khoảng 600 chữ, có đủ Mở bài - Thân bài - Kết bài).
+   thinking=• Mở bài: Dẫn dắt câu danh ngôn của Aristotle về bản chất quá trình học tập.
+• Thân bài:
+  - Giải thích: "Rễ đắng cay" là quá trình học tập vất vả, gian nan, đòi hỏi kỉ luật; "Quả ngọt ngào" là thành tựu, tri thức và tương lai tươi sáng.
+  - Bàn luận (3 ý): 1. Chiếm lĩnh tri thức đòi hỏi mồ hôi nước mắt, kiên trì vượt khó. 2. Thành quả nhận được là sự trưởng thành trí tuệ, cơ hội nghề nghiệp và tự do tư tưởng. 3. Đó là niềm tự hào của bản thân, gia đình và đóng góp cho xã hội.
+  - Chứng minh: Tấm gương các nhà khoa học, học sinh nghèo vượt khó.
+  - Phản đề: Phê phán thái độ lười biếng, chuộng bằng cấp, gian lận trong thi cử.
+  - Bài học: Rèn luyện ý chí vượt qua "vị đắng" ban đầu để đón nhận "vị ngọt".
+• Kết bài: Khẳng định lại ý nghĩa câu nói và lời nhắn nhủ thế hệ trẻ.
+
+12. id=bai_nlxh_02 | cat=bai-nlxh | subType=nlxh_bai_hientuong | title=[Bài NLXH - Đề 2] Hiện tượng "nghiện" mạng xã hội của một bộ phận giới trẻ hiện nay
+   prompt=Bàn về hiện tượng "nghiện" mạng xã hội (TikTok, Facebook, Instagram...) của một bộ phận giới trẻ hiện nay (Bài văn khoảng 600 chữ).
+   thinking=• Thực trạng: Dành quá nhiều thời gian lướt web vô bổ, lệ thuộc vào lượt like, view.
+• Tác hại (3 ý): 1. Suy giảm sức khỏe thể chất (thị lực, giấc ngủ, lười vận động). 2. Bỏ bê học tập, giảm khả năng tập trung, mất kết nối với thế giới thực. 3. Dễ bị thao túng tâm lí, lệch lạc nhận thức bởi tin giả, trào lưu độc hại.
+• Nguyên nhân: Thiếu sân chơi thực tế, tâm lí tò mò, thiếu kỉ luật tự giác.
+• Giải pháp: Cá nhân cài đặt giới hạn thời gian (screen time); Gia đình đồng hành, tạo sân chơi ngoài trời; Nhà trường định hướng sử dụng mạng văn minh.
+
+13. id=bai_nlxh_03 | cat=bai-nlxh | subType=nlxh_bai_vdxh_tpvh | title=[Bài NLXH - Đề 3] Sức mạnh của tình yêu thương trong việc cảm hóa con người (từ bát cháo hành Chí Phèo)
+   prompt=Từ sức mạnh lay động của "bát cháo hành" (Chí Phèo - Nam Cao), bàn về sức mạnh của tình yêu thương trong việc cảm hóa con người (Bài văn khoảng 600 chữ).
+   thinking=• Dẫn dắt: Nêu biểu hiện của tình thương qua bát cháo hành của Thị Nở đánh thức lương tri Chí Phèo.
+• Bàn luận (3 ý): 1. Tình yêu thương chân thành có thể làm tan chảy những tâm hồn chai sạn, thức tỉnh phần "người" bị vùi lấp. 2. Tình thương thắp lên niềm tin, tạo cơ hội cho người lầm lỡ làm lại cuộc đời. 3. Xã hội tràn ngập tình thương là xã hội văn minh, triệt tiêu mầm mống cái ác.
+• Chứng minh: Những dự án giáo dục, hoàn lương cho phạm nhân bằng tình nhân ái.
+• Phản đề: Phê phán lối sống thờ ơ, vô cảm hoặc tình thương vụ lợi.
+• Bài học: Mở rộng tấm lòng trao gửi yêu thương mỗi ngày.
+
+14. id=bai_nlxh_04 | cat=bai-nlxh | subType=nlxh_bai_tutuong | title=[Bài NLXH - Đề 4] Bàn về quan điểm: "Sự im lặng của người tốt còn đáng sợ hơn tiếng la hét của kẻ xấu"
+   prompt=Bàn về quan điểm: "Sự im lặng của người tốt còn đáng sợ hơn tiếng la hét của kẻ xấu" (Martin Luther King) (Bài văn khoảng 600 chữ).
+   thinking=• Giải thích: Kẻ xấu la hét là cái ác công khai; im lặng là thái độ thờ ơ, vô cảm, thỏa hiệp với cái xấu.
+• Bàn luận (3 ý): 1. Kẻ xấu hành động công khai vì tin rằng sẽ không bị phản kháng hay trừng phạt. 2. Sự im lặng của người tốt trực tiếp dung túng, tiếp tay cho cái ác lộng hành. 3. Hậu quả là làm băng hoại đạo đức xã hội, đẩy nạn nhân vào tuyệt vọng và niềm tin công lí bị sụp đổ.
+• Chứng minh: Hiện tượng bàng quan trước bạo lực nơi công cộng, bạo lực học đường.
+• Phản đề: Phê phán hội chứng "vô cảm", thói "thấy việc tốt không làm, thấy việc ác không can".
+• Bài học: Lòng dũng cảm lên tiếng bảo vệ công lí.
+
+15. id=bai_nlxh_05 | cat=bai-nlxh | subType=nlxh_bai_hientuong | title=[Bài NLXH - Đề 5] Phong trào thiện nguyện, tương thân tương ái của thế hệ Gen Z trong cứu trợ thiên tai
+   prompt=Viết bài văn nghị luận về phong trào thiện nguyện, tương thân tương ái của thế hệ Gen Z trong các đợt cứu trợ thiên tai (Bài văn khoảng 600 chữ).
+   thinking=• Khái quát: Khẳng định tinh thần trách nhiệm, lòng nhân ái của thế hệ trẻ trước biến cố thiên tai bão lũ.
+• Bàn luận (3 ý): 1. Kế thừa và phát huy truyền thống "Lá lành đùm lá rách" theo cách hiện đại (ứng dụng công nghệ, sao kê minh bạch, livestream kết nối). 2. Lan tỏa hình ảnh thanh niên năng động, thấu cảm và trách nhiệm. 3. Kịp thời tiếp sức đồng bào vượt qua khó khăn vật chất lẫn tinh thần.
+• Dẫn chứng: Các đội nhóm cứu trợ thanh niên trong bão Yagi.
+• Phản đề: Phê phán hiện tượng "làm màu", trục lợi truyền thông từ hoạt động từ thiện.
+• Bài học: Thiện nguyện phải xuất phát từ cái tâm trong sáng và tổ chức khoa học.
+
+16. id=bai_nlxh_06 | cat=bai-nlxh | subType=nlxh_bai_vdxh_tpvh | title=[Bài NLXH - Đề 6] Khát vọng hạnh phúc của con người trong nghịch cảnh (từ Vợ nhặt - Kim Lân)
+   prompt=Từ quyết định "nhặt vợ" của Tràng giữa nạn đói (Vợ nhặt - Kim Lân), bàn về khát vọng hạnh phúc của con người trong nghịch cảnh (Bài văn khoảng 600 chữ).
+   thinking=• Dẫn dắt: Quyết định liều lĩnh mà nhân văn của Tràng giữa ranh giới sự sống và cái chết năm 1945.
+• Bàn luận (3 ý): 1. Trong tận cùng bi đát, con người không nghĩ đến cái chết mà luôn hướng về sự sống và tương lai. 2. Khát vọng hạnh phúc gia đình là sức mạnh nội sinh kì diệu giúp con người vượt qua sợ hãi. 3. Sự cưu mang, sưởi ấm lẫn nhau trong nghịch cảnh thắp lên ánh sáng của niềm hi vọng và phẩm giá con người.
+• Dẫn chứng: Những tấm gương chiến thắng bệnh tật, vượt khó vươn lên xây dựng mái ấm.
+• Phản đề: Phê phán thái độ buông xuôi, tuyệt vọng khi gặp trắc trở.
+• Bài học: Giữ vững niềm tin yêu cuộc sống dù trong hoàn cảnh ngặt nghèo nhất.
+
+17. id=bai_nlxh_07 | cat=bai-nlxh | subType=nlxh_bai_tutuong | title=[Bài NLXH - Đề 7] "Nếu không có mục đích, anh không làm được gì cả..."
+   prompt=Trình bày suy nghĩ về câu nói: "Nếu không có mục đích, anh không làm được gì cả. Anh cũng không làm được gì vĩ đại nếu mục đích tầm thường" (Bài văn khoảng 600 chữ).
+   thinking=• Giải thích: Mục đích là đích đến, kim chỉ nam định hướng cho hành động; mục đích tầm thường chỉ phục vụ tư lợi ích kỉ, mục đích vĩ đại hướng tới cống hiến cho nhân loại.
+• Bàn luận (3 ý): 1. Sống không mục đích như con thuyền không bánh lái, lênh đênh và dễ gục ngã trước sóng gió. 2. Mục đích nhỏ nhoi chỉ giới hạn năng lực con người trong vòng an toàn hạn hẹp. 3. Mục đích cao cả (vì cộng đồng, vì dân tộc) mới đánh thức tiềm năng vô hạn và tạo ra những thành tựu vĩ đại lưu danh muôn đời.
+• Chứng minh: Chủ tịch Hồ Chí Minh ra đi tìm đường cứu nước với mục đích giải phóng dân tộc.
+• Phản đề: Phê phán lối sống vô định, "nước chảy bèo trôi" của một bộ phận người trẻ.
+• Bài học: Xác định mục tiêu sống cao đẹp và lập kế hoạch kiên định theo đuổi.
+
+18. id=bai_nlxh_08 | cat=bai-nlxh | subType=nlxh_bai_hientuong | title=[Bài NLXH - Đề 8] Hiện tượng chạy theo lối sống phô trương, chuộng hình thức (sống ảo) ở học sinh
+   prompt=Bàn về hiện tượng chạy theo lối sống phô trương, chuộng hình thức (sống ảo) của một bộ phận học sinh hiện nay (Bài văn khoảng 600 chữ).
+   thinking=• Thực trạng: Đua đòi đồ hiệu, check-in sang chảnh vượt quá điều kiện kinh tế gia đình, chụp ảnh khoe mẽ trên mạng.
+• Tác hại (3 ý): 1. Tạo gánh nặng tài chính đè nặng lên vai cha mẹ. 2. Đánh mất giá trị thực, rơi vào lối sống giả tạo, luôn thấp thỏm lo sợ bị phát hiện. 3. Dễ sa ngã vào tệ nạn xã hội hoặc đánh đổi phẩm giá để thỏa mãn nhu cầu vật chất bề nổi.
+• Nguyên nhân: Tâm lí sĩ diện, thiếu bản lĩnh, ảnh hưởng từ văn hóa thần tượng lệch lạc.
+• Giải pháp: Nhận thức giá trị thực của con người nằm ở tri thức và đạo đức; gia đình định hướng lối sống giản dị, lành mạnh.
+
+19. id=bai_nlxh_09 | cat=bai-nlxh | subType=nlxh_bai_vdxh_tpvh | title=[Bài NLXH - Đề 9] Ranh giới giữa đam mê cá nhân và trách nhiệm với cộng đồng (từ Vũ Như Tô)
+   prompt=Từ hình ảnh người nghệ sĩ Vũ Như Tô xây Cửu Trùng Đài, bàn về ranh giới giữa đam mê cá nhân và trách nhiệm với cộng đồng (Bài văn khoảng 600 chữ).
+   thinking=• Dẫn dắt: Bi kịch của Vũ Như Tô - nghệ sĩ tài ba say mê cái đẹp tuyệt đỉnh nhưng gián tiếp bóc lột nhân dân lầm than.
+• Bàn luận (3 ý): 1. Đam mê cá nhân là động lực thúc đẩy sáng tạo, vươn tới đỉnh cao nghề nghiệp. 2. Tuy nhiên, nếu đam mê đó mù quáng, bất chấp đạo lí và chà đạp lên lợi ích sống còn của cộng đồng thì sẽ trở thành tội ác. 3. Trách nhiệm cao nhất của mọi nghề nghiệp và đam mê là phụng sự con người, hướng về nhân sinh.
+• Chứng minh: Sự phát triển công nghệ AI, y sinh học cần đi đôi với đạo đức xã hội.
+• Phản đề: Phê phán lối sống ích kỉ "chỉ biết mình", xem nhẹ lợi ích tập thể.
+• Bài học: Đặt đam mê cá nhân trong sự hài hòa với lợi ích chung của đất nước.
+
+20. id=bai_nlxh_10 | cat=bai-nlxh | subType=nlxh_bai_tutuong | title=[Bài NLXH - Đề 10] Bàn về ý kiến: "Tôn trọng người khác chính là tôn trọng chính mình"
+   prompt=Bàn về ý kiến: "Tôn trọng người khác chính là tôn trọng chính mình" (Bài văn khoảng 600 chữ).
+   thinking=• Giải thích: Tôn trọng là thái độ công nhận giá trị, nhân phẩm và sự bình đẳng của người khác.
+• Bàn luận (3 ý): 1. Cách bạn đối xử với người khác phản chiếu trực tiếp phông văn hóa và nhân cách của chính bạn. 2. Khi bạn trao đi sự tôn trọng, bạn thiết lập tiêu chuẩn để người khác đối xử tương tự với bạn. 3. Một xã hội xây dựng trên nền tảng tôn trọng sẽ triệt tiêu xung đột, bạo lực và gắn kết hòa bình bền vững.
+• Chứng minh: Văn hóa xếp hàng, ứng xử nơi công cộng, tôn trọng sự riêng tư.
+• Phản đề: Phê phán thái độ trịch thượng, coi thường người yếu thế.
+• Bài học: Học cách cúi đầu lắng nghe, cư xử nhã nhặn từ những việc nhỏ nhất.
+
+21. id=doan_nlvh_01 | cat=doan-nlvh | subType=nlvh_doan_nt_truyen | title=[Đoạn NLVH - Đề 1] Phân tích ý nghĩa chi tiết "tiếng chửi" mở đầu truyện ngắn Chí Phèo (Nam Cao)
+   prompt=Phân tích ý nghĩa chi tiết "tiếng chửi" của Chí Phèo ở phần mở đầu truyện ngắn Chí Phèo (Nam Cao):
+
+“Hắn vừa đi vừa chửi. Bao giờ cũng thế, cứ rượu xong là hắn chửi. Bắt đầu hắn chửi giời. Có hề gì? giời có của riêng nhà nào? Rồi hắn chửi đời. Thế cũng chẳng sao: đời là tất cả nhưng chẳng là ai. Tức mình, hắn chửi ngay tất cả làng Vũ Đại. Nhưng cả làng Vũ Đại, ai cũng tự nhủ: « Chắc nó trừ mình ra! » Không ai lên tiếng cả. Tức thật! tức thật! ồ! thế này thì tức thật! tức chết đi được mất! Đã thế, hắn phải chửi cha đứa nào không chửi nhau với hắn. Nhưng cũng không ai ra điều. Mẹ kiếp! thế thì có phí rượu không? Thế thì có khổ hắn không? Không biết đứa chết mẹ nào lại đẻ ra thân hắn cho hắn khổ đến nông nỗi này? A hà! phải đấy, hắn cứ thế mà chửi, hắn cứ chửi đứa chết mẹ nào đẻ ra thân hắn, đẻ ra thằng Chí Phèo! Hắn nghiến răng vào mà chửi cái đứa đã đẻ ra Chí Phèo. Nhưng mà biết đứa nào đã đẻ ra Chí Phèo? Có mà giời biết! Hắn không biết, cả làng Vũ Đại cũng không ai biết..”
+   thinking=• Gọi tên yếu tố: Chi tiết nghệ thuật đặc sắc kết hợp điểm nhìn trần thuật nửa trực tiếp độc đáo.
+• Phân tích: Trình tự tiếng chửi thu hẹp dần: từ trời, đời ➔ làng Vũ Đại ➔ đứa không chửi nhau với hắn ➔ đứa đẻ ra thân hắn. Tiếng chửi là phản ứng của một kẻ say nhưng ẩn chứa nỗi đau tỉnh táo: hắn thèm khát giao tiếp với con người nhưng đáp lại chỉ là sự im lặng ghê người của cả làng Vũ Đại.
+• Đánh giá: Tiếng chửi không chỉ thể hiện tình trạng lưu manh hóa mà thực chất là tiếng kêu cứu cô độc, quằn quại của một con người bị cự tuyệt quyền làm người.
+
+22. id=doan_nlvh_02 | cat=doan-nlvh | subType=nlvh_doan_nt_truyen | title=[Đoạn NLVH - Đề 2] Phân tích tác dụng điểm nhìn trần thuật từ bà cụ Tứ khi nhìn nàng dâu mới (Vợ nhặt)
+   prompt=Phân tích tác dụng của điểm nhìn trần thuật từ nhân vật bà cụ Tứ khi nhìn nàng dâu mới (Vợ nhặt - Kim Lân):
+
+“Bà lão cúi đầu nín lặng. Bà lão hiểu rồi. Lòng người mẹ nghèo khổ ấy còn hiểu ra biết bao nhiêu cơ sự, vừa ai oán vừa xót thương cho số kiếp đứa con mình. Chao ôi, người ta dựng vợ gả chồng cho con là lúc trong nhà ăn nên làm nổi, những mong sinh con đẻ cái mở mặt sau này. Còn mình thì... Trong kẽ mắt kèm nhèm của bà rủ xuống hai dòng nước mắt... Biết rằng chúng nó có nuôi nổi nhau sống qua được cơn đói khát này không?
+Bà lão khẽ thở dài đứng lên, đăm đăm nhìn người đàn bà. Thị cúi mặt xuống, tay vân vê tà áo đã rách bợt. Bà lão nhìn thị và bà nghĩ: Người ta có gặp bước khó khăn, đói khổ này, người ta mới lấy đến con mình. Mà con mình mới có vợ được... Thôi thì bổn phận bà là mẹ, bà đã chẳng lo lắng được cho con... May ra mà qua khỏi được cái tao đoạn này thì thằng con bà cũng có vợ, nó yên bề nó, chẳng may ra ông giời bắt chết cũng phải chịu chứ biết thế nào mà lo cho hết được?...”
+   thinking=• Gọi tên yếu tố: Điểm nhìn bên trong (nội tâm nhân vật người mẹ già nghèo khổ) kết hợp lời trần thuật nửa trực tiếp.
+• Phân tích: Điểm nhìn giúp nhà văn soi rọi dòng độc thoại nội tâm phức tạp của bà cụ Tứ: từ ngỡ ngàng, ai oán, tủi phận vì không lo được cho con đến niềm thương cảm vô bờ đối với người đàn bà xa lạ ("người ta có đói khổ mới lấy đến con mình").
+• Đánh giá: Thể hiện tấm lòng bao dung, nhân hậu và tình mẫu tử thiêng liêng; khẳng định niềm tin bất diệt vào tình người giữa nạn đói khốc liệt.
+
+23. id=doan_nlvh_03 | cat=doan-nlvh | subType=nlvh_doan_nt_truyen | title=[Đoạn NLVH - Đề 3] Phân tích tình huống truyện độc đáo trong tác phẩm Vợ nhặt (Kim Lân)
+   prompt=Phân tích tình huống truyện độc đáo trong tác phẩm Vợ nhặt (Kim Lân) (Đoạn văn khoảng 200 chữ).
+   thinking=• Gọi tên: Tình huống "nhặt vợ" oái oăm, vừa bi vừa hài, đầy nghịch lí.
+• Phân tích: Tràng là một người ngụ cư, nghèo khổ, thô kệch lại lấy được vợ giữa lúc nạn đói 1945 hoành hành dữ dội nhất ("người chết như ngả rạ"). Việc lấy vợ vốn là đại sự thiêng liêng trở nên rẻ rúng như nhặt cọng rơm ngọn cỏ qua vài câu đùa và bốn bát bánh đúc. Nhưng đằng sau sự oái oăm là ngọn lửa ấm áp của tình yêu thương gia đình.
+• Đánh giá: Tình huống làm nổi bật ranh giới mỏng manh giữa sự sống và cái chết, từ đó tôn vinh khát vọng sống, khát vọng hạnh phúc mãnh liệt của người nông dân.
+
+24. id=doan_nlvh_04 | cat=doan-nlvh | subType=nlvh_doan_nt_tho | title=[Đoạn NLVH - Đề 4] Hiệu quả của nghệ thuật đối và từ láy trong hai câu thơ Tràng giang (Huy Cận)
+   prompt=Phân tích hiệu quả của nghệ thuật đối và từ láy trong hai câu thơ:
+"Lơ thơ cồn nhỏ gió đìu hiu/
+Đâu tiếng làng xa vãn chợ chiều"
+(Tràng giang - Huy Cận) (Đoạn văn khoảng 200 chữ).
+   thinking=• Gọi tên yếu tố: Từ láy tượng hình "lơ thơ", tượng thanh/tượng cảm "đìu hiu" kết hợp âm hưởng đối thanh và hình ảnh "vãn chợ chiều".
+• Phân tích: Từ láy "lơ thơ" gợi sự thưa thớt, trơ trọi của những cồn cát nhỏ giữa sông nước mênh mông; "đìu hiu" (mượn âm hưởng Chinh phụ ngâm) gợi ngọn gió hiu hắt, lạnh lẽo. Hình ảnh "chợ chiều" đã tàn tạ, vắng lặng, thêm từ "đâu" (vừa là đâu đó mơ hồ, vừa là phủ định không đâu có) càng xoáy sâu vào không gian quạnh quẽ.
+• Đánh giá: Hai câu thơ thể hiện sâu sắc nỗi sầu không gian, nỗi sầu vạn kỉ và cảm giác bơ vơ, lạc lõng của cái tôi Thơ Mới trước vũ trụ vô cùng.
+
+25. id=doan_nlvh_05 | cat=doan-nlvh | subType=nlvh_doan_camxuc_tho | title=[Đoạn NLVH - Đề 5] Niềm khao khát tự do qua khổ thơ cuối bài Nhớ đồng (Tố Hữu)
+   prompt=Phân tích niềm khao khát tự do qua khổ thơ cuối bài Nhớ đồng (Tố Hữu):
+
+“Rồi một hôm nào, tôi thấy tôi
+Nhẹ nhàng như con chim cà lơi
+Say đồng hương nắng vui ca hát
+Trên chín tầng cao bát ngát trời...
+Cho tới chừ đây, tới chừ đây
+Tôi mơ qua cửa khám bao ngày
+Tôi thu tất cả trong thầm lặng
+Như cánh chim buồn nhớ gió mây.
+Gì sâu bằng những trưa hiu quạnh
+Ôi ruộng đồng quê thương nhớ ơi!”
+   thinking=• Gọi tên yếu tố: Cấu tứ đối lập giữa quá khứ tự do ("chim cà lơi bay lượn") với hiện tại tù đày ("mơ qua cửa khám", "cánh chim buồn"); điệp ngữ cảm thán "Gì sâu bằng...", "Ôi... thương nhớ ơi!".
+• Phân tích: Hình ảnh so sánh "như con chim cà lơi say đồng hương nắng" gợi tả niềm say mê hoạt động cách mạng giữa quần chúng. Sự đối lập với thực tại "bốn bức tường giam" làm bật lên nỗi ngột ngạt, bức bối và khát khao tự do cháy bỏng.
+• Đánh giá: Khổ thơ khẳng định lí tưởng cách mạng kiên định và tình yêu tha thiết dành cho đất nước, quê hương của người chiến sĩ trẻ.
+
+26. id=doan_nlvh_06 | cat=doan-nlvh | subType=nlvh_doan_camxuc_tho | title=[Đoạn NLVH - Đề 6] Diễn biến tâm lí Thúy Kiều qua 8 câu thơ cuối đoạn trích Trao duyên (Nguyễn Du)
+   prompt=Phân tích diễn biến tâm lí của Thúy Kiều qua 8 câu thơ cuối trong đoạn trích Trao duyên (Truyện Kiều - Nguyễn Du):
+
+"Bây giờ trâm gãy gương tan,
+Kể làm sao xiết muôn vàn ái ân!
+Trăm nghìn gửi lạy tình quân,
+Tơ duyên ngắn ngủi có ngần ấy thôi!
+Phận sao phận bạc như vôi!
+Đã đành nước chảy hoa trôi lỡ làng.
+Ôi Kim lang! Hỡi Kim lang!
+Thôi thôi thiếp đã phụ chàng từ đây!"
+   thinking=• Gọi tên: Nghệ thuật miêu tả nội tâm qua độc thoại, thành ngữ dân gian ("trâm gãy gương tan", "phận bạc như vôi", "nước chảy hoa trôi"), thán từ và điệp từ tiếng gọi "Kim lang".
+• Phân tích: Sau khi trao duyên cho Thúy Vân, Kiều rơi vào trạng thái bàng hoàng, đau đớn tột cùng khi đối diện với sự thật tình yêu tan vỡ. Nàng lạy Kim Trọng - cái lạy tạ tội đầy xót xa. Đỉnh điểm là tiếng kêu thét xé lòng "Ôi Kim lang! Hỡi Kim lang!" như một tiếng nấc nghẹn ngào, nàng nhận hết phần lỗi về mình ("thiếp đã phụ chàng").
+• Đánh giá: Thể hiện đức hi sinh cao cả, lòng vị tha và bi kịch tình yêu tan vỡ đầy thương cảm của nàng Kiều.
+
+27. id=doan_nlvh_07 | cat=doan-nlvh | subType=nlvh_doan_nt_truyen | title=[Đoạn NLVH - Đề 7] Mâu thuẫn kịch qua lời thoại Vũ Như Tô khi bị quân khởi loạn bắt (Hồi V, Vũ Như Tô)
+   prompt=Phân tích mâu thuẫn qua lời thoại của Vũ Như Tô khi bị quân khởi loạn bắt (Hồi V, Vũ Như Tô - Nguyễn Huy Tưởng) (Đoạn văn khoảng 200 chữ).
+   thinking=• Gọi tên: Lời thoại đầy ảo tưởng, không chịu tin vào thực tế nghiệt ngã ("Ta có tội gì? Ta chỉ xây Cửu Trùng Đài để tô điểm cho đất nước!").
+• Phân tích: Vũ Như Tô mù quáng tin rằng Cửu Trùng Đài là công trình nghệ thuật vĩ đại mang lại danh dự cho non sông, mà không nhận ra nó được xây dựng bằng mồ hôi, nước mắt và máu của hàng vạn dân phu đói khổ. Lời thoại bộc lộ sự vỡ mộng đau đớn khi quân khởi loạn đòi đốt phá đài cao.
+• Đánh giá: Khắc họa xung đột bi kịch không thể điều hòa giữa khát vọng nghệ thuật siêu việt thuần túy và quyền lợi thiết thân của quần chúng nhân dân.
+
+28. id=doan_nlvh_08 | cat=doan-nlvh | subType=nlvh_doan_nhanvat | title=[Đoạn NLVH - Đề 8] Thái độ của nhân vật Đan Thiềm khi khuyên Vũ Như Tô chạy trốn (Hồi V, Vũ Như Tô)
+   prompt=Phân tích thái độ của nhân vật Đan Thiềm khi khuyên Vũ Như Tô chạy trốn (Hồi V, Vũ Như Tô - Nguyễn Huy Tưởng) (Đoạn văn khoảng 200 chữ).
+   thinking=• Gọi tên: Hành động dồn dập, lời thoại khẩn khoản, tha thiết kết hợp chỉ dẫn sân khấu gấp gáp.
+• Phân tích: Đan Thiềm là người phụ nữ tỉnh táo, hiểu rõ thời cuộc ("Thời thế đã đổi rồi"). Bà không màng đến tính mạng bản thân ("Tôi chết cũng được, nhưng ông phải sống"), chỉ một lòng muốn bảo vệ "kì tài" cho đất nước. Thái độ đau đớn, hốt hoảng bộc lộ tấm lòng tri âm, tri kỉ tuyệt đối với người nghệ sĩ.
+• Đánh giá: Nhân vật thể hiện căn "bệnh Đan Thiềm" - bệnh mê đắm cái tài hoa, tôn thờ cái đẹp đến mức quên cả chính mình; làm sâu sắc thêm tính chất bi tráng của vở kịch.
+
+29. id=doan_nlvh_09 | cat=doan-nlvh | subType=nlvh_doan_chude | title=[Đoạn NLVH - Đề 9] Vẻ đẹp sông Hương qua chi tiết "cô gái Di-gan phóng khoáng và man dại" (Hoàng Phủ Ngọc Tường)
+   prompt=Phân tích vẻ đẹp của sông Hương qua chi tiết "như một cô gái Di-gan phóng khoáng và man dại" (Ai đã đặt tên cho dòng sông? - Hoàng Phủ Ngọc Tường):
+
+"Trong những dòng sông đẹp ở các nước mà tôi đã nghe nói đến, hình như chỉ có sông Hương là thuộc về một thành phố duy nhất. Trước khi về đến vùng châu thổ êm đềm, nó đã là một bản trường ca của rừng già, rầm rộ giữa bóng cây đại ngàn, mãnh liệt qua những ghềnh thác, cuộn xoáy như cơn lốc vào những đáy vực bí ẩn, và cũng có lúc nó trở nên dịu dàng và say đắm giữa những dặm dài chói lọi màu đỏ của hoa đỗ quyên rừng. Giữa lòng Trường Sơn, sông Hương đã sống một nửa cuộc đời của mình như một cô gái Di-gan phóng khoáng và man dại. Rừng già đã hun đúc cho nó một bản lĩnh gan dạ, một tâm hồn tự do và trong sáng. Nhưng chính rừng già nơi đây, với cấu trúc đặc biệt có thể mở ra của dòng chảy, đã chế ngự sức mạnh bản năng ở người con gái ấy để khi ra khỏi rừng, sông Hương nhanh chóng mang một sắc đẹp dịu dàng và trí tuệ, trở thành người mẹ phù sa của một vùng văn hóa xứ sở."
+   thinking=• Gọi tên: Biện pháp so sánh, nhân hóa độc đáo; từ ngữ giàu tính tạo hình và trường từ vựng phong phú.
+• Phân tích: Hình ảnh "cô gái Di-gan phóng khoáng và man dại" gợi vẻ đẹp hoang dã, tự do, căng tràn nhựa sống và cá tính mãnh liệt của dòng sông giữa đại ngàn Trường Sơn. Sông Hương không chỉ có dòng chảy vật lí mà hiện lên như một sinh thể sống động với "bản lĩnh gan dạ" và "tâm hồn trong sáng".
+• Đánh giá: Thể hiện vốn hiểu biết địa lí - văn hóa uyên bác và ngòi bút tài hoa, lãng mạn bậc thầy của Hoàng Phủ Ngọc Tường.
+
+30. id=doan_nlvh_10 | cat=doan-nlvh | subType=nlvh_doan_chude | title=[Đoạn NLVH - Đề 10] Sự chặt chẽ của lập luận trong phần mở đầu văn bản Đại cáo bình Ngô (Nguyễn Trãi)
+   prompt=Phân tích sự chặt chẽ của lập luận trong phần mở đầu văn bản Đại cáo bình Ngô (Nguyễn Trãi):
+
+"Từng nghe:
+Việc nhân nghĩa cốt ở yên dân,
+Quân điếu phạt trước lo trừ bạo.
+Như nước Đại Việt ta từ trước,
+Vốn xưng nền văn hiến đã lâu.
+Núi sông bờ cõi đã chia,
+Phong tục Bắc Nam cũng khác.
+Từ Triệu, Đinh, Lý, Trần bao đời xây nền độc lập,
+Cùng Hán, Đường, Tống, Nguyên mỗi bên xưng đế một phương.
+Tuy mạnh yếu từng lúc khác nhau,
+Song hào kiệt đời nào cũng có."
+   thinking=• Gọi tên: Lập luận chặt chẽ theo cấu trúc diễn dịch, câu văn biền ngẫu sóng đôi cân xứng, kết hợp tiền đề chân lí (nhân nghĩa) và bằng chứng lịch sử xác thực.
+• Phân tích: Nguyễn Trãi nêu luận đề chính nghĩa: "yên dân" - bảo vệ cuộc sống bình yên của dân chúng và "trừ bạo" - tiêu diệt quân xâm lược bạo tàn. Tiếp đó, tác giả đưa ra các căn cứ vững chắc khẳng định chủ quyền độc lập của Đại Việt: văn hiến, lãnh thổ, phong tục, triều đại lịch sử ngang hàng với phương Bắc, hào kiệt ngàn đời.
+• Đánh giá: Đoạn văn mang sức thuyết phục đanh thép, xứng danh bản tuyên ngôn độc lập sáng chói của dân tộc.
+
+31. id=doan_nlvh_11 | cat=doan-nlvh | subType=nlvh_doan_nt_truyen | title=[Đoạn NLVH - Đề 11] Phân tích chi tiết "cái cúi đầu" của viên quản ngục trong Chữ người tử tù (Nguyễn Tuân)
+   prompt=Viết đoạn văn (khoảng 200 chữ) phân tích chi tiết "cái cúi đầu" của viên quản ngục ở cuối tác phẩm Chữ người tử tù (Nguyễn Tuân):
+
+"Huấn Cao thở dài, buồn bã đỡ viên quản ngục đứng thẳng người dậy và bảo:
+- Tôi bảo thực đấy, thầy Quản nên thay chốn ở đi. Chỗ này không phải là nơi để treo một bức lụa trắng với những nét chữ vuông vắn tươi tắn nó nói lên những cái hoài bão tung hoành của một đời con người. Thầy mến pháp đẹp là một chuyện, nhưng giữ lấy cái thiên lương cho lành vững rồi hãy nghĩ đến chuyện chơi chữ. Ở đây, khó giữ thiên lương cho lành vững được và rồi cũng đến nhem nhuốc mất cái đời lương thiện đi.
+Ngục quan cảm động, vái người tù một vái, chắp tay nói một câu mà dòng nước mắt rỉ vào kẽ miệng làm cho nghẹn ngào:
+- Kẻ mê muội này xin bái lĩnh."
+   thinking=• Câu dẫn: Khái quát chi tiết nghệ thuật mang tính biểu tượng cao ở đoạn kết truyện.
+• Phân tích: Hành động viên quản ngục vái lạy người tù và nghẹn ngào "Kẻ mê muội này xin bái lĩnh" là chi tiết bất ngờ, độc đáo: sự đảo lộn ngôi thứ hoàn toàn (kẻ nắm quyền lực cúi đầu trước kẻ tử tù đeo gông). Cái cúi đầu thể hiện sự khuất phục tuyệt đối của quyền lực trước cái đẹp, sự thức tỉnh thiên lương trước nhân cách cao cả của Huấn Cao.
+• Đánh giá: Khẳng định sự bất tử của cái Đẹp và thiên lương; bộc lộ niềm tin mãnh liệt của Nguyễn Tuân vào sự chiến thắng của ánh sáng trước bóng tối.
+
+32. id=doan_nlvh_12 | cat=doan-nlvh | subType=nlvh_doan_nt_tho | title=[Đoạn NLVH - Đề 12] Bức tranh chiều xuân qua 4 câu thơ đầu bài Chiều xuân (Anh Thơ)
+   prompt=Viết đoạn văn (khoảng 200 chữ) phân tích bức tranh chiều xuân qua 4 câu thơ đầu bài thơ Chiều xuân (Anh Thơ):
+
+"Mưa đổ bụi êm êm trên bến vắng,
+Đò biếng lười nằm mặc nước sông trôi
+Quán tranh đứng im lìm trong vắng lặng
+Bên chòm xoan hoa tím rụng tơi bời."
+   thinking=• Câu dẫn: Giới thiệu bức tranh thiên nhiên mùa xuân êm đềm, thanh bình ở làng quê Bắc Bộ.
+• Phân tích: Gọi tên hình ảnh và từ ngữ: từ láy "êm êm", "tơi bời" kết hợp thủ pháp nhân hóa con đò "biếng lười", quán tranh "đứng im lìm". Mưa xuân dịu nhẹ như bụi sương, cảnh vật chìm trong tĩnh lặng nhưng không tàn úa mà giàu sức sống nhờ sắc "hoa tím rụng tơi bời".
+• Đánh giá: Thể hiện tâm hồn nhạy cảm, tinh tế của nữ sĩ Anh Thơ và tình yêu quê hương thiết tha, bình dị.
+
+33. id=doan_nlvh_13 | cat=doan-nlvh | subType=nlvh_doan_nhanvat | title=[Đoạn NLVH - Đề 13] Tâm trạng nhân vật Hộ khi tỉnh rượu nhận ra bạo hành vợ con (Đời thừa - Nam Cao)
+   prompt=Viết đoạn văn (khoảng 200 chữ) phân tích tâm trạng của nhân vật Hộ khi tỉnh rượu và nhận ra mình đã bạo hành vợ con (Trích Đời thừa - Nam Cao).
+   thinking=• Câu dẫn: Nêu vấn đề nghị luận là bi kịch tinh thần đau đớn của người trí thức nghèo trước gánh nặng áo cơm.
+• Phân tích: Gọi tên nghệ thuật miêu tả nội tâm sâu sắc: Hộ thức dậy trong sự ân hận tột cùng, nhìn người vợ tiều tụy và những đứa con thơ mà "nước mắt bật ra như đứa trẻ". Hộ đau đớn nhận ra mình đã vi phạm lẽ sống tình thương - nguyên tắc đạo đức thiêng liêng nhất mà mình hằng tôn thờ.
+• Đánh giá: Thể hiện cái nhìn nhân đạo sâu sắc của Nam Cao: trân trọng phẩm giá và khát vọng sống nhân văn của người trí thức giữa xã hội ngột ngạt.
+
+34. id=doan_nlvh_14 | cat=doan-nlvh | subType=nlvh_doan_camxuc_tho | title=[Đoạn NLVH - Đề 14] Nỗi nhớ làng quê qua 4 câu thơ đầu bài Quê hương (Tế Hanh)
+   prompt=Viết đoạn văn (khoảng 200 chữ) phân tích nỗi nhớ làng quê qua 4 câu thơ đầu bài Quê hương (Tế Hanh):
+
+"Làng tôi ở vốn làm nghề chài lưới:
+Nước bao vây cách biển nửa ngày sông.
+Khi trời trong, gió nhẹ, sớm mai hồng,
+Dân trai tráng bơi thuyền đi đánh cá."
+   thinking=• Câu dẫn: Giới thiệu hồn thơ Tế Hanh và khúc dạo đầu bài thơ Quê hương đong đầy tình cảm trong sáng.
+• Phân tích: Cách giới thiệu tự nhiên, giản dị "Làng tôi ở..." như lời giới thiệu thân thương về cội nguồn. Hình ảnh không gian "cách biển nửa ngày sông", thời tiết "trời trong, gió nhẹ, sớm mai hồng" mở ra khung cảnh biển trời tươi sáng, rực rỡ; hình ảnh "dân trai tráng bơi thuyền" khắc họa vẻ đẹp khỏe khoắn, tràn trề sức sống lao động.
+• Đánh giá: Thể hiện tình yêu tha thiết, niềm tự hào sâu sắc của thi nhân đối với mảnh đất chôn nhau cắt rốn.
+
+35. id=doan_nlvh_15 | cat=doan-nlvh | subType=nlvh_doan_nt_truyen | title=[Đoạn NLVH - Đề 15] Điểm nhìn và cảm xúc nhân vật Thanh khi bước vào khu vườn nhà bà (Dưới bóng hoàng lan)
+   prompt=Viết đoạn văn (khoảng 200 chữ) phân tích điểm nhìn và cảm xúc của nhân vật Thanh khi bước vào khu vườn nhà bà (Trích Dưới bóng hoàng lan - Thạch Lam):
+
+"Thanh lách cánh cửa gỗ để khép, nhẹ nhàng bước vào. Chàng thấy mát hẳn cả người. Trên con đường lát gạch Bát Tràng rêu phủ, những vòng ánh sáng lọt qua vòm cây xuống nhảy múa theo chiều gió. Một mùi lá tươi non phảng phất trong không khí. Thanh rút khăn lau mồ hôi trên trán - bên ngoài trời nắng gắt - rồi thong thả đi bên bức tường hoa thấp chạy thẳng đến đầu nhà. Yên tĩnh quá, không một tiếng động nhỏ trong căn vườn, tựa như bao nhiêu sự ồn ào ở ngoài kia đều ngừng lại trên bậc cửa.
+Thanh bước lên thềm, đặt va li trên chiếc trường kỉ, rồi ngó đầu nhìn vào trong nhà: bóng tối dịu và man mát loáng qua những màu sắc rực rỡ chàng đem ở ngoài trời vào. Thanh chưa nhìn rõ thấy gì cả. Một lát, quen bóng tối, chàng mới nhận thấy cảnh tượng gian nhà cũ không có gì thay đổi, cũng y nguyên như ngày chàng đi xưa. Sự yên lặng trầm tịch đến nỗi Thanh trở nên nghẹn họng; mãi mãi chàng mới cất được tiếng lên gọi khẽ:
+- Bà ơi!
+Một cái bóng lẹ làng từ trong vụt ra, rơi xuống mặt bàn. Thanh định rõ nhìn: con mèo của bà chàng, con mèo già vẫn chơi đùa với chàng ngày trước. Con vật nép chân vào mình khẽ phe phẩy cái đuôi, rồi hai mắt ngọc thạch xanh dương lên nhìn người. Thanh mỉm cười lại gần vuốt ve con mèo:
+- Bà mày đâu?"
+   thinking=• Gọi tên: Điểm nhìn bên trong kết hợp nghệ thuật miêu tả không gian qua đa giác quan (thị giác, khứu giác, xúc giác).
+• Phân tích: Thanh cảm nhận sự đối lập giữa cái nắng gắt, ồn ào nơi phố thị với sự yên tĩnh, mát mẻ, ngát hương lá non trong khu vườn của bà. Không gian bình yên khiến lòng chàng lắng lại, nghẹn ngào gọi "Bà ơi!". Con mèo già thân thuộc gợi lại ký ức ấu thơ êm đềm.
+• Đánh giá: Thể hiện chất văn xuôi trữ tình đậm chất Thạch Lam; khẳng định quê hương và tình bà cháu luôn là chốn về bình yên, chở che tâm hồn con người.
+
+36. id=bai_nlvh_01 | cat=bai-nlvh | subType=nlvh_bai_1tacpham | title=[Bài NLVH - Đề 1] Phân tích nội dung và nghệ thuật của bài thơ Tràng giang (Huy Cận)
+   prompt=Phân tích nội dung và nghệ thuật của bài thơ Tràng giang (Huy Cận) (Bài văn khoảng 600 chữ, đầy đủ Mở bài - Thân bài - Kết bài).
+   thinking=• Mở bài: Giới thiệu Huy Cận - hồn thơ ảo não bậc nhất phong trào Thơ Mới; bài thơ Tràng giang tiêu biểu cho cảm hứng sầu vũ trụ.
+• Thân bài:
+  - Nội dung: 1. Nỗi buồn trước không gian sông nước mênh mông, quạnh quẽ (sóng gợn tràng giang, cồn nhỏ đìu hiu). 2. Cảm giác cô đơn, lạc lõng của kiếp người nhỏ bé (củi một cành khô lạc mấy dòng, bến cô liêu). 3. Tình yêu quê hương, đất nước thầm kín được gửi gắm qua bức tranh thiên nhiên cổ điển mà hiện đại (Dợn dợn vời con nước điệp trùng / Không khói hoàng hôn cũng nhớ nhà).
+  - Nghệ thuật: Thể thơ thất ngôn trang nghiêm, mang phong vị Đường thi; thủ pháp đối lập, từ láy giàu sức gợi; sự kết hợp giữa nét cổ điển và hiện đại.
+  - Đánh giá: Khẳng định vẻ đẹp đỉnh cao của Tràng giang trong thi ca lãng mạn Việt Nam.
+• Kết bài: Tổng kết giá trị bài thơ và dấu ấn phong cách Huy Cận.
+
+37. id=bai_nlvh_02 | cat=bai-nlvh | subType=nlvh_bai_1tacpham | title=[Bài NLVH - Đề 2] Quá trình lưu manh hóa và bi kịch cự tuyệt quyền làm người của Chí Phèo (Nam Cao)
+   prompt=Phân tích quá trình lưu manh hóa và bi kịch cự tuyệt quyền làm người của nhân vật Chí Phèo trong truyện ngắn cùng tên của Nam Cao (Bài văn khoảng 600 chữ).
+   thinking=• Mở bài: Giới thiệu nhà văn Nam Cao và đỉnh cao hiện thực Chí Phèo.
+• Thân bài:
+  - Quá trình lưu manh hóa: 1. Chí Phèo vốn là nông dân lương thiện, giàu tự trọng. 2. Bị Bá Kiến đẩy vào tù thực dân ➔ Tha hóa cả nhân hình (mặt rạch sẹo, mắt gườm gườm) lẫn nhân tính (rượu say, đâm thuê chém mướn), trở thành con quỷ dữ làng Vũ Đại.
+  - Bi kịch cự tuyệt quyền làm người: Gặp Thị Nở, bát cháo hành đánh thức khát khao hoàn lương ➔ Bị bà cô Thị Nở và định kiến làng Vũ Đại từ chối ➔ Rơi vào bế tắc tột cùng ➔ Đâm chết Bá Kiến và tự kết liễu đời mình trong câu hỏi nhức nhối: "Ai cho tao lương thiện?".
+  - Nghệ thuật: Xây dựng nhân vật điển hình, phân tích tâm lí bậc thầy, ngôn ngữ trần thuật đa thanh.
+• Kết bài: Khẳng định giá trị hiện thực và giá trị nhân đạo đanh thép của tác phẩm.
+
+38. id=bai_nlvh_03 | cat=bai-nlvh | subType=nlvh_bai_1tacpham | title=[Bài NLVH - Đề 3] Cách tạo mâu thuẫn/xung đột kịch trong Hồi V vở kịch Vũ Như Tô (Nguyễn Huy Tưởng)
+   prompt=Phân tích cách tạo mâu thuẫn/xung đột kịch trong Hồi V vở kịch Vũ Như Tô (Nguyễn Huy Tưởng) (Bài văn khoảng 600 chữ).
+   thinking=• Mở bài: Giới thiệu Nguyễn Huy Tưởng và thể loại bi kịch lịch sử; Hồi V là đỉnh cao của tấn bi kịch Vũ Như Tô.
+• Thân bài:
+  - Hai tuyến mâu thuẫn đan cài gay gắt:
+    1. Mâu thuẫn xã hội: Giữa nhân dân lầm than, đói khổ, bị bóc lột với tập đoàn phong kiến bạo chúa Lê Tương Dực ăn chơi xa xỉ.
+    2. Mâu thuẫn nghệ thuật: Giữa khát vọng sáng tạo cái đẹp vĩ đại muôn đời (Cửu Trùng Đài) với đời sống thực tế tối tăm của nhân dân.
+  - Nghệ thuật tạo kịch tính: Nhịp điệu dồn dập, chỉ dẫn sân khấu gấp gáp (tiếng reo hò, lửa cháy), lời thoại đối lập giữa ảo tưởng nghệ sĩ và hiện thực bạo lực.
+  - Đánh giá: Bi kịch không thể dung hòa của người nghệ sĩ tài ba lạc lối; bài học sâu sắc về mối quan hệ giữa nghệ thuật và đời sống.
+
+39. id=bai_nlvh_04 | cat=bai-nlvh | subType=nlvh_bai_1tacpham | title=[Bài NLVH - Đề 4] Tình huống truyện và diễn biến tâm trạng nhân vật Tràng (Vợ nhặt - Kim Lân)
+   prompt=Phân tích tình huống truyện và diễn biến tâm trạng của nhân vật Tràng trong tác phẩm Vợ nhặt (Kim Lân) (Bài văn khoảng 600 chữ).
+   thinking=• Mở bài: Giới thiệu Kim Lân - nhà văn của làng quê và nông dân nghèo; Vợ nhặt là kiệt tác viết về nạn đói 1945.
+• Thân bài:
+  - Tình huống truyện: Tràng nghèo, xấu xí, ngụ cư bỗng nhiên nhặt được vợ giữa lúc người chết đói như ngả rạ.
+  - Diễn biến tâm trạng Tràng:
+    1. Lúc đầu: Vui đùa bất ngờ, liều lĩnh "chậc, kệ" trước hoàn cảnh.
+    2. Trên đường về: Mặt phớn phở, tự hào, bước chân ngượng nghịu mà ngập tràn hạnh phúc.
+    3. Buổi sáng hôm sau: Thấy xung quanh thay đổi, cảm thấy mình trưởng thành, có trách nhiệm gắn bó với vợ con và mái ấm gia đình.
+    4. Trong bữa cơm ngày đói: Lắng nghe tiếng trống thuế, trong óc Tràng hiện lên hình ảnh lá cờ đỏ và đoàn người đói đi phá kho thóc.
+  - Nghệ thuật: Điểm nhìn tâm lí tự nhiên, chân thực, ngôn ngữ mộc mạc đậm chất nông thôn.
+• Kết bài: Tôn vinh vẻ đẹp nhân tính và niềm tin vào tương lai của người nông dân.
+
+40. id=bai_nlvh_05 | cat=bai-nlvh | subType=nlvh_bai_1tacpham | title=[Bài NLVH - Đề 5] Phân tích đoạn thơ Trao duyên. Qua đó đánh giá tài nghệ miêu tả nội tâm của Nguyễn Du
+   prompt=Phân tích đoạn trích Trao duyên (Truyện Kiều - Nguyễn Du). Qua đó, đánh giá tài nghệ miêu tả nội tâm nhân vật xuất sắc của Nguyễn Du (Bài văn khoảng 600 chữ).
+   thinking=• Mở bài: Giới thiệu Nguyễn Du, Truyện Kiều và vị trí đoạn trích Trao duyên.
+• Thân bài:
+  - Phân tích đoạn thơ:
+    1. Lời nhờ cậy và thuyết phục Thúy Vân: Dùng từ ngữ trang trọng ("cậy", "chịu lời", "ngồi lên cho lạy"), viện dẫn lí lẽ chữ hiếu - tình chị em ràng buộc.
+    2. Hành động trao kỉ vật trong xót xa: Chiếc vành, bức tờ mây; lời dặn dò đầy mâu thuẫn "duyên này thì giữ, vật này của chung".
+    3. Nỗi đau tuyệt vọng tột cùng: Dự cảm về cái chết oan khiên và tiếng khóc gọi tên Kim Trọng nấc nghẹn.
+  - Giải quyết yêu cầu phụ (Đánh giá tài nghệ miêu tả nội tâm):
+    + Bút pháp miêu tả nội tâm tinh vi, nắm bắt từng nấc thang cảm xúc phức tạp.
+    + Kết hợp độc thoại nội tâm, câu cảm thán, thành ngữ dân gian nhuần nhuyễn trong thể thơ lục bát.
+• Kết bài: Khẳng định tấm lòng thương cảm sâu sắc của Nguyễn Du đối với thân phận người phụ nữ tài hoa bạc mệnh.
+
+41. id=bai_nlvh_06 | cat=bai-nlvh | subType=nlvh_bai_sosanh | title=[Bài NLVH - Đề 6] Hình tượng sông Hương ở khúc thượng nguồn và khi về đồng bằng (Hoàng Phủ Ngọc Tường)
+   prompt=Phân tích hình tượng sông Hương ở khúc thượng nguồn và khi chảy về đồng bằng trong đoạn trích Ai đã đặt tên cho dòng sông? (Hoàng Phủ Ngọc Tường) (Bài văn khoảng 600 chữ).
+   thinking=• Mở bài: Giới thiệu Hoàng Phủ Ngọc Tường - nhà văn chuyên về thể loại tùy bút, kí; sông Hương qua ngòi bút tác giả mang vẻ đẹp đa diện, giàu nữ tính.
+• Thân bài:
+  - Sông Hương ở thượng nguồn: Mãnh liệt, hoang dại như "bản trường ca của rừng già", như "cô gái Di-gan phóng khoáng và man dại", bản lĩnh gan dạ và tâm hồn trong sáng.
+  - Sông Hương khi về đồng bằng ngoại vi Huế: Dịu dàng, uốn mình mềm mại, như "người gái đẹp ngủ mơ màng giữa cánh đồng Châu Hóa đầy hoa dại", trở thành "người tình dịu dàng và thủy chung".
+  - Nghệ thuật: Biện pháp nhân hóa, so sánh độc đáo; ngôn ngữ giàu chất thơ, nhạc tính; sự kết hợp nhuần nhuyễn giữa kiến thức địa lí, văn hóa và cảm xúc lãng mạn.
+• Kết bài: Tình yêu say đắm, tha thiết của tác giả dành cho dòng sông Hương và xứ Huế mộng mơ.
+
+42. id=bai_nlvh_07 | cat=bai-nlvh | subType=nlvh_bai_1tacpham | title=[Bài NLVH - Đề 7] Mạch cảm xúc và khát vọng tự do qua bài thơ Nhớ đồng (Tố Hữu)
+   prompt=Phân tích mạch cảm xúc và khát vọng tự do qua bài thơ Nhớ đồng (Tố Hữu) (Bài văn khoảng 600 chữ).
+   thinking=• Mở bài: Giới thiệu Tố Hữu - lá cờ đầu của thơ ca cách mạng Việt Nam; Nhớ đồng viết trong nhà lao Thừa Phủ chan chứa nỗi nhớ và khát vọng tự do.
+• Thân bài:
+  - Khơi nguồn cảm xúc: Tiếng hò lẻ loi trưa hiu quạnh đánh thức nỗi nhớ đồng quê da diết.
+  - Bức tranh đồng quê và con người lao động: Cảnh sắc mộc mạc (ruộng rạ, hương nắng, bùn tươi); hình ảnh người mẹ già nghèo khổ, những người nông dân tần tảo chân lấm tay bùn.
+  - Sự bừng tỉnh lí tưởng và nỗi nhớ bản thân những ngày tự do: Hình ảnh "chim cà lơi" bay lượn giữa trời cao ➔ Đối lập thực tại tù ngục ngột ngạt ➔ Nung nấu ý chí vượt ngục, tiếp tục chiến đấu vì độc lập dân tộc.
+  - Nghệ thuật: Cấu tứ lặp vòng, điệp từ điệp ngữ cảm thán, giọng thơ ngọt ngào đằm thắm của tâm hồn xứ Huế.
+• Kết bài: Khẳng định vẻ đẹp tâm hồn trẻ trung, say mê lí tưởng cách mạng của Tố Hữu.
+
+43. id=bai_nlvh_08 | cat=bai-nlvh | subType=nlvh_bai_1tacpham | title=[Bài NLVH - Đề 8] Diễn biến tâm trạng Chí Phèo sau đêm say rượu gặp Thị Nở (Nam Cao)
+   prompt=Phân tích diễn biến tâm trạng của nhân vật Chí Phèo sau đêm say rượu gặp Thị Nở (Từ lúc tỉnh dậy đến trước khi mang dao đến nhà Bá Kiến) (Nam Cao) (Bài văn khoảng 600 chữ).
+   thinking=• Mở bài: Giới thiệu Nam Cao và truyện ngắn Chí Phèo; cuộc gặp gỡ Thị Nở là bước ngoặt quyết định sự hồi sinh nhân tính của Chí Phèo.
+• Thân bài:
+  - Chặng 1: Sự thức tỉnh của các giác quan và nhận thức:
+    + Lần đầu tiên sau bao năm say rượu, Chí tỉnh táo nghe thấy âm thanh bình dị của cuộc sống (tiếng chim hót, tiếng cười nói người đi chợ, tiếng gõ mái chèo).
+    + Nhận thức bi kịch tuổi già: cô độc, đói rét, ốm đau.
+  - Chặng 2: Sự bừng nở của khát vọng lương thiện nhờ bát cháo hành:
+    + Bát cháo hành nóng hổi của Thị Nở chan chứa tình người khiến Chí ngạc nhiên, xúc động đến trào nước mắt.
+    + Khát khao làm hòa với mọi người, mong muốn xây dựng một gia đình bình dị: "Thị Nở sẽ mở đường cho hắn!".
+  - Chặng 3: Sự sụp đổ và tuyệt vọng tột cùng:
+    + Bị bà cô Thị Nở cự tuyệt ➔ Chí ôm mặt khóc rưng rức, uống rượu nhưng càng uống càng tỉnh, thoang thoảng mùi cháo hành ➔ Nhận thức rõ ràng bi kịch không thể trở lại làm người lương thiện.
+  - Nghệ thuật: Miêu tả diễn biến tâm lí bậc thầy, ngôn ngữ trần thuật nửa trực tiếp.
+• Kết bài: Tấm lòng nhân đạo sâu sắc của Nam Cao: niềm tin bất diệt vào bản chất lương thiện của con người.
+
+44. id=bai_nlvh_09 | cat=bai-nlvh | subType=nlvh_bai_1tacpham | title=[Bài NLVH - Đề 9] Vẻ đẹp khuất lấp của người vợ nhặt trong tác phẩm cùng tên của Kim Lân
+   prompt=Phân tích vẻ đẹp khuất lấp của nhân vật người vợ nhặt trong tác phẩm cùng tên của nhà văn Kim Lân (Bài văn khoảng 600 chữ).
+   thinking=• Mở bài: Giới thiệu Kim Lân và truyện ngắn Vợ nhặt; nhân vật thị không có tên riêng nhưng ẩn chứa phẩm giá cao đẹp của người phụ nữ lao động.
+• Thân bài:
+  - Vẻ bề ngoài thảm hại do nạn đói xô đẩy: Quần áo rách bợt như tổ đỉa, gầy sọp, khuôn mặt lưỡi cày xám xịt; hành động táo tợn, trơ trẽn "ăn một chặp bốn bát bánh đúc" vì miếng ăn để tồn tại.
+  - Vẻ đẹp khuất lấp bừng sáng khi có mái ấm gia đình:
+    1. Ý thức gìn giữ phẩm giá: Trên đường về nhà Tràng, thị ngượng nghịu, rụt rè nép vào bóng Tràng, bước đi e thẹn đúng phẩm chất người phụ nữ.
+    2. Đảm đang, vun vén cho tổ ấm: Sáng hôm sau dậy sớm quét dọn nhà cửa, gánh nước, biến căn nhà xơ xác trở nên quang quẻ, ấm áp.
+    3. Tinh tế và giàu lòng trắc ẩn: Ngoan ngoãn dạ vâng trước mẹ chồng, đón nhận bát cháo cám chát chúa mà không hề than phiền.
+    4. Niềm tin vào tương lai cách mạng: Kể chuyện trên mạn Thái Nguyên, Bắc Giang người ta phá kho thóc Nhật, thắp lên niềm tin đổi đời.
+  - Nghệ thuật: Khắc họa tâm lí kín đáo qua hành động, cử chỉ; ngòi bút đậm chất nhân đạo.
+• Kết bài: Khẳng định vẻ đẹp tâm hồn người lao động: dù bị đẩy đến miệng vực cái chết vẫn giữ trọn thiên chức và niềm tin yêu cuộc đời.
+
+45. id=bai_nlvh_10 | cat=bai-nlvh | subType=nlvh_bai_1tacpham | title=[Bài NLVH - Đề 10] Bức tranh mùa thu và tâm trạng thi nhân qua 2 khổ đầu bài Đây mùa thu tới (Xuân Diệu)
+   prompt=Phân tích bức tranh mùa thu và tâm trạng của thi nhân qua 2 khổ thơ đầu bài thơ Đây mùa thu tới (Xuân Diệu):
+
+"Rặng liễu đìu hiu đứng chịu tang,
+Tóc buồn buông xuống lệ ngàn hàng:
+Đây mùa thu tới - mùa thu tới
+Với áo mơ phai dệt lá vàng.
+
+Hơn một loài hoa đã rụng cành
+Trong vườn sắc đỏ rũa màu xanh;
+Những luồng run rẩy rung rinh lá...
+Đôi nhánh khô gầy xương mỏng manh."
+   thinking=• Mở bài: Giới thiệu Xuân Diệu - nhà thơ "mới nhất trong các nhà thơ mới"; Đây mùa thu tới là tuyệt tác thu mang cảm quan hiện đại phương Tây.
+• Thân bài:
+  - Khổ 1: Cảm nhận thu về từ rặng liễu buồn và tiếng reo thu:
+    + Hình tượng "rặng liễu đứng chịu tang", mái tóc liễu buông xuống như "lệ ngàn hàng" ➔ Liễu hóa thân thành thiếu nữ đau buồn trong tang lễ thời gian.
+    + Tiếng reo "Đây mùa thu tới - mùa thu tới" vừa ngỡ ngàng, vừa xao xuyến; sắc áo "mơ phai dệt lá vàng" thanh tao, huyền ảo.
+  - Khổ 2: Sự biến thái tinh vi, tàn tạ của vạn vật:
+    + Cách diễn đạt Tây hóa độc đáo "hơn một loài hoa" (không phải một, cũng không phải nhiều mà là sự rơi rụng dần dần).
+    + Động từ "rũa" giàu tính tạo hình: sắc đỏ đang gặm nhấm, lấn át sắc xanh của mùa hè.
+    + Phép điệp phụ âm đầu "run rẩy rung rinh lá" gợi cái rùng mình se lạnh của cây cỏ trước gió heo may; "nhánh khô gầy xương mỏng manh" như nét khắc gợi cảm giác cô đơn, tàn tạ.
+  - Nghệ thuật: Ngôn ngữ thơ cách tân, sử dụng điệp từ, nhân hóa, tương giao các giác quan tinh tế.
+• Kết bài: Bức tranh thu đượm buồn nhưng tuyệt đẹp, thể hiện lòng yêu đời, khát khao níu giữ thời gian của Xuân Diệu.
+
+46. id=bai_nlvh_11 | cat=bai-nlvh | subType=nlvh_bai_1tacpham | title=[Bài NLVH - Đề 11] Phân tích nội dung và nghệ thuật của bài thơ Tương tư (Nguyễn Bính)
+   prompt=Phân tích nội dung và nghệ thuật của bài thơ Tương tư (Nguyễn Bính) (Bài văn khoảng 600 chữ):
+
+"Thôn Đoài ngồi nhớ thôn Đông,
+Một người chín nhớ mười mong một người.
+Gió mưa là bệnh của giời,
+Tương tư là bệnh của tôi yêu nàng.
+Hai thôn chung lại một làng,
+Cớ sao bên ấy chẳng sang bên này?
+Ngày qua ngày lại qua ngày,
+Lá xanh nhuộm đã thành cây lá vàng.
+Bảo rằng cách trở đò giang,
+Không sang là chẳng đường sang đã đành.
+Nhưng đây cách một đầu đình,
+Có xa xôi mấy mà tình xa xôi...
+Tương tư thức mấy đêm rồi,
+Biết cho ai, hỏi ai người biết cho!
+Bao giờ bến mới gặp đò?
+Hoa khuê các bướm giang hồ gặp nhau?
+Nhà em có một giàn giầu,
+Nhà anh có một hàng cau liên phòng.
+Thôn Đoài thì nhớ thôn Đông,
+Cau thôn Đoài nhớ giầu không thôn nào?"
+   thinking=• Mở bài: Giới thiệu Nguyễn Bính - thi sĩ của đồng quê với phong cách chân quê mộc mạc; bài thơ Tương tư diễn tả nỗi nhớ nhung sâu lắng của tình yêu đôi lứa.
+• Thân bài:
+  - Mạch cảm xúc và tâm trạng tương tư:
+    1. Khởi nguồn nỗi nhớ: Quy luật tự nhiên "tương tư là bệnh của tôi yêu nàng", thành ngữ "chín nhớ mười mong" dân dã.
+    2. Hờn trách đáng yêu vì khoảng cách không gian và thời gian: "cớ sao bên ấy chẳng sang bên này", thời gian đằng đẵng "ngày qua ngày lại qua ngày", lá xanh đã nhuộm thành vàng mà tình vẫn cách trở dù chỉ cách một đầu đình.
+    3. Khao khát gắn kết lứa đôi: Ước vọng bến gặp đò, hình ảnh biểu tượng truyền thống "giàn giầu - hàng cau liên phòng" đậm đà phong vị làng quê Bắc Bộ.
+  - Nghệ thuật: Thể thơ lục bát uyển chuyển mang âm hưởng ca dao; hình ảnh hoán dụ, ẩn dụ (thôn Đoài - thôn Đông, trầu - cau); ngôn ngữ dung dị, mộc mạc mà thấm thía.
+• Kết bài: Bài thơ là đóa hoa đồng nội ngát hương, khẳng định vị thế "thi sĩ chân quê" độc nhất vô nhị của Nguyễn Bính.
+
+47. id=bai_nlvh_12 | cat=bai-nlvh | subType=nlvh_bai_1tacpham | title=[Bài NLVH - Đề 12] Vẻ đẹp hình tượng nhân vật Huấn Cao trong tác phẩm Chữ người tử tù (Nguyễn Tuân)
+   prompt=Phân tích vẻ đẹp hình tượng nhân vật Huấn Cao trong tác phẩm Chữ người tử tù của nhà văn Nguyễn Tuân (Bài văn khoảng 600 chữ).
+   thinking=• Mở bài: Giới thiệu Nguyễn Tuân - nhà văn suốt đời đi tìm cái Đẹp; nhân vật Huấn Cao là biểu tượng rực rỡ cho vẻ đẹp tài hoa, khí phách và thiên lương.
+• Thân bài:
+  - Phẩm chất 1: Tài hoa nghệ sĩ xuất chúng:
+    + Tài viết chữ Hán vuông vắn, tươi tắn - một nghệ thuật thư pháp đỉnh cao; "có được chữ Huấn Cao treo là có một báu vật trên đời".
+  - Phẩm chất 2: Khí phách hiên ngang, bất khuất:
+    + Là thủ lĩnh khởi nghĩa chống lại triều đình thối nát; ung dung rũ rệp trên gông sắt, coi thường uy quyền và cái chết cận kề ("thản nhiên nhận rượu thịt").
+  - Phẩm chất 3: Thiên lương trong sáng và nhân cách cao khiết:
+    + "Tính ông vốn khoảnh, trừ chỗ tri kỉ không vì vàng ngọc hay quyền thế mà ép mình viết câu đối bao giờ".
+    + Cảm kích trước tấm lòng "biệt nhỡn liên tài" của quản ngục, sẵn sàng cho chữ và khuyên quản ngục giữ lấy thiên lương lành vững.
+  - Nghệ thuật: Bút pháp lãng mạn hóa, thủ pháp tương phản đối lập gay gắt, ngôn từ cổ kính trang trọng, tình huống "xưa nay chưa từng có".
+• Kết bài: Huấn Cao là hình tượng kết tinh quan niệm thẩm mĩ tiến bộ: Tài phải đi đôi với Tâm, cái Đẹp luôn gắn liền cái Thiện.
+
+48. id=bai_nlvh_13 | cat=bai-nlvh | subType=nlvh_bai_1tacpham | title=[Bài NLVH - Đề 13] Bức tranh thiên nhiên và tâm trạng con người qua bài thơ Đây thôn Vĩ Dạ (Hàn Mặc Tử)
+   prompt=Phân tích bức tranh thiên nhiên và tâm trạng con người qua bài thơ Đây thôn Vĩ Dạ (Hàn Mặc Tử) (Bài văn khoảng 600 chữ):
+
+"Sao anh không về chơi thôn Vĩ?
+Nhìn nắng hàng cau nắng mới lên.
+Vườn ai mướt quá, xanh như ngọc
+Lá trúc che ngang mặt chữ điền.
+
+Gió theo lối gió, mây đường mây,
+Dòng nước buồn thiu, hoa bắp lay...
+Thuyền ai đậu bến sông trăng đó,
+Có chở trăng về kịp tối nay?
+
+Mơ khách đường xa, khách đường xa,
+Áo em trắng quá nhìn không ra...
+Ở đây sương khói mờ nhân ảnh,
+Ai biết tình ai có đậm đà?"
+   thinking=• Mở bài: Giới thiệu Hàn Mặc Tử - hiện tượng thơ độc đáo, kì lạ bậc nhất của phong trào Thơ Mới; Đây thôn Vĩ Dạ là thi phẩm xuất thần kết hợp giữa cảnh sắc xứ Huế và nỗi đau thân phận.
+• Thân bài:
+  - Khổ 1: Bức tranh thôn Vĩ ban mai và niềm khao khát giao cảm:
+    + Nắng hàng cau tinh khôi, vườn xanh như ngọc tràn đầy sức sống; nét vẽ mặt chữ điền phúc hậu khuất sau lá trúc.
+  - Khổ 2: Cảnh hoàng hôn sông Hương và tâm trạng chia lìa, âu lo:
+    + Gió mây đôi ngả chia lìa; dòng nước buồn thiu; hình ảnh bến sông trăng huyền ảo cùng câu hỏi khắc khoải "Có chở trăng về kịp tối nay?" chạy đua với thời gian định mệnh.
+  - Khổ 3: Cảnh sương khói mờ ảo và nỗi hoài nghi, tuyệt vọng:
+    + Hình bóng "khách đường xa" nhạt nhòa trong sương khói; câu hỏi tu từ khép lại bài thơ "Ai biết tình ai có đậm đà?" đọng lại nỗi cô đơn, xót xa mà thiết tha gắn bó với trần thế.
+  - Nghệ thuật: Hình ảnh thơ biến ảo giữa thực và mộng, câu hỏi tu từ đầy ám ảnh, giọng điệu trữ tình khắc khoải.
+• Kết bài: Tình yêu tha thiết đối với thiên nhiên xứ Huế và khát vọng sống, khát vọng yêu thương mãnh liệt vượt lên số phận bi thương.
+
+49. id=bai_nlvh_14 | cat=bai-nlvh | subType=nlvh_bai_1tacpham | title=[Bài NLVH - Đề 14] Bi kịch tinh thần và giá trị nhân đạo trong truyện ngắn Đời thừa (Nam Cao)
+   prompt=Phân tích bi kịch tinh thần của nhân vật Hộ và giá trị nhân đạo sâu sắc trong truyện ngắn Đời thừa của Nam Cao (Bài văn khoảng 600 chữ).
+   thinking=• Mở bài: Giới thiệu Nam Cao - cây bút hiện thực xuất sắc viết về đề tài người trí thức tiểu tư sản nghèo trước cách mạng; Đời thừa là tiếng chuông cảnh tỉnh về số phận bi kịch của người trí thức.
+• Thân bài:
+  - Bi kịch thứ nhất: Bi kịch nhà văn bị gánh nặng cơm áo ghì sát đất:
+    + Hộ là người có tài năng, có hoài bão lớn lao muốn viết một tác phẩm để đời, được trao giải Nobel văn chương.
+    + Vì gánh nặng gia đình đông con, Hộ phải cẩu thả viết những bài báo giật gân, những cuốn sách vô giá trị ➔ Tự thấy mình là kẻ đê tiện, là kẻ giết chết nghệ thuật.
+  - Bi kịch thứ hai: Bi kịch đánh mất lẽ sống tình thương:
+    + Hộ tôn thờ tình thương là nguyên tắc tối thượng của con người. Nhưng vì túng quẫn, Hộ tìm đến rượu, say xỉn và bạo hành người vợ hiền thảo Từ.
+    + Khi tỉnh rượu, Hộ ân hận khóc như một đứa trẻ, quằn quại nhận ra mình đang trở thành một "đời thừa" vô ích và độc ác.
+  - Giá trị nhân đạo sâu sắc của Nam Cao:
+    + Đồng cảm sâu sắc với nỗi đau tinh thần của người trí thức.
+    + Tố cáo xã hội thực dân nửa phong kiến bóp nghẹt tài năng và hủy hoại nhân phẩm con người.
+    + Trân trọng khát vọng hoàn lương, bảo vệ lương tri trong sáng của người lao động trí óc.
+  - Nghệ thuật: Đi sâu vào những ngóc ngách tâm lí tinh vi, kết cấu truyện tâm lí độc đáo.
+• Kết bài: Tác phẩm đặt ra bài học muôn đời về đạo đức nghề nghiệp và gìn giữ nhân cách con người giữa bão táp mưu sinh.
+
+50. id=bai_nlvh_15 | cat=bai-nlvh | subType=nlvh_bai_1tacpham | title=[Bài NLVH - Đề 15] Vẻ đẹp thiên nhiên và cái tôi tác giả trong Tháng Giêng mơ về trăng non rét ngọt (Vũ Bằng)
+   prompt=Phân tích vẻ đẹp của thiên nhiên và cái tôi tác giả trong đoạn trích Tháng Giêng mơ về trăng non rét ngọt (Trích Thương nhớ mười hai - Vũ Bằng) (Bài văn khoảng 600 chữ).
+   thinking=• Mở bài: Giới thiệu Vũ Bằng - nhà văn xứ Bắc với ngòi bút kí, tản văn đằm thắm; tác phẩm Thương nhớ mười hai viết tại miền Nam hướng về cảnh sắc quê hương đất Bắc.
+• Thân bài:
+  - Vẻ đẹp thiên nhiên mùa xuân đất Bắc tháng Giêng:
+    + Khí trời đặc trưng "rét ngọt", mưa riêu riêu gió lành lạnh.
+    + Sự hồi sinh của vạn vật: Mầm non xanh biếc, tiếng chim hót líu lo, không khí ấm cúng của những ngày Tết sum vầy bên gia đình.
+    + Cảnh sắc trăng non đầu tháng lung linh, huyền ảo đậm đà phong vị Bắc Bộ.
+  - Vẻ đẹp cái tôi tác giả Vũ Bằng:
+    + Tình yêu quê hương Hà Nội nồng nàn, tha thiết, thấu suốt từng biến thái tinh vi của đất trời.
+    + Nỗi niềm hoài niệm da diết, nhớ thương khôn nguôi của người con xa quê đang sống giữa Sài Gòn nắng gió.
+    + Cái tôi tài hoa, tinh tế với trái tim nhạy cảm và vốn sống văn hóa phong phú.
+  - Nghệ thuật: Thể văn tản văn tùy bút giàu hình ảnh và nhạc tính; lời văn mượt mà, cảm xúc tràn trề; kết hợp tự sự, miêu tả và bộc lộ cảm xúc trực tiếp.
+• Kết bài: Đoạn trích là bản tình ca tuyệt đẹp về mùa xuân Hà Nội, bồi đắp trong lòng người đọc tình yêu tha thiết với cội nguồn dân tộc.
+

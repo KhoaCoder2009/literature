@@ -76,46 +76,44 @@
 
               <!-- THANH NÚT GỢI Ý TƯ DUY NẰM TRỰC TIẾP DƯỚI ĐỀ BÀI -->
               <div class="writing-prompt-actions-under">
-                <button type="button" class="btn cy sm scaffold-trigger-btn" id="btn-toggle-thinking-guide" onclick="toggleWorkspaceThinkingGuide()" title="Ẩn/Hiện gợi ý tư duy định hướng luận điểm cho đề bài này">
-                  <ion-icon name="bulb-outline"></ion-icon> <span>💡 Gợi ý tư duy</span>
+                <button type="button" class="btn cy sm scaffold-trigger-btn" id="btn-toggle-thinking-guide" onclick="toggleWorkspaceThinkingGuide()" title="Ẩn/Hiện gợi ý tư duy & dạng bài cho đề bài này">
+                  <ion-icon name="bulb-outline"></ion-icon> <span>💡 Gợi ý tư duy &amp; Dạng bài</span>
                 </button>
                 <button type="button" class="btn au sm thinking-action-btn" id="btn-quick-insert-thinking-guide" onclick="insertSetThinkingGuideToActiveSection()" title="Chèn nhanh gợi ý tư duy này vào bài làm để phát triển bài viết">
-                  <ion-icon name="flash-outline"></ion-icon> <span>Chèn vào bài</span>
+                  <ion-icon name="flash-outline"></ion-icon> <span>Chèn gợi ý vào bài</span>
                 </button>
-                <button type="button" class="btn gh sm thinking-action-btn" onclick="toggleWritingScaffoldingPanel()" title="Mở rộng sơ đồ Giàn giáo nhận thức GDPT 2018">
-                  <ion-icon name="options-outline"></ion-icon> <span>Mở rộng dàn ý</span>
+                <button type="button" class="btn gh sm thinking-action-btn" onclick="insertScaffoldFormulaOutline()" title="Chèn khung sườn các bước dàn ý vào bài làm">
+                  <ion-icon name="list-outline"></ion-icon> <span>Chèn sườn dàn ý</span>
                 </button>
               </div>
 
-              <!-- HỘP GỢI Ý TƯ DUY TRỌNG TÂM NẰM NGAY DƯỚI ĐỀ BÀI -->
+              <!-- HỘP GỢI Ý TƯ DUY & DẠNG BÀI NGHỊ LUẬN NẰM NGAY DƯỚI ĐỀ BÀI -->
               <div class="writing-thinking-card" id="workspace-thinking-card">
                 <div class="thinking-card-header">
                   <div class="thinking-card-title-box">
                     <span class="thinking-card-badge-icon">💡</span>
                     <div>
-                      <h4 class="thinking-card-heading">GỢI Ý TƯ DUY TRỌNG TÂM</h4>
-                      <p class="thinking-card-sub" id="workspace-thinking-card-sub">Định hướng luận điểm, thao tác lập luận &amp; dẫn chứng</p>
+                      <h4 class="thinking-card-heading">GỢI Ý TƯ DUY &amp; DẠNG BÀI NGHỊ LUẬN</h4>
+                      <p class="thinking-card-sub" id="workspace-thinking-card-sub">Định hướng luận điểm, quy trình các bước &amp; từ khóa theo tài liệu phương pháp</p>
                     </div>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <button type="button" class="btn au sm" onclick="insertSetThinkingGuideToActiveSection()" title="Chèn nhanh gợi ý tư duy này vào bài làm">
+                      <ion-icon name="flash-outline"></ion-icon> <span>Chèn vào bài</span>
+                    </button>
+                    <button type="button" class="btn gh sm" onclick="toggleWorkspaceThinkingGuide()" title="Thu gọn hộp gợi ý tư duy">
+                      <ion-icon name="chevron-up-outline"></ion-icon>
+                    </button>
                   </div>
                 </div>
                 <div class="thinking-card-body" id="workspace-thinking-guide-body">
-                  <!-- Nội dung gợi ý tư duy hiển thị trực quan ở đây -->
+                  <!-- Toàn bộ nội dung Dạng bài, Hình thức, Quy trình, Gợi ý trọng tâm, Từ khóa, Cụm từ dẫn sẽ render trực quan ở đây -->
                 </div>
               </div>
             </div>
 
-            <!-- Hộp Giàn giáo nhận thức (Scaffolding) cho Luyện viết -->
-            <div class="scaffold-box writing-scaffold-card" id="writing-scaffolding-panel" style="display:none;">
-              <div class="scaffold-header">
-                <div class="scaffold-title-row">
-                  <span class="scaffold-badge-icon">💡</span>
-                  <div>
-                    <h4 class="scaffold-title">Giàn Giáo Nhận Thức (Scaffolding)</h4>
-                    <p class="scaffold-subtitle">Công thức tư duy, từ khóa gợi mở &amp; sơ đồ dàn ý trống GDPT 2018</p>
-                  </div>
-                </div>
-                <button type="button" class="btn gh sm" onclick="toggleWritingScaffoldingPanel()" style="padding:2px 8px;">Thu gọn</button>
-              </div>
+            <!-- Placeholder tương thích ngược cho hệ thống cũ nếu có selector truy vấn -->
+            <div id="writing-scaffolding-panel" style="display:none;">
               <div id="writing-scaffolding-body"></div>
             </div>
 
