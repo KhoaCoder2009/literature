@@ -6,15 +6,10 @@ let currentSetupTopic = 'all';
 let setupSearchQuery = '';
 
 const SETUP_PALETTES = [
-  'linear-gradient(135deg, #f43f5e 0%, #e11d48 100%)', // 1. Red / Coral (Ngữ văn)
-  'linear-gradient(135deg, #fb923c 0%, #ea580c 100%)', // 2. Orange (Toán)
-  'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', // 3. Amber / Gold
-  'linear-gradient(135deg, #10b981 0%, #059669 100%)', // 4. Emerald / Dark Green
-  'linear-gradient(135deg, #84cc16 0%, #65a30d 100%)', // 5. Lime / Light Green
-  'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)', // 6. Teal / Olive
-  'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)', // 7. Navy / Dark Blue
-  'linear-gradient(135deg, #3b82f6 0%, #0284c7 100%)', // 8. Medium Blue
-  'linear-gradient(135deg, #06b6d4 0%, #0284c7 100%)'  // 9. Cyan / Light Blue
+  'linear-gradient(135deg, #1e293b 0%, #334155 100%)', // Slate Navy
+  'linear-gradient(135deg, #312e81 0%, #4338ca 100%)', // Deep Indigo
+  'linear-gradient(135deg, #0f766e 0%, #0d9488 100%)', // Deep Teal
+  'linear-gradient(135deg, #92400e 0%, #b45309 100%)'  // Warm Bronze
 ];
 
 function onPlayerInfoChange() {

@@ -29,21 +29,6 @@
 
       <!-- PANE 1: BỘ ĐỀ BÀI HỌC -->
       <div id="lib-pane-lessons" class="lib-tab-pane active">
-        <div class="hud teacher-only" style="justify-content:flex-end;">
-          <button class="btn au" onclick="newSet()">
-            <ion-icon name="add-outline"></ion-icon> Tạo bộ mới
-          </button>
-          <button class="btn cy" onclick="openPromptDialog()">
-            <ion-icon name="sparkles-outline"></ion-icon> Soạn đề bằng AI
-          </button>
-          <button id="bulk-delete-start" class="btn no" onclick="enableBulkDeleteMode()">
-            <ion-icon name="trash-outline"></ion-icon> Xóa nhiều
-          </button>
-          <div id="bulk-delete-actions" hidden>
-            <button id="bulk-delete" class="btn no" onclick="deleteSelectedSets()" disabled>Xóa đã chọn (0)</button>
-            <button class="btn gh" onclick="cancelBulkDeleteMode()">Hủy</button>
-          </div>
-        </div>
         <!-- Search & Topic Tags Filter -->
         <div class="lib-search-filter-card">
           <div class="lib-search-bar-row">
@@ -56,10 +41,25 @@
                 <ion-icon name="close-outline"></ion-icon>
               </button>
             </div>
+            <div class="hud teacher-only lib-inline-actions">
+              <button class="btn au sm" onclick="newSet()">
+                <ion-icon name="add-outline"></ion-icon> Tạo bộ mới
+              </button>
+              <button class="btn cy sm" onclick="openPromptDialog()">
+                <ion-icon name="sparkles-outline"></ion-icon> Soạn bằng AI
+              </button>
+              <button id="bulk-delete-start" class="btn gh sm" onclick="enableBulkDeleteMode()">
+                <ion-icon name="trash-outline"></ion-icon> Xóa nhiều
+              </button>
+              <div id="bulk-delete-actions" hidden style="display:inline-flex; gap:6px;">
+                <button id="bulk-delete" class="btn no sm" onclick="deleteSelectedSets()" disabled>Xóa đã chọn (0)</button>
+                <button class="btn gh sm" onclick="cancelBulkDeleteMode()">Hủy</button>
+              </div>
+            </div>
           </div>
           <div class="topic-filter-row">
             <div class="topic-filter-meta">
-              <span class="topic-filter-title">Lọc theo thẻ chủ đề:</span>
+              <span class="topic-filter-title">Chủ đề:</span>
               <span id="topic-filter-summary" class="topic-filter-summary"></span>
             </div>
             <div id="topic-chips-bar" class="topic-chips-bar" role="tablist" aria-label="Bộ lọc thẻ chủ đề"></div>
@@ -70,17 +70,6 @@
 
       <!-- PANE 2: BỘ ĐỀ ĐỌC HIỂU -->
       <div id="lib-pane-reading" class="lib-tab-pane">
-        <div class="hud teacher-only" style="justify-content:flex-end; gap:8px;">
-          <button class="btn cy" type="button" onclick="promptAddNewReadingCategory()" title="Tạo thêm chủ đề mới">
-            <ion-icon name="add-outline"></ion-icon> Thêm chủ đề
-          </button>
-          <button class="btn no" type="button" onclick="promptDeleteCurrentReadingCategory()" title="Xóa chủ đề">
-            <ion-icon name="trash-outline"></ion-icon> Xóa chủ đề
-          </button>
-          <button class="btn au" type="button" onclick="openCreateReadingSetModal()" title="Tạo đề đọc hiểu mới">
-            <ion-icon name="add-outline"></ion-icon> Thêm đề mới
-          </button>
-        </div>
         <div class="lib-search-filter-card">
           <div class="lib-search-bar-row">
             <div class="lib-search-input-box">
@@ -89,10 +78,21 @@
               </span>
               <input id="lib-reading-search" type="text" placeholder="Tìm kiếm bộ đề đọc hiểu theo tên tác phẩm, tác giả..." oninput="onLibReadingSearchInput()" autocomplete="off">
             </div>
+            <div class="hud teacher-only lib-inline-actions">
+              <button class="btn au sm" type="button" onclick="openCreateReadingSetModal()" title="Tạo đề đọc hiểu mới">
+                <ion-icon name="add-outline"></ion-icon> Thêm đề mới
+              </button>
+              <button class="btn gh sm" type="button" onclick="promptAddNewReadingCategory()" title="Tạo thêm chủ đề mới">
+                <ion-icon name="pricetag-outline"></ion-icon> + Chủ đề
+              </button>
+              <button class="btn gh sm" type="button" onclick="promptDeleteCurrentReadingCategory()" title="Xóa chủ đề">
+                <ion-icon name="trash-outline"></ion-icon> Xóa chủ đề
+              </button>
+            </div>
           </div>
           <div class="topic-filter-row">
             <div class="topic-filter-meta">
-              <span class="topic-filter-title">Lọc theo chủ đề:</span>
+              <span class="topic-filter-title">Chủ đề:</span>
               <span id="lib-reading-topic-summary" class="topic-filter-summary"></span>
             </div>
             <div id="lib-reading-chips-bar" class="topic-chips-bar" role="tablist" aria-label="Bộ lọc chủ đề đọc hiểu"></div>
@@ -103,17 +103,6 @@
 
       <!-- PANE 3: BỘ ĐỀ VIẾT -->
       <div id="lib-pane-writing" class="lib-tab-pane">
-        <div class="hud teacher-only" style="justify-content:flex-end; gap:8px;">
-          <button class="btn cy" type="button" onclick="promptAddNewCategory()" title="Tạo thêm chủ đề mới">
-            <ion-icon name="add-outline"></ion-icon> Thêm chủ đề
-          </button>
-          <button class="btn no" type="button" onclick="promptDeleteCurrentCategory()" title="Xóa chủ đề (có xác nhận)">
-            <ion-icon name="trash-outline"></ion-icon> Xóa chủ đề
-          </button>
-          <button class="btn au" type="button" onclick="openCreateWritingSetModal()" title="Tạo bộ đề mới">
-            <ion-icon name="add-outline"></ion-icon> Thêm bộ mới
-          </button>
-        </div>
         <div class="lib-search-filter-card">
           <div class="lib-search-bar-row">
             <div class="lib-search-input-box">
@@ -122,10 +111,21 @@
               </span>
               <input id="lib-writing-search" type="text" placeholder="Tìm kiếm bộ đề viết theo tiêu đề, dạng đề..." oninput="onLibWritingSearchInput()" autocomplete="off">
             </div>
+            <div class="hud teacher-only lib-inline-actions">
+              <button class="btn au sm" type="button" onclick="openCreateWritingSetModal()" title="Tạo bộ đề mới">
+                <ion-icon name="add-outline"></ion-icon> Thêm bộ mới
+              </button>
+              <button class="btn gh sm" type="button" onclick="promptAddNewCategory()" title="Tạo thêm chủ đề mới">
+                <ion-icon name="pricetag-outline"></ion-icon> + Chủ đề
+              </button>
+              <button class="btn gh sm" type="button" onclick="promptDeleteCurrentCategory()" title="Xóa chủ đề (có xác nhận)">
+                <ion-icon name="trash-outline"></ion-icon> Xóa chủ đề
+              </button>
+            </div>
           </div>
           <div class="topic-filter-row">
             <div class="topic-filter-meta">
-              <span class="topic-filter-title">Lọc theo chủ đề:</span>
+              <span class="topic-filter-title">Chủ đề:</span>
               <span id="lib-writing-topic-summary" class="topic-filter-summary"></span>
             </div>
             <div id="lib-writing-chips-bar" class="topic-chips-bar" role="tablist" aria-label="Bộ lọc chủ đề viết"></div>
@@ -137,51 +137,42 @@
 
     <!-- EDITOR VIEW -->
     <div id="ev" hidden>
-      <button class="btn gh sm" style="margin-bottom:12px;" onclick="go('lib')">
-        <ion-icon name="arrow-back-outline"></ion-icon> Quay lại thư viện
-      </button>
-      <div class="hud">
-        <h1 style="font-size:26px; margin:0;">Soạn thảo bộ câu hỏi</h1>
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; flex-wrap:wrap;">
+        <h1 style="font-size:22px; margin:0; font-weight:800;">Soạn thảo bộ câu hỏi</h1>
+        <button class="btn gh sm" onclick="go('lib')">
+          <ion-icon name="arrow-back-outline"></ion-icon> Quay lại thư viện
+        </button>
       </div>
       <div class="card">
         <div class="g2">
           <label>Tên bộ câu hỏi<input id="et" oninput="meta()"></label>
           <label>Chủ đề / Bài học<input id="ec" oninput="meta()"></label>
         </div>
-        <div style="display:flex;align-items:center;gap:18px;margin-top:12px;flex-wrap:wrap;">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span style="font-weight:700;">Biểu tượng bộ đề:</span>
-            <button class="emoji-trigger" type="button" onclick="toggleEmojiPicker()" id="emoji-trigger-btn"><span id="current-emo">📖</span> ▾ Chọn biểu tượng</button>
+        <div class="editor-meta-bar">
+          <div class="editor-meta-item">
+            <span class="editor-meta-lbl">Biểu tượng:</span>
+            <button class="emoji-trigger" type="button" onclick="toggleEmojiPicker()" id="emoji-trigger-btn"><span id="current-emo">📖</span> ▾</button>
           </div>
-          <div style="display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--stroke);border-radius:10px;padding:6px 12px;">
-            <label for="set-privacy" style="margin:0;font-weight:700;display:flex;align-items:center;gap:6px;font-size:13px;">
-              <ion-icon name="eye-outline"></ion-icon> Chế độ:
-            </label>
-            <select id="set-privacy" class="inp" style="padding:4px 8px;border-radius:6px;font-weight:700;font-size:12.5px;background:var(--bg-card);color:var(--ink);" onchange="meta()" title="Chọn chế độ hiển thị cho bộ đề">
-              <option value="public">🌐 Công khai</option>
-              <option value="private">🔒 Riêng tư</option>
+          <div class="editor-meta-item">
+            <label for="set-privacy" class="editor-meta-lbl"><ion-icon name="eye-outline"></ion-icon> Hiển thị:</label>
+            <select id="set-privacy" class="inp" onchange="meta()" title="Chọn chế độ hiển thị cho bộ đề">
+              <option value="public">Công khai</option>
+              <option value="private">Riêng tư</option>
             </select>
           </div>
-          <div style="display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--stroke);border-radius:10px;padding:6px 12px;">
-            <label for="set-open-at" style="margin:0;font-weight:700;display:flex;align-items:center;gap:6px;font-size:13px;">
-              <ion-icon name="time-outline"></ion-icon> Mở lúc:
-            </label>
-            <input type="datetime-local" id="set-open-at" class="inp" style="padding:4px 8px;border-radius:6px;font-weight:700;font-size:12.5px;" onchange="meta()" title="Để trống = Mở ngay">
-            <button type="button" class="btn gh sm" onclick="$('#set-open-at').value=''; meta();" title="Mở ngay" style="padding:2px 6px;height:24px;">✕</button>
+          <div class="editor-meta-item">
+            <label for="set-max-attempts" class="editor-meta-lbl"><ion-icon name="timer-outline"></ion-icon> Số lượt:</label>
+            <input type="number" id="set-max-attempts" min="0" max="999" value="0" class="inp" style="width:68px;text-align:center;" onchange="meta()" title="0 = Không giới hạn">
           </div>
-          <div style="display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--stroke);border-radius:10px;padding:6px 12px;">
-            <label for="set-max-attempts" style="margin:0;font-weight:700;display:flex;align-items:center;gap:6px;font-size:13px;">
-              <ion-icon name="timer-outline"></ion-icon> Giới hạn lượt làm:
-            </label>
-            <input type="number" id="set-max-attempts" min="0" max="999" value="0" class="inp" style="width:75px;text-align:center;font-weight:800;padding:4px 8px;border-radius:6px;" onchange="meta()" title="0 = Không giới hạn">
-            <span class="mut" style="font-size:12px;">lượt (0 = không giới hạn)</span>
+          <div class="editor-meta-item">
+            <label for="set-open-at" class="editor-meta-lbl"><ion-icon name="time-outline"></ion-icon> Mở lúc:</label>
+            <input type="datetime-local" id="set-open-at" class="inp" onchange="meta()" title="Để trống = Mở ngay">
+            <button type="button" class="btn gh sm" onclick="$('#set-open-at').value=''; meta();" title="Mở ngay" style="padding:2px 6px;height:28px;">✕</button>
           </div>
-          <div style="display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--stroke);border-radius:10px;padding:6px 12px;">
-            <label for="set-deadline" style="margin:0;font-weight:700;display:flex;align-items:center;gap:6px;font-size:13px;">
-              <ion-icon name="alarm-outline"></ion-icon> Hạn nộp:
-            </label>
-            <input type="datetime-local" id="set-deadline" class="inp" style="padding:4px 8px;border-radius:6px;font-weight:700;font-size:12.5px;" onchange="meta()" title="Để trống = Không giới hạn hạn nộp">
-            <button type="button" class="btn gh sm" onclick="$('#set-deadline').value=''; meta();" title="Xóa hạn nộp" style="padding:2px 6px;height:24px;">✕</button>
+          <div class="editor-meta-item">
+            <label for="set-deadline" class="editor-meta-lbl"><ion-icon name="alarm-outline"></ion-icon> Hạn nộp:</label>
+            <input type="datetime-local" id="set-deadline" class="inp" onchange="meta()" title="Để trống = Không giới hạn hạn nộp">
+            <button type="button" class="btn gh sm" onclick="$('#set-deadline').value=''; meta();" title="Xóa hạn nộp" style="padding:2px 6px;height:28px;">✕</button>
           </div>
         </div>
         <div class="emoji-picker" id="emoji-picker"></div>

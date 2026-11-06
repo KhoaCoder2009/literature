@@ -32,37 +32,41 @@
           </button>
         </div>
 
-        <!-- Thanh tiến trình XP & Mục tiêu ngày -->
-        <div class="gami-progress-section">
-          <div class="gami-progress-labels">
-            <span><ion-icon name="trending-up-outline"></ion-icon> Tiến trình cấp độ (<span id="home-xp-current">0</span> / <span id="home-xp-next">100</span> XP)</span>
-            <b id="home-xp-percent">0%</b>
-          </div>
-          <div class="gami-progress-track">
-            <div class="gami-progress-fill" id="home-xp-bar" style="width: 15%;"></div>
+        <!-- Thanh tiến trình XP & Mục tiêu ngày (Gộp 2 cột gọn gàng) -->
+        <div class="gami-progress-section gami-progress-dual">
+          <div class="gami-progress-col">
+            <div class="gami-progress-labels">
+              <span>Cấp độ (<span id="home-xp-current">0</span>/<span id="home-xp-next">100</span> XP)</span>
+              <b id="home-xp-percent">0%</b>
+            </div>
+            <div class="gami-progress-track">
+              <div class="gami-progress-fill" id="home-xp-bar" style="width: 15%;"></div>
+            </div>
           </div>
 
-          <div class="gami-progress-labels" style="margin-top: 10px;">
-            <span><ion-icon name="checkmark-done-circle-outline"></ion-icon> Mục tiêu hôm nay (<span id="home-daily-done">0</span>/3 hoạt động)</span>
-            <b id="home-daily-percent">0%</b>
-          </div>
-          <div class="gami-progress-track gami-daily-track">
-            <div class="gami-progress-fill gami-daily-fill" id="home-daily-bar" style="width: 0%;"></div>
+          <div class="gami-progress-col">
+            <div class="gami-progress-labels">
+              <span>Mục tiêu ngày (<span id="home-daily-done">0</span>/3 bài)</span>
+              <b id="home-daily-percent">0%</b>
+            </div>
+            <div class="gami-progress-track gami-daily-track">
+              <div class="gami-progress-fill gami-daily-fill" id="home-daily-bar" style="width: 0%;"></div>
+            </div>
           </div>
         </div>
 
-        <!-- Lịch tuần 7 ngày kiểu Duolingo -->
+        <!-- Lịch tuần 7 ngày -->
         <div class="gami-week-row" id="home-streak-week-row"></div>
 
-        <!-- Dải huy hiệu nhanh -->
-        <div class="gami-mini-badges-row" id="home-mini-badges-row"></div>
+        <!-- Dải huy hiệu nhanh (ẩn trên card chính để tránh rối mắt, xem chi tiết trong modal Huy hiệu) -->
+        <div class="gami-mini-badges-row" id="home-mini-badges-row" style="display:none;"></div>
       </div>
 
       <!-- 2. GÓC TRUYỀN CẢM HỨNG (QUOTE OF THE DAY) -->
       <div class="card qotd-home-card" id="home-qotd-card">
         <div class="qotd-header">
           <div class="qotd-badge-tag">
-            <ion-icon name="sparkles"></ion-icon> <span>GÓC TRUYỀN CẢM HỨNG HÔM NAY</span>
+            <ion-icon name="sparkles-outline"></ion-icon> <span>Nhận định văn học hôm nay</span>
           </div>
           <div class="qotd-header-actions">
             <button class="btn gh sm qotd-icon-btn" type="button" onclick="nextQuoteOfDay()" title="Đổi nhận định / câu văn khác">
@@ -77,21 +81,23 @@
         <blockquote class="qotd-quote-box" id="home-qotd-text">
           “Văn học là nhân học.”
         </blockquote>
-        <div class="qotd-author-row">
-          <span class="qotd-category-pill" id="home-qotd-category">Lý luận văn học</span>
-          <b class="qotd-author-name" id="home-qotd-author">— M. Gorki —</b>
-        </div>
 
-        <div class="qotd-usage-tip" id="home-qotd-tip">
-          <b>💡 Gợi ý vận dụng viết văn:</b> Dùng làm câu dẫn Mở bài hoặc Kết bài cho các đề phân tích giá trị nhân đạo và thiên chức của nhà văn.
+        <div class="qotd-meta-tip-wrap">
+          <div class="qotd-author-row">
+            <span class="qotd-category-pill" id="home-qotd-category">Lý luận văn học</span>
+            <b class="qotd-author-name" id="home-qotd-author">— M. Gorki —</b>
+          </div>
+          <div class="qotd-usage-tip" id="home-qotd-tip">
+            <b>💡 Vận dụng:</b> Dùng làm câu dẫn Mở bài hoặc Kết bài cho các đề phân tích giá trị nhân đạo và thiên chức của nhà văn.
+          </div>
         </div>
 
         <div class="qotd-footer-actions">
           <button class="btn gh sm" type="button" onclick="copyCurrentQuoteOfDay()">
-            <ion-icon name="copy-outline"></ion-icon> <span>Sao chép câu văn</span>
+            <ion-icon name="copy-outline"></ion-icon> <span>Sao chép</span>
           </button>
           <button class="btn cy sm" type="button" id="btn-save-qotd-home" onclick="toggleSaveCurrentQuote()">
-            <ion-icon name="bookmark-outline"></ion-icon> <span>Lưu vào sổ tay</span>
+            <ion-icon name="bookmark-outline"></ion-icon> <span>Lưu sổ tay</span>
           </button>
         </div>
       </div>
@@ -99,31 +105,31 @@
 
 
     <!-- LEADERBOARD -->
-    <div class="card lb-card" style="padding:24px 28px;">
+    <div class="card lb-card">
       <div class="lb-header-bar">
         <div class="lb-title-wrap">
           <span class="lb-trophy-icon">
-            <ion-icon name="trophy-outline" style="font-size:24px; color:var(--gold);"></ion-icon>
+            <ion-icon name="trophy-outline"></ion-icon>
           </span>
           <div>
-            <h2 class="lb-heading">Bảng Vàng Vinh Danh Học Sinh</h2>
-            <p class="lb-subheading">Thành tích qua các lượt bài học và kiểm tra</p>
+            <h2 class="lb-heading">Bảng Vàng Thành Tích</h2>
+            <p class="lb-subheading">Kết quả học tập qua các lượt làm bài</p>
           </div>
         </div>
-        <button class="btn gh sm lb-filter-reset" onclick="R.home()" title="Làm mới bảng xếp hạng">
-          <ion-icon name="refresh-outline"></ion-icon> Làm mới
-        </button>
-      </div>
-      <div class="lb-filters">
-        <div class="lb-search-wrap">
-          <input id="lb-search" class="lb-search-input" placeholder="Tìm kiếm theo tên học sinh, lớp, bộ đề..." oninput="renderLeaderboard()">
+        <div class="lb-filters">
+          <div class="lb-search-wrap">
+            <input id="lb-search" class="lb-search-input" placeholder="Tìm học sinh, lớp, bộ đề..." oninput="renderLeaderboard()">
+          </div>
+          <select id="lb-mode-filter" class="lb-mode-select" onchange="renderLeaderboard()" style="display:none;">
+            <option value="">Tất cả kết quả</option>
+          </select>
+          <button class="btn gh sm lb-filter-reset" onclick="resetLbFilters()" title="Xóa bộ lọc tìm kiếm">
+            <ion-icon name="close-circle-outline"></ion-icon> <span>Xóa lọc</span>
+          </button>
+          <button class="btn gh sm lb-filter-reset" onclick="R.home()" title="Làm mới bảng xếp hạng">
+            <ion-icon name="refresh-outline"></ion-icon>
+          </button>
         </div>
-        <select id="lb-mode-filter" class="lb-mode-select" onchange="renderLeaderboard()" style="display:none;">
-          <option value="">Tất cả kết quả</option>
-        </select>
-        <button class="btn gh sm lb-filter-reset" onclick="resetLbFilters()">
-          <ion-icon name="close-circle-outline"></ion-icon> Xóa lọc
-        </button>
       </div>
       <div id="lb-container"></div>
     </div>

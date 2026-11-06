@@ -1001,10 +1001,9 @@ function getSetPrivacyBadgeHtml(s, type = 'quiz') {
 
   const isPriv = isSetPrivate(s, type);
   if (isPriv) {
-    return `<button type="button" class="lib-pill pill-privacy-private" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Chế độ Riêng tư (Học sinh bị ẩn). Nhấp để đổi sang Công khai"><ion-icon name="lock-closed-outline"></ion-icon> Riêng tư 🔒</button>`;
-  } else {
-    return `<button type="button" class="lib-pill pill-privacy-public" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Chế độ Công khai (Học sinh được xem). Nhấp để đổi sang Riêng tư"><ion-icon name="globe-outline"></ion-icon> Công khai 🌐</button>`;
+    return `<button type="button" class="lib-pill pill-privacy-private" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Chế độ Riêng tư (Học sinh bị ẩn). Nhấp để đổi sang Công khai"><ion-icon name="lock-closed-outline"></ion-icon> Riêng tư</button>`;
   }
+  return '';
 }
 
 function getSetOpenAtBadgeHtml(s, type = 'quiz') {
@@ -1017,7 +1016,7 @@ function getSetOpenAtBadgeHtml(s, type = 'quiz') {
   const notYetOpen = isSetNotYetOpen(s, type);
 
   if (isTeacherOrAdmin) {
-    return `<button type="button" class="lib-pill pill-teacher-open-at" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Lịch mở bài làm: ${formatDeadlineDisplay(openAt)}. Nhấp để đổi"><ion-icon name="time-outline"></ion-icon> Mở: ${formatDeadlineDisplay(openAt)} ⚙️</button>`;
+    return `<button type="button" class="lib-pill pill-teacher-open-at" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Lịch mở bài làm: ${formatDeadlineDisplay(openAt)}. Nhấp để đổi"><ion-icon name="time-outline"></ion-icon> Mở: ${formatDeadlineDisplay(openAt)}</button>`;
   }
 
   if (isStudent && notYetOpen) {
@@ -1035,10 +1034,9 @@ function getSetAttemptBadgeHtml(s, type = 'quiz') {
 
   if (isTeacherOrAdmin) {
     if (maxAttempts > 0) {
-      return `<button type="button" class="lib-pill pill-teacher-limit" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Nhấp để sửa giới hạn số lượt & hạn nộp bài"><ion-icon name="timer-outline"></ion-icon> Giới hạn: ${maxAttempts} lượt ⚙️</button>`;
-    } else {
-      return `<button type="button" class="lib-pill pill-teacher-unlimited" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Nhấp để đặt giới hạn số lượt & hạn nộp bài"><ion-icon name="infinite-outline"></ion-icon> Không giới hạn ⚙️</button>`;
+      return `<button type="button" class="lib-pill pill-teacher-limit" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Nhấp để sửa giới hạn số lượt & hạn nộp bài"><ion-icon name="timer-outline"></ion-icon> Giới hạn: ${maxAttempts} lượt</button>`;
     }
+    return '';
   }
 
   if (isStudent && maxAttempts > 0) {
@@ -1062,7 +1060,7 @@ function getSetDeadlineBadgeHtml(s, type = 'quiz') {
   if (isTeacherOrAdmin) {
     if (dl) {
       const isExpired = isSetDeadlineExpired(s, type);
-      return `<button type="button" class="lib-pill pill-teacher-deadline" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Hạn nộp: ${formatDeadlineDisplay(dl)}. Nhấp để đổi hoặc xóa."><ion-icon name="calendar-outline"></ion-icon> Hạn: ${formatDeadlineDisplay(dl)}${isExpired ? ' (Hết hạn)' : ''} ⚙️</button>`;
+      return `<button type="button" class="lib-pill pill-teacher-deadline" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Hạn nộp: ${formatDeadlineDisplay(dl)}. Nhấp để đổi hoặc xóa."><ion-icon name="calendar-outline"></ion-icon> Hạn: ${formatDeadlineDisplay(dl)}${isExpired ? ' (Hết hạn)' : ''}</button>`;
     }
     return '';
   }

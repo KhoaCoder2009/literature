@@ -32,16 +32,16 @@
 
   <div class="nav-user-area" id="nav-user-area">
     <button class="btn sm gh nav-streak-pill" id="nav-streak-btn" type="button" onclick="openGamificationModal()" title="Chuỗi ngày học liên tục &amp; Huy hiệu chinh phục">
-      <span class="streak-flame-icon">🔥</span> <span id="nav-streak-count">1</span><span class="nav-btn-label">&nbsp;ngày</span>
+      <ion-icon name="flame" style="font-size: 16px; color: #f97316;"></ion-icon> <span id="nav-streak-count">1</span>
     </button>
-    <button class="btn sm gh nav-quote-pill" id="nav-quote-btn" type="button" onclick="openQuoteOfDayModal()" title="Góc truyền cảm hứng văn học mỗi ngày">
-      <ion-icon name="sparkles-outline" style="font-size: 18px; color: var(--yellow);"></ion-icon> <span class="nav-btn-label">Cảm hứng</span>
+    <button class="btn sm gh nav-quote-pill" id="nav-quote-btn" type="button" onclick="openQuoteOfDayModal()" title="Góc truyền cảm hứng văn học mỗi ngày" style="display:none;">
+      <ion-icon name="sparkles-outline" style="font-size: 17px; color: var(--yellow);"></ion-icon>
     </button>
     <button class="btn sm gh nav-qa-pill" id="nav-qa-btn" type="button" onclick="openQaReportModal()" title="Báo cáo lỗi hoặc đặt câu hỏi thắc mắc kiến thức">
-      <ion-icon name="help-buoy-outline" style="font-size: 18px; color: var(--cyan);"></ion-icon> <span class="nav-btn-label">Hỏi đáp</span>
+      <ion-icon name="help-buoy-outline" style="font-size: 17px;"></ion-icon> <span class="nav-btn-label">Hỏi đáp</span>
     </button>
     <button class="btn sm gh nav-settings-btn" type="button" onclick="openSettingsDialog()" title="Cài đặt">
-      <ion-icon name="settings-outline" style="font-size: 19px;"></ion-icon> <span class="nav-btn-label">Cài đặt</span>
+      <ion-icon name="settings-outline" style="font-size: 17px;"></ion-icon> <span class="nav-btn-label">Cài đặt</span>
     </button>
   </div>
 </nav>
@@ -58,7 +58,7 @@
   </div>
 
   <div class="sidebar-links-list">
-    <div class="sidebar-section-title">Học tập & Luyện đề</div>
+    <div class="sidebar-section-title">Học tập</div>
     <a data-g="home" onclick="go('home'); closeMobileMenu();">
       <span class="sidebar-icon"><ion-icon name="home-outline"></ion-icon></span> <span>Trang chủ</span>
     </a>
@@ -72,26 +72,24 @@
       <span class="sidebar-icon"><ion-icon name="create-outline"></ion-icon></span> <span>Luyện viết</span>
     </a>
 
-    <div class="sidebar-section-title">Kho dữ liệu & Hồ sơ</div>
+    <div class="sidebar-section-title">Quản lý</div>
     <a data-g="lib" onclick="go('lib'); closeMobileMenu();">
-      <span class="sidebar-icon"><ion-icon name="library-outline"></ion-icon></span> <span>Thư viện học liệu</span>
+      <span class="sidebar-icon"><ion-icon name="library-outline"></ion-icon></span> <span>Thư viện</span>
     </a>
     <a data-g="history" onclick="go('history'); closeMobileMenu();">
-      <span class="sidebar-icon"><ion-icon name="time-outline"></ion-icon></span> <span>Lịch sử bài làm</span>
+      <span class="sidebar-icon"><ion-icon name="time-outline"></ion-icon></span> <span>Lịch sử</span>
     </a>
 
-    <div class="sidebar-section-title">Tiện ích & Động lực</div>
+    <div class="sidebar-section-title">Tiện ích</div>
     <a onclick="closeMobileMenu(); openGamificationModal();">
-      <span class="sidebar-icon">🔥</span> <span>Chuỗi ngày học &amp; Huy hiệu</span>
+      <span class="sidebar-icon"><ion-icon name="flame-outline"></ion-icon></span> <span>Tiến độ &amp; Huy hiệu</span>
     </a>
     <a onclick="closeMobileMenu(); openQuoteOfDayModal();">
-      <span class="sidebar-icon"><ion-icon name="sparkles-outline"></ion-icon></span> <span>Góc truyền cảm hứng</span>
+      <span class="sidebar-icon"><ion-icon name="sparkles-outline"></ion-icon></span> <span>Góc cảm hứng</span>
     </a>
     <a onclick="closeMobileMenu(); openQaReportModal();">
-      <span class="sidebar-icon"><ion-icon name="help-buoy-outline"></ion-icon></span> <span>Báo cáo lỗi / Thắc mắc</span>
+      <span class="sidebar-icon"><ion-icon name="help-buoy-outline"></ion-icon></span> <span>Hỏi đáp &amp; Báo lỗi</span>
     </a>
-
-    <div class="sidebar-section-title">Hệ thống & Cài đặt</div>
     <a onclick="closeMobileMenu(); openSettingsDialog();">
       <span class="sidebar-icon"><ion-icon name="settings-outline"></ion-icon></span> <span>Cài đặt</span>
     </a>

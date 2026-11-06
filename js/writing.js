@@ -649,15 +649,10 @@ function onWritingSearchInput() {
 }
 
 const WRITING_PALETTES = [
-  'linear-gradient(135deg, #ef4444 0%, #f87171 100%)', // Red / Coral
-  'linear-gradient(135deg, #f97316 0%, #fb923c 100%)', // Orange
-  'linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)', // Amber / Gold
-  'linear-gradient(135deg, #15803d 0%, #22c55e 100%)', // Dark green
-  'linear-gradient(135deg, #84cc16 0%, #a3e635 100%)', // Light green / Lime
-  'linear-gradient(135deg, #14b8a6 0%, #2dd4bf 100%)', // Teal
-  'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)', // Dark blue
-  'linear-gradient(135deg, #0284c7 0%, #38bdf8 100%)', // Sky / Medium Blue
-  'linear-gradient(135deg, #06b6d4 0%, #67e8f9 100%)', // Cyan
+  'linear-gradient(135deg, #1e293b 0%, #334155 100%)', // Slate Navy
+  'linear-gradient(135deg, #312e81 0%, #4338ca 100%)', // Deep Indigo
+  'linear-gradient(135deg, #0f766e 0%, #0d9488 100%)', // Deep Teal
+  'linear-gradient(135deg, #92400e 0%, #b45309 100%)'  // Warm Bronze
 ];
 
 function renderWritingSetsGrid() {
