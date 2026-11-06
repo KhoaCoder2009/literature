@@ -522,14 +522,14 @@ function renderNavbarUserWidget() {
 
   container.innerHTML = `
     <div class="nav-student-bar">
-      <button type="button" class="nav-student-pill" onclick="openStudentNameModal()" title="Bấm để nhập hoặc đổi Họ tên &amp; Lớp học sinh (không cần đăng nhập)">
+      <button type="button" class="nav-student-pill" onclick="openStudentNameModal()" title="Học sinh: Bấm để đổi Họ tên &amp; Lớp (không cần đăng nhập)">
         <span>🎓</span>
-        <span style="overflow:hidden; text-overflow:ellipsis;">${escHtml(studentDisplay)}</span>
+        <span class="nav-student-name">${escHtml(studentDisplay)}</span>
         <ion-icon name="create-outline" style="font-size:13px; color:var(--mut); flex-shrink:0;"></ion-icon>
       </button>
-      <button type="button" class="nav-teacher-login-btn" onclick="openLoginDialog()" title="Đăng nhập dành riêng cho Giáo viên &amp; Quản trị viên">
-        <ion-icon name="shield-checkmark-outline" style="font-size:14px;"></ion-icon>
-        <span>Giáo viên</span>
+      <button type="button" class="nav-teacher-login-btn" onclick="openLoginDialog()" title="Đăng nhập tài khoản Giáo viên &amp; Quản trị viên (Học sinh không cần đăng nhập)">
+        <ion-icon name="log-in-outline" style="font-size:15px;"></ion-icon>
+        <span>Đăng nhập</span>
       </button>
     </div>
   `;
