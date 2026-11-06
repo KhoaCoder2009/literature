@@ -971,11 +971,11 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
     <div style="display:flex; align-items:center; gap:10px;">
       <div class="auth-logo-circle" aria-hidden="true">🔐</div>
       <div>
-        <h3 id="login-dialog-title" style="margin:0; font-size:17px; font-weight:800; color:var(--tx);">Đăng nhập Giáo viên</h3>
+        <h3 id="login-dialog-title" style="margin:0; font-size:17px; font-weight:800; color:var(--ink);">Đăng nhập Giáo viên</h3>
         <p style="margin:2px 0 0; font-size:12px; color:var(--mut); font-weight:500;">Mở khóa quyền đăng bài tập, chấm bài, kiểm soát lịch sử &amp; tên học sinh</p>
       </div>
     </div>
-    <button type="button" class="btn gh sm" onclick="closeLoginDialog()" aria-label="Đóng" style="padding:4px 8px;">✕</button>
+    <button type="button" class="auth-close-btn" onclick="closeLoginDialog()" aria-label="Đóng">✕</button>
   </div>
 
   <div class="auth-student-notice">
@@ -1006,7 +1006,7 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
     </div>
 
     <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:14px;">
-      <label style="display:inline-flex; align-items:center; gap:6px; font-size:12.5px; color:var(--tx2); cursor:pointer; font-weight:600;">
+      <label style="display:inline-flex; align-items:center; gap:6px; font-size:12.5px; color:var(--ink); cursor:pointer; font-weight:600;">
         <input type="checkbox" id="login-remember" checked style="accent-color:var(--au); width:15px; height:15px;">
         <span>Duy trì đăng nhập trên thiết bị này</span>
       </label>
@@ -1027,11 +1027,11 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
     <div style="display:flex; align-items:center; gap:10px;">
       <div class="auth-logo-circle" aria-hidden="true">🎓</div>
       <div>
-        <h3 id="student-name-dialog-title" style="margin:0; font-size:16.5px; font-weight:800; color:var(--tx);">Thông tin Học sinh làm bài</h3>
+        <h3 id="student-name-dialog-title" style="margin:0; font-size:16.5px; font-weight:800; color:var(--ink);">Thông tin Học sinh làm bài</h3>
         <p id="student-name-dialog-sub" style="margin:2px 0 0; font-size:12px; color:var(--mut); font-weight:500;">Nhập họ tên &amp; lớp để giáo viên ghi nhận kết quả</p>
       </div>
     </div>
-    <button type="button" class="btn gh sm" onclick="closeStudentNameModal()" aria-label="Đóng" style="padding:4px 8px;">✕</button>
+    <button type="button" class="auth-close-btn" onclick="closeStudentNameModal()" aria-label="Đóng">✕</button>
   </div>
 
   <form id="student-name-form" onsubmit="handleStudentNameSubmit(event)" class="auth-form-body">
@@ -1063,11 +1063,11 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
     <div style="display:flex; align-items:center; gap:10px;">
       <div class="auth-logo-circle" aria-hidden="true">🔑</div>
       <div>
-        <h3 style="margin:0; font-size:16.5px; font-weight:800; color:var(--tx);">Đổi mật khẩu Giáo viên</h3>
+        <h3 style="margin:0; font-size:16.5px; font-weight:800; color:var(--ink);">Đổi mật khẩu Giáo viên</h3>
         <p style="margin:2px 0 0; font-size:12px; color:var(--mut);">Cập nhật mật khẩu bảo mật cho tài khoản của bạn</p>
       </div>
     </div>
-    <button type="button" class="btn gh sm" onclick="closeChangePasswordModal()" style="padding:4px 8px;">✕</button>
+    <button type="button" class="auth-close-btn" onclick="closeChangePasswordModal()" aria-label="Đóng">✕</button>
   </div>
   <form id="change-password-form" onsubmit="handleChangePasswordSubmit(event)" class="auth-form-body">
     <div id="change-password-alert" class="auth-error-alert" style="display:none;"></div>
@@ -1096,11 +1096,11 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
     <div style="display:flex; align-items:center; gap:10px;">
       <div class="auth-logo-circle" aria-hidden="true">👑</div>
       <div>
-        <h3 style="margin:0; font-size:17px; font-weight:800; color:var(--tx);">Trung tâm Kiểm soát Giáo viên &amp; Quản trị</h3>
+        <h3 style="margin:0; font-size:17px; font-weight:800; color:var(--ink);">Trung tâm Kiểm soát Giáo viên &amp; Quản trị</h3>
         <p style="margin:2px 0 0; font-size:12px; color:var(--mut);">Kiểm soát danh sách tên học sinh, lịch sử nộp bài và tài khoản giáo viên</p>
       </div>
     </div>
-    <button type="button" class="btn gh sm" onclick="closeAccountManagerModal()" style="padding:4px 8px;">✕</button>
+    <button type="button" class="auth-close-btn" onclick="closeAccountManagerModal()" aria-label="Đóng">✕</button>
   </div>
 
   <div class="qa-modal-tabs" style="padding:0 18px; border-bottom:1px solid var(--bd);">
@@ -1130,7 +1130,7 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
     <!-- TAB 2: QUẢN LÝ TÀI KHOẢN GIÁO VIÊN / ADMIN -->
     <div id="ctrl-pane-accounts" style="display:none;">
       <form id="admin-create-user-form" onsubmit="handleAdminCreateUser(event)" style="background:var(--bg2); border:1px solid var(--bd); border-radius:10px; padding:12px; margin-bottom:14px;">
-        <div style="font-size:13px; font-weight:700; color:var(--tx); margin-bottom:10px;">➕ Cấp thêm Tài khoản Giáo viên / Quản trị viên</div>
+        <div style="font-size:13px; font-weight:700; color:var(--ink); margin-bottom:10px;">➕ Cấp thêm Tài khoản Giáo viên / Quản trị viên</div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:8px; margin-bottom:10px;">
           <input id="new-acc-username" class="fi" type="text" placeholder="Tên đăng nhập *" required>
           <input id="new-acc-password" class="fi" type="text" placeholder="Mật khẩu (tối thiểu 6 ký tự) *" required minlength="6">
