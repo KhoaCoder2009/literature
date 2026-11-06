@@ -7176,9 +7176,6 @@ ion-icon {
   .nav-user-area {
     gap: 6px;
   }
-  .nav-qa-pill {
-    display: none !important;
-  }
   .nav-student-pill .nav-student-name {
     max-width: 95px;
   }
