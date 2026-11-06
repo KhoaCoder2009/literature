@@ -1210,19 +1210,704 @@
     }
   }
 
-  function renderWorkspaceThinkingGuide(curSet, overrideKey) {
-    const card = document.getElementById('workspace-thinking-card');
-    if (card) card.style.display = 'none';
-    const btn = document.getElementById('btn-toggle-thinking-guide');
-    if (btn) btn.style.display = 'none';
+  
+  // =========================================================================
+  // NÂNG CẤP HỆ THỐNG GỢI Ý TƯ DUY – NGỮ VĂN (13 DẠNG CHUẨN SGK & CẤU TRÚC 6 PHẦN)
+  // =========================================================================
+
+  const FORMS_METADATA = {
+    // A. VIẾT ĐOẠN NGHỊ LUẬN VĂN HỌC (5 DẠNG)
+    nlvh_doan_chude: {
+      group: 'VIẾT ĐOẠN NGHỊ LUẬN VĂN HỌC',
+      name: 'Dạng 1: Phân tích, đánh giá nội dung chủ đề',
+      category: 'doan-nlvh',
+      categoryName: 'Đoạn nghị luận văn học',
+      volume: 'Khoảng 200 chữ (01 đoạn văn duy nhất, không xuống hàng; chiếm 2/3 đến tối đa 1 trang giấy thi chừa lại 3 dòng).',
+      coreRequirement: 'Làm nổi bật chủ đề tư tưởng của tác phẩm qua các khía cạnh nội dung tiêu biểu.',
+      analysisTarget: 'Thơ (Nhan đề, hình tượng trung tâm, tình cảm cảm xúc) | Truyện (Tình huống truyện, nhân vật, phẩm chất, chi tiết đặc sắc).',
+      avoidConfusion: 'Tránh nhầm lẫn giữa phân tích nội dung chủ đề với phân tích toàn diện nghệ thuật. Ở dạng này, nghệ thuật chỉ đóng vai trò phương tiện hỗ trợ làm sáng tỏ chủ đề.',
+      steps: [
+        'Câu dẫn + Giới thiệu tác phẩm và vấn đề nghị luận',
+        'Nêu chủ đề chính của tác phẩm (VD: ca ngợi tình mẫu tử, tình yêu quê hương...)',
+        'Phân tích 2–3 khía cạnh làm nổi bật chủ đề (Gọi tên yếu tố + Dẫn chứng cụ thể + Phân tích ý nghĩa/tác dụng)',
+        'Đánh giá ý nghĩa của chủ đề, giá trị tư tưởng và thông điệp gửi gắm',
+        'Phân tích các nét nghệ thuật đặc sắc góp phần thể hiện chủ đề',
+        'Kết đoạn bằng nhận xét, đánh giá hoặc câu trích dẫn phù hợp'
+      ],
+      checklist: [
+        'Hình thức: Đúng 01 đoạn văn duy nhất, liền mạch, tuyệt đối không xuống dòng (~200 chữ).',
+        'Mở đoạn có câu dẫn trích dẫn và nêu trúng chủ đề tác phẩm.',
+        'Triển khai đủ 2–3 khía cạnh chủ đề theo công thức: Gọi tên ➔ Dẫn chứng ➔ Tác dụng.',
+        'Phân tích rõ nét đặc thù của Thơ (hình tượng/cảm xúc) hoặc Truyện (tình huống/nhân vật/chi tiết).',
+        'Có phần đánh giá vai trò của chủ đề đối với tư tưởng tác phẩm và bài học cuộc sống.',
+        'Không suy diễn hoặc bịa đặt dẫn chứng ngoài văn bản.'
+      ]
+    },
+
+    nlvh_doan_nt_tho: {
+      group: 'VIẾT ĐOẠN NGHỊ LUẬN VĂN HỌC',
+      name: 'Dạng 2: Phân tích, đánh giá nghệ thuật THƠ',
+      category: 'doan-nlvh',
+      categoryName: 'Đoạn nghị luận văn học',
+      volume: 'Khoảng 200 chữ (01 đoạn văn duy nhất, không xuống dòng).',
+      coreRequirement: 'Phân tích các yếu tố hình thức nghệ thuật đặc sắc của đoạn thơ/bài thơ và chỉ rõ tác dụng biểu đạt.',
+      analysisTarget: 'Thể thơ, hình ảnh thơ, từ ngữ (từ láy, động từ mạnh), biện pháp tu từ, vần nhịp, giọng điệu.',
+      avoidConfusion: 'Tuyệt đối không liệt kê hàng loạt biện pháp nghệ thuật mà không phân tích tác dụng. Mọi yếu tố hình thức đều phải gắn liền với việc làm rõ chủ đề và cảm xúc tác giả.',
+      steps: [
+        'Câu dẫn + Giới thiệu tác giả, đoạn thơ và VĐNL về nghệ thuật thơ',
+        'Phân tích Thể thơ: Gọi tên thể thơ, vần nhịp và nêu tác dụng tạo âm hưởng',
+        'Phân tích Hình ảnh thơ: Nhận xét chung + Đưa dẫn chứng + Phân tích giá trị biểu đạt',
+        'Phân tích Từ ngữ: Chọn từ ngữ đặc sắc (từ láy, từ gợi cảm) + Phân tích hiệu quả nghệ thuật',
+        'Phân tích Biện pháp tu từ: Gọi tên (ẩn dụ, so sánh, điệp từ...) + Dẫn chứng + Phân tích tác dụng',
+        'Khẳng định các yếu tố nghệ thuật đã góp phần làm rõ chủ đề và chuyển tải thông điệp'
+      ],
+      checklist: [
+        'Hình thức: Đúng 01 đoạn văn duy nhất (~200 chữ), không xuống dòng.',
+        'Không liệt kê suông: mỗi yếu tố nghệ thuật gọi tên đều phải đi kèm dẫn chứng thơ và tác dụng cụ thể.',
+        'Chỉ rõ tác dụng của thể thơ, từ ngữ, hình ảnh hoặc biện pháp tu từ tiêu biểu.',
+        'Có câu chốt khẳng định nghệ thuật giúp làm sáng tỏ chủ đề và thông điệp của nhà thơ.',
+        'Dẫn chứng thơ được đặt trong dấu ngoặc kép chính xác tuyệt đối.'
+      ]
+    },
+
+    nlvh_doan_camxuc_tho: {
+      group: 'VIẾT ĐOẠN NGHỊ LUẬN VĂN HỌC',
+      name: 'Dạng 3: Phân tích, đánh giá TÌNH CẢM, CẢM XÚC trong thơ',
+      category: 'doan-nlvh',
+      categoryName: 'Đoạn nghị luận văn học',
+      volume: 'Khoảng 200 chữ (01 đoạn văn duy nhất, không xuống dòng).',
+      coreRequirement: 'Làm nổi bật mạch vận động cảm xúc và thế giới tâm hồn chân thành, sâu lắng của chủ thể trữ tình.',
+      analysisTarget: 'Cảm xúc chủ đạo, các cung bậc cảm xúc, sự chuyển biến tâm trạng, ngôn từ và hình ảnh gợi cảm.',
+      avoidConfusion: 'Tránh sa vào diễn xuôi ý thơ hoặc chỉ phân tích biện pháp tu từ máy móc. Phải đi sâu vào mạch cảm xúc, nỗi niềm, khát vọng của nhà thơ.',
+      steps: [
+        'Xác định cảm xúc chủ đạo của bài thơ hoặc đoạn thơ',
+        'Tìm các cung bậc cảm xúc nổi bật và mạch vận động tâm trạng',
+        'Phân tích Cung bậc 1: Gọi tên cảm xúc ➔ Chọn dẫn chứng ➔ Phân tích từ ngữ/hình ảnh biểu đạt',
+        'Phân tích Cung bậc 2 (sự chuyển biến): Gọi tên ➔ Dẫn chứng ➔ Phân tích ý nghĩa',
+        'Nêu nghệ thuật biểu đạt cảm xúc (thể thơ, giọng điệu, nhịp thơ ngân vang)',
+        'Đánh giá: Cảm xúc chân thành/sâu sắc? Triết lí nhân sinh, thông điệp tư tưởng và phong cách tác giả'
+      ],
+      checklist: [
+        'Hình thức: Đúng 01 đoạn văn duy nhất khoảng 200 chữ, không xuống dòng.',
+        'Gọi tên chính xác cảm xúc chủ đạo (say sưa, đau đớn, khao khát tự do, nhớ nhung...).',
+        'Phân tích được sự vận động, chuyển biến mạch cảm xúc qua các câu thơ.',
+        'Gắn cảm xúc với các từ ngữ, hình ảnh thơ tiêu biểu.',
+        'Đánh giá được chiều sâu tư tưởng, nhân sinh quan và thông điệp của nhà thơ.'
+      ]
+    },
+
+    nlvh_doan_nt_truyen: {
+      group: 'VIẾT ĐOẠN NGHỊ LUẬN VĂN HỌC',
+      name: 'Dạng 4: Phân tích nghệ thuật TRUYỆN NGẮN',
+      category: 'doan-nlvh',
+      categoryName: 'Đoạn nghị luận văn học',
+      volume: 'Khoảng 200 chữ (01 đoạn văn duy nhất, không xuống dòng).',
+      coreRequirement: 'Lựa chọn và phân tích sâu sắc các phương diện nghệ thuật tự sự thực sự nổi bật của thiên truyện.',
+      analysisTarget: 'Ngôi kể, điểm nhìn trần thuật, tình huống truyện, chi tiết nghệ thuật, ngôn ngữ, giọng điệu, miêu tả nội tâm.',
+      avoidConfusion: 'Không bắt buộc phải phân tích tất cả các phương diện. Chỉ chọn 2–3 yếu tố nghệ thuật xuất sắc nhất trong ngữ liệu để phân tích sâu, tránh biến bài viết thành bản liệt kê lí thuyết.',
+      steps: [
+        'Câu dẫn + Giới thiệu tác giả, truyện ngắn và nét nghệ thuật tự sự nổi bật',
+        'Phân tích Ngôi kể & Điểm nhìn: Ngôi thứ mấy? Điểm nhìn đặt ở đâu? Tác dụng biểu đạt?',
+        'Phân tích Tình huống truyện (nếu có): Tình huống gì? Vai trò bộc lộ phẩm chất nhân vật?',
+        'Phân tích Chi tiết nghệ thuật đắt giá & Ngòi bút miêu tả diễn biến nội tâm tinh tế',
+        'Phân tích Ngôn ngữ & Giọng điệu trần thuật (đối thoại, độc thoại, giọng triết lí/ấm áp/trầm buồn)',
+        'Đánh giá tài năng, phong cách cá tính sáng tạo của tác giả và sự đóng góp cho chủ đề'
+      ],
+      checklist: [
+        'Hình thức: 01 đoạn văn duy nhất (~200 chữ), không xuống dòng.',
+        'Chọn đúng phương diện nghệ thuật nổi bật của tác phẩm (ngôi kể, điểm nhìn, tình huống, chi tiết).',
+        'Có dẫn chứng trích dẫn cụ thể từ văn bản truyện.',
+        'Chỉ rõ tác dụng: yếu tố nghệ thuật đó giúp bộc lộ tính cách nhân vật hay thể hiện tư tưởng ra sao?',
+        'Khẳng định tài năng và cá tính sáng tạo độc đáo của nhà văn.'
+      ]
+    },
+
+    nlvh_doan_nhanvat: {
+      group: 'VIẾT ĐOẠN NGHỊ LUẬN VĂN HỌC',
+      name: 'Dạng 5: Phân tích đặc điểm NHÂN VẬT',
+      category: 'doan-nlvh',
+      categoryName: 'Đoạn nghị luận văn học',
+      volume: 'Khoảng 200 chữ (01 đoạn văn duy nhất, không xuống dòng).',
+      coreRequirement: 'Khắc họa nổi bật vẻ đẹp phẩm chất, tính cách hoặc bi kịch tâm trạng của nhân vật kèm nghệ thuật xây dựng nhân vật.',
+      analysisTarget: 'Ngoại hình, hoàn cảnh, xuất thân, phẩm chất, lời nói, hành động, diễn biến tâm trạng.',
+      avoidConfusion: 'Không nhầm lẫn giữa việc kể lại toàn bộ câu chuyện với phân tích đặc điểm nhân vật. Phải gọi tên phẩm chất ➔ đưa dẫn chứng (lời nói, hành động) ➔ phân tích ý nghĩa.',
+      steps: [
+        'Khái quát nhân vật: Tên tuổi, hoàn cảnh, xuất thân, ngoại hình (nếu có)',
+        'Phân tích Phẩm chất / Đặc điểm 1: Gọi tên ➔ Dẫn chứng (lời nói, hành động, thái độ) ➔ Phân tích',
+        'Phân tích Phẩm chất / Đặc điểm 2: Gọi tên ➔ Dẫn chứng ➔ Phân tích chiều sâu tâm trạng',
+        'Phân tích Nghệ thuật xây dựng nhân vật (khắc họa qua hành động, lời nói, nội tâm, tình huống, điểm nhìn)',
+        'Đánh giá: Nhân vật tiêu biểu cho kiểu người/tầng lớp nào? Ý nghĩa hình tượng và thông điệp tác giả'
+      ],
+      checklist: [
+        'Hình thức: Đúng 01 đoạn văn duy nhất (~200 chữ), không xuống hàng.',
+        'Gọi tên rõ ràng từng phẩm chất hoặc nét tính cách của nhân vật.',
+        'Mỗi phẩm chất phải có dẫn chứng chính xác: lời nói, hành động, cử chỉ hoặc suy nghĩ nội tâm.',
+        'Phân tích nghệ thuật xây dựng nhân vật (ngôi kể, tình huống, miêu tả tâm lí).',
+        'Rút ra được thông điệp nhân văn mà nhà văn gửi gắm qua hình tượng nhân vật.'
+      ]
+    },
+
+    // B. VIẾT BÀI NGHỊ LUẬN VĂN HỌC (2 DẠNG)
+    nlvh_bai_1tacpham: {
+      group: 'VIẾT BÀI NGHỊ LUẬN VĂN HỌC',
+      name: 'Dạng 1: Phân tích, đánh giá nội dung, chủ đề & nghệ thuật MỘT tác phẩm Thơ/Truyện',
+      category: 'bai-nlvh',
+      categoryName: 'Bài nghị luận văn học',
+      volume: 'Khoảng 600 chữ (Bố cục 3 phần rõ ràng: Mở bài - Thân bài - Kết bài, chia thành nhiều đoạn văn).',
+      coreRequirement: 'Phân tích toàn diện và sâu sắc cả giá trị nội dung chủ đề lẫn hình thức nghệ thuật của tác phẩm.',
+      analysisTarget: 'Thơ: Đề tài, chủ đề, cảm xúc, chủ thể trữ tình, thể thơ, từ ngữ, hình ảnh, BPTT, vần nhịp | Truyện: Đề tài, chủ đề, nhân vật, ngôi kể, điểm nhìn, nhan đề, tình huống, chi tiết, kết thúc.',
+      avoidConfusion: 'Luôn nhớ 2 bước cốt lõi trong từng luận điểm: Bước 1: Phân tích (Gọi tên + dẫn chứng + tác dụng) ➔ Bước 2: Đánh giá (Vai trò đối với chủ đề, tư tưởng và thông điệp).',
+      steps: [
+        'I. Mở bài: Trích dẫn nhận định/câu thơ dẫn dắt ➔ Giới thiệu tác giả, tác phẩm ➔ Nêu vấn đề nghị luận',
+        'II.1. Thân bài - Khái quát chung về hoàn cảnh sáng tác, xuất xứ, đề tài và cảm hứng chủ đạo',
+        'II.2. Thân bài - Phân tích các khía cạnh Nội dung & Chủ đề (theo đặc trưng Thơ hoặc Truyện)',
+        'II.3. Thân bài - Phân tích các yếu tố Hình thức Nghệ thuật đặc sắc (hình ảnh, từ ngữ, ngôi kể, điểm nhìn...)',
+        'II.4. Thân bài - Đánh giá vai trò nghệ thuật với tư tưởng, thông điệp nhân văn và phong cách tác giả',
+        'III. Kết bài: Khẳng định lại giá trị bền vững và sức sống của tác phẩm trong lòng độc giả'
+      ],
+      checklist: [
+        'Bố cục hoàn chỉnh: Mở bài, Thân bài (chia các đoạn rõ ràng), Kết bài.',
+        'Cân đối giữa phân tích Nội dung và Hình thức nghệ thuật theo đặc trưng thể loại.',
+        'Mỗi luận điểm đều thực hiện đủ 2 bước: Phân tích (gọi tên + d/c + tác dụng) ➔ Đánh giá.',
+        'Dẫn chứng phong phú, trích dẫn chính xác từ văn bản.',
+        'Có liên hệ, mở rộng nâng cao tư tưởng và phong cách nghệ thuật của tác giả.'
+      ]
+    },
+
+    nlvh_bai_sosanh: {
+      group: 'VIẾT BÀI NGHỊ LUẬN VĂN HỌC',
+      name: 'Dạng 2: So sánh, đánh giá hai đoạn trích hoặc hai tác phẩm thơ/truyện/kí/kịch',
+      category: 'bai-nlvh',
+      categoryName: 'Bài nghị luận văn học',
+      volume: 'Khoảng 600 chữ (Chia thành nhiều đoạn văn có kết nối logic).',
+      coreRequirement: 'Chỉ ra điểm tương đồng và khác biệt về nội dung và nghệ thuật giữa hai tác phẩm, lí giải nguyên nhân và đánh giá.',
+      analysisTarget: 'Đề tài, chủ đề, cảm hứng, hình tượng, bút pháp nghệ thuật của cả hai văn bản.',
+      avoidConfusion: 'Tránh phân tích lần lượt từng tác phẩm một cách độc lập như hai bài riêng biệt. Phải đặt hai tác phẩm trong thế đối sánh để làm nổi bật nét gặp gỡ và phong cách độc đáo của mỗi nhà văn.',
+      steps: [
+        'I. Mở bài: Dẫn dắt ➔ Giới thiệu TG1+TP1, TG2+TP2 ➔ Nêu vấn đề so sánh và định hướng nét tương đồng/khác biệt',
+        'II.1. Khái quát chung: Hoàn cảnh sáng tác, vị trí đoạn trích và cảm hứng chủ đạo của hai tác phẩm',
+        'II.2. Điểm tương đồng: Phân tích nét gặp gỡ về đề tài, chủ đề, cảm xúc hoặc thủ pháp nghệ thuật (+ d/c 2 TP)',
+        'II.3. Điểm khác biệt: Phân tích nét độc đáo riêng về nội dung tư tưởng và hình thức biểu đạt (+ d/c 2 TP)',
+        'II.4. Lí giải nguyên nhân giống và khác nhau (hoàn cảnh thời đại, quan điểm thẩm mĩ, cá tính sáng tạo)',
+        'II.5. Đánh giá ý nghĩa so sánh & III. Kết bài: Khẳng định sức sống của hai tác phẩm và sự đa dạng của văn học'
+      ],
+      checklist: [
+        'Bố cục mạch lạc theo các phần: Khái quát ➔ Tương đồng ➔ Khác biệt ➔ Lí giải ➔ Đánh giá.',
+        'Dẫn chứng cân đối, lấy lí lẽ và bằng chứng từ cả hai tác phẩm.',
+        'Phần lí giải chỉ rõ căn nguyên thời đại, hoàn cảnh sống và cá tính sáng tạo của từng tác giả.',
+        'Đánh giá được đóng góp của mỗi tác phẩm đối với dòng chảy văn học dân tộc.'
+      ]
+    },
+
+    // C. VIẾT ĐOẠN NGHỊ LUẬN XÃ HỘI (3 DẠNG)
+    nlxh_doan_ynghia: {
+      group: 'VIẾT ĐOẠN NGHỊ LUẬN XÃ HỘI',
+      name: 'Dạng 1 & 2: Nghị luận về ý kiến / Ý nghĩa, giá trị của một vấn đề đối với tuổi trẻ',
+      category: 'doan-nlxh',
+      categoryName: 'Đoạn văn nghị luận xã hội',
+      volume: 'Khoảng 200 chữ (01 đoạn văn duy nhất, không xuống dòng).',
+      coreRequirement: 'Bàn luận sâu sắc về ý nghĩa, giá trị, tầm quan trọng hoặc sự cần thiết của vấn đề qua 3 luận điểm.',
+      analysisTarget: 'Nhận thức cá nhân, thành công, hạnh phúc, mối quan hệ xã hội, cộng đồng văn minh.',
+      avoidConfusion: 'Nếu đề xuất phát từ phần Đọc hiểu, trước tiên phải nêu 1-2 câu xác định vấn đề xã hội từ văn bản. Bàn luận bắt buộc có 3 luận điểm đa chiều kèm dẫn chứng thực tế.',
+      steps: [
+        'Mở đoạn: Dẫn dắt và nêu vấn đề nghị luận (ý nghĩa/tầm quan trọng của vấn đề)',
+        'Giải thích ngắn gọn bản chất của vấn đề (trong 1 câu)',
+        'Luận điểm 1: Giá trị đối với bản thân (mở rộng nhận thức, tôi luyện ý chí, bản lĩnh và nhân cách)',
+        'Luận điểm 2: Giá trị đối với sự nghiệp và các mối quan hệ (tạo dựng uy tín, gặt hái thành công, niềm tin)',
+        'Luận điểm 3: Giá trị đối với cộng đồng, xã hội (lan tỏa năng lượng tích cực, xây dựng xã hội văn minh)',
+        'Dẫn chứng thực tế tiêu biểu ➔ Bài học nhận thức, hành động và câu kết đoạn khẳng định'
+      ],
+      checklist: [
+        'Hình thức: Đúng 01 đoạn văn duy nhất khoảng 200 chữ, không xuống dòng.',
+        'Có câu giải thích ngắn gọn, súc tích trong 1 câu.',
+        'Đủ 3 luận điểm bàn luận: Bản thân ➔ Mối quan hệ/Thành công ➔ Xã hội.',
+        'Có ít nhất 1 dẫn chứng người thật, việc thật hoặc sự kiện thực tế có sức thuyết phục.',
+        'Rút ra bài học nhận thức và hành động thiết thực cho người trẻ.'
+      ]
+    },
+
+    nlxh_doan_tachai: {
+      group: 'VIẾT ĐOẠN NGHỊ LUẬN XÃ HỘI',
+      name: 'Dạng 2 (Tác hại): Trình bày suy nghĩ về tác hại/hậu quả của một thói quen/hiện tượng tiêu cực',
+      category: 'doan-nlxh',
+      categoryName: 'Đoạn văn nghị luận xã hội',
+      volume: 'Khoảng 200 chữ (01 đoạn văn duy nhất, không xuống dòng).',
+      coreRequirement: 'Chỉ rõ những hệ lụy, tác hại và hậu quả tiêu cực của thói quen/hiện tượng đối với bản thân và xã hội.',
+      analysisTarget: 'Thời gian, năng lực, cơ hội phát triển, uy tín cá nhân, mối quan hệ, sức ỳ xã hội.',
+      avoidConfusion: 'Không chỉ dừng lại ở phê phán cảm tính; phải chỉ ra cơ chế tác hại một cách logic, thuyết phục và rút ra bài học kiên quyết từ bỏ thói xấu.',
+      steps: [
+        'Mở đoạn: Nêu hiện tượng/thói quen tiêu cực cần bàn luận',
+        'Giải thích ngắn gọn bản chất của thói quen/hiện tượng đó (1 câu)',
+        'Luận điểm 1: Tác hại đối với bản thân (làm tiêu hao thời gian, thui chột ý chí, đánh mất cơ hội)',
+        'Luận điểm 2: Tác hại đối với các mối quan hệ và tương lai (suy giảm uy tín, rạn nứt niềm tin)',
+        'Luận điểm 3: Tác hại đối với cộng đồng và xã hội (tạo sức ỳ, kìm hãm sự phát triển văn minh)',
+        'Dẫn chứng thực tế ➔ Phê phán lối sống buông thả ➔ Bài học nhận thức, hành động và kết đoạn'
+      ],
+      checklist: [
+        'Hình thức: Đúng 01 đoạn văn duy nhất (~200 chữ), không xuống dòng.',
+        'Phân tích đủ 3 cấp độ tác hại: Bản thân ➔ Uy tín/Quan hệ ➔ Xã hội.',
+        'Có dẫn chứng thực tế minh chứng cho hậu quả khôn lường.',
+        'Thái độ phê phán dứt khoát, tỉnh táo và giàu tính xây dựng.',
+        'Bài học hành động rõ ràng: tự kỷ luật, thay đổi thói quen ngay hôm nay.'
+      ]
+    },
+
+    nlxh_doan_giaiphap: {
+      group: 'VIẾT ĐOẠN NGHỊ LUẬN XÃ HỘI',
+      name: 'Dạng 3: Trình bày suy nghĩ về hành động/trách nhiệm của tuổi trẻ đối với bản thân hoặc xã hội',
+      category: 'doan-nlxh',
+      categoryName: 'Đoạn văn nghị luận xã hội',
+      volume: 'Khoảng 200 chữ (01 đoạn văn duy nhất, không xuống dòng).',
+      coreRequirement: 'Đề xuất các giải pháp, cách thức hành động và trách nhiệm cụ thể của tuổi trẻ.',
+      analysisTarget: 'Nhận thức, kĩ năng, thói quen, thái độ, hành động cá nhân; vai trò gia đình, nhà trường; cộng đồng và xã hội.',
+      avoidConfusion: 'Tránh đưa ra những khẩu hiệu suông, chung chung. Giải pháp phải cụ thể, khả thi và triển khai theo 3 cấp độ rõ ràng.',
+      steps: [
+        'Mở đoạn: Giới thiệu vấn đề trách nhiệm hoặc giải pháp của tuổi trẻ',
+        'Giải thích ngắn gọn vấn đề',
+        'Luận điểm 1 - Trách nhiệm cá nhân: Nâng cao nhận thức, trau dồi kĩ năng, thay đổi thói quen, chủ động hành động',
+        'Luận điểm 2 - Trách nhiệm gia đình & nhà trường: Giáo dục, thấu hiểu, lắng nghe và định hướng tích cực',
+        'Luận điểm 3 - Trách nhiệm cộng đồng & xã hội: Xây dựng chính sách, phong trào, truyền thông và môi trường lành mạnh',
+        'Dẫn chứng hành động cụ thể ➔ Cam kết và câu kết đoạn truyền cảm hứng'
+      ],
+      checklist: [
+        'Hình thức: 01 đoạn văn duy nhất (~200 chữ), không xuống dòng.',
+        'Đầy đủ 3 cấp độ giải pháp: Cá nhân ➔ Gia đình & Nhà trường ➔ Cộng đồng xã hội.',
+        'Hành động đề xuất mang tính khả thi, thiết thực với lứa tuổi học sinh, thanh niên.',
+        'Có dẫn chứng về những tấm gương người trẻ hành động đẹp.',
+        'Giọng văn nhiệt huyết, trách nhiệm và giàu sức thuyết phục.'
+      ]
+    },
+
+    // D. VIẾT BÀI NGHỊ LUẬN XÃ HỘI (3 DẠNG)
+    nlxh_bai_tutuong: {
+      group: 'VIẾT BÀI NGHỊ LUẬN XÃ HỘI',
+      name: 'Dạng 1: Nghị luận về một tư tưởng đạo lí / câu nói',
+      category: 'bai-nlxh',
+      categoryName: 'Bài văn nghị luận',
+      volume: 'Khoảng 600 chữ (Chia thành các đoạn văn rõ ràng: Mở bài - Thân bài - Kết bài).',
+      coreRequirement: 'Làm sáng tỏ tư tưởng đạo lí, phân tích nguyên nhân vì sao và rút ra bài học nhận thức, hành động.',
+      analysisTarget: 'Từ ngữ, vế câu, ý nghĩa cả câu; lí lẽ vì sao đúng; 3 luận điểm ý nghĩa; dẫn chứng thực tế; phản đề.',
+      avoidConfusion: 'Phải giải thích thấu đáo các từ ngữ trọng tâm trước khi bàn luận. Bàn luận cần trả lời được: Vì sao đặt ra vấn đề này? Vấn đề này có ý nghĩa gì đối với cá nhân và nhân loại?',
+      steps: [
+        'I. Mở bài: Dẫn dắt câu nói/tư tưởng ➔ Giới thiệu vấn đề nghị luận',
+        'II.1. Thân bài - Giải thích: Giải thích từ ngữ quan trọng, từng vế câu ➔ Rút ra ý nghĩa toàn bộ câu nói',
+        'II.2. Thân bài - Bàn luận, chứng minh: Vì sao đặt ra vấn đề? Triển khai 3 luận điểm có lí lẽ và dẫn chứng thực tế',
+        'II.3. Thân bài - Phê phán, mở rộng: Chỉ ra những biểu hiện trái ngược, lệch lạc hoặc mặt hạn chế nếu có',
+        'II.4. Thân bài - Giải pháp, liên hệ bản thân: Bài học nhận thức, bài học hành động cho thế hệ trẻ',
+        'III. Kết bài: Khẳng định lại giá trị bền vững và ý nghĩa sống còn của tư tưởng đạo lí'
+      ],
+      checklist: [
+        'Bố cục bài văn 3 phần hoàn chỉnh, các đoạn thân bài tách bạch rõ ràng.',
+        'Có bước giải thích tường minh từ ngữ và thông điệp toàn câu nói.',
+        'Bàn luận chặt chẽ với ít nhất 3 luận điểm lí lẽ xác đáng kèm dẫn chứng thực tế.',
+        'Có đoạn phản biện/phê phán mở rộng vấn đề một cách đa chiều, khách quan.',
+        'Liên hệ sâu sắc với bản thân và thực tiễn tuổi trẻ hiện nay.'
+      ]
+    },
+
+    nlxh_bai_hientuong: {
+      group: 'VIẾT BÀI NGHỊ LUẬN XÃ HỘI',
+      name: 'Dạng 2: Nghị luận về một hiện tượng đời sống',
+      category: 'bai-nlxh',
+      categoryName: 'Bài văn nghị luận',
+      volume: 'Khoảng 600 chữ (Chia nhiều đoạn văn mạch lạc).',
+      coreRequirement: 'Phân tích bản chất, thực trạng, nguyên nhân, tác động và giải pháp đối với một hiện tượng xã hội.',
+      analysisTarget: 'Thực trạng, biểu hiện, nguyên nhân chủ quan/khách quan, tác dụng hoặc hậu quả, giải pháp cá nhân/cộng đồng.',
+      avoidConfusion: 'Cần phân biệt rõ giữa nguyên nhân và biểu hiện; giữa giải pháp cá nhân và giải pháp cộng đồng (trước mắt và lâu dài).',
+      steps: [
+        'I. Mở bài: Giới thiệu hiện tượng đời sống đang được quan tâm',
+        'II.1. Thân bài - Giải thích hiện tượng & Nêu bức tranh thực trạng, biểu hiện trong xã hội',
+        'II.2. Thân bài - Phân tích Nguyên nhân: Nguyên nhân chủ quan (ý thức cá nhân) và Khách quan (môi trường, giáo dục, pháp luật)',
+        'II.3. Thân bài - Phân tích Tác dụng (nếu tích cực) hoặc Hậu quả/Hệ lụy (nếu tiêu cực) kèm dẫn chứng xác thực',
+        'II.4. Thân bài - Giải pháp: Đối với cá nhân, đối với cộng đồng (giải pháp trước mắt và lâu dài)',
+        'III. Kết bài: Liên hệ bản thân, rút ra bài học nhận thức và hành động'
+      ],
+      checklist: [
+        'Bố cục bài văn mạch lạc: Thực trạng ➔ Nguyên nhân ➔ Hậu quả/Tác dụng ➔ Giải pháp.',
+        'Chỉ rõ nguyên nhân chủ quan và khách quan một cách công tâm.',
+        'Dẫn chứng thực tế nóng hổi, mang tính thời sự và có tính thuyết phục cao.',
+        'Giải pháp toàn diện: cá nhân, nhà trường, xã hội, luật pháp.',
+        'Bài học nhận thức và hành động gắn liền với thực tế cuộc sống.'
+      ]
+    },
+
+    nlxh_bai_vdxh_tpvh: {
+      group: 'VIẾT BÀI NGHỊ LUẬN XÃ HỘI',
+      name: 'Dạng 3: Nghị luận về một vấn đề xã hội được đặt ra trong tác phẩm văn học',
+      category: 'bai-nlxh',
+      categoryName: 'Bài văn nghị luận',
+      volume: 'Khoảng 600 chữ (Chia nhiều đoạn văn).',
+      coreRequirement: 'Kết nối nhuần nhuyễn giữa vấn đề xã hội được phản ánh trong trang sách với thực tiễn đời sống xã hội ngày nay.',
+      analysisTarget: 'Vấn đề xã hội trong tác phẩm, biểu hiện qua nhân vật/tình huống, biểu hiện ngoài đời thực, ý nghĩa, giải pháp.',
+      avoidConfusion: 'Đây là bài Nghị luận xã hội, không phải phân tích văn học đơn thuần. Tác phẩm văn học chỉ đóng vai trò là khởi nguồn, là dẫn chứng xuất phát điểm để mở rộng bàn luận vấn đề xã hội.',
+      steps: [
+        'I. Mở bài: Giới thiệu tác phẩm văn học ➔ Dẫn dắt vấn đề xã hội được khơi gợi từ tác phẩm',
+        'II.1. Thân bài - Giải thích vấn đề xã hội và nêu biểu hiện của vấn đề trong tác phẩm văn học',
+        'II.2. Thân bài - Biểu hiện của vấn đề trong thực tế đời sống hiện đại (đời sống tiếp nối trang văn)',
+        'II.3. Thân bài - Bàn luận, chứng minh: Vì sao đặt ra vấn đề? Ý nghĩa to lớn của vấn đề (3 luận điểm + d/c đời sống)',
+        'II.4. Thân bài - Phê phán những biểu hiện lệch lạc ➔ Đề xuất giải pháp hành động',
+        'III. Kết bài: Liên hệ bản thân và khẳng định giá trị nhân văn kết nối từ tác phẩm đến cuộc đời'
+      ],
+      checklist: [
+        'Xác định đúng trọng tâm: Đây là bài NLXH lấy cảm hứng từ tác phẩm văn học.',
+        'Không sa đà vào phân tích tác phẩm văn học quá dài; chỉ dùng tác phẩm làm dẫn chứng xuất phát điểm.',
+        'Mở rộng bàn luận sâu sắc về thực tế đời sống xã hội ngày nay với dẫn chứng thời sự.',
+        'Có đủ các bước: Biểu hiện trong TP ➔ Biểu hiện ngoài đời ➔ Bàn luận ý nghĩa ➔ Phê phán ➔ Giải pháp.',
+        'Bài học rút ra chân thành, sâu sắc và gắn liền với thế hệ trẻ.'
+      ]
+    }
+  };
+
+  function detectWritingPromptType(text, categoryHint, subTypeHint) {
+    if (subTypeHint && FORMS_METADATA[subTypeHint]) return subTypeHint;
+    const lower = String(text || '').toLowerCase();
+    const cat = String(categoryHint || '').toLowerCase();
+
+    let isParagraph = cat.startsWith('doan-') || lower.includes('đoạn văn') || lower.includes('200 chữ') || !lower.includes('bài văn');
+    let isLiterary = cat.includes('nlvh') || lower.includes('thơ') || lower.includes('truyện') || lower.includes('tác phẩm') || lower.includes('nhân vật') || lower.includes('nam cao') || lower.includes('kim lân') || lower.includes('nguyễn tuân') || lower.includes('tố hữu') || lower.includes('huy cận') || lower.includes('tế hanh') || lower.includes('nguyễn trãi') || lower.includes('hoàng phủ ngọc tường') || lower.includes('sông hương');
+
+    if (lower.includes('so sánh') && (lower.includes('hai bài') || lower.includes('hai tác phẩm') || lower.includes('hai đoạn'))) {
+      isParagraph = false;
+      isLiterary = true;
+    }
+
+    if (isLiterary) {
+      if (isParagraph) {
+        if (lower.includes('nhân vật') || lower.includes('phẩm chất') || lower.includes('tính cách') || lower.includes('tâm trạng nhân vật')) {
+          return 'nlvh_doan_nhanvat';
+        }
+        if (lower.includes('cảm xúc') || lower.includes('tình cảm') || lower.includes('tâm tư') || lower.includes('nỗi nhớ') || lower.includes('khao khát') || lower.includes('mạch cảm xúc')) {
+          return 'nlvh_doan_camxuc_tho';
+        }
+        if (lower.includes('nghệ thuật thơ') || lower.includes('thể thơ') || lower.includes('từ láy') || lower.includes('nghệ thuật đối') || lower.includes('chiều xuân') || (lower.includes('thơ') && (lower.includes('nghệ thuật') || lower.includes('hiệu quả')))) {
+          return 'nlvh_doan_nt_tho';
+        }
+        if (lower.includes('truyện') || lower.includes('ngôi kể') || lower.includes('điểm nhìn') || lower.includes('tình huống') || lower.includes('chi tiết') || lower.includes('tiếng chửi') || lower.includes('cúi đầu') || lower.includes('lời thoại') || lower.includes('kịch')) {
+          return 'nlvh_doan_nt_truyen';
+        }
+        return 'nlvh_doan_chude';
+      } else {
+        if (lower.includes('so sánh') || lower.includes('hai tác phẩm') || lower.includes('hai đoạn')) {
+          return 'nlvh_bai_sosanh';
+        }
+        return 'nlvh_bai_1tacpham';
+      }
+    } else {
+      if (isParagraph) {
+        if (lower.includes('trách nhiệm') || lower.includes('hành động') || lower.includes('giải pháp') || lower.includes('cần làm gì')) {
+          return 'nlxh_doan_giaiphap';
+        }
+        if (lower.includes('tác hại') || lower.includes('hậu quả') || lower.includes('tiêu cực') || lower.includes('trì hoãn') || lower.includes('nghiện')) {
+          return 'nlxh_doan_tachai';
+        }
+        return 'nlxh_doan_ynghia';
+      } else {
+        if (lower.includes('trong tác phẩm') || lower.includes('từ tác phẩm') || lower.includes('bát cháo hành')) {
+          return 'nlxh_bai_vdxh_tpvh';
+        }
+        if (lower.includes('hiện tượng') || lower.includes('thực trạng') || lower.includes('nghiện mạng')) {
+          return 'nlxh_bai_hientuong';
+        }
+        return 'nlxh_bai_tutuong';
+      }
+    }
   }
 
-  function toggleWorkspaceThinkingGuide() {
-    const card = document.getElementById('workspace-thinking-card');
-    if (card) card.style.display = 'none';
-    const btn = document.getElementById('btn-toggle-thinking-guide');
-    if (btn) btn.style.display = 'none';
+  function generateStructuredThinkingGuide(setOrPrompt) {
+    let promptText = '';
+    let title = '';
+    let explicitCategory = '';
+    let explicitSubType = '';
+    let existingGuide = '';
+
+    if (typeof setOrPrompt === 'string') {
+      promptText = setOrPrompt;
+      title = setOrPrompt;
+    } else if (setOrPrompt && typeof setOrPrompt === 'object') {
+      promptText = setOrPrompt.prompt || setOrPrompt.title || '';
+      title = setOrPrompt.title || '';
+      explicitCategory = setOrPrompt.category || '';
+      explicitSubType = setOrPrompt.subType || '';
+      existingGuide = setOrPrompt.thinkingGuide || '';
+    }
+
+    const subType = detectWritingPromptType(promptText + ' ' + title, explicitCategory, explicitSubType);
+    const meta = FORMS_METADATA[subType] || FORMS_METADATA.nlvh_doan_chude;
+
+    let topic = title.replace(/\[.*?\]\s*/g, '').trim();
+    if (!topic) topic = promptText.slice(0, 100);
+
+    let argumentsList = [];
+    if (existingGuide && existingGuide.length > 20) {
+      const rawLines = existingGuide.split('\n').map(l => l.trim()).filter(Boolean);
+      argumentsList = rawLines.map(p => p.replace(/^[•\-\*]\s*/, ''));
+    } else {
+      meta.steps.slice(2, 5).forEach((st, idx) => {
+        argumentsList.push(`Luận điểm ${idx + 1}: ${st}`);
+      });
+    }
+
+    const isDoan = meta.category.startsWith('doan-');
+    const phrasing = {
+      openers: isDoan
+        ? [
+            `Mở đầu tác phẩm / Trong dòng chảy của thi ca hiện đại, vấn đề "${topic}" đã được nhà văn/nhà thơ khắc họa sâu sắc qua...`,
+            `Nêu trúng vấn đề nghị luận ngay từ câu mở đoạn: Bàn về "${topic}", trang văn của... đã để lại dư âm bất tận trong lòng người đọc.`
+          ]
+        : [
+            `Văn học là nhân học, là tấm gương phản chiếu tâm hồn con người. Đến với "${topic}", ta bắt gặp một tiếng nói nghệ thuật đầy tài hoa và trăn trở...`,
+            `Có một nhà văn từng tâm niệm: “Thiên chức của người cầm bút là khơi dậy lòng trắc ẩn”. Bằng tác phẩm của mình, tác giả đã làm sáng tỏ trọn vẹn vấn đề "${topic}"...`
+          ],
+      transitions: [
+        'Thứ nhất, xét ở phương diện...',
+        'Thứ hai, không chỉ dừng lại ở đó, vấn đề/cảm xúc còn được nâng lên một tầng bậc mới qua...',
+        'Thứ ba, đặt trong mối tương quan với toàn thể tác phẩm, nét đặc sắc ấy còn thể hiện qua...',
+        'Bên cạnh đó, nhìn nhận một cách toàn diện...',
+        'Đặc biệt, ngòi bút của tác giả đã chạm đến chiều sâu tư tưởng khi...'
+      ],
+      evaluations: [
+        'Qua đó, tác giả không chỉ khẳng định tài năng và cá tính sáng tạo độc đáo mà còn gửi gắm bức thông điệp nhân văn sâu sắc.',
+        'Những sáng tạo nghệ thuật ấy đã trở thành phương tiện đắc lực giúp tư tưởng của tác phẩm ngân vang vượt qua thử thách của thời gian.',
+        'Đó chính là minh chứng sống động cho thiên chức của văn chương: thanh lọc tâm hồn và hướng con người tới Chân - Thiện - Mĩ.'
+      ],
+      closers: isDoan
+        ? [
+            `Khép lại đoạn văn, giá trị của "${topic}" mãi là lời nhắc nhở sâu lắng trong tâm trí mỗi chúng ta.`,
+            `Tóm lại, bằng ngôn từ cô đọng và cảm xúc chân thành, đoạn văn đã khẳng định trọn vẹn sức sống của vấn đề trong lòng độc giả.`
+          ]
+        : [
+            `Khép lại trang sách, nhưng những âm vang về "${topic}" vẫn còn nguyên giá trị lay động, đồng hành cùng độc giả trên hành trình hoàn thiện nhân cách.`,
+            `Tác phẩm xứng đáng là đóa hoa ngát hương trong vườn hoa văn học dân tộc, mãi tỏa sáng cùng thời gian.`
+          ]
+    };
+
+    return {
+      meta,
+      subType,
+      topic,
+      section1: {
+        type: meta.group,
+        formName: meta.name,
+        volume: meta.volume,
+        coreRequirement: meta.coreRequirement
+      },
+      section2: {
+        explanation: `Đề bài yêu cầu học sinh tập trung làm rõ: "${topic}".`,
+        avoidConfusion: meta.avoidConfusion,
+        analysisTarget: meta.analysisTarget
+      },
+      section3: {
+        steps: meta.steps
+      },
+      section4: {
+        arguments: argumentsList
+      },
+      section5: phrasing,
+      section6: {
+        checklist: meta.checklist
+      }
+    };
   }
+
+  function renderThinkingGuideHtml(guide, isModal = false) {
+    if (!guide) return '<div class="mut">Chưa có dữ liệu gợi ý tư duy.</div>';
+
+    return `
+      <div class="thinking-guide-structured-view ${isModal ? 'is-modal' : 'is-inline'}">
+        
+        <!-- PHẦN 1: NHẬN DIỆN ĐỀ BÀI -->
+        <div class="tg-section-box" style="margin-bottom:14px; padding:12px 14px; background:var(--card, #fff); border:1px solid var(--bd, #e2e8f0); border-radius:10px;">
+          <h4 style="margin:0 0 10px; font-size:13.5px; font-weight:800; color:var(--bl, #2563eb); text-transform:uppercase; display:flex; align-items:center; gap:6px;">
+            <span>1. Nhận diện đề bài</span>
+          </h4>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
+            <div style="background:var(--bg2, #f8fafc); padding:8px 10px; border-radius:8px;">
+              <span class="mut" style="font-size:11px; font-weight:700; text-transform:uppercase;">Dạng đề &amp; Thể loại:</span>
+              <div style="font-weight:700; font-size:13px; color:var(--ink); margin-top:2px;">${esc(guide.section1.formName)}</div>
+            </div>
+            <div style="background:var(--bg2, #f8fafc); padding:8px 10px; border-radius:8px;">
+              <span class="mut" style="font-size:11px; font-weight:700; text-transform:uppercase;">Dung lượng chuẩn:</span>
+              <div style="font-weight:700; font-size:13px; color:#d97706; margin-top:2px;">${esc(guide.section1.volume)}</div>
+            </div>
+          </div>
+          <div style="margin-top:8px; font-size:13px; color:var(--ink); line-height:1.5;">
+            <b>🎯 Yêu cầu trọng tâm:</b> ${esc(guide.section1.coreRequirement)}
+          </div>
+        </div>
+
+        <!-- PHẦN 2: PHÂN TÍCH YÊU CẦU & TRÁNH NHẦM LẪN -->
+        <div class="tg-section-box" style="margin-bottom:14px; padding:12px 14px; background:var(--card, #fff); border:1px solid var(--bd, #e2e8f0); border-radius:10px;">
+          <h4 style="margin:0 0 8px; font-size:13.5px; font-weight:800; color:var(--bl, #2563eb); text-transform:uppercase; display:flex; align-items:center; gap:6px;">
+            <span>2. Phân tích yêu cầu &amp; Lưu ý</span>
+          </h4>
+          <div style="font-size:13px; line-height:1.5; color:var(--ink);">
+            <p style="margin:0 0 6px;"><b>🔍 Đối tượng &amp; Phạm vi:</b> ${esc(guide.section2.analysisTarget)}</p>
+            <div style="background:rgba(239, 68, 68, 0.08); border-left:3px solid #ef4444; padding:8px 10px; border-radius:4px; font-size:12.5px; color:#b91c1c; margin-top:6px;">
+              <b>⚠️ Cảnh báo tránh nhầm lẫn:</b> ${esc(guide.section2.avoidConfusion)}
+            </div>
+          </div>
+        </div>
+
+        <!-- PHẦN 3: HƯỚNG TƯ DUY (CÁC BƯỚC TRIỂN KHAI) -->
+        <div class="tg-section-box" style="margin-bottom:14px; padding:12px 14px; background:var(--card, #fff); border:1px solid var(--bd, #e2e8f0); border-radius:10px;">
+          <h4 style="margin:0 0 10px; font-size:13.5px; font-weight:800; color:var(--bl, #2563eb); text-transform:uppercase; display:flex; align-items:center; gap:6px;">
+            <span>3. Hướng tư duy (Trình tự các bước)</span>
+          </h4>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            ${guide.section3.steps.map((st, i) => `
+              <div style="display:flex; align-items:flex-start; gap:8px; font-size:13px; line-height:1.45;">
+                <span style="flex-shrink:0; width:22px; height:22px; border-radius:50%; background:var(--bl, #2563eb); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-size:11.5px; font-weight:800;">${i + 1}</span>
+                <span style="padding-top:2px; color:var(--ink);">${esc(st)}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- PHẦN 4: HỆ THỐNG LUẬN ĐIỂM GỢI Ý -->
+        <div class="tg-section-box" style="margin-bottom:14px; padding:12px 14px; background:var(--card, #fff); border:1px solid var(--bd, #e2e8f0); border-radius:10px;">
+          <h4 style="margin:0 0 10px; font-size:13.5px; font-weight:800; color:var(--bl, #2563eb); text-transform:uppercase; display:flex; align-items:center; gap:6px;">
+            <span>4. Hệ thống luận điểm &amp; Hướng phân tích</span>
+          </h4>
+          <ul style="margin:0; padding-left:18px; font-size:13px; line-height:1.6; color:var(--ink);">
+            ${guide.section4.arguments.map(arg => `
+              <li style="margin-bottom:6px;">${esc(arg)}</li>
+            `).join('')}
+          </ul>
+        </div>
+
+        <!-- PHẦN 5: GỢI Ý CÁCH DIỄN ĐẠT -->
+        <div class="tg-section-box" style="margin-bottom:14px; padding:12px 14px; background:var(--card, #fff); border:1px solid var(--bd, #e2e8f0); border-radius:10px;">
+          <h4 style="margin:0 0 10px; font-size:13.5px; font-weight:800; color:var(--bl, #2563eb); text-transform:uppercase; display:flex; align-items:center; gap:6px;">
+            <span>5. Gợi ý cách diễn đạt hay</span>
+          </h4>
+          <div style="font-size:12.5px; line-height:1.5; color:var(--ink);">
+            <div style="margin-bottom:8px;">
+              <b>✨ Mở bài / Mở đoạn gợi ý:</b>
+              <div style="background:var(--bg2, #f8fafc); padding:6px 10px; border-radius:6px; margin-top:4px; font-style:italic;">
+                "${esc(guide.section5.openers[0])}"
+              </div>
+            </div>
+            <div style="margin-bottom:8px;">
+              <b>🔗 Cụm từ chuyển ý &amp; liên kết:</b>
+              <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;">
+                ${guide.section5.transitions.slice(0, 4).map(t => `<span class="tag gh sm" style="font-size:11.5px;">${esc(t)}</span>`).join('')}
+              </div>
+            </div>
+            <div>
+              <b>💡 Đánh giá &amp; Nâng cao:</b>
+              <div style="background:var(--bg2, #f8fafc); padding:6px 10px; border-radius:6px; margin-top:4px; font-style:italic;">
+                "${esc(guide.section5.evaluations[0])}"
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHẦN 6: CHECKLIST TỰ KIỂM TRA -->
+        <div class="tg-section-box" style="padding:12px 14px; background:var(--card, #fff); border:1px solid var(--bd, #e2e8f0); border-radius:10px;">
+          <h4 style="margin:0 0 10px; font-size:13.5px; font-weight:800; color:var(--bl, #2563eb); text-transform:uppercase; display:flex; align-items:center; gap:6px;">
+            <span>6. Checklist tự kiểm tra trước khi hoàn thành</span>
+          </h4>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            ${guide.section6.checklist.map((chk, i) => `
+              <label style="display:flex; align-items:flex-start; gap:8px; font-size:12.5px; cursor:pointer; color:var(--ink);">
+                <input type="checkbox" style="margin-top:2px; accent-color:var(--bl, #2563eb);">
+                <span>${esc(chk)}</span>
+              </label>
+            `).join('')}
+          </div>
+        </div>
+
+      </div>
+    `;
+  }
+
+  function renderWorkspaceThinkingGuide(curSet) {
+    const card = document.getElementById('workspace-thinking-card');
+    const body = document.getElementById('workspace-thinking-card-body');
+    const pill = document.getElementById('workspace-thinking-form-pill');
+    if (!card || !body) return;
+
+    if (!curSet) {
+      card.style.display = 'none';
+      return;
+    }
+
+    const guide = generateStructuredThinkingGuide(curSet);
+    if (pill) {
+      pill.textContent = guide.meta.name.replace(/^Dạng \d+:\s*/, '');
+    }
+
+    body.innerHTML = `
+      <div style="margin-bottom:10px; display:flex; justify-content:flex-end;">
+        <button type="button" class="btn gh sm" onclick="openWorkspaceThinkingGuideModal()" style="font-size:12px; font-weight:700;">
+          <ion-icon name="scan-outline"></ion-icon> <span>Phóng to toàn màn hình</span>
+        </button>
+      </div>
+      ${renderThinkingGuideHtml(guide, false)}
+    `;
+    card.style.display = 'block';
+  }
+
+  function toggleWorkspaceThinkingCard() {
+    const body = document.getElementById('workspace-thinking-card-body');
+    const btn = document.getElementById('btn-toggle-thinking-card');
+    if (!body) return;
+    const isHidden = body.style.display === 'none';
+    body.style.display = isHidden ? 'block' : 'none';
+    if (btn) btn.textContent = isHidden ? 'Thu gọn' : 'Mở rộng';
+  }
+
+  function openWorkspaceThinkingGuideModal() {
+    const dlg = document.getElementById('workspace-thinking-dialog');
+    const body = document.getElementById('modal-thinking-content-body');
+    const subtitle = document.getElementById('modal-thinking-subtitle');
+    if (!dlg || !body) return;
+
+    const curSet = (typeof currentWritingSet !== 'undefined' && currentWritingSet) ? currentWritingSet : (typeof window !== 'undefined' ? window.currentWritingSet : null);
+    if (!curSet) {
+      if (typeof toast === 'function') toast('Vui lòng mở một bộ đề luyện viết trước!', 'no');
+      return;
+    }
+
+    const guide = generateStructuredThinkingGuide(curSet);
+    if (subtitle) {
+      subtitle.textContent = `${guide.meta.group} · ${guide.meta.name}`;
+    }
+
+    body.innerHTML = renderThinkingGuideHtml(guide, true);
+    if (typeof dlg.showModal === 'function') {
+      dlg.showModal();
+    } else {
+      dlg.setAttribute('open', '');
+    }
+  }
+
+  function closeWorkspaceThinkingGuideModal() {
+    const dlg = document.getElementById('workspace-thinking-dialog');
+    if (dlg) dlg.close();
+  }
+
+  const ThinkingGuideSystem = {
+    FORMS_METADATA,
+    detectWritingPromptType,
+    generateStructuredThinkingGuide,
+    renderThinkingGuideHtml,
+    renderWorkspaceThinkingGuide,
+    openWorkspaceThinkingGuideModal,
+    closeWorkspaceThinkingGuideModal,
+    toggleWorkspaceThinkingCard
+  };
+
+  global.ThinkingGuideSystem = ThinkingGuideSystem;
+  global.FORMS_METADATA = FORMS_METADATA;
+  global.detectWritingPromptType = detectWritingPromptType;
+  global.generateStructuredThinkingGuide = generateStructuredThinkingGuide;
+  global.renderThinkingGuideHtml = renderThinkingGuideHtml;
+  global.renderWorkspaceThinkingGuide = renderWorkspaceThinkingGuide;
+  global.openWorkspaceThinkingGuideModal = openWorkspaceThinkingGuideModal;
+  global.closeWorkspaceThinkingGuideModal = closeWorkspaceThinkingGuideModal;
+  global.toggleWorkspaceThinkingCard = toggleWorkspaceThinkingCard;
+
 
   function initWritingScaffoldingAndTimer() {
     const curSet = (typeof currentWritingSet !== 'undefined' && currentWritingSet) ? currentWritingSet : (typeof window !== 'undefined' ? window.currentWritingSet : null);
@@ -1934,7 +2619,8 @@
   global.initWritingScaffoldingAndTimer = initWritingScaffoldingAndTimer;
   global.onScaffoldTemplateChange = onScaffoldTemplateChange;
   global.renderWorkspaceThinkingGuide = renderWorkspaceThinkingGuide;
-  global.toggleWorkspaceThinkingGuide = toggleWorkspaceThinkingGuide;
+  global.toggleWorkspaceThinkingCard = toggleWorkspaceThinkingCard;
+  global.toggleWorkspaceThinkingGuide = toggleWorkspaceThinkingCard;
   global.toggleWritingScaffoldingPanel = toggleWritingScaffoldingPanel;
   global.renderWritingMainScaffoldingBody = renderWritingMainScaffoldingBody;
   global.toggleWritingSectionScaffolding = toggleWritingSectionScaffolding;

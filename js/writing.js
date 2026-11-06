@@ -15,10 +15,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Gọi tên: Biện pháp so sánh, nhân hóa độc đáo; từ ngữ giàu tính tạo hình và trường từ vựng phong phú.\n• Phân tích: Hình ảnh \"cô gái Di-gan phóng khoáng và man dại\" gợi vẻ đẹp hoang dã, tự do, căng tràn nhựa sống và cá tính mãnh liệt của dòng sông giữa đại ngàn Trường Sơn. Sông Hương không chỉ có dòng chảy vật lí mà hiện lên như một sinh thể sống động với \"bản lĩnh gan dạ\" và \"tâm hồn trong sáng\".\n• Đánh giá: Thể hiện vốn hiểu biết địa lí - văn hóa uyên bác và ngòi bút tài hoa, lãng mạn bậc thầy của Hoàng Phủ Ngọc Tường.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Mở đoạn: Dẫn dắt vẻ đẹp sông Hương ở thượng nguồn ➔ Thân đoạn: Phân tích hình ảnh so sánh cô gái Di-gan và bản trường ca rừng già ➔ Đánh giá cái tôi tài hoa, uyên bác của tác giả...",
-        "guide": "• Viết liền mạch 1 đoạn văn ~200 chữ.\n• Khắc họa vẻ đẹp đối lập giữa sự hoang dại thượng nguồn và vẻ dịu dàng khi về đồng bằng.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Dẫn dắt vẻ đẹp sông Hương ở thượng nguồn",
+        "guide": "Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích hình ảnh so sánh cô gái Di-gan và bản trường ca rừng già",
+        "guide": "Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Đánh giá cái tôi tài hoa, uyên bác của tác giả...",
+        "guide": "Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.",
         "sample": ""
       }
     ]
@@ -35,10 +49,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Gọi tên: Lập luận chặt chẽ theo cấu trúc diễn dịch, câu văn biền ngẫu sóng đôi cân xứng, kết hợp tiền đề chân lí (nhân nghĩa) và bằng chứng lịch sử xác thực.\n• Phân tích: Nguyễn Trãi nêu luận đề chính nghĩa: \"yên dân\" - bảo vệ cuộc sống bình yên của dân chúng và \"trừ bạo\" - tiêu diệt quân xâm lược bạo tàn. Tiếp đó, tác giả đưa ra các căn cứ vững chắc khẳng định chủ quyền độc lập của Đại Việt: văn hiến, lãnh thổ, phong tục, triều đại lịch sử ngang hàng với phương Bắc, hào kiệt ngàn đời.\n• Đánh giá: Đoạn văn mang sức thuyết phục đanh thép, xứng danh bản tuyên ngôn độc lập sáng chói của dân tộc.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Giới thiệu Nguyễn Trãi và Đại cáo bình Ngô ➔ Phân tích trình tự lập luận: Nguyên lí nhân nghĩa ➔ Các yếu tố khẳng định chủ quyền ➔ Đánh giá giá trị bản tuyên ngôn...",
-        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Làm rõ mối quan hệ logic giữa nguyên lí nhân nghĩa và quyền độc lập tự chủ.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Giới thiệu Nguyễn Trãi và Đại cáo bình Ngô",
+        "guide": "Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích trình tự lập luận: Nguyên lí nhân nghĩa ➔ Các yếu tố khẳng định chủ quyền",
+        "guide": "Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Đánh giá giá trị bản tuyên ngôn...",
+        "guide": "Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.",
         "sample": ""
       }
     ]
@@ -55,10 +83,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Gọi tên yếu tố: Từ láy tượng hình \"lơ thơ\", tượng thanh/tượng cảm \"đìu hiu\" kết hợp âm hưởng đối thanh và hình ảnh \"vãn chợ chiều\".\n• Phân tích: Từ láy \"lơ thơ\" gợi sự thưa thớt, trơ trọi của những cồn cát nhỏ giữa sông nước mênh mông; \"đìu hiu\" (mượn âm hưởng Chinh phụ ngâm) gợi ngọn gió hiu hắt, lạnh lẽo. Hình ảnh \"chợ chiều\" đã tàn tạ, vắng lặng, thêm từ \"đâu\" (vừa là đâu đó mơ hồ, vừa là phủ định không đâu có) càng xoáy sâu vào không gian quạnh quẽ.\n• Đánh giá: Hai câu thơ thể hiện sâu sắc nỗi sầu không gian, nỗi sầu vạn kỉ và cảm giác bơ vơ, lạc lõng của cái tôi Thơ Mới trước vũ trụ vô cùng.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Giới thiệu Huy Cận và bài thơ Tràng giang ➔ Phân tích nghệ thuật từ láy \"lơ thơ\", \"đìu hiu\", âm hưởng đối và hình ảnh \"vãn chợ chiều\" ➔ Đánh giá tâm trạng thi nhân...",
-        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Chỉ rõ giá trị gợi hình và gợi cảm của từ láy và nghệ thuật đăng đối.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Giới thiệu Huy Cận và bài thơ Tràng giang",
+        "guide": "Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích nghệ thuật từ láy \"lơ thơ\", \"đìu hiu\", âm hưởng đối và hình ảnh \"vãn chợ chiều\"",
+        "guide": "Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Đánh giá tâm trạng thi nhân...",
+        "guide": "Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.",
         "sample": ""
       }
     ]
@@ -75,10 +117,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Câu dẫn: Giới thiệu bức tranh thiên nhiên mùa xuân êm đềm, thanh bình ở làng quê Bắc Bộ.\n• Phân tích: Gọi tên hình ảnh và từ ngữ: từ láy \"êm êm\", \"tơi bời\" kết hợp thủ pháp nhân hóa con đò \"biếng lười\", quán tranh \"đứng im lìm\". Mưa xuân dịu nhẹ như bụi sương, cảnh vật chìm trong tĩnh lặng nhưng không tàn úa mà giàu sức sống nhờ sắc \"hoa tím rụng tơi bời\".\n• Đánh giá: Thể hiện tâm hồn nhạy cảm, tinh tế của nữ sĩ Anh Thơ và tình yêu quê hương thiết tha, bình dị.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Dẫn dắt bài thơ Chiều xuân ➔ Phân tích từ láy \"êm êm\", nhân hóa con đò, quán tranh và nét chấm phá sắc hoa tím ➔ Đánh giá vẻ đẹp làng quê...",
-        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Chú ý nét đẹp hội họa và sự tĩnh lặng đầy chất thơ của làng quê.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Dẫn dắt bài thơ Chiều xuân",
+        "guide": "Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích từ láy \"êm êm\", nhân hóa con đò, quán tranh và nét chấm phá sắc hoa tím",
+        "guide": "Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Đánh giá vẻ đẹp làng quê...",
+        "guide": "Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.",
         "sample": ""
       }
     ]
@@ -95,10 +151,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Gọi tên yếu tố: Cấu tứ đối lập giữa quá khứ tự do (\"chim cà lơi bay lượn\") với hiện tại tù đày (\"mơ qua cửa khám\", \"cánh chim buồn\"); điệp ngữ cảm thán \"Gì sâu bằng...\", \"Ôi... thương nhớ ơi!\".\n• Phân tích: Hình ảnh so sánh \"như con chim cà lơi say đồng hương nắng\" gợi tả niềm say mê hoạt động cách mạng giữa quần chúng. Sự đối lập với thực tại \"bốn bức tường giam\" làm bật lên nỗi ngột ngạt, bức bối và khát khao tự do cháy bỏng.\n• Đánh giá: Khổ thơ khẳng định lí tưởng cách mạng kiên định và tình yêu tha thiết dành cho đất nước, quê hương của người chiến sĩ trẻ.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Giới thiệu Tố Hữu, bài thơ Nhớ đồng và vị trí đoạn trích ➔ Phân tích nghệ thuật đối lập hình ảnh cánh chim, điệp ngữ cảm thán ➔ Đánh giá khát vọng tự do và lí tưởng cách mạng...",
-        "guide": "• Đoạn văn ~200 chữ.\n• Tập trung vào mạch vận động cảm xúc từ say sưa đến ngột ngạt và khát khao phá bỏ xiềng xích.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Giới thiệu Tố Hữu, bài thơ Nhớ đồng và vị trí đoạn trích",
+        "guide": "Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích nghệ thuật đối lập hình ảnh cánh chim, điệp ngữ cảm thán",
+        "guide": "Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Đánh giá khát vọng tự do và lí tưởng cách mạng...",
+        "guide": "Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.",
         "sample": ""
       }
     ]
@@ -115,10 +185,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Gọi tên: Nghệ thuật miêu tả nội tâm qua độc thoại, thành ngữ dân gian (\"trâm gãy gương tan\", \"phận bạc như vôi\", \"nước chảy hoa trôi\"), thán từ và điệp từ tiếng gọi \"Kim lang\".\n• Phân tích: Sau khi trao duyên cho Thúy Vân, Kiều rơi vào trạng thái bàng hoàng, đau đớn tột cùng khi đối diện với sự thật tình yêu tan vỡ. Nàng lạy Kim Trọng - cái lạy tạ tội đầy xót xa. Đỉnh điểm là tiếng kêu thét xé lòng \"Ôi Kim lang! Hỡi Kim lang!\" như một tiếng nấc nghẹn ngào, nàng nhận hết phần lỗi về mình (\"thiếp đã phụ chàng\").\n• Đánh giá: Thể hiện đức hi sinh cao cả, lòng vị tha và bi kịch tình yêu tan vỡ đầy thương cảm của nàng Kiều.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Mở đoạn: Vị trí đoạn thơ trong Truyện Kiều ➔ Thân đoạn: Phân tích thành ngữ bi kịch, cái lạy tạ tội và tiếng gọi Kim lang nghẹn ngào ➔ Đánh giá tài năng miêu tả nội tâm kiệt xuất của Nguyễn Du...",
-        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Làm nổi bật sự chuyển biến từ trao kỉ vật sang tiếng khóc than cho số phận và tình yêu.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Vị trí đoạn thơ trong Truyện Kiều",
+        "guide": "Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích thành ngữ bi kịch, cái lạy tạ tội và tiếng gọi Kim lang nghẹn ngào",
+        "guide": "Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Đánh giá tài năng miêu tả nội tâm kiệt xuất của Nguyễn Du...",
+        "guide": "Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.",
         "sample": ""
       }
     ]
@@ -135,10 +219,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Câu dẫn: Giới thiệu hồn thơ Tế Hanh và khúc dạo đầu bài thơ Quê hương đong đầy tình cảm trong sáng.\n• Phân tích: Cách giới thiệu tự nhiên, giản dị \"Làng tôi ở...\" như lời giới thiệu thân thương về cội nguồn. Hình ảnh không gian \"cách biển nửa ngày sông\", thời tiết \"trời trong, gió nhẹ, sớm mai hồng\" mở ra khung cảnh biển trời tươi sáng, rực rỡ; hình ảnh \"dân trai tráng bơi thuyền\" khắc họa vẻ đẹp khỏe khoắn, tràn trề sức sống lao động.\n• Đánh giá: Thể hiện tình yêu tha thiết, niềm tự hào sâu sắc của thi nhân đối với mảnh đất chôn nhau cắt rốn.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Dẫn dắt bài thơ Quê hương ➔ Phân tích giọng điệu mộc mạc, hình ảnh thiên nhiên tươi sáng và vẻ đẹp con người lao động ➔ Đánh giá tình yêu quê hương...",
-        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Khắc họa vẻ đẹp khỏe khoắn, tươi sáng của người dân chài.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Dẫn dắt bài thơ Quê hương",
+        "guide": "Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích giọng điệu mộc mạc, hình ảnh thiên nhiên tươi sáng và vẻ đẹp con người lao động",
+        "guide": "Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Đánh giá tình yêu quê hương...",
+        "guide": "Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.",
         "sample": ""
       }
     ]
@@ -155,10 +253,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Gọi tên yếu tố: Chi tiết nghệ thuật đặc sắc kết hợp điểm nhìn trần thuật nửa trực tiếp độc đáo.\n• Phân tích: Trình tự tiếng chửi thu hẹp dần: từ trời, đời ➔ làng Vũ Đại ➔ đứa không chửi nhau với hắn ➔ đứa đẻ ra thân hắn. Tiếng chửi là phản ứng của một kẻ say nhưng ẩn chứa nỗi đau tỉnh táo: hắn thèm khát giao tiếp với con người nhưng đáp lại chỉ là sự im lặng ghê người của cả làng Vũ Đại.\n• Đánh giá: Tiếng chửi không chỉ thể hiện tình trạng lưu manh hóa mà thực chất là tiếng kêu cứu cô độc, quằn quại của một con người bị cự tuyệt quyền làm người.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Mở đoạn: Giới thiệu tác giả Nam Cao, tác phẩm Chí Phèo và chi tiết tiếng chửi ➔ Thân đoạn: Gọi tên nghệ thuật trần thuật + phân tích trình tự tiếng chửi và ý nghĩa bi kịch cự tuyệt giao tiếp ➔ Đánh giá giá trị nhân đạo...",
-        "guide": "• Viết liền mạch 1 đoạn văn khoảng 200 chữ, không xuống hàng.\n• Bắt buộc: Nêu vấn đề nghị luận ➔ Gọi tên chi tiết + dẫn chứng ➔ Phân tích ý nghĩa ➔ Đánh giá tư tưởng nhân đạo.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Giới thiệu tác giả Nam Cao, tác phẩm Chí Phèo và chi tiết tiếng chửi",
+        "guide": "Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Gọi tên nghệ thuật trần thuật + phân tích trình tự tiếng chửi và ý nghĩa bi kịch cự tuyệt giao tiếp",
+        "guide": "Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Đánh giá giá trị nhân đạo...",
+        "guide": "Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.",
         "sample": ""
       }
     ]
@@ -175,10 +287,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Gọi tên yếu tố: Điểm nhìn bên trong (nội tâm nhân vật người mẹ già nghèo khổ) kết hợp lời trần thuật nửa trực tiếp.\n• Phân tích: Điểm nhìn giúp nhà văn soi rọi dòng độc thoại nội tâm phức tạp của bà cụ Tứ: từ ngỡ ngàng, ai oán, tủi phận vì không lo được cho con đến niềm thương cảm vô bờ đối với người đàn bà xa lạ (\"người ta có đói khổ mới lấy đến con mình\").\n• Đánh giá: Thể hiện tấm lòng bao dung, nhân hậu và tình mẫu tử thiêng liêng; khẳng định niềm tin bất diệt vào tình người giữa nạn đói khốc liệt.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Mở đoạn: Nêu tác giả Kim Lân, truyện Vợ nhặt và điểm nhìn bà cụ Tứ ➔ Thân đoạn: Phân tích diễn biến tâm lí tủi phận - thấu hiểu - bao dung ➔ Đánh giá vai trò khắc họa phẩm giá con người...",
-        "guide": "• Viết 1 đoạn văn khoảng 200 chữ.\n• Điểm nhìn trần thuật từ bên trong giúp câu chuyện thấm đẫm chất nhân văn và tình mẫu tử.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Nêu tác giả Kim Lân, truyện Vợ nhặt và điểm nhìn bà cụ Tứ",
+        "guide": "Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích diễn biến tâm lí tủi phận - thấu hiểu - bao dung",
+        "guide": "Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Đánh giá vai trò khắc họa phẩm giá con người...",
+        "guide": "Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.",
         "sample": ""
       }
     ]
@@ -195,10 +321,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Gọi tên: Tình huống \"nhặt vợ\" oái oăm, vừa bi vừa hài, đầy nghịch lí.\n• Phân tích: Tràng là một người ngụ cư, nghèo khổ, thô kệch lại lấy được vợ giữa lúc nạn đói 1945 hoành hành dữ dội nhất (\"người chết như ngả rạ\"). Việc lấy vợ vốn là đại sự thiêng liêng trở nên rẻ rúng như nhặt cọng rơm ngọn cỏ qua vài câu đùa và bốn bát bánh đúc. Nhưng đằng sau sự oái oăm là ngọn lửa ấm áp của tình yêu thương gia đình.\n• Đánh giá: Tình huống làm nổi bật ranh giới mỏng manh giữa sự sống và cái chết, từ đó tôn vinh khát vọng sống, khát vọng hạnh phúc mãnh liệt của người nông dân.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Giới thiệu tác phẩm và tình huống \"nhặt vợ\" ➔ Phân tích tính nghịch lí và tác dụng tạo bước ngoặt tâm lí ➔ Đánh giá tư tưởng nhân văn của Kim Lân...",
-        "guide": "• Viết liền mạch 1 đoạn văn ~200 chữ.\n• Làm nổi bật sự tương phản: Nạn đói thê thảm đối lập với hơi ấm hạnh phúc gia đình.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Giới thiệu tác phẩm và tình huống \"nhặt vợ\"",
+        "guide": "Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích tính nghịch lí và tác dụng tạo bước ngoặt tâm lí",
+        "guide": "Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Đánh giá tư tưởng nhân văn của Kim Lân...",
+        "guide": "Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.",
         "sample": ""
       }
     ]
@@ -215,10 +355,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Gọi tên: Lời thoại đầy ảo tưởng, không chịu tin vào thực tế nghiệt ngã (\"Ta có tội gì? Ta chỉ xây Cửu Trùng Đài để tô điểm cho đất nước!\").\n• Phân tích: Vũ Như Tô mù quáng tin rằng Cửu Trùng Đài là công trình nghệ thuật vĩ đại mang lại danh dự cho non sông, mà không nhận ra nó được xây dựng bằng mồ hôi, nước mắt và máu của hàng vạn dân phu đói khổ. Lời thoại bộc lộ sự vỡ mộng đau đớn khi quân khởi loạn đòi đốt phá đài cao.\n• Đánh giá: Khắc họa xung đột bi kịch không thể điều hòa giữa khát vọng nghệ thuật siêu việt thuần túy và quyền lợi thiết thân của quần chúng nhân dân.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Giới thiệu bi kịch Vũ Như Tô ➔ Phân tích tính chất bi kịch trong lời thoại ngơ ngác, không tin mình có tội ➔ Đánh giá mối quan hệ giữa nghệ thuật và đời sống...",
-        "guide": "• Đoạn văn ~200 chữ.\n• Chỉ rõ sự bế tắc của người nghệ sĩ tài ba nhưng lạc lối về quan điểm nghệ thuật.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Giới thiệu bi kịch Vũ Như Tô",
+        "guide": "Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích tính chất bi kịch trong lời thoại ngơ ngác, không tin mình có tội",
+        "guide": "Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Đánh giá mối quan hệ giữa nghệ thuật và đời sống...",
+        "guide": "Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.",
         "sample": ""
       }
     ]
@@ -235,10 +389,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Câu dẫn: Khái quát chi tiết nghệ thuật mang tính biểu tượng cao ở đoạn kết truyện.\n• Phân tích: Hành động viên quản ngục vái lạy người tù và nghẹn ngào \"Kẻ mê muội này xin bái lĩnh\" là chi tiết bất ngờ, độc đáo: sự đảo lộn ngôi thứ hoàn toàn (kẻ nắm quyền lực cúi đầu trước kẻ tử tù đeo gông). Cái cúi đầu thể hiện sự khuất phục tuyệt đối của quyền lực trước cái đẹp, sự thức tỉnh thiên lương trước nhân cách cao cả của Huấn Cao.\n• Đánh giá: Khẳng định sự bất tử của cái Đẹp và thiên lương; bộc lộ niềm tin mãnh liệt của Nguyễn Tuân vào sự chiến thắng của ánh sáng trước bóng tối.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Nêu ý nghĩa chi tiết cái cúi đầu ➔ Phân tích ý nghĩa biểu tượng: Cái đẹp chiến thắng cường quyền ➔ Đánh giá tư tưởng nhân văn của Nguyễn Tuân...",
-        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Nhấn mạnh: Đây là cái cúi đầu nâng cao phẩm giá con người.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Nêu ý nghĩa chi tiết cái cúi đầu",
+        "guide": "Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích ý nghĩa biểu tượng: Cái đẹp chiến thắng cường quyền",
+        "guide": "Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Đánh giá tư tưởng nhân văn của Nguyễn Tuân...",
+        "guide": "Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.",
         "sample": ""
       }
     ]
@@ -255,10 +423,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Gọi tên: Điểm nhìn bên trong kết hợp nghệ thuật miêu tả không gian qua đa giác quan (thị giác, khứu giác, xúc giác).\n• Phân tích: Thanh cảm nhận sự đối lập giữa cái nắng gắt, ồn ào nơi phố thị với sự yên tĩnh, mát mẻ, ngát hương lá non trong khu vườn của bà. Không gian bình yên khiến lòng chàng lắng lại, nghẹn ngào gọi \"Bà ơi!\". Con mèo già thân thuộc gợi lại ký ức ấu thơ êm đềm.\n• Đánh giá: Thể hiện chất văn xuôi trữ tình đậm chất Thạch Lam; khẳng định quê hương và tình bà cháu luôn là chốn về bình yên, chở che tâm hồn con người.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Giới thiệu Thạch Lam và trích đoạn ➔ Phân tích điểm nhìn cảm giác, sự đối lập không gian phố thị - vườn quê và cảm xúc xúc động nghẹn ngào ➔ Đánh giá giá trị bình yên của tình thân...",
-        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Làm nổi bật chất thơ thanh nhẹ, tinh tế đặc trưng của văn Thạch Lam.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Giới thiệu Thạch Lam và trích đoạn",
+        "guide": "Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích điểm nhìn cảm giác, sự đối lập không gian phố thị - vườn quê và cảm xúc xúc động nghẹn ngào",
+        "guide": "Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Đánh giá giá trị bình yên của tình thân...",
+        "guide": "Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.",
         "sample": ""
       }
     ]
@@ -275,10 +457,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Gọi tên: Hành động dồn dập, lời thoại khẩn khoản, tha thiết kết hợp chỉ dẫn sân khấu gấp gáp.\n• Phân tích: Đan Thiềm là người phụ nữ tỉnh táo, hiểu rõ thời cuộc (\"Thời thế đã đổi rồi\"). Bà không màng đến tính mạng bản thân (\"Tôi chết cũng được, nhưng ông phải sống\"), chỉ một lòng muốn bảo vệ \"kì tài\" cho đất nước. Thái độ đau đớn, hốt hoảng bộc lộ tấm lòng tri âm, tri kỉ tuyệt đối với người nghệ sĩ.\n• Đánh giá: Nhân vật thể hiện căn \"bệnh Đan Thiềm\" - bệnh mê đắm cái tài hoa, tôn thờ cái đẹp đến mức quên cả chính mình; làm sâu sắc thêm tính chất bi tráng của vở kịch.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Giới thiệu nhân vật Đan Thiềm và bối cảnh hồi V ➔ Phân tích hành động khuyên can khẩn thiết vì yêu quý kì tài ➔ Đánh giá ý nghĩa biểu tượng của tấm lòng tri âm...",
-        "guide": "• Đoạn văn ~200 chữ.\n• Làm sáng rõ sự tỉnh táo trước thời cuộc đối lập với sự si mê cái đẹp tài hoa.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Giới thiệu nhân vật Đan Thiềm và bối cảnh hồi V",
+        "guide": "Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích hành động khuyên can khẩn thiết vì yêu quý kì tài",
+        "guide": "Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Đánh giá ý nghĩa biểu tượng của tấm lòng tri âm...",
+        "guide": "Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.",
         "sample": ""
       }
     ]
@@ -295,10 +491,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Câu dẫn: Nêu vấn đề nghị luận là bi kịch tinh thần đau đớn của người trí thức nghèo trước gánh nặng áo cơm.\n• Phân tích: Gọi tên nghệ thuật miêu tả nội tâm sâu sắc: Hộ thức dậy trong sự ân hận tột cùng, nhìn người vợ tiều tụy và những đứa con thơ mà \"nước mắt bật ra như đứa trẻ\". Hộ đau đớn nhận ra mình đã vi phạm lẽ sống tình thương - nguyên tắc đạo đức thiêng liêng nhất mà mình hằng tôn thờ.\n• Đánh giá: Thể hiện cái nhìn nhân đạo sâu sắc của Nam Cao: trân trọng phẩm giá và khát vọng sống nhân văn của người trí thức giữa xã hội ngột ngạt.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Mở đoạn: Bi kịch nhân vật Hộ trong Đời thừa ➔ Thân đoạn: Phân tích giọt nước mắt hối hận và sự dằn vặt lương tâm khi vi phạm nguyên tắc tình thương ➔ Đánh giá tinh thần nhân đạo...",
-        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Làm nổi bật sự giằng xé giữa gánh nặng cơm áo và lương tri nghệ sĩ.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Bi kịch nhân vật Hộ trong Đời thừa",
+        "guide": "Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích giọt nước mắt hối hận và sự dằn vặt lương tâm khi vi phạm nguyên tắc tình thương",
+        "guide": "Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Đánh giá tinh thần nhân đạo...",
+        "guide": "Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.",
         "sample": ""
       }
     ]
@@ -825,10 +1035,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Giải thích: Áp lực là khó khăn, thử thách; kim cương biểu tượng cho thành quả rực rỡ.\n• Bàn luận (3 ý): Thứ nhất, áp lực rèn luyện cho ta ý chí, bản lĩnh kiên cường. Thứ hai, áp lực đẩy con người đến giới hạn để khám phá năng lực tiềm ẩn của bản thân. Thứ ba, không có áp lực, con người dễ nảy sinh tâm lí ỷ lại, thụt lùi.\n• Dẫn chứng: Vận động viên thể thao rèn luyện cường độ cao để đạt huy chương vàng.\n• Bài học: Biết chấp nhận và biến áp lực thành động lực phát triển.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Viết liền mạch trong 1 đoạn văn (khoảng 200 chữ, không xuống hàng): Mở đoạn (Dẫn dắt + Nêu ý kiến) ➔ Thân đoạn: Giải thích ngắn ➔ Bàn luận 3 luận điểm (Thứ nhất... Thứ hai... Thứ ba...) ➔ Dẫn chứng tiêu biểu ➔ Bài học nhận thức và hành động ➔ Kết đoạn khẳng định lại vấn đề...",
-        "guide": "• Hình thức: 01 đoạn văn duy nhất, khoảng 200 chữ, không xuống dòng.\n• Giải thích: Áp lực là nghịch cảnh, gian nan; kim cương là giá trị cao quý, thành công rực rỡ.\n• Bàn luận: 1. Thử thách tôi luyện bản lĩnh. 2. Đẩy con người vượt qua giới hạn thông thường. 3. Thiếu áp lực dễ sinh trì trệ, thỏa mãn.\n• Dẫn chứng & Bài học: Chọn 1 dẫn chứng ngắn gọn, rút ra bài học cho bản thân.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Viết liền mạch trong 1 đoạn văn (khoảng 200 chữ, không xuống hàng): Mở đoạn (Dẫn dắt + Nêu ý kiến)",
+        "guide": "Dẫn dắt và nêu trực tiếp vấn đề nghị luận xã hội.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Giải thích ngắn ➔ Bàn luận 3 luận điểm (Thứ nhất... Thứ hai... Thứ ba...) ➔ Dẫn chứng tiêu biểu ➔ Bài học nhận thức và hành động",
+        "guide": "Giải thích ngắn gọn (1 câu) ➔ Bàn luận đa chiều qua 3 luận điểm (Bản thân - Các mối quan hệ - Xã hội) ➔ Dẫn chứng thực tế tiêu biểu.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Kết đoạn khẳng định lại vấn đề...",
+        "guide": "Rút ra bài học nhận thức và hành động thiết thực cho người trẻ; câu chốt truyền cảm hứng.",
         "sample": ""
       }
     ]
@@ -845,10 +1069,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Bàn luận (3 ý): Thứ nhất, đối với cá nhân: giúp mỗi người tự tin phát huy thế mạnh riêng, không bị hòa tan. Thứ hai, đối với người khác: tạo ra sự thấu cảm, xóa bỏ định kiến và bạo lực ngôn từ. Thứ ba, đối với xã hội: làm cho bức tranh văn hóa đa dạng, thúc đẩy sáng tạo và đổi mới.\n• Bài học: Tránh đánh giá người khác qua lăng kính chủ quan của mình; học cách lắng nghe và bao dung.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Viết liền mạch trong 1 đoạn văn (khoảng 200 chữ, không xuống dòng): Nêu vấn đề tôn trọng sự khác biệt ➔ Ý nghĩa đối với cá nhân, cộng đồng và xã hội ➔ Bài học nhận thức...",
-        "guide": "• Hình thức: Viết liền mạch 1 đoạn văn khoảng 200 chữ.\n• Luận điểm 1: Giúp cá nhân tự tin bộc lộ cá tính, sở trường.\n• Luận điểm 2: Xóa tan định kiến, đẩy lùi kì thị và bạo lực mạng.\n• Luận điểm 3: Xây dựng cộng đồng đa sắc màu, giàu tính nhân văn và sáng tạo.\n• Bài học: Lắng nghe, thấu hiểu và tôn trọng cá tính của người khác.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Viết liền mạch trong 1 đoạn văn (khoảng 200 chữ, không xuống dòng): Nêu vấn đề tôn trọng sự khác biệt",
+        "guide": "Dẫn dắt và nêu trực tiếp vấn đề nghị luận xã hội.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Ý nghĩa đối với cá nhân, cộng đồng và xã hội",
+        "guide": "Giải thích ngắn gọn (1 câu) ➔ Bàn luận đa chiều qua 3 luận điểm (Bản thân - Các mối quan hệ - Xã hội) ➔ Dẫn chứng thực tế tiêu biểu.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Bài học nhận thức...",
+        "guide": "Rút ra bài học nhận thức và hành động thiết thực cho người trẻ; câu chốt truyền cảm hứng.",
         "sample": ""
       }
     ]
@@ -865,10 +1103,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Hành động (3 ý): Thứ nhất, trang bị kĩ năng chọn lọc, kiểm chứng thông tin trước khi chia sẻ. Thứ hai, ứng xử văn minh, không sử dụng ngôn từ kích động, gây hấn trên không gian mạng. Thứ ba, chủ động lên tiếng tố giác các hành vi lừa đảo, phát tán tin giả.\n• Khẳng định: Không gian số lành mạnh bắt đầu từ ý thức của mỗi cá nhân.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Nêu trách nhiệm của thế hệ trẻ trên không gian mạng ➔ 3 hành động cụ thể (kiểm chứng thông tin, văn hóa ứng xử, đấu tranh với tin giả) ➔ Khẳng định...",
-        "guide": "• Mở đoạn: Khẳng định không gian mạng là một phần thiết yếu của đời sống hiện đại, đòi hỏi trách nhiệm công dân số.\n• 3 hành động: 1. Tỉnh táo trước thông tin xấu độc. 2. Lan tỏa giá trị tích cực, ứng xử văn minh. 3. Tuân thủ luật an ninh mạng, tố giác sai phạm.\n• Kết đoạn: Thông điệp hành động vì một môi trường số an toàn, văn minh.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Nêu trách nhiệm của thế hệ trẻ trên không gian mạng",
+        "guide": "Dẫn dắt và nêu trực tiếp vấn đề nghị luận xã hội.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: 3 hành động cụ thể (kiểm chứng thông tin, văn hóa ứng xử, đấu tranh với tin giả)",
+        "guide": "Giải thích ngắn gọn (1 câu) ➔ Bàn luận đa chiều qua 3 luận điểm (Bản thân - Các mối quan hệ - Xã hội) ➔ Dẫn chứng thực tế tiêu biểu.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Khẳng định...",
+        "guide": "Rút ra bài học nhận thức và hành động thiết thực cho người trẻ; câu chốt truyền cảm hứng.",
         "sample": ""
       }
     ]
@@ -885,10 +1137,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Bàn luận (3 ý): Thứ nhất, đánh mất những cơ hội quý giá để phát triển bản thân. Thứ hai, làm suy giảm uy tín, đánh mất sự tin tưởng của người khác. Thứ ba, tạo ra tâm lí lo âu, căng thẳng khi công việc dồn ứ sát hạn chót (deadline).\n• Bài học: Rèn luyện kỉ luật bản thân, chia nhỏ mục tiêu và hành động ngay lập tức.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Khái niệm trì hoãn ➔ 3 tác hại trực tiếp đối với bản thân và xã hội ➔ Giải pháp khắc phục...",
-        "guide": "• Mở đoạn: Dẫn dắt về thói quen \"để mai tính\" - kẻ cắp thời gian nguy hiểm.\n• Thân đoạn: Phân tích 3 tác hại (đánh mất thời cơ, tổn hại uy tín, kiệt sức vì áp lực dồn ứ).\n• Kết đoạn: Bài học về kỉ luật thép và hành động tức thì.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Khái niệm trì hoãn",
+        "guide": "Dẫn dắt và nêu trực tiếp vấn đề nghị luận xã hội.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: 3 tác hại trực tiếp đối với bản thân và xã hội",
+        "guide": "Giải thích ngắn gọn (1 câu) ➔ Bàn luận đa chiều qua 3 luận điểm (Bản thân - Các mối quan hệ - Xã hội) ➔ Dẫn chứng thực tế tiêu biểu.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Giải pháp khắc phục...",
+        "guide": "Rút ra bài học nhận thức và hành động thiết thực cho người trẻ; câu chốt truyền cảm hứng.",
         "sample": ""
       }
     ]
@@ -905,10 +1171,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Giải thích: Thành công thường đo bằng vật chất, địa vị; giá trị đo bằng sự cống hiến, ý nghĩa mang lại cho cộng đồng.\n• Bàn luận (3 ý): 1. Người có giá trị lan tỏa năng lượng tích cực, giúp đỡ người khác. 2. Giá trị tạo ra sự tôn trọng bền vững hơn những thành tích bề nổi. 3. Khi bạn nỗ lực tạo ra giá trị đích thực, thành công chân chính sẽ tự khắc đến.\n• Bài học: Tập trung hoàn thiện nhân cách và chia sẻ với xã hội.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Giải thích \"thành công\" và \"người có giá trị\" ➔ Phân tích tại sao nên sống có giá trị ➔ Bài học...",
-        "guide": "• Giải thích: Phân biệt giữa danh vọng nhất thời và giá trị nhân văn bền vững.\n• Bàn luận: Giá trị cốt lõi đến từ năng lực cống hiến và lòng trắc ẩn.\n• Bài học: Không ngừng trau dồi tri thức, đạo đức để hữu ích cho cuộc đời.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Giải thích \"thành công\" và \"người có giá trị\"",
+        "guide": "Dẫn dắt và nêu trực tiếp vấn đề nghị luận xã hội.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích tại sao nên sống có giá trị",
+        "guide": "Giải thích ngắn gọn (1 câu) ➔ Bàn luận đa chiều qua 3 luận điểm (Bản thân - Các mối quan hệ - Xã hội) ➔ Dẫn chứng thực tế tiêu biểu.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Bài học...",
+        "guide": "Rút ra bài học nhận thức và hành động thiết thực cho người trẻ; câu chốt truyền cảm hứng.",
         "sample": ""
       }
     ]
@@ -925,10 +1205,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Bàn luận (3 ý): Thứ nhất, làm việc nhóm giúp bổ khuyết điểm yếu, phát huy thế mạnh của từng cá nhân. Thứ hai, tăng hiệu suất và chất lượng công việc so với làm độc lập. Thứ ba, môi trường nhóm rèn luyện kĩ năng lắng nghe, thấu cảm và giải quyết xung đột.\n• Bài học: Vượt qua cái tôi cá nhân, xây dựng tinh thần trách nhiệm tập thể.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Khẳng định vai trò của teamwork ➔ 3 lợi ích nổi bật ➔ Bài học rèn luyện trong nhà trường...",
-        "guide": "• 3 luận điểm: 1. Cộng hưởng sức mạnh trí tuệ. 2. Tối ưu thời gian và chất lượng. 3. Hoàn thiện kĩ năng mềm (giao tiếp, giải quyết vấn đề).\n• Bài học: Tôn trọng ý kiến khác biệt, chủ động nhận trách nhiệm.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Khẳng định vai trò của teamwork",
+        "guide": "Dẫn dắt và nêu trực tiếp vấn đề nghị luận xã hội.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: 3 lợi ích nổi bật",
+        "guide": "Giải thích ngắn gọn (1 câu) ➔ Bàn luận đa chiều qua 3 luận điểm (Bản thân - Các mối quan hệ - Xã hội) ➔ Dẫn chứng thực tế tiêu biểu.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Bài học rèn luyện trong nhà trường...",
+        "guide": "Rút ra bài học nhận thức và hành động thiết thực cho người trẻ; câu chốt truyền cảm hứng.",
         "sample": ""
       }
     ]
@@ -945,10 +1239,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Hành động (3 ý): Đối với cá nhân: Tích cực học tập, chan hòa và mở lòng với bạn bè. Đối với tập thể: Tôn trọng thầy cô, tham gia xây dựng không gian lớp học xanh - sạch - đẹp. Tuyệt đối nói không với bạo lực học đường, cô lập và tẩy chay bạn bè.\n• Khẳng định: Hạnh phúc bắt nguồn từ sự quan tâm và tình thân ái mỗi ngày.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Khái niệm trường học hạnh phúc ➔ Việc làm cụ thể của học sinh (cá nhân, tập thể, thái độ ứng xử) ➔ Kết đoạn...",
-        "guide": "• Mở đoạn: Trường học hạnh phúc là nơi mỗi ngày đến trường là một ngày vui.\n• Hành động: 1. Tôn trọng, tri ân thầy cô. 2. Đoàn kết, không bạo lực hay cô lập bạn. 3. Chung tay giữ gìn môi trường học tập xanh - sạch.\n• Kết đoạn: Thông điệp về tình bạn và tình thầy trò.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Khái niệm trường học hạnh phúc",
+        "guide": "Dẫn dắt và nêu trực tiếp vấn đề nghị luận xã hội.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Việc làm cụ thể của học sinh (cá nhân, tập thể, thái độ ứng xử)",
+        "guide": "Giải thích ngắn gọn (1 câu) ➔ Bàn luận đa chiều qua 3 luận điểm (Bản thân - Các mối quan hệ - Xã hội) ➔ Dẫn chứng thực tế tiêu biểu.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Kết đoạn...",
+        "guide": "Rút ra bài học nhận thức và hành động thiết thực cho người trẻ; câu chốt truyền cảm hứng.",
         "sample": ""
       }
     ]
@@ -965,10 +1273,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Giải thích: Biển lặng là hoàn cảnh thuận lợi, êm ả; thủy thủ tài ba là người có bản lĩnh xuất chúng, giàu kinh nghiệm.\n• Bàn luận (3 ý): Nghịch cảnh là phép thử lớn nhất cho lòng kiên nhẫn và ý chí. Khó khăn kích thích trí sáng tạo để tìm ra hướng đi mới. Vượt qua sóng gió giúp con người tích lũy bài học và trưởng thành sâu sắc hơn.\n• Dẫn chứng: Những tấm gương khởi nghiệp vượt qua khủng hoảng.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Giải thích ẩn dụ biển lặng - thủy thủ ➔ 3 khía cạnh giá trị của thử thách ➔ Dẫn chứng & liên hệ...",
-        "guide": "• Giải thích câu danh ngôn: Thử thách là người thầy nghiêm khắc nhưng tạo nên bản lĩnh vượt trội.\n• Phân tích: Đối mặt giông bão giúp tôi rèn thần kinh thép và năng lực ứng biến.\n• Bài học: Không né tránh khó khăn, sẵn sàng bước ra khỏi vùng an toàn.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Giải thích ẩn dụ biển lặng - thủy thủ",
+        "guide": "Dẫn dắt và nêu trực tiếp vấn đề nghị luận xã hội.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: 3 khía cạnh giá trị của thử thách",
+        "guide": "Giải thích ngắn gọn (1 câu) ➔ Bàn luận đa chiều qua 3 luận điểm (Bản thân - Các mối quan hệ - Xã hội) ➔ Dẫn chứng thực tế tiêu biểu.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Dẫn chứng & liên hệ...",
+        "guide": "Rút ra bài học nhận thức và hành động thiết thực cho người trẻ; câu chốt truyền cảm hứng.",
         "sample": ""
       }
     ]
@@ -985,10 +1307,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Khái quát: Nêu 1 câu khẳng định vai trò của lòng biết ơn trong cuộc sống.\n• Bàn luận (3 ý): Biết ơn giúp con người hoàn thiện nhân cách, sống tình nghĩa và khiêm nhường. Biết ơn cội nguồn, cha mẹ giúp gắn kết gia đình bền chặt. Biết ơn những người giúp đỡ mình lan tỏa vòng tròn tử tế và lòng trắc ẩn trong xã hội.\n• Bài học: Thể hiện lòng biết ơn bằng lời nói chân thành và hành động đền ơn thiết thực.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Khẳng định ý nghĩa của lòng biết ơn ➔ Phân tích 3 biểu hiện / giá trị của sự tri ân ➔ Hành động cụ thể...",
-        "guide": "• Luận điểm: 1. Nuôi dưỡng tâm hồn thuần khiết. 2. Gắn kết tình thân, đạo lí \"Uống nước nhớ nguồn\". 3. Tạo dựng xã hội nhân ái, ấm áp.\n• Kết đoạn: Tri ân cuộc đời qua những việc làm có ích mỗi ngày.",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Khẳng định ý nghĩa của lòng biết ơn",
+        "guide": "Dẫn dắt và nêu trực tiếp vấn đề nghị luận xã hội.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: Phân tích 3 biểu hiện / giá trị của sự tri ân",
+        "guide": "Giải thích ngắn gọn (1 câu) ➔ Bàn luận đa chiều qua 3 luận điểm (Bản thân - Các mối quan hệ - Xã hội) ➔ Dẫn chứng thực tế tiêu biểu.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Hành động cụ thể...",
+        "guide": "Rút ra bài học nhận thức và hành động thiết thực cho người trẻ; câu chốt truyền cảm hứng.",
         "sample": ""
       }
     ]
@@ -1005,10 +1341,24 @@ const DEFAULT_WRITING_SETS = [
     "thinkingGuide": "• Bàn luận (3 ý): Tự học giúp tiếp cận kho tàng tri thức khổng lồ không giới hạn qua Internet. Tự học rèn luyện tư duy phản biện, giúp chủ động chọn lọc thông tin, không bị lệ thuộc một cách thụ động vào máy móc (AI). Tự học là chìa khóa then chốt để không bị đào thải trong thị trường lao động luôn thay đổi nhanh chóng.\n• Bài học: Xây dựng kế hoạch tự học có kỉ luật và kiên trì.",
     "sections": [
       {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Nêu tầm quan trọng của tự học thời 4.0 ➔ 3 giá trị then chốt của năng lực tự học ➔ Thông điệp học tập suốt đời...",
-        "guide": "• Luận điểm: 1. Khai phóng tri thức vô tận. 2. Làm chủ công nghệ thay vì để công nghệ thao túng. 3. Thích ứng linh hoạt trước chuyển biến xã hội.\n• Bài học: Tinh thần \"Học, học nữa, học mãi\".",
+        "id": "sec_mo_doan",
+        "title": "I. Mở đoạn",
+        "placeholder": "Mở đoạn: Nêu tầm quan trọng của tự học thời 4.0",
+        "guide": "Dẫn dắt và nêu trực tiếp vấn đề nghị luận xã hội.",
+        "sample": ""
+      },
+      {
+        "id": "sec_than_doan",
+        "title": "II. Thân đoạn",
+        "placeholder": "Thân đoạn: 3 giá trị then chốt của năng lực tự học",
+        "guide": "Giải thích ngắn gọn (1 câu) ➔ Bàn luận đa chiều qua 3 luận điểm (Bản thân - Các mối quan hệ - Xã hội) ➔ Dẫn chứng thực tế tiêu biểu.",
+        "sample": ""
+      },
+      {
+        "id": "sec_ket_doan",
+        "title": "III. Kết đoạn",
+        "placeholder": "Kết đoạn: Thông điệp học tập suốt đời...",
+        "guide": "Rút ra bài học nhận thức và hành động thiết thực cho người trẻ; câu chốt truyền cảm hứng.",
         "sample": ""
       }
     ]
@@ -1374,7 +1724,7 @@ let editingSections = [];
 function loadWritingSets() {
   try {
     // Tự động đồng bộ và nạp Bộ 50 đề sắp xếp theo 4 dạng bài chuẩn và 5 dạng Đoạn NLVH
-    const v50Version = 'v50_2026_11_06_v6_5_subtypes_nlvh';
+    const v50Version = 'v50_2026_11_06_v7_2_split_paragraphs';
     const currentVersion = localStorage.getItem('vq_writing_sets_version');
     
     const raw = localStorage.getItem('vq_writing_sets');
@@ -1383,7 +1733,7 @@ function loadWritingSets() {
       try { parsed = JSON.parse(raw); } catch (e) {}
     }
 
-    const isOldData = !parsed || !Array.isArray(parsed) || parsed.some(s => s.id && s.id.startsWith('doan_') && !s.subType);
+    const isOldData = !parsed || !Array.isArray(parsed) || parsed.some(s => s.id && s.id.startsWith('doan_') && !s.subType) || parsed.some(s => s.category && s.category.startsWith('doan-') && s.sections && s.sections.length === 1);
 
     if (currentVersion !== v50Version || isOldData) {
       // Nạp trọn vẹn 50 đề mới đã sắp xếp
@@ -2140,7 +2490,54 @@ function handleStartWritingSubmit(e) {
   openWritingWorkspace(set, chosenMinutes);
 }
 
+
+function normalizeParagraphSectionsIfNeeded(set) {
+  if (!set) return;
+  const isDoan = String(set.category || '').startsWith('doan-');
+  if (isDoan && (!set.sections || set.sections.length <= 1)) {
+    const isNlvh = set.category === 'doan-nlvh';
+    const oldFirst = (set.sections && set.sections[0]) ? set.sections[0] : null;
+    const oldSample = oldFirst ? (oldFirst.sample || '') : '';
+    set.sections = [
+      {
+        id: 'sec_mo_doan',
+        title: 'I. Mở đoạn',
+        guide: isNlvh
+          ? 'Dẫn dắt, trích dẫn câu văn/câu thơ và giới thiệu vấn đề nghị luận.'
+          : 'Dẫn dắt và nêu trực tiếp vấn đề nghị luận xã hội (ý nghĩa, tác hại hoặc trách nhiệm tuổi trẻ).',
+        placeholder: isNlvh
+          ? 'Nhập phần Mở đoạn: Dẫn dắt và nêu vấn đề nghị luận văn học...'
+          : 'Nhập phần Mở đoạn: Dẫn dắt và nêu vấn đề nghị luận xã hội...',
+        sample: ''
+      },
+      {
+        id: 'sec_than_doan',
+        title: 'II. Thân đoạn',
+        guide: isNlvh
+          ? 'Triển khai 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.'
+          : 'Giải thích ngắn gọn (1 câu) ➔ Bàn luận đa chiều qua 3 luận điểm (Bản thân - Các mối quan hệ - Xã hội) ➔ Dẫn chứng thực tế tiêu biểu.',
+        placeholder: isNlvh
+          ? 'Nhập phần Thân đoạn: Triển khai các luận điểm, dẫn chứng và phân tích làm sáng tỏ vấn đề...'
+          : 'Nhập phần Thân đoạn: Giải thích ngắn gọn + Bàn luận 3 luận điểm + Dẫn chứng thực tế...',
+        sample: oldSample
+      },
+      {
+        id: 'sec_ket_doan',
+        title: 'III. Kết đoạn',
+        guide: isNlvh
+          ? 'Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp hoặc câu chốt ấn tượng.'
+          : 'Rút ra bài học nhận thức và hành động thiết thực cho người trẻ; câu chốt truyền cảm hứng.',
+        placeholder: isNlvh
+          ? 'Nhập phần Kết đoạn: Khái quát ý nghĩa, rút ra thông điệp cuộc sống...'
+          : 'Nhập phần Kết đoạn: Bài học nhận thức, hành động và thông điệp gửi gắm...',
+        sample: ''
+      }
+    ];
+  }
+}
+
 function openWritingWorkspace(set, chosenMinutes = null) {
+  normalizeParagraphSectionsIfNeeded(set);
   if (chosenMinutes === null || chosenMinutes === undefined) {
     openStartWritingModal(set.id);
     return;
@@ -2204,10 +2601,9 @@ function openWritingWorkspace(set, chosenMinutes = null) {
     initWritingPressureTimerUI(set);
   }
 
-  // Outline card removed from student workspace (no hints shown during testing)
-  const outlineContent = $('#workspace-outline-content');
-  if (outlineContent) {
-    outlineContent.innerHTML = '';
+  // Hiển thị Gợi ý tư duy trọng tâm trong Workspace
+  if (typeof renderWorkspaceThinkingGuide === 'function') {
+    renderWorkspaceThinkingGuide(set);
   }
 
   // Load existing draft
@@ -2632,8 +3028,20 @@ function applyQuickOutlineTemplate(forcedCategory) {
     editingSections = [
       {
         id: 'sec_' + uid(),
-        title: 'Đoạn văn Nghị luận Văn học (~200 chữ - Không xuống dòng)',
-        guide: '• Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ).\n• Cấu trúc: Mở đoạn (Câu trích dẫn + Nêu VĐNL) ➔ Phân tích 2-3 luận điểm (Gọi tên yếu tố + dẫn chứng + tác dụng) ➔ Đánh giá & Nghệ thuật ➔ Kết đoạn – trích dẫn.',
+        title: 'I. Mở đoạn',
+        guide: 'Dẫn dắt, trích dẫn câu văn/câu thơ và nêu rõ vấn đề nghị luận.',
+        sample: ''
+      },
+      {
+        id: 'sec_' + uid(),
+        title: 'II. Thân đoạn',
+        guide: 'Phân tích 2–3 khía cạnh/luận điểm (Gọi tên yếu tố + Dẫn chứng + Phân tích tác dụng); phân tích nét nghệ thuật đặc sắc và đánh giá chiều sâu tư tưởng.',
+        sample: ''
+      },
+      {
+        id: 'sec_' + uid(),
+        title: 'III. Kết đoạn',
+        guide: 'Khái quát lại giá trị của vấn đề nghị luận, rút ra thông điệp cuộc sống.',
         sample: ''
       }
     ];
@@ -2668,8 +3076,20 @@ function applyQuickOutlineTemplate(forcedCategory) {
     editingSections = [
       {
         id: 'sec_' + uid(),
-        title: 'Đoạn văn Nghị luận Xã hội (~200 chữ - Không xuống dòng)',
-        guide: '• Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ).\n• Mở đoạn: Nêu VĐNL.\n• Thân đoạn (4 bước): 1. Giải thích (1 câu) ➔ 2. Bàn luận 3 luận điểm (Ý nghĩa: Thứ nhất giúp mở rộng hiểu biết/bản lĩnh; Thứ hai giúp thành công/hạnh phúc; Thứ ba đối với xã hội | Giải pháp: Thứ nhất cá nhân; Thứ hai gia đình/nhà trường; Thứ ba cộng đồng/xã hội) ➔ 3. Dẫn chứng thực tế ➔ 4. Bài học nhận thức, hành động & Kết đoạn.',
+        title: 'I. Mở đoạn',
+        guide: 'Dẫn dắt và nêu trực tiếp vấn đề nghị luận xã hội.',
+        sample: ''
+      },
+      {
+        id: 'sec_' + uid(),
+        title: 'II. Thân đoạn',
+        guide: 'Giải thích ngắn gọn (1 câu) ➔ Bàn luận đa chiều qua 3 luận điểm (Bản thân - Các mối quan hệ - Xã hội) ➔ Dẫn chứng thực tế tiêu biểu.',
+        sample: ''
+      },
+      {
+        id: 'sec_' + uid(),
+        title: 'III. Kết đoạn',
+        guide: 'Rút ra bài học nhận thức và hành động thiết thực cho người trẻ; thông điệp truyền cảm hứng.',
         sample: ''
       }
     ];
@@ -2887,7 +3307,46 @@ function handleSaveWritingSet(e) {
   if (typeof updateLibTabsUI === 'function') updateLibTabsUI();
 }
 
-function autoGenerateThinkingGuideForModal() {}
+function autoGenerateThinkingGuideForModal() {
+  const cat = $('#input-set-category')?.value || 'doan-nlvh';
+  const subType = $('#input-set-subtype')?.value || '';
+  const title = ($('#input-set-title')?.value || '').trim();
+  const prompt = ($('#input-set-prompt')?.value || '').trim();
+
+  if (typeof generateStructuredThinkingGuide === 'function') {
+    const guide = generateStructuredThinkingGuide({ category: cat, subType, title, prompt });
+    const formatted = `### 1. NHẬN DIỆN ĐỀ BÀI
+- Thể loại & Dạng đề: ${guide.section1.formName}
+- Dung lượng chuẩn: ${guide.section1.volume}
+- Yêu cầu trọng tâm: ${guide.section1.coreRequirement}
+
+### 2. PHÂN TÍCH YÊU CẦU & LƯU Ý
+- Đối tượng phân tích: ${guide.section2.analysisTarget}
+- Cảnh báo tránh nhầm lẫn: ${guide.section2.avoidConfusion}
+
+### 3. HƯỚNG TƯ DUY (CÁC BƯỚC TRIỂN KHAI)
+${guide.section3.steps.map((st, i) => `${i + 1}. ${st}`).join('\n')}
+
+### 4. HỆ THỐNG LUẬN ĐIỂM
+${guide.section4.arguments.map(a => `• ${a}`).join('\n')}
+
+### 5. GỢI Ý CÁCH DIỄN ĐẠT
+• Mở đoạn/bài: "${guide.section5.openers[0]}"
+• Chuyển ý: ${guide.section5.transitions.slice(0, 3).join(', ')}...
+• Đánh giá: "${guide.section5.evaluations[0]}"
+• Kết đoạn/bài: "${guide.section5.closers[0]}"
+
+### 6. CHECKLIST TRƯỚC KHI HOÀN THÀNH
+${guide.section6.checklist.map(c => `[ ] ${c}`).join('\n')}`;
+
+    const guideInput = $('#input-set-thinking-guide');
+    if (guideInput) {
+      guideInput.value = formatted;
+      toast('✨ Đã tự động tạo Gợi ý tư duy chuẩn hóa 6 phần!', 'ok');
+    }
+    return;
+  }
+}
 window.autoGenerateThinkingGuideForModal = autoGenerateThinkingGuideForModal;
 
 function deleteCurrentOpenedWritingSet() {
@@ -2959,7 +3418,8 @@ function openWritingReviewModal() {
     if (text) paragraphs.push(text);
   });
 
-  const combinedText = paragraphs.join('\n\n') || '(Chưa có nội dung bài viết. Hãy quay lại và nhập bài làm của bạn nhé!)';
+  const isDoan = String(currentWritingSet.category || '').startsWith('doan-');
+  const combinedText = (isDoan ? paragraphs.join(' ') : paragraphs.join('\n\n')) || '(Chưa có nội dung bài viết. Hãy quay lại và nhập bài làm của bạn nhé!)';
   
   // Stats
   $('#review-stat-words').textContent = totalWords;

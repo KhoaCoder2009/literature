@@ -1153,6 +1153,28 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
   </div>
 </dialog>
 
+<!-- WORKSPACE THINKING GUIDE DIALOG -->
+<dialog id="workspace-thinking-dialog" class="workspace-thinking-modal" style="max-width:840px; width:92%; border-radius:14px; border:1px solid var(--bd); padding:0; box-shadow:0 24px 60px rgba(0,0,0,0.35); overflow:hidden;">
+  <div class="workspace-thinking-modal-header" style="padding:16px 20px; border-bottom:1px solid var(--bd); display:flex; align-items:center; justify-content:space-between; background:var(--bg2);">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span style="font-size:24px; color:#eab308;"><ion-icon name="bulb"></ion-icon></span>
+      <div>
+        <h3 id="modal-thinking-title" style="margin:0; font-size:17px; font-weight:800;">GỢI Ý TƯ DUY &amp; PHƯƠNG PHÁP LÀM BÀI</h3>
+        <span class="mut" id="modal-thinking-subtitle" style="font-size:12.5px;">Cấu trúc chuẩn hóa 6 phần theo dạng đề</span>
+      </div>
+    </div>
+    <button class="btn gh sm" type="button" onclick="closeWorkspaceThinkingGuideModal()" aria-label="Đóng" title="Đóng">
+      <ion-icon name="close-outline" style="font-size:20px;"></ion-icon>
+    </button>
+  </div>
+  <div class="workspace-thinking-modal-body" id="modal-thinking-content-body" style="padding:20px; max-height:75vh; overflow-y:auto; line-height:1.65; background:var(--card);"></div>
+  <div class="workspace-thinking-modal-footer" style="padding:12px 20px; border-top:1px solid var(--bd); display:flex; justify-content:flex-end; gap:8px; background:var(--bg2);">
+    <button type="button" class="btn au sm" onclick="closeWorkspaceThinkingGuideModal()">
+      <ion-icon name="checkmark-outline"></ion-icon> <span>Đã hiểu, quay lại viết bài</span>
+    </button>
+  </div>
+</dialog>
+
 <!-- FLOATING QA / BUG REPORT BUTTON (Hidden to avoid duplicating topbar #nav-qa-btn) & TOAST & BACK TO TOP -->
 <button id="fab-qa-report" class="fab-qa-btn" style="display:none;" onclick="openQaReportModal()" aria-label="Báo cáo lỗi hoặc Gửi thắc mắc" title="Đặt câu hỏi thắc mắc hoặc Báo lỗi">
   <span class="fab-qa-icon">💬</span>
