@@ -46,16 +46,9 @@
         <div class="reading-workspace-actions">
           <div class="exam-pressure-timer-widget" id="reading-pressure-timer-widget">
             <span class="ept-icon">⏱️</span>
-            <select class="ept-mode-select" id="reading-timer-preset" onchange="setReadingPressureTimer(this.value)" title="Chọn thời gian rèn áp lực phòng thi">
-              <option value="0">Tự do (Đếm xuôi)</option>
-              <option value="15">🔥 15 phút (Đọc hiểu nhanh)</option>
-              <option value="20" selected>⚡ 20 phút (Đoạn văn 200 chữ)</option>
-              <option value="30">🏆 30 phút (Đọc hiểu + Đoạn văn)</option>
-              <option value="45">🎓 45 phút (Đề kiểm tra)</option>
-            </select>
+            <span class="writing-timer-badge" id="reading-timer-mode-tag">⚡ 20 phút</span>
             <b class="ept-clock" id="reading-timer-clock">20:00</b>
-            <button type="button" class="ept-ctrl-btn" id="reading-timer-toggle-btn" onclick="toggleReadingPressureTimer()" title="Bắt đầu / Tạm dừng đồng hồ">▶️</button>
-            <button type="button" class="ept-ctrl-btn" onclick="resetReadingPressureTimer()" title="Đặt lại đồng hồ">↺</button>
+            <button type="button" class="ept-ctrl-btn" id="reading-timer-toggle-btn" onclick="toggleReadingPressureTimer()" title="Bắt đầu / Tạm dừng đồng hồ">⏸</button>
           </div>
           <button class="btn no sm btn-exit-exam" type="button" onclick="confirmExitCurrentSession('reading')" title="Thoát bài đọc hiểu (Sẽ nộp bài và tính 1 lượt làm)">
             <ion-icon name="log-out-outline"></ion-icon> <span>Thoát bài</span>
@@ -126,6 +119,70 @@
       </div>
     </div>
 
+    <!-- DIALOG: CHUẨN BỊ VÀO PHÒNG ĐỌC HIỂU & CHỌN THỜI GIAN LÀM BÀI TRƯỚC -->
+    <dialog id="start-reading-dialog" class="writing-modal setup-start-modal" aria-labelledby="start-reading-heading">
+      <div class="writing-modal-header">
+        <div class="writing-modal-title">
+          <h3 id="start-reading-heading">Chuẩn bị vào phòng Đọc hiểu</h3>
+        </div>
+        <button class="btn sm gh" type="button" onclick="closeStartReadingModal()" aria-label="Đóng">
+          <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
+        </button>
+      </div>
+
+      <form id="start-reading-form" onsubmit="handleStartReadingSubmit(event)" class="writing-modal-form-wrap">
+        <input type="hidden" id="start-reading-set-id">
+
+        <div class="writing-modal-body" style="padding: 20px 24px;">
+          <!-- Thông tin bộ đề đang chọn -->
+          <div class="setup-modal-set-preview" id="start-reading-preview">
+            <span class="setup-modal-pill" id="start-reading-set-badge">5 câu hỏi</span>
+            <h4 id="start-reading-set-title" style="margin: 6px 0 0; font-size: 17.5px; font-weight: 800; line-height: 1.35;"></h4>
+            <span id="start-reading-set-topic" class="mut" style="font-size: 13px; font-weight: 600; display: block; margin-top: 4px;"></span>
+          </div>
+
+          <!-- Thông tin học sinh -->
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-top: 16px;">
+            <div>
+              <label for="start-reading-nick" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13.5px;">
+                Họ và tên học sinh <span style="color:var(--red)">*</span>
+              </label>
+              <input type="text" id="start-reading-nick" required maxlength="50" placeholder="Nhập tên học sinh..." style="font-size: 14.5px; padding: 10px 12px; width: 100%;">
+            </div>
+            <div>
+              <label for="start-reading-class" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13.5px;">
+                Lớp học
+              </label>
+              <input type="text" id="start-reading-class" maxlength="30" placeholder="Ví dụ: 11A1, 12A2..." style="font-size: 14.5px; padding: 10px 12px; width: 100%;">
+            </div>
+          </div>
+
+          <!-- CHỌN THỜI GIAN LÀM BÀI TRƯỚC KHI VÀO -->
+          <div style="margin-top: 16px;">
+            <label for="start-reading-timer-preset" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13.5px;">
+              ⏱️ Thời gian làm bài (Hẹn giờ áp lực phòng thi) <span style="color:var(--red)">*</span>
+            </label>
+            <select id="start-reading-timer-preset" style="width: 100%; height: 44px; font-size: 13.5px; font-weight: 700; border-radius: 12px; padding: 0 14px; background: var(--bg-card); color: var(--ink); border: 2px solid var(--stroke);">
+              <option value="15">🔥 15 phút (Đọc hiểu nhanh)</option>
+              <option value="20" selected>⚡ 20 phút (Đoạn văn 200 chữ - Chuẩn)</option>
+              <option value="30">🏆 30 phút (Đọc hiểu sâu + Đoạn văn)</option>
+              <option value="45">🎓 45 phút (Đề kiểm tra 1 tiết)</option>
+              <option value="0">⏳ Tự do (Đếm xuôi không giới hạn thời gian)</option>
+            </select>
+            <p style="margin: 8px 0 0; font-size: 12px; color: var(--mut); line-height: 1.45;">
+              ⏰ <i>Lưu ý quan trọng:</i> Khi hết thời gian làm bài, hệ thống sẽ <b>tự động thu bài, khóa làm bài và lưu gửi kết quả về cho Giáo viên/Admin</b>.
+            </p>
+          </div>
+        </div>
+
+        <div class="writing-modal-footer">
+          <button type="button" class="btn gh" onclick="closeStartReadingModal()">Hủy</button>
+          <button type="submit" class="btn au" style="font-weight: 800;">
+            <ion-icon name="play-outline"></ion-icon> Bắt đầu làm bài ngay
+          </button>
+        </div>
+      </form>
+    </dialog>
   </div>
 </section>
 

@@ -423,10 +423,100 @@ function exitReadingWorkspace(force = false) {
   return true;
 }
 
-function openReadingSet(id) {
-  if (typeof ensureStudentNameBeforeExam === 'function') {
-    const ok = ensureStudentNameBeforeExam(() => openReadingSet(id));
-    if (!ok) return;
+function openStartReadingModal(id) {
+  const set = readingSets.find(s => String(s.id) === String(id));
+  if (!set) return;
+
+  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(set, 'reading')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(set, 'reading') : { hasSubmissions: false, message: 'Bộ đề đọc hiểu này đã bị khóa đối với bạn!' };
+    toast(info.message, 'bad');
+    if (info.hasSubmissions) {
+      openHistoryForSet(set.id, set.title);
+    }
+    return;
+  }
+
+  const dlg = document.getElementById('start-reading-dialog');
+  if (!dlg) {
+    openReadingSet(id, 20);
+    return;
+  }
+
+  const idInput = document.getElementById('start-reading-set-id');
+  if (idInput) idInput.value = set.id;
+
+  const titleEl = document.getElementById('start-reading-set-title');
+  if (titleEl) titleEl.textContent = set.title;
+
+  const badgeEl = document.getElementById('start-reading-set-badge');
+  if (badgeEl) badgeEl.textContent = (Array.isArray(set.questions) ? set.questions.length : 5) + ' câu hỏi';
+
+  const topicEl = document.getElementById('start-reading-set-topic');
+  if (topicEl) topicEl.textContent = set.genre || set.category || 'Đọc hiểu';
+
+  const u = (typeof Auth !== 'undefined') ? Auth.getCurrentUser() : null;
+  const nickInput = document.getElementById('start-reading-nick');
+  const classInput = document.getElementById('start-reading-class');
+  const savedNick = (typeof Auth !== 'undefined' ? Auth.getSavedStudentName() : '') || localStorage.getItem('vq_player_nick') || '';
+  const savedClass = (typeof Auth !== 'undefined' ? Auth.getSavedStudentClass() : '') || localStorage.getItem('vq_player_class') || '';
+
+  if (nickInput) nickInput.value = (u && u.full_name && u.full_name !== 'Học sinh' && u.full_name !== 'Khách') ? u.full_name : savedNick;
+  if (classInput) classInput.value = (u && u.class_name) ? u.class_name : savedClass;
+
+  if (typeof dlg.showModal === 'function') {
+    if (!dlg.open) dlg.showModal();
+  } else {
+    dlg.setAttribute('open', '');
+  }
+
+  setTimeout(() => {
+    if (nickInput && !nickInput.value) nickInput.focus();
+  }, 60);
+}
+
+function closeStartReadingModal() {
+  const dlg = document.getElementById('start-reading-dialog');
+  if (dlg) {
+    if (typeof dlg.close === 'function' && dlg.open) dlg.close();
+    else dlg.removeAttribute('open');
+  }
+}
+
+function handleStartReadingSubmit(e) {
+  if (e) e.preventDefault();
+  const id = document.getElementById('start-reading-set-id')?.value;
+  const set = readingSets.find(s => String(s.id) === String(id));
+  if (!set) return;
+
+  const nick = (document.getElementById('start-reading-nick')?.value || '').trim();
+  const className = (document.getElementById('start-reading-class')?.value || '').trim();
+  const chosenMinutes = parseInt(document.getElementById('start-reading-timer-preset')?.value, 10) || 0;
+
+  if (!nick) {
+    if (typeof toast === 'function') toast('Vui lòng nhập họ và tên học sinh!', 'bad');
+    return;
+  }
+
+  if (typeof Auth !== 'undefined' && typeof Auth.setSavedStudentInfo === 'function') {
+    Auth.setSavedStudentInfo(nick, className);
+  } else {
+    try {
+      localStorage.setItem('vq_player_nick', nick);
+      if (className) localStorage.setItem('vq_player_class', className);
+    } catch (_) {}
+  }
+
+  if (typeof renderNavbarUserWidget === 'function') renderNavbarUserWidget();
+  if (typeof renderMobileSidebarUser === 'function') renderMobileSidebarUser();
+
+  closeStartReadingModal();
+  openReadingSet(id, chosenMinutes);
+}
+
+function openReadingSet(id, chosenMinutes = null) {
+  if (chosenMinutes === null || chosenMinutes === undefined) {
+    openStartReadingModal(id);
+    return;
   }
 
   const set = readingSets.find(s => String(s.id) === String(id));
@@ -459,6 +549,16 @@ function openReadingSet(id) {
   }
 
   renderReadingWorkspace(set);
+
+  if (typeof setReadingPressureTimer === 'function') {
+    setReadingPressureTimer(chosenMinutes);
+  }
+
+  const modeTag = document.getElementById('reading-timer-mode-tag');
+  if (modeTag) {
+    modeTag.textContent = chosenMinutes > 0 ? `⚡ ${chosenMinutes} phút` : '⏳ Tự do';
+  }
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -910,14 +1010,16 @@ function resetCurrentReadingDraft() {
 }
 
 // SUBMIT & REVIEW
-function submitReadingAnswers() {
+function submitReadingAnswers(isAutoSubmit = false) {
   const set = readingSets.find(s => String(s.id) === String(currentReadingSetId));
   if (!set) return;
 
-  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(set, 'reading')) {
-    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(set, 'reading') : { message: 'Đề đọc hiểu này đã kết thúc!' };
-    toast(`⚠️ ${info.message}`, 'bad');
-    return;
+  if (!isAutoSubmit) {
+    if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(set, 'reading')) {
+      const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(set, 'reading') : { message: 'Đề đọc hiểu này đã kết thúc!' };
+      toast(`⚠️ ${info.message}`, 'bad');
+      return;
+    }
   }
 
   const draft = getSavedReadingDraft(set.id);
@@ -976,6 +1078,8 @@ function submitReadingAnswers() {
         answeredCount,
         totalQuestions: questions.length,
         elapsedSeconds: 0,
+        isAutoSubmitted: Boolean(isAutoSubmit),
+        autoSubmitReason: isAutoSubmit ? 'Hết thời gian làm bài' : '',
         details: questions.map((q, idx) => ({
           questionText: q.text,
           questionType: 'reading',
@@ -990,10 +1094,14 @@ function submitReadingAnswers() {
       if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.endExam === 'function') {
         window.__SECURITY_SHIELD.endExam(true);
       }
-      toast('🎉 Nộp bài thành công! Bài làm đọc hiểu đã được lưu vào Lịch sử.', 'ok');
+      if (isAutoSubmit) {
+        toast('⏰ HẾT GIỜ LÀM BÀI! Bài đọc hiểu của bạn đã được tự động nộp và gửi về cho Giáo viên/Admin.', 'bad');
+      } else {
+        toast('🎉 Nộp bài đọc hiểu thành công! Hãy đối chiếu câu trả lời bên dưới.', 'ok');
+      }
     }
   } catch (e) {
-    console.error('Save reading history error:', e);
+    console.error('Error saving reading history:', e);
   }
 }
 
@@ -1661,6 +1769,10 @@ function promptDeleteCurrentReadingCategory() {
 }
 
 if (typeof window !== 'undefined') {
+  window.openStartReadingModal = openStartReadingModal;
+  window.closeStartReadingModal = closeStartReadingModal;
+  window.handleStartReadingSubmit = handleStartReadingSubmit;
+  window.submitReadingAnswers = submitReadingAnswers;
   window.promptAddNewReadingCategory = promptAddNewReadingCategory;
   window.promptDeleteCurrentReadingCategory = promptDeleteCurrentReadingCategory;
 }

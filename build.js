@@ -194,6 +194,7 @@ const securityLockdownSnippet = `
     'selectEmoji', 'toggleEmojiPicker', 'setT', 'saveQ', 'renderQs', 'pickImg',
     'setTopicFilter', 'filterWritingCategory', 'onWritingSearchInput',
     'promptAddNewCategory', 'promptDeleteCurrentCategory', 'promptDeleteCategory',
+    'openStartWritingModal', 'closeStartWritingModal', 'handleStartWritingSubmit',
     'openCreateWritingSetModal', 'closeCreateWritingSetModal', 'handleSaveWritingSet',
     'editWritingSet', 'openEditWritingSetModal', 'deleteWritingSet',
     'deleteCurrentOpenedWritingSet', 'openWritingWorkspaceById', 'exitWritingWorkspace',
@@ -204,6 +205,7 @@ const securityLockdownSnippet = `
     'getWritingSectionMaxScore',
     'setReadingCategoryFilter', 'onReadingSearchInput', 'onLibReadingSearchInput',
     'promptAddNewReadingCategory', 'promptDeleteCurrentReadingCategory',
+    'openStartReadingModal', 'closeStartReadingModal', 'handleStartReadingSubmit',
     'openCreateReadingSetModal', 'closeReadingEditModal', 'handleReadingFormSubmit',
     'openEditReadingSetModal', 'deleteReadingSet', 'deleteCurrentOpenedReadingSet',
     'openReadingSet', 'exitReadingWorkspace', 'changePassageFontSize',
@@ -274,8 +276,8 @@ if (fs.existsSync(indexPath)) {
   );
 
   // Luôn làm mới version cache-busting cho bundle CSS & JS
-  html = html.replace(/\.\/dist\/app\.bundle\.css(\?v=[^"]*)?/g, './dist/app.bundle.css?v=4.4');
-  html = html.replace(/\.\/dist\/app\.bundle\.js(\?v=[^"]*)?/g, './dist/app.bundle.js?v=4.4');
+  html = html.replace(/\.\/dist\/app\.bundle\.css(\?v=[^"]*)?/g, './dist/app.bundle.css?v=4.5');
+  html = html.replace(/\.\/dist\/app\.bundle\.js(\?v=[^"]*)?/g, './dist/app.bundle.js?v=4.5');
 
   fs.writeFileSync(indexPath, html, 'utf8');
   console.log('✓ Đã cập nhật index.html sang chế độ Bundle duy nhất (ẩn hoàn toàn các tên file nguồn)');

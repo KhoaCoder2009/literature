@@ -1402,6 +1402,12 @@
     readingTimerSecondsLeft = mins * 60;
     readingTimerElapsed = 0;
     updateReadingTimerClockUI();
+
+    const modeTag = document.getElementById('reading-timer-mode-tag');
+    if (modeTag) {
+      modeTag.textContent = mins > 0 ? `⚡ ${mins} phút` : '⏳ Tự do';
+    }
+
     if (mins > 0) {
       startReadingPressureTimer();
       toast(`⏱️ Đã bật chế độ rèn áp lực phòng thi: ${mins} phút!`, 'ok');
@@ -1430,7 +1436,10 @@
         } else {
           stopReadingPressureTimer();
           if (typeof playSound === 'function') playSound('wrong');
-          toast('⏰ HẾT GIỜ LÀM BÀI! Bạn đã hoàn thành phiên rèn áp lực phòng thi.', 'bad');
+          toast('⏰ HẾT GIỜ LÀM BÀI! Đang tự động thu bài đọc hiểu và lưu gửi về cho Giáo viên/Admin...', 'bad');
+          if (typeof submitReadingAnswers === 'function') {
+            submitReadingAnswers(true);
+          }
         }
       } else {
         updateReadingTimerClockUI();
@@ -1518,6 +1527,11 @@
     }
     refreshWritingPressureDisplay();
 
+    const modeTag = document.getElementById('workspace-timer-mode-tag');
+    if (modeTag) {
+      modeTag.textContent = mins > 0 ? `⏱️ ${mins} phút` : '⏳ Tự do';
+    }
+
     if (mins > 0) {
       toast(`⏱️ Đã bật đồng hồ đếm ngược ${mins} phút rèn áp lực phòng thi!`, 'ok');
     } else {
@@ -1567,7 +1581,10 @@
         writingCountdownEnded = true;
         if (typeof stopWritingTimer === 'function') stopWritingTimer();
         if (typeof playSound === 'function') playSound('wrong');
-        toast('⏰ ĐÃ HẾT THỜI GIAN LÀM BÀI! Hãy nộp bài để ghi nhận kết quả rèn luyện.', 'bad');
+        toast('⏰ HẾT GIỜ LÀM BÀI! Đang tự động thu bài và lưu gửi về cho Giáo viên/Admin...', 'bad');
+        if (typeof submitWritingEssay === 'function') {
+          submitWritingEssay(true);
+        }
       }
     } else {
       if (box) box.classList.remove('timer-warn', 'timer-danger');

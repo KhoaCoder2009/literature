@@ -827,14 +827,117 @@ function renderWritingSetsGrid() {
 // =========================================================================
 
 function openWritingWorkspaceById(setId) {
-  const set = writingSets.find(s => s.id === setId);
-  if (set) openWritingWorkspace(set);
+  openStartWritingModal(setId);
 }
 
-function openWritingWorkspace(set) {
-  if (typeof ensureStudentNameBeforeExam === 'function') {
-    const ok = ensureStudentNameBeforeExam(() => openWritingWorkspace(set));
-    if (!ok) return;
+function openStartWritingModal(setId) {
+  const set = writingSets.find(s => String(s.id) === String(setId));
+  if (!set) return;
+
+  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(set, 'writing')) {
+    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(set, 'writing') : { hasSubmissions: false, message: 'Bộ đề luyện viết này đã khóa đối với bạn!' };
+    toast(info.message, 'bad');
+    if (info.hasSubmissions) {
+      openHistoryForSet(set.id, set.title);
+    }
+    return;
+  }
+
+  const dlg = document.getElementById('start-writing-dialog');
+  if (!dlg) {
+    openWritingWorkspace(set, 60);
+    return;
+  }
+
+  const idInput = document.getElementById('start-writing-set-id');
+  if (idInput) idInput.value = set.id;
+
+  const titleEl = document.getElementById('start-writing-set-title');
+  if (titleEl) titleEl.textContent = set.title;
+
+  const badgeEl = document.getElementById('start-writing-set-badge');
+  if (badgeEl) badgeEl.textContent = set.categoryName || set.category || 'Luyện viết';
+
+  const topicEl = document.getElementById('start-writing-set-topic');
+  if (topicEl) topicEl.textContent = (set.sections ? set.sections.length : 0) + ' phần dàn ý chuẩn';
+
+  const u = (typeof Auth !== 'undefined') ? Auth.getCurrentUser() : null;
+  const nickInput = document.getElementById('start-writing-nick');
+  const classInput = document.getElementById('start-writing-class');
+  const savedNick = (typeof Auth !== 'undefined' ? Auth.getSavedStudentName() : '') || localStorage.getItem('vq_player_nick') || '';
+  const savedClass = (typeof Auth !== 'undefined' ? Auth.getSavedStudentClass() : '') || localStorage.getItem('vq_player_class') || '';
+
+  if (nickInput) nickInput.value = (u && u.full_name && u.full_name !== 'Học sinh' && u.full_name !== 'Khách') ? u.full_name : savedNick;
+  if (classInput) classInput.value = (u && u.class_name) ? u.class_name : savedClass;
+
+  // Tự động gợi ý thời gian theo thể loại đề
+  const presetSelect = document.getElementById('start-writing-timer-preset');
+  if (presetSelect) {
+    const catStr = String(set.category || '').toLowerCase();
+    const titleStr = String(set.title || '').toLowerCase();
+    if (catStr.includes('200') || titleStr.includes('200') || catStr.startsWith('doan-')) {
+      presetSelect.value = '20';
+    } else if (catStr.startsWith('bai-') || titleStr.includes('văn học') || catStr.includes('nlvh')) {
+      presetSelect.value = '60';
+    } else {
+      presetSelect.value = '60';
+    }
+  }
+
+  if (typeof dlg.showModal === 'function') {
+    if (!dlg.open) dlg.showModal();
+  } else {
+    dlg.setAttribute('open', '');
+  }
+
+  setTimeout(() => {
+    if (nickInput && !nickInput.value) nickInput.focus();
+  }, 60);
+}
+
+function closeStartWritingModal() {
+  const dlg = document.getElementById('start-writing-dialog');
+  if (dlg) {
+    if (typeof dlg.close === 'function' && dlg.open) dlg.close();
+    else dlg.removeAttribute('open');
+  }
+}
+
+function handleStartWritingSubmit(e) {
+  if (e) e.preventDefault();
+  const id = document.getElementById('start-writing-set-id')?.value;
+  const set = writingSets.find(s => String(s.id) === String(id));
+  if (!set) return;
+
+  const nick = (document.getElementById('start-writing-nick')?.value || '').trim();
+  const className = (document.getElementById('start-writing-class')?.value || '').trim();
+  const chosenMinutes = parseInt(document.getElementById('start-writing-timer-preset')?.value, 10) || 0;
+
+  if (!nick) {
+    if (typeof toast === 'function') toast('Vui lòng nhập họ và tên học sinh!', 'bad');
+    return;
+  }
+
+  if (typeof Auth !== 'undefined' && typeof Auth.setSavedStudentInfo === 'function') {
+    Auth.setSavedStudentInfo(nick, className);
+  } else {
+    try {
+      localStorage.setItem('vq_player_nick', nick);
+      if (className) localStorage.setItem('vq_player_class', className);
+    } catch (_) {}
+  }
+
+  if (typeof renderNavbarUserWidget === 'function') renderNavbarUserWidget();
+  if (typeof renderMobileSidebarUser === 'function') renderMobileSidebarUser();
+
+  closeStartWritingModal();
+  openWritingWorkspace(set, chosenMinutes);
+}
+
+function openWritingWorkspace(set, chosenMinutes = null) {
+  if (chosenMinutes === null || chosenMinutes === undefined) {
+    openStartWritingModal(set.id);
+    return;
   }
 
   if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(set, 'writing')) {
@@ -892,13 +995,17 @@ function openWritingWorkspace(set) {
   // Render Section Inputs in Right Panel
   renderWritingSections();
 
-  // Initialize Scaffolding & Pressure Timer
-  if (typeof initWritingScaffoldingAndTimer === 'function') {
-    initWritingScaffoldingAndTimer();
+  // Initialize Scaffolding & Pressure Timer with the chosen time!
+  if (typeof setWritingPressureMode === 'function') {
+    setWritingPressureMode(chosenMinutes);
+  } else if (typeof startWritingTimer === 'function') {
+    startWritingTimer();
   }
 
-  // Start Timer
-  startWritingTimer();
+  const modeTag = document.getElementById('workspace-timer-mode-tag');
+  if (modeTag) {
+    modeTag.textContent = chosenMinutes > 0 ? `⏱️ ${chosenMinutes} phút` : '⏳ Tự do';
+  }
 
   // Setup auto-save every 15s
   clearInterval(autoSaveDraftTimer);
@@ -908,6 +1015,7 @@ function openWritingWorkspace(set) {
 
   // Initialize split resizer
   setupSplitter();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function exitWritingWorkspace(force = false) {
@@ -1723,15 +1831,9 @@ function getWritingSectionMaxScore(sec, idx, totalSecs) {
   return Math.round((10.0 / Math.max(1, totalSecs)) * 10) / 10;
 }
 
-function submitWritingEssay() {
+function submitWritingEssay(isAutoSubmit = false) {
   if (!currentWritingSet) {
     toast('Không tìm thấy thông tin bộ đề luyện viết hiện tại!', 'bad');
-    return;
-  }
-
-  if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(currentWritingSet, 'writing')) {
-    const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(currentWritingSet, 'writing') : { message: 'Đề luyện viết này đã kết thúc!' };
-    toast(`⚠️ ${info.message}`, 'bad');
     return;
   }
 
@@ -1740,25 +1842,38 @@ function submitWritingEssay() {
   const totalWords = updateTotalWordsDisplay();
   const sections = currentWritingSet.sections || [];
 
-  if (totalWords === 0) {
-    toast('Vui lòng viết nội dung bài làm trước khi nộp bài!', 'bad');
-    return;
+  if (!isAutoSubmit) {
+    if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(currentWritingSet, 'writing')) {
+      const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(currentWritingSet, 'writing') : { message: 'Đề luyện viết này đã kết thúc!' };
+      toast(`⚠️ ${info.message}`, 'bad');
+      return;
+    }
+
+    if (totalWords === 0) {
+      toast('Vui lòng viết nội dung bài làm trước khi nộp bài!', 'bad');
+      return;
+    }
+
+    const answeredSections = sections.filter(sec => {
+      const text = (currentWritingDraft.sections?.[sec.id] || '').trim();
+      return text.length > 0;
+    });
+
+    const confirmMsg = answeredSections.length < sections.length
+      ? `Bạn mới viết ${answeredSections.length}/${sections.length} phần của bài viết (${totalWords} từ). Bạn có chắc chắn muốn nộp bài chấm điểm không?`
+      : `Xác nhận nộp bài viết "${currentWritingSet.title}" (${totalWords} từ) để lưu vào lịch sử và gửi giáo viên chấm điểm?`;
+
+    if (!confirm(confirmMsg)) return;
   }
+
+  const user = typeof Auth !== 'undefined' ? Auth.getCurrentUser() : null;
+  const pName = (user ? (user.full_name || user.username) : (localStorage.getItem('vq_player_nick') || localStorage.getItem('vq_player_name') || '')).trim() || 'Học sinh';
+  const cName = (user ? (user.class_name || '') : (localStorage.getItem('vq_player_class') || '')).trim();
 
   const answeredSections = sections.filter(sec => {
     const text = (currentWritingDraft.sections?.[sec.id] || '').trim();
     return text.length > 0;
   });
-
-  const confirmMsg = answeredSections.length < sections.length
-    ? `Bạn mới viết ${answeredSections.length}/${sections.length} phần của bài viết (${totalWords} từ). Bạn có chắc chắn muốn nộp bài chấm điểm không?`
-    : `Xác nhận nộp bài viết "${currentWritingSet.title}" (${totalWords} từ) để lưu vào lịch sử và gửi giáo viên chấm điểm?`;
-
-  if (!confirm(confirmMsg)) return;
-
-  const user = typeof Auth !== 'undefined' ? Auth.getCurrentUser() : null;
-  const pName = (user ? (user.full_name || user.username) : (localStorage.getItem('vq_player_nick') || localStorage.getItem('vq_player_name') || '')).trim() || 'Học sinh';
-  const cName = (user ? (user.class_name || '') : (localStorage.getItem('vq_player_class') || '')).trim();
 
   const details = sections.map((sec, idx) => {
     const text = (currentWritingDraft.sections?.[sec.id] || '').trim();
@@ -1801,10 +1916,12 @@ function submitWritingEssay() {
     totalQuestions: sections.length,
     answeredCount: answeredSections.length,
     savedShortCount: totalWords,
-    elapsedSeconds: writingTimerSeconds,
+    elapsedSeconds: typeof writingTimerSeconds !== 'undefined' ? writingTimerSeconds : 0,
     isGraded: false,
     teacherFeedback: '',
     teacherName: '',
+    isAutoSubmitted: Boolean(isAutoSubmit),
+    autoSubmitReason: isAutoSubmit ? 'Hết thời gian làm bài' : '',
     details: details
   };
 
@@ -1839,7 +1956,11 @@ function submitWritingEssay() {
     }
 
     // 4. Hiển thị thông báo nộp bài thành công
-    toast(`🎉 Nộp bài thành công! Bài làm (${totalWords} từ) đã được gửi và lưu vào Lịch sử bài làm.`, 'ok');
+    if (isAutoSubmit) {
+      toast(`⏰ HẾT GIỜ LÀM BÀI! Bài làm (${totalWords} từ) đã được hệ thống tự động thu và gửi về cho Giáo viên/Admin.`, 'bad');
+    } else {
+      toast(`🎉 Nộp bài thành công! Bài làm (${totalWords} từ) đã được gửi và lưu vào Lịch sử bài làm.`, 'ok');
+    }
   } catch (err) {
     console.error('Submit writing error:', err);
     toast('Lỗi khi lưu bài viết vào lịch sử.', 'bad');
@@ -1847,6 +1968,9 @@ function submitWritingEssay() {
 }
 
 if (typeof window !== 'undefined') {
+  window.openStartWritingModal = openStartWritingModal;
+  window.closeStartWritingModal = closeStartWritingModal;
+  window.handleStartWritingSubmit = handleStartWritingSubmit;
   window.submitWritingEssay = submitWritingEssay;
   window.getWritingSectionMaxScore = getWritingSectionMaxScore;
   window.promptAddNewCategory = promptAddNewCategory;
