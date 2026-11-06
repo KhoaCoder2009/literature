@@ -24,7 +24,10 @@
           <select id="history-page-set-filter" onchange="onHistoryPageSetFilterChange()" style="height:46px; border-radius:14px; border:2px solid var(--stroke); padding:0 14px; font-weight:700; font-size:13.5px; background:var(--bg-card); color:var(--ink); min-width:200px; max-width:280px;" title="Lọc theo bộ câu hỏi">
             <option value="">Tất cả bộ đề</option>
           </select>
-          <button class="btn no sm teacher-only" type="button" onclick="clearAllQuizHistory()" title="Xóa toàn bộ lịch sử trên máy" style="height:46px; padding:0 14px; font-weight:700; border-radius:14px;">
+          <button class="btn cy sm teacher-only" type="button" onclick="openAccountManagerModal('students')" title="Kiểm soát danh sách tên học sinh &amp; chuẩn hóa tên" style="height:40px; padding:0 12px; font-weight:700; border-radius:10px;">
+            <ion-icon name="people-outline"></ion-icon> <span>Kiểm soát Tên HS</span>
+          </button>
+          <button class="btn no sm teacher-only" type="button" onclick="clearAllQuizHistory()" title="Xóa toàn bộ lịch sử trên máy" style="height:40px; padding:0 12px; font-weight:700; border-radius:10px;">
             <ion-icon name="trash-outline"></ion-icon> <span>Xóa tất cả</span>
           </button>
         </div>

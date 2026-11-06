@@ -127,6 +127,11 @@ function handleStartQuizSubmit(e) {
     localStorage.setItem('vq_player_nick', nick);
     if (className) localStorage.setItem('vq_player_class', className);
     else localStorage.removeItem('vq_player_class');
+    if (typeof Auth !== 'undefined' && typeof Auth.setSavedStudentInfo === 'function') {
+      Auth.setSavedStudentInfo(nick, className);
+    }
+    if (typeof renderNavbarUserWidget === 'function') renderNavbarUserWidget();
+    if (typeof renderMobileSidebarUser === 'function') renderMobileSidebarUser();
   } catch (err) {}
 
   // Sync to hidden inputs

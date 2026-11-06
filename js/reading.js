@@ -423,6 +423,11 @@ function exitReadingWorkspace(force = false) {
 }
 
 function openReadingSet(id) {
+  if (typeof ensureStudentNameBeforeExam === 'function') {
+    const ok = ensureStudentNameBeforeExam(() => openReadingSet(id));
+    if (!ok) return;
+  }
+
   const set = readingSets.find(s => String(s.id) === String(id));
   if (!set) {
     toast('Không tìm thấy bộ đề đọc hiểu này!', 'bad');

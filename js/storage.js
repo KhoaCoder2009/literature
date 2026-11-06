@@ -1172,7 +1172,20 @@ window.getSetAttemptBadgeHtml = getSetAttemptBadgeHtml;
 window.getSetDeadlineBadgeHtml = getSetDeadlineBadgeHtml;
 
 function getQuizHistory(forceAll = false) {
-  return getAllRawQuizHistory();
+  const all = getAllRawQuizHistory();
+  if (forceAll || (typeof Auth !== 'undefined' && Auth.isTeacher())) {
+    return all;
+  }
+  // Nếu là học sinh: chỉ hiển thị bài làm của chính học sinh này (theo tên học sinh đã lưu)
+  const studentName = typeof Auth !== 'undefined' ? (Auth.getSavedStudentName() || '').trim().toLowerCase() : '';
+  if (!studentName || studentName === 'học sinh' || studentName === 'khách') {
+    return all;
+  }
+  const filtered = all.filter(item => {
+    const pName = String(item.playerName || '').trim().toLowerCase();
+    return pName === studentName;
+  });
+  return filtered.length > 0 ? filtered : all;
 }
 
 function mapSupabaseRowToHistory(row) {
@@ -1792,6 +1805,9 @@ function renderHistoryItemCardHtml(item) {
 
       <div class="history-item-footer">
         ${canGrade ? `
+          <button class="btn gh sm teacher-only" type="button" onclick="openEditHistoryStudentModal('${esc(item.id)}')" title="Sửa tên &amp; lớp học sinh trên bài nộp này">
+            <ion-icon name="person-outline"></ion-icon> Sửa tên HS
+          </button>
           ${isGraded ? `
             <button class="btn cy sm" type="button" onclick="viewHistoryDetail('${esc(item.id)}', true)">
               <ion-icon name="create-outline"></ion-icon> Sửa điểm / Chấm lại

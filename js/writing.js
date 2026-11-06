@@ -831,6 +831,11 @@ function openWritingWorkspaceById(setId) {
 }
 
 function openWritingWorkspace(set) {
+  if (typeof ensureStudentNameBeforeExam === 'function') {
+    const ok = ensureStudentNameBeforeExam(() => openWritingWorkspace(set));
+    if (!ok) return;
+  }
+
   if (typeof isStudentEntryBlocked === 'function' && isStudentEntryBlocked(set, 'writing')) {
     const info = (typeof getStudentBlockInfo === 'function') ? getStudentBlockInfo(set, 'writing') : { hasSubmissions: false, message: 'Bộ đề luyện viết này đã khóa đối với bạn!' };
     toast(info.message, 'bad');

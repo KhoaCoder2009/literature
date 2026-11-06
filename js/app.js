@@ -61,6 +61,21 @@ function updateSettingsUI() {
     projBtn.textContent = isProjectorMode ? 'Bật' : 'Tắt';
     projBtn.className = 'btn sm settings-action-btn ' + (isProjectorMode ? 'au' : 'gh');
   }
+  const userDesc = $('#settings-user-desc');
+  const userBtn = $('#btn-setting-account');
+  if (typeof Auth !== 'undefined' && userDesc && userBtn) {
+    if (Auth.isTeacher()) {
+      const u = Auth.getCurrentUser();
+      userDesc.textContent = `Giáo viên: ${u.full_name} (@${u.username})`;
+      userBtn.textContent = 'Quản lý';
+      userBtn.className = 'btn sm cy settings-action-btn';
+    } else {
+      const sName = Auth.getSavedStudentName();
+      userDesc.textContent = sName ? `Học sinh: ${sName}` : 'Chế độ Học sinh (Không cần đăng nhập)';
+      userBtn.textContent = 'Đăng nhập GV';
+      userBtn.className = 'btn sm au settings-action-btn';
+    }
+  }
 }
 
 function toggleMobileMenu() {

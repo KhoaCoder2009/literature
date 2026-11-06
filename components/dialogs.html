@@ -861,10 +861,10 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
     <button type="button" class="qa-tab-btn active" id="qa-tab-btn-form" onclick="switchQaModalTab('form')">
       <ion-icon name="paper-plane-outline"></ion-icon> <span>Gửi câu hỏi / Báo lỗi</span>
     </button>
-    <button type="button" class="qa-tab-btn" id="qa-tab-btn-list" onclick="switchQaModalTab('list')">
+    <button type="button" class="qa-tab-btn teacher-only" id="qa-tab-btn-list" onclick="switchQaModalTab('list')">
       <ion-icon name="list-outline"></ion-icon> <span>Danh sách thắc mắc (<span id="qa-saved-count">0</span>)</span>
     </button>
-    <button type="button" class="qa-tab-btn" id="qa-tab-btn-config" onclick="switchQaModalTab('config')">
+    <button type="button" class="qa-tab-btn teacher-only" id="qa-tab-btn-config" onclick="switchQaModalTab('config')">
       <ion-icon name="settings-outline"></ion-icon> <span>Kết nối Email / Sheets</span>
     </button>
   </div>
@@ -961,6 +961,194 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
           </button>
         </div>
       </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- DIALOG: ĐĂNG NHẬP TÀI KHOẢN GIÁO VIÊN / QUẢN TRỊ VIÊN -->
+<dialog id="login-dialog" class="auth-dialog" aria-labelledby="login-dialog-title">
+  <div class="auth-dialog-header">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <div class="auth-logo-circle" aria-hidden="true">🔐</div>
+      <div>
+        <h3 id="login-dialog-title" style="margin:0; font-size:17px; font-weight:800; color:var(--tx);">Đăng nhập Giáo viên</h3>
+        <p style="margin:2px 0 0; font-size:12px; color:var(--mut); font-weight:500;">Mở khóa quyền đăng bài tập, chấm bài, kiểm soát lịch sử &amp; tên học sinh</p>
+      </div>
+    </div>
+    <button type="button" class="btn gh sm" onclick="closeLoginDialog()" aria-label="Đóng" style="padding:4px 8px;">✕</button>
+  </div>
+
+  <div class="auth-student-notice">
+    <ion-icon name="school-outline"></ion-icon>
+    <span><b>Học sinh</b> không cần đăng nhập tài khoản — các em có thể vào làm bài trực tiếp ngay!</span>
+  </div>
+
+  <form id="login-form" onsubmit="handleAuthLoginSubmit(event)" autocomplete="on" class="auth-form-body">
+    <div id="login-error-alert" class="auth-error-alert" style="display:none;" role="alert"></div>
+
+    <div class="fg" style="margin-bottom:12px;">
+      <label class="fl" for="login-username">Tài khoản Giáo viên / Quản trị</label>
+      <div class="auth-input-wrap">
+        <ion-icon name="person-outline" class="auth-input-icon"></ion-icon>
+        <input id="login-username" class="fi auth-fi" type="text" placeholder="Ví dụ: giaovien hoặc admin..." required autocomplete="username">
+      </div>
+    </div>
+
+    <div class="fg" style="margin-bottom:12px;">
+      <label class="fl" for="login-password">Mật khẩu</label>
+      <div class="auth-input-wrap">
+        <ion-icon name="lock-closed-outline" class="auth-input-icon"></ion-icon>
+        <input id="login-password" class="fi auth-fi" type="password" placeholder="Nhập mật khẩu giáo viên..." required autocomplete="current-password" style="padding-right:38px;">
+        <button type="button" class="auth-eye-btn" onclick="toggleAuthPasswordEye('login-password', this)" aria-label="Hiện/Ẩn mật khẩu">
+          <ion-icon name="eye-outline"></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:14px;">
+      <label style="display:inline-flex; align-items:center; gap:6px; font-size:12.5px; color:var(--tx2); cursor:pointer; font-weight:600;">
+        <input type="checkbox" id="login-remember" checked style="accent-color:var(--au); width:15px; height:15px;">
+        <span>Duy trì đăng nhập trên thiết bị này</span>
+      </label>
+    </div>
+
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      <button type="button" class="btn gh sm" onclick="closeLoginDialog()">Đóng</button>
+      <button type="submit" id="btn-submit-login" class="btn au">
+        <ion-icon name="log-in-outline"></ion-icon> <span>Đăng nhập Giáo viên</span>
+      </button>
+    </div>
+  </form>
+</dialog>
+
+<!-- DIALOG: CẬP NHẬT HỌ TÊN & LỚP HỌC SINH (HOẶC SỬA TÊN HS TRONG LỊCH SỬ) -->
+<dialog id="student-name-dialog" class="auth-dialog" style="max-width:420px;" aria-labelledby="student-name-dialog-title">
+  <div class="auth-dialog-header">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <div class="auth-logo-circle" aria-hidden="true">🎓</div>
+      <div>
+        <h3 id="student-name-dialog-title" style="margin:0; font-size:16.5px; font-weight:800; color:var(--tx);">Thông tin Học sinh làm bài</h3>
+        <p id="student-name-dialog-sub" style="margin:2px 0 0; font-size:12px; color:var(--mut); font-weight:500;">Nhập họ tên &amp; lớp để giáo viên ghi nhận kết quả</p>
+      </div>
+    </div>
+    <button type="button" class="btn gh sm" onclick="closeStudentNameModal()" aria-label="Đóng" style="padding:4px 8px;">✕</button>
+  </div>
+
+  <form id="student-name-form" onsubmit="handleStudentNameSubmit(event)" class="auth-form-body">
+    <input type="hidden" id="edit-history-student-id" value="">
+    <input type="hidden" id="bulk-rename-old-name" value="">
+
+    <div class="fg" style="margin-bottom:12px;">
+      <label class="fl" for="student-modal-name">Họ và tên học sinh <span style="color:var(--red);">*</span></label>
+      <input id="student-modal-name" class="fi" type="text" placeholder="Ví dụ: Nguyễn Văn An" maxlength="60" required>
+    </div>
+
+    <div class="fg" style="margin-bottom:14px;">
+      <label class="fl" for="student-modal-class">Lớp</label>
+      <input id="student-modal-class" class="fi" type="text" placeholder="Ví dụ: 11A1, 12A2..." maxlength="25">
+    </div>
+
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      <button type="button" class="btn gh sm" onclick="closeStudentNameModal()">Hủy</button>
+      <button type="submit" class="btn au">
+        <ion-icon name="checkmark-circle-outline"></ion-icon> <span id="student-name-submit-label">Lưu thông tin</span>
+      </button>
+    </div>
+  </form>
+</dialog>
+
+<!-- DIALOG: ĐỔI MẬT KHẨU GIÁO VIÊN / ADMIN -->
+<dialog id="change-password-dialog" class="auth-dialog" style="max-width:420px;">
+  <div class="auth-dialog-header">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <div class="auth-logo-circle" aria-hidden="true">🔑</div>
+      <div>
+        <h3 style="margin:0; font-size:16.5px; font-weight:800; color:var(--tx);">Đổi mật khẩu Giáo viên</h3>
+        <p style="margin:2px 0 0; font-size:12px; color:var(--mut);">Cập nhật mật khẩu bảo mật cho tài khoản của bạn</p>
+      </div>
+    </div>
+    <button type="button" class="btn gh sm" onclick="closeChangePasswordModal()" style="padding:4px 8px;">✕</button>
+  </div>
+  <form id="change-password-form" onsubmit="handleChangePasswordSubmit(event)" class="auth-form-body">
+    <div id="change-password-alert" class="auth-error-alert" style="display:none;"></div>
+    <div class="fg" style="margin-bottom:10px;">
+      <label class="fl" for="change-old-password">Mật khẩu hiện tại</label>
+      <input id="change-old-password" class="fi" type="password" required placeholder="Nhập mật khẩu đang dùng...">
+    </div>
+    <div class="fg" style="margin-bottom:10px;">
+      <label class="fl" for="change-new-password">Mật khẩu mới</label>
+      <input id="change-new-password" class="fi" type="password" required minlength="6" placeholder="Tối thiểu 6 ký tự...">
+    </div>
+    <div class="fg" style="margin-bottom:14px;">
+      <label class="fl" for="change-confirm-password">Xác nhận mật khẩu mới</label>
+      <input id="change-confirm-password" class="fi" type="password" required minlength="6" placeholder="Nhập lại mật khẩu mới...">
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      <button type="button" class="btn gh sm" onclick="closeChangePasswordModal()">Hủy</button>
+      <button type="submit" id="btn-submit-change-pw" class="btn au">Lưu mật khẩu mới</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- DIALOG: TRUNG TÂM KIỂM SOÁT HỌC SINH & TÀI KHOẢN GIÁO VIÊN (QUYỀN CAO NHẤT) -->
+<dialog id="account-manager-dialog" class="auth-dialog" style="max-width:780px; width:95vw;">
+  <div class="auth-dialog-header">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <div class="auth-logo-circle" aria-hidden="true">👑</div>
+      <div>
+        <h3 style="margin:0; font-size:17px; font-weight:800; color:var(--tx);">Trung tâm Kiểm soát Giáo viên &amp; Quản trị</h3>
+        <p style="margin:2px 0 0; font-size:12px; color:var(--mut);">Kiểm soát danh sách tên học sinh, lịch sử nộp bài và tài khoản giáo viên</p>
+      </div>
+    </div>
+    <button type="button" class="btn gh sm" onclick="closeAccountManagerModal()" style="padding:4px 8px;">✕</button>
+  </div>
+
+  <div class="qa-modal-tabs" style="padding:0 18px; border-bottom:1px solid var(--bd);">
+    <button type="button" class="qa-tab-btn active" id="ctrl-tab-btn-students" onclick="switchControlModalTab('students')">
+      <ion-icon name="people-outline"></ion-icon> <span>Kiểm soát Tên Học sinh (<span id="ctrl-student-count">0</span>)</span>
+    </button>
+    <button type="button" class="qa-tab-btn" id="ctrl-tab-btn-accounts" onclick="switchControlModalTab('accounts')">
+      <ion-icon name="shield-checkmark-outline"></ion-icon> <span>Tài khoản Giáo viên / Admin</span>
+    </button>
+  </div>
+
+  <div class="auth-form-body" style="max-height:72vh; overflow-y:auto;">
+    <!-- TAB 1: KIỂM SOÁT DANH SÁCH HỌC SINH & CHUẨN HÓA TÊN -->
+    <div id="ctrl-pane-students">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px;">
+        <div class="search-wrap" style="flex:1; min-width:200px;">
+          <ion-icon name="search-outline" class="search-icon"></ion-icon>
+          <input id="ctrl-student-search" class="fi" type="text" placeholder="Tìm học sinh theo tên hoặc lớp..." oninput="renderStudentControlList()" style="padding-left:32px;">
+        </div>
+        <button type="button" class="btn gh sm" onclick="renderStudentControlList(true)">
+          <ion-icon name="refresh-outline"></ion-icon> <span>Làm mới</span>
+        </button>
+      </div>
+      <div id="ctrl-student-list-container"></div>
+    </div>
+
+    <!-- TAB 2: QUẢN LÝ TÀI KHOẢN GIÁO VIÊN / ADMIN -->
+    <div id="ctrl-pane-accounts" style="display:none;">
+      <form id="admin-create-user-form" onsubmit="handleAdminCreateUser(event)" style="background:var(--bg2); border:1px solid var(--bd); border-radius:10px; padding:12px; margin-bottom:14px;">
+        <div style="font-size:13px; font-weight:700; color:var(--tx); margin-bottom:10px;">➕ Cấp thêm Tài khoản Giáo viên / Quản trị viên</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:8px; margin-bottom:10px;">
+          <input id="new-acc-username" class="fi" type="text" placeholder="Tên đăng nhập *" required>
+          <input id="new-acc-password" class="fi" type="text" placeholder="Mật khẩu (tối thiểu 6 ký tự) *" required minlength="6">
+          <input id="new-acc-fullname" class="fi" type="text" placeholder="Họ tên Giáo viên *" required>
+          <select id="new-acc-role" class="fsel">
+            <option value="teacher">👑 Giáo viên (Toàn quyền bài học &amp; chấm bài)</option>
+            <option value="admin">🛡️ Quản trị viên (Quyền cao nhất)</option>
+          </select>
+        </div>
+        <input type="hidden" id="new-acc-class" value="">
+        <div style="display:flex; justify-content:flex-end;">
+          <button type="submit" id="btn-admin-create-acc" class="btn au sm">
+            <ion-icon name="person-add-outline"></ion-icon> <span>Tạo tài khoản Giáo viên</span>
+          </button>
+        </div>
+      </form>
+
+      <div id="account-manager-list"></div>
     </div>
   </div>
 </dialog>

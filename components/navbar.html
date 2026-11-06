@@ -25,7 +25,7 @@
     <a data-g="history" onclick="go('history')" class="nav-link">
       <ion-icon name="time-outline"></ion-icon> <span>Lịch sử</span>
     </a>
-    <a data-g="lib" class="nav-link" onclick="go('lib')">
+    <a data-g="lib" class="nav-link teacher-only" onclick="go('lib')">
       <ion-icon name="library-outline"></ion-icon> <span>Thư viện</span>
     </a>
   </div>
@@ -40,8 +40,9 @@
     <button class="btn sm gh nav-qa-pill" id="nav-qa-btn" type="button" onclick="openQaReportModal()" title="Báo cáo lỗi hoặc đặt câu hỏi thắc mắc kiến thức">
       <ion-icon name="help-buoy-outline" style="font-size: 17px;"></ion-icon> <span class="nav-btn-label">Hỏi đáp</span>
     </button>
+    <div id="nav-user-widget"></div>
     <button class="btn sm gh nav-settings-btn" type="button" onclick="openSettingsDialog()" title="Cài đặt">
-      <ion-icon name="settings-outline" style="font-size: 17px;"></ion-icon> <span class="nav-btn-label">Cài đặt</span>
+      <ion-icon name="settings-outline" style="font-size: 17px;"></ion-icon>
     </button>
   </div>
 </nav>
@@ -56,6 +57,8 @@
       <ion-icon name="close-outline" style="font-size: 20px;"></ion-icon>
     </button>
   </div>
+
+  <div id="sidebar-user-header"></div>
 
   <div class="sidebar-links-list">
     <div class="sidebar-section-title">Học tập</div>
@@ -73,7 +76,7 @@
     </a>
 
     <div class="sidebar-section-title">Quản lý</div>
-    <a data-g="lib" onclick="go('lib'); closeMobileMenu();">
+    <a data-g="lib" class="teacher-only" onclick="go('lib'); closeMobileMenu();">
       <span class="sidebar-icon"><ion-icon name="library-outline"></ion-icon></span> <span>Thư viện</span>
     </a>
     <a data-g="history" onclick="go('history'); closeMobileMenu();">

@@ -112,7 +112,16 @@ function go(n, p) {
     return;
   }
   if (n === 'accounts') {
+    if (typeof Auth !== 'undefined' && Auth.isTeacher() && typeof openAccountManagerModal === 'function') {
+      openAccountManagerModal('students');
+      return;
+    }
     n = 'home';
+  }
+  if ((n === 'lib' || n === 'edit') && typeof Auth !== 'undefined' && !Auth.canEditContent()) {
+    toast('🔒 Thư viện & Đăng bài tập chỉ dành cho Giáo viên! Vui lòng đăng nhập tài khoản Giáo viên.', 'err');
+    if (typeof openLoginDialog === 'function') openLoginDialog();
+    return;
   }
   if (typeof playSound === 'function') playSound('pop');
   const sc = n == 'edit' ? 'lib' : n;
