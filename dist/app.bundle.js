@@ -4407,9 +4407,11 @@ const writingLibCardHtml = (s, idx = 0) => {
 </div>`;
 };
 
-function setTopicFilter(topic) {
+function setTopicFilter(topic, fromSelect) {
   topic = String(topic || '').trim();
-  if (currentTopicFilter.toLowerCase() === topic.toLowerCase()) {
+  if (fromSelect) {
+    currentTopicFilter = topic;
+  } else if (currentTopicFilter.toLowerCase() === topic.toLowerCase()) {
     currentTopicFilter = ''; // toggle off back to all
   } else {
     currentTopicFilter = topic;
@@ -4451,30 +4453,27 @@ function renderTopicChips(allSets, filteredSets) {
     return a.localeCompare(b, 'vi');
   });
 
-  let chipsHtml = `
-    <button type="button" class="topic-chip ${!currentTopicFilter ? 'active' : ''}" onclick="setTopicFilter('')" role="tab" aria-selected="${!currentTopicFilter}">
-      <span><ion-icon name="pricetag-outline"></ion-icon> Tất cả</span>
-      <span class="topic-chip-count">${allSets.length}</span>
-    </button>
-  `;
+  let optionsHtml = `<option value="" ${!currentTopicFilter ? 'selected' : ''}>🏷️ Tất cả chủ đề (${allSets.length} bộ)</option>`;
 
   uniqueTopics.forEach(top => {
     const isActive = currentTopicFilter && currentTopicFilter.toLowerCase() === top.toLowerCase();
     const count = topicCounts[top];
-    chipsHtml += `
-      <button type="button" class="topic-chip ${isActive ? 'active' : ''}" onclick="setTopicFilter('${esc(top)}')" role="tab" aria-selected="${isActive}">
-        <span>${esc(top)}</span>
-        <span class="topic-chip-count">${count}</span>
-      </button>
-    `;
+    optionsHtml += `<option value="${esc(top)}" ${isActive ? 'selected' : ''}>${esc(top)} (${count})</option>`;
   });
 
-  container.innerHTML = chipsHtml;
+  container.innerHTML = `
+    <div class="topic-dropdown-wrap">
+      <select class="topic-filter-select" id="lib-topic-select" onchange="setTopicFilter(this.value, true)" aria-label="Bộ lọc thẻ chủ đề">
+        ${optionsHtml}
+      </select>
+      ${currentTopicFilter ? `<button type="button" class="btn gh sm" onclick="setTopicFilter('', true)" title="Bỏ lọc chủ đề">✕ Xem tất cả</button>` : ''}
+    </div>
+  `;
 
   const summary = $('#topic-filter-summary');
   if (summary) {
     if (currentTopicFilter) {
-      summary.innerHTML = `Đang chọn: <b>${esc(currentTopicFilter)}</b> (${filteredSets.length}/${allSets.length} bộ) · <a href="javascript:void(0)" onclick="setTopicFilter('')" style="color:var(--yellow); text-decoration:underline; font-weight:800;">✕ Xem tất cả</a>`;
+      summary.innerHTML = `Đang chọn: <b>${esc(currentTopicFilter)}</b> (${filteredSets.length}/${allSets.length} bộ)`;
     } else {
       summary.textContent = `Tổng cộng: ${allSets.length} bộ câu hỏi`;
     }
@@ -4818,9 +4817,13 @@ function onLibReadingSearchInput() {
   renderLibReadingPane();
 }
 
-function setLibReadingTopicFilter(top) {
+function setLibReadingTopicFilter(top, fromSelect) {
   top = String(top || '').trim();
-  currentLibReadingTopic = currentLibReadingTopic.toLowerCase() === top.toLowerCase() ? '' : top;
+  if (fromSelect) {
+    currentLibReadingTopic = top;
+  } else {
+    currentLibReadingTopic = currentLibReadingTopic.toLowerCase() === top.toLowerCase() ? '' : top;
+  }
   renderLibReadingPane();
 }
 
@@ -4835,7 +4838,7 @@ function renderLibReadingPane() {
 
   const allSets = Array.isArray(readingSets) ? readingSets : [];
 
-  // Render Topic Chips
+  // Render Topic Dropdown
   if (chipsBar) {
     const catMap = new Map();
     allSets.forEach(s => {
@@ -4844,20 +4847,19 @@ function renderLibReadingPane() {
     });
 
     const isAll = !currentLibReadingTopic;
-    let chipsHtml = `
-      <button class="topic-chip ${isAll ? 'active' : ''}" type="button" onclick="setLibReadingTopicFilter('')">
-        <span>Tất cả</span> <span class="topic-chip-count">${allSets.length}</span>
-      </button>
-    `;
+    let optionsHtml = `<option value="" ${isAll ? 'selected' : ''}>🏷️ Tất cả chủ đề (${allSets.length} đề)</option>`;
     catMap.forEach((count, cat) => {
       const isActive = currentLibReadingTopic.toLowerCase() === cat.toLowerCase();
-      chipsHtml += `
-        <button class="topic-chip ${isActive ? 'active' : ''}" type="button" onclick="setLibReadingTopicFilter('${esc(cat)}')">
-          <span>${esc(cat)}</span> <span class="topic-chip-count">${count}</span>
-        </button>
-      `;
+      optionsHtml += `<option value="${esc(cat)}" ${isActive ? 'selected' : ''}>${esc(cat)} (${count})</option>`;
     });
-    chipsBar.innerHTML = chipsHtml;
+    chipsBar.innerHTML = `
+      <div class="topic-dropdown-wrap">
+        <select class="topic-filter-select" id="lib-reading-topic-select" onchange="setLibReadingTopicFilter(this.value, true)" aria-label="Bộ lọc chủ đề đọc hiểu">
+          ${optionsHtml}
+        </select>
+        ${!isAll ? `<button type="button" class="btn gh sm" onclick="setLibReadingTopicFilter('', true)" title="Bỏ lọc chủ đề">✕ Xem tất cả</button>` : ''}
+      </div>
+    `;
     if (summaryEl) {
       summaryEl.textContent = isAll ? `Tổng cộng: ${allSets.length} đề` : `Đang lọc: "${currentLibReadingTopic}"`;
     }
@@ -4900,9 +4902,13 @@ function onLibWritingSearchInput() {
   renderLibWritingPane();
 }
 
-function setLibWritingTopicFilter(top) {
+function setLibWritingTopicFilter(top, fromSelect) {
   top = String(top || '').trim();
-  currentLibWritingTopic = currentLibWritingTopic.toLowerCase() === top.toLowerCase() ? '' : top;
+  if (fromSelect) {
+    currentLibWritingTopic = top;
+  } else {
+    currentLibWritingTopic = currentLibWritingTopic.toLowerCase() === top.toLowerCase() ? '' : top;
+  }
   renderLibWritingPane();
 }
 
@@ -4917,7 +4923,7 @@ function renderLibWritingPane() {
 
   const allSets = Array.isArray(writingSets) ? writingSets : [];
 
-  // Render Topic Chips
+  // Render Topic Dropdown
   if (chipsBar) {
     const catMap = new Map();
     allSets.forEach(s => {
@@ -4926,20 +4932,19 @@ function renderLibWritingPane() {
     });
 
     const isAll = !currentLibWritingTopic;
-    let chipsHtml = `
-      <button class="topic-chip ${isAll ? 'active' : ''}" type="button" onclick="setLibWritingTopicFilter('')">
-        <span>Tất cả</span> <span class="topic-chip-count">${allSets.length}</span>
-      </button>
-    `;
+    let optionsHtml = `<option value="" ${isAll ? 'selected' : ''}>🏷️ Tất cả chủ đề (${allSets.length} đề)</option>`;
     catMap.forEach((count, cat) => {
       const isActive = currentLibWritingTopic.toLowerCase() === cat.toLowerCase();
-      chipsHtml += `
-        <button class="topic-chip ${isActive ? 'active' : ''}" type="button" onclick="setLibWritingTopicFilter('${esc(cat)}')">
-          <span>${esc(cat)}</span> <span class="topic-chip-count">${count}</span>
-        </button>
-      `;
+      optionsHtml += `<option value="${esc(cat)}" ${isActive ? 'selected' : ''}>${esc(cat)} (${count})</option>`;
     });
-    chipsBar.innerHTML = chipsHtml;
+    chipsBar.innerHTML = `
+      <div class="topic-dropdown-wrap">
+        <select class="topic-filter-select" id="lib-writing-topic-select" onchange="setLibWritingTopicFilter(this.value, true)" aria-label="Bộ lọc chủ đề viết">
+          ${optionsHtml}
+        </select>
+        ${!isAll ? `<button type="button" class="btn gh sm" onclick="setLibWritingTopicFilter('', true)" title="Bỏ lọc chủ đề">✕ Xem tất cả</button>` : ''}
+      </div>
+    `;
     if (summaryEl) {
       summaryEl.textContent = isAll ? `Tổng cộng: ${allSets.length} đề` : `Đang lọc: "${currentLibWritingTopic}"`;
     }
@@ -6269,7 +6274,7 @@ function renderSetupSetsGrid(selectedId) {
     return true;
   });
 
-  // 1. Render Topic Chips
+  // 1. Render Topic Dropdown
   const chipsContainer = $('#setup-topic-chips');
   const summaryEl = $('#setup-topic-summary');
   if (chipsContainer) {
@@ -6280,22 +6285,21 @@ function renderSetupSetsGrid(selectedId) {
     });
 
     const isAll = currentSetupTopic === 'all';
-    let chipsHtml = `
-      <button class="topic-chip ${isAll ? 'active' : ''}" type="button" onclick="setSetupTopicFilter('all')">
-        Tất cả <span class="chip-count">(${validSets.length})</span>
-      </button>
-    `;
+    let optionsHtml = `<option value="all" ${isAll ? 'selected' : ''}>🏷️ Tất cả chủ đề (${validSets.length} bộ)</option>`;
 
     topicMap.forEach((count, top) => {
       const isActive = currentSetupTopic === top;
-      chipsHtml += `
-        <button class="topic-chip ${isActive ? 'active' : ''}" type="button" onclick="setSetupTopicFilter('${esc(top)}')">
-          ${esc(top)} <span class="chip-count">(${count})</span>
-        </button>
-      `;
+      optionsHtml += `<option value="${esc(top)}" ${isActive ? 'selected' : ''}>${esc(top)} (${count})</option>`;
     });
 
-    chipsContainer.innerHTML = chipsHtml;
+    chipsContainer.innerHTML = `
+      <div class="topic-dropdown-wrap">
+        <select class="topic-filter-select" id="setup-topic-select" onchange="setSetupTopicFilter(this.value)" aria-label="Bộ lọc chủ đề bài học">
+          ${optionsHtml}
+        </select>
+        ${!isAll ? `<button type="button" class="btn gh sm" onclick="setSetupTopicFilter('all')" title="Bỏ lọc chủ đề">✕ Xem tất cả</button>` : ''}
+      </div>
+    `;
     if (summaryEl) {
       summaryEl.textContent = isAll ? `(${validSets.length} bộ đề)` : `(Lọc theo "${currentSetupTopic}")`;
     }
@@ -7433,24 +7437,24 @@ function renderCategoryFilterBar() {
 
   const cats = getWritingCategories();
   const allCount = writingSets.length;
+  const isAll = currentWritingCategory === 'all';
 
-  let html = `
-    <button type="button" class="w-chip ${currentWritingCategory === 'all' ? 'on' : ''}" data-cat="all" onclick="filterWritingCategory('all')">
-      <span>Tất cả</span> <span class="w-chip-count">${allCount}</span>
-    </button>
-  `;
+  let optionsHtml = `<option value="all" ${isAll ? 'selected' : ''}>🏷️ Tất cả chủ đề (${allCount} đề)</option>`;
 
   cats.forEach(c => {
     const count = writingSets.filter(s => s.category === c.id).length;
-    html += `
-      <button type="button" class="w-chip ${currentWritingCategory === c.id ? 'on' : ''}" data-cat="${c.id}" onclick="filterWritingCategory('${c.id}')">
-        <span><ion-icon name="pricetag-outline"></ion-icon> ${esc(c.name)}</span>
-        <span class="w-chip-count">${count}</span>
-      </button>
-    `;
+    const isActive = currentWritingCategory === c.id;
+    optionsHtml += `<option value="${esc(c.id)}" ${isActive ? 'selected' : ''}>${esc(c.name)} (${count})</option>`;
   });
 
-  container.innerHTML = html;
+  container.innerHTML = `
+    <div class="topic-dropdown-wrap">
+      <select class="topic-filter-select" id="writing-category-select" onchange="filterWritingCategory(this.value)" aria-label="Lọc theo chủ đề luyện viết">
+        ${optionsHtml}
+      </select>
+      ${!isAll ? `<button type="button" class="btn gh sm" onclick="filterWritingCategory('all')" title="Bỏ lọc chủ đề">✕ Xem tất cả</button>` : ''}
+    </div>
+  `;
 }
 
 function promptAddNewCategory() {
@@ -9274,23 +9278,23 @@ function renderReadingCategoryChips() {
   if (!container) return;
 
   const allCount = readingSets.length;
-  let html = `
-    <button class="reading-chip ${currentReadingCategory === 'all' ? 'active' : ''}" type="button" onclick="setReadingCategoryFilter('all')">
-      Tất cả <span class="reading-chip-count">(${allCount})</span>
-    </button>
-  `;
+  const isAll = currentReadingCategory === 'all';
+  let optionsHtml = `<option value="all" ${isAll ? 'selected' : ''}>🏷️ Tất cả chủ đề (${allCount} đề)</option>`;
 
   readingCategories.forEach(cat => {
     const count = readingSets.filter(s => (s.category || '').trim() === cat).length;
     const isActive = currentReadingCategory === cat;
-    html += `
-      <button class="reading-chip ${isActive ? 'active' : ''}" type="button" onclick="setReadingCategoryFilter('${esc(cat)}')">
-        ${esc(cat)} <span class="reading-chip-count">(${count})</span>
-      </button>
-    `;
+    optionsHtml += `<option value="${esc(cat)}" ${isActive ? 'selected' : ''}>${esc(cat)} (${count})</option>`;
   });
 
-  container.innerHTML = html;
+  container.innerHTML = `
+    <div class="topic-dropdown-wrap">
+      <select class="topic-filter-select" id="reading-category-select" onchange="setReadingCategoryFilter(this.value)" aria-label="Lọc theo chủ đề đọc hiểu">
+        ${optionsHtml}
+      </select>
+      ${!isAll ? `<button type="button" class="btn gh sm" onclick="setReadingCategoryFilter('all')" title="Bỏ lọc chủ đề">✕ Xem tất cả</button>` : ''}
+    </div>
+  `;
 }
 
 function setReadingCategoryFilter(category) {

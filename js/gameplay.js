@@ -152,7 +152,7 @@ function renderSetupSetsGrid(selectedId) {
     return true;
   });
 
-  // 1. Render Topic Chips
+  // 1. Render Topic Dropdown
   const chipsContainer = $('#setup-topic-chips');
   const summaryEl = $('#setup-topic-summary');
   if (chipsContainer) {
@@ -163,22 +163,21 @@ function renderSetupSetsGrid(selectedId) {
     });
 
     const isAll = currentSetupTopic === 'all';
-    let chipsHtml = `
-      <button class="topic-chip ${isAll ? 'active' : ''}" type="button" onclick="setSetupTopicFilter('all')">
-        Tất cả <span class="chip-count">(${validSets.length})</span>
-      </button>
-    `;
+    let optionsHtml = `<option value="all" ${isAll ? 'selected' : ''}>🏷️ Tất cả chủ đề (${validSets.length} bộ)</option>`;
 
     topicMap.forEach((count, top) => {
       const isActive = currentSetupTopic === top;
-      chipsHtml += `
-        <button class="topic-chip ${isActive ? 'active' : ''}" type="button" onclick="setSetupTopicFilter('${esc(top)}')">
-          ${esc(top)} <span class="chip-count">(${count})</span>
-        </button>
-      `;
+      optionsHtml += `<option value="${esc(top)}" ${isActive ? 'selected' : ''}>${esc(top)} (${count})</option>`;
     });
 
-    chipsContainer.innerHTML = chipsHtml;
+    chipsContainer.innerHTML = `
+      <div class="topic-dropdown-wrap">
+        <select class="topic-filter-select" id="setup-topic-select" onchange="setSetupTopicFilter(this.value)" aria-label="Bộ lọc chủ đề bài học">
+          ${optionsHtml}
+        </select>
+        ${!isAll ? `<button type="button" class="btn gh sm" onclick="setSetupTopicFilter('all')" title="Bỏ lọc chủ đề">✕ Xem tất cả</button>` : ''}
+      </div>
+    `;
     if (summaryEl) {
       summaryEl.textContent = isAll ? `(${validSets.length} bộ đề)` : `(Lọc theo "${currentSetupTopic}")`;
     }

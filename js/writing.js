@@ -475,24 +475,24 @@ function renderCategoryFilterBar() {
 
   const cats = getWritingCategories();
   const allCount = writingSets.length;
+  const isAll = currentWritingCategory === 'all';
 
-  let html = `
-    <button type="button" class="w-chip ${currentWritingCategory === 'all' ? 'on' : ''}" data-cat="all" onclick="filterWritingCategory('all')">
-      <span>Tất cả</span> <span class="w-chip-count">${allCount}</span>
-    </button>
-  `;
+  let optionsHtml = `<option value="all" ${isAll ? 'selected' : ''}>🏷️ Tất cả chủ đề (${allCount} đề)</option>`;
 
   cats.forEach(c => {
     const count = writingSets.filter(s => s.category === c.id).length;
-    html += `
-      <button type="button" class="w-chip ${currentWritingCategory === c.id ? 'on' : ''}" data-cat="${c.id}" onclick="filterWritingCategory('${c.id}')">
-        <span><ion-icon name="pricetag-outline"></ion-icon> ${esc(c.name)}</span>
-        <span class="w-chip-count">${count}</span>
-      </button>
-    `;
+    const isActive = currentWritingCategory === c.id;
+    optionsHtml += `<option value="${esc(c.id)}" ${isActive ? 'selected' : ''}>${esc(c.name)} (${count})</option>`;
   });
 
-  container.innerHTML = html;
+  container.innerHTML = `
+    <div class="topic-dropdown-wrap">
+      <select class="topic-filter-select" id="writing-category-select" onchange="filterWritingCategory(this.value)" aria-label="Lọc theo chủ đề luyện viết">
+        ${optionsHtml}
+      </select>
+      ${!isAll ? `<button type="button" class="btn gh sm" onclick="filterWritingCategory('all')" title="Bỏ lọc chủ đề">✕ Xem tất cả</button>` : ''}
+    </div>
+  `;
 }
 
 function promptAddNewCategory() {
