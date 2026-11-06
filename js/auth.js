@@ -36,7 +36,7 @@ const Auth = (() => {
       full_name: 'Giáo viên Ngữ văn',
       class_name: 'Giáo viên Bộ môn',
       role: 'teacher',
-      avatar: '👩‍🏫'
+      avatar: '👤'
     }
   ];
 
@@ -164,7 +164,7 @@ const Auth = (() => {
       full_name: userObj.full_name || userObj.username,
       class_name: userObj.class_name || 'Giáo viên',
       role: userObj.role === 'admin' ? 'admin' : 'teacher',
-      avatar: userObj.avatar || (userObj.role === 'admin' ? '🛡️' : '👑'),
+      avatar: userObj.avatar || (userObj.role === 'admin' ? './assets/teacher-tuanh.png' : '👤'),
       loginAt: new Date().toISOString()
     };
     currentTeacherUser = safeUser;
@@ -1301,7 +1301,7 @@ async function handleAdminCreateUser(e) {
     full_name: fullName,
     class_name: role === 'admin' ? 'Quản trị viên' : 'Giáo viên',
     role,
-    avatar: role === 'admin' ? '🛡️' : '👑'
+    avatar: role === 'admin' ? './assets/teacher-tuanh.png' : '👤'
   };
 
   customList.push(newAcc);
