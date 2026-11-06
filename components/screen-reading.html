@@ -44,6 +44,19 @@
           <span id="reading-workspace-set-badge" class="tag cy">Thơ hiện đại</span>
         </div>
         <div class="reading-workspace-actions">
+          <div class="exam-pressure-timer-widget" id="reading-pressure-timer-widget">
+            <span class="ept-icon">⏱️</span>
+            <select class="ept-mode-select" id="reading-timer-preset" onchange="setReadingPressureTimer(this.value)" title="Chọn thời gian rèn áp lực phòng thi">
+              <option value="0">Tự do (Đếm xuôi)</option>
+              <option value="15">🔥 15 phút (Đọc hiểu nhanh)</option>
+              <option value="20" selected>⚡ 20 phút (Đoạn văn 200 chữ)</option>
+              <option value="30">🏆 30 phút (Đọc hiểu + Đoạn văn)</option>
+              <option value="45">🎓 45 phút (Đề kiểm tra)</option>
+            </select>
+            <b class="ept-clock" id="reading-timer-clock">20:00</b>
+            <button type="button" class="ept-ctrl-btn" id="reading-timer-toggle-btn" onclick="toggleReadingPressureTimer()" title="Bắt đầu / Tạm dừng đồng hồ">▶️</button>
+            <button type="button" class="ept-ctrl-btn" onclick="resetReadingPressureTimer()" title="Đặt lại đồng hồ">↺</button>
+          </div>
           <button class="btn no sm btn-exit-exam" type="button" onclick="confirmExitCurrentSession('reading')" title="Thoát bài đọc hiểu (Sẽ nộp bài và tính 1 lượt làm)">
             <ion-icon name="log-out-outline"></ion-icon> <span>Thoát bài</span>
           </button>

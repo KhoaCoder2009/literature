@@ -82,7 +82,8 @@ fs.writeFileSync(path.join(componentsDir, 'components.js'), componentsJsContent,
 const cssFiles = [
   path.join(cssDir, 'style.css'),
   path.join(cssDir, 'writing.css'),
-  path.join(cssDir, 'reading.css')
+  path.join(cssDir, 'reading.css'),
+  path.join(cssDir, 'enhancements.css')
 ];
 
 let bundleCssContent = `/* =========================================================================
@@ -119,6 +120,7 @@ const jsOrder = [
   path.join(jsDir, 'gameplay.js'),
   path.join(jsDir, 'writing.js'),
   path.join(jsDir, 'reading.js'),
+  path.join(jsDir, 'enhancements.js'),
   path.join(jsDir, 'app.js')
 ];
 
@@ -208,7 +210,20 @@ const securityLockdownSnippet = `
     'resetLbFilters', 'renderLeaderboard',
     'openExternalAI', 'importPromptQuestionSet', 'copyQuestionPrompt', 'buildQuestionPrompt',
     'adjustPromptTypeCount', 'autoDistributePromptTypes', 'onPromptTypeToggle',
-    'onPromptTotalCountChange', 'onPromptTypeCountInput'
+    'onPromptTotalCountChange', 'onPromptTypeCountInput',
+    'nextQuoteOfDay', 'copyCurrentQuoteOfDay', 'toggleSaveCurrentQuote',
+    'openQuoteOfDayModal', 'closeQuoteOfDayModal', 'renderQuoteOfDayModalBody', 'copySpecificQuote',
+    'openGamificationModal', 'closeGamificationModal', 'onActivityCompletedGamification',
+    'awardCustomGamificationPoints', 'renderGamificationUI',
+    'toggleReadingQuestionScaffolding', 'insertKeywordIntoReadingAnswer', 'assembleReadingScaffoldToTextarea',
+    'initWritingScaffoldingAndTimer', 'toggleWritingScaffoldingPanel', 'toggleWritingSectionScaffolding',
+    'insertTextIntoSpecificWritingSection', 'insertTextIntoActiveWritingSection', 'assembleWritingSectionScaffold',
+    'initReadingPressureTimer', 'setReadingPressureTimer', 'toggleReadingPressureTimer', 'resetReadingPressureTimer',
+    'setWritingPressureMode', 'resetWritingPressureTimer',
+    'openQaReportModal', 'closeQaReportModal', 'switchQaModalTab', 'fillQuickQaTemplate',
+    'submitQaReportForm', 'submitQaViaMailto', 'toggleQaReportResolved',
+    'deleteSingleQaReport', 'clearAllQaReports', 'exportQaReportsToCsv',
+    'saveQaIntegrationConfig', 'copyAppsScriptSnippet'
   ];
 
   protectedFunctionList.forEach(name => {

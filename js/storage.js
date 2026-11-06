@@ -1432,6 +1432,9 @@ function saveQuizAttemptToHistory(entry) {
     localStorage.setItem(QUIZ_HISTORY_KEY, JSON.stringify(history));
 
     saveQuizAttemptToSupabase(entry);
+    if (typeof onActivityCompletedGamification === 'function') {
+      try { onActivityCompletedGamification(entry); } catch (_) {}
+    }
     return true;
   } catch (e) {
     console.error('Failed to save quiz attempt to history:', e);

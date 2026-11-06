@@ -840,7 +840,174 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
   </div>
 </dialog>
 
-<!-- TOAST & BACK TO TOP -->
+<!-- =======================================================================
+     GAMIFICATION DIALOG (CHUỖI NGÀY HỌC, PROGRESS BAR & BỘ SƯU TẬP HUY HIỆU)
+     ======================================================================= -->
+<dialog id="gamification-dialog" class="gami-modal">
+  <div class="gami-modal-header">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span style="font-size:34px; line-height:1;">🔥</span>
+      <div>
+        <h3 style="margin:0; font-size:20px; font-weight:800; color:#ffffff;">Hành Trình Chinh Phục Ngữ Văn</h3>
+        <p style="margin:2px 0 0; font-size:13px; opacity:0.95; font-weight:600;">Chuỗi ngày học liên tục (Streak), Cấp độ &amp; Huy hiệu danh giá</p>
+      </div>
+    </div>
+    <button type="button" class="btn gh sm" onclick="closeGamificationModal()" style="background:rgba(0,0,0,0.2); color:#fff; border:none; border-radius:50%; width:34px; height:34px; padding:0;">✕</button>
+  </div>
+
+  <div class="gami-modal-body" id="gamification-modal-body">
+    <!-- Sẽ được render động bởi enhancements.js -->
+  </div>
+</dialog>
+
+<!-- =======================================================================
+     QUOTE OF THE DAY DIALOG (GÓC TRUYỀN CẢM HỨNG & SỔ TAY VĂN HỌC)
+     ======================================================================= -->
+<dialog id="quote-of-day-dialog" class="qotd-modal">
+  <div class="qotd-modal-header">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span style="font-size:32px; line-height:1;">✨</span>
+      <div>
+        <h3 style="margin:0; font-size:20px; font-weight:800; color:#ffffff;">Góc Truyền Cảm Hứng Văn Học</h3>
+        <p style="margin:2px 0 0; font-size:13px; opacity:0.95; font-weight:600;">Nuôi dưỡng tâm hồn &amp; Kho nhận định lý luận văn học đắt giá</p>
+      </div>
+    </div>
+    <button type="button" class="btn gh sm" onclick="closeQuoteOfDayModal()" style="background:rgba(0,0,0,0.2); color:#fff; border:none; border-radius:50%; width:34px; height:34px; padding:0;">✕</button>
+  </div>
+
+  <div class="qotd-modal-body" id="qotd-modal-body">
+    <!-- Sẽ được render động bởi enhancements.js -->
+  </div>
+</dialog>
+
+<!-- =======================================================================
+     QA & BUG REPORT DIALOG (BÁO CÁO LỖI / THẮC MẮC KIẾN THỨC)
+     ======================================================================= -->
+<dialog id="qa-report-dialog" class="qa-modal">
+  <div class="qa-modal-header">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span style="font-size:32px; line-height:1;">💬</span>
+      <div>
+        <h3 style="margin:0; font-size:19px; font-weight:800; color:#ffffff;">Báo Cáo Lỗi &amp; Giải Đáp Thắc Mắc</h3>
+        <p style="margin:2px 0 0; font-size:12.5px; opacity:0.95; font-weight:600;">Đặt câu hỏi trực tiếp để được giải đáp kịp thời trên lớp</p>
+      </div>
+    </div>
+    <button type="button" class="btn gh sm" onclick="closeQaReportModal()" style="background:rgba(0,0,0,0.2); color:#fff; border:none; border-radius:50%; width:34px; height:34px; padding:0;">✕</button>
+  </div>
+
+  <div class="qa-modal-tabs">
+    <button type="button" class="qa-tab-btn active" id="qa-tab-btn-form" onclick="switchQaModalTab('form')">
+      <ion-icon name="paper-plane-outline"></ion-icon> <span>Gửi câu hỏi / Báo lỗi</span>
+    </button>
+    <button type="button" class="qa-tab-btn" id="qa-tab-btn-list" onclick="switchQaModalTab('list')">
+      <ion-icon name="list-outline"></ion-icon> <span>Danh sách thắc mắc (<span id="qa-saved-count">0</span>)</span>
+    </button>
+    <button type="button" class="qa-tab-btn" id="qa-tab-btn-config" onclick="switchQaModalTab('config')">
+      <ion-icon name="settings-outline"></ion-icon> <span>Kết nối Email / Sheets</span>
+    </button>
+  </div>
+
+  <div class="qa-modal-body">
+    <!-- TAB 1: FORM GỬI THẮC MẮC / BÁO LỖI -->
+    <div id="qa-pane-form">
+      <div class="qa-context-banner" id="qa-context-banner">
+        <ion-icon name="location-outline"></ion-icon>
+        <span>Vị trí đang xem: <b id="qa-current-context-label">Trang chủ</b></span>
+      </div>
+
+      <div class="qa-form-grid-2">
+        <div>
+          <label class="qa-label" for="qa-student-name">Họ và tên học sinh <span style="color:var(--red);">*</span></label>
+          <input type="text" id="qa-student-name" class="qa-input" placeholder="Nhập họ tên của em..." maxlength="60">
+        </div>
+        <div>
+          <label class="qa-label" for="qa-student-class">Lớp</label>
+          <input type="text" id="qa-student-class" class="qa-input" placeholder="Ví dụ: 11A1, 12A2..." maxlength="25">
+        </div>
+      </div>
+
+      <div style="margin-top:12px;">
+        <label class="qa-label" for="qa-issue-type">Phân loại nội dung</label>
+        <select id="qa-issue-type" class="qa-select">
+          <option value="Thắc mắc kiến thức">❓ Thắc mắc kiến thức Ngữ văn (Cần giải đáp trên lớp)</option>
+          <option value="Góp ý viết đoạn/bài">✍️ Xin hướng dẫn cách lập dàn ý / viết đoạn văn 200 chữ</option>
+          <option value="Báo lỗi câu hỏi/đáp án">🐞 Báo lỗi nội dung câu hỏi / Đáp án chưa chính xác</option>
+          <option value="Báo lỗi kỹ thuật">⚙️ Báo lỗi hiển thị / Kỹ thuật trên web</option>
+        </select>
+      </div>
+
+      <div style="margin-top:12px;">
+        <label class="qa-label" for="qa-message-input">Nội dung câu hỏi hoặc lỗi phát hiện <span style="color:var(--red);">*</span></label>
+        <div class="qa-quick-chips">
+          <button type="button" class="qa-chip" onclick="fillQuickQaTemplate('Em chưa hiểu rõ cách triển khai luận điểm và dẫn chứng ở đề này ạ.')">+ Chưa hiểu cách triển khai luận điểm</button>
+          <button type="button" class="qa-chip" onclick="fillQuickQaTemplate('Thầy/cô giải thích thêm giúp em tác dụng biện pháp tu từ trong ngữ liệu này với ạ.')">+ Hỏi về biện pháp tu từ</button>
+          <button type="button" class="qa-chip" onclick="fillQuickQaTemplate('Cho em hỏi công thức viết đoạn 200 chữ cho chủ đề này nên bắt đầu như thế nào ạ?')">+ Hỏi cách viết đoạn 200 chữ</button>
+          <button type="button" class="qa-chip" onclick="fillQuickQaTemplate('Em thấy đáp án của câu hỏi này có điểm chưa khớp với ngữ liệu, nhờ kiểm tra lại giúp em ạ.')">+ Báo lỗi đáp án câu hỏi</button>
+        </div>
+        <textarea id="qa-message-input" class="qa-textarea" rows="4" placeholder="Nhập chi tiết phần kiến thức em chưa hiểu hoặc lỗi em gặp phải để được giải đáp kịp thời trên lớp..." maxlength="2000"></textarea>
+      </div>
+
+      <div class="qa-submit-row">
+        <button type="button" class="btn gh sm" onclick="submitQaViaMailto()" title="Mở trình gửi Email trực tiếp">
+          <ion-icon name="mail-outline"></ion-icon> <span>Gửi qua Email</span>
+        </button>
+        <button type="button" class="btn au" id="btn-submit-qa-report" onclick="submitQaReportForm()">
+          <ion-icon name="send-outline"></ion-icon> <span>Gửi thắc mắc ngay</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 2: DANH SÁCH THẮC MẮC CỦA LỚP -->
+    <div id="qa-pane-list" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+        <span style="font-size:13px; color:var(--mut); font-weight:600;">Tổng hợp câu hỏi học sinh gửi để giải đáp trên lớp</span>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn cy sm" onclick="exportQaReportsToCsv()" title="Xuất file CSV mở bằng Google Sheets / Excel">
+            <ion-icon name="download-outline"></ion-icon> <span>Xuất Google Sheets (CSV)</span>
+          </button>
+          <button type="button" class="btn no sm" onclick="clearAllQaReports()" title="Xóa toàn bộ danh sách">
+            <ion-icon name="trash-outline"></ion-icon> <span>Xóa hết</span>
+          </button>
+        </div>
+      </div>
+      <div id="qa-reports-list-container" class="qa-reports-list"></div>
+    </div>
+
+    <!-- TAB 3: CẤU HÌNH GOOGLE SHEETS & EMAIL NHẬN -->
+    <div id="qa-pane-config" style="display:none;">
+      <div class="qa-config-box">
+        <h4 style="margin:0 0 6px; font-size:15px;">⚙️ Cấu hình Kênh Nhận Thắc Mắc Trực Tiếp</h4>
+        <p style="margin:0 0 14px; font-size:12.5px; color:var(--mut); line-height:1.5;">
+          Khi học sinh bấm <b>Gửi thắc mắc</b>, dữ liệu sẽ tự động lưu trên hệ thống, đồng thời đẩy thẳng về <b>Google Sheets Webhook</b> hoặc <b>Email</b> bạn thiết lập bên dưới.
+        </p>
+
+        <label class="qa-label" for="qa-cfg-email">📧 Địa chỉ Email nhận câu hỏi</label>
+        <input type="email" id="qa-cfg-email" class="qa-input" placeholder="Ví dụ: giaovien.nguvan@gmail.com">
+
+        <label class="qa-label" for="qa-cfg-webhook" style="margin-top:12px;">📊 Google Sheets Webhook URL (Apps Script Web App URL)</label>
+        <input type="url" id="qa-cfg-webhook" class="qa-input" placeholder="https://script.google.com/macros/s/.../exec">
+        <p style="margin:6px 0 14px; font-size:11.5px; color:var(--mut); line-height:1.45;">
+          💡 <i>Mẹo:</i> Trong Google Sheets, vào <b>Tiện ích mở rộng → Apps Script</b>, dán hàm <code>doPost(e)</code> nhận JSON và triển khai dạng <i>Ứng dụng Web (Bất kỳ ai)</i> rồi dán link vào ô trên để tự động ghi từng dòng câu hỏi của học sinh vào bảng tính!
+        </p>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+          <button type="button" class="btn gh sm" onclick="copyAppsScriptSnippet()">
+            <ion-icon name="code-slash-outline"></ion-icon> <span>Sao chép mã Apps Script mẫu</span>
+          </button>
+          <button type="button" class="btn au sm" onclick="saveQaIntegrationConfig()">
+            <ion-icon name="save-outline"></ion-icon> <span>Lưu cấu hình kết nối</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- FLOATING QA / BUG REPORT BUTTON & TOAST & BACK TO TOP -->
+<button id="fab-qa-report" class="fab-qa-btn" onclick="openQaReportModal()" aria-label="Báo cáo lỗi hoặc Gửi thắc mắc" title="Đặt câu hỏi thắc mắc hoặc Báo lỗi">
+  <span class="fab-qa-icon">💬</span>
+  <span class="fab-qa-text">Hỏi đáp / Báo lỗi</span>
+</button>
 <div id="toast" role="status"></div>
 <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Về đầu trang" title="Về đầu trang">
   <ion-icon name="arrow-up-outline"></ion-icon>

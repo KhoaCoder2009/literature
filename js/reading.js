@@ -758,16 +758,23 @@ function renderReadingWorkspace(set) {
 
       return `
         <div class="reading-question-card ${isParagraphQuestion ? 'reading-q-essay-card' : ''}" id="card-q-${idx}">
-          <div class="reading-q-header" style="display:flex; justify-content:space-between; align-items:center;">
-            <div style="display:flex; align-items:center; gap:8px;">
+          <div class="reading-q-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
               <span class="reading-q-number">Câu ${idx + 1}</span>
               <span class="reading-q-level ${levelClass}">${esc(levelTitle)}</span>
             </div>
-            <span class="tag cy" style="font-weight:800; font-size:12px; padding:2px 8px;"><ion-icon name="trophy-outline"></ion-icon> ${maxPts} điểm</span>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <button type="button" class="btn cy sm scaffold-trigger-btn" onclick="toggleReadingQuestionScaffolding(${idx}, ${isParagraphQuestion ? 'true' : 'false'})" title="Mở Gợi ý tư duy (Giàn giáo nhận thức): Từ khóa, Công thức &amp; Sơ đồ dàn ý trống">
+                💡 Gợi ý tư duy
+              </button>
+              <span class="tag cy" style="font-weight:800; font-size:12px; padding:2px 8px;"><ion-icon name="trophy-outline"></ion-icon> ${maxPts} điểm</span>
+            </div>
           </div>
           <div class="reading-q-text">${esc(q.text)}</div>
+          <div class="scaffold-box reading-q-scaffold-box" id="reading-scaffold-box-${idx}" style="display:none;"></div>
           <div class="reading-answer-box">
             <textarea
+              id="reading-q-textarea-${idx}"
               class="reading-answer-textarea ${isParagraphQuestion ? 'reading-essay-textarea' : ''}"
               rows="${isParagraphQuestion ? 7 : 3}"
               placeholder="${isParagraphQuestion ? 'Viết đoạn văn khoảng 200 chữ tại đây (rút ra thông điệp hoặc liên hệ bài học cuộc sống)...' : 'Nhập câu trả lời của bạn...'}"
@@ -795,6 +802,9 @@ function renderReadingWorkspace(set) {
     }).join('');
   }
 
+  if (typeof initReadingPressureTimer === 'function') {
+    initReadingPressureTimer();
+  }
   updateAnswersToggleButtonState();
 }
 

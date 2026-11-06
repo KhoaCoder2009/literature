@@ -1,0 +1,852 @@
+/* =========================================================================
+   GDPT 2018 EDUCATIONAL ENHANCEMENTS STYLESHEET
+   1. Gamification (Streak, Progress Bar, Badges)
+   2. Quote of the Day (Góc truyền cảm hứng)
+   3. Cognitive Scaffolding ("Gợi ý tư duy" - Giàn giáo nhận thức)
+   4. Exam Pressure Timer (Bộ đếm thời gian rèn áp lực phòng thi)
+   5. Q&A & Bug Report ("Báo cáo lỗi / Thắc mắc")
+   ========================================================================= */
+
+/* --- NAVBAR PILLS --- */
+.nav-streak-pill {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%) !important;
+  border-color: #f59e0b !important;
+  color: #b45309 !important;
+  font-weight: 800 !important;
+}
+[data-theme="dark"] .nav-streak-pill {
+  background: rgba(245, 158, 11, 0.16) !important;
+  color: #fde047 !important;
+}
+.streak-flame-icon {
+  font-size: 16px;
+  display: inline-block;
+  animation: flamePulse 1.8s infinite ease-in-out;
+}
+@keyframes flamePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.16); }
+}
+
+/* --- HOME ENRICHMENT GRID (GAMIFICATION + QUOTE OF THE DAY) --- */
+.home-enrichment-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+@media (max-width: 960px) {
+  .home-enrichment-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- GAMIFICATION HOME CARD --- */
+.gami-home-card {
+  padding: 20px 22px !important;
+  border: 3px solid var(--stroke) !important;
+  border-radius: 22px !important;
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+}
+.gami-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.gami-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.gami-flame-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2.5px solid var(--stroke);
+  box-shadow: 0 4px 0 var(--stroke);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+.gami-heading {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.gami-subtitle {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--mut);
+}
+
+.gami-progress-section {
+  background: rgba(148, 163, 184, 0.08);
+  border: 2px solid var(--stroke);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+.gami-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 5px;
+}
+.gami-progress-track {
+  width: 100%;
+  height: 12px;
+  background: rgba(100, 116, 139, 0.18);
+  border: 2px solid var(--stroke);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.gami-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+  border-radius: 999px;
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.gami-daily-fill {
+  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+}
+
+/* 7-day Streak Week Row */
+.gami-week-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+.gami-day-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 4px;
+  border-radius: 12px;
+  border: 2px solid var(--stroke);
+  background: var(--bg-base);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--mut);
+}
+.gami-day-pill.active {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #d97706;
+  color: #b45309;
+}
+[data-theme="dark"] .gami-day-pill.active {
+  background: rgba(245, 158, 11, 0.22);
+  color: #fde047;
+}
+.gami-day-pill.today {
+  box-shadow: 0 3px 0 var(--stroke);
+  transform: translateY(-1px);
+}
+.gami-day-dot {
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+/* Mini Badges Strip */
+.gami-mini-badges-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.gami-mini-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 2px solid var(--stroke);
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.gami-mini-badge:hover {
+  transform: translateY(-2px);
+}
+.gami-mini-badge.unlocked {
+  background: var(--bg-base);
+  color: var(--ink);
+  box-shadow: 0 2px 0 var(--stroke);
+}
+.gami-mini-badge.locked {
+  opacity: 0.48;
+  filter: grayscale(0.85);
+}
+
+/* --- QUOTE OF THE DAY HOME CARD --- */
+.qotd-home-card {
+  padding: 20px 22px !important;
+  border: 3px solid var(--stroke) !important;
+  border-radius: 22px !important;
+  background: linear-gradient(145deg, var(--bg-card) 0%, rgba(254, 243, 199, 0.35) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+[data-theme="dark"] .qotd-home-card {
+  background: linear-gradient(145deg, var(--bg-card) 0%, rgba(30, 41, 59, 0.9) 100%);
+}
+.qotd-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.qotd-badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.16);
+  border: 1.5px solid #f59e0b;
+  color: #b45309;
+  font-size: 11.5px;
+  font-weight: 800;
+}
+[data-theme="dark"] .qotd-badge-tag {
+  color: #fde047;
+}
+.qotd-header-actions {
+  display: flex;
+  gap: 6px;
+}
+.qotd-quote-box {
+  margin: 2px 0;
+  padding: 12px 16px;
+  border-left: 4px solid #f59e0b;
+  background: var(--bg-base);
+  border-radius: 0 14px 14px 0;
+  font-size: 15px;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.qotd-author-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.qotd-category-pill {
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: rgba(6, 182, 212, 0.14);
+  color: var(--cyan);
+  border: 1.5px solid var(--cyan);
+}
+.qotd-author-name {
+  font-size: 13.5px;
+  color: var(--ink);
+}
+.qotd-usage-tip {
+  font-size: 12.5px;
+  line-height: 1.5;
+  padding: 9px 12px;
+  border-radius: 12px;
+  border: 1.5px dashed var(--stroke);
+  background: rgba(16, 185, 129, 0.08);
+  color: var(--ink);
+}
+.qotd-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* --- GIÀN GIÁO NHẬN THỨC (SCAFFOLDING BOX) --- */
+.scaffold-trigger-btn {
+  font-weight: 800 !important;
+  padding: 4px 10px !important;
+  font-size: 12px !important;
+  border-radius: 10px !important;
+}
+.scaffold-box {
+  margin: 10px 0 12px;
+  padding: 14px 16px;
+  border: 2.5px solid var(--stroke);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(254, 243, 199, 0.42) 0%, var(--bg-card) 100%);
+  box-shadow: 0 5px 0 var(--stroke);
+}
+[data-theme="dark"] .scaffold-box {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
+}
+.scaffold-header, .scaffold-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.scaffold-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.scaffold-badge-icon {
+  font-size: 24px;
+}
+.scaffold-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+}
+.scaffold-subtitle {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--mut);
+}
+.scaffold-tag {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #b45309;
+  background: #fef3c7;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1.5px solid #f59e0b;
+}
+[data-theme="dark"] .scaffold-tag {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fde047;
+}
+.scaffold-formula-banner {
+  background: var(--bg-card);
+  border: 2px solid var(--stroke);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  font-size: 12.5px;
+}
+.scaffold-steps-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-weight: 700;
+}
+.scaffold-step-pill {
+  background: rgba(6, 182, 212, 0.14);
+  border: 1.5px solid var(--stroke);
+  padding: 3px 9px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.scaffold-lbl {
+  font-size: 12.5px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+.scaffold-kw-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.scaffold-kw-chip {
+  background: var(--bg-card);
+  color: var(--ink);
+  border: 1.5px solid var(--stroke);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.scaffold-kw-chip:hover {
+  background: var(--yellow-light);
+  color: #92400e;
+  transform: translateY(-1px);
+}
+.scaffold-grid-steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+@media (max-width: 720px) {
+  .scaffold-grid-steps {
+    grid-template-columns: 1fr;
+  }
+}
+.scaffold-step-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.scaffold-step-field label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--mut);
+  margin: 0;
+}
+.scaffold-step-field input {
+  padding: 7px 10px;
+  font-size: 12.5px;
+  border: 2px solid var(--stroke);
+  border-radius: 9px;
+  background: var(--bg-card);
+  color: var(--ink);
+}
+
+/* --- EXAM PRESSURE TIMER WIDGET (ĐỒNG HỒ RÈN ÁP LỰC PHÒNG THI) --- */
+.exam-pressure-timer-widget {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 2.5px solid var(--stroke);
+  background: var(--bg-card);
+  box-shadow: 0 3px 0 var(--stroke);
+}
+.ept-mode-select {
+  padding: 4px 8px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  border: 1.5px solid var(--stroke) !important;
+  background: var(--bg-base) !important;
+  color: var(--ink) !important;
+  width: auto !important;
+  max-width: 195px;
+}
+.ept-clock {
+  font-family: monospace;
+  font-size: 15px;
+  font-weight: 900;
+  min-width: 48px;
+  text-align: center;
+  color: var(--ink);
+}
+.ept-ctrl-btn {
+  border: 1.5px solid var(--stroke);
+  background: var(--bg-base);
+  color: var(--ink);
+  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 0;
+}
+.timer-warn {
+  background: #fef3c7 !important;
+  border-color: #f59e0b !important;
+  color: #b45309 !important;
+}
+.timer-danger {
+  background: #fee2e2 !important;
+  border-color: #ef4444 !important;
+  color: #dc2626 !important;
+  animation: timerDangerPulse 1s infinite;
+}
+@keyframes timerDangerPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+/* --- FLOATING QA / BUG REPORT BUTTON --- */
+.fab-qa-btn {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 45;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 3px solid var(--stroke);
+  background: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 13.5px;
+  box-shadow: 0 5px 0 var(--stroke);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.fab-qa-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 var(--stroke);
+}
+@media (max-width: 640px) {
+  .fab-qa-btn {
+    left: 12px;
+    bottom: 14px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
+
+/* --- MODALS: GAMIFICATION, QUOTE OF THE DAY & QA REPORT --- */
+.gami-modal, .qotd-modal, .qa-modal {
+  max-width: 680px;
+  width: 94vw;
+  border: 3.5px solid var(--stroke);
+  border-radius: 24px;
+  box-shadow: 0 14px 0 var(--stroke);
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg-card);
+  color: var(--ink);
+}
+.gami-modal-header {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.qotd-modal-header {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.qa-modal-header {
+  background: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%);
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.gami-modal-body, .qotd-modal-body, .qa-modal-body {
+  padding: 20px 22px;
+  max-height: 75vh;
+  overflow-y: auto;
+}
+
+.gami-modal-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+@media (max-width: 640px) {
+  .gami-modal-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.gami-stat-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 2.5px solid var(--stroke);
+  border-radius: 16px;
+  background: var(--bg-base);
+}
+.gami-stat-icon {
+  font-size: 28px;
+}
+.gami-stat-val {
+  font-size: 17px;
+  font-weight: 900;
+}
+.gami-stat-lbl {
+  font-size: 11.5px;
+  color: var(--mut);
+  font-weight: 600;
+}
+.gami-modal-progress-card {
+  padding: 14px 16px;
+  border: 2px solid var(--stroke);
+  border-radius: 16px;
+  background: var(--bg-base);
+}
+.gami-badges-full-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+@media (max-width: 640px) {
+  .gami-badges-full-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.gami-badge-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 2.5px solid var(--stroke);
+  border-radius: 16px;
+  background: var(--bg-base);
+}
+.gami-badge-card.is-locked {
+  opacity: 0.55;
+  filter: grayscale(0.8);
+}
+.gami-badge-big-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+.gami-badge-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}
+.gami-badge-xp {
+  font-size: 11px;
+  font-weight: 800;
+  color: #b45309;
+  background: #fef3c7;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+.gami-badge-info p {
+  margin: 4px 0 6px;
+  font-size: 12px;
+  color: var(--mut);
+}
+.gami-badge-status {
+  font-size: 11.5px;
+  font-weight: 800;
+}
+.gami-badge-status.ok {
+  color: var(--green);
+}
+
+/* Quote Modal Spotlight & List */
+.qotd-modal-spotlight {
+  padding: 16px 18px;
+  border: 2.5px solid var(--stroke);
+  border-radius: 18px;
+  background: var(--bg-base);
+  margin-bottom: 14px;
+}
+.qotd-spotlight-badge {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+.qotd-spotlight-quote {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1.55;
+}
+.qotd-spotlight-author {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mut);
+  margin-bottom: 8px;
+}
+.qotd-spotlight-tip {
+  font-size: 12.5px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(139, 92, 246, 0.1);
+}
+.qotd-filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.qotd-list-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.qotd-list-item {
+  padding: 12px 14px;
+  border: 2px solid var(--stroke);
+  border-radius: 14px;
+  background: var(--bg-base);
+}
+.qotd-item-quote {
+  font-size: 14px;
+  font-weight: 700;
+  font-style: italic;
+  margin-bottom: 4px;
+}
+.qotd-item-author {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--mut);
+  margin-bottom: 4px;
+}
+.qotd-item-tip {
+  font-size: 12px;
+  color: var(--ink);
+}
+
+/* QA Modal Tabs & Form */
+.qa-modal-tabs {
+  display: flex;
+  border-bottom: 2.5px solid var(--stroke);
+  background: var(--bg-base);
+}
+.qa-tab-btn {
+  flex: 1;
+  padding: 11px 10px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--mut);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-bottom: 3px solid transparent;
+}
+.qa-tab-btn.active {
+  color: var(--ink);
+  background: var(--bg-card);
+  border-bottom-color: var(--cyan);
+}
+.qa-context-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 2px dashed var(--cyan);
+  background: rgba(6, 182, 212, 0.08);
+  font-size: 12.5px;
+  margin-bottom: 12px;
+}
+.qa-form-grid-2 {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 10px;
+}
+@media (max-width: 560px) {
+  .qa-form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+.qa-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+.qa-input, .qa-select, .qa-textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border: 2px solid var(--stroke);
+  border-radius: 12px;
+  background: var(--bg-base);
+  color: var(--ink);
+  font-size: 13.5px;
+}
+.qa-quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.qa-chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1.5px solid var(--stroke);
+  background: var(--bg-base);
+  color: var(--ink);
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.qa-chip:hover {
+  background: rgba(6, 182, 212, 0.15);
+}
+.qa-submit-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.qa-reports-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.qa-report-card {
+  padding: 12px 14px;
+  border: 2px solid var(--stroke);
+  border-radius: 14px;
+  background: var(--bg-base);
+}
+.qa-report-card.is-resolved {
+  opacity: 0.72;
+  border-color: var(--green);
+}
+.qa-report-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.qa-type-tag {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(6, 182, 212, 0.16);
+  border: 1.5px solid var(--cyan);
+}
+.qa-report-ctx {
+  font-size: 12px;
+  color: var(--mut);
+  margin-bottom: 6px;
+}
+.qa-report-msg {
+  font-size: 13.5px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  white-space: pre-wrap;
+}
+.qa-report-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.qa-config-box {
+  padding: 14px 16px;
+  border: 2px solid var(--stroke);
+  border-radius: 16px;
+  background: var(--bg-base);
+}

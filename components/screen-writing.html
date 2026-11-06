@@ -67,11 +67,29 @@
             <div class="writing-prompt-card">
               <div class="writing-prompt-header">
                 <span class="writing-prompt-tag">Đề bài</span>
+                <button type="button" class="btn cy sm scaffold-trigger-btn" onclick="toggleWritingScaffoldingPanel()" title="Mở Giàn giáo nhận thức: Từ khóa, Công thức viết đoạn &amp; Sơ đồ dàn ý trống">
+                  <ion-icon name="bulb-outline"></ion-icon> <span>Gợi ý tư duy</span>
+                </button>
               </div>
               <div class="writing-prompt-text-wrapper">
                 <p id="workspace-prompt-text" class="writing-prompt-text"></p>
                 <button type="button" id="workspace-prompt-toggle-btn" class="writing-prompt-toggle" onclick="togglePromptExpand()">Xem thêm</button>
               </div>
+            </div>
+
+            <!-- Hộp Giàn giáo nhận thức (Scaffolding) cho Luyện viết -->
+            <div class="scaffold-box writing-scaffold-card" id="writing-scaffolding-panel" style="display:none;">
+              <div class="scaffold-header">
+                <div class="scaffold-title-row">
+                  <span class="scaffold-badge-icon">💡</span>
+                  <div>
+                    <h4 class="scaffold-title">Giàn Giáo Nhận Thức (Scaffolding)</h4>
+                    <p class="scaffold-subtitle">Công thức tư duy, từ khóa gợi mở &amp; sơ đồ dàn ý trống GDPT 2018</p>
+                  </div>
+                </div>
+                <button type="button" class="btn gh sm" onclick="toggleWritingScaffoldingPanel()" style="padding:2px 8px;">Thu gọn</button>
+              </div>
+              <div id="writing-scaffolding-body"></div>
             </div>
 
           </div>
@@ -88,8 +106,13 @@
           <!-- Header thanh công cụ phải -->
           <div class="writing-editor-header">
             <span style="font-size:14px; font-weight:700; color:var(--ink);">Bài làm</span>
-            <div class="writing-word-count-badge">
-              Tổng số từ: <b id="workspace-total-words">0</b>
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <button type="button" class="btn gh sm scaffold-mini-btn" onclick="toggleWritingScaffoldingPanel()" title="Bật/tắt Gợi ý tư duy &amp; Công thức viết">
+                💡 Gợi ý tư duy
+              </button>
+              <div class="writing-word-count-badge">
+                Tổng số từ: <b id="workspace-total-words">0</b>
+              </div>
             </div>
           </div>
 
@@ -98,11 +121,21 @@
 
           <!-- Bottom Sticky Action Bar -->
           <div class="writing-bottom-bar">
-            <div class="writing-timer-box">
-              <span class="writing-timer-label">Thời gian:</span>
+            <div class="writing-timer-box" id="writing-timer-box">
+              <span class="writing-timer-label">⏱️ Áp lực phòng thi:</span>
+              <select class="ept-mode-select" id="writing-timer-preset" onchange="setWritingPressureMode(this.value)" title="Chọn chế độ hẹn giờ rèn áp lực phòng thi">
+                <option value="0">Đếm xuôi (Tự do)</option>
+                <option value="20">🔥 20 phút (Đoạn NLXH 200 chữ)</option>
+                <option value="45">⚡ 45 phút (Bài nghị luận ngắn)</option>
+                <option value="60">🏆 60 phút (Bài Nghị luận Văn học)</option>
+                <option value="90">🎓 90 phút (Đề thi tổng hợp)</option>
+              </select>
               <b class="writing-timer-value" id="workspace-timer-display">00:00:00</b>
               <button class="writing-timer-btn" id="workspace-timer-btn" onclick="toggleWritingTimer()" title="Tạm dừng / Tiếp tục">
-                <ion-icon name="pause-outline"></ion-icon>
+                ⏸
+              </button>
+              <button class="writing-timer-btn" type="button" onclick="resetWritingPressureTimer()" title="Đặt lại đồng hồ">
+                ↺
               </button>
             </div>
 
