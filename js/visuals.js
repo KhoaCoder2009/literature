@@ -285,7 +285,8 @@ function applyHeroQuote(idx, animate = true) {
   const tag = document.querySelector('#study-tag');
   const quote = document.querySelector('#study-quote');
   const author = document.querySelector('#study-author');
-  const tip = document.querySelector('#study-tip');
+  const oldTip = document.querySelector('#study-tip');
+  if (oldTip) oldTip.remove();
 
   if (!card || !img || !quote) return;
 
@@ -298,9 +299,6 @@ function applyHeroQuote(idx, animate = true) {
     if (tag) tag.textContent = item.tag;
     quote.textContent = item.quote;
     if (author) author.textContent = item.author;
-    if (tip) {
-      tip.innerHTML = item.tip ? `<b>💡 Gợi ý vận dụng viết văn:</b> ${item.tip}` : '';
-    }
 
     // Apply font size adjustment for long quotes
     if (item.quote.length > 90) {
