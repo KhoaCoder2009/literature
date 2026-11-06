@@ -276,8 +276,8 @@ if (fs.existsSync(indexPath)) {
   );
 
   // Luôn làm mới version cache-busting cho bundle CSS & JS
-  html = html.replace(/\.\/dist\/app\.bundle\.css(\?v=[^"]*)?/g, './dist/app.bundle.css?v=4.9');
-  html = html.replace(/\.\/dist\/app\.bundle\.js(\?v=[^"]*)?/g, './dist/app.bundle.js?v=4.9');
+  html = html.replace(/\.\/dist\/app\.bundle\.css(\?v=[^"]*)?/g, './dist/app.bundle.css?v=5.0');
+  html = html.replace(/\.\/dist\/app\.bundle\.js(\?v=[^"]*)?/g, './dist/app.bundle.js?v=5.0');
 
   fs.writeFileSync(indexPath, html, 'utf8');
   console.log('✓ Đã cập nhật index.html sang chế độ Bundle duy nhất (ẩn hoàn toàn các tên file nguồn)');
