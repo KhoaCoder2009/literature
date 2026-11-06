@@ -1374,26 +1374,37 @@ let editingSections = [];
 function loadWritingSets() {
   try {
     // Tự động đồng bộ và nạp Bộ 50 đề NLVH & NLXH chuẩn mới nhất
-    const v50Version = 'v50_2026_11_06_subtypes_scaffold';
+    const v50Version = 'v50_2026_11_06_v4_view_only';
     const currentVersion = localStorage.getItem('vq_writing_sets_version');
     
-    if (currentVersion !== v50Version) {
+    const raw = localStorage.getItem('vq_writing_sets');
+    let parsed = null;
+    if (raw) {
+      try { parsed = JSON.parse(raw); } catch (e) {}
+    }
+
+    const isOldData = !parsed || !Array.isArray(parsed) || parsed.some(s => s.id && s.id.startsWith('doan_') && !s.subType);
+
+    if (currentVersion !== v50Version || isOldData) {
       // Nạp trọn vẹn 50 đề mới
       writingSets = JSON.parse(JSON.stringify(DEFAULT_WRITING_SETS));
+      if (Array.isArray(parsed)) {
+        const defaultIds = new Set(DEFAULT_WRITING_SETS.map(s => s.id));
+        const customSets = parsed.filter(s => !defaultIds.has(s.id));
+        if (customSets.length > 0) {
+          writingSets.push(...customSets);
+        }
+      }
       localStorage.setItem('vq_writing_sets', JSON.stringify(writingSets));
       localStorage.setItem('vq_writing_sets_version', v50Version);
       window.writingSets = writingSets;
       return;
     }
 
-    const raw = localStorage.getItem('vq_writing_sets');
-    if (raw) {
-      let parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        writingSets = parsed;
-        window.writingSets = writingSets;
-        return;
-      }
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      writingSets = parsed;
+      window.writingSets = writingSets;
+      return;
     }
   } catch (err) {
     console.warn('Lỗi nạp vq_writing_sets từ localStorage:', err);

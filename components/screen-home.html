@@ -1,21 +1,37 @@
 <!-- SCREEN 1: HOME -->
 <section id="s-home" class="scr">
   <div class="wrap">
-    <!-- HERO SHOWCASE -->
+    <!-- HERO SHOWCASE: NHẬN ĐỊNH VĂN HỌC & TRUYỀN CẢM HỨNG -->
     <div class="hero-showcase" id="hero-showcase">
       <div class="hero-study-card" id="hero-study-card">
         <div class="study-card-img-wrap" id="study-img-wrap">
-          <img class="study-card-img" id="study-img" src="./assets/bac-ho.jpg" alt="Chủ tịch Hồ Chí Minh">
+          <img class="study-card-img" id="study-img" src="./assets/logo-nguvan.png" alt="Nhận định văn học">
         </div>
         <div class="study-card-content" id="study-content">
-          <div class="study-quote-tag" id="study-tag">Lời dạy của Bác Hồ</div>
-          <div class="study-main-quote long-quote" id="study-quote">“Non sông Việt Nam có trở nên tươi đẹp hay không, dân tộc Việt Nam có bước tới đài vinh quang để sánh vai với các cường quốc năm châu được hay không, chính là nhờ một phần lớn ở công học tập của các em.”</div>
-          <div class="study-quote-author" id="study-author">— Chủ tịch Hồ Chí Minh —</div>
+          <div style="display:flex; align-items:center; justify-content:space-between; width:100%; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+            <div class="study-quote-tag" id="study-tag">LÝ LUẬN VĂN HỌC</div>
+            <div class="study-quote-actions" style="display:flex; align-items:center; gap:6px;">
+              <button class="btn gh sm" type="button" onclick="nextHeroQuote()" title="Đổi nhận định khác">
+                <ion-icon name="shuffle-outline"></ion-icon> <span>Đổi câu</span>
+              </button>
+              <button class="btn gh sm" type="button" onclick="copyCurrentHeroQuote()" title="Sao chép nhận định này">
+                <ion-icon name="copy-outline"></ion-icon> <span>Sao chép</span>
+              </button>
+              <button class="btn gh sm" type="button" onclick="openQuoteOfDayModal()" title="Mở Sổ tay nhận định văn học">
+                <ion-icon name="book-outline"></ion-icon> <span>Sổ tay</span>
+              </button>
+            </div>
+          </div>
+          <div class="study-main-quote" id="study-quote">“Văn học là nhân học.”</div>
+          <div class="study-quote-author" id="study-author">— M. Gorki —</div>
+          <div class="study-quote-tip" id="study-tip" style="margin-top:8px; font-size:13.5px; line-height:1.5; color:var(--mut);">
+            <b>💡 Gợi ý vận dụng:</b> Dùng làm câu dẫn Mở bài hoặc Kết bài cho các đề nghị luận về giá trị nhân đạo và sứ mệnh nuôi dưỡng tâm hồn của văn chương.
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- GAMIFICATION & QUOTE OF THE DAY GRID -->
+    <!-- GAMIFICATION & TIẾN TRÌNH HỌC TẬP -->
     <div class="home-enrichment-grid">
       <!-- 1. CƠ CHẾ GAMIFICATION: STREAK, PROGRESS BAR & BADGES -->
       <div class="card gami-home-card" id="home-gamification-card">
@@ -60,46 +76,6 @@
 
         <!-- Dải huy hiệu nhanh -->
         <div class="gami-mini-badges-row" id="home-mini-badges-row"></div>
-      </div>
-
-      <!-- 2. GÓC TRUYỀN CẢM HỨNG (QUOTE OF THE DAY) -->
-      <div class="card qotd-home-card" id="home-qotd-card">
-        <div class="qotd-header">
-          <div class="qotd-badge-tag">
-            <ion-icon name="sparkles-outline"></ion-icon> <span>Nhận định văn học hôm nay</span>
-          </div>
-          <div class="qotd-header-actions">
-            <button class="btn gh sm qotd-icon-btn" type="button" onclick="nextQuoteOfDay()" title="Đổi nhận định / câu văn khác">
-              <ion-icon name="shuffle-outline"></ion-icon> <span>Đổi câu</span>
-            </button>
-            <button class="btn gh sm qotd-icon-btn" type="button" onclick="openQuoteOfDayModal()" title="Mở kho nhận định &amp; Sổ tay văn học">
-              <ion-icon name="book-outline"></ion-icon> <span>Sổ tay</span>
-            </button>
-          </div>
-        </div>
-
-        <blockquote class="qotd-quote-box" id="home-qotd-text">
-          “Văn học là nhân học.”
-        </blockquote>
-
-        <div class="qotd-meta-tip-wrap">
-          <div class="qotd-author-row">
-            <span class="qotd-category-pill" id="home-qotd-category">Lý luận văn học</span>
-            <b class="qotd-author-name" id="home-qotd-author">— M. Gorki —</b>
-          </div>
-          <div class="qotd-usage-tip" id="home-qotd-tip">
-            <b>💡 Vận dụng:</b> Dùng làm câu dẫn Mở bài hoặc Kết bài cho các đề phân tích giá trị nhân đạo và thiên chức của nhà văn.
-          </div>
-        </div>
-
-        <div class="qotd-footer-actions">
-          <button class="btn gh sm" type="button" onclick="copyCurrentQuoteOfDay()">
-            <ion-icon name="copy-outline"></ion-icon> <span>Sao chép</span>
-          </button>
-          <button class="btn cy sm" type="button" id="btn-save-qotd-home" onclick="toggleSaveCurrentQuote()">
-            <ion-icon name="bookmark-outline"></ion-icon> <span>Lưu sổ tay</span>
-          </button>
-        </div>
       </div>
     </div>
 

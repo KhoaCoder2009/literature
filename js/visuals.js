@@ -146,42 +146,68 @@ function drawBackground() {
 }
 drawBackground();
 
-/* === HERO STUDY QUOTES === */
+/* === HERO STUDY QUOTES: NHẬN ĐỊNH VĂN HỌC & TRUYỀN CẢM HỨNG === */
 const HERO_STUDY_QUOTES = [
   {
-    tag: 'LỜI DẠY CỦA BÁC HỒ',
-    quote: '“Non sông Việt Nam có trở nên tươi đẹp hay không, dân tộc Việt Nam có bước tới đài vinh quang để sánh vai với các cường quốc năm châu được hay không, chính là nhờ một phần lớn ở công học tập của các em.”',
-    author: '— Chủ tịch Hồ Chí Minh —',
-    img: './assets/bac-ho.jpg',
+    tag: 'LÝ LUẬN VĂN HỌC',
+    quote: '“Văn học là nhân học.”',
+    author: '— M. Gorki —',
+    tip: 'Dùng làm câu dẫn Mở bài hoặc Kết bài cho các đề nghị luận về giá trị nhân đạo và sứ mệnh nuôi dưỡng tâm hồn của văn chương.',
+    img: './assets/logo-nguvan.png',
     accent: '#b45309',
     border: '#f59e0b',
     bgLight: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 45%, #fffdf5 100%)',
     bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   },
   {
-    tag: 'TRI THỨC LÀ SỨC MẠNH',
-    quote: '“Học, học nữa, học mãi.”',
-    author: '— V.I. Lê-nin —',
-    img: './assets/lenin.jpg',
+    tag: 'LÝ LUẬN VĂN HỌC',
+    quote: '“Nghệ thuật không cần phải là ánh trăng lừa dối, nghệ thuật không nên là ánh trăng lừa dối, nghệ thuật có thể chỉ là tiếng đau khổ kia, thoát ra từ những kiếp lầm than.”',
+    author: '— Nam Cao (Trăng sáng) —',
+    tip: 'Rất đắt giá khi phân tích mối quan hệ giữa văn học và hiện thực cuộc sống, hoặc khi viết về các tác phẩm hiện thực phê phán.',
+    img: './assets/logo-nguvan.png',
     accent: '#dc2626',
     border: '#ef4444',
     bgLight: 'linear-gradient(135deg, #fef2f2 0%, #fee2e2 45%, #fffdf8 100%)',
     bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   },
   {
-    tag: 'BẢN LĨNH TRI THỨC',
-    quote: '“Giáo dục là vũ khí mạnh nhất mà bạn có thể dùng để thay đổi thế giới.”',
-    author: '— Nelson Mandela —',
-    img: './assets/mandela.jpg',
+    tag: 'THIÊN CHỨC NHÀ VĂN',
+    quote: '“Nhà văn tồn tại ở trên đời có lẽ trước hết là để làm công việc giống như kẻ nâng giấc cho những con người bị cùng đường, tuyệt lộ, bị cái ác hoặc số phận đen đủi dồn đến chân tường.”',
+    author: '— Nguyễn Minh Châu —',
+    tip: 'Dùng để bàn luận sâu sắc về tấm lòng nhân đạo, sự thấu cảm và thiên chức bảo vệ con người của người cầm bút.',
+    img: './assets/logo-nguvan.png',
     accent: '#059669',
     border: '#10b981',
     bgLight: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 45%, #fafffd 100%)',
     bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   },
   {
-    tag: 'ÁNH SÁNG TÂM HỒN',
+    tag: 'LÝ LUẬN VỀ THƠ',
+    quote: '“Thơ là tiếng lòng, là sự đồng điệu giữa tâm hồn nhà thơ và tâm hồn người đọc.”',
+    author: '— Tố Hữu —',
+    tip: 'Áp dụng tuyệt vời cho Mở bài hoặc Kết bài của mọi đề phân tích, cảm nhận một đoạn thơ trữ tình.',
+    img: './assets/logo-nguvan.png',
+    accent: '#7c3aed',
+    border: '#8b5cf6',
+    bgLight: 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 45%, #fcfaff 100%)',
+    bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
+  },
+  {
+    tag: 'SỨ MỆNH VĂN CHƯƠNG',
+    quote: '“Văn chương không phải là cách đem đến cho người đọc sự thoát ly hay sự quên; trái lại văn chương là một thứ khí giới thanh cao và đắc lực mà chúng ta có, để vừa tố cáo và thay đổi một cái thế giới giả dối và tàn ác, vừa làm cho lòng người được thêm trong sạch và phong phú hơn.”',
+    author: '— Thạch Lam (Theo dòng) —',
+    tip: 'Nhận định vàng cho mọi bài văn nghị luận khi bàn về chức năng giáo dục và thanh lọc tâm hồn của văn chương.',
+    img: './assets/logo-nguvan.png',
+    accent: '#0891b2',
+    border: '#06b6d4',
+    bgLight: 'linear-gradient(135deg, #ecfeff 0%, #cffafe 45%, #fafffd 100%)',
+    bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
+  },
+  {
+    tag: 'GIÁ TRỊ NHÂN ĐẠO',
     quote: '“Văn học là nhân đạo hóa con người.”',
     author: '— Victor Hugo —',
+    tip: 'Dùng làm câu dẫn khi phân tích tư tưởng nhân văn, tình yêu thương con người trong tác phẩm văn học.',
     img: './assets/victor-hugo.jpg',
     accent: '#7c3aed',
     border: '#8b5cf6',
@@ -189,13 +215,58 @@ const HERO_STUDY_QUOTES = [
     bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   },
   {
-    tag: 'ĐAM MÊ KHÁM PHÁ',
-    quote: '“Học tập không bao giờ làm cạn kiệt trí óc.”',
-    author: '— Leonardo da Vinci —',
-    img: './assets/aristotle.jpg',
+    tag: 'LÝ TƯỞNG SỐNG · NLXH',
+    quote: '“Nếu là con chim, chiếc lá / Thì con chim phải hót, chiếc lá phải xanh / Lẽ nào vay mà không có trả / Sống là cho, đâu chỉ nhận riêng mình.”',
+    author: '— Tố Hữu —',
+    tip: 'Dẫn chứng thơ cực hay cho đoạn văn 200 chữ về lối sống cống hiến, lòng nhân ái, trách nhiệm của tuổi trẻ.',
+    img: './assets/logo-nguvan.png',
+    accent: '#059669',
+    border: '#10b981',
+    bgLight: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 45%, #fafffd 100%)',
+    bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
+  },
+  {
+    tag: 'SÁNG TẠO NGHỆ THUẬT',
+    quote: '“Mỗi tác phẩm phải là một phát minh về hình thức và một khám phá về nội dung.”',
+    author: '— Leonid Leonov —',
+    tip: 'Dùng để đánh giá tài năng độc đáo, phong cách nghệ thuật riêng biệt của tác giả ở phần Đánh giá chung.',
+    img: './assets/logo-nguvan.png',
+    accent: '#b45309',
+    border: '#f59e0b',
+    bgLight: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 45%, #fffdf5 100%)',
+    bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
+  },
+  {
+    tag: 'BẢN LĨNH SỐNG · NLXH',
+    quote: '“Con người có thể bị hủy diệt chứ không thể bị khuất phục.”',
+    author: '— Ernest Hemingway (Ông già và biển cả) —',
+    tip: 'Câu châm ngôn kinh điển cho các đề nghị luận xã hội về nghị lực vượt khó, ý chí kiên cường trước nghịch cảnh.',
+    img: './assets/logo-nguvan.png',
+    accent: '#dc2626',
+    border: '#ef4444',
+    bgLight: 'linear-gradient(135deg, #fef2f2 0%, #fee2e2 45%, #fffdf8 100%)',
+    bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
+  },
+  {
+    tag: 'TIẾP NHẬN VĂN HỌC',
+    quote: '“Khi tác phẩm kết thúc, ấy mới là lúc cuộc sống thực sự của nó bắt đầu trong lòng người đọc.”',
+    author: '— Tiếp nhận văn học —',
+    tip: 'Dùng cho phần Kết bài để khẳng định sức sống vượt thời gian và dư âm của tác phẩm trong lòng độc giả.',
+    img: './assets/logo-nguvan.png',
     accent: '#0891b2',
     border: '#06b6d4',
     bgLight: 'linear-gradient(135deg, #ecfeff 0%, #cffafe 45%, #fafffd 100%)',
+    bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
+  },
+  {
+    tag: 'LỜI BÁC DẠY · TRUYỀN CẢM HỨNG',
+    quote: '“Non sông Việt Nam có trở nên tươi đẹp hay không, dân tộc Việt Nam có bước tới đài vinh quang để sánh vai với các cường quốc năm châu được hay không, chính là nhờ một phần lớn ở công học tập của các em.”',
+    author: '— Chủ tịch Hồ Chí Minh —',
+    tip: 'Dẫn chứng mẫu mực cho các đề bài về khát vọng cống hiến, trách nhiệm học tập của thế hệ trẻ hôm nay.',
+    img: './assets/bac-ho.jpg',
+    accent: '#b45309',
+    border: '#f59e0b',
+    bgLight: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 45%, #fffdf5 100%)',
     bgDark: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   }
 ];
@@ -214,6 +285,7 @@ function applyHeroQuote(idx, animate = true) {
   const tag = document.querySelector('#study-tag');
   const quote = document.querySelector('#study-quote');
   const author = document.querySelector('#study-author');
+  const tip = document.querySelector('#study-tip');
 
   if (!card || !img || !quote) return;
 
@@ -223,6 +295,9 @@ function applyHeroQuote(idx, animate = true) {
     if (tag) tag.textContent = item.tag;
     quote.textContent = item.quote;
     if (author) author.textContent = item.author;
+    if (tip) {
+      tip.innerHTML = item.tip ? `<b>💡 Gợi ý vận dụng viết văn:</b> ${item.tip}` : '';
+    }
 
     // Apply font size adjustment for long quotes
     if (item.quote.length > 90) {
@@ -281,9 +356,28 @@ function rotateHeroQuote() {
   applyHeroQuote(heroQuoteIndex, true);
 }
 
+function nextHeroQuote() {
+  rotateHeroQuote();
+  if (typeof playSound === 'function') playSound('pop');
+}
+
+function copyCurrentHeroQuote() {
+  const item = HERO_STUDY_QUOTES[heroQuoteIndex] || HERO_STUDY_QUOTES[0];
+  const text = `${item.quote} (${item.author})`;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      if (typeof toast === 'function') toast('📋 Đã sao chép nhận định văn học!', 'ok');
+    }).catch(() => {
+      if (typeof toast === 'function') toast('📋 ' + text, 'ok');
+    });
+  } else if (typeof toast === 'function') {
+    toast('📋 ' + text, 'ok');
+  }
+}
+
 function startHeroQuoteRotation() {
   stopHeroQuoteRotation();
-  heroQuoteTimer = setInterval(rotateHeroQuote, 8500);
+  heroQuoteTimer = setInterval(rotateHeroQuote, 12000);
 }
 
 function stopHeroQuoteRotation() {

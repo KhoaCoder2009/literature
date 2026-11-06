@@ -97,34 +97,40 @@ window.renderWorkspaceThinkingGuide(setTruyen);
 
 const bodyEl = document.getElementById('workspace-thinking-guide-body');
 assert(Boolean(bodyEl.innerHTML), 'workspace-thinking-guide-body đã render HTML');
-assert(bodyEl.innerHTML.includes('nlvh_doan_nt_truyen" selected'), 'Dropdown Dạng bài tự động chọn đúng nlvh_doan_nt_truyen');
+assert(bodyEl.innerHTML.includes('nlvh_doan_nt_truyen" selected'), 'Dropdown Dạng bài tự động chọn đúng nlvh_doan_nt_truyen cho đề truyện');
 assert(bodyEl.innerHTML.includes('Bám sát các yếu tố tự sự: ngôi kể, điểm nhìn, tình huống'), 'Hiển thị đúng Quy tắc hình thức của dạng nghệ thuật truyện ngắn');
 assert(bodyEl.innerHTML.includes('Ngôi kể &amp; Điểm nhìn') || bodyEl.innerHTML.includes('Ngôi kể & Điểm nhìn'), 'Hiển thị đúng Quy trình các bước triển khai');
-assert(bodyEl.innerHTML.includes('Tình huống truyện độc đáo'), 'Hiển thị đúng Từ khóa gợi ý theo đề');
+assert(bodyEl.innerHTML.includes('Tình huống truyện độc đáo'), 'Hiển thị đúng Từ khóa gợi ý theo đề truyện');
 assert(bodyEl.innerHTML.includes('Thứ nhất,'), 'Hiển thị đúng Cụm từ dẫn luận điểm');
-assert(bodyEl.innerHTML.includes('GỢI Ý TƯ DUY TRỌNG TÂM CỦA ĐỀ NÀY'), 'Hiển thị khung Gợi ý tư duy trọng tâm');
+assert(bodyEl.innerHTML.includes('GỢI Ý TƯ DUY TRỌNG TÂM'), 'Hiển thị khung Gợi ý tư duy trọng tâm');
+assert(bodyEl.innerHTML.includes('scaffold-kw-chip-static'), 'Từ khóa là thẻ span tĩnh (chỉ đọc, không chèn tự động)');
 
-// 3. Kiểm tra chèn gợi ý vào ô bài viết
+// 3. Mở đề NLXH "Áp lực tạo nên kim cương" (Đề 1) và kiểm tra tính chính xác tuyệt đối
+const setNLXH = window.writingSets.find(s => s.id === 'doan_nlxh_01');
+assert(Boolean(setNLXH), 'Tìm thấy Đề 1 NLXH (doan_nlxh_01)');
+window.currentWritingSet = setNLXH;
+window.renderWorkspaceThinkingGuide(setNLXH);
+assert(bodyEl.innerHTML.includes('nlxh_doan_ynghia" selected'), 'Đề "Áp lực tạo nên kim cương" tự động chọn đúng dạng Đoạn NLXH (nlxh_doan_ynghia)');
+assert(bodyEl.innerHTML.includes('Thử thách tôi luyện bản lĩnh'), 'Hiển thị từ khóa chuẩn theo đề: "Thử thách tôi luyện bản lĩnh"');
+assert(bodyEl.innerHTML.includes('Biến áp lực thành động lực'), 'Hiển thị từ khóa chuẩn theo đề: "Biến áp lực thành động lực"');
+assert(!bodyEl.innerHTML.includes('Tình huống truyện độc đáo'), 'Đề NLXH không bị nhầm lẫn từ khóa của truyện ngắn');
+assert(!bodyEl.innerHTML.includes('Bấm để chèn vào phần đang viết'), 'Không còn dòng chữ kêu gọi bấm chèn vào bài');
+
+// 4. Kiểm tra nguyên tắc Sư phạm: Không chèn hay ghi đè bài của học sinh
 const mockTextarea = document.getElementById('sec-input-sec_doan_200');
-mockTextarea.value = '';
+mockTextarea.value = 'Bài làm của học sinh...';
 mockTextarea.classList.contains = (c) => c === 'writing-textarea';
 
 window.insertSetThinkingGuideToActiveSection();
-assert(mockTextarea.value.includes('[GỢI Ý TƯ DUY ĐỊNH HƯỚNG]:'), 'Chèn thành công Gợi ý tư duy vào bài viết');
-assert(mockTextarea.value.includes('Chi tiết nghệ thuật đặc sắc'), 'Nội dung gợi ý đề 21 xuất hiện trong ô bài viết');
+assert(mockTextarea.value === 'Bài làm của học sinh...', 'Gợi ý tư duy thuần túy để đọc, không tự ý chèn đè bài của học sinh');
 
-// 4. Kiểm tra chèn sườn dàn ý
-mockTextarea.value = '';
 window.insertScaffoldFormulaOutline();
-assert(mockTextarea.value.includes('[KHUNG SƯỜN DÀN Ý'), 'Chèn thành công Khung sườn dàn ý vào bài viết');
-assert(mockTextarea.value.includes('Tình huống truyện'), 'Sườn dàn ý chứa bước Tình huống truyện');
+assert(mockTextarea.value === 'Bài làm của học sinh...', 'Khung sườn thuần túy để đọc tham khảo, không tự ý chèn đè bài');
 
-// 5. Kiểm tra chèn từ khóa gợi ý và cụm từ dẫn
-mockTextarea.value = 'Đoạn văn bắt đầu.';
-window.insertTextIntoActiveWritingSection('Tình huống truyện độc đáo');
-assert(mockTextarea.value.includes('Tình huống truyện độc đáo'), 'Chèn từ khóa thành công vào cuối bài');
+window.insertTextIntoActiveWritingSection('Thử thách tôi luyện bản lĩnh');
+assert(mockTextarea.value === 'Bài làm của học sinh...', 'Từ khóa thuần túy để đọc tham khảo, không chèn đè vào ô bài viết');
 
-// 6. Kiểm tra chuyển đổi dạng bài trên dropdown
+// 5. Kiểm tra chuyển đổi dạng bài trên dropdown
 window.onScaffoldTemplateChange('nlxh_doan_tachai');
 assert(bodyEl.innerHTML.includes('nlxh_doan_tachai" selected'), 'Chuyển đổi thành công sang dạng Tác hại / Hậu quả');
 assert(bodyEl.innerHTML.includes('TÁC HẠI / HẬU QUẢ'), 'Nội dung hiển thị theo dạng mới');

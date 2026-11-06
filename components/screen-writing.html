@@ -66,25 +66,17 @@
             <!-- Hộp đề bài -->
             <div class="writing-prompt-card">
               <div class="writing-prompt-header" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-                <span class="writing-prompt-tag" style="font-size:11.5px; font-weight:800; color:var(--bl, #2563eb); text-transform:uppercase; letter-spacing:0.5px;">ĐỀ BÀI</span>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="writing-prompt-tag" style="font-size:11.5px; font-weight:800; color:var(--bl, #2563eb); text-transform:uppercase; letter-spacing:0.5px;">ĐỀ BÀI</span>
+                  <button type="button" class="btn cy sm scaffold-trigger-btn" id="btn-toggle-thinking-guide" onclick="toggleWorkspaceThinkingGuide()" title="Ẩn/Hiện gợi ý tư duy & dạng bài để đọc và tham khảo khi làm bài" style="padding:3px 10px; font-size:12px; font-weight:700; border-radius:20px;">
+                    <ion-icon name="bulb-outline"></ion-icon> <span>💡 Gợi ý tư duy</span>
+                  </button>
+                </div>
                 <span id="workspace-prompt-genre-pill" class="tag cy sm" style="font-size:11.5px; font-weight:700;">Nghị luận</span>
               </div>
               <div class="writing-prompt-text-wrapper">
                 <p id="workspace-prompt-text" class="writing-prompt-text"></p>
                 <button type="button" id="workspace-prompt-toggle-btn" class="writing-prompt-toggle" onclick="togglePromptExpand()">Xem thêm</button>
-              </div>
-
-              <!-- THANH NÚT GỢI Ý TƯ DUY NẰM TRỰC TIẾP DƯỚI ĐỀ BÀI -->
-              <div class="writing-prompt-actions-under">
-                <button type="button" class="btn cy sm scaffold-trigger-btn" id="btn-toggle-thinking-guide" onclick="toggleWorkspaceThinkingGuide()" title="Ẩn/Hiện gợi ý tư duy & dạng bài cho đề bài này">
-                  <ion-icon name="bulb-outline"></ion-icon> <span>💡 Gợi ý tư duy &amp; Dạng bài</span>
-                </button>
-                <button type="button" class="btn au sm thinking-action-btn" id="btn-quick-insert-thinking-guide" onclick="insertSetThinkingGuideToActiveSection()" title="Chèn nhanh gợi ý tư duy này vào bài làm để phát triển bài viết">
-                  <ion-icon name="flash-outline"></ion-icon> <span>Chèn gợi ý vào bài</span>
-                </button>
-                <button type="button" class="btn gh sm thinking-action-btn" onclick="insertScaffoldFormulaOutline()" title="Chèn khung sườn các bước dàn ý vào bài làm">
-                  <ion-icon name="list-outline"></ion-icon> <span>Chèn sườn dàn ý</span>
-                </button>
               </div>
 
               <!-- HỘP GỢI Ý TƯ DUY & DẠNG BÀI NGHỊ LUẬN NẰM NGAY DƯỚI ĐỀ BÀI -->
@@ -94,15 +86,12 @@
                     <span class="thinking-card-badge-icon">💡</span>
                     <div>
                       <h4 class="thinking-card-heading">GỢI Ý TƯ DUY &amp; DẠNG BÀI NGHỊ LUẬN</h4>
-                      <p class="thinking-card-sub" id="workspace-thinking-card-sub">Định hướng luận điểm, quy trình các bước &amp; từ khóa theo tài liệu phương pháp</p>
+                      <p class="thinking-card-sub" id="workspace-thinking-card-sub">Định hướng luận điểm, quy trình các bước &amp; từ khóa theo tài liệu phương pháp (Chỉ để đọc tham khảo)</p>
                     </div>
                   </div>
-                  <div style="display:flex; align-items:center; gap:6px;">
-                    <button type="button" class="btn au sm" onclick="insertSetThinkingGuideToActiveSection()" title="Chèn nhanh gợi ý tư duy này vào bài làm">
-                      <ion-icon name="flash-outline"></ion-icon> <span>Chèn vào bài</span>
-                    </button>
+                  <div>
                     <button type="button" class="btn gh sm" onclick="toggleWorkspaceThinkingGuide()" title="Thu gọn hộp gợi ý tư duy">
-                      <ion-icon name="chevron-up-outline"></ion-icon>
+                      <ion-icon name="chevron-up-outline"></ion-icon> <span>Thu gọn</span>
                     </button>
                   </div>
                 </div>

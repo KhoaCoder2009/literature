@@ -220,6 +220,7 @@ const securityLockdownSnippet = `
     'adjustPromptTypeCount', 'autoDistributePromptTypes', 'onPromptTypeToggle',
     'onPromptTotalCountChange', 'onPromptTypeCountInput',
     'nextQuoteOfDay', 'copyCurrentQuoteOfDay', 'toggleSaveCurrentQuote',
+    'nextHeroQuote', 'copyCurrentHeroQuote', 'rotateHeroQuote',
     'openQuoteOfDayModal', 'closeQuoteOfDayModal', 'renderQuoteOfDayModalBody', 'copySpecificQuote',
     'openGamificationModal', 'closeGamificationModal', 'onActivityCompletedGamification',
     'awardCustomGamificationPoints', 'renderGamificationUI',
@@ -278,8 +279,8 @@ if (fs.existsSync(indexPath)) {
   );
 
   // Luôn làm mới version cache-busting cho bundle CSS & JS
-  html = html.replace(/\.\/dist\/app\.bundle\.css(\?v=[^"]*)?/g, './dist/app.bundle.css?v=5.7');
-  html = html.replace(/\.\/dist\/app\.bundle\.js(\?v=[^"]*)?/g, './dist/app.bundle.js?v=5.7');
+  html = html.replace(/\.\/dist\/app\.bundle\.css(\?v=[^"]*)?/g, './dist/app.bundle.css?v=6.0');
+  html = html.replace(/\.\/dist\/app\.bundle\.js(\?v=[^"]*)?/g, './dist/app.bundle.js?v=6.0');
 
   fs.writeFileSync(indexPath, html, 'utf8');
   console.log('✓ Đã cập nhật index.html sang chế độ Bundle duy nhất (ẩn hoàn toàn các tên file nguồn)');
