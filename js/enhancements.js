@@ -681,7 +681,7 @@
     // --- NHÓM 1: ĐOẠN VĂN NGHỊ LUẬN VĂN HỌC (~200 CHỮ - 1 ĐOẠN DUY NHẤT) ---
     nlvh_doan_chude: {
       group: 'Đoạn văn NLVH (~200 chữ)',
-      name: '1. Đoạn NLVH: Phân tích, đánh giá NỘI DUNG CHỦ ĐỀ (Thơ / Truyện)',
+      name: '1. Đoạn văn phân tích, đánh giá nội dung chủ đề',
       singleParagraph: true,
       formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng. Dung lượng: Khoảng 200 chữ (từ 2/3 đến tối đa 1 trang giấy thi, chừa lại 3 dòng).',
       formulaSteps: ['Câu dẫn + GTVĐNL', 'Nêu chủ đề', 'Phân tích 2-3 khía cạnh (Thứ nhất, Thứ hai, Thứ ba)', 'Đánh giá vai trò chủ đề', 'Nghệ thuật', 'Kết đoạn – Trích dẫn'],
@@ -715,7 +715,7 @@
 
     nlvh_doan_nt_tho: {
       group: 'Đoạn văn NLVH (~200 chữ)',
-      name: '2. Đoạn NLVH: Phân tích, đánh giá NGHỆ THUẬT THƠ',
+      name: '2. Đoạn văn phân tích, đánh giá nghệ thuật THƠ',
       singleParagraph: true,
       formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Luôn gắn các yếu tố hình thức với việc làm rõ chủ đề và thông điệp.',
       formulaSteps: ['Câu dẫn + GTVĐNL', 'Thứ nhất: Thể thơ', 'Thứ hai: Hình ảnh', 'Thứ ba: Từ ngữ', 'Thứ tư: Biện pháp tu từ', 'Làm rõ Chủ đề & Thông điệp'],
@@ -732,7 +732,7 @@
 
     nlvh_doan_camxuc_tho: {
       group: 'Đoạn văn NLVH (~200 chữ)',
-      name: '3. Đoạn NLVH: Phân tích, đánh giá TÌNH CẢM, CẢM XÚC trong thơ',
+      name: '3. Đoạn văn phân tích, đánh giá TÌNH CẢM, CẢM XÚC trong thơ',
       singleParagraph: true,
       formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Chỉ rõ từng cung bậc cảm xúc kèm dẫn chứng và phân tích.',
       formulaSteps: ['Câu dẫn + GTVĐNL', 'Cảm xúc 1 (Dẫn chứng + Phân tích)', 'Cảm xúc 2 (Dẫn chứng + Phân tích)', 'Nghệ thuật biểu đạt', 'Đánh giá triết lí nhân sinh & Phong cách'],
@@ -748,7 +748,7 @@
 
     nlvh_doan_nt_truyen: {
       group: 'Đoạn văn NLVH (~200 chữ)',
-      name: '4. Đoạn NLVH: Phân tích NGHỆ THUẬT TRUYỆN NGẮN',
+      name: '4. Đoạn văn phân tích nghệ thuật TRUYỆN NGẮN',
       singleParagraph: true,
       formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Bám sát các yếu tố tự sự: ngôi kể, điểm nhìn, tình huống, chi tiết, ngôn ngữ, giọng điệu, tâm lí.',
       formulaSteps: ['Câu dẫn + GTVĐNL', 'Ngôi kể & Điểm nhìn', 'Tình huống truyện', 'Chi tiết nghệ thuật & Nội tâm', 'Ngôn ngữ & Giọng điệu', 'Đánh giá tài năng & Chủ đề'],
@@ -765,7 +765,7 @@
 
     nlvh_doan_nhanvat: {
       group: 'Đoạn văn NLVH (~200 chữ)',
-      name: '5. Đoạn NLVH: Phân tích ĐẶC ĐIỂM NHÂN VẬT',
+      name: '5. Đoạn văn phân tích đặc điểm NHÂN VẬT',
       singleParagraph: true,
       formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Kết hợp phân tích phẩm chất (qua hành động, lời nói, thái độ) với nghệ thuật xây dựng nhân vật.',
       formulaSteps: ['Mở đoạn & Khái quát (tên, ngoại hình, hoàn cảnh)', 'Vẻ đẹp / Phẩm chất 1 (D/c + PT)', 'Vẻ đẹp / Phẩm chất 2 (D/c + PT)', 'Nghệ thuật xây dựng nhân vật', 'Đánh giá (Tiêu biểu cho tầng lớp & Thông điệp)'],

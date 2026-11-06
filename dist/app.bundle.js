@@ -8559,61 +8559,41 @@ function replay() { go('setup', G.s.id); }
 
 const DEFAULT_WRITING_SETS = [
   {
-    "id": "doan_nlvh_01",
+    "id": "doan_nlvh_09",
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn nghị luận văn học",
-    "subType": "nlvh_doan_nt_truyen",
+    "subType": "nlvh_doan_chude",
     "icon": "🖋️",
-    "title": "[Đoạn NLVH - Đề 1] Phân tích ý nghĩa chi tiết \"tiếng chửi\" mở đầu truyện ngắn Chí Phèo (Nam Cao)",
-    "prompt": "Phân tích ý nghĩa chi tiết \"tiếng chửi\" của Chí Phèo ở phần mở đầu truyện ngắn Chí Phèo (Nam Cao):\n\n“Hắn vừa đi vừa chửi. Bao giờ cũng thế, cứ rượu xong là hắn chửi. Bắt đầu hắn chửi giời. Có hề gì? giời có của riêng nhà nào? Rồi hắn chửi đời. Thế cũng chẳng sao: đời là tất cả nhưng chẳng là ai. Tức mình, hắn chửi ngay tất cả làng Vũ Đại. Nhưng cả làng Vũ Đại, ai cũng tự nhủ: « Chắc nó trừ mình ra! » Không ai lên tiếng cả. Tức thật! tức thật! ồ! thế này thì tức thật! tức chết đi được mất! Đã thế, hắn phải chửi cha đứa nào không chửi nhau với hắn. Nhưng cũng không ai ra điều. Mẹ kiếp! thế thì có phí rượu không? Thế thì có khổ hắn không? Không biết đứa chết mẹ nào lại đẻ ra thân hắn cho hắn khổ đến nông nỗi này? A hà! phải đấy, hắn cứ thế mà chửi, hắn cứ chửi đứa chết mẹ nào đẻ ra thân hắn, đẻ ra thằng Chí Phèo! Hắn nghiến răng vào mà chửi cái đứa đã đẻ ra Chí Phèo. Nhưng mà biết đứa nào đã đẻ ra Chí Phèo? Có mà giời biết! Hắn không biết, cả làng Vũ Đại cũng không ai biết..”",
-    "thinkingGuide": "• Gọi tên yếu tố: Chi tiết nghệ thuật đặc sắc kết hợp điểm nhìn trần thuật nửa trực tiếp độc đáo.\n• Phân tích: Trình tự tiếng chửi thu hẹp dần: từ trời, đời ➔ làng Vũ Đại ➔ đứa không chửi nhau với hắn ➔ đứa đẻ ra thân hắn. Tiếng chửi là phản ứng của một kẻ say nhưng ẩn chứa nỗi đau tỉnh táo: hắn thèm khát giao tiếp với con người nhưng đáp lại chỉ là sự im lặng ghê người của cả làng Vũ Đại.\n• Đánh giá: Tiếng chửi không chỉ thể hiện tình trạng lưu manh hóa mà thực chất là tiếng kêu cứu cô độc, quằn quại của một con người bị cự tuyệt quyền làm người.",
+    "title": "[Đoạn NLVH - Đề 1] Vẻ đẹp sông Hương qua chi tiết \"cô gái Di-gan phóng khoáng và man dại\" (Hoàng Phủ Ngọc Tường)",
+    "prompt": "Phân tích vẻ đẹp của sông Hương qua chi tiết \"như một cô gái Di-gan phóng khoáng và man dại\" (Ai đã đặt tên cho dòng sông? - Hoàng Phủ Ngọc Tường):\n\n\"Trong những dòng sông đẹp ở các nước mà tôi đã nghe nói đến, hình như chỉ có sông Hương là thuộc về một thành phố duy nhất. Trước khi về đến vùng châu thổ êm đềm, nó đã là một bản trường ca của rừng già, rầm rộ giữa bóng cây đại ngàn, mãnh liệt qua những ghềnh thác, cuộn xoáy như cơn lốc vào những đáy vực bí ẩn, và cũng có lúc nó trở nên dịu dàng và say đắm giữa những dặm dài chói lọi màu đỏ của hoa đỗ quyên rừng. Giữa lòng Trường Sơn, sông Hương đã sống một nửa cuộc đời của mình như một cô gái Di-gan phóng khoáng và man dại. Rừng già đã hun đúc cho nó một bản lĩnh gan dạ, một tâm hồn tự do và trong sáng. Nhưng chính rừng già nơi đây, với cấu trúc đặc biệt có thể mở ra của dòng chảy, đã chế ngự sức mạnh bản năng ở người con gái ấy để khi ra khỏi rừng, sông Hương nhanh chóng mang một sắc đẹp dịu dàng và trí tuệ, trở thành người mẹ phù sa của một vùng văn hóa xứ sở.\"",
+    "thinkingGuide": "• Gọi tên: Biện pháp so sánh, nhân hóa độc đáo; từ ngữ giàu tính tạo hình và trường từ vựng phong phú.\n• Phân tích: Hình ảnh \"cô gái Di-gan phóng khoáng và man dại\" gợi vẻ đẹp hoang dã, tự do, căng tràn nhựa sống và cá tính mãnh liệt của dòng sông giữa đại ngàn Trường Sơn. Sông Hương không chỉ có dòng chảy vật lí mà hiện lên như một sinh thể sống động với \"bản lĩnh gan dạ\" và \"tâm hồn trong sáng\".\n• Đánh giá: Thể hiện vốn hiểu biết địa lí - văn hóa uyên bác và ngòi bút tài hoa, lãng mạn bậc thầy của Hoàng Phủ Ngọc Tường.",
     "sections": [
       {
         "id": "sec_doan_200",
         "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Mở đoạn: Giới thiệu tác giả Nam Cao, tác phẩm Chí Phèo và chi tiết tiếng chửi ➔ Thân đoạn: Gọi tên nghệ thuật trần thuật + phân tích trình tự tiếng chửi và ý nghĩa bi kịch cự tuyệt giao tiếp ➔ Đánh giá giá trị nhân đạo...",
-        "guide": "• Viết liền mạch 1 đoạn văn khoảng 200 chữ, không xuống hàng.\n• Bắt buộc: Nêu vấn đề nghị luận ➔ Gọi tên chi tiết + dẫn chứng ➔ Phân tích ý nghĩa ➔ Đánh giá tư tưởng nhân đạo.",
+        "placeholder": "Mở đoạn: Dẫn dắt vẻ đẹp sông Hương ở thượng nguồn ➔ Thân đoạn: Phân tích hình ảnh so sánh cô gái Di-gan và bản trường ca rừng già ➔ Đánh giá cái tôi tài hoa, uyên bác của tác giả...",
+        "guide": "• Viết liền mạch 1 đoạn văn ~200 chữ.\n• Khắc họa vẻ đẹp đối lập giữa sự hoang dại thượng nguồn và vẻ dịu dàng khi về đồng bằng.",
         "sample": ""
       }
     ]
   },
   {
-    "id": "doan_nlvh_02",
+    "id": "doan_nlvh_10",
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn nghị luận văn học",
-    "subType": "nlvh_doan_nt_truyen",
+    "subType": "nlvh_doan_chude",
     "icon": "🖋️",
-    "title": "[Đoạn NLVH - Đề 2] Phân tích tác dụng điểm nhìn trần thuật từ bà cụ Tứ khi nhìn nàng dâu mới (Vợ nhặt)",
-    "prompt": "Phân tích tác dụng của điểm nhìn trần thuật từ nhân vật bà cụ Tứ khi nhìn nàng dâu mới (Vợ nhặt - Kim Lân):\n\n“Bà lão cúi đầu nín lặng. Bà lão hiểu rồi. Lòng người mẹ nghèo khổ ấy còn hiểu ra biết bao nhiêu cơ sự, vừa ai oán vừa xót thương cho số kiếp đứa con mình. Chao ôi, người ta dựng vợ gả chồng cho con là lúc trong nhà ăn nên làm nổi, những mong sinh con đẻ cái mở mặt sau này. Còn mình thì... Trong kẽ mắt kèm nhèm của bà rủ xuống hai dòng nước mắt... Biết rằng chúng nó có nuôi nổi nhau sống qua được cơn đói khát này không?\nBà lão khẽ thở dài đứng lên, đăm đăm nhìn người đàn bà. Thị cúi mặt xuống, tay vân vê tà áo đã rách bợt. Bà lão nhìn thị và bà nghĩ: Người ta có gặp bước khó khăn, đói khổ này, người ta mới lấy đến con mình. Mà con mình mới có vợ được... Thôi thì bổn phận bà là mẹ, bà đã chẳng lo lắng được cho con... May ra mà qua khỏi được cái tao đoạn này thì thằng con bà cũng có vợ, nó yên bề nó, chẳng may ra ông giời bắt chết cũng phải chịu chứ biết thế nào mà lo cho hết được?...”",
-    "thinkingGuide": "• Gọi tên yếu tố: Điểm nhìn bên trong (nội tâm nhân vật người mẹ già nghèo khổ) kết hợp lời trần thuật nửa trực tiếp.\n• Phân tích: Điểm nhìn giúp nhà văn soi rọi dòng độc thoại nội tâm phức tạp của bà cụ Tứ: từ ngỡ ngàng, ai oán, tủi phận vì không lo được cho con đến niềm thương cảm vô bờ đối với người đàn bà xa lạ (\"người ta có đói khổ mới lấy đến con mình\").\n• Đánh giá: Thể hiện tấm lòng bao dung, nhân hậu và tình mẫu tử thiêng liêng; khẳng định niềm tin bất diệt vào tình người giữa nạn đói khốc liệt.",
+    "title": "[Đoạn NLVH - Đề 2] Sự chặt chẽ của lập luận trong phần mở đầu văn bản Đại cáo bình Ngô (Nguyễn Trãi)",
+    "prompt": "Phân tích sự chặt chẽ của lập luận trong phần mở đầu văn bản Đại cáo bình Ngô (Nguyễn Trãi):\n\n\"Từng nghe:\nViệc nhân nghĩa cốt ở yên dân,\nQuân điếu phạt trước lo trừ bạo.\nNhư nước Đại Việt ta từ trước,\nVốn xưng nền văn hiến đã lâu.\nNúi sông bờ cõi đã chia,\nPhong tục Bắc Nam cũng khác.\nTừ Triệu, Đinh, Lý, Trần bao đời xây nền độc lập,\nCùng Hán, Đường, Tống, Nguyên mỗi bên xưng đế một phương.\nTuy mạnh yếu từng lúc khác nhau,\nSong hào kiệt đời nào cũng có.\"",
+    "thinkingGuide": "• Gọi tên: Lập luận chặt chẽ theo cấu trúc diễn dịch, câu văn biền ngẫu sóng đôi cân xứng, kết hợp tiền đề chân lí (nhân nghĩa) và bằng chứng lịch sử xác thực.\n• Phân tích: Nguyễn Trãi nêu luận đề chính nghĩa: \"yên dân\" - bảo vệ cuộc sống bình yên của dân chúng và \"trừ bạo\" - tiêu diệt quân xâm lược bạo tàn. Tiếp đó, tác giả đưa ra các căn cứ vững chắc khẳng định chủ quyền độc lập của Đại Việt: văn hiến, lãnh thổ, phong tục, triều đại lịch sử ngang hàng với phương Bắc, hào kiệt ngàn đời.\n• Đánh giá: Đoạn văn mang sức thuyết phục đanh thép, xứng danh bản tuyên ngôn độc lập sáng chói của dân tộc.",
     "sections": [
       {
         "id": "sec_doan_200",
         "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Mở đoạn: Nêu tác giả Kim Lân, truyện Vợ nhặt và điểm nhìn bà cụ Tứ ➔ Thân đoạn: Phân tích diễn biến tâm lí tủi phận - thấu hiểu - bao dung ➔ Đánh giá vai trò khắc họa phẩm giá con người...",
-        "guide": "• Viết 1 đoạn văn khoảng 200 chữ.\n• Điểm nhìn trần thuật từ bên trong giúp câu chuyện thấm đẫm chất nhân văn và tình mẫu tử.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlvh_03",
-    "status": "published",
-    "category": "doan-nlvh",
-    "categoryName": "Đoạn nghị luận văn học",
-    "subType": "nlvh_doan_nt_truyen",
-    "icon": "🖋️",
-    "title": "[Đoạn NLVH - Đề 3] Phân tích tình huống truyện độc đáo trong tác phẩm Vợ nhặt (Kim Lân)",
-    "prompt": "Phân tích tình huống truyện độc đáo trong tác phẩm Vợ nhặt (Kim Lân) (Đoạn văn khoảng 200 chữ).",
-    "thinkingGuide": "• Gọi tên: Tình huống \"nhặt vợ\" oái oăm, vừa bi vừa hài, đầy nghịch lí.\n• Phân tích: Tràng là một người ngụ cư, nghèo khổ, thô kệch lại lấy được vợ giữa lúc nạn đói 1945 hoành hành dữ dội nhất (\"người chết như ngả rạ\"). Việc lấy vợ vốn là đại sự thiêng liêng trở nên rẻ rúng như nhặt cọng rơm ngọn cỏ qua vài câu đùa và bốn bát bánh đúc. Nhưng đằng sau sự oái oăm là ngọn lửa ấm áp của tình yêu thương gia đình.\n• Đánh giá: Tình huống làm nổi bật ranh giới mỏng manh giữa sự sống và cái chết, từ đó tôn vinh khát vọng sống, khát vọng hạnh phúc mãnh liệt của người nông dân.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Giới thiệu tác phẩm và tình huống \"nhặt vợ\" ➔ Phân tích tính nghịch lí và tác dụng tạo bước ngoặt tâm lí ➔ Đánh giá tư tưởng nhân văn của Kim Lân...",
-        "guide": "• Viết liền mạch 1 đoạn văn ~200 chữ.\n• Làm nổi bật sự tương phản: Nạn đói thê thảm đối lập với hơi ấm hạnh phúc gia đình.",
+        "placeholder": "Giới thiệu Nguyễn Trãi và Đại cáo bình Ngô ➔ Phân tích trình tự lập luận: Nguyên lí nhân nghĩa ➔ Các yếu tố khẳng định chủ quyền ➔ Đánh giá giá trị bản tuyên ngôn...",
+        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Làm rõ mối quan hệ logic giữa nguyên lí nhân nghĩa và quyền độc lập tự chủ.",
         "sample": ""
       }
     ]
@@ -8625,7 +8605,7 @@ const DEFAULT_WRITING_SETS = [
     "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_nt_tho",
     "icon": "🖋️",
-    "title": "[Đoạn NLVH - Đề 4] Hiệu quả của nghệ thuật đối và từ láy trong hai câu thơ Tràng giang (Huy Cận)",
+    "title": "[Đoạn NLVH - Đề 3] Hiệu quả của nghệ thuật đối và từ láy trong hai câu thơ Tràng giang (Huy Cận)",
     "prompt": "Phân tích hiệu quả của nghệ thuật đối và từ láy trong hai câu thơ:\n\"Lơ thơ cồn nhỏ gió đìu hiu/\nĐâu tiếng làng xa vãn chợ chiều\"\n(Tràng giang - Huy Cận) (Đoạn văn khoảng 200 chữ).",
     "thinkingGuide": "• Gọi tên yếu tố: Từ láy tượng hình \"lơ thơ\", tượng thanh/tượng cảm \"đìu hiu\" kết hợp âm hưởng đối thanh và hình ảnh \"vãn chợ chiều\".\n• Phân tích: Từ láy \"lơ thơ\" gợi sự thưa thớt, trơ trọi của những cồn cát nhỏ giữa sông nước mênh mông; \"đìu hiu\" (mượn âm hưởng Chinh phụ ngâm) gợi ngọn gió hiu hắt, lạnh lẽo. Hình ảnh \"chợ chiều\" đã tàn tạ, vắng lặng, thêm từ \"đâu\" (vừa là đâu đó mơ hồ, vừa là phủ định không đâu có) càng xoáy sâu vào không gian quạnh quẽ.\n• Đánh giá: Hai câu thơ thể hiện sâu sắc nỗi sầu không gian, nỗi sầu vạn kỉ và cảm giác bơ vơ, lạc lõng của cái tôi Thơ Mới trước vũ trụ vô cùng.",
     "sections": [
@@ -8634,6 +8614,26 @@ const DEFAULT_WRITING_SETS = [
         "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
         "placeholder": "Giới thiệu Huy Cận và bài thơ Tràng giang ➔ Phân tích nghệ thuật từ láy \"lơ thơ\", \"đìu hiu\", âm hưởng đối và hình ảnh \"vãn chợ chiều\" ➔ Đánh giá tâm trạng thi nhân...",
         "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Chỉ rõ giá trị gợi hình và gợi cảm của từ láy và nghệ thuật đăng đối.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlvh_12",
+    "status": "published",
+    "category": "doan-nlvh",
+    "categoryName": "Đoạn nghị luận văn học",
+    "subType": "nlvh_doan_nt_tho",
+    "icon": "🖋️",
+    "title": "[Đoạn NLVH - Đề 4] Bức tranh chiều xuân qua 4 câu thơ đầu bài Chiều xuân (Anh Thơ)",
+    "prompt": "Viết đoạn văn (khoảng 200 chữ) phân tích bức tranh chiều xuân qua 4 câu thơ đầu bài thơ Chiều xuân (Anh Thơ):\n\n\"Mưa đổ bụi êm êm trên bến vắng,\nĐò biếng lười nằm mặc nước sông trôi\nQuán tranh đứng im lìm trong vắng lặng\nBên chòm xoan hoa tím rụng tơi bời.\"",
+    "thinkingGuide": "• Câu dẫn: Giới thiệu bức tranh thiên nhiên mùa xuân êm đềm, thanh bình ở làng quê Bắc Bộ.\n• Phân tích: Gọi tên hình ảnh và từ ngữ: từ láy \"êm êm\", \"tơi bời\" kết hợp thủ pháp nhân hóa con đò \"biếng lười\", quán tranh \"đứng im lìm\". Mưa xuân dịu nhẹ như bụi sương, cảnh vật chìm trong tĩnh lặng nhưng không tàn úa mà giàu sức sống nhờ sắc \"hoa tím rụng tơi bời\".\n• Đánh giá: Thể hiện tâm hồn nhạy cảm, tinh tế của nữ sĩ Anh Thơ và tình yêu quê hương thiết tha, bình dị.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
+        "placeholder": "Dẫn dắt bài thơ Chiều xuân ➔ Phân tích từ láy \"êm êm\", nhân hóa con đò, quán tranh và nét chấm phá sắc hoa tím ➔ Đánh giá vẻ đẹp làng quê...",
+        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Chú ý nét đẹp hội họa và sự tĩnh lặng đầy chất thơ của làng quê.",
         "sample": ""
       }
     ]
@@ -8679,153 +8679,13 @@ const DEFAULT_WRITING_SETS = [
     ]
   },
   {
-    "id": "doan_nlvh_07",
-    "status": "published",
-    "category": "doan-nlvh",
-    "categoryName": "Đoạn nghị luận văn học",
-    "subType": "nlvh_doan_nt_truyen",
-    "icon": "🖋️",
-    "title": "[Đoạn NLVH - Đề 7] Mâu thuẫn kịch qua lời thoại Vũ Như Tô khi bị quân khởi loạn bắt (Hồi V, Vũ Như Tô)",
-    "prompt": "Phân tích mâu thuẫn qua lời thoại của Vũ Như Tô khi bị quân khởi loạn bắt (Hồi V, Vũ Như Tô - Nguyễn Huy Tưởng) (Đoạn văn khoảng 200 chữ).",
-    "thinkingGuide": "• Gọi tên: Lời thoại đầy ảo tưởng, không chịu tin vào thực tế nghiệt ngã (\"Ta có tội gì? Ta chỉ xây Cửu Trùng Đài để tô điểm cho đất nước!\").\n• Phân tích: Vũ Như Tô mù quáng tin rằng Cửu Trùng Đài là công trình nghệ thuật vĩ đại mang lại danh dự cho non sông, mà không nhận ra nó được xây dựng bằng mồ hôi, nước mắt và máu của hàng vạn dân phu đói khổ. Lời thoại bộc lộ sự vỡ mộng đau đớn khi quân khởi loạn đòi đốt phá đài cao.\n• Đánh giá: Khắc họa xung đột bi kịch không thể điều hòa giữa khát vọng nghệ thuật siêu việt thuần túy và quyền lợi thiết thân của quần chúng nhân dân.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Giới thiệu bi kịch Vũ Như Tô ➔ Phân tích tính chất bi kịch trong lời thoại ngơ ngác, không tin mình có tội ➔ Đánh giá mối quan hệ giữa nghệ thuật và đời sống...",
-        "guide": "• Đoạn văn ~200 chữ.\n• Chỉ rõ sự bế tắc của người nghệ sĩ tài ba nhưng lạc lối về quan điểm nghệ thuật.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlvh_08",
-    "status": "published",
-    "category": "doan-nlvh",
-    "categoryName": "Đoạn nghị luận văn học",
-    "subType": "nlvh_doan_nhanvat",
-    "icon": "🖋️",
-    "title": "[Đoạn NLVH - Đề 8] Thái độ của nhân vật Đan Thiềm khi khuyên Vũ Như Tô chạy trốn (Hồi V, Vũ Như Tô)",
-    "prompt": "Phân tích thái độ của nhân vật Đan Thiềm khi khuyên Vũ Như Tô chạy trốn (Hồi V, Vũ Như Tô - Nguyễn Huy Tưởng) (Đoạn văn khoảng 200 chữ).",
-    "thinkingGuide": "• Gọi tên: Hành động dồn dập, lời thoại khẩn khoản, tha thiết kết hợp chỉ dẫn sân khấu gấp gáp.\n• Phân tích: Đan Thiềm là người phụ nữ tỉnh táo, hiểu rõ thời cuộc (\"Thời thế đã đổi rồi\"). Bà không màng đến tính mạng bản thân (\"Tôi chết cũng được, nhưng ông phải sống\"), chỉ một lòng muốn bảo vệ \"kì tài\" cho đất nước. Thái độ đau đớn, hốt hoảng bộc lộ tấm lòng tri âm, tri kỉ tuyệt đối với người nghệ sĩ.\n• Đánh giá: Nhân vật thể hiện căn \"bệnh Đan Thiềm\" - bệnh mê đắm cái tài hoa, tôn thờ cái đẹp đến mức quên cả chính mình; làm sâu sắc thêm tính chất bi tráng của vở kịch.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Giới thiệu nhân vật Đan Thiềm và bối cảnh hồi V ➔ Phân tích hành động khuyên can khẩn thiết vì yêu quý kì tài ➔ Đánh giá ý nghĩa biểu tượng của tấm lòng tri âm...",
-        "guide": "• Đoạn văn ~200 chữ.\n• Làm sáng rõ sự tỉnh táo trước thời cuộc đối lập với sự si mê cái đẹp tài hoa.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlvh_09",
-    "status": "published",
-    "category": "doan-nlvh",
-    "categoryName": "Đoạn nghị luận văn học",
-    "subType": "nlvh_doan_chude",
-    "icon": "🖋️",
-    "title": "[Đoạn NLVH - Đề 9] Vẻ đẹp sông Hương qua chi tiết \"cô gái Di-gan phóng khoáng và man dại\" (Hoàng Phủ Ngọc Tường)",
-    "prompt": "Phân tích vẻ đẹp của sông Hương qua chi tiết \"như một cô gái Di-gan phóng khoáng và man dại\" (Ai đã đặt tên cho dòng sông? - Hoàng Phủ Ngọc Tường):\n\n\"Trong những dòng sông đẹp ở các nước mà tôi đã nghe nói đến, hình như chỉ có sông Hương là thuộc về một thành phố duy nhất. Trước khi về đến vùng châu thổ êm đềm, nó đã là một bản trường ca của rừng già, rầm rộ giữa bóng cây đại ngàn, mãnh liệt qua những ghềnh thác, cuộn xoáy như cơn lốc vào những đáy vực bí ẩn, và cũng có lúc nó trở nên dịu dàng và say đắm giữa những dặm dài chói lọi màu đỏ của hoa đỗ quyên rừng. Giữa lòng Trường Sơn, sông Hương đã sống một nửa cuộc đời của mình như một cô gái Di-gan phóng khoáng và man dại. Rừng già đã hun đúc cho nó một bản lĩnh gan dạ, một tâm hồn tự do và trong sáng. Nhưng chính rừng già nơi đây, với cấu trúc đặc biệt có thể mở ra của dòng chảy, đã chế ngự sức mạnh bản năng ở người con gái ấy để khi ra khỏi rừng, sông Hương nhanh chóng mang một sắc đẹp dịu dàng và trí tuệ, trở thành người mẹ phù sa của một vùng văn hóa xứ sở.\"",
-    "thinkingGuide": "• Gọi tên: Biện pháp so sánh, nhân hóa độc đáo; từ ngữ giàu tính tạo hình và trường từ vựng phong phú.\n• Phân tích: Hình ảnh \"cô gái Di-gan phóng khoáng và man dại\" gợi vẻ đẹp hoang dã, tự do, căng tràn nhựa sống và cá tính mãnh liệt của dòng sông giữa đại ngàn Trường Sơn. Sông Hương không chỉ có dòng chảy vật lí mà hiện lên như một sinh thể sống động với \"bản lĩnh gan dạ\" và \"tâm hồn trong sáng\".\n• Đánh giá: Thể hiện vốn hiểu biết địa lí - văn hóa uyên bác và ngòi bút tài hoa, lãng mạn bậc thầy của Hoàng Phủ Ngọc Tường.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Mở đoạn: Dẫn dắt vẻ đẹp sông Hương ở thượng nguồn ➔ Thân đoạn: Phân tích hình ảnh so sánh cô gái Di-gan và bản trường ca rừng già ➔ Đánh giá cái tôi tài hoa, uyên bác của tác giả...",
-        "guide": "• Viết liền mạch 1 đoạn văn ~200 chữ.\n• Khắc họa vẻ đẹp đối lập giữa sự hoang dại thượng nguồn và vẻ dịu dàng khi về đồng bằng.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlvh_10",
-    "status": "published",
-    "category": "doan-nlvh",
-    "categoryName": "Đoạn nghị luận văn học",
-    "subType": "nlvh_doan_chude",
-    "icon": "🖋️",
-    "title": "[Đoạn NLVH - Đề 10] Sự chặt chẽ của lập luận trong phần mở đầu văn bản Đại cáo bình Ngô (Nguyễn Trãi)",
-    "prompt": "Phân tích sự chặt chẽ của lập luận trong phần mở đầu văn bản Đại cáo bình Ngô (Nguyễn Trãi):\n\n\"Từng nghe:\nViệc nhân nghĩa cốt ở yên dân,\nQuân điếu phạt trước lo trừ bạo.\nNhư nước Đại Việt ta từ trước,\nVốn xưng nền văn hiến đã lâu.\nNúi sông bờ cõi đã chia,\nPhong tục Bắc Nam cũng khác.\nTừ Triệu, Đinh, Lý, Trần bao đời xây nền độc lập,\nCùng Hán, Đường, Tống, Nguyên mỗi bên xưng đế một phương.\nTuy mạnh yếu từng lúc khác nhau,\nSong hào kiệt đời nào cũng có.\"",
-    "thinkingGuide": "• Gọi tên: Lập luận chặt chẽ theo cấu trúc diễn dịch, câu văn biền ngẫu sóng đôi cân xứng, kết hợp tiền đề chân lí (nhân nghĩa) và bằng chứng lịch sử xác thực.\n• Phân tích: Nguyễn Trãi nêu luận đề chính nghĩa: \"yên dân\" - bảo vệ cuộc sống bình yên của dân chúng và \"trừ bạo\" - tiêu diệt quân xâm lược bạo tàn. Tiếp đó, tác giả đưa ra các căn cứ vững chắc khẳng định chủ quyền độc lập của Đại Việt: văn hiến, lãnh thổ, phong tục, triều đại lịch sử ngang hàng với phương Bắc, hào kiệt ngàn đời.\n• Đánh giá: Đoạn văn mang sức thuyết phục đanh thép, xứng danh bản tuyên ngôn độc lập sáng chói của dân tộc.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Giới thiệu Nguyễn Trãi và Đại cáo bình Ngô ➔ Phân tích trình tự lập luận: Nguyên lí nhân nghĩa ➔ Các yếu tố khẳng định chủ quyền ➔ Đánh giá giá trị bản tuyên ngôn...",
-        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Làm rõ mối quan hệ logic giữa nguyên lí nhân nghĩa và quyền độc lập tự chủ.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlvh_11",
-    "status": "published",
-    "category": "doan-nlvh",
-    "categoryName": "Đoạn nghị luận văn học",
-    "subType": "nlvh_doan_nt_truyen",
-    "icon": "🖋️",
-    "title": "[Đoạn NLVH - Đề 11] Phân tích chi tiết \"cái cúi đầu\" của viên quản ngục trong Chữ người tử tù (Nguyễn Tuân)",
-    "prompt": "Viết đoạn văn (khoảng 200 chữ) phân tích chi tiết \"cái cúi đầu\" của viên quản ngục ở cuối tác phẩm Chữ người tử tù (Nguyễn Tuân):\n\n\"Huấn Cao thở dài, buồn bã đỡ viên quản ngục đứng thẳng người dậy và bảo:\n- Tôi bảo thực đấy, thầy Quản nên thay chốn ở đi. Chỗ này không phải là nơi để treo một bức lụa trắng với những nét chữ vuông vắn tươi tắn nó nói lên những cái hoài bão tung hoành của một đời con người. Thầy mến pháp đẹp là một chuyện, nhưng giữ lấy cái thiên lương cho lành vững rồi hãy nghĩ đến chuyện chơi chữ. Ở đây, khó giữ thiên lương cho lành vững được và rồi cũng đến nhem nhuốc mất cái đời lương thiện đi.\nNgục quan cảm động, vái người tù một vái, chắp tay nói một câu mà dòng nước mắt rỉ vào kẽ miệng làm cho nghẹn ngào:\n- Kẻ mê muội này xin bái lĩnh.\"",
-    "thinkingGuide": "• Câu dẫn: Khái quát chi tiết nghệ thuật mang tính biểu tượng cao ở đoạn kết truyện.\n• Phân tích: Hành động viên quản ngục vái lạy người tù và nghẹn ngào \"Kẻ mê muội này xin bái lĩnh\" là chi tiết bất ngờ, độc đáo: sự đảo lộn ngôi thứ hoàn toàn (kẻ nắm quyền lực cúi đầu trước kẻ tử tù đeo gông). Cái cúi đầu thể hiện sự khuất phục tuyệt đối của quyền lực trước cái đẹp, sự thức tỉnh thiên lương trước nhân cách cao cả của Huấn Cao.\n• Đánh giá: Khẳng định sự bất tử của cái Đẹp và thiên lương; bộc lộ niềm tin mãnh liệt của Nguyễn Tuân vào sự chiến thắng của ánh sáng trước bóng tối.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Nêu ý nghĩa chi tiết cái cúi đầu ➔ Phân tích ý nghĩa biểu tượng: Cái đẹp chiến thắng cường quyền ➔ Đánh giá tư tưởng nhân văn của Nguyễn Tuân...",
-        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Nhấn mạnh: Đây là cái cúi đầu nâng cao phẩm giá con người.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlvh_12",
-    "status": "published",
-    "category": "doan-nlvh",
-    "categoryName": "Đoạn nghị luận văn học",
-    "subType": "nlvh_doan_nt_tho",
-    "icon": "🖋️",
-    "title": "[Đoạn NLVH - Đề 12] Bức tranh chiều xuân qua 4 câu thơ đầu bài Chiều xuân (Anh Thơ)",
-    "prompt": "Viết đoạn văn (khoảng 200 chữ) phân tích bức tranh chiều xuân qua 4 câu thơ đầu bài thơ Chiều xuân (Anh Thơ):\n\n\"Mưa đổ bụi êm êm trên bến vắng,\nĐò biếng lười nằm mặc nước sông trôi\nQuán tranh đứng im lìm trong vắng lặng\nBên chòm xoan hoa tím rụng tơi bời.\"",
-    "thinkingGuide": "• Câu dẫn: Giới thiệu bức tranh thiên nhiên mùa xuân êm đềm, thanh bình ở làng quê Bắc Bộ.\n• Phân tích: Gọi tên hình ảnh và từ ngữ: từ láy \"êm êm\", \"tơi bời\" kết hợp thủ pháp nhân hóa con đò \"biếng lười\", quán tranh \"đứng im lìm\". Mưa xuân dịu nhẹ như bụi sương, cảnh vật chìm trong tĩnh lặng nhưng không tàn úa mà giàu sức sống nhờ sắc \"hoa tím rụng tơi bời\".\n• Đánh giá: Thể hiện tâm hồn nhạy cảm, tinh tế của nữ sĩ Anh Thơ và tình yêu quê hương thiết tha, bình dị.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Dẫn dắt bài thơ Chiều xuân ➔ Phân tích từ láy \"êm êm\", nhân hóa con đò, quán tranh và nét chấm phá sắc hoa tím ➔ Đánh giá vẻ đẹp làng quê...",
-        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Chú ý nét đẹp hội họa và sự tĩnh lặng đầy chất thơ của làng quê.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlvh_13",
-    "status": "published",
-    "category": "doan-nlvh",
-    "categoryName": "Đoạn nghị luận văn học",
-    "subType": "nlvh_doan_nhanvat",
-    "icon": "🖋️",
-    "title": "[Đoạn NLVH - Đề 13] Tâm trạng nhân vật Hộ khi tỉnh rượu nhận ra bạo hành vợ con (Đời thừa - Nam Cao)",
-    "prompt": "Viết đoạn văn (khoảng 200 chữ) phân tích tâm trạng của nhân vật Hộ khi tỉnh rượu và nhận ra mình đã bạo hành vợ con (Trích Đời thừa - Nam Cao).",
-    "thinkingGuide": "• Câu dẫn: Nêu vấn đề nghị luận là bi kịch tinh thần đau đớn của người trí thức nghèo trước gánh nặng áo cơm.\n• Phân tích: Gọi tên nghệ thuật miêu tả nội tâm sâu sắc: Hộ thức dậy trong sự ân hận tột cùng, nhìn người vợ tiều tụy và những đứa con thơ mà \"nước mắt bật ra như đứa trẻ\". Hộ đau đớn nhận ra mình đã vi phạm lẽ sống tình thương - nguyên tắc đạo đức thiêng liêng nhất mà mình hằng tôn thờ.\n• Đánh giá: Thể hiện cái nhìn nhân đạo sâu sắc của Nam Cao: trân trọng phẩm giá và khát vọng sống nhân văn của người trí thức giữa xã hội ngột ngạt.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
-        "placeholder": "Mở đoạn: Bi kịch nhân vật Hộ trong Đời thừa ➔ Thân đoạn: Phân tích giọt nước mắt hối hận và sự dằn vặt lương tâm khi vi phạm nguyên tắc tình thương ➔ Đánh giá tinh thần nhân đạo...",
-        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Làm nổi bật sự giằng xé giữa gánh nặng cơm áo và lương tri nghệ sĩ.",
-        "sample": ""
-      }
-    ]
-  },
-  {
     "id": "doan_nlvh_14",
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_camxuc_tho",
     "icon": "🖋️",
-    "title": "[Đoạn NLVH - Đề 14] Nỗi nhớ làng quê qua 4 câu thơ đầu bài Quê hương (Tế Hanh)",
+    "title": "[Đoạn NLVH - Đề 7] Nỗi nhớ làng quê qua 4 câu thơ đầu bài Quê hương (Tế Hanh)",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) phân tích nỗi nhớ làng quê qua 4 câu thơ đầu bài Quê hương (Tế Hanh):\n\n\"Làng tôi ở vốn làm nghề chài lưới:\nNước bao vây cách biển nửa ngày sông.\nKhi trời trong, gió nhẹ, sớm mai hồng,\nDân trai tráng bơi thuyền đi đánh cá.\"",
     "thinkingGuide": "• Câu dẫn: Giới thiệu hồn thơ Tế Hanh và khúc dạo đầu bài thơ Quê hương đong đầy tình cảm trong sáng.\n• Phân tích: Cách giới thiệu tự nhiên, giản dị \"Làng tôi ở...\" như lời giới thiệu thân thương về cội nguồn. Hình ảnh không gian \"cách biển nửa ngày sông\", thời tiết \"trời trong, gió nhẹ, sớm mai hồng\" mở ra khung cảnh biển trời tươi sáng, rực rỡ; hình ảnh \"dân trai tráng bơi thuyền\" khắc họa vẻ đẹp khỏe khoắn, tràn trề sức sống lao động.\n• Đánh giá: Thể hiện tình yêu tha thiết, niềm tự hào sâu sắc của thi nhân đối với mảnh đất chôn nhau cắt rốn.",
     "sections": [
@@ -8839,13 +8699,113 @@ const DEFAULT_WRITING_SETS = [
     ]
   },
   {
+    "id": "doan_nlvh_01",
+    "status": "published",
+    "category": "doan-nlvh",
+    "categoryName": "Đoạn nghị luận văn học",
+    "subType": "nlvh_doan_nt_truyen",
+    "icon": "🖋️",
+    "title": "[Đoạn NLVH - Đề 8] Phân tích ý nghĩa chi tiết \"tiếng chửi\" mở đầu truyện ngắn Chí Phèo (Nam Cao)",
+    "prompt": "Phân tích ý nghĩa chi tiết \"tiếng chửi\" của Chí Phèo ở phần mở đầu truyện ngắn Chí Phèo (Nam Cao):\n\n“Hắn vừa đi vừa chửi. Bao giờ cũng thế, cứ rượu xong là hắn chửi. Bắt đầu hắn chửi giời. Có hề gì? giời có của riêng nhà nào? Rồi hắn chửi đời. Thế cũng chẳng sao: đời là tất cả nhưng chẳng là ai. Tức mình, hắn chửi ngay tất cả làng Vũ Đại. Nhưng cả làng Vũ Đại, ai cũng tự nhủ: « Chắc nó trừ mình ra! » Không ai lên tiếng cả. Tức thật! tức thật! ồ! thế này thì tức thật! tức chết đi được mất! Đã thế, hắn phải chửi cha đứa nào không chửi nhau với hắn. Nhưng cũng không ai ra điều. Mẹ kiếp! thế thì có phí rượu không? Thế thì có khổ hắn không? Không biết đứa chết mẹ nào lại đẻ ra thân hắn cho hắn khổ đến nông nỗi này? A hà! phải đấy, hắn cứ thế mà chửi, hắn cứ chửi đứa chết mẹ nào đẻ ra thân hắn, đẻ ra thằng Chí Phèo! Hắn nghiến răng vào mà chửi cái đứa đã đẻ ra Chí Phèo. Nhưng mà biết đứa nào đã đẻ ra Chí Phèo? Có mà giời biết! Hắn không biết, cả làng Vũ Đại cũng không ai biết..”",
+    "thinkingGuide": "• Gọi tên yếu tố: Chi tiết nghệ thuật đặc sắc kết hợp điểm nhìn trần thuật nửa trực tiếp độc đáo.\n• Phân tích: Trình tự tiếng chửi thu hẹp dần: từ trời, đời ➔ làng Vũ Đại ➔ đứa không chửi nhau với hắn ➔ đứa đẻ ra thân hắn. Tiếng chửi là phản ứng của một kẻ say nhưng ẩn chứa nỗi đau tỉnh táo: hắn thèm khát giao tiếp với con người nhưng đáp lại chỉ là sự im lặng ghê người của cả làng Vũ Đại.\n• Đánh giá: Tiếng chửi không chỉ thể hiện tình trạng lưu manh hóa mà thực chất là tiếng kêu cứu cô độc, quằn quại của một con người bị cự tuyệt quyền làm người.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
+        "placeholder": "Mở đoạn: Giới thiệu tác giả Nam Cao, tác phẩm Chí Phèo và chi tiết tiếng chửi ➔ Thân đoạn: Gọi tên nghệ thuật trần thuật + phân tích trình tự tiếng chửi và ý nghĩa bi kịch cự tuyệt giao tiếp ➔ Đánh giá giá trị nhân đạo...",
+        "guide": "• Viết liền mạch 1 đoạn văn khoảng 200 chữ, không xuống hàng.\n• Bắt buộc: Nêu vấn đề nghị luận ➔ Gọi tên chi tiết + dẫn chứng ➔ Phân tích ý nghĩa ➔ Đánh giá tư tưởng nhân đạo.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlvh_02",
+    "status": "published",
+    "category": "doan-nlvh",
+    "categoryName": "Đoạn nghị luận văn học",
+    "subType": "nlvh_doan_nt_truyen",
+    "icon": "🖋️",
+    "title": "[Đoạn NLVH - Đề 9] Phân tích tác dụng điểm nhìn trần thuật từ bà cụ Tứ khi nhìn nàng dâu mới (Vợ nhặt)",
+    "prompt": "Phân tích tác dụng của điểm nhìn trần thuật từ nhân vật bà cụ Tứ khi nhìn nàng dâu mới (Vợ nhặt - Kim Lân):\n\n“Bà lão cúi đầu nín lặng. Bà lão hiểu rồi. Lòng người mẹ nghèo khổ ấy còn hiểu ra biết bao nhiêu cơ sự, vừa ai oán vừa xót thương cho số kiếp đứa con mình. Chao ôi, người ta dựng vợ gả chồng cho con là lúc trong nhà ăn nên làm nổi, những mong sinh con đẻ cái mở mặt sau này. Còn mình thì... Trong kẽ mắt kèm nhèm của bà rủ xuống hai dòng nước mắt... Biết rằng chúng nó có nuôi nổi nhau sống qua được cơn đói khát này không?\nBà lão khẽ thở dài đứng lên, đăm đăm nhìn người đàn bà. Thị cúi mặt xuống, tay vân vê tà áo đã rách bợt. Bà lão nhìn thị và bà nghĩ: Người ta có gặp bước khó khăn, đói khổ này, người ta mới lấy đến con mình. Mà con mình mới có vợ được... Thôi thì bổn phận bà là mẹ, bà đã chẳng lo lắng được cho con... May ra mà qua khỏi được cái tao đoạn này thì thằng con bà cũng có vợ, nó yên bề nó, chẳng may ra ông giời bắt chết cũng phải chịu chứ biết thế nào mà lo cho hết được?...”",
+    "thinkingGuide": "• Gọi tên yếu tố: Điểm nhìn bên trong (nội tâm nhân vật người mẹ già nghèo khổ) kết hợp lời trần thuật nửa trực tiếp.\n• Phân tích: Điểm nhìn giúp nhà văn soi rọi dòng độc thoại nội tâm phức tạp của bà cụ Tứ: từ ngỡ ngàng, ai oán, tủi phận vì không lo được cho con đến niềm thương cảm vô bờ đối với người đàn bà xa lạ (\"người ta có đói khổ mới lấy đến con mình\").\n• Đánh giá: Thể hiện tấm lòng bao dung, nhân hậu và tình mẫu tử thiêng liêng; khẳng định niềm tin bất diệt vào tình người giữa nạn đói khốc liệt.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
+        "placeholder": "Mở đoạn: Nêu tác giả Kim Lân, truyện Vợ nhặt và điểm nhìn bà cụ Tứ ➔ Thân đoạn: Phân tích diễn biến tâm lí tủi phận - thấu hiểu - bao dung ➔ Đánh giá vai trò khắc họa phẩm giá con người...",
+        "guide": "• Viết 1 đoạn văn khoảng 200 chữ.\n• Điểm nhìn trần thuật từ bên trong giúp câu chuyện thấm đẫm chất nhân văn và tình mẫu tử.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlvh_03",
+    "status": "published",
+    "category": "doan-nlvh",
+    "categoryName": "Đoạn nghị luận văn học",
+    "subType": "nlvh_doan_nt_truyen",
+    "icon": "🖋️",
+    "title": "[Đoạn NLVH - Đề 10] Phân tích tình huống truyện độc đáo trong tác phẩm Vợ nhặt (Kim Lân)",
+    "prompt": "Phân tích tình huống truyện độc đáo trong tác phẩm Vợ nhặt (Kim Lân) (Đoạn văn khoảng 200 chữ).",
+    "thinkingGuide": "• Gọi tên: Tình huống \"nhặt vợ\" oái oăm, vừa bi vừa hài, đầy nghịch lí.\n• Phân tích: Tràng là một người ngụ cư, nghèo khổ, thô kệch lại lấy được vợ giữa lúc nạn đói 1945 hoành hành dữ dội nhất (\"người chết như ngả rạ\"). Việc lấy vợ vốn là đại sự thiêng liêng trở nên rẻ rúng như nhặt cọng rơm ngọn cỏ qua vài câu đùa và bốn bát bánh đúc. Nhưng đằng sau sự oái oăm là ngọn lửa ấm áp của tình yêu thương gia đình.\n• Đánh giá: Tình huống làm nổi bật ranh giới mỏng manh giữa sự sống và cái chết, từ đó tôn vinh khát vọng sống, khát vọng hạnh phúc mãnh liệt của người nông dân.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
+        "placeholder": "Giới thiệu tác phẩm và tình huống \"nhặt vợ\" ➔ Phân tích tính nghịch lí và tác dụng tạo bước ngoặt tâm lí ➔ Đánh giá tư tưởng nhân văn của Kim Lân...",
+        "guide": "• Viết liền mạch 1 đoạn văn ~200 chữ.\n• Làm nổi bật sự tương phản: Nạn đói thê thảm đối lập với hơi ấm hạnh phúc gia đình.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlvh_07",
+    "status": "published",
+    "category": "doan-nlvh",
+    "categoryName": "Đoạn nghị luận văn học",
+    "subType": "nlvh_doan_nt_truyen",
+    "icon": "🖋️",
+    "title": "[Đoạn NLVH - Đề 11] Mâu thuẫn kịch qua lời thoại Vũ Như Tô khi bị quân khởi loạn bắt (Hồi V, Vũ Như Tô)",
+    "prompt": "Phân tích mâu thuẫn qua lời thoại của Vũ Như Tô khi bị quân khởi loạn bắt (Hồi V, Vũ Như Tô - Nguyễn Huy Tưởng) (Đoạn văn khoảng 200 chữ).",
+    "thinkingGuide": "• Gọi tên: Lời thoại đầy ảo tưởng, không chịu tin vào thực tế nghiệt ngã (\"Ta có tội gì? Ta chỉ xây Cửu Trùng Đài để tô điểm cho đất nước!\").\n• Phân tích: Vũ Như Tô mù quáng tin rằng Cửu Trùng Đài là công trình nghệ thuật vĩ đại mang lại danh dự cho non sông, mà không nhận ra nó được xây dựng bằng mồ hôi, nước mắt và máu của hàng vạn dân phu đói khổ. Lời thoại bộc lộ sự vỡ mộng đau đớn khi quân khởi loạn đòi đốt phá đài cao.\n• Đánh giá: Khắc họa xung đột bi kịch không thể điều hòa giữa khát vọng nghệ thuật siêu việt thuần túy và quyền lợi thiết thân của quần chúng nhân dân.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
+        "placeholder": "Giới thiệu bi kịch Vũ Như Tô ➔ Phân tích tính chất bi kịch trong lời thoại ngơ ngác, không tin mình có tội ➔ Đánh giá mối quan hệ giữa nghệ thuật và đời sống...",
+        "guide": "• Đoạn văn ~200 chữ.\n• Chỉ rõ sự bế tắc của người nghệ sĩ tài ba nhưng lạc lối về quan điểm nghệ thuật.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlvh_11",
+    "status": "published",
+    "category": "doan-nlvh",
+    "categoryName": "Đoạn nghị luận văn học",
+    "subType": "nlvh_doan_nt_truyen",
+    "icon": "🖋️",
+    "title": "[Đoạn NLVH - Đề 12] Phân tích chi tiết \"cái cúi đầu\" của viên quản ngục trong Chữ người tử tù (Nguyễn Tuân)",
+    "prompt": "Viết đoạn văn (khoảng 200 chữ) phân tích chi tiết \"cái cúi đầu\" của viên quản ngục ở cuối tác phẩm Chữ người tử tù (Nguyễn Tuân):\n\n\"Huấn Cao thở dài, buồn bã đỡ viên quản ngục đứng thẳng người dậy và bảo:\n- Tôi bảo thực đấy, thầy Quản nên thay chốn ở đi. Chỗ này không phải là nơi để treo một bức lụa trắng với những nét chữ vuông vắn tươi tắn nó nói lên những cái hoài bão tung hoành của một đời con người. Thầy mến pháp đẹp là một chuyện, nhưng giữ lấy cái thiên lương cho lành vững rồi hãy nghĩ đến chuyện chơi chữ. Ở đây, khó giữ thiên lương cho lành vững được và rồi cũng đến nhem nhuốc mất cái đời lương thiện đi.\nNgục quan cảm động, vái người tù một vái, chắp tay nói một câu mà dòng nước mắt rỉ vào kẽ miệng làm cho nghẹn ngào:\n- Kẻ mê muội này xin bái lĩnh.\"",
+    "thinkingGuide": "• Câu dẫn: Khái quát chi tiết nghệ thuật mang tính biểu tượng cao ở đoạn kết truyện.\n• Phân tích: Hành động viên quản ngục vái lạy người tù và nghẹn ngào \"Kẻ mê muội này xin bái lĩnh\" là chi tiết bất ngờ, độc đáo: sự đảo lộn ngôi thứ hoàn toàn (kẻ nắm quyền lực cúi đầu trước kẻ tử tù đeo gông). Cái cúi đầu thể hiện sự khuất phục tuyệt đối của quyền lực trước cái đẹp, sự thức tỉnh thiên lương trước nhân cách cao cả của Huấn Cao.\n• Đánh giá: Khẳng định sự bất tử của cái Đẹp và thiên lương; bộc lộ niềm tin mãnh liệt của Nguyễn Tuân vào sự chiến thắng của ánh sáng trước bóng tối.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
+        "placeholder": "Nêu ý nghĩa chi tiết cái cúi đầu ➔ Phân tích ý nghĩa biểu tượng: Cái đẹp chiến thắng cường quyền ➔ Đánh giá tư tưởng nhân văn của Nguyễn Tuân...",
+        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Nhấn mạnh: Đây là cái cúi đầu nâng cao phẩm giá con người.",
+        "sample": ""
+      }
+    ]
+  },
+  {
     "id": "doan_nlvh_15",
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_nt_truyen",
     "icon": "🖋️",
-    "title": "[Đoạn NLVH - Đề 15] Điểm nhìn và cảm xúc nhân vật Thanh khi bước vào khu vườn nhà bà (Dưới bóng hoàng lan)",
+    "title": "[Đoạn NLVH - Đề 13] Điểm nhìn và cảm xúc nhân vật Thanh khi bước vào khu vườn nhà bà (Dưới bóng hoàng lan)",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) phân tích điểm nhìn và cảm xúc của nhân vật Thanh khi bước vào khu vườn nhà bà (Trích Dưới bóng hoàng lan - Thạch Lam):\n\n\"Thanh lách cánh cửa gỗ để khép, nhẹ nhàng bước vào. Chàng thấy mát hẳn cả người. Trên con đường lát gạch Bát Tràng rêu phủ, những vòng ánh sáng lọt qua vòm cây xuống nhảy múa theo chiều gió. Một mùi lá tươi non phảng phất trong không khí. Thanh rút khăn lau mồ hôi trên trán - bên ngoài trời nắng gắt - rồi thong thả đi bên bức tường hoa thấp chạy thẳng đến đầu nhà. Yên tĩnh quá, không một tiếng động nhỏ trong căn vườn, tựa như bao nhiêu sự ồn ào ở ngoài kia đều ngừng lại trên bậc cửa.\nThanh bước lên thềm, đặt va li trên chiếc trường kỉ, rồi ngó đầu nhìn vào trong nhà: bóng tối dịu và man mát loáng qua những màu sắc rực rỡ chàng đem ở ngoài trời vào. Thanh chưa nhìn rõ thấy gì cả. Một lát, quen bóng tối, chàng mới nhận thấy cảnh tượng gian nhà cũ không có gì thay đổi, cũng y nguyên như ngày chàng đi xưa. Sự yên lặng trầm tịch đến nỗi Thanh trở nên nghẹn họng; mãi mãi chàng mới cất được tiếng lên gọi khẽ:\n- Bà ơi!\nMột cái bóng lẹ làng từ trong vụt ra, rơi xuống mặt bàn. Thanh định rõ nhìn: con mèo của bà chàng, con mèo già vẫn chơi đùa với chàng ngày trước. Con vật nép chân vào mình khẽ phe phẩy cái đuôi, rồi hai mắt ngọc thạch xanh dương lên nhìn người. Thanh mỉm cười lại gần vuốt ve con mèo:\n- Bà mày đâu?\"",
     "thinkingGuide": "• Gọi tên: Điểm nhìn bên trong kết hợp nghệ thuật miêu tả không gian qua đa giác quan (thị giác, khứu giác, xúc giác).\n• Phân tích: Thanh cảm nhận sự đối lập giữa cái nắng gắt, ồn ào nơi phố thị với sự yên tĩnh, mát mẻ, ngát hương lá non trong khu vườn của bà. Không gian bình yên khiến lòng chàng lắng lại, nghẹn ngào gọi \"Bà ơi!\". Con mèo già thân thuộc gợi lại ký ức ấu thơ êm đềm.\n• Đánh giá: Thể hiện chất văn xuôi trữ tình đậm chất Thạch Lam; khẳng định quê hương và tình bà cháu luôn là chốn về bình yên, chở che tâm hồn con người.",
     "sections": [
@@ -8854,6 +8814,46 @@ const DEFAULT_WRITING_SETS = [
         "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
         "placeholder": "Giới thiệu Thạch Lam và trích đoạn ➔ Phân tích điểm nhìn cảm giác, sự đối lập không gian phố thị - vườn quê và cảm xúc xúc động nghẹn ngào ➔ Đánh giá giá trị bình yên của tình thân...",
         "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Làm nổi bật chất thơ thanh nhẹ, tinh tế đặc trưng của văn Thạch Lam.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlvh_08",
+    "status": "published",
+    "category": "doan-nlvh",
+    "categoryName": "Đoạn nghị luận văn học",
+    "subType": "nlvh_doan_nhanvat",
+    "icon": "🖋️",
+    "title": "[Đoạn NLVH - Đề 14] Thái độ của nhân vật Đan Thiềm khi khuyên Vũ Như Tô chạy trốn (Hồi V, Vũ Như Tô)",
+    "prompt": "Phân tích thái độ của nhân vật Đan Thiềm khi khuyên Vũ Như Tô chạy trốn (Hồi V, Vũ Như Tô - Nguyễn Huy Tưởng) (Đoạn văn khoảng 200 chữ).",
+    "thinkingGuide": "• Gọi tên: Hành động dồn dập, lời thoại khẩn khoản, tha thiết kết hợp chỉ dẫn sân khấu gấp gáp.\n• Phân tích: Đan Thiềm là người phụ nữ tỉnh táo, hiểu rõ thời cuộc (\"Thời thế đã đổi rồi\"). Bà không màng đến tính mạng bản thân (\"Tôi chết cũng được, nhưng ông phải sống\"), chỉ một lòng muốn bảo vệ \"kì tài\" cho đất nước. Thái độ đau đớn, hốt hoảng bộc lộ tấm lòng tri âm, tri kỉ tuyệt đối với người nghệ sĩ.\n• Đánh giá: Nhân vật thể hiện căn \"bệnh Đan Thiềm\" - bệnh mê đắm cái tài hoa, tôn thờ cái đẹp đến mức quên cả chính mình; làm sâu sắc thêm tính chất bi tráng của vở kịch.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
+        "placeholder": "Giới thiệu nhân vật Đan Thiềm và bối cảnh hồi V ➔ Phân tích hành động khuyên can khẩn thiết vì yêu quý kì tài ➔ Đánh giá ý nghĩa biểu tượng của tấm lòng tri âm...",
+        "guide": "• Đoạn văn ~200 chữ.\n• Làm sáng rõ sự tỉnh táo trước thời cuộc đối lập với sự si mê cái đẹp tài hoa.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlvh_13",
+    "status": "published",
+    "category": "doan-nlvh",
+    "categoryName": "Đoạn nghị luận văn học",
+    "subType": "nlvh_doan_nhanvat",
+    "icon": "🖋️",
+    "title": "[Đoạn NLVH - Đề 15] Tâm trạng nhân vật Hộ khi tỉnh rượu nhận ra bạo hành vợ con (Đời thừa - Nam Cao)",
+    "prompt": "Viết đoạn văn (khoảng 200 chữ) phân tích tâm trạng của nhân vật Hộ khi tỉnh rượu và nhận ra mình đã bạo hành vợ con (Trích Đời thừa - Nam Cao).",
+    "thinkingGuide": "• Câu dẫn: Nêu vấn đề nghị luận là bi kịch tinh thần đau đớn của người trí thức nghèo trước gánh nặng áo cơm.\n• Phân tích: Gọi tên nghệ thuật miêu tả nội tâm sâu sắc: Hộ thức dậy trong sự ân hận tột cùng, nhìn người vợ tiều tụy và những đứa con thơ mà \"nước mắt bật ra như đứa trẻ\". Hộ đau đớn nhận ra mình đã vi phạm lẽ sống tình thương - nguyên tắc đạo đức thiêng liêng nhất mà mình hằng tôn thờ.\n• Đánh giá: Thể hiện cái nhìn nhân đạo sâu sắc của Nam Cao: trân trọng phẩm giá và khát vọng sống nhân văn của người trí thức giữa xã hội ngột ngạt.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Văn học (~200 chữ - Viết liền mạch 1 đoạn)",
+        "placeholder": "Mở đoạn: Bi kịch nhân vật Hộ trong Đời thừa ➔ Thân đoạn: Phân tích giọt nước mắt hối hận và sự dằn vặt lương tâm khi vi phạm nguyên tắc tình thương ➔ Đánh giá tinh thần nhân đạo...",
+        "guide": "• Viết 1 đoạn văn ~200 chữ.\n• Làm nổi bật sự giằng xé giữa gánh nặng cơm áo và lương tri nghệ sĩ.",
         "sample": ""
       }
     ]
@@ -9928,8 +9928,8 @@ let editingSections = [];
 
 function loadWritingSets() {
   try {
-    // Tự động đồng bộ và nạp Bộ 50 đề sắp xếp theo 4 dạng bài chuẩn
-    const v50Version = 'v50_2026_11_06_v5_sorted_by_type';
+    // Tự động đồng bộ và nạp Bộ 50 đề sắp xếp theo 4 dạng bài chuẩn và 5 dạng Đoạn NLVH
+    const v50Version = 'v50_2026_11_06_v6_5_subtypes_nlvh';
     const currentVersion = localStorage.getItem('vq_writing_sets_version');
     
     const raw = localStorage.getItem('vq_writing_sets');
@@ -9974,10 +9974,23 @@ function loadWritingSets() {
         'doan-nlxh': 3,
         'bai-nlxh': 4
       };
+      const subOrder = {
+        'nlvh_doan_chude': 1,
+        'nlvh_doan_nt_tho': 2,
+        'nlvh_doan_camxuc_tho': 3,
+        'nlvh_doan_nt_truyen': 4,
+        'nlvh_doan_nhanvat': 5
+      };
       parsed.sort((a, b) => {
         const ordA = catOrder[a.category] || 99;
         const ordB = catOrder[b.category] || 99;
-        return ordA - ordB;
+        if (ordA !== ordB) return ordA - ordB;
+        if (a.category === 'doan-nlvh' && b.category === 'doan-nlvh') {
+          const sA = subOrder[a.subType] || 99;
+          const sB = subOrder[b.subType] || 99;
+          if (sA !== sB) return sA - sB;
+        }
+        return 0;
       });
       writingSets = parsed;
       window.writingSets = writingSets;
@@ -10088,7 +10101,7 @@ function renderCategoryFilterBar() {
 
   let optionsHtml = `<option value="all" ${isAll ? 'selected' : ''}>🏷️ Tất cả bộ đề (${allCount} đề)</option>`;
 
-  optionsHtml += `<optgroup label="─── DẠNG BÀI NGHỊ LUẬN ───">`;
+  optionsHtml += `<optgroup label="─── DẠNG BÀI NGHỊ LUẬN CHÍNH ───">`;
   cats.forEach(c => {
     const count = writingSets.filter(s => s.category === c.id).length;
     const isActive = currentWritingCategory === c.id;
@@ -10096,10 +10109,28 @@ function renderCategoryFilterBar() {
   });
   optionsHtml += `</optgroup>`;
 
+  // 5 Dạng con chuẩn của Đoạn nghị luận văn học
+  const DANG_DOAN_NLVH = [
+    { id: 'nlvh_doan_chude', name: '1. Đoạn văn phân tích, đánh giá nội dung chủ đề' },
+    { id: 'nlvh_doan_nt_tho', name: '2. Đoạn văn phân tích, đánh giá nghệ thuật THƠ' },
+    { id: 'nlvh_doan_camxuc_tho', name: '3. Đoạn văn phân tích, đánh giá TÌNH CẢM, CẢM XÚC trong thơ' },
+    { id: 'nlvh_doan_nt_truyen', name: '4. Đoạn văn phân tích nghệ thuật TRUYỆN NGẮN' },
+    { id: 'nlvh_doan_nhanvat', name: '5. Đoạn văn phân tích đặc điểm NHÂN VẬT' }
+  ];
+
+  optionsHtml += `<optgroup label="─── 5 DẠNG ĐOẠN NGHỊ LUẬN VĂN HỌC ───">`;
+  DANG_DOAN_NLVH.forEach(d => {
+    const count = writingSets.filter(s => s.category === 'doan-nlvh' && s.subType === d.id).length;
+    const isActive = currentWritingCategory === ('sub_' + d.id);
+    optionsHtml += `<option value="sub_${esc(d.id)}" ${isActive ? 'selected' : ''}>${esc(d.name)} (${count} đề)</option>`;
+  });
+  optionsHtml += `</optgroup>`;
+
   const tpls = (typeof SCAFFOLD_TEMPLATES !== 'undefined') ? SCAFFOLD_TEMPLATES : {};
-  if (Object.keys(tpls).length > 0) {
-    optionsHtml += `<optgroup label="─── DẠNG BÀI NGHỊ LUẬN (THEO PHƯƠNG PHÁP) ───">`;
-    Object.entries(tpls).forEach(([k, tpl]) => {
+  const otherTpls = Object.entries(tpls).filter(([k]) => !k.startsWith('nlvh_doan_'));
+  if (otherTpls.length > 0) {
+    optionsHtml += `<optgroup label="─── DẠNG BÀI NGHỊ LUẬN KHÁC ───">`;
+    otherTpls.forEach(([k, tpl]) => {
       const count = writingSets.filter(s => s.subType === k).length;
       if (count > 0) {
         const isActive = currentWritingCategory === ('sub_' + k);
@@ -10324,8 +10355,8 @@ function renderWritingSetsGrid() {
               <ion-icon name="pricetag-outline"></ion-icon> <span>${esc(topic)}</span>
             </span>
             ${s.subType && typeof SCAFFOLD_TEMPLATES !== 'undefined' && SCAFFOLD_TEMPLATES[s.subType] ? `
-              <span class="tag cy sm" style="font-size:11px; font-weight:700; padding:2px 8px; border-radius:6px;" title="Dạng bài chuẩn theo phương pháp: ${esc(SCAFFOLD_TEMPLATES[s.subType].name)}">
-                <ion-icon name="bookmarks-outline"></ion-icon> <span>${esc(SCAFFOLD_TEMPLATES[s.subType].name.split(':')[1]?.trim() || SCAFFOLD_TEMPLATES[s.subType].name)}</span>
+              <span class="tag cy sm" style="font-size:11.5px; font-weight:700; padding:2px 8px; border-radius:6px;" title="Dạng bài chuẩn: ${esc(SCAFFOLD_TEMPLATES[s.subType].name)}">
+                <ion-icon name="bookmarks-outline"></ion-icon> <span>${esc(SCAFFOLD_TEMPLATES[s.subType].name)}</span>
               </span>
             ` : ''}
           </div>
@@ -10405,6 +10436,83 @@ function renderWritingSetsGrid() {
       return;
     }
 
+    // Khi đang xem dạng "Đoạn nghị luận văn học", phân chia rõ thành 5 nhóm dạng bài
+    if (currentWritingCategory === 'doan-nlvh' && !query) {
+      const DANG_DOAN_NLVH = [
+        { id: 'nlvh_doan_chude', name: '1. Đoạn văn phân tích, đánh giá nội dung chủ đề', short: '1. Nội dung chủ đề' },
+        { id: 'nlvh_doan_nt_tho', name: '2. Đoạn văn phân tích, đánh giá nghệ thuật THƠ', short: '2. Nghệ thuật thơ' },
+        { id: 'nlvh_doan_camxuc_tho', name: '3. Đoạn văn phân tích, đánh giá TÌNH CẢM, CẢM XÚC trong thơ', short: '3. Cảm xúc thơ' },
+        { id: 'nlvh_doan_nt_truyen', name: '4. Đoạn văn phân tích nghệ thuật TRUYỆN NGẮN', short: '4. Nghệ thuật truyện ngắn' },
+        { id: 'nlvh_doan_nhanvat', name: '5. Đoạn văn phân tích đặc điểm NHÂN VẬT', short: '5. Đặc điểm nhân vật' }
+      ];
+
+      let sectionsHtml = '';
+      DANG_DOAN_NLVH.forEach(d => {
+        const groupSets = filtered.filter(s => s.subType === d.id);
+        if (groupSets.length > 0) {
+          sectionsHtml += `
+            <div class="writing-subtype-group-block" style="margin-top:24px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; padding:10px 14px; background:var(--bg2, #f8fafc); border-left:4px solid var(--gold, #d97706); border-radius:8px;">
+                <h4 style="margin:0; font-size:15px; font-weight:800; color:var(--ink); display:flex; align-items:center; gap:8px;">
+                  <span style="color:var(--gold, #d97706); font-size:17px;"><ion-icon name="bookmark"></ion-icon></span>
+                  <span>${esc(d.name)}</span>
+                </h4>
+                <span class="tag cy sm" style="font-weight:700;">${groupSets.length} đề</span>
+              </div>
+              <div class="setup-sets-grid">
+                ${groupSets.map((s, i) => renderCard(s, i)).join('')}
+              </div>
+            </div>
+          `;
+        }
+      });
+
+      container.innerHTML = `
+        <div class="writing-cat-header-bar">
+          <div class="writing-cat-header-title">
+            <span style="font-size: 24px; color: var(--gold, #d97706);"><ion-icon name="bookmarks-outline"></ion-icon></span>
+            <div>
+              <h3 style="margin: 0; font-size: 17px; font-weight: 800;">Đoạn nghị luận văn học</h3>
+              <span class="mut" style="font-size: 12.5px;">Phân chia theo 5 dạng bài chuẩn (Tổng cộng: ${filtered.length} đề)</span>
+            </div>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:12px;">
+            <button type="button" class="btn gh sm" style="font-weight:700; background:rgba(217, 119, 6, 0.12); color:var(--gold, #d97706); border-color:var(--gold, #d97706);" onclick="filterWritingCategory('doan-nlvh')">Tất cả 5 dạng (${filtered.length})</button>
+            ${DANG_DOAN_NLVH.map(d => {
+              const c = filtered.filter(s => s.subType === d.id).length;
+              return `<button type="button" class="btn gh sm" onclick="filterWritingCategory('sub_${d.id}')">${esc(d.short)} (${c})</button>`;
+            }).join('')}
+          </div>
+        </div>
+        ${sectionsHtml}
+      `;
+      return;
+    }
+
+    if (isSub) {
+      const isNlvhSub = subKey && subKey.startsWith('nlvh_doan_');
+      container.innerHTML = `
+        <div class="writing-cat-header-bar">
+          <div class="writing-cat-header-title">
+            <span style="font-size: 24px; color: var(--gold, #d97706);"><ion-icon name="bookmark"></ion-icon></span>
+            <div>
+              <h3 style="margin: 0; font-size: 17px; font-weight: 800;">Dạng bài: ${esc(activeCat.name)}</h3>
+              <span class="mut" style="font-size: 12.5px;">Đang hiển thị ${filtered.length} bộ đề</span>
+            </div>
+          </div>
+          <div style="margin-top:10px;">
+            <button type="button" class="btn gh sm" onclick="filterWritingCategory('${isNlvhSub ? 'doan-nlvh' : 'all'}')">
+              ← ${isNlvhSub ? 'Quay lại tất cả dạng Đoạn NLVH' : 'Xem tất cả bộ đề'}
+            </button>
+          </div>
+        </div>
+        <div class="setup-sets-grid">
+          ${filtered.map((s, i) => renderCard(s, i)).join('')}
+        </div>
+      `;
+      return;
+    }
+
     container.innerHTML = `
       <div class="writing-cat-header-bar">
         <div class="writing-cat-header-title">
@@ -10419,7 +10527,7 @@ function renderWritingSetsGrid() {
         ${filtered.map((s, i) => renderCard(s, i)).join('')}
       </div>
     `;
-      return;
+    return;
   }
 
   // Case 2: "Tất cả" - Hiện HẾT tất cả các bộ đề trong một danh sách lưới chung
@@ -10446,13 +10554,25 @@ function renderWritingSetsGrid() {
     return;
   }
 
-  // Sắp xếp các bộ đề theo thứ tự các chủ đề đã thiết lập
+  // Sắp xếp các bộ đề theo thứ tự các chủ đề đã thiết lập và 5 dạng Đoạn NLVH
   const catOrder = {};
   cats.forEach((c, idx) => { catOrder[c.id] = idx; });
+  const subOrder = {
+    'nlvh_doan_chude': 1,
+    'nlvh_doan_nt_tho': 2,
+    'nlvh_doan_camxuc_tho': 3,
+    'nlvh_doan_nt_truyen': 4,
+    'nlvh_doan_nhanvat': 5
+  };
   const sorted = [...filtered].sort((a, b) => {
     const orderA = catOrder[a.category] !== undefined ? catOrder[a.category] : 999;
     const orderB = catOrder[b.category] !== undefined ? catOrder[b.category] : 999;
     if (orderA !== orderB) return orderA - orderB;
+    if (a.category === 'doan-nlvh' && b.category === 'doan-nlvh') {
+      const sA = subOrder[a.subType] || 99;
+      const sB = subOrder[b.subType] || 99;
+      if (sA !== sB) return sA - sB;
+    }
     return 0;
   });
 
@@ -14112,7 +14232,7 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
     // --- NHÓM 1: ĐOẠN VĂN NGHỊ LUẬN VĂN HỌC (~200 CHỮ - 1 ĐOẠN DUY NHẤT) ---
     nlvh_doan_chude: {
       group: 'Đoạn văn NLVH (~200 chữ)',
-      name: '1. Đoạn NLVH: Phân tích, đánh giá NỘI DUNG CHỦ ĐỀ (Thơ / Truyện)',
+      name: '1. Đoạn văn phân tích, đánh giá nội dung chủ đề',
       singleParagraph: true,
       formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng. Dung lượng: Khoảng 200 chữ (từ 2/3 đến tối đa 1 trang giấy thi, chừa lại 3 dòng).',
       formulaSteps: ['Câu dẫn + GTVĐNL', 'Nêu chủ đề', 'Phân tích 2-3 khía cạnh (Thứ nhất, Thứ hai, Thứ ba)', 'Đánh giá vai trò chủ đề', 'Nghệ thuật', 'Kết đoạn – Trích dẫn'],
@@ -14146,7 +14266,7 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
 
     nlvh_doan_nt_tho: {
       group: 'Đoạn văn NLVH (~200 chữ)',
-      name: '2. Đoạn NLVH: Phân tích, đánh giá NGHỆ THUẬT THƠ',
+      name: '2. Đoạn văn phân tích, đánh giá nghệ thuật THƠ',
       singleParagraph: true,
       formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Luôn gắn các yếu tố hình thức với việc làm rõ chủ đề và thông điệp.',
       formulaSteps: ['Câu dẫn + GTVĐNL', 'Thứ nhất: Thể thơ', 'Thứ hai: Hình ảnh', 'Thứ ba: Từ ngữ', 'Thứ tư: Biện pháp tu từ', 'Làm rõ Chủ đề & Thông điệp'],
@@ -14163,7 +14283,7 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
 
     nlvh_doan_camxuc_tho: {
       group: 'Đoạn văn NLVH (~200 chữ)',
-      name: '3. Đoạn NLVH: Phân tích, đánh giá TÌNH CẢM, CẢM XÚC trong thơ',
+      name: '3. Đoạn văn phân tích, đánh giá TÌNH CẢM, CẢM XÚC trong thơ',
       singleParagraph: true,
       formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Chỉ rõ từng cung bậc cảm xúc kèm dẫn chứng và phân tích.',
       formulaSteps: ['Câu dẫn + GTVĐNL', 'Cảm xúc 1 (Dẫn chứng + Phân tích)', 'Cảm xúc 2 (Dẫn chứng + Phân tích)', 'Nghệ thuật biểu đạt', 'Đánh giá triết lí nhân sinh & Phong cách'],
@@ -14179,7 +14299,7 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
 
     nlvh_doan_nt_truyen: {
       group: 'Đoạn văn NLVH (~200 chữ)',
-      name: '4. Đoạn NLVH: Phân tích NGHỆ THUẬT TRUYỆN NGẮN',
+      name: '4. Đoạn văn phân tích nghệ thuật TRUYỆN NGẮN',
       singleParagraph: true,
       formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Bám sát các yếu tố tự sự: ngôi kể, điểm nhìn, tình huống, chi tiết, ngôn ngữ, giọng điệu, tâm lí.',
       formulaSteps: ['Câu dẫn + GTVĐNL', 'Ngôi kể & Điểm nhìn', 'Tình huống truyện', 'Chi tiết nghệ thuật & Nội tâm', 'Ngôn ngữ & Giọng điệu', 'Đánh giá tài năng & Chủ đề'],
@@ -14196,7 +14316,7 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
 
     nlvh_doan_nhanvat: {
       group: 'Đoạn văn NLVH (~200 chữ)',
-      name: '5. Đoạn NLVH: Phân tích ĐẶC ĐIỂM NHÂN VẬT',
+      name: '5. Đoạn văn phân tích đặc điểm NHÂN VẬT',
       singleParagraph: true,
       formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Kết hợp phân tích phẩm chất (qua hành động, lời nói, thái độ) với nghệ thuật xây dựng nhân vật.',
       formulaSteps: ['Mở đoạn & Khái quát (tên, ngoại hình, hoàn cảnh)', 'Vẻ đẹp / Phẩm chất 1 (D/c + PT)', 'Vẻ đẹp / Phẩm chất 2 (D/c + PT)', 'Nghệ thuật xây dựng nhân vật', 'Đánh giá (Tiêu biểu cho tầng lớp & Thông điệp)'],
