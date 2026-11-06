@@ -406,6 +406,11 @@ const Auth = (() => {
     applyRolePermissions();
   }
 
+  // Tự động phục hồi phiên đăng nhập ngay khi khởi tạo module Auth
+  try {
+    loadSession();
+  } catch (_) {}
+
   return {
     init,
     loadSession,
@@ -437,6 +442,21 @@ const Auth = (() => {
     }
   };
 })();
+
+// Tự động khởi chạy Auth.init() để khôi phục phiên đăng nhập và phân quyền trên giao diện
+try {
+  Auth.init();
+} catch (_) {}
+
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      try { Auth.init(); } catch (_) {}
+    });
+  } else {
+    try { Auth.init(); } catch (_) {}
+  }
+}
 
 /* =========================================================================
    UI WIDGETS: TOPBAR & MOBILE SIDEBAR USER AREA

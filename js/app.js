@@ -148,6 +148,11 @@ if (backToTopBtn) {
 
 // App startup
 try {
+  // Đảm bảo phục hồi phiên đăng nhập Giáo viên / Admin trước khi điều hướng màn hình
+  if (typeof Auth !== 'undefined' && typeof Auth.init === 'function') {
+    Auth.init();
+  }
+
   let initialScreen = 'home';
   try {
     const savedScreen = sessionStorage.getItem('vq_current_screen');

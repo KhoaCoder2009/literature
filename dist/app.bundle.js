@@ -1257,6 +1257,11 @@ const Auth = (() => {
     applyRolePermissions();
   }
 
+  // Tự động phục hồi phiên đăng nhập ngay khi khởi tạo module Auth
+  try {
+    loadSession();
+  } catch (_) {}
+
   return {
     init,
     loadSession,
@@ -1288,6 +1293,21 @@ const Auth = (() => {
     }
   };
 })();
+
+// Tự động khởi chạy Auth.init() để khôi phục phiên đăng nhập và phân quyền trên giao diện
+try {
+  Auth.init();
+} catch (_) {}
+
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      try { Auth.init(); } catch (_) {}
+    });
+  } else {
+    try { Auth.init(); } catch (_) {}
+  }
+}
 
 /* =========================================================================
    UI WIDGETS: TOPBAR & MOBILE SIDEBAR USER AREA
@@ -15376,6 +15396,11 @@ if (backToTopBtn) {
 
 // App startup
 try {
+  // Đảm bảo phục hồi phiên đăng nhập Giáo viên / Admin trước khi điều hướng màn hình
+  if (typeof Auth !== 'undefined' && typeof Auth.init === 'function') {
+    Auth.init();
+  }
+
   let initialScreen = 'home';
   try {
     const savedScreen = sessionStorage.getItem('vq_current_screen');
