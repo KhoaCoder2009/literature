@@ -1198,10 +1198,12 @@
     const card = document.getElementById('workspace-thinking-card');
     const body = document.getElementById('workspace-thinking-guide-body');
     const sub = document.getElementById('workspace-thinking-card-sub');
+    const btn = document.getElementById('btn-toggle-thinking-guide');
     if (!card || !body) return;
 
     if (!curSet) {
       card.style.display = 'none';
+      if (btn) btn.style.display = 'none';
       return;
     }
 
@@ -1213,6 +1215,12 @@
     if (guide) {
       card.style.display = 'block';
       body.textContent = guide;
+      if (btn) {
+        btn.style.display = 'inline-flex';
+        btn.classList.add('active');
+        const span = btn.querySelector('span');
+        if (span) span.textContent = 'Thu gọn gợi ý';
+      }
       if (sub) {
         const isDoan = String(curSet.category || '').startsWith('doan-');
         sub.textContent = isDoan
@@ -1221,6 +1229,33 @@
       }
     } else {
       card.style.display = 'none';
+      if (btn) btn.style.display = 'none';
+    }
+  }
+
+  function toggleWorkspaceThinkingGuide() {
+    const card = document.getElementById('workspace-thinking-card');
+    const btn = document.getElementById('btn-toggle-thinking-guide');
+    if (!card) return;
+
+    const isHidden = (card.style.display === 'none' || getComputedStyle(card).display === 'none');
+    if (isHidden) {
+      const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
+      renderWorkspaceThinkingGuide(curSet);
+      card.style.display = 'block';
+      if (btn) {
+        btn.classList.add('active');
+        const span = btn.querySelector('span');
+        if (span) span.textContent = 'Thu gọn gợi ý';
+      }
+      toast('💡 Đã mở gợi ý tư duy dưới đề bài!', 'ok');
+    } else {
+      card.style.display = 'none';
+      if (btn) {
+        btn.classList.remove('active');
+        const span = btn.querySelector('span');
+        if (span) span.textContent = 'Gợi ý tư duy';
+      }
     }
   }
 
@@ -2165,6 +2200,7 @@
 
   global.initWritingScaffoldingAndTimer = initWritingScaffoldingAndTimer;
   global.renderWorkspaceThinkingGuide = renderWorkspaceThinkingGuide;
+  global.toggleWorkspaceThinkingGuide = toggleWorkspaceThinkingGuide;
   global.toggleWritingScaffoldingPanel = toggleWritingScaffoldingPanel;
   global.renderWritingMainScaffoldingBody = renderWritingMainScaffoldingBody;
   global.toggleWritingSectionScaffolding = toggleWritingSectionScaffolding;

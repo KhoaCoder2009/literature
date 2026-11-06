@@ -65,37 +65,42 @@
             
             <!-- Hộp đề bài -->
             <div class="writing-prompt-card">
-              <div class="writing-prompt-header">
-                <span class="writing-prompt-tag">Đề bài</span>
+              <div class="writing-prompt-header" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+                <span class="writing-prompt-tag" style="font-size:11.5px; font-weight:800; color:var(--bl, #2563eb); text-transform:uppercase; letter-spacing:0.5px;">ĐỀ BÀI</span>
                 <span id="workspace-prompt-genre-pill" class="tag cy sm" style="font-size:11.5px; font-weight:700;">Nghị luận</span>
               </div>
               <div class="writing-prompt-text-wrapper">
                 <p id="workspace-prompt-text" class="writing-prompt-text"></p>
                 <button type="button" id="workspace-prompt-toggle-btn" class="writing-prompt-toggle" onclick="togglePromptExpand()">Xem thêm</button>
               </div>
-            </div>
 
-            <!-- HỘP GỢI Ý TƯ DUY TRỌNG TÂM NẰM NGAY DƯỚI ĐỀ BÀI -->
-            <div class="writing-thinking-card" id="workspace-thinking-card">
-              <div class="thinking-card-header">
-                <div class="thinking-card-title-box">
-                  <span class="thinking-card-badge-icon">💡</span>
-                  <div>
-                    <h4 class="thinking-card-heading">GỢI Ý TƯ DUY TRỌNG TÂM</h4>
-                    <p class="thinking-card-sub" id="workspace-thinking-card-sub">Định hướng luận điểm, thao tác lập luận &amp; dẫn chứng</p>
+              <!-- THANH NÚT GỢI Ý TƯ DUY NẰM TRỰC TIẾP DƯỚI ĐỀ BÀI -->
+              <div class="writing-prompt-actions-under">
+                <button type="button" class="btn cy sm scaffold-trigger-btn" id="btn-toggle-thinking-guide" onclick="toggleWorkspaceThinkingGuide()" title="Ẩn/Hiện gợi ý tư duy định hướng luận điểm cho đề bài này">
+                  <ion-icon name="bulb-outline"></ion-icon> <span>💡 Gợi ý tư duy</span>
+                </button>
+                <button type="button" class="btn au sm thinking-action-btn" id="btn-quick-insert-thinking-guide" onclick="insertSetThinkingGuideToActiveSection()" title="Chèn nhanh gợi ý tư duy này vào bài làm để phát triển bài viết">
+                  <ion-icon name="flash-outline"></ion-icon> <span>Chèn vào bài</span>
+                </button>
+                <button type="button" class="btn gh sm thinking-action-btn" onclick="toggleWritingScaffoldingPanel()" title="Mở rộng sơ đồ Giàn giáo nhận thức GDPT 2018">
+                  <ion-icon name="options-outline"></ion-icon> <span>Mở rộng dàn ý</span>
+                </button>
+              </div>
+
+              <!-- HỘP GỢI Ý TƯ DUY TRỌNG TÂM NẰM NGAY DƯỚI ĐỀ BÀI -->
+              <div class="writing-thinking-card" id="workspace-thinking-card">
+                <div class="thinking-card-header">
+                  <div class="thinking-card-title-box">
+                    <span class="thinking-card-badge-icon">💡</span>
+                    <div>
+                      <h4 class="thinking-card-heading">GỢI Ý TƯ DUY TRỌNG TÂM</h4>
+                      <p class="thinking-card-sub" id="workspace-thinking-card-sub">Định hướng luận điểm, thao tác lập luận &amp; dẫn chứng</p>
+                    </div>
                   </div>
                 </div>
-                <div class="thinking-card-actions">
-                  <button type="button" class="btn au sm thinking-action-btn" onclick="insertSetThinkingGuideToActiveSection()" title="Chèn toàn bộ gợi ý tư duy này vào bài làm để phát triển bài viết">
-                    <ion-icon name="flash-outline"></ion-icon> <span>Chèn vào bài</span>
-                  </button>
-                  <button type="button" class="btn gh sm thinking-action-btn" onclick="toggleWritingScaffoldingPanel()" title="Mở rộng sơ đồ Giàn giáo nhận thức &amp; khung dàn ý chi tiết">
-                    <ion-icon name="options-outline"></ion-icon> <span>Mở rộng dàn ý</span>
-                  </button>
+                <div class="thinking-card-body" id="workspace-thinking-guide-body">
+                  <!-- Nội dung gợi ý tư duy hiển thị trực quan ở đây -->
                 </div>
-              </div>
-              <div class="thinking-card-body" id="workspace-thinking-guide-body">
-                <!-- Nội dung gợi ý tư duy hiển thị trực quan ở đây -->
               </div>
             </div>
 

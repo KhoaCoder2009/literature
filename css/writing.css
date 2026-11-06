@@ -1415,6 +1415,39 @@ body.in-writing-workspace .writing-workspace-nav {
   padding: 0 18px !important;
 }
 
+/* --- THANH NÚT HÀNH ĐỘNG NẰM TRỰC TIẾP DƯỚI ĐỀ BÀI --- */
+.writing-prompt-actions-under {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1.5px dashed var(--stroke, #e2e8f0);
+}
+
+.writing-prompt-actions-under .btn {
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  padding: 6px 12px !important;
+  border-radius: 10px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  border: 1.5px solid var(--stroke) !important;
+  box-shadow: 0 2px 0 var(--stroke) !important;
+}
+
+.writing-prompt-actions-under .btn:hover {
+  transform: translateY(-1px);
+}
+
+.writing-prompt-actions-under .btn.active {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+}
+
 /* --- HỘP GỢI Ý TƯ DUY NẰM TRỰC TIẾP DƯỚI ĐỀ BÀI --- */
 .writing-thinking-card {
   margin-top: 14px;
