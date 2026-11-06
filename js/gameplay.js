@@ -151,8 +151,8 @@ function renderSetupSetsGrid(selectedId) {
   if (!container) return;
 
   const isStudent = (typeof Auth !== 'undefined' && Auth.isStudent());
-  const validSets = (sets || []).filter(s => {
-    if (String(s.id).startsWith('set_')) return false;
+  const setsSource = (Array.isArray(sets) && sets.length) ? sets : (Array.isArray(window.sets) ? window.sets : (sets || []));
+  const validSets = setsSource.filter(s => {
     if (isStudent && typeof isSetPrivate === 'function' && isSetPrivate(s, 'quiz')) return false;
     return true;
   });
@@ -278,7 +278,12 @@ function updateSetupQuestionCount() {
 }
 
 R.setup = id => {
-  const validSets = sets.filter(s => !String(s.id).startsWith('set_'));
+  const isStudent = (typeof Auth !== 'undefined' && Auth.isStudent());
+  const setsSource = (Array.isArray(sets) && sets.length) ? sets : (Array.isArray(window.sets) ? window.sets : (sets || []));
+  const validSets = setsSource.filter(s => {
+    if (isStudent && typeof isSetPrivate === 'function' && isSetPrivate(s, 'quiz')) return false;
+    return true;
+  });
   const ss = $('#ss');
   if (ss) {
     ss.innerHTML = validSets.map(s => `<option value="${s.id}" ${s.id == id ? 'selected' : ''}>${esc(s.title)} (${s.qs.length} câu)</option>`).join('');

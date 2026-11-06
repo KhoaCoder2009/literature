@@ -22,16 +22,44 @@ async function loadSetsFromSupabase() {
     if (!res.ok) throw new Error('Supabase request failed');
     const rows = await res.json();
     if (Array.isArray(rows)) {
-      sets = rows.filter(row => row.status !== 'deleted' && !String(row.id).startsWith('set_')).map(row => ({
-        id: String(row.id),
-        emo: row.emo || '📖',
-        title: row.title || 'Bộ câu hỏi',
-        topic: row.topic || '',
-        status: row.status || 'draft',
-        maxAttempts: (typeof getSetMaxAttempts === 'function' ? getSetMaxAttempts(row.id, 'quiz') : 0),
-        deadline: (typeof getSetDeadline === 'function' ? getSetDeadline(row.id, 'quiz') : ''),
-        qs: Array.isArray(row.qs) ? row.qs : []
-      }));
+      const pMap = getSetPrivacyMap();
+      let mapChanged = false;
+
+      sets = rows.filter(row => row.status !== 'deleted').map(row => {
+        const isPublished = (row.status === 'published');
+        const rowId = String(row.id);
+        
+        // Đồng bộ map quyền riêng tư cục bộ theo trạng thái máy chủ đám mây
+        if (isPublished) {
+          if (pMap[rowId] !== 'public') {
+            pMap[rowId] = 'public';
+            mapChanged = true;
+          }
+        } else if (row.status === 'draft') {
+          if (pMap[rowId] !== 'private') {
+            pMap[rowId] = 'private';
+            mapChanged = true;
+          }
+        }
+
+        return {
+          id: rowId,
+          emo: row.emo || '📖',
+          title: row.title || 'Bộ câu hỏi',
+          topic: row.topic || '',
+          status: row.status || 'draft',
+          privacy: isPublished ? 'public' : 'private',
+          isDraft: !isPublished,
+          maxAttempts: (typeof getSetMaxAttempts === 'function' ? getSetMaxAttempts(row.id, 'quiz') : 0),
+          deadline: (typeof getSetDeadline === 'function' ? getSetDeadline(row.id, 'quiz') : ''),
+          qs: Array.isArray(row.qs) ? row.qs : []
+        };
+      });
+
+      if (mapChanged) {
+        saveSetPrivacyMap(pMap);
+      }
+      window.sets = sets;
       return true;
     }
   } catch (e) {
@@ -72,13 +100,16 @@ async function archiveQuestionSets(ids) {
 async function syncSetsToSupabase() {
   if (!isSupabaseConfigured()) return;
   try {
-    const rows = sets.map(s => ({
-      id: String(s.id),
-      title: s.title,
-      topic: s.topic || '',
-      status: s.status || 'draft',
-      qs: s.qs || []
-    }));
+    const rows = sets.map(s => {
+      const isPublic = (s.privacy === 'public' || s.status === 'published' || (typeof getSetPrivacy === 'function' && getSetPrivacy(s, 'quiz') === 'public'));
+      return {
+        id: String(s.id),
+        title: s.title,
+        topic: s.topic || '',
+        status: isPublic ? 'published' : 'draft',
+        qs: s.qs || []
+      };
+    });
     const url = `${appConfig.supabase.url.replace(/\/$/, '')}/rest/v1/${appConfig.supabase.table || 'question_sets'}`;
     const res = await fetch(url, {
       method: 'POST',
@@ -457,20 +488,65 @@ function saveSetOpenAtMap(map) {
   } catch (e) {}
 }
 
+function findSetObjectById(id, type = '') {
+  const idStr = String(id || '');
+  if (!idStr) return null;
+  if (type === 'quiz' || type === 'lessons' || type === 'set' || !type) {
+    const qList = (Array.isArray(window.sets) && window.sets.length) ? window.sets : (typeof sets !== 'undefined' && Array.isArray(sets) ? sets : []);
+    const found = qList.find(s => String(s.id) === idStr);
+    if (found) return found;
+  }
+  if (type === 'reading' || !type) {
+    const rList = (typeof readingSets !== 'undefined' && Array.isArray(readingSets)) ? readingSets : [];
+    const found = rList.find(s => String(s.id) === idStr);
+    if (found) return found;
+  }
+  if (type === 'writing' || !type) {
+    const wList = (typeof writingSets !== 'undefined' && Array.isArray(writingSets)) ? writingSets : [];
+    const found = wList.find(s => String(s.id) === idStr);
+    if (found) return found;
+  }
+  return null;
+}
+
 function getSetPrivacy(setOrId, type = '') {
   let id = '';
-  let directPrivacy = '';
+  let obj = null;
+
   if (typeof setOrId === 'object' && setOrId !== null) {
+    obj = setOrId;
     id = String(setOrId.id || '');
-    if (setOrId.privacy) directPrivacy = String(setOrId.privacy).trim();
-    else if (setOrId.status === 'draft' || setOrId.isDraft) directPrivacy = 'private';
-    else if (setOrId.status === 'published') directPrivacy = 'public';
   } else {
     id = String(setOrId || '');
+    obj = findSetObjectById(id, type);
+  }
+
+  let directPrivacy = '';
+  let isExplicitlyPublished = false;
+
+  if (obj) {
+    if (obj.privacy) {
+      directPrivacy = String(obj.privacy).trim().toLowerCase();
+      if (directPrivacy === 'public') isExplicitlyPublished = true;
+    }
+    if (obj.status === 'published') {
+      isExplicitlyPublished = true;
+      directPrivacy = 'public';
+    } else if (obj.status === 'draft' || obj.isDraft) {
+      if (!directPrivacy) directPrivacy = 'private';
+    }
   }
 
   const map = getSetPrivacyMap();
   const mapPrivacy = (map && map[id]) ? String(map[id]).trim().toLowerCase() : '';
+
+  // Nếu bộ đề máy chủ hoặc đối tượng xác định rõ ràng là 'public', đồng bộ và ưu tiên công khai
+  if (isExplicitlyPublished && mapPrivacy !== 'public') {
+    map[id] = 'public';
+    saveSetPrivacyMap(map);
+    return 'public';
+  }
+
   // Cài đặt của Giáo viên/Admin trong map ghi đè tuyệt đối thuộc tính mặc định
   if (mapPrivacy === 'public' || mapPrivacy === 'private') {
     return mapPrivacy;
@@ -698,16 +774,29 @@ function updateSetAttemptLimit(type, setId, limit, deadline, privacy, openAt) {
 
   // 5. Cập nhật đối tượng bộ đề tương ứng trong bộ nhớ
   if (type === 'quiz' || type === 'lessons' || type === 'set') {
-    if (typeof sets !== 'undefined' && Array.isArray(sets)) {
-      const target = sets.find(s => String(s.id) === targetIdStr);
-      if (target) {
-        target.maxAttempts = numLimit;
-        target.deadline = deadlineStr;
-        target.privacy = privacyStr;
-        target.status = (privacyStr === 'private' ? 'draft' : 'published');
-        target.isDraft = (privacyStr === 'private');
-        target.openAt = openAtStr;
-        if (typeof save === 'function') save();
+    const qList = (Array.isArray(window.sets) && window.sets.length) ? window.sets : (typeof sets !== 'undefined' && Array.isArray(sets) ? sets : []);
+    const target = qList.find(s => String(s.id) === targetIdStr);
+    if (target) {
+      target.maxAttempts = numLimit;
+      target.deadline = deadlineStr;
+      target.privacy = privacyStr;
+      target.status = (privacyStr === 'private' ? 'draft' : 'published');
+      target.isDraft = (privacyStr === 'private');
+      target.openAt = openAtStr;
+      if (typeof save === 'function') save();
+
+        // Đồng bộ trực tiếp ngay lập tức lên Supabase không cần chờ debounce
+        if (typeof isSupabaseConfigured === 'function' && isSupabaseConfigured() && typeof appConfig !== 'undefined') {
+          try {
+            const table = appConfig.supabase.table || 'question_sets';
+            const patchUrl = `${appConfig.supabase.url.replace(/\/$/, '')}/rest/v1/${table}?id=eq.${encodeURIComponent(targetIdStr)}`;
+            fetch(patchUrl, {
+              method: 'PATCH',
+              headers: getSupabaseRequestHeaders({ 'Prefer': 'return=minimal' }),
+              body: JSON.stringify({ status: target.status })
+            }).catch(e => console.warn('Lỗi PATCH trực tiếp trạng thái lên Supabase:', e));
+          } catch (e) {}
+        }
       }
     }
   } else if (type === 'reading') {
@@ -740,6 +829,7 @@ function updateSetAttemptLimit(type, setId, limit, deadline, privacy, openAt) {
 
   // 6. Render lại các danh sách đang hiển thị
   if (typeof renderLibLessonsPane === 'function') renderLibLessonsPane();
+  if (typeof R !== 'undefined' && typeof R.lib === 'function') R.lib();
   if (typeof renderLibReadingPane === 'function') renderLibReadingPane();
   if (typeof renderLibWritingPane === 'function') renderLibWritingPane();
   if (typeof renderReadingSetsGrid === 'function') renderReadingSetsGrid();

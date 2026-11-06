@@ -21,7 +21,9 @@ window.sets = sets;
 let tt, T, G, CS, EQ, ET = 'mc', IMG;
 let feedbackTimeout, feedbackCountdown;
 const selectedSetIds = new Set();
+window.selectedSetIds = selectedSetIds;
 let bulkDeleteMode = false;
+window.bulkDeleteMode = bulkDeleteMode;
 let currentScreen = 'home';
 window.currentScreen = 'home';
 const R = window.R = (window.R || {});
@@ -63,6 +65,8 @@ const appConfig = Object.freeze({
 
 const hasSupabaseCredentials = () => !!(appConfig.supabase && appConfig.supabase.url && appConfig.supabase.anonKey);
 const isSupabaseConfigured = () => !!(appConfig.supabase && appConfig.supabase.enabled && hasSupabaseCredentials());
+window.isSupabaseConfigured = isSupabaseConfigured;
+window.hasSupabaseCredentials = hasSupabaseCredentials;
 
 function toast(m, k) {
   const t = $('#toast');

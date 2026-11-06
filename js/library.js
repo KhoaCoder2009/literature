@@ -605,6 +605,8 @@ function meta() {
   if (privacyInp) {
     const priv = (privacyInp.value || 'public').trim();
     CS.privacy = priv;
+    CS.status = (priv === 'private' ? 'draft' : 'published');
+    CS.isDraft = (priv === 'private');
     if (typeof getSetPrivacyMap === 'function' && typeof saveSetPrivacyMap === 'function') {
       const pMap = getSetPrivacyMap();
       pMap[String(CS.id)] = priv;
@@ -631,7 +633,6 @@ function renderHomeSets() {
   
   const isStudent = (typeof Auth !== 'undefined' && Auth.isStudent());
   const validSets = (sets || []).filter(s => {
-    if (String(s.id).startsWith('set_')) return false;
     if (isStudent && typeof isSetPrivate === 'function' && isSetPrivate(s, 'quiz')) return false;
     return true;
   });
@@ -735,7 +736,7 @@ function updateLibTabsUI() {
   });
 
   // 1. Lessons Badge
-  const validLessonSets = (sets || []).filter(s => !String(s.id).startsWith('set_'));
+  const validLessonSets = (sets || []);
   const lessonBadge = $('#lib-lessons-badge');
   if (lessonBadge) lessonBadge.textContent = validLessonSets.length;
 
@@ -925,3 +926,10 @@ function renderLibWritingPane() {
 
   container.innerHTML = filtered.map((s, idx) => writingLibCardHtml(s, idx)).join('');
 }
+
+function renderLibLessonsPane() {
+  if (typeof R !== 'undefined' && typeof R.lib === 'function') {
+    R.lib();
+  }
+}
+window.renderLibLessonsPane = renderLibLessonsPane;

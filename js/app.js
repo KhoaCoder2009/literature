@@ -181,7 +181,6 @@ async function initPersistedData() {
     try { const x = JSON.parse(localStorage.vq_cartoon); if (Array.isArray(x) && x.length) sets = x; } catch (e) {}
   }
   sets = sets.filter(s => {
-    if (String(s.id).startsWith('set_')) return false;
     const t = (String(s.title) + ' ' + String(s.topic) + ' ' + String(s.id)).toLowerCase();
     if (t.includes('ielts') || t.includes('english') || t.includes('tiếng anh')) return false;
     return true;

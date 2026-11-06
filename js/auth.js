@@ -401,7 +401,8 @@ const Auth = (() => {
 
     // Cập nhật lại các danh sách đề đang hiển thị để ẩn/hiện nút Sửa/Xóa/Cài đặt của Giáo viên
     try {
-      if (typeof cur !== 'undefined') {
+      const cur = (typeof currentScreen !== 'undefined') ? currentScreen : ((typeof window !== 'undefined' && window.currentScreen) ? window.currentScreen : '');
+      if (cur) {
         if (cur === 'setup' && typeof renderSetupSetsGrid === 'function') renderSetupSetsGrid();
         if (cur === 'reading' && typeof renderReadingListView === 'function') renderReadingListView();
         if (cur === 'writing' && typeof renderWritingSetsGrid === 'function') renderWritingSetsGrid();
