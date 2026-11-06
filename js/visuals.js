@@ -153,7 +153,7 @@ const HERO_STUDY_QUOTES = [
     quote: '“Văn học là nhân học.”',
     author: '— M. Gorki —',
     tip: 'Dùng làm câu dẫn Mở bài hoặc Kết bài cho các đề nghị luận về giá trị nhân đạo và sứ mệnh nuôi dưỡng tâm hồn của văn chương.',
-    img: './assets/logo-nguvan.png',
+    img: './assets/gorki.jpg',
     accent: '#b45309',
     border: '#f59e0b',
     bgLight: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 45%, #fffdf5 100%)',
@@ -164,7 +164,7 @@ const HERO_STUDY_QUOTES = [
     quote: '“Nghệ thuật không cần phải là ánh trăng lừa dối, nghệ thuật không nên là ánh trăng lừa dối, nghệ thuật có thể chỉ là tiếng đau khổ kia, thoát ra từ những kiếp lầm than.”',
     author: '— Nam Cao (Trăng sáng) —',
     tip: 'Rất đắt giá khi phân tích mối quan hệ giữa văn học và hiện thực cuộc sống, hoặc khi viết về các tác phẩm hiện thực phê phán.',
-    img: './assets/logo-nguvan.png',
+    img: './assets/nam-cao.jpg',
     accent: '#dc2626',
     border: '#ef4444',
     bgLight: 'linear-gradient(135deg, #fef2f2 0%, #fee2e2 45%, #fffdf8 100%)',
@@ -175,7 +175,7 @@ const HERO_STUDY_QUOTES = [
     quote: '“Nhà văn tồn tại ở trên đời có lẽ trước hết là để làm công việc giống như kẻ nâng giấc cho những con người bị cùng đường, tuyệt lộ, bị cái ác hoặc số phận đen đủi dồn đến chân tường.”',
     author: '— Nguyễn Minh Châu —',
     tip: 'Dùng để bàn luận sâu sắc về tấm lòng nhân đạo, sự thấu cảm và thiên chức bảo vệ con người của người cầm bút.',
-    img: './assets/logo-nguvan.png',
+    img: './assets/nguyen-minh-chau.jpg',
     accent: '#059669',
     border: '#10b981',
     bgLight: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 45%, #fafffd 100%)',
@@ -186,7 +186,7 @@ const HERO_STUDY_QUOTES = [
     quote: '“Thơ là tiếng lòng, là sự đồng điệu giữa tâm hồn nhà thơ và tâm hồn người đọc.”',
     author: '— Tố Hữu —',
     tip: 'Áp dụng tuyệt vời cho Mở bài hoặc Kết bài của mọi đề phân tích, cảm nhận một đoạn thơ trữ tình.',
-    img: './assets/logo-nguvan.png',
+    img: './assets/to-huu.jpg',
     accent: '#7c3aed',
     border: '#8b5cf6',
     bgLight: 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 45%, #fcfaff 100%)',
@@ -197,7 +197,7 @@ const HERO_STUDY_QUOTES = [
     quote: '“Văn chương không phải là cách đem đến cho người đọc sự thoát ly hay sự quên; trái lại văn chương là một thứ khí giới thanh cao và đắc lực mà chúng ta có, để vừa tố cáo và thay đổi một cái thế giới giả dối và tàn ác, vừa làm cho lòng người được thêm trong sạch và phong phú hơn.”',
     author: '— Thạch Lam (Theo dòng) —',
     tip: 'Nhận định vàng cho mọi bài văn nghị luận khi bàn về chức năng giáo dục và thanh lọc tâm hồn của văn chương.',
-    img: './assets/logo-nguvan.png',
+    img: './assets/thach-lam.jpg',
     accent: '#0891b2',
     border: '#06b6d4',
     bgLight: 'linear-gradient(135deg, #ecfeff 0%, #cffafe 45%, #fafffd 100%)',
@@ -219,7 +219,7 @@ const HERO_STUDY_QUOTES = [
     quote: '“Nếu là con chim, chiếc lá / Thì con chim phải hót, chiếc lá phải xanh / Lẽ nào vay mà không có trả / Sống là cho, đâu chỉ nhận riêng mình.”',
     author: '— Tố Hữu —',
     tip: 'Dẫn chứng thơ cực hay cho đoạn văn 200 chữ về lối sống cống hiến, lòng nhân ái, trách nhiệm của tuổi trẻ.',
-    img: './assets/logo-nguvan.png',
+    img: './assets/to-huu.jpg',
     accent: '#059669',
     border: '#10b981',
     bgLight: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 45%, #fafffd 100%)',
@@ -230,7 +230,7 @@ const HERO_STUDY_QUOTES = [
     quote: '“Mỗi tác phẩm phải là một phát minh về hình thức và một khám phá về nội dung.”',
     author: '— Leonid Leonov —',
     tip: 'Dùng để đánh giá tài năng độc đáo, phong cách nghệ thuật riêng biệt của tác giả ở phần Đánh giá chung.',
-    img: './assets/logo-nguvan.png',
+    img: './assets/leonov.jpg',
     accent: '#b45309',
     border: '#f59e0b',
     bgLight: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 45%, #fffdf5 100%)',
@@ -241,7 +241,7 @@ const HERO_STUDY_QUOTES = [
     quote: '“Con người có thể bị hủy diệt chứ không thể bị khuất phục.”',
     author: '— Ernest Hemingway (Ông già và biển cả) —',
     tip: 'Câu châm ngôn kinh điển cho các đề nghị luận xã hội về nghị lực vượt khó, ý chí kiên cường trước nghịch cảnh.',
-    img: './assets/logo-nguvan.png',
+    img: './assets/hemingway.jpg',
     accent: '#dc2626',
     border: '#ef4444',
     bgLight: 'linear-gradient(135deg, #fef2f2 0%, #fee2e2 45%, #fffdf8 100%)',
@@ -250,9 +250,9 @@ const HERO_STUDY_QUOTES = [
   {
     tag: 'TIẾP NHẬN VĂN HỌC',
     quote: '“Khi tác phẩm kết thúc, ấy mới là lúc cuộc sống thực sự của nó bắt đầu trong lòng người đọc.”',
-    author: '— Tiếp nhận văn học —',
+    author: '— Tiếp nhận văn học (J.P. Sartre) —',
     tip: 'Dùng cho phần Kết bài để khẳng định sức sống vượt thời gian và dư âm của tác phẩm trong lòng độc giả.',
-    img: './assets/logo-nguvan.png',
+    img: './assets/sartre.jpg',
     accent: '#0891b2',
     border: '#06b6d4',
     bgLight: 'linear-gradient(135deg, #ecfeff 0%, #cffafe 45%, #fafffd 100%)',
@@ -290,6 +290,9 @@ function applyHeroQuote(idx, animate = true) {
   if (!card || !img || !quote) return;
 
   const updateContent = () => {
+    img.onerror = () => {
+      img.src = './assets/victor-hugo.jpg';
+    };
     img.src = item.img;
     img.alt = item.author;
     if (tag) tag.textContent = item.tag;
