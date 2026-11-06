@@ -5226,60 +5226,84 @@ body[data-user-role="student"] .teacher-only {
 .nav-user-pill {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 5px 14px 5px 6px;
+  gap: 8px;
+  height: 36px;
+  padding: 0 11px 0 5px;
   border-radius: 9999px;
   background: var(--bg-card);
-  border: 2px solid var(--stroke);
+  border: 1.5px solid var(--bd);
   cursor: pointer;
   user-select: none;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   max-width: 280px;
+  box-sizing: border-box;
 }
 .nav-user-pill:hover {
-  background: var(--bg-hover);
-  border-color: var(--primary);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.16);
+  background: var(--bg2);
+  border-color: var(--au);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.16);
 }
 .nav-user-pill:active {
   transform: translateY(0);
 }
 .nav-user-pill.active {
-  border-color: var(--primary);
-  background: var(--bg-hover);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18), 0 8px 24px rgba(0, 0, 0, 0.1);
+  border-color: var(--au);
+  background: var(--bg2);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+[data-theme="dark"] .nav-user-pill {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+[data-theme="dark"] .nav-user-pill:hover {
+  border-color: #f59e0b;
+  background: #263346;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+[data-theme="dark"] .nav-user-pill.active {
+  border-color: #f59e0b;
+  background: #263346;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.28);
 }
 
-/* Avatar with status indicator */
+/* Avatar circle inside pill */
 .user-pill-avatar-wrap {
-  position: relative;
-  width: 38px;
-  height: 38px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(245, 158, 11, 0.15));
-  border: 2px solid rgba(255, 255, 255, 0.95);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  background: rgba(245, 158, 11, 0.14);
+  border: 1px solid rgba(245, 158, 11, 0.32);
+  transition: transform 0.2s ease;
+}
+.user-pill-avatar-wrap.admin {
+  background: rgba(139, 92, 246, 0.14);
+  border-color: rgba(139, 92, 246, 0.32);
+}
+.nav-user-pill:hover .user-pill-avatar-wrap {
+  transform: scale(1.05);
 }
 [data-theme="dark"] .user-pill-avatar-wrap {
-  border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  background: rgba(245, 158, 11, 0.22);
+  border-color: rgba(245, 158, 11, 0.45);
+}
+[data-theme="dark"] .user-pill-avatar-wrap.admin {
+  background: rgba(139, 92, 246, 0.22);
+  border-color: rgba(139, 92, 246, 0.45);
 }
 .user-pill-avatar {
-  font-size: 19px;
+  font-size: 14px;
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
 }
 .user-ion-avatar {
   width: 100%;
@@ -5300,7 +5324,7 @@ body[data-user-role="student"] .teacher-only {
   pointer-events: none;
 }
 .user-pill-avatar-img.user-ion-avatar {
-  font-size: 20px;
+  font-size: 16px;
   border-radius: 50%;
 }
 .dropdown-avatar-img.user-ion-avatar {
@@ -5312,39 +5336,25 @@ body[data-user-role="student"] .teacher-only {
   border-radius: 50%;
 }
 .user-pill-status-dot {
-  position: absolute;
-  bottom: -1px;
-  right: -1px;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #10b981;
-  border: 2px solid #ffffff;
-  box-shadow: 0 0 6px rgba(16, 185, 129, 0.7);
-  z-index: 2;
-}
-[data-theme="dark"] .user-pill-status-dot {
-  border-color: #1e293b;
+  display: none;
 }
 
 /* Pill text info */
 .user-pill-text {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  overflow: hidden;
-  line-height: 1.2;
+  align-items: center;
+  gap: 6px;
 }
 .user-pill-name {
-  font-size: 13.5px;
-  font-weight: 800;
-  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tx);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 140px;
   letter-spacing: -0.01em;
+  line-height: 1;
 }
 .user-pill-meta {
   display: inline-flex;
@@ -5353,50 +5363,42 @@ body[data-user-role="student"] .teacher-only {
   white-space: nowrap;
 }
 
-/* Badges */
+/* Elegant Tag / Badge (flat chip, eliminates pill-inside-a-pill) */
 .user-role-badge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: 10.5px;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  padding: 1.5px 7px;
-  border-radius: 999px;
-  line-height: 1.35;
-}
-.user-role-badge.admin {
-  background: linear-gradient(135deg, #ede9fe, #ddd6fe);
-  color: #5b21b6;
-  border: 1px solid #8b5cf6;
-  box-shadow: 0 1px 3px rgba(139, 92, 246, 0.2);
-}
-[data-theme="dark"] .user-role-badge.admin {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(124, 58, 237, 0.38));
-  color: #e0e7ff;
-  border-color: #a78bfa;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  padding: 2px 7px;
+  border-radius: 6px;
+  line-height: 1.25;
+  white-space: nowrap;
 }
 .user-role-badge.teacher {
-  background: linear-gradient(135deg, #fef3c7, #fde68a);
-  color: #92400e;
-  border: 1px solid #f59e0b;
-  box-shadow: 0 1px 3px rgba(245, 158, 11, 0.15);
+  background: rgba(245, 158, 11, 0.14);
+  color: #b45309;
 }
 [data-theme="dark"] .user-role-badge.teacher {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.35));
-  color: #fef08a;
-  border-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.24);
+  color: #fbbf24;
+}
+.user-role-badge.admin {
+  background: rgba(139, 92, 246, 0.14);
+  color: #6d28d9;
+}
+[data-theme="dark"] .user-role-badge.admin {
+  background: rgba(139, 92, 246, 0.24);
+  color: #c4b5fd;
 }
 .user-role-badge.student {
-  background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
-  color: #3730a3;
-  border: 1px solid #818cf8;
-  box-shadow: 0 1px 3px rgba(99, 102, 241, 0.15);
+  background: rgba(99, 102, 241, 0.12);
+  color: #4338ca;
 }
 [data-theme="dark"] .user-role-badge.student {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(79, 70, 229, 0.35));
-  color: #c7d2fe;
-  border-color: #818cf8;
+  background: rgba(99, 102, 241, 0.22);
+  color: #a5b4fc;
 }
 
 .acc-stat-card.admin:hover .acc-stat-icon-wrap {
@@ -5413,16 +5415,17 @@ body[data-user-role="student"] .teacher-only {
 /* Pill Arrow */
 .user-pill-arrow {
   color: var(--mut);
-  font-size: 11px;
-  display: flex;
+  font-size: 13px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
-  margin-left: 2px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  flex-shrink: 0;
+  margin-left: -1px;
 }
 .nav-user-pill:hover .user-pill-arrow,
 .nav-user-pill.active .user-pill-arrow {
-  color: var(--primary);
+  color: var(--au);
 }
 .nav-user-pill.active .user-pill-arrow {
   transform: rotate(180deg);
@@ -5931,14 +5934,32 @@ body[data-user-role="student"] .teacher-only {
 .login-divider-text::before { left: 0; }
 .login-divider-text::after { right: 0; }
 
-/* Mobile responsive */
-@media (max-width: 600px) {
-  .nav-user-pill {
-    padding: 4px 8px 4px 4px;
-    gap: 6px;
-  }
-  .user-pill-text {
+/* Mobile responsive for navbar user pill */
+@media (max-width: 680px) {
+  .nav-user-pill .user-role-badge {
     display: none;
+  }
+  .nav-user-pill .user-pill-name {
+    max-width: 100px;
+  }
+}
+
+@media (max-width: 520px) {
+  .nav-user-pill {
+    height: 32px;
+    padding: 0 8px 0 4px;
+    gap: 5px;
+  }
+  .nav-user-pill .user-pill-avatar-wrap {
+    width: 24px;
+    height: 24px;
+  }
+  .nav-user-pill .user-pill-avatar {
+    font-size: 12px;
+  }
+  .nav-user-pill .user-pill-name {
+    max-width: 75px;
+    font-size: 12px;
   }
   .user-dropdown-menu {
     right: -6px;

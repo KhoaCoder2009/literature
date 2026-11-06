@@ -458,16 +458,11 @@ function renderNavbarUserWidget() {
 
     container.innerHTML = `
       <div class="nav-user-pill" id="nav-user-pill-btn" onclick="toggleUserDropdownMenu(event)" title="Tài khoản ${escHtml(roleLabel)}: ${escHtml(user.full_name)}">
-        <div class="user-pill-avatar-wrap">
-          <div class="user-pill-avatar">${roleIcon}</div>
-          <span class="user-pill-status-dot"></span>
+        <div class="user-pill-avatar-wrap ${roleBadgeClass}">
+          <span class="user-pill-avatar">${roleIcon}</span>
         </div>
-        <div class="user-pill-text">
-          <span class="user-pill-name">${escHtml(user.full_name)}</span>
-          <div class="user-pill-meta">
-            <span class="user-role-badge ${roleBadgeClass}">${roleLabel}</span>
-          </div>
-        </div>
+        <span class="user-pill-name">${escHtml(user.full_name)}</span>
+        <span class="user-role-badge ${roleBadgeClass}">${roleLabel}</span>
         <span class="user-pill-arrow"><ion-icon name="chevron-down-outline"></ion-icon></span>
       </div>
 
