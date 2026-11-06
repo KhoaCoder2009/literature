@@ -119,6 +119,7 @@ const jsOrder = [
   path.join(jsDir, 'editor.js'),
   path.join(jsDir, 'gameplay.js'),
   path.join(jsDir, 'writing.js'),
+  path.join(jsDir, 'reading-presets-data.js'),
   path.join(jsDir, 'reading.js'),
   path.join(jsDir, 'enhancements.js'),
   path.join(jsDir, 'app.js')

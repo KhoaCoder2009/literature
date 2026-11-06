@@ -9,7 +9,7 @@ const DEFAULT_READING_CATEGORIES = [
   'Nghị luận & Thông tin'
 ];
 
-const DEFAULT_READING_SETS = [
+const BUILTIN_SAMPLE_READING_SETS = [
   {
     id: 'reading_preset_inamori',
     title: 'Sống hết mình cho thời khắc hiện tại',
@@ -291,6 +291,10 @@ Bây giờ về phố, sống giữa những căn bếp hiện đại, sạch b�
   }
 ];
 
+const DEFAULT_READING_SETS = (typeof READING_PRESETS_DATA !== 'undefined' && Array.isArray(READING_PRESETS_DATA) && READING_PRESETS_DATA.length > 0)
+  ? [...READING_PRESETS_DATA, ...BUILTIN_SAMPLE_READING_SETS]
+  : BUILTIN_SAMPLE_READING_SETS;
+
 // STATE VARIABLES
 let readingSets = [];
 let readingCategories = [];
@@ -328,7 +332,20 @@ function loadReadingData() {
     }
     if (!Array.isArray(loaded)) loaded = [];
 
-    if (loaded.length > 0) {
+    const VERSION_TAG_KEY = 'vq_reading_sets_version_tag';
+    const CURRENT_VERSION_TAG = 'v110_reading_sets_2026_11_06_r1';
+    const savedVersionTag = localStorage.getItem(VERSION_TAG_KEY);
+
+    if (savedVersionTag !== CURRENT_VERSION_TAG) {
+      // Làm mới toàn bộ kho đề mặc định (cập nhật 110 đề mới và tiêu đề chuẩn hóa theo tác phẩm)
+      const customSets = loaded.filter(s => s && s.isCustom);
+      readingSets = JSON.parse(JSON.stringify(DEFAULT_READING_SETS)).map(s => ({ ...s, status: s.status || 'published' }));
+      if (customSets.length) {
+        readingSets.push(...customSets);
+      }
+      localStorage.setItem('vq_reading_sets_v1', JSON.stringify(readingSets));
+      try { localStorage.setItem(VERSION_TAG_KEY, CURRENT_VERSION_TAG); } catch (_) {}
+    } else if (loaded.length > 0) {
       // Đảm bảo tất cả câu hỏi trong các bộ đề đều có maxScore và status
       loaded.forEach(s => {
         if (!s.status) s.status = 'published';
