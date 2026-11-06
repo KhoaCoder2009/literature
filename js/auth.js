@@ -18,32 +18,23 @@ const Auth = (() => {
   let currentTeacherUser = null;
   let pendingAfterStudentNameCallback = null;
 
-  // Danh sách tài khoản Giáo viên & Quản trị viên mặc định (hoạt động cả khi Offline & Online)
+  // Danh sách tài khoản Giáo viên & Quản trị viên mặc định (chỉ giữ đúng 2 tài khoản tuanh & giaovien)
   const BUILTIN_TEACHER_ACCOUNTS = [
     {
-      id: 'usr_admin_root',
-      username: 'admin',
-      passwords: ['admin9999', '123456'],
-      full_name: 'Quản trị viên Hệ thống',
-      class_name: 'Ban Giám Hiệu / Admin',
+      id: 'usr_teacher_tuanh',
+      username: 'tuanh',
+      passwords: ['123456'],
+      full_name: 'Cô Tú Anh',
+      class_name: 'Quản trị viên / Giáo viên Ngữ văn',
       role: 'admin',
       avatar: '🛡️'
     },
     {
       id: 'usr_teacher_main',
       username: 'giaovien',
-      passwords: ['123456', 'giaovien123'],
-      full_name: 'Cô Tú Anh (Giáo viên Ngữ văn)',
+      passwords: ['123456'],
+      full_name: 'Giáo viên Ngữ văn',
       class_name: 'Giáo viên Bộ môn',
-      role: 'teacher',
-      avatar: '👑'
-    },
-    {
-      id: 'usr_teacher_tuanh',
-      username: 'tuanh',
-      passwords: ['123456', 'tuanh123'],
-      full_name: 'Cô Tú Anh',
-      class_name: 'Giáo viên Ngữ văn',
       role: 'teacher',
       avatar: '👑'
     }
@@ -146,8 +137,18 @@ const Auth = (() => {
       }
       const parsed = JSON.parse(raw);
       if (parsed && parsed.username && (parsed.role === 'teacher' || parsed.role === 'admin')) {
-        currentTeacherUser = parsed;
-        return currentTeacherUser;
+        const builtin = BUILTIN_TEACHER_ACCOUNTS.find(a => a.username.toLowerCase() === parsed.username.toLowerCase());
+        if (builtin) {
+          parsed.full_name = builtin.full_name;
+          parsed.class_name = builtin.class_name;
+          parsed.role = builtin.role;
+          parsed.avatar = builtin.avatar;
+          currentTeacherUser = parsed;
+          return currentTeacherUser;
+        } else {
+          clearSession();
+          return null;
+        }
       }
     } catch (e) {
       console.warn('Không thể đọc phiên đăng nhập Giáo viên:', e);
@@ -415,6 +416,14 @@ const Auth = (() => {
   }
 
   function init() {
+    try {
+      localStorage.removeItem(STORAGE_CUSTOM_TEACHERS_KEY);
+      const overrides = getPasswordOverrides();
+      if (overrides && overrides.admin) {
+        delete overrides.admin;
+        localStorage.setItem(STORAGE_CUSTOM_PW_OVERRIDES_KEY, JSON.stringify(overrides));
+      }
+    } catch (_) {}
     loadSession();
     applyRolePermissions();
   }

@@ -798,7 +798,6 @@ function updateSetAttemptLimit(type, setId, limit, deadline, privacy, openAt) {
           } catch (e) {}
         }
       }
-    }
   } else if (type === 'reading') {
     if (typeof readingSets !== 'undefined' && Array.isArray(readingSets)) {
       const target = readingSets.find(s => String(s.id) === targetIdStr);
