@@ -1072,7 +1072,8 @@ function submitReadingAnswers(isAutoSubmit = false) {
         setTitle: set.title,
         setTopic: set.genre || set.category || 'Đọc hiểu',
         setEmo: set.emo || '📑',
-        score: 0,
+        score: null,
+        isGraded: false,
         answeredCount,
         totalQuestions: questions.length,
         elapsedSeconds: 0,
@@ -1085,7 +1086,9 @@ function submitReadingAnswers(isAutoSubmit = false) {
           userAnswer: (draft[q.id || idx] || '').trim(),
           correctAnswer: q.guide || 'Chưa có đáp án chuẩn',
           status: 'saved',
-          points: 0,
+          gradeStatus: '',
+          isGraded: false,
+          points: null,
           explanation: ''
         }))
       });

@@ -3264,13 +3264,29 @@ function getAllRawQuizHistory() {
     if (Array.isArray(list)) {
       // Lọc sạch toàn bộ bài thi mẫu / dữ liệu thử nghiệm cũ để chỉ giữ dữ liệu thật
       list = list.filter(item => item && !String(item.id).startsWith('sample_'));
-      if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.verify === 'function') {
-        list.forEach(item => {
-          if (item && item._secSig && !window.__SECURITY_SHIELD.verify(item)) {
+
+      // Tự động chuẩn hóa & khắc phục các bài luyện viết / đọc hiểu chưa chấm bị gán nhầm điểm 0 hoặc cờ isGraded
+      list.forEach(item => {
+        if (!item) return;
+        if (item.type === 'writing' || item.type === 'reading') {
+          const hasTeacherComment = Boolean(item.teacherFeedback && String(item.teacherFeedback).trim());
+          const hasDetailGrade = Array.isArray(item.details) && item.details.some(d => d && (
+            d.isGraded === true ||
+            (d.gradeStatus && d.gradeStatus !== 'saved' && ['ok', 'partial', 'bad'].includes(d.gradeStatus)) ||
+            (d.points !== undefined && d.points !== null && Number(d.points) > 0) ||
+            (d.teacherComment && String(d.teacherComment).trim().length > 0)
+          ));
+          if (!hasTeacherComment && !hasDetailGrade) {
+            item.isGraded = false;
+            item.score = null;
+          }
+        }
+        if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.verify === 'function') {
+          if (item._secSig && !window.__SECURITY_SHIELD.verify(item)) {
             item.isTampered = true;
           }
-        });
-      }
+        }
+      });
     }
     return list;
   } catch (e) {
@@ -4198,8 +4214,15 @@ function getQuizHistory(forceAll = false) {
 function mapSupabaseRowToHistory(row) {
   const d = new Date(row.created_at || Date.now());
   const details = Array.isArray(row.details) ? row.details : [];
-  const hasGradedDetail = details.some(x => x && (x.isGraded || x.gradeStatus || (x.points !== undefined && x.points > 0)));
-  const isGraded = Boolean(row.is_graded || hasGradedDetail);
+  const isExplicitGradedStatus = s => s === 'ok' || s === 'partial' || s === 'bad';
+  const hasTeacherFeedback = Boolean(row.teacher_feedback && String(row.teacher_feedback).trim());
+  const hasGradedDetail = details.some(x => x && (
+    x.isGraded === true ||
+    (x.gradeStatus && isExplicitGradedStatus(x.gradeStatus)) ||
+    (x.points !== undefined && x.points !== null && Number(x.points) > 0) ||
+    (x.teacherComment && String(x.teacherComment).trim().length > 0)
+  ));
+  const isGraded = Boolean(row.is_graded || hasTeacherFeedback || hasGradedDetail);
   const teacherFeedback = row.teacher_feedback || (details.find(x => x && x.generalTeacherFeedback)?.generalTeacherFeedback || '');
 
   return {
@@ -4214,7 +4237,9 @@ function mapSupabaseRowToHistory(row) {
     setTitle: row.set_title || 'Bài làm',
     setTopic: row.set_topic || '',
     setEmo: row.set_emo || (row.type === 'writing' ? '✍️' : (row.type === 'reading' ? '📑' : '📖')),
-    score: parseFloat(row.score) || 0,
+    score: (row.type === 'writing' || row.type === 'reading')
+      ? (isGraded ? (parseFloat(row.score) || 0) : null)
+      : (parseFloat(row.score) || 0),
     correctCount: Number(row.correct_count) || 0,
     wrongCount: Number(row.wrong_count) || 0,
     savedShortCount: Number(row.saved_short_count) || 0,
@@ -4715,10 +4740,11 @@ function renderHistoryPage() {
 function renderHistoryItemCardHtml(item) {
   const isQuiz = item.type === 'quiz' || !item.type;
   const isWriting = item.type === 'writing';
-  const typeIcon = isWriting ? '<ion-icon name="create-outline"></ion-icon>' : (item.type === 'reading' ? '<ion-icon name="document-text-outline"></ion-icon>' : '<ion-icon name="book-outline"></ion-icon>');
-  const typeName = isWriting ? 'Luyện viết' : (item.type === 'reading' ? 'Đọc hiểu' : 'Bài học');
+  const isReading = item.type === 'reading';
+  const typeIcon = isWriting ? '<ion-icon name="create-outline"></ion-icon>' : (isReading ? '<ion-icon name="document-text-outline"></ion-icon>' : '<ion-icon name="book-outline"></ion-icon>');
+  const typeName = isWriting ? 'Luyện viết' : (isReading ? 'Đọc hiểu' : 'Bài học');
   const isGraded = Boolean(item.isGraded);
-  const hasUngradedShort = !isGraded && (item.type === 'reading' || item.type === 'writing' || item.savedShortCount > 0 || (Array.isArray(item.details) && item.details.some(d => d.status === 'saved')));
+  const hasUngradedShort = !isGraded && (isReading || isWriting || item.savedShortCount > 0 || (Array.isArray(item.details) && item.details.some(d => d.status === 'saved' || !d.isGraded)));
   const canGrade = Boolean(typeof Auth === 'undefined' || Auth.canGradeSubmissions());
 
   // Thiết lập ô điểm hiển thị nổi bật ở góc phải thẻ
@@ -4727,24 +4753,24 @@ function renderHistoryItemCardHtml(item) {
   let scoreSub = 'ĐIỂM SỐ';
   let scoreTooltip = 'Điểm số bài làm';
 
-  const rawScore = item.score !== undefined && item.score !== null ? parseFloat(item.score) : 0;
-  const formattedScore = (Math.round(rawScore * 100) / 100).toFixed(2).replace(/\.?0+$/, '') + 'đ';
+  const rawScore = (item.score !== undefined && item.score !== null) ? parseFloat(item.score) : null;
+  const formattedScore = rawScore !== null ? ((Math.round(rawScore * 100) / 100).toFixed(2).replace(/\.?0+$/, '') + 'đ') : '—';
 
   if (item.isTampered) {
     scoreBoxClass = 'score-box-waiting';
     scoreValue = 'Vô hiệu';
     scoreSub = '<ion-icon name="warning-outline"></ion-icon> CAN THIỆP';
     scoreTooltip = 'Phát hiện dữ liệu bài làm bị sửa đổi bất thường qua Console hoặc LocalStorage!';
+  } else if (!isGraded && (isWriting || isReading || hasUngradedShort)) {
+    scoreBoxClass = 'score-box-waiting';
+    scoreValue = 'Chờ chấm';
+    scoreSub = '<ion-icon name="hourglass-outline"></ion-icon> ĐỢI CHẤM';
+    scoreTooltip = isWriting ? 'Bài viết đã gửi thành công và đang chờ giáo viên chấm điểm' : 'Bài làm đang chờ giáo viên chấm điểm';
   } else if (isGraded) {
     scoreBoxClass = 'score-box-graded';
     scoreValue = formattedScore;
     scoreSub = '<ion-icon name="checkmark-done-outline"></ion-icon> ĐÃ CHẤM';
     scoreTooltip = `Bài làm đã được chấm điểm: ${formattedScore}`;
-  } else if (hasUngradedShort) {
-    scoreBoxClass = 'score-box-waiting';
-    scoreValue = 'Chờ chấm';
-    scoreSub = '<ion-icon name="hourglass-outline"></ion-icon> ĐỢI CHẤM';
-    scoreTooltip = isWriting ? 'Bài viết đang chờ giáo viên chấm điểm' : 'Bài làm có câu tự luận đang chờ giáo viên chấm điểm';
   } else {
     scoreBoxClass = 'score-box-quiz';
     scoreValue = formattedScore;
@@ -5080,7 +5106,7 @@ function renderHistoryDetailModalView() {
             )
         }
         <span class="tag ${isGraded ? 'ok' : 'cy'}" style="font-weight:800;">
-          ${isGraded ? `<ion-icon name="checkmark-done-outline"></ion-icon> Đã chấm: ${item.score || 0}/${itemTotalMaxScore > 0 ? itemTotalMaxScore : (isWriting ? 10.0 : 6.0)}đ` : '<ion-icon name="hourglass-outline"></ion-icon> Chờ chấm điểm'}
+          ${isGraded ? `<ion-icon name="checkmark-done-outline"></ion-icon> Đã chấm: ${(item.score !== null && item.score !== undefined) ? item.score : 0}/${itemTotalMaxScore > 0 ? itemTotalMaxScore : (isWriting ? 10.0 : 6.0)}đ` : '<ion-icon name="hourglass-outline"></ion-icon> Chờ chấm điểm'}
         </span>
         ${item.gradedDateStr ? `<span class="mut" style="font-size:12.5px;">(Chấm lúc: ${item.gradedDateStr})</span>` : ''}
         <span class="tag gh" style="font-size:11.5px; font-weight:700;">
@@ -5378,13 +5404,15 @@ function renderHistoryDetailModalView() {
             <h4 style="margin:0; font-size:16px; font-weight:800; display:flex; align-items:center; gap:6px;">
               <span><ion-icon name="trophy-outline"></ion-icon></span> <span>Kết quả chấm bài của Giáo viên</span>
             </h4>
+            ${canGrade ? `
             <button type="button" class="btn cy sm" onclick="toggleHistoryGradingMode()" style="font-weight:700;">
               <ion-icon name="create-outline"></ion-icon> Sửa điểm / Chấm lại
             </button>
+            ` : ''}
           </div>
           <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap;">
             <span style="font-size:24px; font-weight:900; color:var(--green);">
-              ${item.score || 0} / ${itemTotalMaxScore || (isWriting ? 10.0 : 6.0)} điểm
+              ${(item.score !== null && item.score !== undefined) ? item.score : 0} / ${itemTotalMaxScore || (isWriting ? 10.0 : 6.0)} điểm
             </span>
             ${getGradeRankBadge(item.score, itemTotalMaxScore)}
             ${item.gradedDateStr ? `<span class="mut" style="font-size:12.5px;">(Chấm lúc: ${item.gradedDateStr})</span>` : ''}
@@ -5398,12 +5426,23 @@ function renderHistoryDetailModalView() {
       `;
     } else {
       summaryEl.innerHTML = `
-        <div style="text-align:center; margin-top:20px; padding:22px; border:2px dashed var(--stroke); border-radius:16px; background:var(--bg-base);">
-          <p class="mut" style="margin:0 0 12px; font-size:14.5px;">Bài làm này đang ở trạng thái <b>chờ chấm điểm thủ công</b>.</p>
+        <div class="history-overall-grading-card" style="border-color:rgba(59, 130, 246, 0.4); background:rgba(59, 130, 246, 0.05); text-align:center; padding:22px; border-radius:16px;">
+          <div style="font-size:28px; margin-bottom:6px;">⏳</div>
+          <h4 style="margin:0 0 6px; font-size:16px; font-weight:800; color:var(--bl, #2563eb);">BÀI LÀM ĐANG CHỜ GIÁO VIÊN CHẤM ĐIỂM</h4>
+          <p class="mut" style="margin:0 auto 12px; max-width:540px; font-size:13.5px; line-height:1.6;">
+            ${isWriting 
+              ? 'Bài viết của bạn đã được gửi thành công vào hệ thống. Điểm số và lời nhận xét chi tiết của thầy/cô sẽ hiển thị tại đây ngay sau khi được chấm.' 
+              : 'Bài làm đã nộp thành công và đang chờ giáo viên chấm phần tự luận. Điểm số chính thức sẽ được cập nhật sau khi hoàn tất chấm.'}
+          </p>
+          <div style="display:inline-flex; align-items:center; gap:6px; padding:6px 16px; border-radius:20px; background:rgba(59, 130, 246, 0.12); color:var(--bl, #2563eb); font-size:13px; font-weight:800; margin-bottom:${canGrade ? '12px' : '0'};">
+            <ion-icon name="hourglass-outline"></ion-icon> Trạng thái: Chờ chấm điểm (Chưa tính điểm)
+          </div>
           ${canGrade ? `
-          <button type="button" class="btn au" onclick="toggleHistoryGradingMode()" style="font-weight:800; padding:10px 24px;">
-            <ion-icon name="create-outline"></ion-icon> Bắt đầu chấm bài ngay
-          </button>
+          <div style="margin-top:10px;">
+            <button type="button" class="btn au" onclick="toggleHistoryGradingMode()" style="font-weight:800; padding:9px 24px; font-size:14px;">
+              <ion-icon name="create-outline"></ion-icon> Bắt đầu chấm bài ngay
+            </button>
+          </div>
           ` : ''}
         </div>
       `;
@@ -5642,7 +5681,7 @@ function copyHistoryDetailText() {
     `=== KẾT QUẢ BÀI LÀM: ${item.setTitle || 'Bài làm'} ===`,
     `Học sinh: ${item.playerName || 'Học sinh'}${item.className ? ' - Lớp: ' + item.className : ''}`,
     `Thời gian làm: ${item.dateStr || ''}`,
-    item.isGraded ? `TỔNG ĐIỂM: ${item.score || 0} điểm` : `Điểm số: ${item.score || 0}`,
+    item.isGraded ? `TỔNG ĐIỂM: ${(item.score !== null && item.score !== undefined) ? item.score : 0} điểm` : 'TRẠNG THÁI: Đang chờ giáo viên chấm điểm (Chưa có điểm)',
     item.teacherFeedback ? `Lời phê của giáo viên: ${item.teacherFeedback}` : '',
     '',
     '--- CHI TIẾT TỪNG CÂU HỎI ---'
@@ -12175,8 +12214,8 @@ function submitWritingEssay(isAutoSubmit = false) {
       userAnswer: text,
       words: words,
       maxScore: maxScore,
-      points: 0,
-      gradeStatus: 'saved',
+      points: null,
+      gradeStatus: '',
       status: 'saved',
       isGraded: false,
       teacherComment: ''
@@ -12197,7 +12236,7 @@ function submitWritingEssay(isAutoSubmit = false) {
     setTitle: currentWritingSet.title || 'Luyện viết văn',
     setTopic: currentWritingSet.categoryName || 'Luyện viết',
     setEmo: currentWritingSet.icon || '✍️',
-    score: 0,
+    score: null,
     totalWords: totalWords,
     totalQuestions: sections.length,
     answeredCount: answeredSections.length,
@@ -13340,7 +13379,8 @@ function submitReadingAnswers(isAutoSubmit = false) {
         setTitle: set.title,
         setTopic: set.genre || set.category || 'Đọc hiểu',
         setEmo: set.emo || '📑',
-        score: 0,
+        score: null,
+        isGraded: false,
         answeredCount,
         totalQuestions: questions.length,
         elapsedSeconds: 0,
@@ -13353,7 +13393,9 @@ function submitReadingAnswers(isAutoSubmit = false) {
           userAnswer: (draft[q.id || idx] || '').trim(),
           correctAnswer: q.guide || 'Chưa có đáp án chuẩn',
           status: 'saved',
-          points: 0,
+          gradeStatus: '',
+          isGraded: false,
+          points: null,
           explanation: ''
         }))
       });
