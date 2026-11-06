@@ -352,6 +352,44 @@
         <textarea id="input-set-prompt" required placeholder="Dán nội dung đề bài, câu hỏi yêu cầu tại đây..."></textarea>
       </div>
 
+      <div style="margin-top:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:8px;">
+          <label for="input-set-thinking-guide" style="margin:0; font-weight:700;">
+            <ion-icon name="bulb-outline" style="color:var(--au);"></ion-icon> Gợi ý tư duy &amp; Định hướng bài viết
+          </label>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <select id="input-set-subtype" style="font-size:12px; padding:3px 8px; border-radius:8px; font-weight:700;">
+              <option value="">(Tự động nhận diện dạng bài)</option>
+              <optgroup label="Đoạn văn NLXH (200 chữ)">
+                <option value="nlxh_doan_ynghia">Ý nghĩa / Giá trị / Câu nói</option>
+                <option value="nlxh_doan_giaiphap">Cách thức / Giải pháp / Trách nhiệm</option>
+                <option value="nlxh_doan_tachai">Tác hại / Hậu quả</option>
+              </optgroup>
+              <optgroup label="Bài văn NLXH (600 chữ)">
+                <option value="nlxh_bai_tutuong">Tư tưởng đạo lí / Câu nói</option>
+                <option value="nlxh_bai_hientuong">Hiện tượng đời sống</option>
+                <option value="nlxh_bai_vdxh_tpvh">Vấn đề xã hội trong tác phẩm</option>
+              </optgroup>
+              <optgroup label="Đoạn văn NLVH (200 chữ)">
+                <option value="nlvh_doan_chude">Phân tích nội dung chủ đề</option>
+                <option value="nlvh_doan_nt_tho">Nghệ thuật thơ</option>
+                <option value="nlvh_doan_camxuc_tho">Tình cảm, cảm xúc thơ</option>
+                <option value="nlvh_doan_nt_truyen">Nghệ thuật truyện ngắn</option>
+                <option value="nlvh_doan_nhanvat">Đặc điểm nhân vật</option>
+              </optgroup>
+              <optgroup label="Bài văn NLVH (600 chữ)">
+                <option value="nlvh_bai_1tacpham">Nội dung &amp; Nghệ thuật 1 tác phẩm</option>
+                <option value="nlvh_bai_sosanh">So sánh 2 đoạn trích / tác phẩm</option>
+              </optgroup>
+            </select>
+            <button type="button" class="btn cy sm" onclick="autoGenerateThinkingGuideForModal()" style="font-size:12px; padding:3px 10px; font-weight:700;">
+              <ion-icon name="sparkles-outline"></ion-icon> Tạo gợi ý chuẩn
+            </button>
+          </div>
+        </div>
+        <textarea id="input-set-thinking-guide" rows="4" placeholder="Nhập gợi ý tư duy, hệ thống luận điểm, dẫn chứng... (Hoặc bấm 'Tạo gợi ý chuẩn' để tạo mẫu tự động)"></textarea>
+      </div>
+
       <!-- Các phần viết -->
       <div style="margin-top:20px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">

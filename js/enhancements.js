@@ -809,6 +809,24 @@
       ]
     },
 
+    nlxh_doan_tachai: {
+      group: 'Đoạn văn NLXH (~200 chữ)',
+      name: '7B. Đoạn NLXH (Định dạng 2): TÁC HẠI / HẬU QUẢ của một thói quen / hiện tượng tiêu cực',
+      singleParagraph: true,
+      formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Bàn luận 3 tác hại trực tiếp: Đối với bản thân (thời gian, năng lực, cơ hội) ➔ Đối với uy tín, mối quan hệ ➔ Đối với xã hội + Dẫn chứng thực tế + Bài học nhận thức, hành động.',
+      formulaSteps: ['Mở đoạn (Nêu VĐNL)', 'Giải thích ngắn', 'Thứ nhất: Tác hại đối với bản thân', 'Thứ hai: Tác hại đối với uy tín, mối quan hệ', 'Thứ ba: Tác hại đối với xã hội', 'Dẫn chứng thực tế', 'Bài học & Kết đoạn'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở đoạn (Nêu hiện tượng/thói quen tiêu cực cần bàn luận):', placeholder: 'Trong đời sống hiện đại, thói quen / hiện tượng [A] đang để lại những hệ lụy khôn lường...' },
+        { label: '2. Giải thích (1 câu ngắn gọn về bản chất của [A]):', placeholder: 'Hiểu một cách rõ ràng, [A] chính là biểu hiện của...' },
+        { label: '3. Tác hại 1 - Đối với bản thân (Đánh mất cơ hội, trì trệ năng lực):', placeholder: 'Thứ nhất, [A] khiến cá nhân đánh mất những cơ hội quý báu để phát triển bản thân, rơi vào trạng thái trì trệ...' },
+        { label: '4. Tác hại 2 - Đối với uy tín & các mối quan hệ:', placeholder: 'Thứ hai, [A] làm suy giảm uy tín cá nhân, đánh mất niềm tin từ thầy cô, bạn bè và đối tác...' },
+        { label: '5. Tác hại 3 - Đối với cộng đồng, xã hội:', placeholder: 'Thứ ba, về lâu dài, [A] tạo ra sức ỳ cho toàn xã hội, kìm hãm sự phát triển chung của cộng đồng...' },
+        { label: '6. Dẫn chứng thực tế:', placeholder: 'Thực tế cho thấy, nhiều người trẻ vì [A] mà đã phải trả giá bằng...' },
+        { label: '7. Bài học nhận thức, hành động & Kết đoạn:', placeholder: 'Bởi vậy, mỗi chúng ta cần kiên quyết từ bỏ [A], rèn luyện lối sống kỉ luật, chủ động để vững bước tương lai.' }
+      ]
+    },
+
     // --- NHÓM 3: BÀI VĂN NGHỊ LUẬN VĂN HỌC (~600 CHỮ - CHIA NHIỀU ĐOẠN) ---
     nlvh_bai_1tacpham: {
       group: 'Bài văn NLVH (~600 chữ)',
@@ -938,15 +956,16 @@
     const t = String(text || '').toLowerCase();
 
     if (t.includes('so sánh')) return 'nlvh_bai_sosanh';
+    if (t.includes('tác hại') || t.includes('hệ lụy') || t.includes('hậu quả')) return 'nlxh_doan_tachai';
     if (t.includes('hiện tượng')) return 'nlxh_bai_hientuong';
     if (t.includes('trong tác phẩm') && (t.includes('xã hội') || t.includes('cuộc sống hôm nay'))) return 'nlxh_bai_vdxh_tpvh';
-    if (t.includes('giải pháp') || t.includes('làm thế nào') || t.includes('cách thức') || t.includes('trách nhiệm')) {
+    if (t.includes('giải pháp') || t.includes('làm thế nào') || t.includes('cách thức') || t.includes('trách nhiệm') || t.includes('cần làm')) {
       return 'nlxh_doan_giaiphap';
     }
     if (t.includes('nhân vật')) return 'nlvh_doan_nhanvat';
     if (t.includes('tình cảm') || t.includes('cảm xúc') || t.includes('mạch cảm xúc')) return 'nlvh_doan_camxuc_tho';
-    if (t.includes('nghệ thuật') && (t.includes('truyện') || t.includes('ngôi kể') || t.includes('tình huống'))) return 'nlvh_doan_nt_truyen';
-    if (t.includes('nghệ thuật') && (t.includes('thơ') || t.includes('khổ thơ') || t.includes('đoạn thơ'))) return 'nlvh_doan_nt_tho';
+    if (t.includes('nghệ thuật') && (t.includes('truyện') || t.includes('ngôi kể') || t.includes('tình huống') || t.includes('chi tiết'))) return 'nlvh_doan_nt_truyen';
+    if (t.includes('nghệ thuật') && (t.includes('thơ') || t.includes('khổ thơ') || t.includes('đoạn thơ') || t.includes('từ láy') || t.includes('nghệ thuật đối'))) return 'nlvh_doan_nt_tho';
     if (t.includes('chủ đề')) return 'nlvh_doan_chude';
 
     if (isParagraphHint || t.includes('200 chữ') || t.includes('đoạn văn')) {
@@ -1206,7 +1225,8 @@
       activeWritingTemplateKey = selectedKey;
     }
     const tpl = SCAFFOLD_TEMPLATES[activeWritingTemplateKey] || SCAFFOLD_TEMPLATES.nlxh_doan_ynghia;
-    const promptText = document.getElementById('workspace-prompt-text')?.textContent || '';
+    const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
+    const promptText = document.getElementById('workspace-prompt-text')?.textContent || (curSet ? curSet.prompt : '');
     const keywords = extractSmartKeywordsFromText(promptText);
     const connectors = [
       'Thứ nhất,',
@@ -1219,7 +1239,39 @@
       'Qua đó, tác giả gửi gắm thông điệp'
     ];
 
+    const thinkingGuide = curSet && curSet.thinkingGuide ? curSet.thinkingGuide.trim() : '';
+
+    const thinkingGuideHtml = thinkingGuide ? `
+      <div class="scaffold-specific-guide-card">
+        <div class="scaffold-guide-card-header">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="scaffold-guide-badge">🎯 GỢI Ý TƯ DUY TRỌNG TÂM CỦA ĐỀ NÀY</span>
+          </div>
+          <div class="scaffold-guide-actions">
+            <button type="button" class="btn au sm scaffold-action-btn" onclick="insertSetThinkingGuideToActiveSection()" title="Chèn toàn bộ gợi ý tư duy này vào bài làm để phát triển bài viết">
+              <ion-icon name="flash-outline"></ion-icon> <span>Chèn gợi ý tư duy vào bài viết</span>
+            </button>
+            <button type="button" class="btn gh sm scaffold-action-btn" onclick="insertScaffoldFormulaOutline()" title="Chèn khung sườn các bước theo dạng bài vào bài làm">
+              <ion-icon name="list-outline"></ion-icon> <span>Chèn sườn dàn ý</span>
+            </button>
+          </div>
+        </div>
+        <div class="scaffold-thinking-guide-text">${esc(thinkingGuide)}</div>
+      </div>
+    ` : `
+      <div class="scaffold-specific-guide-card">
+        <div class="scaffold-guide-card-header">
+          <span class="scaffold-guide-badge">💡 KHUNG DÀN Ý &amp; QUY TRÌNH DẠNG BÀI</span>
+          <button type="button" class="btn au sm scaffold-action-btn" onclick="insertScaffoldFormulaOutline()" title="Chèn khung sườn các bước theo dạng bài vào bài làm">
+            <ion-icon name="list-outline"></ion-icon> <span>Chèn sườn dàn ý vào bài viết</span>
+          </button>
+        </div>
+      </div>
+    `;
+
     body.innerHTML = `
+      ${thinkingGuideHtml}
+
       <div style="margin-bottom:10px;">
         <label class="scaffold-lbl" for="writing-main-tpl-select">📂 Chọn đúng Dạng bài Nghị luận (Theo tài liệu phương pháp):</label>
         <select id="writing-main-tpl-select" class="qa-select" style="font-weight:700; font-size:12.5px;" onchange="renderWritingMainScaffoldingBody(this.value)">
@@ -1278,8 +1330,12 @@
       activeWritingTemplateKey = tplKey;
     }
     const tpl = SCAFFOLD_TEMPLATES[activeWritingTemplateKey] || SCAFFOLD_TEMPLATES.nlxh_doan_ynghia;
+    const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
     const promptText = document.getElementById('workspace-prompt-text')?.textContent || '';
     const keywords = extractSmartKeywordsFromText(promptText);
+
+    const sec = curSet && curSet.sections ? curSet.sections.find(s => s.id === secId) : null;
+    const secGuide = (sec && sec.guide) ? sec.guide : (curSet ? curSet.thinkingGuide : '');
 
     box.innerHTML = `
       <div class="scaffold-inner">
@@ -1292,6 +1348,18 @@
             <button type="button" class="btn gh sm" style="padding:2px 8px; font-size:12px;" onclick="document.getElementById('writing-sec-scaffold-${secId}').style.display='none'">Đóng</button>
           </div>
         </div>
+
+        ${secGuide ? `
+          <div class="scaffold-specific-guide-card" style="margin-bottom:10px;">
+            <div class="scaffold-guide-card-header">
+              <span class="scaffold-guide-badge">🎯 GỢI Ý RIÊNG CHO PHẦN NÀY</span>
+              <button type="button" class="btn au sm scaffold-action-btn" onclick="insertSpecificSectionGuide('${esc(secId)}')" style="font-size:11.5px; padding:3px 8px;">
+                <ion-icon name="flash-outline"></ion-icon> <span>Chèn gợi ý vào ô này</span>
+              </button>
+            </div>
+            <div class="scaffold-thinking-guide-text">${esc(secGuide)}</div>
+          </div>
+        ` : ''}
 
         <div class="scaffold-formula-banner">
           <div style="margin-bottom:4px; color:#b45309; font-weight:800; font-size:12px;">📌 ${esc(tpl.formRule)}</div>
@@ -1336,20 +1404,123 @@
     if (!tx) return;
     tx.value = tx.value ? `${tx.value.trim()} ${text}` : text;
     if (typeof onSectionInput === 'function') onSectionInput(secId, tx);
+    tx.dispatchEvent(new Event('input', { bubbles: true }));
     tx.focus();
     toast(`Đã chèn: "${text}"`, 'ok');
   }
 
-  function insertTextIntoActiveWritingSection(text) {
-    const allTx = document.querySelectorAll('.writing-textarea');
-    if (!allTx.length) return;
-    const tx = document.activeElement && document.activeElement.classList.contains('writing-textarea')
-      ? document.activeElement
-      : allTx[0];
-    const secId = tx.id.replace('sec-input-', '');
-    insertTextIntoSpecificWritingSection(secId, text);
+  function insertSpecificSectionGuide(secId) {
+    const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
+    const sec = curSet && curSet.sections ? curSet.sections.find(s => s.id === secId) : null;
+    const textToInsert = (sec && sec.guide) ? sec.guide : (curSet ? curSet.thinkingGuide : '');
+    if (!textToInsert) {
+      toast('Không có gợi ý riêng cho phần này!', 'bad');
+      return;
+    }
+    const tx = document.getElementById(`sec-input-${secId}`);
+    if (!tx) return;
+    const existing = tx.value.trim();
+    if (existing) {
+      tx.value = `${existing}\n\n[GỢI Ý ĐỊNH HƯỚNG]:\n${textToInsert}`;
+    } else {
+      tx.value = `[GỢI Ý ĐỊNH HƯỚNG]:\n${textToInsert}`;
+    }
+    if (typeof onSectionInput === 'function') onSectionInput(secId, tx);
+    tx.dispatchEvent(new Event('input', { bubbles: true }));
+    tx.focus();
+    toast('⚡ Đã chèn gợi ý vào ô làm bài! Bạn hãy phát triển thành bài văn hoàn chỉnh.', 'ok');
   }
 
+  function insertSetThinkingGuideToActiveSection() {
+    const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
+    if (!curSet || !curSet.thinkingGuide) {
+      toast('Bộ đề này chưa có gợi ý tư duy riêng!', 'bad');
+      return;
+    }
+
+    let targetTx = null;
+    if (document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('writing-textarea')) {
+      targetTx = document.activeElement;
+    }
+    if (!targetTx) {
+      targetTx = document.getElementById('sec-input-sec_doan_200') || document.querySelector('#writing-sections-list textarea');
+    }
+
+    if (!targetTx) {
+      toast('Không tìm thấy ô nhập bài viết!', 'bad');
+      return;
+    }
+
+    const secId = targetTx.id.replace('sec-input-', '');
+    const guideText = curSet.thinkingGuide.trim();
+
+    const existing = targetTx.value.trim();
+    if (existing) {
+      targetTx.value = `${existing}\n\n[GỢI Ý TƯ DUY ĐỊNH HƯỚNG]:\n${guideText}`;
+    } else {
+      targetTx.value = `[GỢI Ý TƯ DUY ĐỊNH HƯỚNG]:\n${guideText}`;
+    }
+
+    if (typeof onSectionInput === 'function') {
+      onSectionInput(secId, targetTx);
+    }
+    targetTx.dispatchEvent(new Event('input', { bubbles: true }));
+    targetTx.focus();
+    toast('⚡ Đã chèn Gợi ý tư duy vào bài viết! Hãy phát triển thành câu văn hoàn chỉnh nhé.', 'ok');
+  }
+
+  function insertScaffoldFormulaOutline() {
+    const tpl = SCAFFOLD_TEMPLATES[activeWritingTemplateKey] || SCAFFOLD_TEMPLATES.nlxh_doan_ynghia;
+    let targetTx = null;
+
+    if (document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('writing-textarea')) {
+      targetTx = document.activeElement;
+    }
+    if (!targetTx) {
+      targetTx = document.getElementById('sec-input-sec_doan_200') || document.querySelector('#writing-sections-list textarea');
+    }
+    if (!targetTx) {
+      toast('Không tìm thấy ô nhập bài viết!', 'bad');
+      return;
+    }
+
+    const secId = targetTx.id.replace('sec-input-', '');
+    const outlineLines = tpl.formulaSteps.map((st, i) => `${i + 1}. ${st}: ...`).join('\n');
+
+    const existing = targetTx.value.trim();
+    if (existing) {
+      targetTx.value = `${existing}\n\n[KHUNG SƯỜN DÀN Ý - ${tpl.name.toUpperCase()}]:\n${outlineLines}`;
+    } else {
+      targetTx.value = `[KHUNG SƯỜN DÀN Ý - ${tpl.name.toUpperCase()}]:\n${outlineLines}`;
+    }
+
+    if (typeof onSectionInput === 'function') {
+      onSectionInput(secId, targetTx);
+    }
+    targetTx.dispatchEvent(new Event('input', { bubbles: true }));
+    targetTx.focus();
+    toast('📋 Đã chèn Khung sườn dàn ý vào ô viết!', 'ok');
+  }
+
+  function insertTextIntoActiveWritingSection(text) {
+    let tx = null;
+    if (document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('writing-textarea')) {
+      tx = document.activeElement;
+    }
+    if (!tx) {
+      tx = document.getElementById('sec-input-sec_doan_200') || document.querySelector('#writing-sections-list textarea');
+    }
+    if (!tx) {
+      toast('Vui lòng bấm chọn ô bài viết muốn chèn!', 'bad');
+      return;
+    }
+    const secId = tx.id.replace('sec-input-', '');
+    tx.value = tx.value ? `${tx.value.trim()} ${text}` : text;
+    if (typeof onSectionInput === 'function') onSectionInput(secId, tx);
+    tx.dispatchEvent(new Event('input', { bubbles: true }));
+    tx.focus();
+    toast(`Đã chèn: "${text}"`, 'ok');
+  }
   function assembleWritingSectionScaffold(secId, isSingleParagraph = true, stepsCount = 7) {
     const tx = document.getElementById(`sec-input-${secId}`);
     if (!tx) return;
@@ -1969,6 +2140,9 @@
   global.insertTextIntoSpecificWritingSection = insertTextIntoSpecificWritingSection;
   global.insertTextIntoActiveWritingSection = insertTextIntoActiveWritingSection;
   global.assembleWritingSectionScaffold = assembleWritingSectionScaffold;
+  global.insertSetThinkingGuideToActiveSection = insertSetThinkingGuideToActiveSection;
+  global.insertScaffoldFormulaOutline = insertScaffoldFormulaOutline;
+  global.insertSpecificSectionGuide = insertSpecificSectionGuide;
 
   global.initReadingPressureTimer = initReadingPressureTimer;
   global.setReadingPressureTimer = setReadingPressureTimer;

@@ -8,7 +8,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlxh",
     "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan",
+    "subType": "nlxh_doan_ynghia",
     "icon": "🌱",
     "title": "[Đoạn NLXH - Đề 1] Suy nghĩ về ý kiến: \"Áp lực tạo nên kim cương\"",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) trình bày suy nghĩ về ý kiến: \"Áp lực tạo nên kim cương\".",
@@ -28,7 +28,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlxh",
     "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan",
+    "subType": "nlxh_doan_ynghia",
     "icon": "🌱",
     "title": "[Đoạn NLXH - Đề 2] Ý nghĩa của việc tôn trọng sự khác biệt trong xã hội hiện đại",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về ý nghĩa của việc tôn trọng sự khác biệt trong xã hội hiện đại.",
@@ -48,7 +48,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlxh",
     "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan",
+    "subType": "nlxh_doan_giaiphap",
     "icon": "🌱",
     "title": "[Đoạn NLXH - Đề 3] Trách nhiệm của thanh niên trong việc bảo vệ an ninh mạng",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) trình bày suy nghĩ về trách nhiệm của thanh niên trong việc bảo vệ an ninh mạng.",
@@ -68,7 +68,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlxh",
     "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan",
+    "subType": "nlxh_doan_tachai",
     "icon": "🌱",
     "title": "[Đoạn NLXH - Đề 4] Tác hại của thói quen trì hoãn ở giới trẻ",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về tác hại của thói quen trì hoãn ở giới trẻ.",
@@ -88,7 +88,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlxh",
     "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan",
+    "subType": "nlxh_doan_ynghia",
     "icon": "🌱",
     "title": "[Đoạn NLXH - Đề 5] Bàn về câu nói: \"Đừng cố gắng trở thành người thành công, hãy cố gắng trở thành người có giá trị\"",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về câu nói: \"Đừng cố gắng trở thành người thành công, hãy cố gắng trở thành người có giá trị\".",
@@ -108,7 +108,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlxh",
     "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan",
+    "subType": "nlxh_doan_ynghia",
     "icon": "🌱",
     "title": "[Đoạn NLXH - Đề 6] Sự cần thiết của kĩ năng làm việc nhóm đối với học sinh",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) trình bày suy nghĩ về sự cần thiết của kĩ năng làm việc nhóm đối với học sinh.",
@@ -128,7 +128,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlxh",
     "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan",
+    "subType": "nlxh_doan_giaiphap",
     "icon": "🌱",
     "title": "[Đoạn NLXH - Đề 7] Những việc học sinh cần làm để xây dựng trường học hạnh phúc",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về những việc học sinh cần làm để xây dựng trường học hạnh phúc.",
@@ -148,7 +148,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlxh",
     "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan",
+    "subType": "nlxh_doan_ynghia",
     "icon": "🌱",
     "title": "[Đoạn NLXH - Đề 8] Bàn về ý kiến: \"Biển lặng không tạo nên thủy thủ tài ba\"",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về ý kiến: \"Biển lặng không tạo nên thủy thủ tài ba\".",
@@ -168,7 +168,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlxh",
     "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan",
+    "subType": "nlxh_doan_ynghia",
     "icon": "🌱",
     "title": "[Đoạn NLXH - Đề 9] Bài học về lòng biết ơn trong cuộc sống (từ phần Đọc hiểu)",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) rút ra bài học về lòng biết ơn (được gợi ra từ phần Đọc hiểu).",
@@ -188,7 +188,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlxh",
     "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan",
+    "subType": "nlxh_doan_ynghia",
     "icon": "🌱",
     "title": "[Đoạn NLXH - Đề 10] Giá trị của sự tự học trong thời đại công nghệ số",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về giá trị của sự tự học trong thời đại công nghệ số.",
@@ -208,7 +208,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlxh",
     "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai",
+    "subType": "nlxh_bai_tutuong",
     "icon": "🌍",
     "title": "[Bài NLXH - Đề 1] \"Cái rễ của học hành thì đắng cay nhưng quả của nó thì ngọt ngào\"",
     "prompt": "Trình bày suy nghĩ về câu nói: \"Cái rễ của học hành thì đắng cay nhưng quả của nó thì ngọt ngào\" (Bài văn khoảng 600 chữ, có đủ Mở bài - Thân bài - Kết bài).",
@@ -242,7 +242,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlxh",
     "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai",
+    "subType": "nlxh_bai_hientuong",
     "icon": "🌍",
     "title": "[Bài NLXH - Đề 2] Hiện tượng \"nghiện\" mạng xã hội của một bộ phận giới trẻ hiện nay",
     "prompt": "Bàn về hiện tượng \"nghiện\" mạng xã hội (TikTok, Facebook, Instagram...) của một bộ phận giới trẻ hiện nay (Bài văn khoảng 600 chữ).",
@@ -276,7 +276,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlxh",
     "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai",
+    "subType": "nlxh_bai_vdxh_tpvh",
     "icon": "🌍",
     "title": "[Bài NLXH - Đề 3] Sức mạnh của tình yêu thương trong việc cảm hóa con người (từ bát cháo hành Chí Phèo)",
     "prompt": "Từ sức mạnh lay động của \"bát cháo hành\" (Chí Phèo - Nam Cao), bàn về sức mạnh của tình yêu thương trong việc cảm hóa con người (Bài văn khoảng 600 chữ).",
@@ -310,7 +310,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlxh",
     "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai",
+    "subType": "nlxh_bai_tutuong",
     "icon": "🌍",
     "title": "[Bài NLXH - Đề 4] Bàn về quan điểm: \"Sự im lặng của người tốt còn đáng sợ hơn tiếng la hét của kẻ xấu\"",
     "prompt": "Bàn về quan điểm: \"Sự im lặng của người tốt còn đáng sợ hơn tiếng la hét của kẻ xấu\" (Martin Luther King) (Bài văn khoảng 600 chữ).",
@@ -344,7 +344,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlxh",
     "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai",
+    "subType": "nlxh_bai_hientuong",
     "icon": "🌍",
     "title": "[Bài NLXH - Đề 5] Phong trào thiện nguyện, tương thân tương ái của thế hệ Gen Z trong cứu trợ thiên tai",
     "prompt": "Viết bài văn nghị luận về phong trào thiện nguyện, tương thân tương ái của thế hệ Gen Z trong các đợt cứu trợ thiên tai (Bài văn khoảng 600 chữ).",
@@ -378,7 +378,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlxh",
     "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai",
+    "subType": "nlxh_bai_vdxh_tpvh",
     "icon": "🌍",
     "title": "[Bài NLXH - Đề 6] Khát vọng hạnh phúc của con người trong nghịch cảnh (từ Vợ nhặt - Kim Lân)",
     "prompt": "Từ quyết định \"nhặt vợ\" của Tràng giữa nạn đói (Vợ nhặt - Kim Lân), bàn về khát vọng hạnh phúc của con người trong nghịch cảnh (Bài văn khoảng 600 chữ).",
@@ -412,7 +412,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlxh",
     "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai",
+    "subType": "nlxh_bai_tutuong",
     "icon": "🌍",
     "title": "[Bài NLXH - Đề 7] \"Nếu không có mục đích, anh không làm được gì cả...\"",
     "prompt": "Trình bày suy nghĩ về câu nói: \"Nếu không có mục đích, anh không làm được gì cả. Anh cũng không làm được gì vĩ đại nếu mục đích tầm thường\" (Bài văn khoảng 600 chữ).",
@@ -446,7 +446,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlxh",
     "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai",
+    "subType": "nlxh_bai_hientuong",
     "icon": "🌍",
     "title": "[Bài NLXH - Đề 8] Hiện tượng chạy theo lối sống phô trương, chuộng hình thức (sống ảo) ở học sinh",
     "prompt": "Bàn về hiện tượng chạy theo lối sống phô trương, chuộng hình thức (sống ảo) của một bộ phận học sinh hiện nay (Bài văn khoảng 600 chữ).",
@@ -480,7 +480,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlxh",
     "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai",
+    "subType": "nlxh_bai_vdxh_tpvh",
     "icon": "🌍",
     "title": "[Bài NLXH - Đề 9] Ranh giới giữa đam mê cá nhân và trách nhiệm với cộng đồng (từ Vũ Như Tô)",
     "prompt": "Từ hình ảnh người nghệ sĩ Vũ Như Tô xây Cửu Trùng Đài, bàn về ranh giới giữa đam mê cá nhân và trách nhiệm với cộng đồng (Bài văn khoảng 600 chữ).",
@@ -514,7 +514,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlxh",
     "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai",
+    "subType": "nlxh_bai_tutuong",
     "icon": "🌍",
     "title": "[Bài NLXH - Đề 10] Bàn về ý kiến: \"Tôn trọng người khác chính là tôn trọng chính mình\"",
     "prompt": "Bàn về ý kiến: \"Tôn trọng người khác chính là tôn trọng chính mình\" (Bài văn khoảng 600 chữ).",
@@ -548,7 +548,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn văn NLVH (200 chữ)",
-    "subType": "nlvh_doan",
+    "subType": "nlvh_doan_nt_truyen",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 1] Phân tích ý nghĩa chi tiết \"tiếng chửi\" mở đầu truyện ngắn Chí Phèo (Nam Cao)",
     "prompt": "Phân tích ý nghĩa chi tiết \"tiếng chửi\" của Chí Phèo ở phần mở đầu truyện ngắn Chí Phèo (Nam Cao):\n\n“Hắn vừa đi vừa chửi. Bao giờ cũng thế, cứ rượu xong là hắn chửi. Bắt đầu hắn chửi giời. Có hề gì? giời có của riêng nhà nào? Rồi hắn chửi đời. Thế cũng chẳng sao: đời là tất cả nhưng chẳng là ai. Tức mình, hắn chửi ngay tất cả làng Vũ Đại. Nhưng cả làng Vũ Đại, ai cũng tự nhủ: « Chắc nó trừ mình ra! » Không ai lên tiếng cả. Tức thật! tức thật! ồ! thế này thì tức thật! tức chết đi được mất! Đã thế, hắn phải chửi cha đứa nào không chửi nhau với hắn. Nhưng cũng không ai ra điều. Mẹ kiếp! thế thì có phí rượu không? Thế thì có khổ hắn không? Không biết đứa chết mẹ nào lại đẻ ra thân hắn cho hắn khổ đến nông nỗi này? A hà! phải đấy, hắn cứ thế mà chửi, hắn cứ chửi đứa chết mẹ nào đẻ ra thân hắn, đẻ ra thằng Chí Phèo! Hắn nghiến răng vào mà chửi cái đứa đã đẻ ra Chí Phèo. Nhưng mà biết đứa nào đã đẻ ra Chí Phèo? Có mà giời biết! Hắn không biết, cả làng Vũ Đại cũng không ai biết..”",
@@ -568,7 +568,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn văn NLVH (200 chữ)",
-    "subType": "nlvh_doan",
+    "subType": "nlvh_doan_nt_truyen",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 2] Phân tích tác dụng điểm nhìn trần thuật từ bà cụ Tứ khi nhìn nàng dâu mới (Vợ nhặt)",
     "prompt": "Phân tích tác dụng của điểm nhìn trần thuật từ nhân vật bà cụ Tứ khi nhìn nàng dâu mới (Vợ nhặt - Kim Lân):\n\n“Bà lão cúi đầu nín lặng. Bà lão hiểu rồi. Lòng người mẹ nghèo khổ ấy còn hiểu ra biết bao nhiêu cơ sự, vừa ai oán vừa xót thương cho số kiếp đứa con mình. Chao ôi, người ta dựng vợ gả chồng cho con là lúc trong nhà ăn nên làm nổi, những mong sinh con đẻ cái mở mặt sau này. Còn mình thì... Trong kẽ mắt kèm nhèm của bà rủ xuống hai dòng nước mắt... Biết rằng chúng nó có nuôi nổi nhau sống qua được cơn đói khát này không?\nBà lão khẽ thở dài đứng lên, đăm đăm nhìn người đàn bà. Thị cúi mặt xuống, tay vân vê tà áo đã rách bợt. Bà lão nhìn thị và bà nghĩ: Người ta có gặp bước khó khăn, đói khổ này, người ta mới lấy đến con mình. Mà con mình mới có vợ được... Thôi thì bổn phận bà là mẹ, bà đã chẳng lo lắng được cho con... May ra mà qua khỏi được cái tao đoạn này thì thằng con bà cũng có vợ, nó yên bề nó, chẳng may ra ông giời bắt chết cũng phải chịu chứ biết thế nào mà lo cho hết được?...”",
@@ -588,7 +588,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn văn NLVH (200 chữ)",
-    "subType": "nlvh_doan",
+    "subType": "nlvh_doan_nt_truyen",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 3] Phân tích tình huống truyện độc đáo trong tác phẩm Vợ nhặt (Kim Lân)",
     "prompt": "Phân tích tình huống truyện độc đáo trong tác phẩm Vợ nhặt (Kim Lân) (Đoạn văn khoảng 200 chữ).",
@@ -608,7 +608,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn văn NLVH (200 chữ)",
-    "subType": "nlvh_doan",
+    "subType": "nlvh_doan_nt_tho",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 4] Hiệu quả của nghệ thuật đối và từ láy trong hai câu thơ Tràng giang (Huy Cận)",
     "prompt": "Phân tích hiệu quả của nghệ thuật đối và từ láy trong hai câu thơ:\n\"Lơ thơ cồn nhỏ gió đìu hiu/\nĐâu tiếng làng xa vãn chợ chiều\"\n(Tràng giang - Huy Cận) (Đoạn văn khoảng 200 chữ).",
@@ -628,7 +628,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn văn NLVH (200 chữ)",
-    "subType": "nlvh_doan",
+    "subType": "nlvh_doan_camxuc_tho",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 5] Niềm khao khát tự do qua khổ thơ cuối bài Nhớ đồng (Tố Hữu)",
     "prompt": "Phân tích niềm khao khát tự do qua khổ thơ cuối bài Nhớ đồng (Tố Hữu):\n\n“Rồi một hôm nào, tôi thấy tôi\nNhẹ nhàng như con chim cà lơi\nSay đồng hương nắng vui ca hát\nTrên chín tầng cao bát ngát trời...\nCho tới chừ đây, tới chừ đây\nTôi mơ qua cửa khám bao ngày\nTôi thu tất cả trong thầm lặng\nNhư cánh chim buồn nhớ gió mây.\nGì sâu bằng những trưa hiu quạnh\nÔi ruộng đồng quê thương nhớ ơi!”",
@@ -648,7 +648,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn văn NLVH (200 chữ)",
-    "subType": "nlvh_doan",
+    "subType": "nlvh_doan_camxuc_tho",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 6] Diễn biến tâm lí Thúy Kiều qua 8 câu thơ cuối đoạn trích Trao duyên (Nguyễn Du)",
     "prompt": "Phân tích diễn biến tâm lí của Thúy Kiều qua 8 câu thơ cuối trong đoạn trích Trao duyên (Truyện Kiều - Nguyễn Du):\n\n\"Bây giờ trâm gãy gương tan,\nKể làm sao xiết muôn vàn ái ân!\nTrăm nghìn gửi lạy tình quân,\nTơ duyên ngắn ngủi có ngần ấy thôi!\nPhận sao phận bạc như vôi!\nĐã đành nước chảy hoa trôi lỡ làng.\nÔi Kim lang! Hỡi Kim lang!\nThôi thôi thiếp đã phụ chàng từ đây!\"",
@@ -668,7 +668,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn văn NLVH (200 chữ)",
-    "subType": "nlvh_doan",
+    "subType": "nlvh_doan_nt_truyen",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 7] Mâu thuẫn kịch qua lời thoại Vũ Như Tô khi bị quân khởi loạn bắt (Hồi V, Vũ Như Tô)",
     "prompt": "Phân tích mâu thuẫn qua lời thoại của Vũ Như Tô khi bị quân khởi loạn bắt (Hồi V, Vũ Như Tô - Nguyễn Huy Tưởng) (Đoạn văn khoảng 200 chữ).",
@@ -688,7 +688,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn văn NLVH (200 chữ)",
-    "subType": "nlvh_doan",
+    "subType": "nlvh_doan_nhanvat",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 8] Thái độ của nhân vật Đan Thiềm khi khuyên Vũ Như Tô chạy trốn (Hồi V, Vũ Như Tô)",
     "prompt": "Phân tích thái độ của nhân vật Đan Thiềm khi khuyên Vũ Như Tô chạy trốn (Hồi V, Vũ Như Tô - Nguyễn Huy Tưởng) (Đoạn văn khoảng 200 chữ).",
@@ -708,7 +708,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn văn NLVH (200 chữ)",
-    "subType": "nlvh_doan",
+    "subType": "nlvh_doan_chude",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 9] Vẻ đẹp sông Hương qua chi tiết \"cô gái Di-gan phóng khoáng và man dại\" (Hoàng Phủ Ngọc Tường)",
     "prompt": "Phân tích vẻ đẹp của sông Hương qua chi tiết \"như một cô gái Di-gan phóng khoáng và man dại\" (Ai đã đặt tên cho dòng sông? - Hoàng Phủ Ngọc Tường):\n\n\"Trong những dòng sông đẹp ở các nước mà tôi đã nghe nói đến, hình như chỉ có sông Hương là thuộc về một thành phố duy nhất. Trước khi về đến vùng châu thổ êm đềm, nó đã là một bản trường ca của rừng già, rầm rộ giữa bóng cây đại ngàn, mãnh liệt qua những ghềnh thác, cuộn xoáy như cơn lốc vào những đáy vực bí ẩn, và cũng có lúc nó trở nên dịu dàng và say đắm giữa những dặm dài chói lọi màu đỏ của hoa đỗ quyên rừng. Giữa lòng Trường Sơn, sông Hương đã sống một nửa cuộc đời của mình như một cô gái Di-gan phóng khoáng và man dại. Rừng già đã hun đúc cho nó một bản lĩnh gan dạ, một tâm hồn tự do và trong sáng. Nhưng chính rừng già nơi đây, với cấu trúc đặc biệt có thể mở ra của dòng chảy, đã chế ngự sức mạnh bản năng ở người con gái ấy để khi ra khỏi rừng, sông Hương nhanh chóng mang một sắc đẹp dịu dàng và trí tuệ, trở thành người mẹ phù sa của một vùng văn hóa xứ sở.\"",
@@ -728,7 +728,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn văn NLVH (200 chữ)",
-    "subType": "nlvh_doan",
+    "subType": "nlvh_doan_chude",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 10] Sự chặt chẽ của lập luận trong phần mở đầu văn bản Đại cáo bình Ngô (Nguyễn Trãi)",
     "prompt": "Phân tích sự chặt chẽ của lập luận trong phần mở đầu văn bản Đại cáo bình Ngô (Nguyễn Trãi):\n\n\"Từng nghe:\nViệc nhân nghĩa cốt ở yên dân,\nQuân điếu phạt trước lo trừ bạo.\nNhư nước Đại Việt ta từ trước,\nVốn xưng nền văn hiến đã lâu.\nNúi sông bờ cõi đã chia,\nPhong tục Bắc Nam cũng khác.\nTừ Triệu, Đinh, Lý, Trần bao đời xây nền độc lập,\nCùng Hán, Đường, Tống, Nguyên mỗi bên xưng đế một phương.\nTuy mạnh yếu từng lúc khác nhau,\nSong hào kiệt đời nào cũng có.\"",
@@ -748,7 +748,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn văn NLVH (200 chữ)",
-    "subType": "nlvh_doan",
+    "subType": "nlvh_doan_nt_truyen",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 11] Phân tích chi tiết \"cái cúi đầu\" của viên quản ngục trong Chữ người tử tù (Nguyễn Tuân)",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) phân tích chi tiết \"cái cúi đầu\" của viên quản ngục ở cuối tác phẩm Chữ người tử tù (Nguyễn Tuân):\n\n\"Huấn Cao thở dài, buồn bã đỡ viên quản ngục đứng thẳng người dậy và bảo:\n- Tôi bảo thực đấy, thầy Quản nên thay chốn ở đi. Chỗ này không phải là nơi để treo một bức lụa trắng với những nét chữ vuông vắn tươi tắn nó nói lên những cái hoài bão tung hoành của một đời con người. Thầy mến pháp đẹp là một chuyện, nhưng giữ lấy cái thiên lương cho lành vững rồi hãy nghĩ đến chuyện chơi chữ. Ở đây, khó giữ thiên lương cho lành vững được và rồi cũng đến nhem nhuốc mất cái đời lương thiện đi.\nNgục quan cảm động, vái người tù một vái, chắp tay nói một câu mà dòng nước mắt rỉ vào kẽ miệng làm cho nghẹn ngào:\n- Kẻ mê muội này xin bái lĩnh.\"",
@@ -768,7 +768,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn văn NLVH (200 chữ)",
-    "subType": "nlvh_doan",
+    "subType": "nlvh_doan_nt_tho",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 12] Bức tranh chiều xuân qua 4 câu thơ đầu bài Chiều xuân (Anh Thơ)",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) phân tích bức tranh chiều xuân qua 4 câu thơ đầu bài thơ Chiều xuân (Anh Thơ):\n\n\"Mưa đổ bụi êm êm trên bến vắng,\nĐò biếng lười nằm mặc nước sông trôi\nQuán tranh đứng im lìm trong vắng lặng\nBên chòm xoan hoa tím rụng tơi bời.\"",
@@ -788,7 +788,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn văn NLVH (200 chữ)",
-    "subType": "nlvh_doan",
+    "subType": "nlvh_doan_nhanvat",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 13] Tâm trạng nhân vật Hộ khi tỉnh rượu nhận ra bạo hành vợ con (Đời thừa - Nam Cao)",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) phân tích tâm trạng của nhân vật Hộ khi tỉnh rượu và nhận ra mình đã bạo hành vợ con (Trích Đời thừa - Nam Cao).",
@@ -808,7 +808,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn văn NLVH (200 chữ)",
-    "subType": "nlvh_doan",
+    "subType": "nlvh_doan_camxuc_tho",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 14] Nỗi nhớ làng quê qua 4 câu thơ đầu bài Quê hương (Tế Hanh)",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) phân tích nỗi nhớ làng quê qua 4 câu thơ đầu bài Quê hương (Tế Hanh):\n\n\"Làng tôi ở vốn làm nghề chài lưới:\nNước bao vây cách biển nửa ngày sông.\nKhi trời trong, gió nhẹ, sớm mai hồng,\nDân trai tráng bơi thuyền đi đánh cá.\"",
@@ -828,7 +828,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "doan-nlvh",
     "categoryName": "Đoạn văn NLVH (200 chữ)",
-    "subType": "nlvh_doan",
+    "subType": "nlvh_doan_nt_truyen",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 15] Điểm nhìn và cảm xúc nhân vật Thanh khi bước vào khu vườn nhà bà (Dưới bóng hoàng lan)",
     "prompt": "Viết đoạn văn (khoảng 200 chữ) phân tích điểm nhìn và cảm xúc của nhân vật Thanh khi bước vào khu vườn nhà bà (Trích Dưới bóng hoàng lan - Thạch Lam):\n\n\"Thanh lách cánh cửa gỗ để khép, nhẹ nhàng bước vào. Chàng thấy mát hẳn cả người. Trên con đường lát gạch Bát Tràng rêu phủ, những vòng ánh sáng lọt qua vòm cây xuống nhảy múa theo chiều gió. Một mùi lá tươi non phảng phất trong không khí. Thanh rút khăn lau mồ hôi trên trán - bên ngoài trời nắng gắt - rồi thong thả đi bên bức tường hoa thấp chạy thẳng đến đầu nhà. Yên tĩnh quá, không một tiếng động nhỏ trong căn vườn, tựa như bao nhiêu sự ồn ào ở ngoài kia đều ngừng lại trên bậc cửa.\nThanh bước lên thềm, đặt va li trên chiếc trường kỉ, rồi ngó đầu nhìn vào trong nhà: bóng tối dịu và man mát loáng qua những màu sắc rực rỡ chàng đem ở ngoài trời vào. Thanh chưa nhìn rõ thấy gì cả. Một lát, quen bóng tối, chàng mới nhận thấy cảnh tượng gian nhà cũ không có gì thay đổi, cũng y nguyên như ngày chàng đi xưa. Sự yên lặng trầm tịch đến nỗi Thanh trở nên nghẹn họng; mãi mãi chàng mới cất được tiếng lên gọi khẽ:\n- Bà ơi!\nMột cái bóng lẹ làng từ trong vụt ra, rơi xuống mặt bàn. Thanh định rõ nhìn: con mèo của bà chàng, con mèo già vẫn chơi đùa với chàng ngày trước. Con vật nép chân vào mình khẽ phe phẩy cái đuôi, rồi hai mắt ngọc thạch xanh dương lên nhìn người. Thanh mỉm cười lại gần vuốt ve con mèo:\n- Bà mày đâu?\"",
@@ -848,7 +848,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlvh",
     "categoryName": "Bài văn NLVH (600 chữ)",
-    "subType": "nlvh_bai",
+    "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 1] Phân tích nội dung và nghệ thuật của bài thơ Tràng giang (Huy Cận)",
     "prompt": "Phân tích nội dung và nghệ thuật của bài thơ Tràng giang (Huy Cận) (Bài văn khoảng 600 chữ, đầy đủ Mở bài - Thân bài - Kết bài).",
@@ -882,7 +882,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlvh",
     "categoryName": "Bài văn NLVH (600 chữ)",
-    "subType": "nlvh_bai",
+    "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 2] Quá trình lưu manh hóa và bi kịch cự tuyệt quyền làm người của Chí Phèo (Nam Cao)",
     "prompt": "Phân tích quá trình lưu manh hóa và bi kịch cự tuyệt quyền làm người của nhân vật Chí Phèo trong truyện ngắn cùng tên của Nam Cao (Bài văn khoảng 600 chữ).",
@@ -916,7 +916,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlvh",
     "categoryName": "Bài văn NLVH (600 chữ)",
-    "subType": "nlvh_bai",
+    "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 3] Cách tạo mâu thuẫn/xung đột kịch trong Hồi V vở kịch Vũ Như Tô (Nguyễn Huy Tưởng)",
     "prompt": "Phân tích cách tạo mâu thuẫn/xung đột kịch trong Hồi V vở kịch Vũ Như Tô (Nguyễn Huy Tưởng) (Bài văn khoảng 600 chữ).",
@@ -950,7 +950,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlvh",
     "categoryName": "Bài văn NLVH (600 chữ)",
-    "subType": "nlvh_bai",
+    "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 4] Tình huống truyện và diễn biến tâm trạng nhân vật Tràng (Vợ nhặt - Kim Lân)",
     "prompt": "Phân tích tình huống truyện và diễn biến tâm trạng của nhân vật Tràng trong tác phẩm Vợ nhặt (Kim Lân) (Bài văn khoảng 600 chữ).",
@@ -984,7 +984,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlvh",
     "categoryName": "Bài văn NLVH (600 chữ)",
-    "subType": "nlvh_bai",
+    "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 5] Phân tích đoạn thơ Trao duyên. Qua đó đánh giá tài nghệ miêu tả nội tâm của Nguyễn Du",
     "prompt": "Phân tích đoạn trích Trao duyên (Truyện Kiều - Nguyễn Du). Qua đó, đánh giá tài nghệ miêu tả nội tâm nhân vật xuất sắc của Nguyễn Du (Bài văn khoảng 600 chữ).",
@@ -1018,7 +1018,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlvh",
     "categoryName": "Bài văn NLVH (600 chữ)",
-    "subType": "nlvh_bai",
+    "subType": "nlvh_bai_sosanh",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 6] Hình tượng sông Hương ở khúc thượng nguồn và khi về đồng bằng (Hoàng Phủ Ngọc Tường)",
     "prompt": "Phân tích hình tượng sông Hương ở khúc thượng nguồn và khi chảy về đồng bằng trong đoạn trích Ai đã đặt tên cho dòng sông? (Hoàng Phủ Ngọc Tường) (Bài văn khoảng 600 chữ).",
@@ -1052,7 +1052,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlvh",
     "categoryName": "Bài văn NLVH (600 chữ)",
-    "subType": "nlvh_bai",
+    "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 7] Mạch cảm xúc và khát vọng tự do qua bài thơ Nhớ đồng (Tố Hữu)",
     "prompt": "Phân tích mạch cảm xúc và khát vọng tự do qua bài thơ Nhớ đồng (Tố Hữu) (Bài văn khoảng 600 chữ).",
@@ -1086,7 +1086,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlvh",
     "categoryName": "Bài văn NLVH (600 chữ)",
-    "subType": "nlvh_bai",
+    "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 8] Diễn biến tâm trạng Chí Phèo sau đêm say rượu gặp Thị Nở (Nam Cao)",
     "prompt": "Phân tích diễn biến tâm trạng của nhân vật Chí Phèo sau đêm say rượu gặp Thị Nở (Từ lúc tỉnh dậy đến trước khi mang dao đến nhà Bá Kiến) (Nam Cao) (Bài văn khoảng 600 chữ).",
@@ -1120,7 +1120,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlvh",
     "categoryName": "Bài văn NLVH (600 chữ)",
-    "subType": "nlvh_bai",
+    "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 9] Vẻ đẹp khuất lấp của người vợ nhặt trong tác phẩm cùng tên của Kim Lân",
     "prompt": "Phân tích vẻ đẹp khuất lấp của nhân vật người vợ nhặt trong tác phẩm cùng tên của nhà văn Kim Lân (Bài văn khoảng 600 chữ).",
@@ -1154,7 +1154,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlvh",
     "categoryName": "Bài văn NLVH (600 chữ)",
-    "subType": "nlvh_bai",
+    "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 10] Bức tranh mùa thu và tâm trạng thi nhân qua 2 khổ đầu bài Đây mùa thu tới (Xuân Diệu)",
     "prompt": "Phân tích bức tranh mùa thu và tâm trạng của thi nhân qua 2 khổ thơ đầu bài thơ Đây mùa thu tới (Xuân Diệu):\n\n\"Rặng liễu đìu hiu đứng chịu tang,\nTóc buồn buông xuống lệ ngàn hàng:\nĐây mùa thu tới - mùa thu tới\nVới áo mơ phai dệt lá vàng.\n\nHơn một loài hoa đã rụng cành\nTrong vườn sắc đỏ rũa màu xanh;\nNhững luồng run rẩy rung rinh lá...\nĐôi nhánh khô gầy xương mỏng manh.\"",
@@ -1188,7 +1188,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlvh",
     "categoryName": "Bài văn NLVH (600 chữ)",
-    "subType": "nlvh_bai",
+    "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 11] Phân tích nội dung và nghệ thuật của bài thơ Tương tư (Nguyễn Bính)",
     "prompt": "Phân tích nội dung và nghệ thuật của bài thơ Tương tư (Nguyễn Bính) (Bài văn khoảng 600 chữ):\n\n\"Thôn Đoài ngồi nhớ thôn Đông,\nMột người chín nhớ mười mong một người.\nGió mưa là bệnh của giời,\nTương tư là bệnh của tôi yêu nàng.\nHai thôn chung lại một làng,\nCớ sao bên ấy chẳng sang bên này?\nNgày qua ngày lại qua ngày,\nLá xanh nhuộm đã thành cây lá vàng.\nBảo rằng cách trở đò giang,\nKhông sang là chẳng đường sang đã đành.\nNhưng đây cách một đầu đình,\nCó xa xôi mấy mà tình xa xôi...\nTương tư thức mấy đêm rồi,\nBiết cho ai, hỏi ai người biết cho!\nBao giờ bến mới gặp đò?\nHoa khuê các bướm giang hồ gặp nhau?\nNhà em có một giàn giầu,\nNhà anh có một hàng cau liên phòng.\nThôn Đoài thì nhớ thôn Đông,\nCau thôn Đoài nhớ giầu không thôn nào?\"",
@@ -1222,7 +1222,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlvh",
     "categoryName": "Bài văn NLVH (600 chữ)",
-    "subType": "nlvh_bai",
+    "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 12] Vẻ đẹp hình tượng nhân vật Huấn Cao trong tác phẩm Chữ người tử tù (Nguyễn Tuân)",
     "prompt": "Phân tích vẻ đẹp hình tượng nhân vật Huấn Cao trong tác phẩm Chữ người tử tù của nhà văn Nguyễn Tuân (Bài văn khoảng 600 chữ).",
@@ -1256,7 +1256,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlvh",
     "categoryName": "Bài văn NLVH (600 chữ)",
-    "subType": "nlvh_bai",
+    "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 13] Bức tranh thiên nhiên và tâm trạng con người qua bài thơ Đây thôn Vĩ Dạ (Hàn Mặc Tử)",
     "prompt": "Phân tích bức tranh thiên nhiên và tâm trạng con người qua bài thơ Đây thôn Vĩ Dạ (Hàn Mặc Tử) (Bài văn khoảng 600 chữ):\n\n\"Sao anh không về chơi thôn Vĩ?\nNhìn nắng hàng cau nắng mới lên.\nVườn ai mướt quá, xanh như ngọc\nLá trúc che ngang mặt chữ điền.\n\nGió theo lối gió, mây đường mây,\nDòng nước buồn thiu, hoa bắp lay...\nThuyền ai đậu bến sông trăng đó,\nCó chở trăng về kịp tối nay?\n\nMơ khách đường xa, khách đường xa,\nÁo em trắng quá nhìn không ra...\nỞ đây sương khói mờ nhân ảnh,\nAi biết tình ai có đậm đà?\"",
@@ -1290,7 +1290,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlvh",
     "categoryName": "Bài văn NLVH (600 chữ)",
-    "subType": "nlvh_bai",
+    "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 14] Bi kịch tinh thần và giá trị nhân đạo trong truyện ngắn Đời thừa (Nam Cao)",
     "prompt": "Phân tích bi kịch tinh thần của nhân vật Hộ và giá trị nhân đạo sâu sắc trong truyện ngắn Đời thừa của Nam Cao (Bài văn khoảng 600 chữ).",
@@ -1324,7 +1324,7 @@ const DEFAULT_WRITING_SETS = [
     "status": "published",
     "category": "bai-nlvh",
     "categoryName": "Bài văn NLVH (600 chữ)",
-    "subType": "nlvh_bai",
+    "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 15] Vẻ đẹp thiên nhiên và cái tôi tác giả trong Tháng Giêng mơ về trăng non rét ngọt (Vũ Bằng)",
     "prompt": "Phân tích vẻ đẹp của thiên nhiên và cái tôi tác giả trong đoạn trích Tháng Giêng mơ về trăng non rét ngọt (Trích Thương nhớ mười hai - Vũ Bằng) (Bài văn khoảng 600 chữ).",
@@ -1373,7 +1373,7 @@ let editingSections = [];
 function loadWritingSets() {
   try {
     // Tự động đồng bộ và nạp Bộ 50 đề NLVH & NLXH chuẩn mới nhất
-    const v50Version = 'v50_2026_11_06_complete';
+    const v50Version = 'v50_2026_11_06_subtypes_scaffold';
     const currentVersion = localStorage.getItem('vq_writing_sets_version');
     
     if (currentVersion !== v50Version) {
@@ -2330,6 +2330,8 @@ function openCreateWritingSetModal(presetCat) {
   $('#input-set-title').value = '';
   updateModalCategorySelect(targetCat);
   $('#input-set-prompt').value = '';
+  if ($('#input-set-thinking-guide')) $('#input-set-thinking-guide').value = '';
+  if ($('#input-set-subtype')) $('#input-set-subtype').value = '';
   if ($('#writing-form-max-attempts')) $('#writing-form-max-attempts').value = 0;
   if ($('#writing-form-deadline')) $('#writing-form-deadline').value = '';
   if ($('#writing-form-privacy')) $('#writing-form-privacy').value = 'public';
@@ -2359,6 +2361,8 @@ function editWritingSet(id) {
   $('#input-set-title').value = set.title || '';
   updateModalCategorySelect(set.category || 'nl-xh');
   $('#input-set-prompt').value = set.prompt || '';
+  if ($('#input-set-thinking-guide')) $('#input-set-thinking-guide').value = set.thinkingGuide || '';
+  if ($('#input-set-subtype')) $('#input-set-subtype').value = set.subType || '';
   const limitEl = $('#writing-form-max-attempts');
   if (limitEl) {
     limitEl.value = (typeof getSetMaxAttempts === 'function' ? getSetMaxAttempts(set, 'writing') : (set.maxAttempts || 0));
@@ -2553,6 +2557,8 @@ function handleSaveWritingSet(e) {
   const deadline = ($('#writing-form-deadline')?.value || '').trim();
   const privacy = ($('#writing-form-privacy')?.value || 'public').trim();
   const openAt = ($('#writing-form-open-at')?.value || '').trim();
+  const thinkingGuide = ($('#input-set-thinking-guide')?.value || '').trim();
+  const subType = ($('#input-set-subtype')?.value || '').trim();
 
   if (editId) {
     const idx = writingSets.findIndex(s => String(s.id) === String(editId));
@@ -2564,6 +2570,8 @@ function handleSaveWritingSet(e) {
         categoryName: categoryNames[category] || category,
         icon: icons[category] || '✍️',
         prompt,
+        thinkingGuide,
+        ...(subType ? { subType } : {}),
         privacy,
         openAt,
         maxAttempts,
@@ -2604,6 +2612,8 @@ function handleSaveWritingSet(e) {
       categoryName: categoryNames[category] || category,
       icon: icons[category] || '✍️',
       prompt,
+      thinkingGuide,
+      subType: subType || (category === 'doan-nlvh' ? 'nlvh_doan_chude' : (category === 'bai-nlvh' ? 'nlvh_bai_1tacpham' : (category === 'doan-nlxh' ? 'nlxh_doan_ynghia' : 'nlxh_bai_tutuong'))),
       privacy,
       openAt,
       maxAttempts,
@@ -2652,6 +2662,60 @@ function handleSaveWritingSet(e) {
   if (typeof renderLibWritingPane === 'function') renderLibWritingPane();
   if (typeof updateLibTabsUI === 'function') updateLibTabsUI();
 }
+
+function autoGenerateThinkingGuideForModal() {
+  const cat = $('#input-set-category')?.value || 'doan-nlxh';
+  const prompt = ($('#input-set-prompt')?.value || '').trim().toLowerCase();
+  const title = ($('#input-set-title')?.value || '').trim().toLowerCase();
+  const subType = $('#input-set-subtype')?.value || '';
+
+  let generated = '';
+
+  if (cat === 'doan-nlxh') {
+    if (subType === 'nlxh_doan_giaiphap' || prompt.includes('trách nhiệm') || prompt.includes('giải pháp') || prompt.includes('cần làm') || title.includes('trách nhiệm') || title.includes('cần làm')) {
+      generated = `• Mở đoạn: Dẫn dắt và nêu vấn đề trách nhiệm / hành động của tuổi trẻ hôm nay.\n• Giải thích (1 câu): Nêu ngắn gọn bản chất cốt lõi của vấn đề.\n• Bàn luận hành động (3 ý):\n  - Thứ nhất (Đối với cá nhân): Nâng cao nhận thức, rèn luyện kĩ năng, thay đổi thói quen xấu, chủ động hành động...\n  - Thứ hai (Đối với gia đình & nhà trường): Tăng cường giáo dục, lắng nghe, thấu hiểu và đồng hành định hướng...\n  - Thứ ba (Đối với cộng đồng & xã hội): Xây dựng chính sách thiết thực, tổ chức sự kiện và đẩy mạnh truyền thông...\n• Dẫn chứng: [Nêu 1 tấm gương / phong trào tiêu biểu]\n• Khẳng định & Bài học: Thông điệp hành động mạnh mẽ của người trẻ.`;
+    } else if (subType === 'nlxh_doan_tachai' || prompt.includes('tác hại') || prompt.includes('hậu quả') || title.includes('tác hại')) {
+      generated = `• Mở đoạn: Nêu hiện tượng / thói quen tiêu cực cần cảnh báo.\n• Giải thích (1 câu): Khái quát bản chất của hiện tượng / thói quen đó.\n• Bàn luận 3 tác hại trực tiếp:\n  - Thứ nhất (Đối với bản thân): Đánh mất cơ hội quý báu, làm suy giảm năng lực và thui chột ý chí cá nhân.\n  - Thứ hai (Đối với uy tín & quan hệ): Làm giảm uy tín, đánh mất sự tin cậy từ những người xung quanh.\n  - Thứ ba (Đối với xã hội): Gây lực cản đối với sự phát triển văn minh, bền vững của cộng đồng.\n• Dẫn chứng: [Minh chứng cụ thể từ đời sống]\n• Bài học nhận thức & hành động: Nhận diện nguy cơ và kiên quyết rèn luyện lối sống lành mạnh, chủ động.`;
+    } else {
+      generated = `• Mở đoạn: Dẫn dắt và nêu vấn đề / ý kiến / câu nói cần bàn luận.\n• Giải thích (1 câu): Giải thích từ ngữ quan trọng / câu nói; khái quát ý nghĩa của vấn đề.\n• Bàn luận 3 luận điểm ý nghĩa:\n  - Thứ nhất: Giúp cá nhân mở rộng nhận thức, tôi luyện ý chí, bản lĩnh và hoàn thiện nhân cách.\n  - Thứ hai: Giúp gặt hái thành công chân chính, tạo dựng uy tín và mang lại bình an, hạnh phúc.\n  - Thứ ba: Đóng góp tích cực xây dựng cộng đồng gắn kết, tiến bộ và nhân văn.\n• Dẫn chứng: [Tấm gương / sự kiện thực tế tiêu biểu]\n• Bài học: Rút ra nhận thức sâu sắc và hành động thiết thực cho bản thân.`;
+    }
+  } else if (cat === 'bai-nlxh') {
+    if (subType === 'nlxh_bai_hientuong' || prompt.includes('hiện tượng') || title.includes('hiện tượng')) {
+      generated = `• Mở bài: Dẫn dắt và giới thiệu hiện tượng đời sống đang được xã hội quan tâm.\n• Thân bài:\n  - Đoạn 1: Giải thích bản chất hiện tượng + Nêu bức tranh thực trạng, biểu hiện sinh động trong đời sống.\n  - Đoạn 2: Phân tích nguyên nhân (nguyên nhân chủ quan từ ý thức cá nhân & nguyên nhân khách quan từ gia đình, xã hội).\n  - Đoạn 3: Tác dụng (nếu hiện tượng tích cực) hoặc Hậu quả (nếu hiện tượng tiêu cực) kèm dẫn chứng thực tế xác thực.\n  - Đoạn 4: Đề xuất giải pháp đồng bộ (về phía cá nhân rèn luyện, gia đình & nhà trường giáo dục, xã hội quản lí & truyền thông; giải pháp trước mắt và lâu dài).\n• Kết bài: Khái quát lại bài học nhận thức và trách nhiệm của thế hệ trẻ.`;
+    } else if (subType === 'nlxh_bai_vdxh_tpvh' || prompt.includes('trong tác phẩm') || prompt.includes('văn học') || title.includes('trong tác phẩm')) {
+      generated = `• Mở bài: Giới thiệu tác phẩm văn học và vấn đề xã hội giàu ý nghĩa nhân sinh được đặt ra.\n• Thân bài:\n  - Đoạn 1: Giải thích vấn đề xã hội; chỉ ra biểu hiện sinh động của vấn đề trong tác phẩm văn học (dẫn chứng từ tác phẩm).\n  - Đoạn 2: Kết nối biểu hiện của vấn đề xã hội từ trang sách bước ra đời sống thực tế.\n  - Đoạn 3: Bàn luận ý nghĩa sâu sắc của vấn đề đối với việc hoàn thiện nhân cách con người (3 luận điểm).\n  - Đoạn 4: Phê phán những quan niệm sai lệch, lối sống ích kỉ, vô cảm.\n  - Đoạn 5: Giải pháp và bài học nhận thức, hành động cho bản thân.\n• Kết bài: Khẳng định sức sống nhân văn bền vững của vấn đề xã hội bắt nguồn từ tác phẩm.`;
+    } else {
+      generated = `• Mở bài: Dẫn dắt câu nói / tư tưởng đạo lí và giới thiệu vấn đề nghị luận.\n• Thân bài:\n  - Đoạn 1: Giải thích các từ ngữ quan trọng, vế câu và rút ra ý nghĩa cả câu (“Vậy câu nói này có nghĩa là...”).\n  - Đoạn 2 (Ý nghĩa 1): Bàn luận vì sao đặt ra vấn đề; ý nghĩa đối với nhận thức và nhân cách (Lí lẽ + Dẫn chứng).\n  - Đoạn 3 (Ý nghĩa 2): Ý nghĩa đối với thành công, các mối quan hệ và hạnh phúc (Lí lẽ + Dẫn chứng).\n  - Đoạn 4 (Ý nghĩa 3): Ý nghĩa đối với sự tiến bộ, văn minh của toàn xã hội (Lí lẽ + Dẫn chứng).\n  - Đoạn 5: Phê phán, mở rộng vấn đề (chỉ ra góc nhìn đa chiều hoặc phản đề nếu có).\n  - Đoạn 6: Bài học nhận thức và hành động của tuổi trẻ.\n• Kết bài: Khẳng định giá trị trường tồn của câu nói đối với mọi thời đại.`;
+    }
+  } else if (cat === 'doan-nlvh') {
+    if (subType === 'nlvh_doan_nt_tho' || (prompt.includes('nghệ thuật') && (prompt.includes('thơ') || prompt.includes('câu thơ')))) {
+      generated = `• Mở đoạn: Câu dẫn + Giới thiệu tác giả, đoạn thơ và nét đặc sắc nghệ thuật.\n• Phân tích 4 khía cạnh nghệ thuật:\n  - Thứ nhất: Thể thơ (gọi tên + tác dụng nhịp điệu, âm hưởng).\n  - Thứ hai: Hình ảnh thơ (nhận xét chung + dẫn chứng + phân tích sức gợi).\n  - Thứ ba: Từ ngữ (nhận xét + dẫn chứng từ đắt giá/từ láy + tác dụng biểu đạt).\n  - Thứ tư: Biện pháp tu từ (gọi tên BPTT + dẫn chứng + tác dụng làm nổi bật hình tượng).\n• Đánh giá: Các yếu tố nghệ thuật góp phần làm rõ chủ đề tác phẩm và gửi gắm thông điệp nhân văn sâu sắc.`;
+    } else if (subType === 'nlvh_doan_camxuc_tho' || prompt.includes('cảm xúc') || prompt.includes('tâm trạng') || title.includes('cảm xúc')) {
+      generated = `• Mở đoạn: Câu dẫn + Giới thiệu tác giả, tác phẩm và mạch cảm xúc chủ đạo của nhân vật trữ tình.\n• Phân tích mạch cảm xúc:\n  - Cung bậc cảm xúc 1: [Gọi tên cảm xúc 1 + Dẫn chứng câu thơ + Phân tích tác dụng]\n  - Cung bậc cảm xúc 2: [Gọi tên cảm xúc 2 + Dẫn chứng câu thơ + Phân tích sự chuyển biến tâm trạng]\n• Nghệ thuật thể hiện: Giọng điệu thiết tha, thể thơ truyền cảm, hình ảnh giàu sức gợi.\n• Đánh giá: Cảm xúc trong sáng, chân thành, thể hiện cái nhìn nhân sinh sâu sắc và chức năng thẩm mĩ của văn chương.`;
+    } else if (subType === 'nlvh_doan_nhanvat' || prompt.includes('nhân vật') || title.includes('nhân vật')) {
+      generated = `• Mở đoạn & Khái quát: Giới thiệu tác giả, tác phẩm, nhân vật (tên tuổi, ngoại hình, hoàn cảnh số phận).\n• Phân tích phẩm chất nhân vật:\n  - Vẻ đẹp / Phẩm chất 1: [Gọi tên phẩm chất + Dẫn chứng hành động, lời nói, thái độ + Phân tích]\n  - Vẻ đẹp / Phẩm chất 2: [Gọi tên phẩm chất + Dẫn chứng nội tâm / việc làm + Phân tích]\n• Nghệ thuật xây dựng nhân vật: Khắc họa qua hành động, lời thoại, miêu tả tâm lí tinh tế, tình huống truyện độc đáo.\n• Đánh giá: Nhân vật tiêu biểu cho phẩm chất con người thời đại; qua đó gửi gắm thông điệp nhân đạo sâu sắc.`;
+    } else if (subType === 'nlvh_doan_nt_truyen' || prompt.includes('truyện') || prompt.includes('chi tiết') || prompt.includes('tình huống') || prompt.includes('điểm nhìn')) {
+      generated = `• Mở đoạn: Câu dẫn + Giới thiệu tác giả, truyện ngắn và đặc sắc nghệ thuật tự sự.\n• Phân tích các yếu tố nghệ thuật:\n  - Ngôi kể & Điểm nhìn: [Ngôi thứ mấy? Điểm nhìn bên trong/bên ngoài? Tác dụng biểu đạt]\n  - Tình huống truyện / Chi tiết nghệ thuật: [Chỉ ra chi tiết/tình huống + Dẫn chứng + Phân tích ý nghĩa]\n  - Ngôn ngữ & Giọng điệu trần thuật: [Mộc mạc, đa thanh, giàu chất triết lí]\n  - Diễn biến nội tâm: Miêu tả tinh vi những biến chuyển tâm lí nhân vật.\n• Đánh giá: Khẳng định tài năng, cá tính sáng tạo độc đáo của nhà văn và tư tưởng tác phẩm.`;
+    } else {
+      generated = `• Câu dẫn + Giới thiệu VĐNL: Nội dung chủ đề tác phẩm.\n• Nêu chủ đề: Chủ đề của tác phẩm là...\n• Phân tích 3 khía cạnh của chủ đề:\n  - Thứ nhất: Chủ đề thể hiện qua nhan đề / hình tượng trung tâm / tình huống truyện (dẫn chứng + phân tích).\n  - Thứ hai: Chủ đề làm rõ qua tâm trạng nhân vật / tình cảm cảm xúc (dẫn chứng + phân tích).\n  - Thứ ba: Chủ đề sáng tỏ qua chi tiết nghệ thuật đắt giá (dẫn chứng + phân tích).\n• Đánh giá: Chủ đề có ý nghĩa sâu sắc, khẳng định thông điệp nhân văn và tài nghệ sáng tạo của tác giả.`;
+    }
+  } else {
+    // bai-nlvh
+    if (subType === 'nlvh_bai_sosanh' || prompt.includes('so sánh') || prompt.includes('hai đoạn trích') || prompt.includes('hai tác phẩm')) {
+      generated = `• I. Mở bài: Dẫn dắt, giới thiệu tác phẩm 1 + tác giả 1, tác phẩm 2 + tác giả 2; nêu vấn đề nghị luận (so sánh điểm tương đồng và khác biệt).\n• II. Thân bài:\n  1. Khái quát chung: Hoàn cảnh sáng tác, xuất xứ, vị trí của hai đoạn trích / tác phẩm.\n  2. Điểm tương đồng:\n    - Về nội dung: Đề tài, chủ đề, cảm hứng chủ đạo, kiểu nhân vật...\n    - Về hình thức: Bút pháp nghệ thuật, thể loại...\n  3. Điểm khác biệt:\n    - Về nội dung: Góc nhìn hiện thực, sắc thái cảm xúc, vẻ đẹp riêng biệt của từng hình tượng...\n    - Về hình thức: Ngôi kể, điểm nhìn, sáng tạo từ ngữ hình ảnh, giọng điệu...\n  4. Lí giải nguyên nhân giống và khác nhau (hoàn cảnh thời đại, cá tính sáng tạo, thi pháp riêng của từng tác giả).\n  5. Đánh giá chung: Ý nghĩa sự tương đồng (quy luật thời đại) và khác biệt (sự phong phú, đa dạng của nền văn học).\n• III. Kết bài: Khẳng định sức sống và vị thế của cả hai tác phẩm trong dòng chảy văn học dân tộc.`;
+    } else {
+      generated = `• I. Mở bài: Trích dẫn – dẫn dắt – giới thiệu tác giả, tác phẩm và định hướng vấn đề nghị luận.\n• II. Thân bài:\n  1. Phân tích nội dung, chủ đề (theo đặc trưng thể loại Thơ hoặc Truyện):\n    - Đề tài, chủ đề cốt lõi của tác phẩm.\n    - Mạch cảm xúc / Quá trình phát triển tâm lí và vẻ đẹp hình tượng nhân vật (kèm dẫn chứng và phân tích tác dụng).\n    - Tư tưởng nhân văn và thông điệp mà tác giả gửi gắm.\n  2. Phân tích hình thức nghệ thuật đặc sắc:\n    - Với Thơ: Thể thơ, vần nhịp, sáng tạo từ ngữ, hình ảnh biểu tượng, biện pháp tu từ, giọng điệu.\n    - Với Truyện: Ngôi kể, điểm nhìn trần thuật, tình huống truyện, nghệ thuật xây dựng nhân vật, chi tiết tiêu biểu, ngôn ngữ đối thoại/độc thoại.\n  3. Đánh giá tổng hợp: Bước 1 phân tích gắn liền Bước 2 đánh giá vai trò đối với chủ đề; khẳng định phong cách nghệ thuật độc đáo của tác giả.\n• III. Kết bài: Khái quát lại giá trị tác phẩm và ấn tượng sâu sắc để lại trong tâm hồn người đọc.`;
+    }
+  }
+
+  const guideEl = document.getElementById('input-set-thinking-guide');
+  if (guideEl) {
+    guideEl.value = generated;
+    guideEl.focus();
+    toast('✨ Đã tự động tạo khung Gợi ý tư duy chuẩn theo dạng bài!', 'ok');
+  }
+}
+window.autoGenerateThinkingGuideForModal = autoGenerateThinkingGuideForModal;
 
 function deleteCurrentOpenedWritingSet() {
   if (typeof Auth !== 'undefined' && !Auth.canEditContent()) {

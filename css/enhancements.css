@@ -487,6 +487,72 @@
   border-right: 1.5px solid var(--stroke);
 }
 
+/* --- GỢI Ý TƯ DUY TRỌNG TÂM (PROMPT THINKING GUIDE CARD) --- */
+.scaffold-specific-guide-card {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(99, 102, 241, 0.06) 100%);
+  border: 2px solid var(--stroke);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 3px 0 var(--stroke);
+}
+[data-theme="dark"] .scaffold-specific-guide-card {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(99, 102, 241, 0.12) 100%);
+}
+.scaffold-guide-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.scaffold-guide-badge {
+  font-size: 12px;
+  font-weight: 800;
+  color: #92400e;
+  background: #fef3c7;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1.5px solid #f59e0b;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+[data-theme="dark"] .scaffold-guide-badge {
+  background: rgba(245, 158, 11, 0.22);
+  color: #fbbf24;
+}
+.scaffold-guide-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.scaffold-action-btn {
+  font-weight: 800 !important;
+  font-size: 11.5px !important;
+  padding: 4px 10px !important;
+  border-radius: 8px !important;
+  cursor: pointer;
+}
+.scaffold-thinking-guide-text {
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--ink);
+  white-space: pre-wrap;
+  background: var(--bg-card);
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1.5px solid var(--stroke);
+  word-break: break-word;
+  max-height: 260px;
+  overflow-y: auto;
+}
+[data-theme="dark"] .scaffold-thinking-guide-text {
+  background: rgba(15, 23, 42, 0.6);
+}
+
 /* --- EXAM PRESSURE TIMER WIDGET (ĐỒNG HỒ RÈN ÁP LỰC PHÒNG THI) --- */
 .exam-pressure-timer-widget {
   display: inline-flex;
