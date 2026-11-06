@@ -418,6 +418,7 @@ function exitReadingWorkspace(force = false) {
   const workView = document.getElementById('reading-workspace-view');
   if (listView) listView.style.display = 'block';
   if (workView) workView.style.display = 'none';
+  if (document.body) document.body.classList.remove('in-reading-workspace');
   renderReadingListView();
   return true;
 }
@@ -450,6 +451,7 @@ function openReadingSet(id) {
 
   const listView = document.getElementById('reading-list-view');
   const workView = document.getElementById('reading-workspace-view');
+  if (document.body) document.body.classList.add('in-reading-workspace');
   if (listView) listView.style.display = 'none';
   if (workView) workView.style.display = 'block';
   if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.startExam === 'function') {

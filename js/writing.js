@@ -631,6 +631,7 @@ function changeSetCategory(setId, newCatId) {
 }
 
 function showWritingListView() {
+  if (document.body) document.body.classList.remove('in-writing-workspace');
   stopWritingTimer();
   if ($('#writing-list-view')) $('#writing-list-view').style.display = 'block';
   if ($('#writing-workspace-view')) $('#writing-workspace-view').style.display = 'none';
@@ -846,6 +847,7 @@ function openWritingWorkspace(set) {
   }
   currentWritingSet = set;
   if (typeof window !== 'undefined') window.currentWritingSetId = set.id;
+  if (document.body) document.body.classList.add('in-writing-workspace');
   if ($('#writing-list-view')) $('#writing-list-view').style.display = 'none';
   if ($('#writing-workspace-view')) $('#writing-workspace-view').style.display = 'block';
   if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.startExam === 'function') {
@@ -913,6 +915,7 @@ function exitWritingWorkspace(force = false) {
     toast('⚠️ Bạn đang làm bài luyện viết! Phải nộp bài xong mới được thoát.', 'bad');
     return false;
   }
+  if (document.body) document.body.classList.remove('in-writing-workspace');
   saveCurrentWritingDraft(false);
   stopWritingTimer();
   clearInterval(autoSaveDraftTimer);

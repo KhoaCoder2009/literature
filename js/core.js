@@ -139,6 +139,12 @@ function go(n, p) {
       window.__SECURITY_SHIELD.endExam(false);
     }
   }
+  if (sc !== 'writing' && document.body) {
+    document.body.classList.remove('in-writing-workspace');
+  }
+  if (sc !== 'reading' && document.body) {
+    document.body.classList.remove('in-reading-workspace');
+  }
   if (typeof closeMobileMenu === 'function') closeMobileMenu();
   document.querySelectorAll('.scr').forEach(s => s.classList.toggle('on', s.id == 's-' + sc));
   document.querySelectorAll('nav a, .mobile-sidebar a').forEach(a => a.classList.toggle('on', a.dataset.g == sc));

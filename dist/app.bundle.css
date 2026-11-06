@@ -8410,6 +8410,29 @@ ion-icon {
 
 
 /* =========================================================================
+   WORKSPACE FULL FOCUS MODE (ẨN NAVBAR & MENU TRÁNH ẤN NHẦM KHI LÀM BÀI)
+   ========================================================================= */
+body.in-writing-workspace nav,
+body.in-writing-workspace .mobile-sidebar,
+body.in-writing-workspace .mobile-menu-toggle,
+body.in-writing-workspace #back-to-top,
+body.in-writing-workspace #fab-qa-report {
+  display: none !important;
+}
+
+body.in-writing-workspace #s-writing .wrap {
+  padding-top: 10px;
+}
+
+body.in-writing-workspace .writing-workspace-nav {
+  position: sticky;
+  top: 8px;
+  z-index: 50;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================================
    READING COMPREHENSION MODULE STYLES (ĐỌC HIỂU NGỮ VĂN)
    ========================================================================= */
 
@@ -9424,6 +9447,29 @@ body.projector-mode .reading-q-text {
 
 body.projector-mode .reading-answer-textarea {
   font-size: 17px;
+}
+
+
+/* =========================================================================
+   WORKSPACE FULL FOCUS MODE (ẨN NAVBAR & MENU TRÁNH ẤN NHẦM KHI LÀM BÀI)
+   ========================================================================= */
+body.in-reading-workspace nav,
+body.in-reading-workspace .mobile-sidebar,
+body.in-reading-workspace .mobile-menu-toggle,
+body.in-reading-workspace #back-to-top,
+body.in-reading-workspace #fab-qa-report {
+  display: none !important;
+}
+
+body.in-reading-workspace #s-reading .wrap {
+  padding-top: 10px;
+}
+
+body.in-reading-workspace .reading-workspace-nav {
+  position: sticky;
+  top: 8px;
+  z-index: 50;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 

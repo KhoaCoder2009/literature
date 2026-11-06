@@ -734,6 +734,12 @@ function go(n, p) {
       window.__SECURITY_SHIELD.endExam(false);
     }
   }
+  if (sc !== 'writing' && document.body) {
+    document.body.classList.remove('in-writing-workspace');
+  }
+  if (sc !== 'reading' && document.body) {
+    document.body.classList.remove('in-reading-workspace');
+  }
   if (typeof closeMobileMenu === 'function') closeMobileMenu();
   document.querySelectorAll('.scr').forEach(s => s.classList.toggle('on', s.id == 's-' + sc));
   document.querySelectorAll('nav a, .mobile-sidebar a').forEach(a => a.classList.toggle('on', a.dataset.g == sc));
@@ -8858,6 +8864,7 @@ function changeSetCategory(setId, newCatId) {
 }
 
 function showWritingListView() {
+  if (document.body) document.body.classList.remove('in-writing-workspace');
   stopWritingTimer();
   if ($('#writing-list-view')) $('#writing-list-view').style.display = 'block';
   if ($('#writing-workspace-view')) $('#writing-workspace-view').style.display = 'none';
@@ -9073,6 +9080,7 @@ function openWritingWorkspace(set) {
   }
   currentWritingSet = set;
   if (typeof window !== 'undefined') window.currentWritingSetId = set.id;
+  if (document.body) document.body.classList.add('in-writing-workspace');
   if ($('#writing-list-view')) $('#writing-list-view').style.display = 'none';
   if ($('#writing-workspace-view')) $('#writing-workspace-view').style.display = 'block';
   if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.startExam === 'function') {
@@ -9140,6 +9148,7 @@ function exitWritingWorkspace(force = false) {
     toast('⚠️ Bạn đang làm bài luyện viết! Phải nộp bài xong mới được thoát.', 'bad');
     return false;
   }
+  if (document.body) document.body.classList.remove('in-writing-workspace');
   saveCurrentWritingDraft(false);
   stopWritingTimer();
   clearInterval(autoSaveDraftTimer);
@@ -10500,6 +10509,7 @@ function exitReadingWorkspace(force = false) {
   const workView = document.getElementById('reading-workspace-view');
   if (listView) listView.style.display = 'block';
   if (workView) workView.style.display = 'none';
+  if (document.body) document.body.classList.remove('in-reading-workspace');
   renderReadingListView();
   return true;
 }
@@ -10532,6 +10542,7 @@ function openReadingSet(id) {
 
   const listView = document.getElementById('reading-list-view');
   const workView = document.getElementById('reading-workspace-view');
+  if (document.body) document.body.classList.add('in-reading-workspace');
   if (listView) listView.style.display = 'none';
   if (workView) workView.style.display = 'block';
   if (window.__SECURITY_SHIELD && typeof window.__SECURITY_SHIELD.startExam === 'function') {

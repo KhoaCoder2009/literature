@@ -1238,3 +1238,26 @@
   line-height: 1.5;
   color: var(--ink);
 }
+
+
+/* =========================================================================
+   WORKSPACE FULL FOCUS MODE (ẨN NAVBAR & MENU TRÁNH ẤN NHẦM KHI LÀM BÀI)
+   ========================================================================= */
+body.in-writing-workspace nav,
+body.in-writing-workspace .mobile-sidebar,
+body.in-writing-workspace .mobile-menu-toggle,
+body.in-writing-workspace #back-to-top,
+body.in-writing-workspace #fab-qa-report {
+  display: none !important;
+}
+
+body.in-writing-workspace #s-writing .wrap {
+  padding-top: 10px;
+}
+
+body.in-writing-workspace .writing-workspace-nav {
+  position: sticky;
+  top: 8px;
+  z-index: 50;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
