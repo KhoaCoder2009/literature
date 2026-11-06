@@ -236,7 +236,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  background: linear-gradient(135deg, rgba(2, 132, 199, 0.1), rgba(13, 148, 136, 0.1));
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
   border: 3px solid var(--stroke);
   border-radius: 18px;
   padding: 12px 20px;
@@ -328,7 +328,7 @@
   background: rgba(148, 163, 184, 0.06);
   padding: 8px 10px;
   border-radius: 10px;
-  border: 1.5px solid ;
+  border-left: 3px solid var(--primary);
 }
 .writing-set-meta-row {
   display: flex;
@@ -717,7 +717,7 @@
 
 /* Gợi ý văn bản dàn ý hiển thị ngay trên ô viết */
 .writing-section-guide-hint {
-  background: rgba(2, 132, 199, 0.07);
+  background: rgba(99, 102, 241, 0.07);
   border-left: 3.5px solid var(--primary);
   border-radius: 8px;
   padding: 8px 14px;
@@ -725,7 +725,7 @@
   margin-bottom: 6px;
 }
 [data-theme="dark"] .writing-section-guide-hint {
-  background: rgba(2, 132, 199, 0.15);
+  background: rgba(99, 102, 241, 0.15);
 }
 
 /* Textarea của từng phần */
@@ -750,7 +750,7 @@
 }
 .writing-textarea:focus {
   border-color: #3b82f6;
-  box-shadow:(15, 23, 42, 0.15);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 .writing-textarea::placeholder {
   color: #94a3b8;
@@ -1222,7 +1222,7 @@
 }
 
 .review-feedback-box {
-  background: rgba(15, 118, 110, 0.08);
+  background: rgba(139, 92, 246, 0.08);
   border: 2px dashed var(--primary);
   border-radius: 14px;
   padding: 14px 16px;
