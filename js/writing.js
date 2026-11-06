@@ -2125,9 +2125,6 @@ function renderWritingSections() {
             ${idx + 1}. ${esc(sec.title)}
           </label>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-            <button type="button" class="btn cy sm scaffold-trigger-btn" onclick="toggleWritingSectionScaffolding('${esc(sec.id)}', ${idx})" title="Mở Gợi ý tư duy &amp; Sơ đồ dàn ý trống cho phần này">
-              💡 Gợi ý tư duy
-            </button>
             <span class="writing-section-count" id="sec-count-${sec.id}">
               ${wordCount} từ
             </span>
@@ -2136,8 +2133,6 @@ function renderWritingSections() {
             </button>
           </div>
         </div>
-
-        <div class="scaffold-box writing-sec-scaffold-box" id="writing-sec-scaffold-${esc(sec.id)}" style="display:none;"></div>
 
         <textarea 
           id="sec-input-${sec.id}"
