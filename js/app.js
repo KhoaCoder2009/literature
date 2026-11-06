@@ -50,7 +50,9 @@ function updateSettingsUI() {
     soundBtn.textContent = soundEnabled ? 'Bật' : 'Tắt';
     soundBtn.className = 'btn sm settings-action-btn ' + (soundEnabled ? 'au' : 'gh');
   }
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const isDark = (document.documentElement && typeof document.documentElement.getAttribute === 'function')
+    ? document.documentElement.getAttribute('data-theme') === 'dark'
+    : false;
   const themeBtn = $('#btn-setting-theme');
   if (themeBtn) {
     themeBtn.textContent = isDark ? 'Tối' : 'Sáng';

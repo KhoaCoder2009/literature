@@ -3,7 +3,7 @@
    ========================================================================= */
 
 const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
+const ctx = canvas && typeof canvas.getContext === 'function' ? canvas.getContext('2d') : null;
 let bgParticles = [];
 let mouseWind = { x: 0, y: 0 };
 let lastMouse = { x: 0, y: 0 };
@@ -15,13 +15,17 @@ try {
 } catch(e) {}
 
 function resizeCanvas() {
+  if (!canvas) return;
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   initBgParticles();
 }
-window.addEventListener('resize', resizeCanvas);
+if (canvas) {
+  window.addEventListener('resize', resizeCanvas);
+}
 
 function initBgParticles() {
+  if (!canvas) return;
   bgParticles = [];
   const count = Math.min(45, Math.floor(window.innerWidth / 32));
   for (let i = 0; i < count; i++) {
@@ -40,7 +44,9 @@ function initBgParticles() {
     });
   }
 }
-resizeCanvas();
+if (canvas && ctx) {
+  resizeCanvas();
+}
 
 window.addEventListener('mousemove', e => {
   const dx = e.clientX - lastMouse.x;
@@ -102,6 +108,7 @@ function drawAutumnLeaf(c, x, y, size, angle, opacity, isDark) {
 }
 
 function drawBackground() {
+  if (!canvas || !ctx) return;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   if (bgParticlesEnabled) {

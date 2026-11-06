@@ -357,10 +357,12 @@ function loadReadingData() {
       readingSets = JSON.parse(JSON.stringify(DEFAULT_READING_SETS)).map(s => ({ ...s, status: s.status || 'published' }));
     }
     localStorage.setItem('vq_reading_sets_v1', JSON.stringify(readingSets));
+    window.readingSets = readingSets;
   } catch (err) {
     console.error('Lỗi khi tải dữ liệu đọc hiểu:', err);
     readingCategories = [...DEFAULT_READING_CATEGORIES];
     readingSets = JSON.parse(JSON.stringify(DEFAULT_READING_SETS));
+    window.readingSets = readingSets;
   }
 }
 
@@ -368,6 +370,7 @@ function saveReadingData() {
   try {
     localStorage.setItem('vq_reading_categories_v1', JSON.stringify(readingCategories));
     localStorage.setItem('vq_reading_sets_v1', JSON.stringify(readingSets));
+    window.readingSets = readingSets;
   } catch (err) {
     console.error('Lỗi khi lưu dữ liệu đọc hiểu:', err);
   }

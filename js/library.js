@@ -418,7 +418,10 @@ function renderTopicChips(allSets, filteredSets) {
 }
 
 R.lib = () => {
-  $('#lv').hidden = 0; $('#ev').hidden = 1;
+  const lv = $('#lv');
+  const ev = $('#ev');
+  if (lv) lv.hidden = 0;
+  if (ev) ev.hidden = 1;
   updateLibTabsUI();
 
   if (currentLibTab === 'reading') {
@@ -447,18 +450,21 @@ R.lib = () => {
 
   renderTopicChips(sets, l);
 
-  if (l.length) {
-    $('#lg').innerHTML = l.map(cardHtml).join('');
-  } else {
-    $('#lg').innerHTML = `
-      <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 42px 24px;">
-        <div style="font-size: 42px; margin-bottom: 12px; color: var(--mut);"><ion-icon name="search-outline"></ion-icon></div>
-        <h3 style="margin-bottom: 8px;">Không tìm thấy bộ bài học nào</h3>
-        <p style="color: var(--mut); margin-bottom: 18px; max-width: 480px; margin-left: auto; margin-right: auto;">
-          ${currentTopicFilter ? `Không có bộ bài học nào thuộc thẻ "<b>${esc(currentTopicFilter)}</b>"${f ? ` với từ khóa "<b>${esc(input.value)}</b>"` : ''}.` : `Không tìm thấy bộ bài học nào khớp với từ khóa "<b>${esc(input ? input.value : '')}</b>".`}
-        </p>
-        <button class="btn au sm" onclick="clearLibSearch(); setTopicFilter('');"><ion-icon name="refresh-outline"></ion-icon> Hiển thị tất cả bộ bài học</button>
-      </div>`;
+  const lgEl = $('#lg');
+  if (lgEl) {
+    if (l.length) {
+      lgEl.innerHTML = l.map(cardHtml).join('');
+    } else {
+      lgEl.innerHTML = `
+        <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 42px 24px;">
+          <div style="font-size: 42px; margin-bottom: 12px; color: var(--mut);"><ion-icon name="search-outline"></ion-icon></div>
+          <h3 style="margin-bottom: 8px;">Không tìm thấy bộ bài học nào</h3>
+          <p style="color: var(--mut); margin-bottom: 18px; max-width: 480px; margin-left: auto; margin-right: auto;">
+            ${currentTopicFilter ? `Không có bộ bài học nào thuộc thẻ "<b>${esc(currentTopicFilter)}</b>"${f ? ` với từ khóa "<b>${esc(input.value)}</b>"` : ''}.` : `Không tìm thấy bộ bài học nào khớp với từ khóa "<b>${esc(input ? input.value : '')}</b>".`}
+          </p>
+          <button class="btn au sm" onclick="clearLibSearch(); setTopicFilter('');"><ion-icon name="refresh-outline"></ion-icon> Hiển thị tất cả bộ bài học</button>
+        </div>`;
+    }
   }
   updateBulkDeleteButton();
 };
@@ -467,11 +473,15 @@ function updateBulkDeleteButton() {
   selectedSetIds.forEach(id => {
     if (!sets.some(set => String(set.id) === id)) selectedSetIds.delete(id);
   });
-  $('#bulk-delete-start').hidden = bulkDeleteMode;
-  $('#bulk-delete-actions').hidden = !bulkDeleteMode;
+  const startBtn = $('#bulk-delete-start');
+  if (startBtn) startBtn.hidden = bulkDeleteMode;
+  const actionsBox = $('#bulk-delete-actions');
+  if (actionsBox) actionsBox.hidden = !bulkDeleteMode;
   const button = $('#bulk-delete');
-  button.textContent = `🗑️ Xóa đã chọn (${selectedSetIds.size})`;
-  button.disabled = selectedSetIds.size === 0;
+  if (button) {
+    button.textContent = `🗑️ Xóa đã chọn (${selectedSetIds.size})`;
+    button.disabled = selectedSetIds.size === 0;
+  }
 }
 
 function enableBulkDeleteMode() {

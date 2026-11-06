@@ -131,7 +131,15 @@ const Auth = (() => {
 
   function loadSession() {
     try {
-      const raw = localStorage.getItem(STORAGE_TEACHER_SESSION_KEY) || sessionStorage.getItem(STORAGE_TEACHER_SESSION_KEY);
+      let raw = null;
+      try {
+        raw = localStorage.getItem(STORAGE_TEACHER_SESSION_KEY);
+      } catch (_) {}
+      if (!raw && typeof sessionStorage !== 'undefined' && sessionStorage) {
+        try {
+          raw = sessionStorage.getItem(STORAGE_TEACHER_SESSION_KEY);
+        } catch (_) {}
+      }
       if (!raw) {
         currentTeacherUser = null;
         return null;
@@ -163,8 +171,10 @@ const Auth = (() => {
       const str = JSON.stringify(safeUser);
       if (remember) {
         localStorage.setItem(STORAGE_TEACHER_SESSION_KEY, str);
-      } else {
+      } else if (typeof sessionStorage !== 'undefined' && sessionStorage) {
         sessionStorage.setItem(STORAGE_TEACHER_SESSION_KEY, str);
+      } else {
+        localStorage.setItem(STORAGE_TEACHER_SESSION_KEY, str);
       }
     } catch (e) {}
     return safeUser;
@@ -174,7 +184,9 @@ const Auth = (() => {
     currentTeacherUser = null;
     try {
       localStorage.removeItem(STORAGE_TEACHER_SESSION_KEY);
-      sessionStorage.removeItem(STORAGE_TEACHER_SESSION_KEY);
+      if (typeof sessionStorage !== 'undefined' && sessionStorage) {
+        sessionStorage.removeItem(STORAGE_TEACHER_SESSION_KEY);
+      }
     } catch (e) {}
   }
 

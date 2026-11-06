@@ -17,6 +17,7 @@ window.uid = uid;
 const T_ = { mc: 'Trắc nghiệm', short: 'Trả lời ngắn', fill: 'Điền từ', tf: 'Đúng/Sai', img: 'Có hình ảnh', match: 'Nối cặp' };
 
 let sets = [];
+window.sets = sets;
 let tt, T, G, CS, EQ, ET = 'mc', IMG;
 let feedbackTimeout, feedbackCountdown;
 const selectedSetIds = new Set();
@@ -160,7 +161,9 @@ function go(n, p) {
     }
   }
   R[n] && R[n](p);
-  scrollTo(0, 0);
+  if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {
+    window.scrollTo(0, 0);
+  }
   if (typeof animateScreenIn === 'function') animateScreenIn(sc);
 }
 window.go = go;

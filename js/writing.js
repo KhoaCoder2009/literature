@@ -1381,6 +1381,7 @@ function loadWritingSets() {
       writingSets = JSON.parse(JSON.stringify(DEFAULT_WRITING_SETS));
       localStorage.setItem('vq_writing_sets', JSON.stringify(writingSets));
       localStorage.setItem('vq_writing_sets_version', v50Version);
+      window.writingSets = writingSets;
       return;
     }
 
@@ -1389,6 +1390,7 @@ function loadWritingSets() {
       let parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
         writingSets = parsed;
+        window.writingSets = writingSets;
         return;
       }
     }
@@ -1396,12 +1398,14 @@ function loadWritingSets() {
     console.warn('Lỗi nạp vq_writing_sets từ localStorage:', err);
   }
   writingSets = JSON.parse(JSON.stringify(DEFAULT_WRITING_SETS));
+  window.writingSets = writingSets;
   saveWritingSets();
 }
 
 function saveWritingSets() {
   try {
     localStorage.setItem('vq_writing_sets', JSON.stringify(writingSets));
+    window.writingSets = writingSets;
   } catch (err) {
     console.error('Không thể lưu vq_writing_sets vào localStorage:', err);
   }

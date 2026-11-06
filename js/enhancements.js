@@ -1238,14 +1238,14 @@
     const btn = document.getElementById('btn-toggle-thinking-guide');
     if (!card) return;
 
-    const isHidden = (card.style.display === 'none' || getComputedStyle(card).display === 'none');
+    const isHidden = (card.style.display === 'none' || (typeof window !== 'undefined' && typeof window.getComputedStyle === 'function' && window.getComputedStyle(card).display === 'none'));
     if (isHidden) {
       const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
       renderWorkspaceThinkingGuide(curSet);
       card.style.display = 'block';
       if (btn) {
         btn.classList.add('active');
-        const span = btn.querySelector('span');
+        const span = typeof btn.querySelector === 'function' ? btn.querySelector('span') : null;
         if (span) span.textContent = 'Thu gọn gợi ý';
       }
       toast('💡 Đã mở gợi ý tư duy dưới đề bài!', 'ok');
@@ -1253,7 +1253,7 @@
       card.style.display = 'none';
       if (btn) {
         btn.classList.remove('active');
-        const span = btn.querySelector('span');
+        const span = typeof btn.querySelector === 'function' ? btn.querySelector('span') : null;
         if (span) span.textContent = 'Gợi ý tư duy';
       }
     }
@@ -1624,7 +1624,7 @@
 
   function initReadingPressureTimer() {
     stopReadingPressureTimer();
-    const sel = document.getElementById('reading-timer-preset');
+    const sel = document.getElementById('start-reading-timer-preset') || document.getElementById('reading-timer-preset');
     const mins = sel ? parseInt(sel.value, 10) : 20;
     readingTimerModeMinutes = isNaN(mins) ? 20 : mins;
     readingTimerSecondsLeft = readingTimerModeMinutes * 60;
@@ -1743,7 +1743,7 @@
     writingCountdownNotified5m = false;
     writingCountdownNotified1m = false;
     writingCountdownEnded = false;
-    const sel = document.getElementById('writing-timer-preset');
+    const sel = document.getElementById('start-writing-timer-preset') || document.getElementById('writing-timer-preset');
     if (sel) sel.value = String(writingPressureMinutes);
     const box = document.getElementById('writing-timer-box');
     if (box) box.classList.remove('timer-warn', 'timer-danger');

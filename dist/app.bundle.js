@@ -612,6 +612,7 @@ window.uid = uid;
 const T_ = { mc: 'Trắc nghiệm', short: 'Trả lời ngắn', fill: 'Điền từ', tf: 'Đúng/Sai', img: 'Có hình ảnh', match: 'Nối cặp' };
 
 let sets = [];
+window.sets = sets;
 let tt, T, G, CS, EQ, ET = 'mc', IMG;
 let feedbackTimeout, feedbackCountdown;
 const selectedSetIds = new Set();
@@ -755,7 +756,9 @@ function go(n, p) {
     }
   }
   R[n] && R[n](p);
-  scrollTo(0, 0);
+  if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {
+    window.scrollTo(0, 0);
+  }
   if (typeof animateScreenIn === 'function') animateScreenIn(sc);
 }
 window.go = go;
@@ -982,7 +985,15 @@ const Auth = (() => {
 
   function loadSession() {
     try {
-      const raw = localStorage.getItem(STORAGE_TEACHER_SESSION_KEY) || sessionStorage.getItem(STORAGE_TEACHER_SESSION_KEY);
+      let raw = null;
+      try {
+        raw = localStorage.getItem(STORAGE_TEACHER_SESSION_KEY);
+      } catch (_) {}
+      if (!raw && typeof sessionStorage !== 'undefined' && sessionStorage) {
+        try {
+          raw = sessionStorage.getItem(STORAGE_TEACHER_SESSION_KEY);
+        } catch (_) {}
+      }
       if (!raw) {
         currentTeacherUser = null;
         return null;
@@ -1014,8 +1025,10 @@ const Auth = (() => {
       const str = JSON.stringify(safeUser);
       if (remember) {
         localStorage.setItem(STORAGE_TEACHER_SESSION_KEY, str);
-      } else {
+      } else if (typeof sessionStorage !== 'undefined' && sessionStorage) {
         sessionStorage.setItem(STORAGE_TEACHER_SESSION_KEY, str);
+      } else {
+        localStorage.setItem(STORAGE_TEACHER_SESSION_KEY, str);
       }
     } catch (e) {}
     return safeUser;
@@ -1025,7 +1038,9 @@ const Auth = (() => {
     currentTeacherUser = null;
     try {
       localStorage.removeItem(STORAGE_TEACHER_SESSION_KEY);
-      sessionStorage.removeItem(STORAGE_TEACHER_SESSION_KEY);
+      if (typeof sessionStorage !== 'undefined' && sessionStorage) {
+        sessionStorage.removeItem(STORAGE_TEACHER_SESSION_KEY);
+      }
     } catch (e) {}
   }
 
@@ -2386,7 +2401,7 @@ window.addEventListener('click', function unlockAudio() {
    ========================================================================= */
 
 const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
+const ctx = canvas && typeof canvas.getContext === 'function' ? canvas.getContext('2d') : null;
 let bgParticles = [];
 let mouseWind = { x: 0, y: 0 };
 let lastMouse = { x: 0, y: 0 };
@@ -2398,13 +2413,17 @@ try {
 } catch(e) {}
 
 function resizeCanvas() {
+  if (!canvas) return;
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   initBgParticles();
 }
-window.addEventListener('resize', resizeCanvas);
+if (canvas) {
+  window.addEventListener('resize', resizeCanvas);
+}
 
 function initBgParticles() {
+  if (!canvas) return;
   bgParticles = [];
   const count = Math.min(45, Math.floor(window.innerWidth / 32));
   for (let i = 0; i < count; i++) {
@@ -2423,7 +2442,9 @@ function initBgParticles() {
     });
   }
 }
-resizeCanvas();
+if (canvas && ctx) {
+  resizeCanvas();
+}
 
 window.addEventListener('mousemove', e => {
   const dx = e.clientX - lastMouse.x;
@@ -2485,6 +2506,7 @@ function drawAutumnLeaf(c, x, y, size, angle, opacity, isDark) {
 }
 
 function drawBackground() {
+  if (!canvas || !ctx) return;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   if (bgParticlesEnabled) {
@@ -5797,7 +5819,10 @@ function renderTopicChips(allSets, filteredSets) {
 }
 
 R.lib = () => {
-  $('#lv').hidden = 0; $('#ev').hidden = 1;
+  const lv = $('#lv');
+  const ev = $('#ev');
+  if (lv) lv.hidden = 0;
+  if (ev) ev.hidden = 1;
   updateLibTabsUI();
 
   if (currentLibTab === 'reading') {
@@ -5826,18 +5851,21 @@ R.lib = () => {
 
   renderTopicChips(sets, l);
 
-  if (l.length) {
-    $('#lg').innerHTML = l.map(cardHtml).join('');
-  } else {
-    $('#lg').innerHTML = `
-      <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 42px 24px;">
-        <div style="font-size: 42px; margin-bottom: 12px; color: var(--mut);"><ion-icon name="search-outline"></ion-icon></div>
-        <h3 style="margin-bottom: 8px;">Không tìm thấy bộ bài học nào</h3>
-        <p style="color: var(--mut); margin-bottom: 18px; max-width: 480px; margin-left: auto; margin-right: auto;">
-          ${currentTopicFilter ? `Không có bộ bài học nào thuộc thẻ "<b>${esc(currentTopicFilter)}</b>"${f ? ` với từ khóa "<b>${esc(input.value)}</b>"` : ''}.` : `Không tìm thấy bộ bài học nào khớp với từ khóa "<b>${esc(input ? input.value : '')}</b>".`}
-        </p>
-        <button class="btn au sm" onclick="clearLibSearch(); setTopicFilter('');"><ion-icon name="refresh-outline"></ion-icon> Hiển thị tất cả bộ bài học</button>
-      </div>`;
+  const lgEl = $('#lg');
+  if (lgEl) {
+    if (l.length) {
+      lgEl.innerHTML = l.map(cardHtml).join('');
+    } else {
+      lgEl.innerHTML = `
+        <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 42px 24px;">
+          <div style="font-size: 42px; margin-bottom: 12px; color: var(--mut);"><ion-icon name="search-outline"></ion-icon></div>
+          <h3 style="margin-bottom: 8px;">Không tìm thấy bộ bài học nào</h3>
+          <p style="color: var(--mut); margin-bottom: 18px; max-width: 480px; margin-left: auto; margin-right: auto;">
+            ${currentTopicFilter ? `Không có bộ bài học nào thuộc thẻ "<b>${esc(currentTopicFilter)}</b>"${f ? ` với từ khóa "<b>${esc(input.value)}</b>"` : ''}.` : `Không tìm thấy bộ bài học nào khớp với từ khóa "<b>${esc(input ? input.value : '')}</b>".`}
+          </p>
+          <button class="btn au sm" onclick="clearLibSearch(); setTopicFilter('');"><ion-icon name="refresh-outline"></ion-icon> Hiển thị tất cả bộ bài học</button>
+        </div>`;
+    }
   }
   updateBulkDeleteButton();
 };
@@ -5846,11 +5874,15 @@ function updateBulkDeleteButton() {
   selectedSetIds.forEach(id => {
     if (!sets.some(set => String(set.id) === id)) selectedSetIds.delete(id);
   });
-  $('#bulk-delete-start').hidden = bulkDeleteMode;
-  $('#bulk-delete-actions').hidden = !bulkDeleteMode;
+  const startBtn = $('#bulk-delete-start');
+  if (startBtn) startBtn.hidden = bulkDeleteMode;
+  const actionsBox = $('#bulk-delete-actions');
+  if (actionsBox) actionsBox.hidden = !bulkDeleteMode;
   const button = $('#bulk-delete');
-  button.textContent = `🗑️ Xóa đã chọn (${selectedSetIds.size})`;
-  button.disabled = selectedSetIds.size === 0;
+  if (button) {
+    button.textContent = `🗑️ Xóa đã chọn (${selectedSetIds.size})`;
+    button.disabled = selectedSetIds.size === 0;
+  }
 }
 
 function enableBulkDeleteMode() {
@@ -9662,6 +9694,7 @@ function loadWritingSets() {
       writingSets = JSON.parse(JSON.stringify(DEFAULT_WRITING_SETS));
       localStorage.setItem('vq_writing_sets', JSON.stringify(writingSets));
       localStorage.setItem('vq_writing_sets_version', v50Version);
+      window.writingSets = writingSets;
       return;
     }
 
@@ -9670,6 +9703,7 @@ function loadWritingSets() {
       let parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
         writingSets = parsed;
+        window.writingSets = writingSets;
         return;
       }
     }
@@ -9677,12 +9711,14 @@ function loadWritingSets() {
     console.warn('Lỗi nạp vq_writing_sets từ localStorage:', err);
   }
   writingSets = JSON.parse(JSON.stringify(DEFAULT_WRITING_SETS));
+  window.writingSets = writingSets;
   saveWritingSets();
 }
 
 function saveWritingSets() {
   try {
     localStorage.setItem('vq_writing_sets', JSON.stringify(writingSets));
+    window.writingSets = writingSets;
   } catch (err) {
     console.error('Không thể lưu vq_writing_sets vào localStorage:', err);
   }
@@ -11692,10 +11728,12 @@ function loadReadingData() {
       readingSets = JSON.parse(JSON.stringify(DEFAULT_READING_SETS)).map(s => ({ ...s, status: s.status || 'published' }));
     }
     localStorage.setItem('vq_reading_sets_v1', JSON.stringify(readingSets));
+    window.readingSets = readingSets;
   } catch (err) {
     console.error('Lỗi khi tải dữ liệu đọc hiểu:', err);
     readingCategories = [...DEFAULT_READING_CATEGORIES];
     readingSets = JSON.parse(JSON.stringify(DEFAULT_READING_SETS));
+    window.readingSets = readingSets;
   }
 }
 
@@ -11703,6 +11741,7 @@ function saveReadingData() {
   try {
     localStorage.setItem('vq_reading_categories_v1', JSON.stringify(readingCategories));
     localStorage.setItem('vq_reading_sets_v1', JSON.stringify(readingSets));
+    window.readingSets = readingSets;
   } catch (err) {
     console.error('Lỗi khi lưu dữ liệu đọc hiểu:', err);
   }
@@ -14358,14 +14397,14 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
     const btn = document.getElementById('btn-toggle-thinking-guide');
     if (!card) return;
 
-    const isHidden = (card.style.display === 'none' || getComputedStyle(card).display === 'none');
+    const isHidden = (card.style.display === 'none' || (typeof window !== 'undefined' && typeof window.getComputedStyle === 'function' && window.getComputedStyle(card).display === 'none'));
     if (isHidden) {
       const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
       renderWorkspaceThinkingGuide(curSet);
       card.style.display = 'block';
       if (btn) {
         btn.classList.add('active');
-        const span = btn.querySelector('span');
+        const span = typeof btn.querySelector === 'function' ? btn.querySelector('span') : null;
         if (span) span.textContent = 'Thu gọn gợi ý';
       }
       toast('💡 Đã mở gợi ý tư duy dưới đề bài!', 'ok');
@@ -14373,7 +14412,7 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
       card.style.display = 'none';
       if (btn) {
         btn.classList.remove('active');
-        const span = btn.querySelector('span');
+        const span = typeof btn.querySelector === 'function' ? btn.querySelector('span') : null;
         if (span) span.textContent = 'Gợi ý tư duy';
       }
     }
@@ -14744,7 +14783,7 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
 
   function initReadingPressureTimer() {
     stopReadingPressureTimer();
-    const sel = document.getElementById('reading-timer-preset');
+    const sel = document.getElementById('start-reading-timer-preset') || document.getElementById('reading-timer-preset');
     const mins = sel ? parseInt(sel.value, 10) : 20;
     readingTimerModeMinutes = isNaN(mins) ? 20 : mins;
     readingTimerSecondsLeft = readingTimerModeMinutes * 60;
@@ -14863,7 +14902,7 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
     writingCountdownNotified5m = false;
     writingCountdownNotified1m = false;
     writingCountdownEnded = false;
-    const sel = document.getElementById('writing-timer-preset');
+    const sel = document.getElementById('start-writing-timer-preset') || document.getElementById('writing-timer-preset');
     if (sel) sel.value = String(writingPressureMinutes);
     const box = document.getElementById('writing-timer-box');
     if (box) box.classList.remove('timer-warn', 'timer-danger');
@@ -15413,7 +15452,9 @@ function updateSettingsUI() {
     soundBtn.textContent = soundEnabled ? 'Bật' : 'Tắt';
     soundBtn.className = 'btn sm settings-action-btn ' + (soundEnabled ? 'au' : 'gh');
   }
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const isDark = (document.documentElement && typeof document.documentElement.getAttribute === 'function')
+    ? document.documentElement.getAttribute('data-theme') === 'dark'
+    : false;
   const themeBtn = $('#btn-setting-theme');
   if (themeBtn) {
     themeBtn.textContent = isDark ? 'Tối' : 'Sáng';
