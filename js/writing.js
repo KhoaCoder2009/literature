@@ -4,550 +4,10 @@
 
 const DEFAULT_WRITING_SETS = [
   {
-    "id": "doan_nlxh_01",
-    "status": "published",
-    "category": "doan-nlxh",
-    "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan_ynghia",
-    "icon": "🌱",
-    "title": "[Đoạn NLXH - Đề 1] Suy nghĩ về ý kiến: \"Áp lực tạo nên kim cương\"",
-    "prompt": "Viết đoạn văn (khoảng 200 chữ) trình bày suy nghĩ về ý kiến: \"Áp lực tạo nên kim cương\".",
-    "thinkingGuide": "• Giải thích: Áp lực là khó khăn, thử thách; kim cương biểu tượng cho thành quả rực rỡ.\n• Bàn luận (3 ý): Thứ nhất, áp lực rèn luyện cho ta ý chí, bản lĩnh kiên cường. Thứ hai, áp lực đẩy con người đến giới hạn để khám phá năng lực tiềm ẩn của bản thân. Thứ ba, không có áp lực, con người dễ nảy sinh tâm lí ỷ lại, thụt lùi.\n• Dẫn chứng: Vận động viên thể thao rèn luyện cường độ cao để đạt huy chương vàng.\n• Bài học: Biết chấp nhận và biến áp lực thành động lực phát triển.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Viết liền mạch trong 1 đoạn văn (khoảng 200 chữ, không xuống hàng): Mở đoạn (Dẫn dắt + Nêu ý kiến) ➔ Thân đoạn: Giải thích ngắn ➔ Bàn luận 3 luận điểm (Thứ nhất... Thứ hai... Thứ ba...) ➔ Dẫn chứng tiêu biểu ➔ Bài học nhận thức và hành động ➔ Kết đoạn khẳng định lại vấn đề...",
-        "guide": "• Hình thức: 01 đoạn văn duy nhất, khoảng 200 chữ, không xuống dòng.\n• Giải thích: Áp lực là nghịch cảnh, gian nan; kim cương là giá trị cao quý, thành công rực rỡ.\n• Bàn luận: 1. Thử thách tôi luyện bản lĩnh. 2. Đẩy con người vượt qua giới hạn thông thường. 3. Thiếu áp lực dễ sinh trì trệ, thỏa mãn.\n• Dẫn chứng & Bài học: Chọn 1 dẫn chứng ngắn gọn, rút ra bài học cho bản thân.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlxh_02",
-    "status": "published",
-    "category": "doan-nlxh",
-    "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan_ynghia",
-    "icon": "🌱",
-    "title": "[Đoạn NLXH - Đề 2] Ý nghĩa của việc tôn trọng sự khác biệt trong xã hội hiện đại",
-    "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về ý nghĩa của việc tôn trọng sự khác biệt trong xã hội hiện đại.",
-    "thinkingGuide": "• Bàn luận (3 ý): Thứ nhất, đối với cá nhân: giúp mỗi người tự tin phát huy thế mạnh riêng, không bị hòa tan. Thứ hai, đối với người khác: tạo ra sự thấu cảm, xóa bỏ định kiến và bạo lực ngôn từ. Thứ ba, đối với xã hội: làm cho bức tranh văn hóa đa dạng, thúc đẩy sáng tạo và đổi mới.\n• Bài học: Tránh đánh giá người khác qua lăng kính chủ quan của mình; học cách lắng nghe và bao dung.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Viết liền mạch trong 1 đoạn văn (khoảng 200 chữ, không xuống dòng): Nêu vấn đề tôn trọng sự khác biệt ➔ Ý nghĩa đối với cá nhân, cộng đồng và xã hội ➔ Bài học nhận thức...",
-        "guide": "• Hình thức: Viết liền mạch 1 đoạn văn khoảng 200 chữ.\n• Luận điểm 1: Giúp cá nhân tự tin bộc lộ cá tính, sở trường.\n• Luận điểm 2: Xóa tan định kiến, đẩy lùi kì thị và bạo lực mạng.\n• Luận điểm 3: Xây dựng cộng đồng đa sắc màu, giàu tính nhân văn và sáng tạo.\n• Bài học: Lắng nghe, thấu hiểu và tôn trọng cá tính của người khác.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlxh_03",
-    "status": "published",
-    "category": "doan-nlxh",
-    "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan_giaiphap",
-    "icon": "🌱",
-    "title": "[Đoạn NLXH - Đề 3] Trách nhiệm của thanh niên trong việc bảo vệ an ninh mạng",
-    "prompt": "Viết đoạn văn (khoảng 200 chữ) trình bày suy nghĩ về trách nhiệm của thanh niên trong việc bảo vệ an ninh mạng.",
-    "thinkingGuide": "• Hành động (3 ý): Thứ nhất, trang bị kĩ năng chọn lọc, kiểm chứng thông tin trước khi chia sẻ. Thứ hai, ứng xử văn minh, không sử dụng ngôn từ kích động, gây hấn trên không gian mạng. Thứ ba, chủ động lên tiếng tố giác các hành vi lừa đảo, phát tán tin giả.\n• Khẳng định: Không gian số lành mạnh bắt đầu từ ý thức của mỗi cá nhân.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Nêu trách nhiệm của thế hệ trẻ trên không gian mạng ➔ 3 hành động cụ thể (kiểm chứng thông tin, văn hóa ứng xử, đấu tranh với tin giả) ➔ Khẳng định...",
-        "guide": "• Mở đoạn: Khẳng định không gian mạng là một phần thiết yếu của đời sống hiện đại, đòi hỏi trách nhiệm công dân số.\n• 3 hành động: 1. Tỉnh táo trước thông tin xấu độc. 2. Lan tỏa giá trị tích cực, ứng xử văn minh. 3. Tuân thủ luật an ninh mạng, tố giác sai phạm.\n• Kết đoạn: Thông điệp hành động vì một môi trường số an toàn, văn minh.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlxh_04",
-    "status": "published",
-    "category": "doan-nlxh",
-    "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan_tachai",
-    "icon": "🌱",
-    "title": "[Đoạn NLXH - Đề 4] Tác hại của thói quen trì hoãn ở giới trẻ",
-    "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về tác hại của thói quen trì hoãn ở giới trẻ.",
-    "thinkingGuide": "• Bàn luận (3 ý): Thứ nhất, đánh mất những cơ hội quý giá để phát triển bản thân. Thứ hai, làm suy giảm uy tín, đánh mất sự tin tưởng của người khác. Thứ ba, tạo ra tâm lí lo âu, căng thẳng khi công việc dồn ứ sát hạn chót (deadline).\n• Bài học: Rèn luyện kỉ luật bản thân, chia nhỏ mục tiêu và hành động ngay lập tức.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Khái niệm trì hoãn ➔ 3 tác hại trực tiếp đối với bản thân và xã hội ➔ Giải pháp khắc phục...",
-        "guide": "• Mở đoạn: Dẫn dắt về thói quen \"để mai tính\" - kẻ cắp thời gian nguy hiểm.\n• Thân đoạn: Phân tích 3 tác hại (đánh mất thời cơ, tổn hại uy tín, kiệt sức vì áp lực dồn ứ).\n• Kết đoạn: Bài học về kỉ luật thép và hành động tức thì.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlxh_05",
-    "status": "published",
-    "category": "doan-nlxh",
-    "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan_ynghia",
-    "icon": "🌱",
-    "title": "[Đoạn NLXH - Đề 5] Bàn về câu nói: \"Đừng cố gắng trở thành người thành công, hãy cố gắng trở thành người có giá trị\"",
-    "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về câu nói: \"Đừng cố gắng trở thành người thành công, hãy cố gắng trở thành người có giá trị\".",
-    "thinkingGuide": "• Giải thích: Thành công thường đo bằng vật chất, địa vị; giá trị đo bằng sự cống hiến, ý nghĩa mang lại cho cộng đồng.\n• Bàn luận (3 ý): 1. Người có giá trị lan tỏa năng lượng tích cực, giúp đỡ người khác. 2. Giá trị tạo ra sự tôn trọng bền vững hơn những thành tích bề nổi. 3. Khi bạn nỗ lực tạo ra giá trị đích thực, thành công chân chính sẽ tự khắc đến.\n• Bài học: Tập trung hoàn thiện nhân cách và chia sẻ với xã hội.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Giải thích \"thành công\" và \"người có giá trị\" ➔ Phân tích tại sao nên sống có giá trị ➔ Bài học...",
-        "guide": "• Giải thích: Phân biệt giữa danh vọng nhất thời và giá trị nhân văn bền vững.\n• Bàn luận: Giá trị cốt lõi đến từ năng lực cống hiến và lòng trắc ẩn.\n• Bài học: Không ngừng trau dồi tri thức, đạo đức để hữu ích cho cuộc đời.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlxh_06",
-    "status": "published",
-    "category": "doan-nlxh",
-    "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan_ynghia",
-    "icon": "🌱",
-    "title": "[Đoạn NLXH - Đề 6] Sự cần thiết của kĩ năng làm việc nhóm đối với học sinh",
-    "prompt": "Viết đoạn văn (khoảng 200 chữ) trình bày suy nghĩ về sự cần thiết của kĩ năng làm việc nhóm đối với học sinh.",
-    "thinkingGuide": "• Bàn luận (3 ý): Thứ nhất, làm việc nhóm giúp bổ khuyết điểm yếu, phát huy thế mạnh của từng cá nhân. Thứ hai, tăng hiệu suất và chất lượng công việc so với làm độc lập. Thứ ba, môi trường nhóm rèn luyện kĩ năng lắng nghe, thấu cảm và giải quyết xung đột.\n• Bài học: Vượt qua cái tôi cá nhân, xây dựng tinh thần trách nhiệm tập thể.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Khẳng định vai trò của teamwork ➔ 3 lợi ích nổi bật ➔ Bài học rèn luyện trong nhà trường...",
-        "guide": "• 3 luận điểm: 1. Cộng hưởng sức mạnh trí tuệ. 2. Tối ưu thời gian và chất lượng. 3. Hoàn thiện kĩ năng mềm (giao tiếp, giải quyết vấn đề).\n• Bài học: Tôn trọng ý kiến khác biệt, chủ động nhận trách nhiệm.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlxh_07",
-    "status": "published",
-    "category": "doan-nlxh",
-    "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan_giaiphap",
-    "icon": "🌱",
-    "title": "[Đoạn NLXH - Đề 7] Những việc học sinh cần làm để xây dựng trường học hạnh phúc",
-    "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về những việc học sinh cần làm để xây dựng trường học hạnh phúc.",
-    "thinkingGuide": "• Hành động (3 ý): Đối với cá nhân: Tích cực học tập, chan hòa và mở lòng với bạn bè. Đối với tập thể: Tôn trọng thầy cô, tham gia xây dựng không gian lớp học xanh - sạch - đẹp. Tuyệt đối nói không với bạo lực học đường, cô lập và tẩy chay bạn bè.\n• Khẳng định: Hạnh phúc bắt nguồn từ sự quan tâm và tình thân ái mỗi ngày.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Khái niệm trường học hạnh phúc ➔ Việc làm cụ thể của học sinh (cá nhân, tập thể, thái độ ứng xử) ➔ Kết đoạn...",
-        "guide": "• Mở đoạn: Trường học hạnh phúc là nơi mỗi ngày đến trường là một ngày vui.\n• Hành động: 1. Tôn trọng, tri ân thầy cô. 2. Đoàn kết, không bạo lực hay cô lập bạn. 3. Chung tay giữ gìn môi trường học tập xanh - sạch.\n• Kết đoạn: Thông điệp về tình bạn và tình thầy trò.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlxh_08",
-    "status": "published",
-    "category": "doan-nlxh",
-    "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan_ynghia",
-    "icon": "🌱",
-    "title": "[Đoạn NLXH - Đề 8] Bàn về ý kiến: \"Biển lặng không tạo nên thủy thủ tài ba\"",
-    "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về ý kiến: \"Biển lặng không tạo nên thủy thủ tài ba\".",
-    "thinkingGuide": "• Giải thích: Biển lặng là hoàn cảnh thuận lợi, êm ả; thủy thủ tài ba là người có bản lĩnh xuất chúng, giàu kinh nghiệm.\n• Bàn luận (3 ý): Nghịch cảnh là phép thử lớn nhất cho lòng kiên nhẫn và ý chí. Khó khăn kích thích trí sáng tạo để tìm ra hướng đi mới. Vượt qua sóng gió giúp con người tích lũy bài học và trưởng thành sâu sắc hơn.\n• Dẫn chứng: Những tấm gương khởi nghiệp vượt qua khủng hoảng.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Giải thích ẩn dụ biển lặng - thủy thủ ➔ 3 khía cạnh giá trị của thử thách ➔ Dẫn chứng & liên hệ...",
-        "guide": "• Giải thích câu danh ngôn: Thử thách là người thầy nghiêm khắc nhưng tạo nên bản lĩnh vượt trội.\n• Phân tích: Đối mặt giông bão giúp tôi rèn thần kinh thép và năng lực ứng biến.\n• Bài học: Không né tránh khó khăn, sẵn sàng bước ra khỏi vùng an toàn.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlxh_09",
-    "status": "published",
-    "category": "doan-nlxh",
-    "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan_ynghia",
-    "icon": "🌱",
-    "title": "[Đoạn NLXH - Đề 9] Bài học về lòng biết ơn trong cuộc sống (từ phần Đọc hiểu)",
-    "prompt": "Viết đoạn văn (khoảng 200 chữ) rút ra bài học về lòng biết ơn (được gợi ra từ phần Đọc hiểu).",
-    "thinkingGuide": "• Khái quát: Nêu 1 câu khẳng định vai trò của lòng biết ơn trong cuộc sống.\n• Bàn luận (3 ý): Biết ơn giúp con người hoàn thiện nhân cách, sống tình nghĩa và khiêm nhường. Biết ơn cội nguồn, cha mẹ giúp gắn kết gia đình bền chặt. Biết ơn những người giúp đỡ mình lan tỏa vòng tròn tử tế và lòng trắc ẩn trong xã hội.\n• Bài học: Thể hiện lòng biết ơn bằng lời nói chân thành và hành động đền ơn thiết thực.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Khẳng định ý nghĩa của lòng biết ơn ➔ Phân tích 3 biểu hiện / giá trị của sự tri ân ➔ Hành động cụ thể...",
-        "guide": "• Luận điểm: 1. Nuôi dưỡng tâm hồn thuần khiết. 2. Gắn kết tình thân, đạo lí \"Uống nước nhớ nguồn\". 3. Tạo dựng xã hội nhân ái, ấm áp.\n• Kết đoạn: Tri ân cuộc đời qua những việc làm có ích mỗi ngày.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "doan_nlxh_10",
-    "status": "published",
-    "category": "doan-nlxh",
-    "categoryName": "Đoạn văn NLXH (200 chữ)",
-    "subType": "nlxh_doan_ynghia",
-    "icon": "🌱",
-    "title": "[Đoạn NLXH - Đề 10] Giá trị của sự tự học trong thời đại công nghệ số",
-    "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về giá trị của sự tự học trong thời đại công nghệ số.",
-    "thinkingGuide": "• Bàn luận (3 ý): Tự học giúp tiếp cận kho tàng tri thức khổng lồ không giới hạn qua Internet. Tự học rèn luyện tư duy phản biện, giúp chủ động chọn lọc thông tin, không bị lệ thuộc một cách thụ động vào máy móc (AI). Tự học là chìa khóa then chốt để không bị đào thải trong thị trường lao động luôn thay đổi nhanh chóng.\n• Bài học: Xây dựng kế hoạch tự học có kỉ luật và kiên trì.",
-    "sections": [
-      {
-        "id": "sec_doan_200",
-        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
-        "placeholder": "Nêu tầm quan trọng của tự học thời 4.0 ➔ 3 giá trị then chốt của năng lực tự học ➔ Thông điệp học tập suốt đời...",
-        "guide": "• Luận điểm: 1. Khai phóng tri thức vô tận. 2. Làm chủ công nghệ thay vì để công nghệ thao túng. 3. Thích ứng linh hoạt trước chuyển biến xã hội.\n• Bài học: Tinh thần \"Học, học nữa, học mãi\".",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "bai_nlxh_01",
-    "status": "published",
-    "category": "bai-nlxh",
-    "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai_tutuong",
-    "icon": "🌍",
-    "title": "[Bài NLXH - Đề 1] \"Cái rễ của học hành thì đắng cay nhưng quả của nó thì ngọt ngào\"",
-    "prompt": "Trình bày suy nghĩ về câu nói: \"Cái rễ của học hành thì đắng cay nhưng quả của nó thì ngọt ngào\" (Bài văn khoảng 600 chữ, có đủ Mở bài - Thân bài - Kết bài).",
-    "thinkingGuide": "• Mở bài: Dẫn dắt câu danh ngôn của Aristotle về bản chất quá trình học tập.\n• Thân bài:\n  - Giải thích: \"Rễ đắng cay\" là quá trình học tập vất vả, gian nan, đòi hỏi kỉ luật; \"Quả ngọt ngào\" là thành tựu, tri thức và tương lai tươi sáng.\n  - Bàn luận (3 ý): 1. Chiếm lĩnh tri thức đòi hỏi mồ hôi nước mắt, kiên trì vượt khó. 2. Thành quả nhận được là sự trưởng thành trí tuệ, cơ hội nghề nghiệp và tự do tư tưởng. 3. Đó là niềm tự hào của bản thân, gia đình và đóng góp cho xã hội.\n  - Chứng minh: Tấm gương các nhà khoa học, học sinh nghèo vượt khó.\n  - Phản đề: Phê phán thái độ lười biếng, chuộng bằng cấp, gian lận trong thi cử.\n  - Bài học: Rèn luyện ý chí vượt qua \"vị đắng\" ban đầu để đón nhận \"vị ngọt\".\n• Kết bài: Khẳng định lại ý nghĩa câu nói và lời nhắn nhủ thế hệ trẻ.",
-    "sections": [
-      {
-        "id": "sec_mb",
-        "title": "I. Mở bài",
-        "placeholder": "Dẫn dắt trực tiếp hoặc gián tiếp, giới thiệu câu danh ngôn và nêu vấn đề nghị luận...",
-        "guide": "• Nêu ngắn gọn vấn đề: Quy luật gian nan và thành quả ngọt ngào trong học tập.\n• Trích dẫn nguyên văn câu nói.",
-        "sample": ""
-      },
-      {
-        "id": "sec_tb",
-        "title": "II. Thân bài (Giải thích - Bàn luận - Dẫn chứng - Phản đề - Bài học)",
-        "placeholder": "1. Giải thích nghĩa đen và nghĩa bóng của câu nói.\n2. Bàn luận 3 khía cạnh: Vì sao quá trình học lại gian nan? Quả ngọt mang lại những giá trị gì?\n3. Dẫn chứng thực tế tiêu biểu.\n4. Phê phán lối học hình thức, lười biếng.\n5. Bài học nhận thức và hành động...",
-        "guide": "• Giải thích: Rễ đắng ➔ Quả ngọt.\n• Bàn luận: 3 luận điểm chặt chẽ kèm dẫn chứng.\n• Phản đề: Lên án thói ỷ lại, mua bằng, gian lận.\n• Giải pháp & Liên hệ bản thân.",
-        "sample": ""
-      },
-      {
-        "id": "sec_kb",
-        "title": "III. Kết bài",
-        "placeholder": "Khái quát lại giá trị của câu nói và gửi gắm thông điệp phấn đấu...",
-        "guide": "• Khẳng định câu nói là chân lí muôn đời cho người học.\n• Lời hứa hành động của bản thân.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "bai_nlxh_02",
-    "status": "published",
-    "category": "bai-nlxh",
-    "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai_hientuong",
-    "icon": "🌍",
-    "title": "[Bài NLXH - Đề 2] Hiện tượng \"nghiện\" mạng xã hội của một bộ phận giới trẻ hiện nay",
-    "prompt": "Bàn về hiện tượng \"nghiện\" mạng xã hội (TikTok, Facebook, Instagram...) của một bộ phận giới trẻ hiện nay (Bài văn khoảng 600 chữ).",
-    "thinkingGuide": "• Thực trạng: Dành quá nhiều thời gian lướt web vô bổ, lệ thuộc vào lượt like, view.\n• Tác hại (3 ý): 1. Suy giảm sức khỏe thể chất (thị lực, giấc ngủ, lười vận động). 2. Bỏ bê học tập, giảm khả năng tập trung, mất kết nối với thế giới thực. 3. Dễ bị thao túng tâm lí, lệch lạc nhận thức bởi tin giả, trào lưu độc hại.\n• Nguyên nhân: Thiếu sân chơi thực tế, tâm lí tò mò, thiếu kỉ luật tự giác.\n• Giải pháp: Cá nhân cài đặt giới hạn thời gian (screen time); Gia đình đồng hành, tạo sân chơi ngoài trời; Nhà trường định hướng sử dụng mạng văn minh.",
-    "sections": [
-      {
-        "id": "sec_mb",
-        "title": "I. Mở bài",
-        "placeholder": "Dẫn dắt sự bùng nổ của mạng xã hội và hiện tượng \"nghiện\" ở giới trẻ...",
-        "guide": "• Nêu hiện tượng đời sống đáng báo động: Nghiện mạng xã hội.",
-        "sample": ""
-      },
-      {
-        "id": "sec_tb",
-        "title": "II. Thân bài (Thực trạng - Nguyên nhân - Tác hại - Giải pháp)",
-        "placeholder": "Phân tích thực trạng ➔ 3 tác hại lớn ➔ Nguyên nhân chủ quan và khách quan ➔ Giải pháp từ cá nhân, gia đình, nhà trường...",
-        "guide": "• Phân tích rõ 3 mặt tác hại: Thể chất - Trí tuệ - Tâm lí xã hội.\n• Đề xuất giải pháp mang tính khả thi cao.",
-        "sample": ""
-      },
-      {
-        "id": "sec_kb",
-        "title": "III. Kết bài",
-        "placeholder": "Tổng kết vấn đề, khẳng định mạng xã hội là công cụ chứ không phải ông chủ...",
-        "guide": "• Làm chủ công nghệ thay vì để công nghệ thao túng cuộc đời.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "bai_nlxh_03",
-    "status": "published",
-    "category": "bai-nlxh",
-    "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai_vdxh_tpvh",
-    "icon": "🌍",
-    "title": "[Bài NLXH - Đề 3] Sức mạnh của tình yêu thương trong việc cảm hóa con người (từ bát cháo hành Chí Phèo)",
-    "prompt": "Từ sức mạnh lay động của \"bát cháo hành\" (Chí Phèo - Nam Cao), bàn về sức mạnh của tình yêu thương trong việc cảm hóa con người (Bài văn khoảng 600 chữ).",
-    "thinkingGuide": "• Dẫn dắt: Nêu biểu hiện của tình thương qua bát cháo hành của Thị Nở đánh thức lương tri Chí Phèo.\n• Bàn luận (3 ý): 1. Tình yêu thương chân thành có thể làm tan chảy những tâm hồn chai sạn, thức tỉnh phần \"người\" bị vùi lấp. 2. Tình thương thắp lên niềm tin, tạo cơ hội cho người lầm lỡ làm lại cuộc đời. 3. Xã hội tràn ngập tình thương là xã hội văn minh, triệt tiêu mầm mống cái ác.\n• Chứng minh: Những dự án giáo dục, hoàn lương cho phạm nhân bằng tình nhân ái.\n• Phản đề: Phê phán lối sống thờ ơ, vô cảm hoặc tình thương vụ lợi.\n• Bài học: Mở rộng tấm lòng trao gửi yêu thương mỗi ngày.",
-    "sections": [
-      {
-        "id": "sec_mb",
-        "title": "I. Mở bài",
-        "placeholder": "Dẫn dắt từ chi tiết bát cháo hành trong văn học đến sức mạnh tình yêu thương ngoài đời thực...",
-        "guide": "• Kết nối văn học với đời sống: Tình thương là phép màu cảm hóa.",
-        "sample": ""
-      },
-      {
-        "id": "sec_tb",
-        "title": "II. Thân bài",
-        "placeholder": "Phân tích ý nghĩa biểu tượng bát cháo hành ➔ Bàn luận sức mạnh cảm hóa của tình thương ➔ Dẫn chứng đời sống ➔ Phản đề ➔ Bài học...",
-        "guide": "• Tập trung luận điểm: Tình yêu thương chân thành đánh thức phần thiện lương.",
-        "sample": ""
-      },
-      {
-        "id": "sec_kb",
-        "title": "III. Kết bài",
-        "placeholder": "Khẳng định tình yêu thương là sợi dây kết nối bền chặt nhất...",
-        "guide": "• Lời kêu gọi sống nhân ái, bao dung.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "bai_nlxh_04",
-    "status": "published",
-    "category": "bai-nlxh",
-    "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai_tutuong",
-    "icon": "🌍",
-    "title": "[Bài NLXH - Đề 4] Bàn về quan điểm: \"Sự im lặng của người tốt còn đáng sợ hơn tiếng la hét của kẻ xấu\"",
-    "prompt": "Bàn về quan điểm: \"Sự im lặng của người tốt còn đáng sợ hơn tiếng la hét của kẻ xấu\" (Martin Luther King) (Bài văn khoảng 600 chữ).",
-    "thinkingGuide": "• Giải thích: Kẻ xấu la hét là cái ác công khai; im lặng là thái độ thờ ơ, vô cảm, thỏa hiệp với cái xấu.\n• Bàn luận (3 ý): 1. Kẻ xấu hành động công khai vì tin rằng sẽ không bị phản kháng hay trừng phạt. 2. Sự im lặng của người tốt trực tiếp dung túng, tiếp tay cho cái ác lộng hành. 3. Hậu quả là làm băng hoại đạo đức xã hội, đẩy nạn nhân vào tuyệt vọng và niềm tin công lí bị sụp đổ.\n• Chứng minh: Hiện tượng bàng quan trước bạo lực nơi công cộng, bạo lực học đường.\n• Phản đề: Phê phán hội chứng \"vô cảm\", thói \"thấy việc tốt không làm, thấy việc ác không can\".\n• Bài học: Lòng dũng cảm lên tiếng bảo vệ công lí.",
-    "sections": [
-      {
-        "id": "sec_mb",
-        "title": "I. Mở bài",
-        "placeholder": "Dẫn dắt câu nói của Martin Luther King về sự im lặng đáng sợ...",
-        "guide": "• Giới thiệu vấn đề: Nguy cơ từ sự bàng quan, thỏa hiệp với cái ác.",
-        "sample": ""
-      },
-      {
-        "id": "sec_tb",
-        "title": "II. Thân bài",
-        "placeholder": "Giải thích câu nói ➔ Phân tích tại sao im lặng lại nguy hiểm ➔ Hậu quả xã hội ➔ Dẫn chứng ➔ Giải pháp...",
-        "guide": "• Phân tích sâu: Im lặng không phải là trung lập, mà là đồng lõa.",
-        "sample": ""
-      },
-      {
-        "id": "sec_kb",
-        "title": "III. Kết bài",
-        "placeholder": "Khẳng định giá trị của tiếng nói dũng cảm vì công lí...",
-        "guide": "• Thông điệp: Dũng cảm đứng về lẽ phải.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "bai_nlxh_05",
-    "status": "published",
-    "category": "bai-nlxh",
-    "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai_hientuong",
-    "icon": "🌍",
-    "title": "[Bài NLXH - Đề 5] Phong trào thiện nguyện, tương thân tương ái của thế hệ Gen Z trong cứu trợ thiên tai",
-    "prompt": "Viết bài văn nghị luận về phong trào thiện nguyện, tương thân tương ái của thế hệ Gen Z trong các đợt cứu trợ thiên tai (Bài văn khoảng 600 chữ).",
-    "thinkingGuide": "• Khái quát: Khẳng định tinh thần trách nhiệm, lòng nhân ái của thế hệ trẻ trước biến cố thiên tai bão lũ.\n• Bàn luận (3 ý): 1. Kế thừa và phát huy truyền thống \"Lá lành đùm lá rách\" theo cách hiện đại (ứng dụng công nghệ, sao kê minh bạch, livestream kết nối). 2. Lan tỏa hình ảnh thanh niên năng động, thấu cảm và trách nhiệm. 3. Kịp thời tiếp sức đồng bào vượt qua khó khăn vật chất lẫn tinh thần.\n• Dẫn chứng: Các đội nhóm cứu trợ thanh niên trong bão Yagi.\n• Phản đề: Phê phán hiện tượng \"làm màu\", trục lợi truyền thông từ hoạt động từ thiện.\n• Bài học: Thiện nguyện phải xuất phát từ cái tâm trong sáng và tổ chức khoa học.",
-    "sections": [
-      {
-        "id": "sec_mb",
-        "title": "I. Mở bài",
-        "placeholder": "Giới thiệu tinh thần thiện nguyện của tuổi trẻ trong hoạn nạn...",
-        "guide": "• Nêu vấn đề: Dấu ấn nhân ái của Gen Z trong cứu trợ thiên tai.",
-        "sample": ""
-      },
-      {
-        "id": "sec_tb",
-        "title": "II. Thân bài",
-        "placeholder": "Biểu hiện hoạt động thiện nguyện Gen Z ➔ Ý nghĩa xã hội to lớn ➔ Sự đổi mới về phương thức minh bạch ➔ Mặt trái cần tránh ➔ Bài học...",
-        "guide": "• Nêu bật tính mới: Tinh thần tình nguyện gắn liền chuyển đổi số và minh bạch.",
-        "sample": ""
-      },
-      {
-        "id": "sec_kb",
-        "title": "III. Kết bài",
-        "placeholder": "Khẳng định niềm tin vào thế hệ trẻ tiếp nối truyền thống tốt đẹp của dân tộc...",
-        "guide": "• Niềm tự hào về sức trẻ Việt Nam.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "bai_nlxh_06",
-    "status": "published",
-    "category": "bai-nlxh",
-    "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai_vdxh_tpvh",
-    "icon": "🌍",
-    "title": "[Bài NLXH - Đề 6] Khát vọng hạnh phúc của con người trong nghịch cảnh (từ Vợ nhặt - Kim Lân)",
-    "prompt": "Từ quyết định \"nhặt vợ\" của Tràng giữa nạn đói (Vợ nhặt - Kim Lân), bàn về khát vọng hạnh phúc của con người trong nghịch cảnh (Bài văn khoảng 600 chữ).",
-    "thinkingGuide": "• Dẫn dắt: Quyết định liều lĩnh mà nhân văn của Tràng giữa ranh giới sự sống và cái chết năm 1945.\n• Bàn luận (3 ý): 1. Trong tận cùng bi đát, con người không nghĩ đến cái chết mà luôn hướng về sự sống và tương lai. 2. Khát vọng hạnh phúc gia đình là sức mạnh nội sinh kì diệu giúp con người vượt qua sợ hãi. 3. Sự cưu mang, sưởi ấm lẫn nhau trong nghịch cảnh thắp lên ánh sáng của niềm hi vọng và phẩm giá con người.\n• Dẫn chứng: Những tấm gương chiến thắng bệnh tật, vượt khó vươn lên xây dựng mái ấm.\n• Phản đề: Phê phán thái độ buông xuôi, tuyệt vọng khi gặp trắc trở.\n• Bài học: Giữ vững niềm tin yêu cuộc sống dù trong hoàn cảnh ngặt nghèo nhất.",
-    "sections": [
-      {
-        "id": "sec_mb",
-        "title": "I. Mở bài",
-        "placeholder": "Từ chuyện \"nhặt vợ\" giữa nạn đói đến thông điệp muôn thuở về khát vọng hạnh phúc...",
-        "guide": "• Nêu vấn đề: Sức sống bất diệt của niềm khao khát hạnh phúc.",
-        "sample": ""
-      },
-      {
-        "id": "sec_tb",
-        "title": "II. Thân bài",
-        "placeholder": "Ý nghĩa hành động của Tràng ➔ Bàn luận bản chất khát vọng hạnh phúc trong nghịch cảnh ➔ Dẫn chứng cuộc sống ➔ Bài học...",
-        "guide": "• Nhấn mạnh: Nghịch cảnh có thể cướp đi vật chất nhưng không thể dập tắt khát vọng yêu thương.",
-        "sample": ""
-      },
-      {
-        "id": "sec_kb",
-        "title": "III. Kết bài",
-        "placeholder": "Khẳng định niềm tin vào sự sống và hạnh phúc chân chính...",
-        "guide": "• Tổng kết giá trị nhân văn.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "bai_nlxh_07",
-    "status": "published",
-    "category": "bai-nlxh",
-    "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai_tutuong",
-    "icon": "🌍",
-    "title": "[Bài NLXH - Đề 7] \"Nếu không có mục đích, anh không làm được gì cả...\"",
-    "prompt": "Trình bày suy nghĩ về câu nói: \"Nếu không có mục đích, anh không làm được gì cả. Anh cũng không làm được gì vĩ đại nếu mục đích tầm thường\" (Bài văn khoảng 600 chữ).",
-    "thinkingGuide": "• Giải thích: Mục đích là đích đến, kim chỉ nam định hướng cho hành động; mục đích tầm thường chỉ phục vụ tư lợi ích kỉ, mục đích vĩ đại hướng tới cống hiến cho nhân loại.\n• Bàn luận (3 ý): 1. Sống không mục đích như con thuyền không bánh lái, lênh đênh và dễ gục ngã trước sóng gió. 2. Mục đích nhỏ nhoi chỉ giới hạn năng lực con người trong vòng an toàn hạn hẹp. 3. Mục đích cao cả (vì cộng đồng, vì dân tộc) mới đánh thức tiềm năng vô hạn và tạo ra những thành tựu vĩ đại lưu danh muôn đời.\n• Chứng minh: Chủ tịch Hồ Chí Minh ra đi tìm đường cứu nước với mục đích giải phóng dân tộc.\n• Phản đề: Phê phán lối sống vô định, \"nước chảy bèo trôi\" của một bộ phận người trẻ.\n• Bài học: Xác định mục tiêu sống cao đẹp và lập kế hoạch kiên định theo đuổi.",
-    "sections": [
-      {
-        "id": "sec_mb",
-        "title": "I. Mở bài",
-        "placeholder": "Dẫn dắt câu danh ngôn và khẳng định tầm quan trọng của mục đích sống...",
-        "guide": "• Giới thiệu câu nói và vấn đề mục tiêu, lí tưởng sống.",
-        "sample": ""
-      },
-      {
-        "id": "sec_tb",
-        "title": "II. Thân bài",
-        "placeholder": "Giải thích câu nói ➔ 3 luận điểm về vai trò của mục đích và tầm vóc của mục đích cao cả ➔ Dẫn chứng ➔ Phê phán ➔ Hành động...",
-        "guide": "• Phân tích hai vế: Cần có mục đích & Cần có mục đích lớn lao.",
-        "sample": ""
-      },
-      {
-        "id": "sec_kb",
-        "title": "III. Kết bài",
-        "placeholder": "Khẳng định: Chọn cho mình một ngọn hải đăng xứng đáng để cuộc đời tỏa sáng...",
-        "guide": "• Lời nhắn nhủ tuổi trẻ.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "bai_nlxh_08",
-    "status": "published",
-    "category": "bai-nlxh",
-    "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai_hientuong",
-    "icon": "🌍",
-    "title": "[Bài NLXH - Đề 8] Hiện tượng chạy theo lối sống phô trương, chuộng hình thức (sống ảo) ở học sinh",
-    "prompt": "Bàn về hiện tượng chạy theo lối sống phô trương, chuộng hình thức (sống ảo) của một bộ phận học sinh hiện nay (Bài văn khoảng 600 chữ).",
-    "thinkingGuide": "• Thực trạng: Đua đòi đồ hiệu, check-in sang chảnh vượt quá điều kiện kinh tế gia đình, chụp ảnh khoe mẽ trên mạng.\n• Tác hại (3 ý): 1. Tạo gánh nặng tài chính đè nặng lên vai cha mẹ. 2. Đánh mất giá trị thực, rơi vào lối sống giả tạo, luôn thấp thỏm lo sợ bị phát hiện. 3. Dễ sa ngã vào tệ nạn xã hội hoặc đánh đổi phẩm giá để thỏa mãn nhu cầu vật chất bề nổi.\n• Nguyên nhân: Tâm lí sĩ diện, thiếu bản lĩnh, ảnh hưởng từ văn hóa thần tượng lệch lạc.\n• Giải pháp: Nhận thức giá trị thực của con người nằm ở tri thức và đạo đức; gia đình định hướng lối sống giản dị, lành mạnh.",
-    "sections": [
-      {
-        "id": "sec_mb",
-        "title": "I. Mở bài",
-        "placeholder": "Dẫn dắt lối sống ảo, chuộng hình thức đang len lỏi vào học đường...",
-        "guide": "• Nêu hiện tượng sống ảo, phô trương của học sinh.",
-        "sample": ""
-      },
-      {
-        "id": "sec_tb",
-        "title": "II. Thân bài",
-        "placeholder": "Biểu hiện sống ảo ➔ Tác hại nghiêm trọng ➔ Căn nguyên vấn đề ➔ Giải pháp thức tỉnh...",
-        "guide": "• Phân biệt giữa nhu cầu làm đẹp chính đáng và lối sống phô trương độc hại.",
-        "sample": ""
-      },
-      {
-        "id": "sec_kb",
-        "title": "III. Kết bài",
-        "placeholder": "Thông điệp: \"Tốt gỗ hơn tốt nước sơn\", hãy tỏa sáng bằng vẻ đẹp bên trong...",
-        "guide": "• Tổng kết giá trị chân thực của bản thân.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "bai_nlxh_09",
-    "status": "published",
-    "category": "bai-nlxh",
-    "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai_vdxh_tpvh",
-    "icon": "🌍",
-    "title": "[Bài NLXH - Đề 9] Ranh giới giữa đam mê cá nhân và trách nhiệm với cộng đồng (từ Vũ Như Tô)",
-    "prompt": "Từ hình ảnh người nghệ sĩ Vũ Như Tô xây Cửu Trùng Đài, bàn về ranh giới giữa đam mê cá nhân và trách nhiệm với cộng đồng (Bài văn khoảng 600 chữ).",
-    "thinkingGuide": "• Dẫn dắt: Bi kịch của Vũ Như Tô - nghệ sĩ tài ba say mê cái đẹp tuyệt đỉnh nhưng gián tiếp bóc lột nhân dân lầm than.\n• Bàn luận (3 ý): 1. Đam mê cá nhân là động lực thúc đẩy sáng tạo, vươn tới đỉnh cao nghề nghiệp. 2. Tuy nhiên, nếu đam mê đó mù quáng, bất chấp đạo lí và chà đạp lên lợi ích sống còn của cộng đồng thì sẽ trở thành tội ác. 3. Trách nhiệm cao nhất của mọi nghề nghiệp và đam mê là phụng sự con người, hướng về nhân sinh.\n• Chứng minh: Sự phát triển công nghệ AI, y sinh học cần đi đôi với đạo đức xã hội.\n• Phản đề: Phê phán lối sống ích kỉ \"chỉ biết mình\", xem nhẹ lợi ích tập thể.\n• Bài học: Đặt đam mê cá nhân trong sự hài hòa với lợi ích chung của đất nước.",
-    "sections": [
-      {
-        "id": "sec_mb",
-        "title": "I. Mở bài",
-        "placeholder": "Từ bi kịch Cửu Trùng Đài đến vấn đề muôn thuở: Đam mê cá nhân và trách nhiệm cộng đồng...",
-        "guide": "• Nêu mối quan hệ biện chứng giữa khát vọng cá nhân và lợi ích nhân sinh.",
-        "sample": ""
-      },
-      {
-        "id": "sec_tb",
-        "title": "II. Thân bài",
-        "placeholder": "Phân tích bài học Vũ Như Tô ➔ Vai trò của đam mê ➔ Giới hạn đạo đức của đam mê ➔ Trách nhiệm xã hội ➔ Dẫn chứng thời đại ➔ Bài học...",
-        "guide": "• Phân tích sâu: Nghệ thuật vị nhân sinh, khoa học vị nhân sinh.",
-        "sample": ""
-      },
-      {
-        "id": "sec_kb",
-        "title": "III. Kết bài",
-        "placeholder": "Khẳng định đam mê chỉ thực sự rực rỡ khi nó mang lại hạnh phúc cho tha nhân...",
-        "guide": "• Thông điệp sống cống hiến.",
-        "sample": ""
-      }
-    ]
-  },
-  {
-    "id": "bai_nlxh_10",
-    "status": "published",
-    "category": "bai-nlxh",
-    "categoryName": "Bài văn NLXH (600 chữ)",
-    "subType": "nlxh_bai_tutuong",
-    "icon": "🌍",
-    "title": "[Bài NLXH - Đề 10] Bàn về ý kiến: \"Tôn trọng người khác chính là tôn trọng chính mình\"",
-    "prompt": "Bàn về ý kiến: \"Tôn trọng người khác chính là tôn trọng chính mình\" (Bài văn khoảng 600 chữ).",
-    "thinkingGuide": "• Giải thích: Tôn trọng là thái độ công nhận giá trị, nhân phẩm và sự bình đẳng của người khác.\n• Bàn luận (3 ý): 1. Cách bạn đối xử với người khác phản chiếu trực tiếp phông văn hóa và nhân cách của chính bạn. 2. Khi bạn trao đi sự tôn trọng, bạn thiết lập tiêu chuẩn để người khác đối xử tương tự với bạn. 3. Một xã hội xây dựng trên nền tảng tôn trọng sẽ triệt tiêu xung đột, bạo lực và gắn kết hòa bình bền vững.\n• Chứng minh: Văn hóa xếp hàng, ứng xử nơi công cộng, tôn trọng sự riêng tư.\n• Phản đề: Phê phán thái độ trịch thượng, coi thường người yếu thế.\n• Bài học: Học cách cúi đầu lắng nghe, cư xử nhã nhặn từ những việc nhỏ nhất.",
-    "sections": [
-      {
-        "id": "sec_mb",
-        "title": "I. Mở bài",
-        "placeholder": "Dẫn dắt về quy luật ứng xử tương hỗ và giới thiệu câu châm ngôn...",
-        "guide": "• Giới thiệu vấn đề: Tôn trọng người khác là tấm gương phản chiếu bản thân.",
-        "sample": ""
-      },
-      {
-        "id": "sec_tb",
-        "title": "II. Thân bài",
-        "placeholder": "Giải thích khái niệm ➔ 3 lí do tôn trọng người khác là tôn trọng mình ➔ Dẫn chứng ứng xử đẹp ➔ Phê phán thói kiêu ngạo ➔ Bài học...",
-        "guide": "• Nhấn mạnh: Muốn nhận được sự tôn trọng, trước hết phải biết trao đi sự tôn trọng.",
-        "sample": ""
-      },
-      {
-        "id": "sec_kb",
-        "title": "III. Kết bài",
-        "placeholder": "Khẳng định giá trị của lòng tôn trọng trong việc kiến tạo thế giới văn minh...",
-        "guide": "• Tổng kết và cam kết hành động.",
-        "sample": ""
-      }
-    ]
-  },
-  {
     "id": "doan_nlvh_01",
     "status": "published",
     "category": "doan-nlvh",
-    "categoryName": "Đoạn văn NLVH (200 chữ)",
+    "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_nt_truyen",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 1] Phân tích ý nghĩa chi tiết \"tiếng chửi\" mở đầu truyện ngắn Chí Phèo (Nam Cao)",
@@ -567,7 +27,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "doan_nlvh_02",
     "status": "published",
     "category": "doan-nlvh",
-    "categoryName": "Đoạn văn NLVH (200 chữ)",
+    "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_nt_truyen",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 2] Phân tích tác dụng điểm nhìn trần thuật từ bà cụ Tứ khi nhìn nàng dâu mới (Vợ nhặt)",
@@ -587,7 +47,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "doan_nlvh_03",
     "status": "published",
     "category": "doan-nlvh",
-    "categoryName": "Đoạn văn NLVH (200 chữ)",
+    "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_nt_truyen",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 3] Phân tích tình huống truyện độc đáo trong tác phẩm Vợ nhặt (Kim Lân)",
@@ -607,7 +67,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "doan_nlvh_04",
     "status": "published",
     "category": "doan-nlvh",
-    "categoryName": "Đoạn văn NLVH (200 chữ)",
+    "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_nt_tho",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 4] Hiệu quả của nghệ thuật đối và từ láy trong hai câu thơ Tràng giang (Huy Cận)",
@@ -627,7 +87,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "doan_nlvh_05",
     "status": "published",
     "category": "doan-nlvh",
-    "categoryName": "Đoạn văn NLVH (200 chữ)",
+    "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_camxuc_tho",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 5] Niềm khao khát tự do qua khổ thơ cuối bài Nhớ đồng (Tố Hữu)",
@@ -647,7 +107,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "doan_nlvh_06",
     "status": "published",
     "category": "doan-nlvh",
-    "categoryName": "Đoạn văn NLVH (200 chữ)",
+    "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_camxuc_tho",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 6] Diễn biến tâm lí Thúy Kiều qua 8 câu thơ cuối đoạn trích Trao duyên (Nguyễn Du)",
@@ -667,7 +127,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "doan_nlvh_07",
     "status": "published",
     "category": "doan-nlvh",
-    "categoryName": "Đoạn văn NLVH (200 chữ)",
+    "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_nt_truyen",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 7] Mâu thuẫn kịch qua lời thoại Vũ Như Tô khi bị quân khởi loạn bắt (Hồi V, Vũ Như Tô)",
@@ -687,7 +147,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "doan_nlvh_08",
     "status": "published",
     "category": "doan-nlvh",
-    "categoryName": "Đoạn văn NLVH (200 chữ)",
+    "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_nhanvat",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 8] Thái độ của nhân vật Đan Thiềm khi khuyên Vũ Như Tô chạy trốn (Hồi V, Vũ Như Tô)",
@@ -707,7 +167,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "doan_nlvh_09",
     "status": "published",
     "category": "doan-nlvh",
-    "categoryName": "Đoạn văn NLVH (200 chữ)",
+    "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_chude",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 9] Vẻ đẹp sông Hương qua chi tiết \"cô gái Di-gan phóng khoáng và man dại\" (Hoàng Phủ Ngọc Tường)",
@@ -727,7 +187,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "doan_nlvh_10",
     "status": "published",
     "category": "doan-nlvh",
-    "categoryName": "Đoạn văn NLVH (200 chữ)",
+    "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_chude",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 10] Sự chặt chẽ của lập luận trong phần mở đầu văn bản Đại cáo bình Ngô (Nguyễn Trãi)",
@@ -747,7 +207,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "doan_nlvh_11",
     "status": "published",
     "category": "doan-nlvh",
-    "categoryName": "Đoạn văn NLVH (200 chữ)",
+    "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_nt_truyen",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 11] Phân tích chi tiết \"cái cúi đầu\" của viên quản ngục trong Chữ người tử tù (Nguyễn Tuân)",
@@ -767,7 +227,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "doan_nlvh_12",
     "status": "published",
     "category": "doan-nlvh",
-    "categoryName": "Đoạn văn NLVH (200 chữ)",
+    "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_nt_tho",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 12] Bức tranh chiều xuân qua 4 câu thơ đầu bài Chiều xuân (Anh Thơ)",
@@ -787,7 +247,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "doan_nlvh_13",
     "status": "published",
     "category": "doan-nlvh",
-    "categoryName": "Đoạn văn NLVH (200 chữ)",
+    "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_nhanvat",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 13] Tâm trạng nhân vật Hộ khi tỉnh rượu nhận ra bạo hành vợ con (Đời thừa - Nam Cao)",
@@ -807,7 +267,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "doan_nlvh_14",
     "status": "published",
     "category": "doan-nlvh",
-    "categoryName": "Đoạn văn NLVH (200 chữ)",
+    "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_camxuc_tho",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 14] Nỗi nhớ làng quê qua 4 câu thơ đầu bài Quê hương (Tế Hanh)",
@@ -827,7 +287,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "doan_nlvh_15",
     "status": "published",
     "category": "doan-nlvh",
-    "categoryName": "Đoạn văn NLVH (200 chữ)",
+    "categoryName": "Đoạn nghị luận văn học",
     "subType": "nlvh_doan_nt_truyen",
     "icon": "🖋️",
     "title": "[Đoạn NLVH - Đề 15] Điểm nhìn và cảm xúc nhân vật Thanh khi bước vào khu vườn nhà bà (Dưới bóng hoàng lan)",
@@ -847,7 +307,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "bai_nlvh_01",
     "status": "published",
     "category": "bai-nlvh",
-    "categoryName": "Bài văn NLVH (600 chữ)",
+    "categoryName": "Bài nghị luận văn học",
     "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 1] Phân tích nội dung và nghệ thuật của bài thơ Tràng giang (Huy Cận)",
@@ -881,7 +341,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "bai_nlvh_02",
     "status": "published",
     "category": "bai-nlvh",
-    "categoryName": "Bài văn NLVH (600 chữ)",
+    "categoryName": "Bài nghị luận văn học",
     "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 2] Quá trình lưu manh hóa và bi kịch cự tuyệt quyền làm người của Chí Phèo (Nam Cao)",
@@ -915,7 +375,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "bai_nlvh_03",
     "status": "published",
     "category": "bai-nlvh",
-    "categoryName": "Bài văn NLVH (600 chữ)",
+    "categoryName": "Bài nghị luận văn học",
     "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 3] Cách tạo mâu thuẫn/xung đột kịch trong Hồi V vở kịch Vũ Như Tô (Nguyễn Huy Tưởng)",
@@ -949,7 +409,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "bai_nlvh_04",
     "status": "published",
     "category": "bai-nlvh",
-    "categoryName": "Bài văn NLVH (600 chữ)",
+    "categoryName": "Bài nghị luận văn học",
     "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 4] Tình huống truyện và diễn biến tâm trạng nhân vật Tràng (Vợ nhặt - Kim Lân)",
@@ -983,7 +443,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "bai_nlvh_05",
     "status": "published",
     "category": "bai-nlvh",
-    "categoryName": "Bài văn NLVH (600 chữ)",
+    "categoryName": "Bài nghị luận văn học",
     "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 5] Phân tích đoạn thơ Trao duyên. Qua đó đánh giá tài nghệ miêu tả nội tâm của Nguyễn Du",
@@ -1017,7 +477,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "bai_nlvh_06",
     "status": "published",
     "category": "bai-nlvh",
-    "categoryName": "Bài văn NLVH (600 chữ)",
+    "categoryName": "Bài nghị luận văn học",
     "subType": "nlvh_bai_sosanh",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 6] Hình tượng sông Hương ở khúc thượng nguồn và khi về đồng bằng (Hoàng Phủ Ngọc Tường)",
@@ -1051,7 +511,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "bai_nlvh_07",
     "status": "published",
     "category": "bai-nlvh",
-    "categoryName": "Bài văn NLVH (600 chữ)",
+    "categoryName": "Bài nghị luận văn học",
     "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 7] Mạch cảm xúc và khát vọng tự do qua bài thơ Nhớ đồng (Tố Hữu)",
@@ -1085,7 +545,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "bai_nlvh_08",
     "status": "published",
     "category": "bai-nlvh",
-    "categoryName": "Bài văn NLVH (600 chữ)",
+    "categoryName": "Bài nghị luận văn học",
     "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 8] Diễn biến tâm trạng Chí Phèo sau đêm say rượu gặp Thị Nở (Nam Cao)",
@@ -1119,7 +579,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "bai_nlvh_09",
     "status": "published",
     "category": "bai-nlvh",
-    "categoryName": "Bài văn NLVH (600 chữ)",
+    "categoryName": "Bài nghị luận văn học",
     "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 9] Vẻ đẹp khuất lấp của người vợ nhặt trong tác phẩm cùng tên của Kim Lân",
@@ -1153,7 +613,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "bai_nlvh_10",
     "status": "published",
     "category": "bai-nlvh",
-    "categoryName": "Bài văn NLVH (600 chữ)",
+    "categoryName": "Bài nghị luận văn học",
     "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 10] Bức tranh mùa thu và tâm trạng thi nhân qua 2 khổ đầu bài Đây mùa thu tới (Xuân Diệu)",
@@ -1187,7 +647,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "bai_nlvh_11",
     "status": "published",
     "category": "bai-nlvh",
-    "categoryName": "Bài văn NLVH (600 chữ)",
+    "categoryName": "Bài nghị luận văn học",
     "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 11] Phân tích nội dung và nghệ thuật của bài thơ Tương tư (Nguyễn Bính)",
@@ -1221,7 +681,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "bai_nlvh_12",
     "status": "published",
     "category": "bai-nlvh",
-    "categoryName": "Bài văn NLVH (600 chữ)",
+    "categoryName": "Bài nghị luận văn học",
     "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 12] Vẻ đẹp hình tượng nhân vật Huấn Cao trong tác phẩm Chữ người tử tù (Nguyễn Tuân)",
@@ -1255,7 +715,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "bai_nlvh_13",
     "status": "published",
     "category": "bai-nlvh",
-    "categoryName": "Bài văn NLVH (600 chữ)",
+    "categoryName": "Bài nghị luận văn học",
     "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 13] Bức tranh thiên nhiên và tâm trạng con người qua bài thơ Đây thôn Vĩ Dạ (Hàn Mặc Tử)",
@@ -1289,7 +749,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "bai_nlvh_14",
     "status": "published",
     "category": "bai-nlvh",
-    "categoryName": "Bài văn NLVH (600 chữ)",
+    "categoryName": "Bài nghị luận văn học",
     "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 14] Bi kịch tinh thần và giá trị nhân đạo trong truyện ngắn Đời thừa (Nam Cao)",
@@ -1323,7 +783,7 @@ const DEFAULT_WRITING_SETS = [
     "id": "bai_nlvh_15",
     "status": "published",
     "category": "bai-nlvh",
-    "categoryName": "Bài văn NLVH (600 chữ)",
+    "categoryName": "Bài nghị luận văn học",
     "subType": "nlvh_bai_1tacpham",
     "icon": "📜",
     "title": "[Bài NLVH - Đề 15] Vẻ đẹp thiên nhiên và cái tôi tác giả trong Tháng Giêng mơ về trăng non rét ngọt (Vũ Bằng)",
@@ -1352,6 +812,546 @@ const DEFAULT_WRITING_SETS = [
         "sample": ""
       }
     ]
+  },
+  {
+    "id": "doan_nlxh_01",
+    "status": "published",
+    "category": "doan-nlxh",
+    "categoryName": "Đoạn văn nghị luận xã hội",
+    "subType": "nlxh_doan_ynghia",
+    "icon": "🌱",
+    "title": "[Đoạn NLXH - Đề 1] Suy nghĩ về ý kiến: \"Áp lực tạo nên kim cương\"",
+    "prompt": "Viết đoạn văn (khoảng 200 chữ) trình bày suy nghĩ về ý kiến: \"Áp lực tạo nên kim cương\".",
+    "thinkingGuide": "• Giải thích: Áp lực là khó khăn, thử thách; kim cương biểu tượng cho thành quả rực rỡ.\n• Bàn luận (3 ý): Thứ nhất, áp lực rèn luyện cho ta ý chí, bản lĩnh kiên cường. Thứ hai, áp lực đẩy con người đến giới hạn để khám phá năng lực tiềm ẩn của bản thân. Thứ ba, không có áp lực, con người dễ nảy sinh tâm lí ỷ lại, thụt lùi.\n• Dẫn chứng: Vận động viên thể thao rèn luyện cường độ cao để đạt huy chương vàng.\n• Bài học: Biết chấp nhận và biến áp lực thành động lực phát triển.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
+        "placeholder": "Viết liền mạch trong 1 đoạn văn (khoảng 200 chữ, không xuống hàng): Mở đoạn (Dẫn dắt + Nêu ý kiến) ➔ Thân đoạn: Giải thích ngắn ➔ Bàn luận 3 luận điểm (Thứ nhất... Thứ hai... Thứ ba...) ➔ Dẫn chứng tiêu biểu ➔ Bài học nhận thức và hành động ➔ Kết đoạn khẳng định lại vấn đề...",
+        "guide": "• Hình thức: 01 đoạn văn duy nhất, khoảng 200 chữ, không xuống dòng.\n• Giải thích: Áp lực là nghịch cảnh, gian nan; kim cương là giá trị cao quý, thành công rực rỡ.\n• Bàn luận: 1. Thử thách tôi luyện bản lĩnh. 2. Đẩy con người vượt qua giới hạn thông thường. 3. Thiếu áp lực dễ sinh trì trệ, thỏa mãn.\n• Dẫn chứng & Bài học: Chọn 1 dẫn chứng ngắn gọn, rút ra bài học cho bản thân.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlxh_02",
+    "status": "published",
+    "category": "doan-nlxh",
+    "categoryName": "Đoạn văn nghị luận xã hội",
+    "subType": "nlxh_doan_ynghia",
+    "icon": "🌱",
+    "title": "[Đoạn NLXH - Đề 2] Ý nghĩa của việc tôn trọng sự khác biệt trong xã hội hiện đại",
+    "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về ý nghĩa của việc tôn trọng sự khác biệt trong xã hội hiện đại.",
+    "thinkingGuide": "• Bàn luận (3 ý): Thứ nhất, đối với cá nhân: giúp mỗi người tự tin phát huy thế mạnh riêng, không bị hòa tan. Thứ hai, đối với người khác: tạo ra sự thấu cảm, xóa bỏ định kiến và bạo lực ngôn từ. Thứ ba, đối với xã hội: làm cho bức tranh văn hóa đa dạng, thúc đẩy sáng tạo và đổi mới.\n• Bài học: Tránh đánh giá người khác qua lăng kính chủ quan của mình; học cách lắng nghe và bao dung.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
+        "placeholder": "Viết liền mạch trong 1 đoạn văn (khoảng 200 chữ, không xuống dòng): Nêu vấn đề tôn trọng sự khác biệt ➔ Ý nghĩa đối với cá nhân, cộng đồng và xã hội ➔ Bài học nhận thức...",
+        "guide": "• Hình thức: Viết liền mạch 1 đoạn văn khoảng 200 chữ.\n• Luận điểm 1: Giúp cá nhân tự tin bộc lộ cá tính, sở trường.\n• Luận điểm 2: Xóa tan định kiến, đẩy lùi kì thị và bạo lực mạng.\n• Luận điểm 3: Xây dựng cộng đồng đa sắc màu, giàu tính nhân văn và sáng tạo.\n• Bài học: Lắng nghe, thấu hiểu và tôn trọng cá tính của người khác.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlxh_03",
+    "status": "published",
+    "category": "doan-nlxh",
+    "categoryName": "Đoạn văn nghị luận xã hội",
+    "subType": "nlxh_doan_giaiphap",
+    "icon": "🌱",
+    "title": "[Đoạn NLXH - Đề 3] Trách nhiệm của thanh niên trong việc bảo vệ an ninh mạng",
+    "prompt": "Viết đoạn văn (khoảng 200 chữ) trình bày suy nghĩ về trách nhiệm của thanh niên trong việc bảo vệ an ninh mạng.",
+    "thinkingGuide": "• Hành động (3 ý): Thứ nhất, trang bị kĩ năng chọn lọc, kiểm chứng thông tin trước khi chia sẻ. Thứ hai, ứng xử văn minh, không sử dụng ngôn từ kích động, gây hấn trên không gian mạng. Thứ ba, chủ động lên tiếng tố giác các hành vi lừa đảo, phát tán tin giả.\n• Khẳng định: Không gian số lành mạnh bắt đầu từ ý thức của mỗi cá nhân.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
+        "placeholder": "Nêu trách nhiệm của thế hệ trẻ trên không gian mạng ➔ 3 hành động cụ thể (kiểm chứng thông tin, văn hóa ứng xử, đấu tranh với tin giả) ➔ Khẳng định...",
+        "guide": "• Mở đoạn: Khẳng định không gian mạng là một phần thiết yếu của đời sống hiện đại, đòi hỏi trách nhiệm công dân số.\n• 3 hành động: 1. Tỉnh táo trước thông tin xấu độc. 2. Lan tỏa giá trị tích cực, ứng xử văn minh. 3. Tuân thủ luật an ninh mạng, tố giác sai phạm.\n• Kết đoạn: Thông điệp hành động vì một môi trường số an toàn, văn minh.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlxh_04",
+    "status": "published",
+    "category": "doan-nlxh",
+    "categoryName": "Đoạn văn nghị luận xã hội",
+    "subType": "nlxh_doan_tachai",
+    "icon": "🌱",
+    "title": "[Đoạn NLXH - Đề 4] Tác hại của thói quen trì hoãn ở giới trẻ",
+    "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về tác hại của thói quen trì hoãn ở giới trẻ.",
+    "thinkingGuide": "• Bàn luận (3 ý): Thứ nhất, đánh mất những cơ hội quý giá để phát triển bản thân. Thứ hai, làm suy giảm uy tín, đánh mất sự tin tưởng của người khác. Thứ ba, tạo ra tâm lí lo âu, căng thẳng khi công việc dồn ứ sát hạn chót (deadline).\n• Bài học: Rèn luyện kỉ luật bản thân, chia nhỏ mục tiêu và hành động ngay lập tức.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
+        "placeholder": "Khái niệm trì hoãn ➔ 3 tác hại trực tiếp đối với bản thân và xã hội ➔ Giải pháp khắc phục...",
+        "guide": "• Mở đoạn: Dẫn dắt về thói quen \"để mai tính\" - kẻ cắp thời gian nguy hiểm.\n• Thân đoạn: Phân tích 3 tác hại (đánh mất thời cơ, tổn hại uy tín, kiệt sức vì áp lực dồn ứ).\n• Kết đoạn: Bài học về kỉ luật thép và hành động tức thì.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlxh_05",
+    "status": "published",
+    "category": "doan-nlxh",
+    "categoryName": "Đoạn văn nghị luận xã hội",
+    "subType": "nlxh_doan_ynghia",
+    "icon": "🌱",
+    "title": "[Đoạn NLXH - Đề 5] Bàn về câu nói: \"Đừng cố gắng trở thành người thành công, hãy cố gắng trở thành người có giá trị\"",
+    "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về câu nói: \"Đừng cố gắng trở thành người thành công, hãy cố gắng trở thành người có giá trị\".",
+    "thinkingGuide": "• Giải thích: Thành công thường đo bằng vật chất, địa vị; giá trị đo bằng sự cống hiến, ý nghĩa mang lại cho cộng đồng.\n• Bàn luận (3 ý): 1. Người có giá trị lan tỏa năng lượng tích cực, giúp đỡ người khác. 2. Giá trị tạo ra sự tôn trọng bền vững hơn những thành tích bề nổi. 3. Khi bạn nỗ lực tạo ra giá trị đích thực, thành công chân chính sẽ tự khắc đến.\n• Bài học: Tập trung hoàn thiện nhân cách và chia sẻ với xã hội.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
+        "placeholder": "Giải thích \"thành công\" và \"người có giá trị\" ➔ Phân tích tại sao nên sống có giá trị ➔ Bài học...",
+        "guide": "• Giải thích: Phân biệt giữa danh vọng nhất thời và giá trị nhân văn bền vững.\n• Bàn luận: Giá trị cốt lõi đến từ năng lực cống hiến và lòng trắc ẩn.\n• Bài học: Không ngừng trau dồi tri thức, đạo đức để hữu ích cho cuộc đời.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlxh_06",
+    "status": "published",
+    "category": "doan-nlxh",
+    "categoryName": "Đoạn văn nghị luận xã hội",
+    "subType": "nlxh_doan_ynghia",
+    "icon": "🌱",
+    "title": "[Đoạn NLXH - Đề 6] Sự cần thiết của kĩ năng làm việc nhóm đối với học sinh",
+    "prompt": "Viết đoạn văn (khoảng 200 chữ) trình bày suy nghĩ về sự cần thiết của kĩ năng làm việc nhóm đối với học sinh.",
+    "thinkingGuide": "• Bàn luận (3 ý): Thứ nhất, làm việc nhóm giúp bổ khuyết điểm yếu, phát huy thế mạnh của từng cá nhân. Thứ hai, tăng hiệu suất và chất lượng công việc so với làm độc lập. Thứ ba, môi trường nhóm rèn luyện kĩ năng lắng nghe, thấu cảm và giải quyết xung đột.\n• Bài học: Vượt qua cái tôi cá nhân, xây dựng tinh thần trách nhiệm tập thể.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
+        "placeholder": "Khẳng định vai trò của teamwork ➔ 3 lợi ích nổi bật ➔ Bài học rèn luyện trong nhà trường...",
+        "guide": "• 3 luận điểm: 1. Cộng hưởng sức mạnh trí tuệ. 2. Tối ưu thời gian và chất lượng. 3. Hoàn thiện kĩ năng mềm (giao tiếp, giải quyết vấn đề).\n• Bài học: Tôn trọng ý kiến khác biệt, chủ động nhận trách nhiệm.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlxh_07",
+    "status": "published",
+    "category": "doan-nlxh",
+    "categoryName": "Đoạn văn nghị luận xã hội",
+    "subType": "nlxh_doan_giaiphap",
+    "icon": "🌱",
+    "title": "[Đoạn NLXH - Đề 7] Những việc học sinh cần làm để xây dựng trường học hạnh phúc",
+    "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về những việc học sinh cần làm để xây dựng trường học hạnh phúc.",
+    "thinkingGuide": "• Hành động (3 ý): Đối với cá nhân: Tích cực học tập, chan hòa và mở lòng với bạn bè. Đối với tập thể: Tôn trọng thầy cô, tham gia xây dựng không gian lớp học xanh - sạch - đẹp. Tuyệt đối nói không với bạo lực học đường, cô lập và tẩy chay bạn bè.\n• Khẳng định: Hạnh phúc bắt nguồn từ sự quan tâm và tình thân ái mỗi ngày.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
+        "placeholder": "Khái niệm trường học hạnh phúc ➔ Việc làm cụ thể của học sinh (cá nhân, tập thể, thái độ ứng xử) ➔ Kết đoạn...",
+        "guide": "• Mở đoạn: Trường học hạnh phúc là nơi mỗi ngày đến trường là một ngày vui.\n• Hành động: 1. Tôn trọng, tri ân thầy cô. 2. Đoàn kết, không bạo lực hay cô lập bạn. 3. Chung tay giữ gìn môi trường học tập xanh - sạch.\n• Kết đoạn: Thông điệp về tình bạn và tình thầy trò.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlxh_08",
+    "status": "published",
+    "category": "doan-nlxh",
+    "categoryName": "Đoạn văn nghị luận xã hội",
+    "subType": "nlxh_doan_ynghia",
+    "icon": "🌱",
+    "title": "[Đoạn NLXH - Đề 8] Bàn về ý kiến: \"Biển lặng không tạo nên thủy thủ tài ba\"",
+    "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về ý kiến: \"Biển lặng không tạo nên thủy thủ tài ba\".",
+    "thinkingGuide": "• Giải thích: Biển lặng là hoàn cảnh thuận lợi, êm ả; thủy thủ tài ba là người có bản lĩnh xuất chúng, giàu kinh nghiệm.\n• Bàn luận (3 ý): Nghịch cảnh là phép thử lớn nhất cho lòng kiên nhẫn và ý chí. Khó khăn kích thích trí sáng tạo để tìm ra hướng đi mới. Vượt qua sóng gió giúp con người tích lũy bài học và trưởng thành sâu sắc hơn.\n• Dẫn chứng: Những tấm gương khởi nghiệp vượt qua khủng hoảng.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
+        "placeholder": "Giải thích ẩn dụ biển lặng - thủy thủ ➔ 3 khía cạnh giá trị của thử thách ➔ Dẫn chứng & liên hệ...",
+        "guide": "• Giải thích câu danh ngôn: Thử thách là người thầy nghiêm khắc nhưng tạo nên bản lĩnh vượt trội.\n• Phân tích: Đối mặt giông bão giúp tôi rèn thần kinh thép và năng lực ứng biến.\n• Bài học: Không né tránh khó khăn, sẵn sàng bước ra khỏi vùng an toàn.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlxh_09",
+    "status": "published",
+    "category": "doan-nlxh",
+    "categoryName": "Đoạn văn nghị luận xã hội",
+    "subType": "nlxh_doan_ynghia",
+    "icon": "🌱",
+    "title": "[Đoạn NLXH - Đề 9] Bài học về lòng biết ơn trong cuộc sống (từ phần Đọc hiểu)",
+    "prompt": "Viết đoạn văn (khoảng 200 chữ) rút ra bài học về lòng biết ơn (được gợi ra từ phần Đọc hiểu).",
+    "thinkingGuide": "• Khái quát: Nêu 1 câu khẳng định vai trò của lòng biết ơn trong cuộc sống.\n• Bàn luận (3 ý): Biết ơn giúp con người hoàn thiện nhân cách, sống tình nghĩa và khiêm nhường. Biết ơn cội nguồn, cha mẹ giúp gắn kết gia đình bền chặt. Biết ơn những người giúp đỡ mình lan tỏa vòng tròn tử tế và lòng trắc ẩn trong xã hội.\n• Bài học: Thể hiện lòng biết ơn bằng lời nói chân thành và hành động đền ơn thiết thực.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
+        "placeholder": "Khẳng định ý nghĩa của lòng biết ơn ➔ Phân tích 3 biểu hiện / giá trị của sự tri ân ➔ Hành động cụ thể...",
+        "guide": "• Luận điểm: 1. Nuôi dưỡng tâm hồn thuần khiết. 2. Gắn kết tình thân, đạo lí \"Uống nước nhớ nguồn\". 3. Tạo dựng xã hội nhân ái, ấm áp.\n• Kết đoạn: Tri ân cuộc đời qua những việc làm có ích mỗi ngày.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "doan_nlxh_10",
+    "status": "published",
+    "category": "doan-nlxh",
+    "categoryName": "Đoạn văn nghị luận xã hội",
+    "subType": "nlxh_doan_ynghia",
+    "icon": "🌱",
+    "title": "[Đoạn NLXH - Đề 10] Giá trị của sự tự học trong thời đại công nghệ số",
+    "prompt": "Viết đoạn văn (khoảng 200 chữ) bàn về giá trị của sự tự học trong thời đại công nghệ số.",
+    "thinkingGuide": "• Bàn luận (3 ý): Tự học giúp tiếp cận kho tàng tri thức khổng lồ không giới hạn qua Internet. Tự học rèn luyện tư duy phản biện, giúp chủ động chọn lọc thông tin, không bị lệ thuộc một cách thụ động vào máy móc (AI). Tự học là chìa khóa then chốt để không bị đào thải trong thị trường lao động luôn thay đổi nhanh chóng.\n• Bài học: Xây dựng kế hoạch tự học có kỉ luật và kiên trì.",
+    "sections": [
+      {
+        "id": "sec_doan_200",
+        "title": "Đoạn văn Nghị luận Xã hội (~200 chữ - Viết 1 đoạn liền mạch)",
+        "placeholder": "Nêu tầm quan trọng của tự học thời 4.0 ➔ 3 giá trị then chốt của năng lực tự học ➔ Thông điệp học tập suốt đời...",
+        "guide": "• Luận điểm: 1. Khai phóng tri thức vô tận. 2. Làm chủ công nghệ thay vì để công nghệ thao túng. 3. Thích ứng linh hoạt trước chuyển biến xã hội.\n• Bài học: Tinh thần \"Học, học nữa, học mãi\".",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "bai_nlxh_01",
+    "status": "published",
+    "category": "bai-nlxh",
+    "categoryName": "Bài văn nghị luận",
+    "subType": "nlxh_bai_tutuong",
+    "icon": "🌍",
+    "title": "[Bài NLXH - Đề 1] \"Cái rễ của học hành thì đắng cay nhưng quả của nó thì ngọt ngào\"",
+    "prompt": "Trình bày suy nghĩ về câu nói: \"Cái rễ của học hành thì đắng cay nhưng quả của nó thì ngọt ngào\" (Bài văn khoảng 600 chữ, có đủ Mở bài - Thân bài - Kết bài).",
+    "thinkingGuide": "• Mở bài: Dẫn dắt câu danh ngôn của Aristotle về bản chất quá trình học tập.\n• Thân bài:\n  - Giải thích: \"Rễ đắng cay\" là quá trình học tập vất vả, gian nan, đòi hỏi kỉ luật; \"Quả ngọt ngào\" là thành tựu, tri thức và tương lai tươi sáng.\n  - Bàn luận (3 ý): 1. Chiếm lĩnh tri thức đòi hỏi mồ hôi nước mắt, kiên trì vượt khó. 2. Thành quả nhận được là sự trưởng thành trí tuệ, cơ hội nghề nghiệp và tự do tư tưởng. 3. Đó là niềm tự hào của bản thân, gia đình và đóng góp cho xã hội.\n  - Chứng minh: Tấm gương các nhà khoa học, học sinh nghèo vượt khó.\n  - Phản đề: Phê phán thái độ lười biếng, chuộng bằng cấp, gian lận trong thi cử.\n  - Bài học: Rèn luyện ý chí vượt qua \"vị đắng\" ban đầu để đón nhận \"vị ngọt\".\n• Kết bài: Khẳng định lại ý nghĩa câu nói và lời nhắn nhủ thế hệ trẻ.",
+    "sections": [
+      {
+        "id": "sec_mb",
+        "title": "I. Mở bài",
+        "placeholder": "Dẫn dắt trực tiếp hoặc gián tiếp, giới thiệu câu danh ngôn và nêu vấn đề nghị luận...",
+        "guide": "• Nêu ngắn gọn vấn đề: Quy luật gian nan và thành quả ngọt ngào trong học tập.\n• Trích dẫn nguyên văn câu nói.",
+        "sample": ""
+      },
+      {
+        "id": "sec_tb",
+        "title": "II. Thân bài (Giải thích - Bàn luận - Dẫn chứng - Phản đề - Bài học)",
+        "placeholder": "1. Giải thích nghĩa đen và nghĩa bóng của câu nói.\n2. Bàn luận 3 khía cạnh: Vì sao quá trình học lại gian nan? Quả ngọt mang lại những giá trị gì?\n3. Dẫn chứng thực tế tiêu biểu.\n4. Phê phán lối học hình thức, lười biếng.\n5. Bài học nhận thức và hành động...",
+        "guide": "• Giải thích: Rễ đắng ➔ Quả ngọt.\n• Bàn luận: 3 luận điểm chặt chẽ kèm dẫn chứng.\n• Phản đề: Lên án thói ỷ lại, mua bằng, gian lận.\n• Giải pháp & Liên hệ bản thân.",
+        "sample": ""
+      },
+      {
+        "id": "sec_kb",
+        "title": "III. Kết bài",
+        "placeholder": "Khái quát lại giá trị của câu nói và gửi gắm thông điệp phấn đấu...",
+        "guide": "• Khẳng định câu nói là chân lí muôn đời cho người học.\n• Lời hứa hành động của bản thân.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "bai_nlxh_02",
+    "status": "published",
+    "category": "bai-nlxh",
+    "categoryName": "Bài văn nghị luận",
+    "subType": "nlxh_bai_hientuong",
+    "icon": "🌍",
+    "title": "[Bài NLXH - Đề 2] Hiện tượng \"nghiện\" mạng xã hội của một bộ phận giới trẻ hiện nay",
+    "prompt": "Bàn về hiện tượng \"nghiện\" mạng xã hội (TikTok, Facebook, Instagram...) của một bộ phận giới trẻ hiện nay (Bài văn khoảng 600 chữ).",
+    "thinkingGuide": "• Thực trạng: Dành quá nhiều thời gian lướt web vô bổ, lệ thuộc vào lượt like, view.\n• Tác hại (3 ý): 1. Suy giảm sức khỏe thể chất (thị lực, giấc ngủ, lười vận động). 2. Bỏ bê học tập, giảm khả năng tập trung, mất kết nối với thế giới thực. 3. Dễ bị thao túng tâm lí, lệch lạc nhận thức bởi tin giả, trào lưu độc hại.\n• Nguyên nhân: Thiếu sân chơi thực tế, tâm lí tò mò, thiếu kỉ luật tự giác.\n• Giải pháp: Cá nhân cài đặt giới hạn thời gian (screen time); Gia đình đồng hành, tạo sân chơi ngoài trời; Nhà trường định hướng sử dụng mạng văn minh.",
+    "sections": [
+      {
+        "id": "sec_mb",
+        "title": "I. Mở bài",
+        "placeholder": "Dẫn dắt sự bùng nổ của mạng xã hội và hiện tượng \"nghiện\" ở giới trẻ...",
+        "guide": "• Nêu hiện tượng đời sống đáng báo động: Nghiện mạng xã hội.",
+        "sample": ""
+      },
+      {
+        "id": "sec_tb",
+        "title": "II. Thân bài (Thực trạng - Nguyên nhân - Tác hại - Giải pháp)",
+        "placeholder": "Phân tích thực trạng ➔ 3 tác hại lớn ➔ Nguyên nhân chủ quan và khách quan ➔ Giải pháp từ cá nhân, gia đình, nhà trường...",
+        "guide": "• Phân tích rõ 3 mặt tác hại: Thể chất - Trí tuệ - Tâm lí xã hội.\n• Đề xuất giải pháp mang tính khả thi cao.",
+        "sample": ""
+      },
+      {
+        "id": "sec_kb",
+        "title": "III. Kết bài",
+        "placeholder": "Tổng kết vấn đề, khẳng định mạng xã hội là công cụ chứ không phải ông chủ...",
+        "guide": "• Làm chủ công nghệ thay vì để công nghệ thao túng cuộc đời.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "bai_nlxh_03",
+    "status": "published",
+    "category": "bai-nlxh",
+    "categoryName": "Bài văn nghị luận",
+    "subType": "nlxh_bai_vdxh_tpvh",
+    "icon": "🌍",
+    "title": "[Bài NLXH - Đề 3] Sức mạnh của tình yêu thương trong việc cảm hóa con người (từ bát cháo hành Chí Phèo)",
+    "prompt": "Từ sức mạnh lay động của \"bát cháo hành\" (Chí Phèo - Nam Cao), bàn về sức mạnh của tình yêu thương trong việc cảm hóa con người (Bài văn khoảng 600 chữ).",
+    "thinkingGuide": "• Dẫn dắt: Nêu biểu hiện của tình thương qua bát cháo hành của Thị Nở đánh thức lương tri Chí Phèo.\n• Bàn luận (3 ý): 1. Tình yêu thương chân thành có thể làm tan chảy những tâm hồn chai sạn, thức tỉnh phần \"người\" bị vùi lấp. 2. Tình thương thắp lên niềm tin, tạo cơ hội cho người lầm lỡ làm lại cuộc đời. 3. Xã hội tràn ngập tình thương là xã hội văn minh, triệt tiêu mầm mống cái ác.\n• Chứng minh: Những dự án giáo dục, hoàn lương cho phạm nhân bằng tình nhân ái.\n• Phản đề: Phê phán lối sống thờ ơ, vô cảm hoặc tình thương vụ lợi.\n• Bài học: Mở rộng tấm lòng trao gửi yêu thương mỗi ngày.",
+    "sections": [
+      {
+        "id": "sec_mb",
+        "title": "I. Mở bài",
+        "placeholder": "Dẫn dắt từ chi tiết bát cháo hành trong văn học đến sức mạnh tình yêu thương ngoài đời thực...",
+        "guide": "• Kết nối văn học với đời sống: Tình thương là phép màu cảm hóa.",
+        "sample": ""
+      },
+      {
+        "id": "sec_tb",
+        "title": "II. Thân bài",
+        "placeholder": "Phân tích ý nghĩa biểu tượng bát cháo hành ➔ Bàn luận sức mạnh cảm hóa của tình thương ➔ Dẫn chứng đời sống ➔ Phản đề ➔ Bài học...",
+        "guide": "• Tập trung luận điểm: Tình yêu thương chân thành đánh thức phần thiện lương.",
+        "sample": ""
+      },
+      {
+        "id": "sec_kb",
+        "title": "III. Kết bài",
+        "placeholder": "Khẳng định tình yêu thương là sợi dây kết nối bền chặt nhất...",
+        "guide": "• Lời kêu gọi sống nhân ái, bao dung.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "bai_nlxh_04",
+    "status": "published",
+    "category": "bai-nlxh",
+    "categoryName": "Bài văn nghị luận",
+    "subType": "nlxh_bai_tutuong",
+    "icon": "🌍",
+    "title": "[Bài NLXH - Đề 4] Bàn về quan điểm: \"Sự im lặng của người tốt còn đáng sợ hơn tiếng la hét của kẻ xấu\"",
+    "prompt": "Bàn về quan điểm: \"Sự im lặng của người tốt còn đáng sợ hơn tiếng la hét của kẻ xấu\" (Martin Luther King) (Bài văn khoảng 600 chữ).",
+    "thinkingGuide": "• Giải thích: Kẻ xấu la hét là cái ác công khai; im lặng là thái độ thờ ơ, vô cảm, thỏa hiệp với cái xấu.\n• Bàn luận (3 ý): 1. Kẻ xấu hành động công khai vì tin rằng sẽ không bị phản kháng hay trừng phạt. 2. Sự im lặng của người tốt trực tiếp dung túng, tiếp tay cho cái ác lộng hành. 3. Hậu quả là làm băng hoại đạo đức xã hội, đẩy nạn nhân vào tuyệt vọng và niềm tin công lí bị sụp đổ.\n• Chứng minh: Hiện tượng bàng quan trước bạo lực nơi công cộng, bạo lực học đường.\n• Phản đề: Phê phán hội chứng \"vô cảm\", thói \"thấy việc tốt không làm, thấy việc ác không can\".\n• Bài học: Lòng dũng cảm lên tiếng bảo vệ công lí.",
+    "sections": [
+      {
+        "id": "sec_mb",
+        "title": "I. Mở bài",
+        "placeholder": "Dẫn dắt câu nói của Martin Luther King về sự im lặng đáng sợ...",
+        "guide": "• Giới thiệu vấn đề: Nguy cơ từ sự bàng quan, thỏa hiệp với cái ác.",
+        "sample": ""
+      },
+      {
+        "id": "sec_tb",
+        "title": "II. Thân bài",
+        "placeholder": "Giải thích câu nói ➔ Phân tích tại sao im lặng lại nguy hiểm ➔ Hậu quả xã hội ➔ Dẫn chứng ➔ Giải pháp...",
+        "guide": "• Phân tích sâu: Im lặng không phải là trung lập, mà là đồng lõa.",
+        "sample": ""
+      },
+      {
+        "id": "sec_kb",
+        "title": "III. Kết bài",
+        "placeholder": "Khẳng định giá trị của tiếng nói dũng cảm vì công lí...",
+        "guide": "• Thông điệp: Dũng cảm đứng về lẽ phải.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "bai_nlxh_05",
+    "status": "published",
+    "category": "bai-nlxh",
+    "categoryName": "Bài văn nghị luận",
+    "subType": "nlxh_bai_hientuong",
+    "icon": "🌍",
+    "title": "[Bài NLXH - Đề 5] Phong trào thiện nguyện, tương thân tương ái của thế hệ Gen Z trong cứu trợ thiên tai",
+    "prompt": "Viết bài văn nghị luận về phong trào thiện nguyện, tương thân tương ái của thế hệ Gen Z trong các đợt cứu trợ thiên tai (Bài văn khoảng 600 chữ).",
+    "thinkingGuide": "• Khái quát: Khẳng định tinh thần trách nhiệm, lòng nhân ái của thế hệ trẻ trước biến cố thiên tai bão lũ.\n• Bàn luận (3 ý): 1. Kế thừa và phát huy truyền thống \"Lá lành đùm lá rách\" theo cách hiện đại (ứng dụng công nghệ, sao kê minh bạch, livestream kết nối). 2. Lan tỏa hình ảnh thanh niên năng động, thấu cảm và trách nhiệm. 3. Kịp thời tiếp sức đồng bào vượt qua khó khăn vật chất lẫn tinh thần.\n• Dẫn chứng: Các đội nhóm cứu trợ thanh niên trong bão Yagi.\n• Phản đề: Phê phán hiện tượng \"làm màu\", trục lợi truyền thông từ hoạt động từ thiện.\n• Bài học: Thiện nguyện phải xuất phát từ cái tâm trong sáng và tổ chức khoa học.",
+    "sections": [
+      {
+        "id": "sec_mb",
+        "title": "I. Mở bài",
+        "placeholder": "Giới thiệu tinh thần thiện nguyện của tuổi trẻ trong hoạn nạn...",
+        "guide": "• Nêu vấn đề: Dấu ấn nhân ái của Gen Z trong cứu trợ thiên tai.",
+        "sample": ""
+      },
+      {
+        "id": "sec_tb",
+        "title": "II. Thân bài",
+        "placeholder": "Biểu hiện hoạt động thiện nguyện Gen Z ➔ Ý nghĩa xã hội to lớn ➔ Sự đổi mới về phương thức minh bạch ➔ Mặt trái cần tránh ➔ Bài học...",
+        "guide": "• Nêu bật tính mới: Tinh thần tình nguyện gắn liền chuyển đổi số và minh bạch.",
+        "sample": ""
+      },
+      {
+        "id": "sec_kb",
+        "title": "III. Kết bài",
+        "placeholder": "Khẳng định niềm tin vào thế hệ trẻ tiếp nối truyền thống tốt đẹp của dân tộc...",
+        "guide": "• Niềm tự hào về sức trẻ Việt Nam.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "bai_nlxh_06",
+    "status": "published",
+    "category": "bai-nlxh",
+    "categoryName": "Bài văn nghị luận",
+    "subType": "nlxh_bai_vdxh_tpvh",
+    "icon": "🌍",
+    "title": "[Bài NLXH - Đề 6] Khát vọng hạnh phúc của con người trong nghịch cảnh (từ Vợ nhặt - Kim Lân)",
+    "prompt": "Từ quyết định \"nhặt vợ\" của Tràng giữa nạn đói (Vợ nhặt - Kim Lân), bàn về khát vọng hạnh phúc của con người trong nghịch cảnh (Bài văn khoảng 600 chữ).",
+    "thinkingGuide": "• Dẫn dắt: Quyết định liều lĩnh mà nhân văn của Tràng giữa ranh giới sự sống và cái chết năm 1945.\n• Bàn luận (3 ý): 1. Trong tận cùng bi đát, con người không nghĩ đến cái chết mà luôn hướng về sự sống và tương lai. 2. Khát vọng hạnh phúc gia đình là sức mạnh nội sinh kì diệu giúp con người vượt qua sợ hãi. 3. Sự cưu mang, sưởi ấm lẫn nhau trong nghịch cảnh thắp lên ánh sáng của niềm hi vọng và phẩm giá con người.\n• Dẫn chứng: Những tấm gương chiến thắng bệnh tật, vượt khó vươn lên xây dựng mái ấm.\n• Phản đề: Phê phán thái độ buông xuôi, tuyệt vọng khi gặp trắc trở.\n• Bài học: Giữ vững niềm tin yêu cuộc sống dù trong hoàn cảnh ngặt nghèo nhất.",
+    "sections": [
+      {
+        "id": "sec_mb",
+        "title": "I. Mở bài",
+        "placeholder": "Từ chuyện \"nhặt vợ\" giữa nạn đói đến thông điệp muôn thuở về khát vọng hạnh phúc...",
+        "guide": "• Nêu vấn đề: Sức sống bất diệt của niềm khao khát hạnh phúc.",
+        "sample": ""
+      },
+      {
+        "id": "sec_tb",
+        "title": "II. Thân bài",
+        "placeholder": "Ý nghĩa hành động của Tràng ➔ Bàn luận bản chất khát vọng hạnh phúc trong nghịch cảnh ➔ Dẫn chứng cuộc sống ➔ Bài học...",
+        "guide": "• Nhấn mạnh: Nghịch cảnh có thể cướp đi vật chất nhưng không thể dập tắt khát vọng yêu thương.",
+        "sample": ""
+      },
+      {
+        "id": "sec_kb",
+        "title": "III. Kết bài",
+        "placeholder": "Khẳng định niềm tin vào sự sống và hạnh phúc chân chính...",
+        "guide": "• Tổng kết giá trị nhân văn.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "bai_nlxh_07",
+    "status": "published",
+    "category": "bai-nlxh",
+    "categoryName": "Bài văn nghị luận",
+    "subType": "nlxh_bai_tutuong",
+    "icon": "🌍",
+    "title": "[Bài NLXH - Đề 7] \"Nếu không có mục đích, anh không làm được gì cả...\"",
+    "prompt": "Trình bày suy nghĩ về câu nói: \"Nếu không có mục đích, anh không làm được gì cả. Anh cũng không làm được gì vĩ đại nếu mục đích tầm thường\" (Bài văn khoảng 600 chữ).",
+    "thinkingGuide": "• Giải thích: Mục đích là đích đến, kim chỉ nam định hướng cho hành động; mục đích tầm thường chỉ phục vụ tư lợi ích kỉ, mục đích vĩ đại hướng tới cống hiến cho nhân loại.\n• Bàn luận (3 ý): 1. Sống không mục đích như con thuyền không bánh lái, lênh đênh và dễ gục ngã trước sóng gió. 2. Mục đích nhỏ nhoi chỉ giới hạn năng lực con người trong vòng an toàn hạn hẹp. 3. Mục đích cao cả (vì cộng đồng, vì dân tộc) mới đánh thức tiềm năng vô hạn và tạo ra những thành tựu vĩ đại lưu danh muôn đời.\n• Chứng minh: Chủ tịch Hồ Chí Minh ra đi tìm đường cứu nước với mục đích giải phóng dân tộc.\n• Phản đề: Phê phán lối sống vô định, \"nước chảy bèo trôi\" của một bộ phận người trẻ.\n• Bài học: Xác định mục tiêu sống cao đẹp và lập kế hoạch kiên định theo đuổi.",
+    "sections": [
+      {
+        "id": "sec_mb",
+        "title": "I. Mở bài",
+        "placeholder": "Dẫn dắt câu danh ngôn và khẳng định tầm quan trọng của mục đích sống...",
+        "guide": "• Giới thiệu câu nói và vấn đề mục tiêu, lí tưởng sống.",
+        "sample": ""
+      },
+      {
+        "id": "sec_tb",
+        "title": "II. Thân bài",
+        "placeholder": "Giải thích câu nói ➔ 3 luận điểm về vai trò của mục đích và tầm vóc của mục đích cao cả ➔ Dẫn chứng ➔ Phê phán ➔ Hành động...",
+        "guide": "• Phân tích hai vế: Cần có mục đích & Cần có mục đích lớn lao.",
+        "sample": ""
+      },
+      {
+        "id": "sec_kb",
+        "title": "III. Kết bài",
+        "placeholder": "Khẳng định: Chọn cho mình một ngọn hải đăng xứng đáng để cuộc đời tỏa sáng...",
+        "guide": "• Lời nhắn nhủ tuổi trẻ.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "bai_nlxh_08",
+    "status": "published",
+    "category": "bai-nlxh",
+    "categoryName": "Bài văn nghị luận",
+    "subType": "nlxh_bai_hientuong",
+    "icon": "🌍",
+    "title": "[Bài NLXH - Đề 8] Hiện tượng chạy theo lối sống phô trương, chuộng hình thức (sống ảo) ở học sinh",
+    "prompt": "Bàn về hiện tượng chạy theo lối sống phô trương, chuộng hình thức (sống ảo) của một bộ phận học sinh hiện nay (Bài văn khoảng 600 chữ).",
+    "thinkingGuide": "• Thực trạng: Đua đòi đồ hiệu, check-in sang chảnh vượt quá điều kiện kinh tế gia đình, chụp ảnh khoe mẽ trên mạng.\n• Tác hại (3 ý): 1. Tạo gánh nặng tài chính đè nặng lên vai cha mẹ. 2. Đánh mất giá trị thực, rơi vào lối sống giả tạo, luôn thấp thỏm lo sợ bị phát hiện. 3. Dễ sa ngã vào tệ nạn xã hội hoặc đánh đổi phẩm giá để thỏa mãn nhu cầu vật chất bề nổi.\n• Nguyên nhân: Tâm lí sĩ diện, thiếu bản lĩnh, ảnh hưởng từ văn hóa thần tượng lệch lạc.\n• Giải pháp: Nhận thức giá trị thực của con người nằm ở tri thức và đạo đức; gia đình định hướng lối sống giản dị, lành mạnh.",
+    "sections": [
+      {
+        "id": "sec_mb",
+        "title": "I. Mở bài",
+        "placeholder": "Dẫn dắt lối sống ảo, chuộng hình thức đang len lỏi vào học đường...",
+        "guide": "• Nêu hiện tượng sống ảo, phô trương của học sinh.",
+        "sample": ""
+      },
+      {
+        "id": "sec_tb",
+        "title": "II. Thân bài",
+        "placeholder": "Biểu hiện sống ảo ➔ Tác hại nghiêm trọng ➔ Căn nguyên vấn đề ➔ Giải pháp thức tỉnh...",
+        "guide": "• Phân biệt giữa nhu cầu làm đẹp chính đáng và lối sống phô trương độc hại.",
+        "sample": ""
+      },
+      {
+        "id": "sec_kb",
+        "title": "III. Kết bài",
+        "placeholder": "Thông điệp: \"Tốt gỗ hơn tốt nước sơn\", hãy tỏa sáng bằng vẻ đẹp bên trong...",
+        "guide": "• Tổng kết giá trị chân thực của bản thân.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "bai_nlxh_09",
+    "status": "published",
+    "category": "bai-nlxh",
+    "categoryName": "Bài văn nghị luận",
+    "subType": "nlxh_bai_vdxh_tpvh",
+    "icon": "🌍",
+    "title": "[Bài NLXH - Đề 9] Ranh giới giữa đam mê cá nhân và trách nhiệm với cộng đồng (từ Vũ Như Tô)",
+    "prompt": "Từ hình ảnh người nghệ sĩ Vũ Như Tô xây Cửu Trùng Đài, bàn về ranh giới giữa đam mê cá nhân và trách nhiệm với cộng đồng (Bài văn khoảng 600 chữ).",
+    "thinkingGuide": "• Dẫn dắt: Bi kịch của Vũ Như Tô - nghệ sĩ tài ba say mê cái đẹp tuyệt đỉnh nhưng gián tiếp bóc lột nhân dân lầm than.\n• Bàn luận (3 ý): 1. Đam mê cá nhân là động lực thúc đẩy sáng tạo, vươn tới đỉnh cao nghề nghiệp. 2. Tuy nhiên, nếu đam mê đó mù quáng, bất chấp đạo lí và chà đạp lên lợi ích sống còn của cộng đồng thì sẽ trở thành tội ác. 3. Trách nhiệm cao nhất của mọi nghề nghiệp và đam mê là phụng sự con người, hướng về nhân sinh.\n• Chứng minh: Sự phát triển công nghệ AI, y sinh học cần đi đôi với đạo đức xã hội.\n• Phản đề: Phê phán lối sống ích kỉ \"chỉ biết mình\", xem nhẹ lợi ích tập thể.\n• Bài học: Đặt đam mê cá nhân trong sự hài hòa với lợi ích chung của đất nước.",
+    "sections": [
+      {
+        "id": "sec_mb",
+        "title": "I. Mở bài",
+        "placeholder": "Từ bi kịch Cửu Trùng Đài đến vấn đề muôn thuở: Đam mê cá nhân và trách nhiệm cộng đồng...",
+        "guide": "• Nêu mối quan hệ biện chứng giữa khát vọng cá nhân và lợi ích nhân sinh.",
+        "sample": ""
+      },
+      {
+        "id": "sec_tb",
+        "title": "II. Thân bài",
+        "placeholder": "Phân tích bài học Vũ Như Tô ➔ Vai trò của đam mê ➔ Giới hạn đạo đức của đam mê ➔ Trách nhiệm xã hội ➔ Dẫn chứng thời đại ➔ Bài học...",
+        "guide": "• Phân tích sâu: Nghệ thuật vị nhân sinh, khoa học vị nhân sinh.",
+        "sample": ""
+      },
+      {
+        "id": "sec_kb",
+        "title": "III. Kết bài",
+        "placeholder": "Khẳng định đam mê chỉ thực sự rực rỡ khi nó mang lại hạnh phúc cho tha nhân...",
+        "guide": "• Thông điệp sống cống hiến.",
+        "sample": ""
+      }
+    ]
+  },
+  {
+    "id": "bai_nlxh_10",
+    "status": "published",
+    "category": "bai-nlxh",
+    "categoryName": "Bài văn nghị luận",
+    "subType": "nlxh_bai_tutuong",
+    "icon": "🌍",
+    "title": "[Bài NLXH - Đề 10] Bàn về ý kiến: \"Tôn trọng người khác chính là tôn trọng chính mình\"",
+    "prompt": "Bàn về ý kiến: \"Tôn trọng người khác chính là tôn trọng chính mình\" (Bài văn khoảng 600 chữ).",
+    "thinkingGuide": "• Giải thích: Tôn trọng là thái độ công nhận giá trị, nhân phẩm và sự bình đẳng của người khác.\n• Bàn luận (3 ý): 1. Cách bạn đối xử với người khác phản chiếu trực tiếp phông văn hóa và nhân cách của chính bạn. 2. Khi bạn trao đi sự tôn trọng, bạn thiết lập tiêu chuẩn để người khác đối xử tương tự với bạn. 3. Một xã hội xây dựng trên nền tảng tôn trọng sẽ triệt tiêu xung đột, bạo lực và gắn kết hòa bình bền vững.\n• Chứng minh: Văn hóa xếp hàng, ứng xử nơi công cộng, tôn trọng sự riêng tư.\n• Phản đề: Phê phán thái độ trịch thượng, coi thường người yếu thế.\n• Bài học: Học cách cúi đầu lắng nghe, cư xử nhã nhặn từ những việc nhỏ nhất.",
+    "sections": [
+      {
+        "id": "sec_mb",
+        "title": "I. Mở bài",
+        "placeholder": "Dẫn dắt về quy luật ứng xử tương hỗ và giới thiệu câu châm ngôn...",
+        "guide": "• Giới thiệu vấn đề: Tôn trọng người khác là tấm gương phản chiếu bản thân.",
+        "sample": ""
+      },
+      {
+        "id": "sec_tb",
+        "title": "II. Thân bài",
+        "placeholder": "Giải thích khái niệm ➔ 3 lí do tôn trọng người khác là tôn trọng mình ➔ Dẫn chứng ứng xử đẹp ➔ Phê phán thói kiêu ngạo ➔ Bài học...",
+        "guide": "• Nhấn mạnh: Muốn nhận được sự tôn trọng, trước hết phải biết trao đi sự tôn trọng.",
+        "sample": ""
+      },
+      {
+        "id": "sec_kb",
+        "title": "III. Kết bài",
+        "placeholder": "Khẳng định giá trị của lòng tôn trọng trong việc kiến tạo thế giới văn minh...",
+        "guide": "• Tổng kết và cam kết hành động.",
+        "sample": ""
+      }
+    ]
   }
 ];
 
@@ -1373,8 +1373,8 @@ let editingSections = [];
 
 function loadWritingSets() {
   try {
-    // Tự động đồng bộ và nạp Bộ 50 đề NLVH & NLXH chuẩn mới nhất
-    const v50Version = 'v50_2026_11_06_v4_view_only';
+    // Tự động đồng bộ và nạp Bộ 50 đề sắp xếp theo 4 dạng bài chuẩn
+    const v50Version = 'v50_2026_11_06_v5_sorted_by_type';
     const currentVersion = localStorage.getItem('vq_writing_sets_version');
     
     const raw = localStorage.getItem('vq_writing_sets');
@@ -1386,7 +1386,7 @@ function loadWritingSets() {
     const isOldData = !parsed || !Array.isArray(parsed) || parsed.some(s => s.id && s.id.startsWith('doan_') && !s.subType);
 
     if (currentVersion !== v50Version || isOldData) {
-      // Nạp trọn vẹn 50 đề mới
+      // Nạp trọn vẹn 50 đề mới đã sắp xếp
       writingSets = JSON.parse(JSON.stringify(DEFAULT_WRITING_SETS));
       if (Array.isArray(parsed)) {
         const defaultIds = new Set(DEFAULT_WRITING_SETS.map(s => s.id));
@@ -1402,6 +1402,28 @@ function loadWritingSets() {
     }
 
     if (Array.isArray(parsed) && parsed.length > 0) {
+      const catNameMap = {
+        'doan-nlvh': 'Đoạn nghị luận văn học',
+        'bai-nlvh': 'Bài nghị luận văn học',
+        'doan-nlxh': 'Đoạn văn nghị luận xã hội',
+        'bai-nlxh': 'Bài văn nghị luận'
+      };
+      parsed.forEach(s => {
+        if (catNameMap[s.category]) {
+          s.categoryName = catNameMap[s.category];
+        }
+      });
+      const catOrder = {
+        'doan-nlvh': 1,
+        'bai-nlvh': 2,
+        'doan-nlxh': 3,
+        'bai-nlxh': 4
+      };
+      parsed.sort((a, b) => {
+        const ordA = catOrder[a.category] || 99;
+        const ordB = catOrder[b.category] || 99;
+        return ordA - ordB;
+      });
       writingSets = parsed;
       window.writingSets = writingSets;
       return;
@@ -1444,10 +1466,10 @@ R.writing = function(setId) {
 // =========================================================================
 
 const DEFAULT_CATEGORIES = [
-  { id: 'doan-nlvh', name: 'Đoạn văn NLVH (200 chữ)', icon: '🖋️' },
-  { id: 'bai-nlvh', name: 'Bài văn NLVH (600 chữ)', icon: '📜' },
-  { id: 'doan-nlxh', name: 'Đoạn văn NLXH (200 chữ)', icon: '🌱' },
-  { id: 'bai-nlxh', name: 'Bài văn NLXH (600 chữ)', icon: '🌍' }
+  { id: 'doan-nlvh', name: 'Đoạn nghị luận văn học', icon: '🖋️' },
+  { id: 'bai-nlvh', name: 'Bài nghị luận văn học', icon: '📜' },
+  { id: 'doan-nlxh', name: 'Đoạn văn nghị luận xã hội', icon: '🌱' },
+  { id: 'bai-nlxh', name: 'Bài văn nghị luận', icon: '🌍' }
 ];
 
 function getWritingCategories() {
@@ -1458,16 +1480,39 @@ function getWritingCategories() {
   } catch (e) {}
 
   const legacyCatIds = new Set(['nl-xh', 'nl-vh', 'cam-thu', 'other']);
+  const defaultMap = new Map(DEFAULT_CATEGORIES.map(c => [c.id, c]));
+
   if (!Array.isArray(list) || list.length === 0) {
-    list = [...DEFAULT_CATEGORIES];
+    list = DEFAULT_CATEGORIES.map(c => ({ ...c }));
   } else {
     list = list.filter(c => c && c.id && !legacyCatIds.has(c.id));
+    // Cập nhật tên chuẩn theo 4 dạng bài
+    list.forEach(c => {
+      if (defaultMap.has(c.id)) {
+        c.name = defaultMap.get(c.id).name;
+        c.icon = defaultMap.get(c.id).icon;
+      }
+    });
     DEFAULT_CATEGORIES.forEach(defCat => {
       if (!list.some(x => x.id === defCat.id)) {
         list.push({ ...defCat });
       }
     });
   }
+
+  // Luôn đảm bảo thứ tự chuẩn 4 dạng bài: Đoạn NLVH -> Bài NLVH -> Đoạn văn NLXH -> Bài văn nghị luận
+  const catOrder = {
+    'doan-nlvh': 1,
+    'bai-nlvh': 2,
+    'doan-nlxh': 3,
+    'bai-nlxh': 4
+  };
+  list.sort((a, b) => {
+    const ordA = catOrder[a.id] || 99;
+    const ordB = catOrder[b.id] || 99;
+    return ordA - ordB;
+  });
+
   saveWritingCategories(list);
   return list;
 }
@@ -1488,7 +1533,7 @@ function renderCategoryFilterBar() {
 
   let optionsHtml = `<option value="all" ${isAll ? 'selected' : ''}>🏷️ Tất cả bộ đề (${allCount} đề)</option>`;
 
-  optionsHtml += `<optgroup label="─── CHỦ ĐỀ CHÍNH ───">`;
+  optionsHtml += `<optgroup label="─── DẠNG BÀI NGHỊ LUẬN ───">`;
   cats.forEach(c => {
     const count = writingSets.filter(s => s.category === c.id).length;
     const isActive = currentWritingCategory === c.id;
