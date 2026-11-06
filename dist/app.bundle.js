@@ -882,10 +882,10 @@ const Auth = (() => {
       id: 'usr_teacher_tuanh',
       username: 'tuanh',
       passwords: ['123456'],
-      full_name: 'Cô Tú Anh',
+      full_name: 'Hoàng Thị Tú Anh',
       class_name: 'Quản trị viên / Giáo viên Ngữ văn',
       role: 'admin',
-      avatar: '🛡️'
+      avatar: './assets/teacher-tuanh.png'
     },
     {
       id: 'usr_teacher_main',
@@ -894,7 +894,7 @@ const Auth = (() => {
       full_name: 'Giáo viên Ngữ văn',
       class_name: 'Giáo viên Bộ môn',
       role: 'teacher',
-      avatar: '👑'
+      avatar: '👩‍🏫'
     }
   ];
 
@@ -1354,12 +1354,17 @@ function renderNavbarUserWidget() {
     const isAdmin = Auth.isAdmin();
     const roleLabel = isAdmin ? 'Quản trị viên' : 'Giáo viên';
     const roleBadgeClass = isAdmin ? 'admin' : 'teacher';
-    const roleIcon = isAdmin ? '🛡️' : '👑';
+    const defaultEmoji = '👩‍🏫';
+    const userAvatar = (user && user.avatar) ? user.avatar : (user && user.username === 'tuanh' ? './assets/teacher-tuanh.png' : defaultEmoji);
+    const isImageAvatar = userAvatar.includes('/') || userAvatar.includes('.');
 
     container.innerHTML = `
       <div class="nav-user-pill" id="nav-user-pill-btn" onclick="toggleUserDropdownMenu(event)" title="Tài khoản ${escHtml(roleLabel)}: ${escHtml(user.full_name)}">
-        <div class="user-pill-avatar-wrap ${roleBadgeClass}">
-          <span class="user-pill-avatar">${roleIcon}</span>
+        <div class="user-pill-avatar-wrap ${roleBadgeClass}" style="overflow:hidden; border-radius:50%;">
+          ${isImageAvatar
+            ? `<img src="${escHtml(userAvatar)}" alt="${escHtml(user.full_name)}" style="width:100%; height:100%; object-fit:cover; border-radius:50%; display:block;" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\\'user-pill-avatar\\'>👩‍🏫</span>';">`
+            : `<span class="user-pill-avatar">${escHtml(userAvatar)}</span>`
+          }
         </div>
         <span class="user-pill-name">${escHtml(user.full_name)}</span>
         <span class="user-role-badge ${roleBadgeClass}">${roleLabel}</span>
@@ -1369,38 +1374,63 @@ function renderNavbarUserWidget() {
       <div class="user-dropdown-menu" id="user-dropdown-menu" onclick="event.stopPropagation()">
         <div class="dropdown-header">
           <div class="dropdown-avatar-wrap">
-            <div class="dropdown-avatar-box" style="font-size:22px;">${roleIcon}</div>
+            <div class="dropdown-avatar-box" style="width:48px; height:48px; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center; background:var(--bg2); border:2px solid var(--bd);">
+              ${isImageAvatar
+                ? `<img src="${escHtml(userAvatar)}" alt="${escHtml(user.full_name)}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.onerror=null; this.parentElement.innerHTML='<span style=\\'font-size:24px;\\'>👩‍🏫</span>';">`
+                : `<span style="font-size:24px;">${escHtml(userAvatar)}</span>`
+              }
+            </div>
             <span class="dropdown-online-dot"></span>
           </div>
           <div class="dropdown-info">
-            <div style="font-weight:800; font-size:14px; color:var(--tx);">${escHtml(user.full_name)}</div>
-            <div style="font-size:11.5px; color:var(--mut);">@${escHtml(user.username)} · Quyền cao nhất</div>
+            <div class="dropdown-name" style="font-size:14.5px; font-weight:800; color:var(--ink);">${escHtml(user.full_name)}</div>
+            <div class="dropdown-meta" style="display:flex; align-items:center; gap:6px;">
+              <span class="dropdown-username" style="font-size:11.5px; font-family:monospace; color:var(--mut);">@${escHtml(user.username)}</span>
+              <span class="user-role-badge ${roleBadgeClass}" style="font-size:10px; font-weight:700; padding:1px 6px; border-radius:999px;">${roleLabel}</span>
+            </div>
           </div>
         </div>
 
-        <div style="padding:6px 0; display:flex; flex-direction:column; gap:2px;">
-          <button type="button" class="btn gh sm" style="justify-content:flex-start; width:100%; border:none; padding:8px 10px;" onclick="closeUserDropdownMenu(); go('lib');">
-            <ion-icon name="library-outline" style="color:var(--au);"></ion-icon>
-            <span>Đăng bài tập &amp; Quản lý Thư viện</span>
+        <div class="dropdown-items" style="padding:6px 0; display:flex; flex-direction:column; gap:2px;">
+          <button type="button" class="dropdown-item" onclick="closeUserDropdownMenu(); go('lib');" title="Quản lý kho học liệu và soạn thảo bộ đề">
+            <span class="dropdown-item-icon icon-amber">
+              <ion-icon name="library-outline"></ion-icon>
+            </span>
+            <span class="dropdown-item-label">Thư viện &amp; Soạn đề</span>
+            <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
           </button>
-          <button type="button" class="btn gh sm" style="justify-content:flex-start; width:100%; border:none; padding:8px 10px;" onclick="closeUserDropdownMenu(); go('history');">
-            <ion-icon name="checkmark-done-circle-outline" style="color:#10b981;"></ion-icon>
-            <span>Kiểm soát Lịch sử &amp; Chấm bài</span>
-          </button>
-          <button type="button" class="btn gh sm" style="justify-content:flex-start; width:100%; border:none; padding:8px 10px;" onclick="closeUserDropdownMenu(); openAccountManagerModal('students');">
-            <ion-icon name="people-outline" style="color:#3b82f6;"></ion-icon>
-            <span>Kiểm soát Tên Học sinh &amp; Tài khoản</span>
-          </button>
-          <button type="button" class="btn gh sm" style="justify-content:flex-start; width:100%; border:none; padding:8px 10px;" onclick="closeUserDropdownMenu(); openChangePasswordModal();">
-            <ion-icon name="key-outline" style="color:var(--mut);"></ion-icon>
-            <span>Đổi mật khẩu Giáo viên</span>
-          </button>
-        </div>
 
-        <div style="border-top:1px solid var(--bd); padding-top:6px; margin-top:2px;">
-          <button type="button" class="btn no sm" style="justify-content:center; width:100%;" onclick="closeUserDropdownMenu(); logoutUser();">
-            <ion-icon name="log-out-outline"></ion-icon>
-            <span>Đăng xuất Giáo viên</span>
+          <button type="button" class="dropdown-item" onclick="closeUserDropdownMenu(); go('history');" title="Xem lịch sử làm bài và chấm điểm tự luận">
+            <span class="dropdown-item-icon icon-emerald">
+              <ion-icon name="checkmark-done-circle-outline"></ion-icon>
+            </span>
+            <span class="dropdown-item-label">Chấm bài &amp; Lịch sử</span>
+            <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
+          </button>
+
+          <button type="button" class="dropdown-item" onclick="closeUserDropdownMenu(); openAccountManagerModal('students');" title="Quản lý danh sách học sinh và phân quyền">
+            <span class="dropdown-item-icon icon-blue">
+              <ion-icon name="people-outline"></ion-icon>
+            </span>
+            <span class="dropdown-item-label">Quản lý học sinh</span>
+            <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
+          </button>
+
+          <div class="dropdown-divider"></div>
+
+          <button type="button" class="dropdown-item" onclick="closeUserDropdownMenu(); openChangePasswordModal();" title="Đổi mật khẩu tài khoản">
+            <span class="dropdown-item-icon icon-muted">
+              <ion-icon name="key-outline"></ion-icon>
+            </span>
+            <span class="dropdown-item-label">Đổi mật khẩu</span>
+            <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
+          </button>
+
+          <button type="button" class="dropdown-item danger" onclick="closeUserDropdownMenu(); logoutUser();" title="Đăng xuất khỏi hệ thống">
+            <span class="dropdown-item-icon icon-red">
+              <ion-icon name="log-out-outline"></ion-icon>
+            </span>
+            <span class="dropdown-item-label">Đăng xuất</span>
           </button>
         </div>
       </div>
@@ -1439,10 +1469,18 @@ function renderMobileSidebarUser() {
   if (Auth.isTeacher()) {
     const user = Auth.getCurrentUser();
     const isAdmin = Auth.isAdmin();
+    const defaultEmoji = '👩‍🏫';
+    const userAvatar = (user && user.avatar) ? user.avatar : (user && user.username === 'tuanh' ? './assets/teacher-tuanh.png' : defaultEmoji);
+    const isImageAvatar = userAvatar.includes('/') || userAvatar.includes('.');
     container.innerHTML = `
       <div style="padding:12px; margin-bottom:8px; border-radius:10px; background:var(--bg2); border:1px solid var(--bd);">
         <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-          <span style="font-size:22px;">${isAdmin ? '🛡️' : '👑'}</span>
+          <div style="width:42px; height:42px; border-radius:50%; overflow:hidden; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:var(--bg2); border:1.5px solid var(--bd);">
+            ${isImageAvatar
+              ? `<img src="${escHtml(userAvatar)}" alt="${escHtml(user.full_name)}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.onerror=null; this.parentElement.innerHTML='<span style=\\'font-size:22px;\\'>👩‍🏫</span>';">`
+              : `<span style="font-size:22px;">${escHtml(userAvatar)}</span>`
+            }
+          </div>
           <div style="min-width:0; flex:1;">
             <div style="font-weight:800; font-size:13.5px; color:var(--tx); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escHtml(user.full_name)}</div>
             <div style="font-size:11.5px; color:var(--au); font-weight:700;">${isAdmin ? 'Quản trị viên (Toàn quyền)' : 'Giáo viên (Toàn quyền)'}</div>
@@ -2060,8 +2098,11 @@ async function renderTeacherAccountsList() {
     return `
       <div class="student-ctrl-card">
         <div style="display:flex; align-items:center; gap:10px;">
-          <div style="width:36px; height:36px; border-radius:9px; background:var(--bg2); border:1px solid var(--bd); display:flex; align-items:center; justify-content:center; font-size:18px;">
-            ${isAdmin ? '🛡️' : '👑'}
+          <div style="width:38px; height:38px; border-radius:50%; overflow:hidden; background:var(--bg2); border:1.5px solid var(--bd); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            ${acc.avatar && (acc.avatar.includes('/') || acc.avatar.includes('.'))
+              ? `<img src="${escHtml(acc.avatar)}" alt="${escHtml(acc.full_name)}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.onerror=null; this.parentElement.innerHTML='<span style=\\'font-size:18px;\\'>👩‍🏫</span>';">`
+              : `<span style="font-size:18px;">${escHtml(acc.avatar || '👩‍🏫')}</span>`
+            }
           </div>
           <div>
             <div style="font-weight:800; font-size:14px; color:var(--tx); display:flex; align-items:center; gap:6px;">
