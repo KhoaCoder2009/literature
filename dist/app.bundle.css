@@ -9664,6 +9664,39 @@ body.projector-mode .reading-answer-textarea {
   background: var(--bg-card);
   color: var(--ink);
 }
+.scaffold-ref-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 10px;
+  border: 2px solid var(--stroke);
+  border-radius: 12px;
+  background: var(--bg-card);
+}
+.scaffold-ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.scaffold-ref-table th,
+.scaffold-ref-table td {
+  padding: 7px 10px;
+  border-bottom: 1.5px solid var(--stroke);
+  text-align: left;
+  vertical-align: top;
+}
+.scaffold-ref-table th {
+  background: rgba(245, 158, 11, 0.14);
+  font-weight: 800;
+  color: var(--ink);
+}
+.scaffold-ref-table tr:last-child td {
+  border-bottom: none;
+}
+.scaffold-ref-table td:not(:last-child),
+.scaffold-ref-table th:not(:last-child) {
+  border-right: 1.5px solid var(--stroke);
+}
 
 /* --- EXAM PRESSURE TIMER WIDGET (ĐỒNG HỒ RÈN ÁP LỰC PHÒNG THI) --- */
 .exam-pressure-timer-widget {

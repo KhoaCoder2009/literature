@@ -3,131 +3,337 @@
    ========================================================================= */
 
 const DEFAULT_WRITING_SETS = [
+  // =========================================================================
+  // NHÓM 1: VIẾT ĐOẠN NGHỊ LUẬN VĂN HỌC (~200 CHỮ - 1 ĐOẠN DUY NHẤT)
+  // =========================================================================
   {
-    id: 'writing_nlxh_kientri',
+    id: 'writing_doan_nlvh_chude',
     status: 'published',
-    category: 'nl-xh',
-    categoryName: 'Nghị luận xã hội',
-    icon: '🌱',
-    title: 'Nghị luận xã hội (200 chữ): Ý nghĩa của lòng kiên trì',
-    prompt: 'Viết một đoạn văn (khoảng 200 chữ) trình bày suy nghĩ của anh/chị về ý nghĩa của lòng kiên trì trên con đường vươn tới thành công của mỗi con người trong cuộc sống hiện đại.',
+    category: 'doan-nlvh',
+    categoryName: 'Đoạn văn NLVH (200 chữ)',
+    subType: 'nlvh_doan_chude',
+    icon: '🖋️',
+    title: '[Đoạn NLVH - Dạng 1] Phân tích, đánh giá NỘI DUNG CHỦ ĐỀ tác phẩm',
+    prompt: 'Viết một đoạn văn (khoảng 200 chữ, chỉ viết trong 1 đoạn văn, không xuống hàng) phân tích, đánh giá nội dung chủ đề của một đoạn thơ hoặc truyện ngắn mà anh/chị tâm đắc (Ví dụ: Chủ đề tình mẫu tử thiêng liêng trong bài thơ "Mây và sóng" - R. Tagore hoặc chủ đề số phận con người trong truyện ngắn).',
     sections: [
       {
-        id: 'sec_mo_bai',
-        title: 'Mở bài',
-        placeholder: 'Nhập phần mở bài / mở đoạn tại đây...',
-        guide: 'Dẫn dắt trực tiếp và nêu vấn đề nghị luận: Lòng kiên trì là chiếc la bàn và kim chỉ nam dẫn lối đến thành công của mỗi con người trong cuộc sống hiện đại.',
-        sample: 'Trên hành trình vươn tới ước mơ, kiên trì chính là chiếc la bàn vững chắc và là kim chỉ nam giúp mỗi con người vượt qua mọi giông bão cuộc đời để chạm tới thành công.'
-      },
-      {
-        id: 'sec_than_bai',
-        title: 'Thân bài',
-        placeholder: 'Nhập phần thân bài / thân đoạn tại đây...',
-        guide: '1. Giải thích: Kiên trì là sự bền bỉ, nhẫn nại theo đuổi mục tiêu dù gặp muôn vàn khó khăn, thử thách mà không hề bỏ cuộc giữa chừng.\n2. Bàn luận & Dẫn chứng: Lòng kiên trì rèn giũa bản lĩnh thép, biến trở ngại thành cơ hội và tích lũy tri thức. Dẫn chứng: Nhà bác học Thomas Edison kiên trì thử nghiệm hàng nghìn lần mới phát minh ra bóng đèn điện; Thầy giáo Nguyễn Ngọc Ký kiên trì tập viết bằng chân...\n3. Phản đề & Mở rộng: Phê phán lối sống thiếu kiên nhẫn, "cả thèm chóng chán", thấy gian nan đã vội vàng buông xuôi.',
-        sample: 'Trước hết, kiên trì là sự bền bỉ, nhẫn nại theo đuổi mục tiêu đã đề ra, dẫu phải đối mặt với muôn vàn khó khăn, thất bại mà không hề chùn bước hay bỏ cuộc giữa chừng. Lòng kiên trì rèn giũa cho ta bản lĩnh thép, giúp biến những thử thách thành bệ phóng tôi luyện trí tuệ và nghị lực. Người kiên trì luôn tìm thấy cơ hội trong nghịch cảnh; như Thomas Edison đã trải qua hàng nghìn lần thử nghiệm thất bại trước khi thắp sáng nhân loại bằng bóng đèn điện. Trái lại, những kẻ thiếu kiên nhẫn, "cả thèm chóng chán", vừa thấy gian nan đã vội vàng buông xuôi sẽ mãi dậm chân tại chỗ và khó có thể chạm tay vào quả ngọt của thành công.'
-      },
-      {
-        id: 'sec_ket_bai',
-        title: 'Kết bài',
-        placeholder: 'Nhập phần kết bài / kết đoạn tại đây...',
-        guide: 'Khái quát lại ý nghĩa của lòng kiên trì; rút ra bài học nhận thức và phương hướng hành động cụ thể cho bản thân trong học tập và cuộc sống.',
-        sample: 'Tóm lại, thành công không đến sau một đêm mà là kết tinh của chuỗi ngày bền bỉ nỗ lực. Là học sinh, em tự nhắc nhở mình phải luôn kiên định với mục tiêu học tập, không ngừng tôi luyện ý chí để vững bước tương lai.'
+        id: 'sec_doan_200',
+        title: 'Đoạn văn Nghị luận Văn học (~200 chữ - Không xuống dòng)',
+        placeholder: 'Viết liền mạch trong 1 đoạn văn duy nhất (khoảng 200 chữ, không xuống hàng) theo đúng trình tự: Mở đoạn (Câu dẫn + GTVĐNL + Nêu chủ đề) ➔ Phân tích 2-3 khía cạnh chủ đề (Thứ nhất... Thứ hai... Thứ ba...) ➔ Đánh giá vai trò chủ đề & thông điệp ➔ Nghệ thuật ➔ Kết đoạn...',
+        guide: '• Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ).\n• Mở đoạn: Câu dẫn + Giới thiệu VĐNL (nội dung chủ đề tác phẩm A) + Nêu rõ chủ đề.\n• Thân đoạn: Phân tích từng khía cạnh của chủ đề (Gọi tên yếu tố + dẫn chứng + phân tích ngắn): Thứ nhất, chủ đề thể hiện qua... Thứ hai, chủ đề còn được làm rõ qua... Thứ ba, chủ đề được làm sáng tỏ qua... (Thơ: Nhan đề, Hình tượng trung tâm, Tình cảm cảm xúc | Truyện: Tình huống truyện, Nhân vật, Chi tiết đặc sắc).\n• Đánh giá & Nghệ thuật: Nêu ý nghĩa của chủ đề, thông điệp tác phẩm và các yếu tố nghệ thuật (thể thơ, từ ngữ, hình ảnh, biện pháp tu từ...)\n• Kết đoạn: Khẳng định lại giá trị và trích dẫn.',
+        sample: ''
       }
     ]
   },
   {
-    id: 'writing_nlvh_taytien',
+    id: 'writing_doan_nlvh_nt_tho',
     status: 'published',
-    category: 'nl-vh',
-    categoryName: 'Nghị luận văn học',
+    category: 'doan-nlvh',
+    categoryName: 'Đoạn văn NLVH (200 chữ)',
+    subType: 'nlvh_doan_nt_tho',
+    icon: '🖋️',
+    title: '[Đoạn NLVH - Dạng 2] Phân tích, đánh giá NGHỆ THUẬT THƠ',
+    prompt: 'Viết một đoạn văn (khoảng 200 chữ, không xuống hàng) phân tích, đánh giá những nét đặc sắc về nghệ thuật (thể thơ, hình ảnh, từ ngữ, biện pháp tu từ) trong đoạn thơ trích bài "Tây Tiến" (Quang Dũng) hoặc "Sóng" (Xuân Quỳnh).',
+    sections: [
+      {
+        id: 'sec_doan_200',
+        title: 'Đoạn văn Phân tích Nghệ thuật Thơ (~200 chữ - Không xuống dòng)',
+        placeholder: 'Viết trong 1 đoạn văn duy nhất: Câu dẫn + GTVĐNL ➔ Thứ nhất, thể thơ (gọi tên + tác dụng) ➔ Thứ hai, hình ảnh (nhận xét + dẫn chứng + phân tích) ➔ Thứ ba, từ ngữ ➔ Thứ tư, biện pháp tu từ ➔ Khẳng định vai trò làm rõ chủ đề & thông điệp...',
+        guide: '• Mở đoạn: Câu dẫn + Giới thiệu VĐNL (đặc sắc nghệ thuật đoạn thơ).\n• Phân tích các khía cạnh nghệ thuật:\n  + Thứ nhất, thể thơ... (gọi tên + nêu tác dụng).\n  + Thứ hai, hình ảnh... (nhận xét chung + đưa dẫn chứng + phân tích).\n  + Thứ ba, từ ngữ... (nhận xét chung + đưa dẫn chứng từ ngữ đắt giá + phân tích).\n  + Thứ tư, biện pháp tu từ... (nhận xét chung + đưa dẫn chứng + phân tích).\n• Đánh giá & Kết đoạn: Các yếu tố hình thức góp phần làm rõ chủ đề tác phẩm (nêu chủ đề) và hỗ trợ nhà thơ chuyển tải thông điệp sâu sắc đến người đọc.',
+        sample: ''
+      }
+    ]
+  },
+  {
+    id: 'writing_doan_nlvh_camxuc_tho',
+    status: 'published',
+    category: 'doan-nlvh',
+    categoryName: 'Đoạn văn NLVH (200 chữ)',
+    subType: 'nlvh_doan_camxuc_tho',
+    icon: '🖋️',
+    title: '[Đoạn NLVH - Dạng 3] Phân tích, đánh giá TÌNH CẢM, CẢM XÚC trong thơ',
+    prompt: 'Viết một đoạn văn (khoảng 200 chữ, không xuống hàng) phân tích, đánh giá mạch tình cảm, cảm xúc của chủ thể trữ tình trong khổ thơ: "Trước muôn trùng sóng bể / Em nghĩ về anh, em / Em nghĩ về biển lớn / Từ nơi nào sóng lên?..." (Sóng - Xuân Quỳnh).',
+    sections: [
+      {
+        id: 'sec_doan_200',
+        title: 'Đoạn văn Phân tích Tình cảm, Cảm xúc trong Thơ (~200 chữ)',
+        placeholder: 'Viết trong 1 đoạn văn duy nhất: Mở đoạn (Câu dẫn + GTVĐNL) ➔ Phân tích Cảm xúc 1 (dẫn chứng + phân tích) ➔ Cảm xúc 2 (dẫn chứng + phân tích) ➔ Đánh giá (cảm xúc chân thành, gửi gắm triết lí nhân sinh, thông điệp & phong cách tác giả)...',
+        guide: '• Mở đoạn: Câu dẫn + Nêu VĐNL (tình cảm, cảm xúc trong đoạn thơ).\n• Phân tích: Chỉ rõ từng cung bậc cảm xúc (Cảm xúc 1 + dẫn chứng + phân tích; Cảm xúc 2 + dẫn chứng + phân tích...).\n• Đánh giá & Kết đoạn: Cảm xúc trong sáng, chân thành, thể hiện cái nhìn tích cực; qua đó gửi gắm triết lí nhân sinh, thông điệp (chức năng giáo dục, nhận thức, thẩm mĩ của văn chương) và tiêu biểu cho phong cách nhà thơ.',
+        sample: ''
+      }
+    ]
+  },
+  {
+    id: 'writing_doan_nlvh_nt_truyen',
+    status: 'published',
+    category: 'doan-nlvh',
+    categoryName: 'Đoạn văn NLVH (200 chữ)',
+    subType: 'nlvh_doan_nt_truyen',
+    icon: '🖋️',
+    title: '[Đoạn NLVH - Dạng 4] Phân tích NGHỆ THUẬT TRUYỆN NGẮN',
+    prompt: 'Viết một đoạn văn (khoảng 200 chữ, không xuống hàng) phân tích các yếu tố nghệ thuật đặc sắc (ngôi kể, điểm nhìn, tình huống truyện, chi tiết nghệ thuật, ngôn ngữ, giọng điệu, miêu tả tâm lí) trong một đoạn trích truyện ngắn hiện đại.',
+    sections: [
+      {
+        id: 'sec_doan_200',
+        title: 'Đoạn văn Phân tích Nghệ thuật Truyện ngắn (~200 chữ)',
+        placeholder: 'Viết liền mạch 1 đoạn văn: Mở đoạn ➔ Phân tích ngôi kể & điểm nhìn ➔ Tình huống truyện & tác dụng ➔ Chi tiết nghệ thuật, ngôn ngữ, giọng điệu, miêu tả diễn biến nội tâm ➔ Đánh giá tài năng, cá tính sáng tạo của nhà văn & thông điệp...',
+        guide: '• Phân tích các phương diện: Ngôi kể (ngôi thứ mấy, tác dụng), Điểm nhìn, Tình huống truyện (tình huống gì, phân tích tác dụng), Chi tiết nghệ thuật đặc sắc, Ngôn ngữ, Giọng điệu, Miêu tả diễn biến nội tâm tinh tế.\n• Đánh giá: Thể hiện tài năng, phong cách, cá tính sáng tạo của tác giả; góp phần làm nổi bật chủ đề, tư tưởng, thông điệp của tác phẩm.',
+        sample: ''
+      }
+    ]
+  },
+  {
+    id: 'writing_doan_nlvh_nhanvat',
+    status: 'published',
+    category: 'doan-nlvh',
+    categoryName: 'Đoạn văn NLVH (200 chữ)',
+    subType: 'nlvh_doan_nhanvat',
+    icon: '🖋️',
+    title: '[Đoạn NLVH - Dạng 5] Phân tích ĐẶC ĐIỂM NHÂN VẬT văn học',
+    prompt: 'Viết một đoạn văn (khoảng 200 chữ, không xuống hàng) phân tích vẻ đẹp phẩm chất, tính cách và nghệ thuật xây dựng một nhân vật văn học tiêu biểu (ví dụ: nhân vật Tràng, bà cụ Tứ trong "Vợ nhặt" - Kim Lân hoặc nhân vật Mị trong "Vợ chồng A Phủ" - Tô Hoài).',
+    sections: [
+      {
+        id: 'sec_doan_200',
+        title: 'Đoạn văn Phân tích Đặc điểm Nhân vật (~200 chữ)',
+        placeholder: 'Viết 1 đoạn văn duy nhất: Mở đoạn & Khái quát (tên tuổi, hoàn cảnh, ngoại hình...) ➔ Phân tích Vẻ đẹp/Phẩm chất 1 (dẫn chứng hành động, lời nói + phân tích) ➔ Vẻ đẹp/Phẩm chất 2 ➔ Nghệ thuật xây dựng nhân vật (tình huống, tâm lí, ngôi kể, điểm nhìn) ➔ Đánh giá (tiêu biểu cho tầng lớp nào, thông điệp của tác giả)...',
+        guide: '• Khái quát: Giới thiệu tên tuổi, hoàn cảnh, ngoại hình, nghề nghiệp nhân vật.\n• Phân tích phẩm chất: Vẻ đẹp 1 (Gọi tên + dẫn chứng hành động, lời nói, thái độ + phân tích); Vẻ đẹp 2...\n• Nghệ thuật xây dựng nhân vật: Khắc họa qua hành động, lời nói, tâm lí; đặt trong tình huống truyện độc đáo; ngôi kể, điểm nhìn, ngôn ngữ, giọng điệu.\n• Đánh giá: Nhân vật tiêu biểu cho tầng lớp nào? Thông qua đó tác giả gửi gắm thông điệp gì về con người và cuộc sống?',
+        sample: ''
+      }
+    ]
+  },
+
+  // =========================================================================
+  // NHÓM 2: VIẾT BÀI NGHỊ LUẬN VĂN HỌC (~600 CHỮ - CHIA NHIỀU ĐOẠN)
+  // =========================================================================
+  {
+    id: 'writing_bai_nlvh_1tacpham',
+    status: 'published',
+    category: 'bai-nlvh',
+    categoryName: 'Bài văn NLVH (600 chữ)',
+    subType: 'nlvh_bai_1tacpham',
     icon: '📜',
-    title: 'Nghị luận văn học: Hình tượng người lính Tây Tiến (Quang Dũng)',
-    prompt: 'Cảm nhận về vẻ đẹp hào hùng và bi tráng của hình tượng người lính Tây Tiến trong đoạn thơ: "Tây Tiến đoàn binh không mọc tóc / Quân xanh màu lá dữ oai hùm / Mắt trừng gửi mộng qua biên giới / Đêm mơ Hà Nội dáng kiều thơm..." (Tây Tiến - Quang Dũng).',
+    title: '[Bài NLVH - Dạng 1] Phân tích, đánh giá nội dung, chủ đề & nghệ thuật MỘT tác phẩm Thơ/Truyện',
+    prompt: 'Viết bài văn nghị luận (khoảng 600 chữ) phân tích, đánh giá nội dung, chủ đề và những nét đặc sắc về hình thức nghệ thuật của bài thơ "Tây Tiến" (Quang Dũng) hoặc một tác phẩm truyện ngắn tiêu biểu trong chương trình Ngữ văn THPT.',
     sections: [
       {
         id: 'sec_mo_bai',
-        title: 'Mở bài',
-        placeholder: 'Nhập phần mở bài tại đây...',
-        guide: 'Giới thiệu tác giả Quang Dũng (hồn thơ phóng khoáng, hồn hậu, lãng mạn), bài thơ "Tây Tiến" và đoạn thơ khắc họa chân dung kiêu hùng của đoàn binh.',
-        sample: 'Quang Dũng là một nghệ sĩ đa tài, một hồn thơ phóng khoáng, hồn hậu và lãng mạn. Nhắc đến ông, người đọc không thể không nhớ đến "Tây Tiến" - bài ca tuyệt tác về những người lính thời kỳ kháng chiến chống Pháp. Đặc biệt, vẻ đẹp hào hùng và bi tráng của người lính Tây Tiến được kết tinh rực rỡ nhất qua đoạn thơ khắc họa chân dung kiêu hùng của họ.'
+        title: 'I. Mở bài',
+        placeholder: 'Trích dẫn nhận định / dẫn dắt ➔ Giới thiệu tác giả, tác phẩm và nêu vấn đề nghị luận (giá trị nội dung, chủ đề và đặc sắc nghệ thuật)...',
+        guide: 'Dẫn dắt từ nhận định văn học hoặc đề tài; giới thiệu tác giả, tác phẩm và nêu khái quát giá trị nội dung, chủ đề cùng hình thức nghệ thuật đặc sắc của tác phẩm.',
+        sample: ''
       },
       {
-        id: 'sec_than_bai',
-        title: 'Thân bài',
-        placeholder: 'Nhập phần thân bài tại đây...',
-        guide: '1. Luận điểm 1: Vẻ đẹp hào hùng, dữ dội - Hiện thực chiến tranh khốc liệt ("không mọc tóc", "quân xanh màu lá") được nâng lên tầm vóc phi thường qua ngòi bút lãng mạn ("dữ oai hùm").\n2. Luận điểm 2: Tâm hồn hào hoa, lãng mạn - Khát vọng chiến đấu qua biên giới gắn liền với nỗi nhớ quê hương ("Mắt trừng gửi mộng qua biên giới / Đêm mơ Hà Nội dáng kiều thơm").\n3. Đánh giá nghệ thuật: Bút pháp lãng mạn kết hợp cảm hứng bi tráng, ngôn từ giàu tính tạo hình và nhạc điệu.',
-        sample: 'Ngay từ những câu thơ đầu, Quang Dũng không hề né tránh hiện thực khốc liệt của chiến tranh. Căn bệnh sốt rét rừng hiểm ác đã khiến đoàn binh "không mọc tóc", làn da "xanh màu lá". Thế nhưng, qua ngòi bút lãng mạn, hiện thực ấy không hề gợi sự tiều tụy mà trái lại toát lên khí phách hiên ngang "dữ oai hùm" như những vị chúa sơn lâm làm chủ đại ngàn. Bên cạnh nét hào hùng là một thế giới nội tâm vô cùng lãng mạn, hào hoa của những chàng trai đất Hà thành. "Mắt trừng" chứa chan ý chí căm thù giặc và khát vọng chiến đấu qua biên giới; nhưng khi đêm về, tâm hồn họ lại hướng về quê hương với "dáng kiều thơm" - nguồn động lực tinh thần diệu kỳ sưởi ấm những đêm đông lạnh giá nơi chiến trường. Với thể thơ thất ngôn giàu nhạc điệu, kết hợp giữa từ ngữ Hán Việt cổ kính và ngôn ngữ đời thường, Quang Dũng đã khắc họa thành công bức tượng đài bi tráng về người lính cách mạng.'
+        id: 'sec_than_bai_nd',
+        title: 'II. Thân bài - 1. Khái quát & Phân tích Nội dung, Chủ đề',
+        placeholder: 'Bước 1: Phân tích (Gọi tên yếu tố + nêu dẫn chứng + phân tích tác dụng) ➔ Bước 2: Đánh giá vai trò với chủ đề / thông điệp...',
+        guide: '• Với THƠ: Làm rõ Đề tài, Chủ đề, Tình cảm cảm xúc – Mạch cảm xúc, Chủ thể trữ tình/Nhân vật trữ tình, Tư tưởng, Thông điệp.\n• Với TRUYỆN: Làm rõ Đề tài, Chủ đề, Vẻ đẹp hình tượng nhân vật (phẩm chất, tính cách, diễn biến tâm trạng...), Tư tưởng, Thông điệp.',
+        sample: ''
+      },
+      {
+        id: 'sec_than_bai_nt',
+        title: 'II. Thân bài - 2. Phân tích, đánh giá Hình thức Nghệ thuật',
+        placeholder: 'Phân tích các tiêu chí hình thức theo đặc trưng thể loại (Thơ: Thể thơ, từ ngữ, hình ảnh, BPTT, vần nhịp, giọng điệu | Truyện: Ngôi kể, điểm nhìn, nhan đề, tình huống, chi tiết tiêu biểu, ngôn ngữ, kết thúc, giọng điệu)...',
+        guide: '• Với THƠ: Thể thơ, Từ ngữ, Hình ảnh, Biện pháp tu từ, Vần/nhịp, Giọng điệu.\n• Với TRUYỆN: Ngôi kể, Điểm nhìn, Nhan đề (gây tò mò, gợi liên tưởng, khắc sâu ý nghĩa), Tình huống truyện, Ngôn ngữ (đối thoại/độc thoại), Chi tiết tiêu biểu (triển khai cốt truyện, khắc họa nhân vật, thể hiện chủ đề), Kết thúc truyện, Giọng điệu trần thuật.',
+        sample: ''
       },
       {
         id: 'sec_ket_bai',
-        title: 'Kết bài',
-        placeholder: 'Nhập phần kết bài tại đây...',
-        guide: 'Tổng kết giá trị nội dung và nghệ thuật của đoạn trích; khẳng định sức sống bất diệt của hình tượng người lính Tây Tiến trong dòng chảy văn học dân tộc.',
-        sample: 'Với bút pháp lãng mạn kết hợp chất bi tráng hào hùng, Quang Dũng đã dựng nên một tượng đài bất tử về người lính vệ quốc. Đoạn thơ không chỉ là khúc ca tri ân thế hệ cha anh mà còn khơi dậy trong lòng mỗi chúng ta niềm tự hào sâu sắc và ý thức trách nhiệm đối với non sông đất nước hôm nay.'
+        title: 'III. Kết bài',
+        placeholder: 'Khẳng định lại giá trị tư tưởng và nghệ thuật của tác phẩm; nêu sức sống của tác phẩm trong lòng người đọc...',
+        guide: 'Tổng kết giá trị nội dung, chủ đề và nghệ thuật; khẳng định tài năng của tác giả và dư âm, thông điệp sâu sắc đối với người đọc hôm nay.',
+        sample: ''
       }
     ]
   },
   {
-    id: 'writing_nlxh_tuhoc',
+    id: 'writing_bai_nlvh_sosanh',
     status: 'published',
-    category: 'nl-xh',
-    categoryName: 'Nghị luận xã hội',
-    icon: '✍️',
-    title: 'Nghị luận xã hội: Tinh thần tự học trong thời đại số',
-    prompt: 'Viết bài văn ngắn trình bày suy nghĩ của anh/chị về vai trò của tinh thần tự học đối với thế hệ trẻ trong kỷ nguyên bùng nổ công nghệ thông tin ngày nay.',
+    category: 'bai-nlvh',
+    categoryName: 'Bài văn NLVH (600 chữ)',
+    subType: 'nlvh_bai_sosanh',
+    icon: '📜',
+    title: '[Bài NLVH - Dạng 2] So sánh, đánh giá HAI đoạn trích / tác phẩm Thơ hoặc Truyện',
+    prompt: 'Viết bài văn nghị luận (khoảng 600 chữ) so sánh, đánh giá hai đoạn trích thơ hoặc hai nhân vật trong hai tác phẩm truyện ngắn để làm nổi bật điểm tương đồng, điểm khác biệt và phong cách sáng tạo độc đáo của mỗi nhà văn, nhà thơ.',
     sections: [
       {
         id: 'sec_mo_bai',
-        title: 'Mở bài',
-        placeholder: 'Nhập phần mở bài tại đây...',
-        guide: 'Dẫn dắt trực tiếp hoặc trích dẫn câu danh ngôn về việc học (Lênin, Bác Hồ), giới thiệu vai trò sống còn của tinh thần tự học trong kỷ nguyên 4.0.',
-        sample: '"Học, học nữa, học mãi" - lời dạy của V.I.Lênin chưa bao giờ mất đi tính thời sự. Đặc biệt trong thế kỷ 21, khi tri thức nhân loại biến đổi từng ngày, tinh thần tự học chính là chiếc chìa khóa vàng giúp người trẻ mở cánh cửa thành công và khẳng định giá trị bản thân.'
+        title: 'I. Mở bài',
+        placeholder: 'Trích dẫn – dẫn dắt – giới thiệu Tác phẩm 1 + Tác giả 1, Tác phẩm 2 + Tác giả 2 + câu chốt VĐNL (điểm tương đồng, khác biệt) + Trích dẫn 2 đoạn...',
+        guide: 'Trích dẫn – dẫn dắt – nêu tên Tác phẩm 1 + Tác giả 1, Tác phẩm 2 + Tác giả 2 + câu chốt VĐNL (điểm tương đồng, khác biệt). Trích 2 đoạn thơ (nếu ngắn) hoặc trích 2 đoạn truyện (dùng “...”, câu đầu và cuối).',
+        sample: ''
       },
       {
-        id: 'sec_than_bai',
-        title: 'Thân bài',
-        placeholder: 'Nhập phần thân bài tại đây...',
-        guide: '1. Giải thích: Tự học là quá trình chủ động, tự giác lĩnh hội kiến thức, kỹ năng mà không phụ thuộc vào sự thúc ép.\n2. Bàn luận & Dẫn chứng: Tự học giúp người học làm chủ công nghệ, thích ứng nhanh với biến động thời đại, rèn tư duy phản biện và khả năng sáng tạo. Dẫn chứng: Tấm gương Bác Hồ tự học ngoại ngữ và văn hóa thế giới...\n3. Phản đề: Phê phán lối học vẹt, thụ động, ỷ lại vào thiết bị điện tử hoặc gian lận thi cử.',
-        sample: 'Tự học là quá trình chủ động, tự giác chiếm lĩnh tri thức mà không phụ thuộc vào sự ép buộc của người khác. Trong thời đại số, tự học biểu hiện qua việc biết tìm kiếm, chọn lọc thông tin trên mạng, tự rèn luyện kỹ năng qua các khóa học trực tuyến và luôn tò mò, khám phá những chân trời kiến thức mới. Tinh thần tự học giúp mỗi người chủ động làm chủ cuộc sống, không bị động trước những thay đổi nhanh chóng của xã hội. Hơn thế, tự học rèn luyện tư duy độc lập, sáng tạo và bản lĩnh kiên trì. Chủ tịch Hồ Chí Minh là tấm gương sáng ngời về tinh thần tự học: từ bến cảng Nhà Rồng ra đi tìm đường cứu nước, Người đã tự học nhiều thứ tiếng và tinh hoa văn hóa nhân loại để lãnh đạo cách mạng Việt Nam thành công. Ngược lại, nếu chỉ học một cách thụ động, ỷ lại vào trí tuệ nhân tạo hay phó mặc cho trường lớp, người trẻ sẽ dễ dàng bị tụt hậu và đào thải.'
+        id: 'sec_tb_khaiquat_tuongdong',
+        title: 'II. Thân bài - 1. Khái quát chung & 2. Điểm tương đồng',
+        placeholder: '1. Khái quát thông tin tác giả, tác phẩm, hoàn cảnh sáng tác, xuất xứ.\n2. Điểm tương đồng về Nội dung và Nghệ thuật (Trình bày: Thứ nhất... Thứ hai... kèm lí lẽ và bằng chứng)...',
+        guide: '1. Khái quát chung: Thông tin về tác giả, tác phẩm, hoàn cảnh sáng tác, xuất xứ.\n2. Điểm tương đồng: Bám theo bảng tiêu chí thể loại (Nội dung: đề tài, chủ đề, hình tượng thơ/nhân vật, cảm hứng chủ đạo, tư tưởng thông điệp | Nghệ thuật: thể loại, bút pháp...). Trình bày: thứ nhất, thứ hai... kèm lí lẽ và bằng chứng.',
+        sample: ''
+      },
+      {
+        id: 'sec_tb_khacbiet',
+        title: 'II. Thân bài - 3. Điểm khác biệt (Nội dung & Hình thức)',
+        placeholder: 'Phân tích điểm khác biệt giữa 2 đoạn trích/tác phẩm về Nội dung và Hình thức nghệ thuật (Thứ nhất... Thứ hai... kèm lí lẽ và bằng chứng)...',
+        guide: '• Nếu so sánh 2 đoạn thơ: Chú trọng Nội dung (Đề tài, hình tượng thơ, cảm hứng chủ đạo) & Hình thức (Chủ thể trữ tình, từ ngữ hình ảnh, biện pháp nghệ thuật).\n• Nếu so sánh 2 nhân vật / truyện: Chú trọng Nội dung (Kiểu nhân vật, tình cảm tác giả) & Hình thức (Ngôi kể, điểm nhìn, cách xây dựng nhân vật, chi tiết, giọng điệu).',
+        sample: ''
+      },
+      {
+        id: 'sec_tb_ligiai_danhgia',
+        title: 'II. Thân bài - 4. Lí giải giống/khác nhau & 5. Đánh giá chung',
+        placeholder: '4. Lí giải vì sao có điểm tương đồng và khác biệt.\n5. Đánh giá ý nghĩa của sự tương đồng, khác biệt đối với phong cách tác giả và nền văn học...',
+        guide: '4. Lí giải: Giống nhau do cùng hoàn cảnh sống, cùng đề cập một hiện tượng đời sống, cùng quan điểm thẩm mĩ hoặc chịu ảnh hưởng nhau. Khác biệt do cá tính sáng tạo riêng, thời đại/truyền thống văn hóa khác nhau, đối tượng và cảm xúc đặc thù.\n5. Đánh giá: Thể hiện sự thống nhất trong quan điểm/thi pháp thời đại và sự độc đáo, đa dạng làm phong phú nền văn học.',
+        sample: ''
       },
       {
         id: 'sec_ket_bai',
-        title: 'Kết bài',
-        placeholder: 'Nhập phần kết bài tại đây...',
-        guide: 'Khẳng định lại ý nghĩa to lớn của tinh thần tự học; rút ra bài học nhận thức và phương hướng hành động cho bản thân học sinh.',
-        sample: 'Khép lại trang sách, mỗi chúng ta cần nhận thức sâu sắc rằng: đường đời là một cái thang không có nấc chót và việc học là quyển sách không có trang cuối. Là học sinh, em nguyện không ngừng trau dồi tinh thần tự giác học tập mỗi ngày để trở thành công dân có ích cho quê hương.'
+        title: 'III. Kết bài',
+        placeholder: 'Khẳng định lại giá trị đặc sắc của cả hai tác phẩm và sức sống trong lòng độc giả...',
+        guide: 'Khái quát lại giá trị của sự tương đồng và khác biệt giữa hai tác phẩm; nêu cảm nhận và bài học tiếp nhận văn chương.',
+        sample: ''
+      }
+    ]
+  },
+
+  // =========================================================================
+  // NHÓM 3: ĐOẠN VĂN NGHỊ LUẬN XÃ HỘI (~200 CHỮ - 1 ĐOẠN DUY NHẤT)
+  // =========================================================================
+  {
+    id: 'writing_doan_nlxh_ynghia',
+    status: 'published',
+    category: 'doan-nlxh',
+    categoryName: 'Đoạn văn NLXH (200 chữ)',
+    subType: 'nlxh_doan_ynghia',
+    icon: '🌱',
+    title: '[Đoạn NLXH - Định dạng 1 & 2] Ý nghĩa / Giá trị / Tầm quan trọng của một vấn đề (200 chữ)',
+    prompt: 'Viết một đoạn văn nghị luận xã hội (khoảng 200 chữ, chỉ viết trong 1 đoạn văn, không xuống hàng) trình bày suy nghĩ của anh/chị về ý nghĩa, tầm quan trọng của lòng kiên trì và bản lĩnh vượt khó đối với tuổi trẻ hôm nay.',
+    sections: [
+      {
+        id: 'sec_doan_200',
+        title: 'Đoạn văn NLXH về Ý nghĩa / Giá trị (~200 chữ - Không xuống dòng)',
+        placeholder: 'Viết trong 1 đoạn văn duy nhất: Mở đoạn ➔ Giải thích (1 câu) ➔ Bàn luận 3 luận điểm (Thứ nhất, A giúp ta mở rộng hiểu biết, bản lĩnh, hoàn thiện nhân cách... Thứ hai, A còn giúp ta thành công, được tin tưởng, hạnh phúc... Thứ ba, đối với xã hội, cải thiện chất lượng sống, văn minh hơn...) + Dẫn chứng ➔ Bài học nhận thức, hành động & Kết đoạn...',
+        guide: '• Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ).\n• Mở đoạn: Nêu vấn đề nghị luận (Nếu gắn với Đọc hiểu: nêu 1-2 câu về vấn đề xã hội trong phần đọc hiểu trước).\n• Thân đoạn (4 bước):\n  1. Giải thích: 1 câu ngắn gọn.\n  2. Bàn luận (Đưa ra 3 luận điểm kèm 1-2 câu lí giải):\n     + Thứ nhất, A giúp ta mở rộng hiểu biết, có ý chí, bản lĩnh, hoàn thiện nhân cách (+ 1-2 câu lí giải).\n     + Thứ hai, A còn giúp ta thành công hơn, được sự tin tưởng, tín nhiệm, mang lại sự bình an, hạnh phúc (+ 1-2 câu lí giải).\n     + Thứ ba, đối với xã hội, A góp phần cải thiện chất lượng sống, làm cộng đồng tốt đẹp, văn minh hơn (+ 1-2 câu lí giải).\n  3. Dẫn chứng: Nêu dẫn chứng thực tế tiêu biểu.\n  4. Bài học nhận thức và hành động.\n• Kết đoạn: Khẳng định lại giá trị vấn đề.',
+        sample: ''
       }
     ]
   },
   {
-    id: 'writing_camthu_song',
+    id: 'writing_doan_nlxh_giaiphap',
     status: 'published',
-    category: 'cam-thu',
-    categoryName: 'Cảm thụ văn học',
-    icon: '🌊',
-    title: 'Cảm thụ văn học: Khát vọng tình yêu trong bài thơ "Sóng" (Xuân Quỳnh)',
-    prompt: 'Viết đoạn văn cảm nhận về khát vọng lý giải tình yêu của người phụ nữ qua khổ thơ: "Trước muôn trùng sóng bể / Em nghĩ về anh, em / Em nghĩ về biển lớn / Từ nơi nào sóng lên? / Gió bắt đầu từ đâu? / Gió bắt đầu từ gió / Gió bắt đầu từ đâu? / Em cũng không biết nữa / Khi nào ta yêu nhau" (Sóng - Xuân Quỳnh).',
+    category: 'doan-nlxh',
+    categoryName: 'Đoạn văn NLXH (200 chữ)',
+    subType: 'nlxh_doan_giaiphap',
+    icon: '🌱',
+    title: '[Đoạn NLXH - Định dạng 3] Cách thức / Giải pháp / Trách nhiệm của tuổi trẻ (200 chữ)',
+    prompt: 'Viết một đoạn văn nghị luận xã hội (khoảng 200 chữ, chỉ viết trong 1 đoạn văn, không xuống hàng) trình bày suy nghĩ của anh/chị về trách nhiệm và những giải pháp thiết thực của người trẻ để giữ gìn bản sắc văn hóa dân tộc trong kỷ nguyên hội nhập.',
+    sections: [
+      {
+        id: 'sec_doan_200',
+        title: 'Đoạn văn NLXH về Giải pháp / Trách nhiệm (~200 chữ - Không xuống dòng)',
+        placeholder: 'Viết trong 1 đoạn văn duy nhất: Mở đoạn ➔ Giải thích (1 câu) ➔ Bàn luận 3 cấp độ giải pháp (Thứ nhất, đối với cá nhân: nâng cao nhận thức, rèn kĩ năng, thái độ tích cực & hành động cụ thể... Thứ hai, đối với gia đình, nhà trường: giáo dục, thấu hiểu, lắng nghe... Thứ ba, đối với cộng đồng, xã hội: chính sách, sự kiện, truyền thông...) + Dẫn chứng ➔ Bài học & Kết đoạn...',
+        guide: '• Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ).\n• Mở đoạn: Giới thiệu vấn đề trách nhiệm / giải pháp.\n• Thân đoạn:\n  1. Giải thích: 1 câu.\n  2. Bàn luận 3 luận điểm giải pháp:\n     + Thứ nhất, đối với cá nhân: Cần nâng cao nhận thức (điều chỉnh quan điểm, tư duy), rèn luyện kĩ năng, thay đổi thói quen, chủ động học hỏi (+ 1-2 câu lí giải); có thái độ tích cực và hành động cụ thể.\n     + Thứ hai, đối với gia đình, nhà trường: Tăng cường giáo dục, thấu hiểu, lắng nghe, định hướng.\n     + Thứ ba, đối với cộng đồng, xã hội: Hoàn thiện chính sách, tổ chức sự kiện, đẩy mạnh truyền thông.\n  3. Dẫn chứng thực tế.\n  4. Bài học nhận thức, hành động & Kết đoạn.',
+        sample: ''
+      }
+    ]
+  },
+
+  // =========================================================================
+  // NHÓM 4: BÀI VĂN NGHỊ LUẬN XÃ HỘI (~600 CHỮ - CHIA NHIỀU ĐOẠN)
+  // =========================================================================
+  {
+    id: 'writing_bai_nlxh_tutuong',
+    status: 'published',
+    category: 'bai-nlxh',
+    categoryName: 'Bài văn NLXH (600 chữ)',
+    subType: 'nlxh_bai_tutuong',
+    icon: '🌍',
+    title: '[Bài NLXH - Dạng 1] Nghị luận về một TƯ TƯỞNG ĐẠO LÍ / CÂU NÓI (600 chữ)',
+    prompt: 'Viết bài văn nghị luận xã hội (khoảng 600 chữ) bàn về ý kiến: “Sống là cho, đâu chỉ nhận riêng mình” (Tố Hữu) hoặc một tư tưởng đạo lí sâu sắc về lẽ sống của tuổi trẻ hôm nay.',
     sections: [
       {
         id: 'sec_mo_bai',
-        title: 'Mở bài',
-        placeholder: 'Nhập phần mở bài / mở đoạn tại đây...',
-        guide: 'Giới thiệu tác giả Xuân Quỳnh (hồn thơ giàu nữ tính, chân thành, da diết) và đoạn thơ thể hiện khát vọng lý giải tình yêu trong thi phẩm "Sóng".',
-        sample: 'Xuân Quỳnh là một trong những gương mặt tiêu biểu của thơ ca kháng chiến chống Mỹ với hồn thơ giàu nữ tính, chân thành và luôn khắc khoải khát vọng hạnh phúc đời thường. Trong thi phẩm "Sóng", khổ thơ thứ ba và thứ tư đã lắng đọng nỗi niềm trăn trở muôn thuở của người phụ nữ khi đứng trước biển lớn tình yêu.'
+        title: 'I. Mở bài & Đoạn 1: Giải thích câu nói / tư tưởng',
+        placeholder: 'Mở bài: Dẫn dắt + Nêu vấn đề nghị luận & trích dẫn câu nói.\nĐoạn 1 (Giải thích): Giải thích từ ngữ quan trọng, từng vế câu ➔ Chốt nghĩa cả câu: “Vậy câu nói này có nghĩa là...”',
+        guide: '• Mở bài: Dẫn dắt và trích dẫn nguyên văn ý kiến / câu nói.\n• Đoạn 1 - Giải thích: Giải thích các từ ngữ trọng tâm, từng vế câu, sau đó rút ra ý nghĩa toàn câu (“Vậy câu này có nghĩa là...”).',
+        sample: ''
       },
       {
-        id: 'sec_than_bai',
-        title: 'Thân bài',
-        placeholder: 'Nhập phần thân bài / thân đoạn tại đây...',
-        guide: '1. Cảm nhận & Phân tích: Đứng trước "muôn trùng sóng bể", người con gái soi mình vào sóng để tự nhận thức ("Em nghĩ về anh, em / Em nghĩ về biển lớn"). Điệp từ "nghĩ" thể hiện sự suy tư sâu lắng.\n2. Khát vọng truy tìm khởi nguồn tình yêu: Chuỗi câu hỏi tu từ về sóng và gió dẫn đến phát hiện tự nhiên, chân thực ("Em cũng không biết nữa / Khi nào ta yêu nhau"). Tình yêu huyền diệu và bí ẩn như thiên nhiên vạn vật.\n3. Đánh giá nghệ thuật: Thể thơ năm chữ giàu nhịp điệu, cấu tứ sóng đôi giữa sóng và em.',
-        sample: 'Đứng trước "muôn trùng sóng bể", người con gái soi mình vào sóng để tự nhận thức: "Em nghĩ về anh, em / Em nghĩ về biển lớn". Điệp từ "nghĩ" vang lên như một nhịp đập thổn thức, suy tư. Từ trăn trở về nguồn gốc của sóng và gió: "Từ nơi nào sóng lên? / Gió bắt đầu từ đâu?", nhân vật trữ tình đã đi đến một phát hiện đầy nữ tính và chân thực: "Em cũng không biết nữa / Khi nào ta yêu nhau". Tình yêu giống như sóng biển và gió trời, bí ẩn, tự nhiên và không thể lý giải bằng lý trí thuần túy mà chỉ có thể cảm nhận bằng trái tim.'
+        id: 'sec_tb_banluan',
+        title: 'II. Thân bài - Bàn luận & Chứng minh (3 luận điểm tách đoạn + Dẫn chứng)',
+        placeholder: 'Trả lời: Vì sao đặt ra vấn đề này? Vấn đề này có ý nghĩa gì?\n- Đoạn Luận điểm 1 (Ý nghĩa 1: đối với nhận thức, nhân cách cá nhân) + Lí lẽ & Dẫn chứng.\n- Đoạn Luận điểm 2 (Ý nghĩa 2: giúp thành công, hạnh phúc, gắn kết) + Lí lẽ & Dẫn chứng.\n- Đoạn Luận điểm 3 (Ý nghĩa 3: đối với cộng đồng, xã hội) + Lí lẽ & Dẫn chứng.',
+        guide: 'Đưa ra hệ thống luận điểm, lí lẽ, bằng chứng làm sáng tỏ quan điểm:\n+ Vì sao đặt ra vấn đề này?\n+ Vấn đề này có ý nghĩa gì? (Đưa ra 3 luận điểm Ý nghĩa 1, Ý nghĩa 2, Ý nghĩa 3, mỗi luận điểm tách thành 1 đoạn nhỏ kèm lí lẽ và dẫn chứng thực tế).',
+        sample: ''
       },
       {
-        id: 'sec_ket_bai',
-        title: 'Kết bài',
-        placeholder: 'Nhập phần kết bài / kết đoạn tại đây...',
-        guide: 'Tổng kết giá trị tư tưởng và nét đặc sắc nghệ thuật; chia sẻ cảm xúc và rung động sâu sắc của bản thân.',
-        sample: 'Bằng thể thơ năm chữ nhịp nhàng như những con sóng vỗ, Xuân Quỳnh đã vẽ nên một nét duyên dáng, đáng yêu của người phụ nữ đang yêu: hồn nhiên, thành thật trước quy luật bất biến của tình cảm muôn đời.'
+        id: 'sec_tb_phephan_giaiphap_kb',
+        title: 'III. Phê phán mở rộng, Giải pháp bài học & Kết bài',
+        placeholder: '- Đoạn Phê phán, mở rộng: Phê phán biểu hiện trái ngược; chỉ ra mặt cần bổ sung (nếu có).\n- Đoạn Giải pháp & Bài học: Liên hệ bản thân, bài học nhận thức và hành động.\n- Kết bài: Khẳng định lại giá trị của tư tưởng đạo lí.',
+        guide: '• Đoạn Phê phán, mở rộng vấn đề (Nếu câu nói có phần chưa toàn diện thì chỉ ra thêm mặt hạn chế).\n• Đoạn Giải pháp, liên hệ bản thân, bài học nhận thức và hành động.\n• Kết bài: Khép lại vấn đề và gửi gắm thông điệp.',
+        sample: ''
+      }
+    ]
+  },
+  {
+    id: 'writing_bai_nlxh_hientuong',
+    status: 'published',
+    category: 'bai-nlxh',
+    categoryName: 'Bài văn NLXH (600 chữ)',
+    subType: 'nlxh_bai_hientuong',
+    icon: '🌍',
+    title: '[Bài NLXH - Dạng 2] Nghị luận về một HIỆN TƯỢNG ĐỜI SỐNG (600 chữ)',
+    prompt: 'Viết bài văn nghị luận xã hội (khoảng 600 chữ) trình bày suy nghĩ của anh/chị về một hiện tượng đời sống đang được xã hội quan tâm hiện nay (ví dụ: văn hóa ứng xử trên mạng xã hội của giới trẻ, hoặc phong trào sống xanh bảo vệ môi trường).',
+    sections: [
+      {
+        id: 'sec_mo_bai_thuctrang',
+        title: 'I. Mở bài & Đoạn 1: Giải thích + Thực trạng',
+        placeholder: 'Mở bài: Dẫn dắt và giới thiệu hiện tượng đời sống.\nĐoạn 1: Giải thích khái niệm hiện tượng và nêu rõ thực trạng, biểu hiện cụ thể trong đời sống hiện nay...',
+        guide: '• Mở bài: Giới thiệu hiện tượng đời sống cần bàn luận.\n• Đoạn 1: Giải thích bản chất hiện tượng + Nêu bức tranh thực trạng (phổ biến như thế nào, biểu hiện ở đâu).',
+        sample: ''
+      },
+      {
+        id: 'sec_tb_nguyennhan_hauqua',
+        title: 'II. Thân bài - Đoạn 2: Nguyên nhân & Đoạn 3: Tác dụng / Hậu quả',
+        placeholder: '- Đoạn 2 (Nguyên nhân): Phân tích nguyên nhân chủ quan (từ ý thức cá nhân) và khách quan (gia đình, nhà trường, xã hội, công nghệ).\n- Đoạn 3 (Tác dụng hoặc Hậu quả): Phân tích sâu tác động đối với cá nhân và xã hội + Dẫn chứng thực tế...',
+        guide: '• Đoạn 2: Phân tích nguyên nhân chủ quan và khách quan dẫn đến hiện tượng.\n• Đoạn 3: Phân tích tác dụng/ý nghĩa (nếu là hiện tượng tốt) hoặc hậu quả/tác hại (nếu là hiện tượng tiêu cực) kèm dẫn chứng xác thực.',
+        sample: ''
+      },
+      {
+        id: 'sec_tb_giaiphap_kb',
+        title: 'III. Thân bài - Đoạn 4: Giải pháp (Cá nhân, Cộng đồng, Trước mắt, Lâu dài) & Kết bài',
+        placeholder: '- Đoạn 4 (Giải pháp): Đề xuất giải pháp từ phía cá nhân, gia đình/nhà trường, cộng đồng/xã hội (cả trước mắt và lâu dài).\n- Kết bài: Khái quát lại vấn đề và liên hệ bài học bản thân...',
+        guide: '• Đoạn 4: Đề xuất hệ thống giải pháp cụ thể: cá nhân, gia đình, nhà trường, cộng đồng; giải pháp trước mắt và lâu dài.\n• Kết bài: Khẳng định thông điệp và trách nhiệm của bản thân.',
+        sample: ''
+      }
+    ]
+  },
+  {
+    id: 'writing_bai_nlxh_vdxh_tpvh',
+    status: 'published',
+    category: 'bai-nlxh',
+    categoryName: 'Bài văn NLXH (600 chữ)',
+    subType: 'nlxh_bai_vdxh_tpvh',
+    icon: '🌍',
+    title: '[Bài NLXH - Dạng 3] Nghị luận về một VẤN ĐỀ XÃ HỘI đặt ra trong tác phẩm văn học (600 chữ)',
+    prompt: 'Từ khát vọng sống và niềm tin vào sự lương thiện của các nhân vật trong truyện ngắn "Vợ nhặt" (Kim Lân) hoặc "Chí Phèo" (Nam Cao), anh/chị hãy viết bài văn nghị luận (khoảng 600 chữ) bàn về sức mạnh của tình người và sự thấu cảm trong cuộc sống hôm nay.',
+    sections: [
+      {
+        id: 'sec_mo_bai_bieuhien',
+        title: 'I. Mở bài & Đoạn 1: Giải thích + Biểu hiện VĐXH trong tác phẩm & đời sống',
+        placeholder: 'Mở bài: Giới thiệu tác phẩm văn học và vấn đề xã hội đặt ra.\nĐoạn 1: Giải thích vấn đề + Nêu biểu hiện của vấn đề xã hội đó trong tác phẩm văn học (dẫn chứng) và ngoài đời thực...',
+        guide: '• Mở bài: Dẫn dắt từ tác phẩm văn học đến vấn đề xã hội cần bàn luận.\n• Đoạn 1: Giải thích khái niệm + Nêu biểu hiện của vấn đề xã hội trong tác phẩm văn học (kèm dẫn chứng ngắn gọn) và biểu hiện ngoài xã hội.',
+        sample: ''
+      },
+      {
+        id: 'sec_tb_banluan_3ynghia',
+        title: 'II. Thân bài - Bàn luận, chứng minh VĐXH (3 luận điểm Ý nghĩa + Dẫn chứng)',
+        placeholder: 'Trả lời: Vì sao đặt ra vấn đề này? Vấn đề này có ý nghĩa gì?\n- Đoạn Ý nghĩa 1 (đối với cá nhân) + Lí lẽ.\n- Đoạn Ý nghĩa 2 (đối với mối quan hệ con người) + Lí lẽ.\n- Đoạn Ý nghĩa 3 (đối với sự phát triển xã hội) + Dẫn chứng thực tế đời sống...',
+        guide: 'Bàn luận, chứng minh vấn đề xã hội:\n+ Vì sao đặt ra vấn đề này?\n+ Vấn đề này có ý nghĩa gì? (Tách thành 3 đoạn luận điểm: Ý nghĩa 1, Ý nghĩa 2, Ý nghĩa 3 kèm dẫn chứng đời sống thực tế).',
+        sample: ''
+      },
+      {
+        id: 'sec_tb_phephan_giaiphap_kb',
+        title: 'III. Phê phán mở rộng, Giải pháp liên hệ bản thân & Kết bài',
+        placeholder: '- Đoạn Phê phán, mở rộng vấn đề.\n- Đoạn Giải pháp, liên hệ bản thân, bài học nhận thức và hành động.\n- Kết bài: Khẳng định sức sống của tác phẩm và ý nghĩa thời sự của vấn đề xã hội...',
+        guide: '• Đoạn Phê phán, mở rộng vấn đề.\n• Đoạn Giải pháp, liên hệ bản thân, rút ra bài học nhận thức và hành động.\n• Kết bài: Khép lại vấn đề và khẳng định giá trị nhân văn kết nối từ trang văn ra cuộc đời.',
+        sample: ''
       }
     ]
   }
@@ -154,33 +360,41 @@ function loadWritingSets() {
     if (raw) {
       let parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        // Loại bỏ sạch các bộ đề IELTS cũ hoặc tên liên quan IELTS
+        const legacyDefaultIds = new Set(['writing_nlxh_kientri', 'writing_nlvh_taytien', 'writing_nlxh_tuhoc', 'writing_camthu_song']);
         parsed = parsed.filter(s => 
           s &&
+          !legacyDefaultIds.has(s.id) &&
           s.category !== 'ielts-task1' &&
           s.category !== 'ielts-task2' &&
           !String(s.id).includes('ielts') &&
           !String(s.title).toLowerCase().includes('ielts')
         ).map(s => {
-          if (s.category === 'other') {
-            s.category = 'nl-xh';
-            s.categoryName = 'Nghị luận xã hội';
-            s.icon = '🌱';
-          }
-          if (String(s.id).startsWith('writing_sample_')) {
-            s.id = s.id.replace('writing_sample_', 'writing_');
+          const is200Words = /200\s*chữ|đoạn\s*văn/i.test(String(s.title) + ' ' + String(s.prompt));
+          if (s.category === 'other' || s.category === 'nl-xh') {
+            s.category = is200Words ? 'doan-nlxh' : 'bai-nlxh';
+            s.categoryName = is200Words ? 'Đoạn văn NLXH (200 chữ)' : 'Bài văn NLXH (600 chữ)';
+            s.icon = is200Words ? '🌱' : '🌍';
+          } else if (s.category === 'nl-vh' || s.category === 'cam-thu') {
+            s.category = is200Words ? 'doan-nlvh' : 'bai-nlvh';
+            s.categoryName = is200Words ? 'Đoạn văn NLVH (200 chữ)' : 'Bài văn NLVH (600 chữ)';
+            s.icon = is200Words ? '🖋️' : '📜';
           }
           if (!s.status) s.status = 'published';
           return s;
         });
 
         const existingIds = new Set(parsed.map(s => s.id));
+        const merged = [];
         for (const def of DEFAULT_WRITING_SETS) {
-          if (!existingIds.has(def.id)) {
-            parsed.push(JSON.parse(JSON.stringify(def)));
+          const found = parsed.find(p => p.id === def.id);
+          merged.push(found || JSON.parse(JSON.stringify(def)));
+        }
+        for (const p of parsed) {
+          if (!DEFAULT_WRITING_SETS.some(d => d.id === p.id)) {
+            merged.push(p);
           }
         }
-        writingSets = parsed;
+        writingSets = merged;
         saveWritingSets();
         return;
       }
@@ -221,9 +435,10 @@ R.writing = function(setId) {
 // =========================================================================
 
 const DEFAULT_CATEGORIES = [
-  { id: 'nl-xh', name: 'Nghị luận xã hội', icon: '🌱' },
-  { id: 'nl-vh', name: 'Nghị luận văn học', icon: '📜' },
-  { id: 'cam-thu', name: 'Cảm thụ văn học', icon: '🌊' }
+  { id: 'doan-nlvh', name: 'Đoạn văn NLVH (200 chữ)', icon: '🖋️' },
+  { id: 'bai-nlvh', name: 'Bài văn NLVH (600 chữ)', icon: '📜' },
+  { id: 'doan-nlxh', name: 'Đoạn văn NLXH (200 chữ)', icon: '🌱' },
+  { id: 'bai-nlxh', name: 'Bài văn NLXH (600 chữ)', icon: '🌍' }
 ];
 
 function getWritingCategories() {
@@ -233,18 +448,19 @@ function getWritingCategories() {
     if (raw) list = JSON.parse(raw);
   } catch (e) {}
 
+  const legacyCatIds = new Set(['nl-xh', 'nl-vh', 'cam-thu', 'other']);
   if (!Array.isArray(list) || list.length === 0) {
     list = [...DEFAULT_CATEGORIES];
-    try {
-      const custom = JSON.parse(localStorage.getItem('vq_writing_custom_cats')) || [];
-      custom.forEach(c => {
-        if (c && c.id && !list.some(x => x.id === c.id)) list.push(c);
-      });
-    } catch (e) {}
-    saveWritingCategories(list);
+  } else {
+    list = list.filter(c => c && c.id && !legacyCatIds.has(c.id));
+    DEFAULT_CATEGORIES.forEach(defCat => {
+      if (!list.some(x => x.id === defCat.id)) {
+        list.push({ ...defCat });
+      }
+    });
   }
-
-  return list.filter(c => c && c.id && c.id !== 'other');
+  saveWritingCategories(list);
+  return list;
 }
 
 function saveWritingCategories(cats) {
@@ -1080,67 +1296,70 @@ function onCategorySelectChange(cat) {
 
 function applyQuickOutlineTemplate(forcedCategory) {
   const cat = forcedCategory || $('#input-set-category').value;
-  if (cat === 'nl-vh') {
+  if (cat === 'doan-nlvh') {
     editingSections = [
       {
         id: 'sec_' + uid(),
-        title: 'Mở bài',
-        guide: 'Giới thiệu tác giả, tác phẩm, hoàn cảnh sáng tác và vấn đề / đoạn trích / nhân vật cần phân tích, cảm nhận.',
-        sample: ''
-      },
-      {
-        id: 'sec_' + uid(),
-        title: 'Thân bài',
-        guide: '1. Luận điểm 1: Phân tích chi tiết nội dung, hình tượng và các tầng ý nghĩa của tác phẩm / đoạn trích.\n2. Luận điểm 2: Chiều sâu tư tưởng, cảm xúc của tác giả gửi gắm qua tác phẩm.\n3. Đánh giá đặc sắc nghệ thuật: Bút pháp, thể loại, kết cấu, ngôn ngữ, giọng điệu đặc trưng.',
-        sample: ''
-      },
-      {
-        id: 'sec_' + uid(),
-        title: 'Kết bài',
-        guide: 'Khái quát lại giá trị nội dung và nghệ thuật của tác phẩm; nêu ấn tượng, bài học và sức sống bền bỉ của tác phẩm trong lòng độc giả.',
+        title: 'Đoạn văn Nghị luận Văn học (~200 chữ - Không xuống dòng)',
+        guide: '• Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ).\n• Cấu trúc: Mở đoạn (Câu trích dẫn + Nêu VĐNL) ➔ Phân tích 2-3 luận điểm (Gọi tên yếu tố + dẫn chứng + tác dụng) ➔ Đánh giá & Nghệ thuật ➔ Kết đoạn – trích dẫn.',
         sample: ''
       }
     ];
-  } else if (cat === 'cam-thu') {
+  } else if (cat === 'bai-nlvh' || cat === 'nl-vh') {
     editingSections = [
       {
         id: 'sec_' + uid(),
-        title: 'Mở bài',
-        guide: 'Giới thiệu tác giả, tác phẩm và cảm nhận chung nhất về đoạn thơ / đoạn văn trích dẫn.',
+        title: 'I. Mở bài',
+        guide: 'Trích dẫn – dẫn dắt – giới thiệu tác giả, tác phẩm và câu chốt vấn đề nghị luận.',
         sample: ''
       },
       {
         id: 'sec_' + uid(),
-        title: 'Thân bài',
-        guide: '1. Cảm nhận về hình ảnh, chi tiết và từ ngữ đắt giá trong đoạn trích.\n2. Phân tích các biện pháp tu từ độc đáo và tác dụng gợi hình, gợi cảm.\n3. Tư tưởng, thông điệp và cảm xúc của nhân vật trữ tình / tác giả.',
+        title: 'II. Thân bài - Phân tích & Đánh giá Nội dung, Chủ đề',
+        guide: 'Bước 1: Phân tích (Gọi tên yếu tố + nêu dẫn chứng + phân tích tác dụng) theo đặc trưng thể loại Thơ/Truyện.\nBước 2: Đánh giá vai trò đối với chủ đề và thông điệp tư tưởng.',
         sample: ''
       },
       {
         id: 'sec_' + uid(),
-        title: 'Kết bài',
-        guide: 'Tổng kết giá trị tư tưởng và nét đặc sắc nghệ thuật; chia sẻ cảm xúc và liên hệ suy nghĩ bản thân.',
+        title: 'II. Thân bài - Phân tích Hình thức Nghệ thuật & Mở rộng',
+        guide: 'Phân tích các yếu tố nghệ thuật đặc sắc (Thơ: thể thơ, từ ngữ, hình ảnh, BPTT, vần nhịp, giọng điệu | Truyện: ngôi kể, điểm nhìn, nhan đề, tình huống, chi tiết tiêu biểu, ngôn ngữ, giọng điệu).',
+        sample: ''
+      },
+      {
+        id: 'sec_' + uid(),
+        title: 'III. Kết bài',
+        guide: 'Khái quát lại giá trị nội dung và nghệ thuật của tác phẩm; nêu sức sống của tác phẩm trong lòng người đọc.',
+        sample: ''
+      }
+    ];
+  } else if (cat === 'doan-nlxh') {
+    editingSections = [
+      {
+        id: 'sec_' + uid(),
+        title: 'Đoạn văn Nghị luận Xã hội (~200 chữ - Không xuống dòng)',
+        guide: '• Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ).\n• Mở đoạn: Nêu VĐNL.\n• Thân đoạn (4 bước): 1. Giải thích (1 câu) ➔ 2. Bàn luận 3 luận điểm (Ý nghĩa: Thứ nhất giúp mở rộng hiểu biết/bản lĩnh; Thứ hai giúp thành công/hạnh phúc; Thứ ba đối với xã hội | Giải pháp: Thứ nhất cá nhân; Thứ hai gia đình/nhà trường; Thứ ba cộng đồng/xã hội) ➔ 3. Dẫn chứng thực tế ➔ 4. Bài học nhận thức, hành động & Kết đoạn.',
         sample: ''
       }
     ];
   } else {
-    // Mặc định hoặc Nghị luận xã hội
+    // bai-nlxh (Bài văn Nghị luận xã hội ~600 chữ)
     editingSections = [
       {
         id: 'sec_' + uid(),
-        title: 'Mở bài',
-        guide: 'Dẫn dắt trực tiếp hoặc gián tiếp, giới thiệu chính xác vấn đề nghị luận xã hội cần bàn luận.',
+        title: 'I. Mở bài & Đoạn 1: Giải thích',
+        guide: 'Mở bài: Dẫn dắt và nêu vấn đề nghị luận.\nĐoạn 1 (Giải thích): Giải thích từ ngữ quan trọng, vế câu, rút ra ý nghĩa cả câu hoặc nêu thực trạng vấn đề.',
         sample: ''
       },
       {
         id: 'sec_' + uid(),
-        title: 'Thân bài',
-        guide: '1. Giải thích: Làm rõ khái niệm, biểu hiện của vấn đề trong thực tế đời sống.\n2. Bàn luận & Dẫn chứng: Phân tích nguyên nhân, vai trò, ý nghĩa; đưa ra dẫn chứng thực tế thuyết phục (người thật việc thật).\n3. Phản đề & Mở rộng: Phê phán những hành vi, nhận thức lệch lạc; nhìn nhận vấn đề đa chiều.',
+        title: 'II. Thân bài - Bàn luận & Chứng minh (3 luận điểm tách đoạn + Dẫn chứng)',
+        guide: 'Trả lời: Vì sao đặt ra vấn đề này? Vấn đề này có ý nghĩa gì? (Đưa ra 3 luận điểm Ý nghĩa 1, Ý nghĩa 2, Ý nghĩa 3 tách đoạn rõ ràng + Dẫn chứng thực tế).',
         sample: ''
       },
       {
         id: 'sec_' + uid(),
-        title: 'Kết bài',
-        guide: 'Khái quát lại ý nghĩa vấn đề; rút ra bài học nhận thức và phương hướng hành động thiết thực cho bản thân.',
+        title: 'III. Phê phán mở rộng, Giải pháp liên hệ bản thân & Kết bài',
+        guide: '• Đoạn Phê phán, mở rộng vấn đề.\n• Đoạn Giải pháp, liên hệ bản thân, bài học nhận thức và hành động.\n• Kết bài: Khẳng định lại ý nghĩa vấn đề.',
         sample: ''
       }
     ];

@@ -1,6 +1,6 @@
 /* =========================================================================
    10. GDPT 2018 EDUCATIONAL ENHANCEMENTS MODULE
-   - 1. Giàn giáo nhận thức (Scaffolding - "Gợi ý tư duy" cho Tự luận & Đoạn 200 chữ)
+   - 1. Giàn giáo nhận thức (Scaffolding - "Gợi ý tư duy" chuẩn hóa theo 12 dạng bài NLVH & NLXH)
    - 2. Cơ chế Gamification (Streak chuỗi ngày học, Thanh tiến trình XP & Huy hiệu)
    - 3. Góc truyền cảm hứng (Quote of the Day & Sổ tay trích dẫn văn học)
    - 4. Bộ đếm thời gian (Timer) rèn áp lực phòng thi (20p NLXH, 60p NLVH...)
@@ -388,7 +388,6 @@
       }
     } catch (_) {}
 
-    // Cập nhật chuỗi ngày học liên tục (Streak) khi mở web hôm nay
     if (!state.activeDates.includes(today)) {
       state.activeDates.push(today);
       if (state.activeDates.length > 60) state.activeDates = state.activeDates.slice(-60);
@@ -403,14 +402,13 @@
         state.streak = 1;
       }
       state.lastActiveDate = today;
-      state.xp = (Number(state.xp) || 0) + 10; // Cộng 10 XP điểm danh mỗi ngày
+      state.xp = (Number(state.xp) || 0) + 10;
     }
 
     if (state.streak > (state.bestStreak || 1)) {
       state.bestStreak = state.streak;
     }
 
-    // Đồng bộ thêm thành tích từ lịch sử làm bài hiện có
     syncGamificationWithHistory(state);
     saveGamificationState(state);
     return state;
@@ -460,7 +458,6 @@
     const hasPerfectOr5 = history.length >= 5 || history.some(h => Number(h.score) >= 10);
     if (hasPerfectOr5) unlock('perfect_scholar');
 
-    // Tính số hoạt động trong ngày hôm nay từ lịch sử
     const today = getTodayDateString();
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0);
@@ -468,7 +465,6 @@
     const savedTodayCount = Number(state.dailyActivities[today] || 0);
     state.dailyActivities[today] = Math.max(savedTodayCount, todayHistoryCount);
 
-    // Đảm bảo XP tối thiểu tương ứng với lịch sử
     const minCalculatedXp = 25 + history.length * 30 + state.unlockedBadges.length * 20;
     if ((Number(state.xp) || 0) < minCalculatedXp) {
       state.xp = minCalculatedXp;
@@ -523,11 +519,9 @@
     const dailyGoal = 3;
     const dailyPercent = Math.min(100, Math.round((dailyDone / dailyGoal) * 100));
 
-    // Navbar Streak
     const navStreak = document.getElementById('nav-streak-count');
     if (navStreak) navStreak.textContent = state.streak;
 
-    // Home Card Elements
     const streakDaysEl = document.getElementById('home-streak-days');
     const rankTitleEl = document.getElementById('home-rank-title');
     const unlockedCountEl = document.getElementById('home-badges-unlocked-count');
@@ -550,7 +544,6 @@
     if (dailyPctEl) dailyPctEl.textContent = `${dailyPercent}%`;
     if (dailyBarEl) dailyBarEl.style.width = `${dailyPercent}%`;
 
-    // Render 7-day Duolingo style week row
     const weekRow = document.getElementById('home-streak-week-row');
     if (weekRow) {
       const dayLabels = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
@@ -571,7 +564,6 @@
       weekRow.innerHTML = daysHtml.join('');
     }
 
-    // Render mini badges row on Home
     const miniBadgesRow = document.getElementById('home-mini-badges-row');
     if (miniBadgesRow) {
       miniBadgesRow.innerHTML = BADGES_CATALOG.map(b => {
@@ -676,36 +668,330 @@
 
 
   // =========================================================================
-  // PHẦN 3: GIÀN GIÁO NHẬN THỨC (SCAFFOLDING) - NÚT "GỢI Ý TƯ DUY"
+  // PHẦN 3: GIÀN GIÁO NHẬN THỨC (SCAFFOLDING) THEO ĐÚNG 12 DẠNG BÀI TRONG FILE
   // =========================================================================
+  const SCAFFOLD_TEMPLATES = {
+    // --- NHÓM 1: ĐOẠN VĂN NGHỊ LUẬN VĂN HỌC (~200 CHỮ - 1 ĐOẠN DUY NHẤT) ---
+    nlvh_doan_chude: {
+      group: 'Đoạn văn NLVH (~200 chữ)',
+      name: '1. Đoạn NLVH: Phân tích, đánh giá NỘI DUNG CHỦ ĐỀ (Thơ / Truyện)',
+      singleParagraph: true,
+      formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng. Dung lượng: Khoảng 200 chữ (từ 2/3 đến tối đa 1 trang giấy thi, chừa lại 3 dòng).',
+      formulaSteps: ['Câu dẫn + GTVĐNL', 'Nêu chủ đề', 'Phân tích 2-3 khía cạnh (Thứ nhất, Thứ hai, Thứ ba)', 'Đánh giá vai trò chủ đề', 'Nghệ thuật', 'Kết đoạn – Trích dẫn'],
+      referenceHtml: `
+        <div class="scaffold-ref-table-wrap">
+          <table class="scaffold-ref-table">
+            <thead>
+              <tr>
+                <th>Chủ đề của THƠ thể hiện qua</th>
+                <th>Chủ đề của TRUYỆN thể hiện qua</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>• Nhan đề<br>• Hình tượng trung tâm<br>• Tình cảm, cảm xúc</td>
+                <td>• Tình huống truyện<br>• Nhân vật (tính cách, phẩm chất, hành động)<br>• Chi tiết đặc sắc</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `,
+      fields: [
+        { label: '1. Câu dẫn + GTVĐNL & Nêu chủ đề tác phẩm:', placeholder: 'VD: Chủ đề của bài thơ/truyện ngắn A là ca ngợi tình mẫu tử thiêng liêng, cao quý...' },
+        { label: '2. Khía cạnh 1 (Gọi tên yếu tố + dẫn chứng + phân tích ngắn):', placeholder: 'Thứ nhất, chủ đề được thể hiện qua [nhan đề / tình huống truyện / hình tượng...]' },
+        { label: '3. Khía cạnh 2 (Gọi tên yếu tố + dẫn chứng + phân tích ngắn):', placeholder: 'Thứ hai, chủ đề còn được làm rõ qua [nhân vật / tình cảm cảm xúc / chi tiết...]' },
+        { label: '4. Khía cạnh 3 (Gọi tên yếu tố + dẫn chứng + phân tích ngắn):', placeholder: 'Thứ ba, chủ đề còn được làm sáng tỏ qua...' },
+        { label: '5. Đánh giá vai trò chủ đề & Thông điệp:', placeholder: 'Chủ đề có ý nghĩa sâu sắc, khơi gợi... góp phần làm rõ thông điệp... của tác phẩm' },
+        { label: '6. Phân tích nghệ thuật & Kết đoạn (kèm trích dẫn):', placeholder: 'Bằng thể thơ/ngôi kể, từ ngữ, hình ảnh, biện pháp tu từ đặc sắc, tác phẩm mãi ngân vang...' }
+      ]
+    },
+
+    nlvh_doan_nt_tho: {
+      group: 'Đoạn văn NLVH (~200 chữ)',
+      name: '2. Đoạn NLVH: Phân tích, đánh giá NGHỆ THUẬT THƠ',
+      singleParagraph: true,
+      formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Luôn gắn các yếu tố hình thức với việc làm rõ chủ đề và thông điệp.',
+      formulaSteps: ['Câu dẫn + GTVĐNL', 'Thứ nhất: Thể thơ', 'Thứ hai: Hình ảnh', 'Thứ ba: Từ ngữ', 'Thứ tư: Biện pháp tu từ', 'Làm rõ Chủ đề & Thông điệp'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở đoạn (Câu dẫn + Giới thiệu VĐNL nghệ thuật thơ):', placeholder: 'Giới thiệu tác giả, đoạn thơ và nhận xét khái quát về đặc sắc nghệ thuật...' },
+        { label: '2. Thứ nhất - Thể thơ (Gọi tên + Nêu tác dụng):', placeholder: 'Thứ nhất, thể thơ [gọi tên thể thơ, vần nhịp] có tác dụng tạo âm hưởng...' },
+        { label: '3. Thứ hai - Hình ảnh (Nhận xét chung + Dẫn chứng + Phân tích):', placeholder: 'Thứ hai, hệ thống hình ảnh [nhận xét + dẫn chứng “...” + phân tích]...' },
+        { label: '4. Thứ ba - Từ ngữ (Nhận xét chung + Dẫn chứng từ ngữ hay + Phân tích):', placeholder: 'Thứ ba, cách dùng từ ngữ [nhận xét + dẫn chứng từ láy/động từ mạnh “...” + phân tích]...' },
+        { label: '5. Thứ tư - Biện pháp tu từ (Nhận xét + Dẫn chứng + Phân tích):', placeholder: 'Thứ tư, biện pháp tu từ [ẩn dụ/nhân hóa/điệp...] qua câu thơ “...” đã làm nổi bật...' },
+        { label: '6. Đánh giá (Làm rõ chủ đề & Thông điệp tác phẩm):', placeholder: 'Các yếu tố hình thức trên đã góp phần làm rõ chủ đề [nêu chủ đề], đồng thời hỗ trợ nhà thơ chuyển tải thông điệp...' }
+      ]
+    },
+
+    nlvh_doan_camxuc_tho: {
+      group: 'Đoạn văn NLVH (~200 chữ)',
+      name: '3. Đoạn NLVH: Phân tích, đánh giá TÌNH CẢM, CẢM XÚC trong thơ',
+      singleParagraph: true,
+      formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Chỉ rõ từng cung bậc cảm xúc kèm dẫn chứng và phân tích.',
+      formulaSteps: ['Câu dẫn + GTVĐNL', 'Cảm xúc 1 (Dẫn chứng + Phân tích)', 'Cảm xúc 2 (Dẫn chứng + Phân tích)', 'Nghệ thuật biểu đạt', 'Đánh giá triết lí nhân sinh & Phong cách'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở đoạn (Câu dẫn + Giới thiệu VĐNL tình cảm, cảm xúc):', placeholder: 'Giới thiệu tác giả, bài thơ và mạch cảm xúc chủ đạo của chủ thể trữ tình...' },
+        { label: '2. Phân tích Cảm xúc 1 (Gọi tên + Dẫn chứng + Phân tích):', placeholder: 'Trước hết, đoạn thơ khắc họa cung bậc cảm xúc [gọi tên + dẫn chứng “...” + phân tích]...' },
+        { label: '3. Phân tích Cảm xúc 2 (Gọi tên + Dẫn chứng + Phân tích):', placeholder: 'Bên cạnh đó, mạch cảm xúc còn lắng đọng ở [gọi tên cảm xúc 2 + dẫn chứng + phân tích]...' },
+        { label: '4. Nghệ thuật thể hiện cảm xúc:', placeholder: 'Mạch cảm xúc ấy được thể hiện qua thể thơ, giọng điệu, từ ngữ và hình ảnh giàu sức gợi...' },
+        { label: '5. Đánh giá & Kết đoạn (Triết lí nhân sinh, Chức năng văn chương & Phong cách):', placeholder: 'Cảm xúc trong sáng, chân thành, gửi gắm triết lí nhân sinh và thông điệp... Đó phải chăng là chức năng giáo dục, nhận thức, thẩm mĩ của văn chương? Bài thơ tiêu biểu cho phong cách...' }
+      ]
+    },
+
+    nlvh_doan_nt_truyen: {
+      group: 'Đoạn văn NLVH (~200 chữ)',
+      name: '4. Đoạn NLVH: Phân tích NGHỆ THUẬT TRUYỆN NGẮN',
+      singleParagraph: true,
+      formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Bám sát các yếu tố tự sự: ngôi kể, điểm nhìn, tình huống, chi tiết, ngôn ngữ, giọng điệu, tâm lí.',
+      formulaSteps: ['Câu dẫn + GTVĐNL', 'Ngôi kể & Điểm nhìn', 'Tình huống truyện', 'Chi tiết nghệ thuật & Nội tâm', 'Ngôn ngữ & Giọng điệu', 'Đánh giá tài năng & Chủ đề'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở đoạn (Câu dẫn + Giới thiệu VĐNL nghệ thuật truyện ngắn):', placeholder: 'Giới thiệu tác giả, tác phẩm và đặc sắc nghệ thuật tự sự của truyện ngắn...' },
+        { label: '2. Ngôi kể & Điểm nhìn (Ngôi thứ mấy? Tác dụng?):', placeholder: 'Trước hết, truyện sử dụng ngôi kể thứ [nhất/ba] kết hợp điểm nhìn [bên trong/bên ngoài] giúp...' },
+        { label: '3. Tình huống truyện (Tình huống gì? Phân tích & Tác dụng?):', placeholder: 'Đặc biệt, nhà văn đã đặt nhân vật vào tình huống [nêu tình huống + tác dụng làm bộc lộ tính cách]...' },
+        { label: '4. Chi tiết nghệ thuật & Miêu tả diễn biến nội tâm:', placeholder: 'Cùng với đó là chi tiết nghệ thuật đắt giá [dẫn chứng] và ngòi bút miêu tả tâm lí nhân vật tinh tế...' },
+        { label: '5. Ngôn ngữ & Giọng điệu trần thuật:', placeholder: 'Ngôn ngữ truyện mộc mạc, giàu cá tính kết hợp cùng giọng điệu [trầm buồn/ấm áp/triết lí]...' },
+        { label: '6. Đánh giá (Tài năng, cá tính sáng tạo & Chủ đề, thông điệp):', placeholder: 'Qua đó khẳng định tài năng, cá tính sáng tạo của nhà văn và làm nổi bật chủ đề, tư tưởng, thông điệp...' }
+      ]
+    },
+
+    nlvh_doan_nhanvat: {
+      group: 'Đoạn văn NLVH (~200 chữ)',
+      name: '5. Đoạn NLVH: Phân tích ĐẶC ĐIỂM NHÂN VẬT',
+      singleParagraph: true,
+      formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Kết hợp phân tích phẩm chất (qua hành động, lời nói, thái độ) với nghệ thuật xây dựng nhân vật.',
+      formulaSteps: ['Mở đoạn & Khái quát (tên, ngoại hình, hoàn cảnh)', 'Vẻ đẹp / Phẩm chất 1 (D/c + PT)', 'Vẻ đẹp / Phẩm chất 2 (D/c + PT)', 'Nghệ thuật xây dựng nhân vật', 'Đánh giá (Tiêu biểu cho tầng lớp & Thông điệp)'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở đoạn & Khái quát nhân vật (Tên tuổi, ngoại hình, nghề nghiệp, hoàn cảnh):', placeholder: 'Giới thiệu tác giả, tác phẩm, nhân vật và vài nét khái quát về số phận/ngoại hình...' },
+        { label: '2. Vẻ đẹp / Phẩm chất 1 (Gọi tên + Dẫn chứng hành động, lời nói, thái độ + Phân tích):', placeholder: 'Trước hết, nhân vật hiện lên với vẻ đẹp [phẩm chất 1] thể hiện qua chi tiết/lời nói “...”' },
+        { label: '3. Vẻ đẹp / Phẩm chất 2 (Gọi tên + Dẫn chứng + Phân tích):', placeholder: 'Không chỉ vậy, ở nhân vật còn sáng ngời phẩm chất [phẩm chất 2] qua hành động/nội tâm “...”' },
+        { label: '4. Nghệ thuật xây dựng nhân vật (Tình huống, tâm lí, ngôi kể, điểm nhìn, ngôn ngữ):', placeholder: 'Nhân vật được khắc họa sinh động qua tình huống truyện độc đáo, miêu tả tâm lí tinh tế, ngôi kể và ngôn ngữ đối thoại...' },
+        { label: '5. Đánh giá (Tiêu biểu cho tầng lớp nào? Thông điệp của tác giả?):', placeholder: 'Nhân vật là hình ảnh tiêu biểu cho người lao động/con người... Qua đó nhà văn gửi gắm thông điệp nhân đạo sâu sắc...' }
+      ]
+    },
+
+    // --- NHÓM 2: ĐOẠN VĂN NGHỊ LUẬN XÃ HỘI (~200 CHỮ - 1 ĐOẠN DUY NHẤT) ---
+    nlxh_doan_ynghia: {
+      group: 'Đoạn văn NLXH (~200 chữ)',
+      name: '6. Đoạn NLXH (Định dạng 1 & 2): Ý NGHĨA / GIÁ TRỊ / TẦM QUAN TRỌNG của một vấn đề',
+      singleParagraph: true,
+      formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Nếu đề gắn với phần Đọc hiểu: nêu 1–2 câu về vấn đề xã hội trong phần đọc hiểu trước. Bàn luận phải đưa ra 3 luận điểm kèm dẫn chứng.',
+      formulaSteps: ['Mở đoạn', 'Giải thích (1 câu)', 'Thứ nhất: Mở rộng hiểu biết, bản lĩnh, nhân cách', 'Thứ hai: Thành công, tín nhiệm, hạnh phúc', 'Thứ ba: Đối với xã hội', 'Dẫn chứng thực tế', 'Bài học & Kết đoạn'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở đoạn (Nêu VĐNL; nếu từ Đọc hiểu thì dẫn 1-2 câu từ văn bản):', placeholder: 'Từ văn bản đọc hiểu / Trong hành trình sống, [vấn đề A] đóng vai trò vô cùng quan trọng...' },
+        { label: '2. Giải thích (1 câu ngắn gọn):', placeholder: 'Hiểu một cách giản dị, [vấn đề A] chính là...' },
+        { label: '3. Luận điểm 1 - Đối với bản lĩnh & nhân cách (+ 1-2 câu lí giải):', placeholder: 'Thứ nhất, [A] giúp ta mở rộng hiểu biết, rèn ý chí, bản lĩnh và hoàn thiện nhân cách bởi...' },
+        { label: '4. Luận điểm 2 - Đối với thành công & hạnh phúc (+ 1-2 câu lí giải):', placeholder: 'Thứ hai, [A] còn giúp ta thành công hơn, nhận được sự tin tưởng, tín nhiệm và mang lại bình an, hạnh phúc...' },
+        { label: '5. Luận điểm 3 - Đối với cộng đồng, xã hội (+ 1-2 câu lí giải):', placeholder: 'Thứ ba, đối với xã hội, [A] góp phần cải thiện chất lượng sống, làm cho cộng đồng tốt đẹp, văn minh hơn...' },
+        { label: '6. Dẫn chứng thực tế tiêu biểu:', placeholder: 'Thực tế đã chứng minh qua tấm gương của...' },
+        { label: '7. Bài học nhận thức, hành động & Kết đoạn:', placeholder: 'Vì vậy, mỗi người trẻ chúng ta cần nhận thức sâu sắc và rèn luyện [A] mỗi ngày để...' }
+      ]
+    },
+
+    nlxh_doan_giaiphap: {
+      group: 'Đoạn văn NLXH (~200 chữ)',
+      name: '7. Đoạn NLXH (Định dạng 3): CÁCH THỨC / GIẢI PHÁP / TRÁCH NHIỆM của tuổi trẻ',
+      singleParagraph: true,
+      formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Bàn luận 3 luận điểm giải pháp theo 3 cấp độ: Cá nhân ➔ Gia đình, nhà trường ➔ Cộng đồng, xã hội + Dẫn chứng.',
+      formulaSteps: ['Mở đoạn', 'Giải thích (1 câu)', 'Thứ nhất: Đối với cá nhân (Nhận thức, kĩ năng, thái độ, hành động)', 'Thứ hai: Gia đình, nhà trường', 'Thứ ba: Cộng đồng, xã hội', 'Dẫn chứng', 'Bài học & Kết đoạn'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở đoạn (Nêu vấn đề trách nhiệm / giải pháp của tuổi trẻ):', placeholder: 'Trước yêu cầu của thời đại mới, việc tìm ra giải pháp / phát huy trách nhiệm của tuổi trẻ trong [vấn đề A] là vô cùng cấp thiết...' },
+        { label: '2. Giải thích (1 câu ngắn gọn):', placeholder: 'Hiểu một cách cốt lõi, [vấn đề A] là...' },
+        { label: '3. Giải pháp 1 - Đối với cá nhân (Nhận thức, kĩ năng, thói quen, thái độ & hành động):', placeholder: 'Thứ nhất, đối với cá nhân, cần nâng cao nhận thức (điều chỉnh quan điểm, tư duy), rèn luyện kĩ năng..., chủ động học hỏi; bên cạnh đó cần có thái độ tích cực và hành động cụ thể như...' },
+        { label: '4. Giải pháp 2 - Đối với gia đình, nhà trường:', placeholder: 'Thứ hai, đối với gia đình và nhà trường, cần tăng cường giáo dục, thấu hiểu, lắng nghe và đồng hành định hướng...' },
+        { label: '5. Giải pháp 3 - Đối với cộng đồng, xã hội:', placeholder: 'Thứ ba, đối với cộng đồng và xã hội, cần xây dựng chính sách thiết thực, tổ chức sự kiện và đẩy mạnh truyền thông...' },
+        { label: '6. Dẫn chứng thực tế:', placeholder: 'Minh chứng tiêu biểu là những người trẻ / chương trình... đã góp phần...' },
+        { label: '7. Bài học nhận thức, hành động & Kết đoạn:', placeholder: 'Khép lại, mỗi người trẻ hãy bắt đầu từ những hành động nhỏ nhất ngay hôm nay để...' }
+      ]
+    },
+
+    // --- NHÓM 3: BÀI VĂN NGHỊ LUẬN VĂN HỌC (~600 CHỮ - CHIA NHIỀU ĐOẠN) ---
+    nlvh_bai_1tacpham: {
+      group: 'Bài văn NLVH (~600 chữ)',
+      name: '8. Bài NLVH (Dạng 1): Phân tích, đánh giá nội dung, chủ đề & nghệ thuật MỘT tác phẩm Thơ/Truyện',
+      singleParagraph: false,
+      formRule: 'Dung lượng: Khoảng 600 chữ (chia thành nhiều đoạn). Luôn nhớ 2 bước: Bước 1: Phân tích (Gọi tên yếu tố + nêu dẫn chứng + phân tích tác dụng) ➔ Bước 2: Đánh giá (vai trò với chủ đề / thông điệp rút ra).',
+      formulaSteps: ['I. Mở bài', 'II.1. Nội dung & Chủ đề (Theo đặc trưng Thơ/Truyện)', 'II.2. Hình thức Nghệ thuật (Theo đặc trưng Thơ/Truyện)', 'II.3. Đánh giá Tư tưởng & Thông điệp', 'III. Kết bài'],
+      referenceHtml: `
+        <div class="scaffold-ref-table-wrap">
+          <table class="scaffold-ref-table">
+            <thead>
+              <tr>
+                <th>Tiêu chí THƠ (Nội dung &amp; Hình thức)</th>
+                <th>Tiêu chí TRUYỆN (Nội dung &amp; Hình thức)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>• Nội dung:</b> Đề tài, Chủ đề, Tình cảm cảm xúc – Mạch cảm xúc, Chủ thể trữ tình/Nhân vật trữ tình, Tư tưởng, Thông điệp.<br><b>• Hình thức:</b> Thể thơ, Từ ngữ, Hình ảnh, Biện pháp tu từ, Vần/nhịp, Giọng điệu.</td>
+                <td><b>• Nội dung:</b> Đề tài, Chủ đề, Vẻ đẹp hình tượng nhân vật (phẩm chất, tính cách, tâm trạng...), Tư tưởng, Thông điệp.<br><b>• Hình thức:</b> Ngôi kể, Điểm nhìn, Nhan đề (gây tò mò, gợi liên tưởng, khắc sâu ý nghĩa), Tình huống truyện, Ngôn ngữ, Chi tiết tiêu biểu, Kết thúc truyện, Giọng điệu.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `,
+      fields: [
+        { label: '1. Mở bài (Trích dẫn – dẫn dắt – giới thiệu tác giả, tác phẩm & VĐNL):', placeholder: 'Giới thiệu tác giả, tác phẩm và khái quát giá trị nội dung, chủ đề, nghệ thuật...' },
+        { label: '2. Thân bài - Phân tích Đề tài, Chủ đề & Mạch cảm xúc / Hình tượng nhân vật:', placeholder: 'Bước 1: Phân tích (gọi tên + dẫn chứng + tác dụng) các yếu tố nội dung chủ đề...' },
+        { label: '3. Thân bài - Phân tích Hình thức Nghệ thuật đặc sắc (Thơ hoặc Truyện):', placeholder: 'Phân tích thể thơ, từ ngữ, hình ảnh, BPTT (với Thơ) hoặc ngôi kể, điểm nhìn, tình huống, chi tiết tiêu biểu, ngôn ngữ (với Truyện)...' },
+        { label: '4. Thân bài - Đánh giá vai trò đối với Tư tưởng, Thông điệp & Phong cách tác giả:', placeholder: 'Bước 2: Đánh giá vai trò của nội dung và nghệ thuật trong việc thể hiện tư tưởng, thông điệp và tài năng nhà văn...' },
+        { label: '5. Kết bài (Khẳng định giá trị & dư âm tác phẩm):', placeholder: 'Khẳng định lại vị trí, sức sống của tác phẩm trong lòng người đọc...' }
+      ]
+    },
+
+    nlvh_bai_sosanh: {
+      group: 'Bài văn NLVH (~600 chữ)',
+      name: '9. Bài NLVH (Dạng 2): So sánh, đánh giá HAI đoạn trích / tác phẩm Thơ hoặc Truyện',
+      singleParagraph: false,
+      formRule: 'Dung lượng: Khoảng 600 chữ. Thân bài chia thành 5 mục rõ ràng: 1. Khái quát chung ➔ 2. Điểm tương đồng ➔ 3. Điểm khác biệt ➔ 4. Lí giải giống/khác nhau ➔ 5. Đánh giá chung.',
+      formulaSteps: ['I. Mở bài (TP1+TG1, TP2+TG2)', 'II.1. Khái quát chung', 'II.2. Điểm tương đồng', 'II.3. Điểm khác biệt', 'II.4. Lí giải giống & khác', 'II.5. Đánh giá & III. Kết bài'],
+      referenceHtml: `
+        <div class="scaffold-ref-table-wrap">
+          <table class="scaffold-ref-table">
+            <thead>
+              <tr>
+                <th>Tiêu chí</th>
+                <th>So sánh hai tác phẩm THƠ</th>
+                <th>So sánh hai tác phẩm TRUYỆN / KÍ / KỊCH</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Nội dung</b></td>
+                <td>Đề tài, chủ đề; hình tượng thơ; cảm hứng chủ đạo; tư tưởng, thông điệp.</td>
+                <td>Đề tài, chủ đề; hình tượng nhân vật (kiểu nhân vật, tình cảm tác giả); tư tưởng, thông điệp; giá trị hiện thực &amp; nhân đạo.</td>
+              </tr>
+              <tr>
+                <td><b>Hình thức</b></td>
+                <td>Thể thơ, vần, nhịp; sáng tạo từ ngữ, hình ảnh, biểu tượng; chủ thể trữ tình, cấu tứ, biện pháp tu từ.</td>
+                <td><b>Truyện:</b> Cốt truyện, cách xây dựng nhân vật, ngôi kể, điểm nhìn, lời kể, kết thúc...<br><b>Kịch:</b> Xung đột kịch, nhân vật hành động, lời thoại.<br><b>Kí:</b> Tính phi hư cấu, kết hợp sự kiện hiện thực với trải nghiệm.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `,
+      fields: [
+        { label: '1. I. Mở bài (Trích dẫn – dẫn dắt – TP1+TG1, TP2+TG2 – chốt tương đồng, khác biệt):', placeholder: 'Giới thiệu hai tác phẩm, hai tác giả và nêu vấn đề nghị luận (điểm tương đồng và khác biệt)...' },
+        { label: '2. II.1. Khái quát chung (Thông tin tác giả, tác phẩm, hoàn cảnh sáng tác, xuất xứ):', placeholder: 'Giới thiệu ngắn gọn hoàn cảnh sáng tác, xuất xứ của hai đoạn trích/tác phẩm...' },
+        { label: '3. II.2. Điểm tương đồng (Nội dung & Nghệ thuật - kèm lí lẽ và bằng chứng):', placeholder: 'Thứ nhất, hai tác phẩm gặp gỡ nhau ở đề tài, chủ đề, cảm hứng... Thứ hai...' },
+        { label: '4. II.3. Điểm khác biệt (Nội dung & Hình thức thể hiện - kèm lí lẽ và bằng chứng):', placeholder: 'Về nội dung (hình tượng thơ/kiểu nhân vật)... Về hình thức (chủ thể trữ tình, từ ngữ, ngôi kể, điểm nhìn, cách xây dựng nhân vật)...' },
+        { label: '5. II.4. Lí giải điểm giống, khác nhau:', placeholder: 'Hai tác phẩm có điểm giống nhau xuất phát từ việc [cùng hoàn cảnh/đề tài/quan điểm thẩm mĩ]... Và điều dẫn đến sự khác biệt là do [cá tính sáng tạo riêng, thời đại, văn hóa, đối tượng đặc thù]...' },
+        { label: '6. II.5. Đánh giá ý nghĩa & III. Kết bài:', placeholder: 'Sự thống nhất trong quan điểm/thi pháp thời đại cùng sự độc đáo, đa dạng trong phong cách nghệ thuật đã làm phong phú nền văn học...' }
+      ]
+    },
+
+    // --- NHÓM 4: BÀI VĂN NGHỊ LUẬN XÃ HỘI (~600 CHỮ - CHIA NHIỀU ĐOẠN) ---
+    nlxh_bai_tutuong: {
+      group: 'Bài văn NLXH (~600 chữ)',
+      name: '10. Bài NLXH (Dạng 1): Nghị luận về một TƯ TƯỞNG ĐẠO LÍ / CÂU NÓI',
+      singleParagraph: false,
+      formRule: 'Dung lượng: Khoảng 600 chữ. Bàn luận phải tách thành 3 đoạn luận điểm (Ý nghĩa 1, Ý nghĩa 2, Ý nghĩa 3) kèm lí lẽ và dẫn chứng.',
+      formulaSteps: ['Mở bài', 'Đoạn 1: Giải thích từ ngữ & cả câu', 'Đoạn 2, 3, 4: Bàn luận 3 Ý nghĩa + Dẫn chứng', 'Đoạn 5: Phê phán, mở rộng', 'Đoạn 6: Giải pháp, liên hệ & Kết bài'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở bài & Đoạn 1 - Giải thích (Từ ngữ quan trọng, vế câu ➔ “Vậy câu này có nghĩa là...”):', placeholder: 'Dẫn dắt câu nói. Giải thích các từ khóa và rút ra ý nghĩa cả câu: “Vậy câu nói này có nghĩa là...”' },
+        { label: '2. Đoạn Bàn luận - Ý nghĩa 1 (Vì sao đặt ra vấn đề? Ý nghĩa 1 + Lí lẽ & Dẫn chứng):', placeholder: 'Trước hết, tư tưởng này giúp mỗi cá nhân mở rộng nhận thức, hoàn thiện nhân cách...' },
+        { label: '3. Đoạn Bàn luận - Ý nghĩa 2 & Ý nghĩa 3 (+ Lí lẽ & Dẫn chứng thực tế):', placeholder: 'Bên cạnh đó (Ý nghĩa 2)... Không những vậy, đối với cộng đồng xã hội (Ý nghĩa 3)... Dẫn chứng thực tế...' },
+        { label: '4. Đoạn Phê phán, mở rộng vấn đề (Chỉ ra biểu hiện trái ngược hoặc mặt hạn chế nếu có):', placeholder: 'Tuy nhiên, trong cuộc sống vẫn còn những người... (Hoặc bổ sung góc nhìn toàn diện cho câu nói)...' },
+        { label: '5. Đoạn Giải pháp, liên hệ bản thân, bài học nhận thức & hành động + Kết bài:', placeholder: 'Từ đó, mỗi người trẻ cần... Khẳng định lại giá trị bền vững của câu nói.' }
+      ]
+    },
+
+    nlxh_bai_hientuong: {
+      group: 'Bài văn NLXH (~600 chữ)',
+      name: '11. Bài NLXH (Dạng 2): Nghị luận về một HIỆN TƯỢNG ĐỜI SỐNG',
+      singleParagraph: false,
+      formRule: 'Dung lượng: Khoảng 600 chữ. Triển khai theo mạch 4 bước: Giải thích + Thực trạng ➔ Nguyên nhân ➔ Tác dụng hoặc Hậu quả ➔ Giải pháp (cá nhân, cộng đồng / trước mắt, lâu dài).',
+      formulaSteps: ['Mở bài', 'Đoạn 1: Giải thích + Thực trạng', 'Đoạn 2: Nguyên nhân', 'Đoạn 3: Tác dụng / Hậu quả + D/c', 'Đoạn 4: Giải pháp (Cá nhân, cộng đồng, trước mắt, lâu dài) & Kết bài'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở bài & Đoạn 1 - Giải thích + Thực trạng hiện nay:', placeholder: 'Giới thiệu hiện tượng đời sống. Giải thích bản chất và nêu bức tranh thực trạng, biểu hiện cụ thể...' },
+        { label: '2. Đoạn 2 - Nguyên nhân (Chủ quan & Khách quan):', placeholder: 'Hiện tượng trên xuất phát từ nguyên nhân chủ quan (ý thức cá nhân) và khách quan (gia đình, nhà trường, xã hội)...' },
+        { label: '3. Đoạn 3 - Tác dụng (Ý nghĩa) hoặc Hậu quả (Tác hại) + Dẫn chứng:', placeholder: 'Phân tích những tác động sâu sắc đối với cá nhân và cộng đồng kèm dẫn chứng thực tế...' },
+        { label: '4. Đoạn 4 - Giải pháp (Cá nhân, cộng đồng / Trước mắt, lâu dài) & Kết bài:', placeholder: 'Để phát huy/khắc phục hiện tượng này, về phía cá nhân... về phía cộng đồng... (giải pháp trước mắt và lâu dài)...' }
+      ]
+    },
+
+    nlxh_bai_vdxh_tpvh: {
+      group: 'Bài văn NLXH (~600 chữ)',
+      name: '12. Bài NLXH (Dạng 3): Nghị luận về một VẤN ĐỀ XÃ HỘI đặt ra trong tác phẩm văn học',
+      singleParagraph: false,
+      formRule: 'Dung lượng: Khoảng 600 chữ. Kết nối từ biểu hiện của vấn đề xã hội trong tác phẩm văn học (dẫn chứng) ra đời sống xã hội (3 luận điểm Ý nghĩa + Phê phán + Giải pháp).',
+      formulaSteps: ['Mở bài', 'Đoạn 1: Giải thích + Biểu hiện trong TP văn học & Xã hội', 'Đoạn 2, 3, 4: Bàn luận 3 Ý nghĩa + Dẫn chứng đời sống', 'Đoạn 5: Phê phán, mở rộng', 'Đoạn 6: Giải pháp, bài học & Kết bài'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở bài & Đoạn 1 - Giải thích + Biểu hiện VĐXH trong tác phẩm văn học (d/c) & Xã hội:', placeholder: 'Giới thiệu tác phẩm văn học và vấn đề xã hội đặt ra. Giải thích vấn đề và chỉ ra biểu hiện trong tác phẩm + ngoài đời thực...' },
+        { label: '2. Đoạn Bàn luận - Vì sao đặt ra vấn đề? Ý nghĩa 1 & Ý nghĩa 2:', placeholder: 'Bước ra từ trang sách, vấn đề này mang ý nghĩa lớn lao. Thứ nhất (Ý nghĩa 1)... Thứ hai (Ý nghĩa 2)...' },
+        { label: '3. Đoạn Bàn luận - Ý nghĩa 3 + Dẫn chứng thực tế đời sống:', placeholder: 'Thứ ba, đối với cộng đồng xã hội (Ý nghĩa 3)... Thực tế đời sống đã chứng minh qua...' },
+        { label: '4. Đoạn Phê phán, mở rộng vấn đề:', placeholder: 'Bên cạnh đó, cần lên án/phê phán những biểu hiện lệch lạc, thờ ơ...' },
+        { label: '5. Đoạn Giải pháp, liên hệ bản thân, bài học nhận thức & hành động + Kết bài:', placeholder: 'Mỗi người trẻ cần hành động thiết thực... Khẳng định giá trị nhân văn kết nối từ tác phẩm đến cuộc đời.' }
+      ]
+    }
+  };
+
+  function detectBestTemplateKey(text, subTypeHint, isParagraphHint) {
+    if (subTypeHint && SCAFFOLD_TEMPLATES[subTypeHint]) return subTypeHint;
+    const t = String(text || '').toLowerCase();
+
+    if (t.includes('so sánh')) return 'nlvh_bai_sosanh';
+    if (t.includes('hiện tượng')) return 'nlxh_bai_hientuong';
+    if (t.includes('trong tác phẩm') && (t.includes('xã hội') || t.includes('cuộc sống hôm nay'))) return 'nlxh_bai_vdxh_tpvh';
+    if (t.includes('giải pháp') || t.includes('làm thế nào') || t.includes('cách thức') || t.includes('trách nhiệm')) {
+      return 'nlxh_doan_giaiphap';
+    }
+    if (t.includes('nhân vật')) return 'nlvh_doan_nhanvat';
+    if (t.includes('tình cảm') || t.includes('cảm xúc') || t.includes('mạch cảm xúc')) return 'nlvh_doan_camxuc_tho';
+    if (t.includes('nghệ thuật') && (t.includes('truyện') || t.includes('ngôi kể') || t.includes('tình huống'))) return 'nlvh_doan_nt_truyen';
+    if (t.includes('nghệ thuật') && (t.includes('thơ') || t.includes('khổ thơ') || t.includes('đoạn thơ'))) return 'nlvh_doan_nt_tho';
+    if (t.includes('chủ đề')) return 'nlvh_doan_chude';
+
+    if (isParagraphHint || t.includes('200 chữ') || t.includes('đoạn văn')) {
+      if (t.includes('thơ') || t.includes('truyện') || t.includes('tác phẩm')) return 'nlvh_doan_chude';
+      return 'nlxh_doan_ynghia';
+    }
+    if (t.includes('600 chữ') || t.includes('bài văn')) {
+      if (t.includes('thơ') || t.includes('truyện') || t.includes('tác phẩm')) return 'nlvh_bai_1tacpham';
+      return 'nlxh_bai_tutuong';
+    }
+    return 'nlxh_doan_ynghia';
+  }
+
+  function buildTemplateSelectOptionsHtml(selectedKey) {
+    return Object.entries(SCAFFOLD_TEMPLATES).map(([key, tpl]) =>
+      `<option value="${key}" ${key === selectedKey ? 'selected' : ''}>[${esc(tpl.group)}] ${esc(tpl.name)}</option>`
+    ).join('');
+  }
+
   function extractSmartKeywordsFromText(text) {
     const t = String(text || '').toLowerCase();
     const kwSet = new Set();
 
     if (t.includes('tuổi trẻ') || t.includes('khát vọng') || t.includes('ước mơ') || t.includes('cống hiến')) {
-      ['Khát vọng vươn lên', 'Lý tưởng sống đẹp', 'Dấn thân & Cống hiến', 'Nhiệt huyết thanh xuân', 'Vượt qua giới hạn'].forEach(k => kwSet.add(k));
+      ['Khát vọng vươn lên', 'Lý tưởng sống đẹp', 'Dấn thân & Cống hiến', 'Nhiệt huyết thanh xuân', 'Hoàn thiện nhân cách'].forEach(k => kwSet.add(k));
     }
     if (t.includes('nhân ái') || t.includes('sẻ chia') || t.includes('yêu thương') || t.includes('thấu cảm') || t.includes('tình người')) {
       ['Sự thấu cảm', 'Tình người ấm áp', 'Sống là cho đi', 'Gắn kết cộng đồng', 'Lòng trắc ẩn'].forEach(k => kwSet.add(k));
     }
-    if (t.includes('bản lĩnh') || t.includes('khó khăn') || t.includes('nghịch cảnh') || t.includes('ý chí') || t.includes('thất bại')) {
-      ['Bản lĩnh kiên cường', 'Ý chí nghị lực', 'Vượt lên nghịch cảnh', 'Biến thử thách thành cơ hội', 'Tinh thần lạc quan'].forEach(k => kwSet.add(k));
+    if (t.includes('bản lĩnh') || t.includes('kiên trì') || t.includes('khó khăn') || t.includes('nghịch cảnh') || t.includes('ý chí')) {
+      ['Bản lĩnh kiên cường', 'Ý chí nghị lực', 'Vượt lên nghịch cảnh', 'Mở rộng hiểu biết', 'Bình an & Hạnh phúc'].forEach(k => kwSet.add(k));
     }
-    if (t.includes('gia đình') || t.includes('mẹ') || t.includes('cha') || t.includes('quê hương') || t.includes('nguồn cội')) {
-      ['Điểm tựa tâm hồn', 'Tình mẫu tử thiêng liêng', 'Nghĩa tình nguồn cội', 'Bến đỗ bình yên', 'Lòng biết ơn'].forEach(k => kwSet.add(k));
+    if (t.includes('thơ') || t.includes('trữ tình')) {
+      ['Chủ thể trữ tình', 'Hình tượng trung tâm', 'Mạch cảm xúc', 'Nhịp điệu ngân vang', 'Biện pháp tu từ đặc sắc'].forEach(k => kwSet.add(k));
     }
-    if (t.includes('biện pháp') || t.includes('tu từ') || t.includes('nghệ thuật') || t.includes('hình ảnh')) {
-      ['Tăng sức gợi hình, gợi cảm', 'Nhấn mạnh sắc thái biểu đạt', 'Tạo nhịp điệu ngân vang', 'Khắc họa sinh động', 'Thể hiện tấm lòng tác giả'].forEach(k => kwSet.add(k));
+    if (t.includes('truyện') || t.includes('nhân vật')) {
+      ['Tình huống truyện độc đáo', 'Điểm nhìn trần thuật', 'Chi tiết nghệ thuật đắt giá', 'Diễn biến nội tâm tinh tế', 'Cá tính sáng tạo'].forEach(k => kwSet.add(k));
     }
 
-    // Mặc định bổ sung các từ khóa học thuật chuẩn GDPT 2018
     const defaults = [
       'Giá trị nhân văn sâu sắc',
       'Thông điệp giàu ý nghĩa',
-      'Nhận thức & Hành động',
-      'Trách nhiệm cá nhân',
-      'Góc nhìn đa chiều',
-      'Bản sắc riêng biệt'
+      'Triết lí nhân sinh',
+      'Bài học nhận thức & hành động',
+      'Cộng đồng văn minh, tốt đẹp'
     ];
     defaults.forEach(k => {
       if (kwSet.size < 8) kwSet.add(k);
@@ -725,92 +1011,39 @@
     }
 
     awardCustomGamificationPoints(10, 'scaffolding');
-
-    // Lấy nội dung câu hỏi để gợi ý từ khóa sát đề
     const card = document.getElementById(`card-q-${idx}`);
     const qText = card ? (card.querySelector('.reading-q-text')?.textContent || '') : '';
+    const defaultTplKey = isParagraph ? detectBestTemplateKey(qText, null, true) : 'reading_short';
+    renderReadingQuestionScaffoldContent(idx, defaultTplKey, qText);
+    box.style.display = 'block';
+  }
+
+  function renderReadingQuestionScaffoldContent(idx, tplKey, qTextOverride) {
+    const box = document.getElementById(`reading-scaffold-box-${idx}`);
+    if (!box) return;
+    const card = document.getElementById(`card-q-${idx}`);
+    const qText = qTextOverride !== undefined ? qTextOverride : (card ? (card.querySelector('.reading-q-text')?.textContent || '') : '');
     const keywords = extractSmartKeywordsFromText(qText);
 
-    if (isParagraph) {
-      // Sơ đồ Giàn giáo nhận thức chuẩn cho Đoạn văn 200 chữ (6 bước)
+    if (tplKey === 'reading_short') {
       box.innerHTML = `
         <div class="scaffold-inner">
-          <div class="scaffold-top-bar">
-            <span class="scaffold-tag">💡 GIÀN GIÁO NHẬN THỨC · ĐOẠN VĂN 200 CHỮ</span>
-            <button type="button" class="btn gh sm" style="padding:2px 8px; font-size:12px;" onclick="document.getElementById('reading-scaffold-box-${idx}').style.display='none'">Đóng</button>
+          <div class="scaffold-top-bar" style="flex-wrap:wrap; gap:8px;">
+            <span class="scaffold-tag">💡 GIÀN GIÁO NHẬN THỨC · ĐỌC HIỂU &amp; NGHỊ LUẬN</span>
+            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+              <select class="ept-mode-select" style="max-width:290px;" onchange="renderReadingQuestionScaffoldContent(${idx}, this.value)">
+                <option value="reading_short" selected>[Đọc hiểu] Công thức 3 bước trả lời câu đọc hiểu</option>
+                ${buildTemplateSelectOptionsHtml('')}
+              </select>
+              <button type="button" class="btn gh sm" style="padding:2px 8px; font-size:12px;" onclick="document.getElementById('reading-scaffold-box-${idx}').style.display='none'">Đóng</button>
+            </div>
           </div>
 
           <div class="scaffold-formula-banner">
-            <b>📐 Công thức 6 bước viết đoạn 200 chữ chuẩn GDPT 2018:</b>
+            <b>📐 Công thức 3 bước trả lời Đọc hiểu đạt điểm tối đa:</b>
             <div class="scaffold-steps-pills">
-              <span class="scaffold-step-pill">1. Câu chủ đề</span> ➔
-              <span class="scaffold-step-pill">2. Giải thích</span> ➔
-              <span class="scaffold-step-pill">3. Bàn luận</span> ➔
-              <span class="scaffold-step-pill">4. Chứng minh</span> ➔
-              <span class="scaffold-step-pill">5. Phản đề</span> ➔
-              <span class="scaffold-step-pill">6. Bài học</span>
-            </div>
-          </div>
-
-          <div class="scaffold-keywords-section">
-            <div class="scaffold-lbl">🔑 Từ khóa gợi mở (Bấm vào để chèn nhanh vào bài viết):</div>
-            <div class="scaffold-kw-list">
-              ${keywords.map(kw => `
-                <button type="button" class="scaffold-kw-chip" onclick="insertKeywordIntoReadingAnswer(${idx}, '${esc(kw)}')">+ ${esc(kw)}</button>
-              `).join('')}
-            </div>
-          </div>
-
-          <div class="scaffold-outline-builder">
-            <div class="scaffold-lbl">🧩 Sơ đồ dàn ý trống (Điền ý ngắn vào các bước rồi bấm Ghép thành đoạn văn):</div>
-            <div class="scaffold-grid-steps">
-              <div class="scaffold-step-field">
-                <label>1. Mở đoạn (Câu chủ đề):</label>
-                <input type="text" id="r-scaf-${idx}-s1" placeholder="Ví dụ: Từ ngữ liệu trên, ta nhận ra vai trò vô cùng to lớn của [vấn đề nghị luận] trong cuộc sống...">
-              </div>
-              <div class="scaffold-step-field">
-                <label>2. Giải thích khái niệm / ý nghĩa:</label>
-                <input type="text" id="r-scaf-${idx}-s2" placeholder="Ví dụ: Hiểu một cách giản dị, [từ khóa] chính là thái độ sống / phẩm chất...">
-              </div>
-              <div class="scaffold-step-field">
-                <label>3. Bàn luận (Biểu hiện &amp; Ý nghĩa, vì sao?):</label>
-                <input type="text" id="r-scaf-${idx}-s3" placeholder="Ví dụ: Trong hành trình trưởng thành, phẩm chất này giúp con người vượt qua thử thách, lan tỏa giá trị tốt đẹp...">
-              </div>
-              <div class="scaffold-step-field">
-                <label>4. Chứng minh (Dẫn chứng thực tế):</label>
-                <input type="text" id="r-scaf-${idx}-s4" placeholder="Ví dụ: Thực tế đã chứng minh qua tấm gương của... đã kiên trì nỗ lực để...">
-              </div>
-              <div class="scaffold-step-field">
-                <label>5. Phản đề (Mở rộng / Phê phán):</label>
-                <input type="text" id="r-scaf-${idx}-s5" placeholder="Ví dụ: Tuy nhiên, vẫn còn một bộ phận người sống thờ ơ, thiếu đi ý thức... thật đáng buồn.">
-              </div>
-              <div class="scaffold-step-field">
-                <label>6. Kết đoạn (Bài học nhận thức &amp; hành động):</label>
-                <input type="text" id="r-scaf-${idx}-s6" placeholder="Ví dụ: Khép lại trang viết, mỗi người trẻ chúng ta cần rèn luyện bản thân bắt đầu từ những hành động nhỏ nhất...">
-              </div>
-            </div>
-            <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px;">
-              <button type="button" class="btn au sm" onclick="assembleReadingScaffoldToTextarea(${idx}, true)">
-                <ion-icon name="flash-outline"></ion-icon> <span>Ghép dàn ý thành đoạn văn đưa vào ô làm bài</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-    } else {
-      // Sơ đồ Giàn giáo nhận thức cho câu hỏi Đọc hiểu tự luận (3 bước)
-      box.innerHTML = `
-        <div class="scaffold-inner">
-          <div class="scaffold-top-bar">
-            <span class="scaffold-tag">💡 GIÀN GIÁO NHẬN THỨC · CÂU HỎI ĐỌC HIỂU</span>
-            <button type="button" class="btn gh sm" style="padding:2px 8px; font-size:12px;" onclick="document.getElementById('reading-scaffold-box-${idx}').style.display='none'">Đóng</button>
-          </div>
-
-          <div class="scaffold-formula-banner">
-            <b>📐 Công thức 3 bước trả lời đọc hiểu đạt điểm tối đa:</b>
-            <div class="scaffold-steps-pills">
-              <span class="scaffold-step-pill">1. Chỉ ra trực tiếp (Gọi tên &amp; từ ngữ)</span> ➔
-              <span class="scaffold-step-pill">2. Tác dụng nội dung (Gợi hình ảnh/cảm xúc)</span> ➔
+              <span class="scaffold-step-pill">1. Chỉ ra trực tiếp (Gọi tên yếu tố &amp; dẫn chứng)</span> ➔
+              <span class="scaffold-step-pill">2. Phân tích tác dụng nội dung</span> ➔
               <span class="scaffold-step-pill">3. Giá trị nghệ thuật / Thông điệp</span>
             </div>
           </div>
@@ -828,29 +1061,80 @@
             <div class="scaffold-lbl">🧩 Sơ đồ dàn ý trống 3 bước:</div>
             <div class="scaffold-grid-steps">
               <div class="scaffold-step-field">
-                <label>Bước 1 - Chỉ ra dấu hiệu / chi tiết trong văn bản:</label>
+                <label>Bước 1 - Gọi tên yếu tố / Chỉ ra dẫn chứng trong văn bản:</label>
                 <input type="text" id="r-scaf-${idx}-s1" placeholder="Ví dụ: Biện pháp tu từ / Chi tiết thể hiện qua từ ngữ “...”">
               </div>
               <div class="scaffold-step-field">
-                <label>Bước 2 - Phân tích tác dụng nội dung / ý nghĩa:</label>
-                <input type="text" id="r-scaf-${idx}-s2" placeholder="Ví dụ: Nhấn mạnh và làm nổi bật vẻ đẹp / tâm trạng... của nhân vật trữ tình.">
+                <label>Bước 2 - Phân tích tác dụng nội dung / cảm xúc:</label>
+                <input type="text" id="r-scaf-${idx}-s2" placeholder="Ví dụ: Làm nổi bật hình ảnh / tâm trạng... của nhân vật trữ tình.">
               </div>
               <div class="scaffold-step-field">
-                <label>Bước 3 - Tác dụng nghệ thuật / Thông điệp rút ra:</label>
-                <input type="text" id="r-scaf-${idx}-s3" placeholder="Ví dụ: Giúp lời văn/thơ giàu hình ảnh, giàu nhịp điệu và khơi gợi sự đồng cảm sâu sắc.">
+                <label>Bước 3 - Đánh giá tác dụng nghệ thuật / Thông điệp:</label>
+                <input type="text" id="r-scaf-${idx}-s3" placeholder="Ví dụ: Giúp lời văn/thơ giàu hình ảnh, nhịp điệu và gửi gắm thông điệp...">
               </div>
             </div>
             <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px;">
-              <button type="button" class="btn au sm" onclick="assembleReadingScaffoldToTextarea(${idx}, false)">
+              <button type="button" class="btn au sm" onclick="assembleReadingScaffoldToTextarea(${idx}, false, 3)">
                 <ion-icon name="flash-outline"></ion-icon> <span>Ghép câu trả lời vào ô làm bài</span>
               </button>
             </div>
           </div>
         </div>
       `;
+      return;
     }
 
-    box.style.display = 'block';
+    const tpl = SCAFFOLD_TEMPLATES[tplKey] || SCAFFOLD_TEMPLATES.nlxh_doan_ynghia;
+    box.innerHTML = `
+      <div class="scaffold-inner">
+        <div class="scaffold-top-bar" style="flex-wrap:wrap; gap:8px;">
+          <span class="scaffold-tag">💡 ${esc(tpl.group.toUpperCase())}</span>
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <select class="ept-mode-select" style="max-width:320px;" onchange="renderReadingQuestionScaffoldContent(${idx}, this.value)">
+              <option value="reading_short">[Đọc hiểu] Công thức 3 bước trả lời câu đọc hiểu</option>
+              ${buildTemplateSelectOptionsHtml(tplKey)}
+            </select>
+            <button type="button" class="btn gh sm" style="padding:2px 8px; font-size:12px;" onclick="document.getElementById('reading-scaffold-box-${idx}').style.display='none'">Đóng</button>
+          </div>
+        </div>
+
+        <div class="scaffold-formula-banner">
+          <div style="margin-bottom:4px; color:#b45309; font-weight:800; font-size:12px;">📌 ${esc(tpl.formRule)}</div>
+          <b>📐 Cấu trúc dàn ý chuẩn (${esc(tpl.name)}):</b>
+          <div class="scaffold-steps-pills">
+            ${tpl.formulaSteps.map(st => `<span class="scaffold-step-pill">${esc(st)}</span>`).join(' ➔ ')}
+          </div>
+        </div>
+
+        ${tpl.referenceHtml || ''}
+
+        <div class="scaffold-keywords-section">
+          <div class="scaffold-lbl">🔑 Từ khóa gợi mở (Bấm vào để chèn nhanh vào bài viết):</div>
+          <div class="scaffold-kw-list">
+            ${keywords.map(kw => `
+              <button type="button" class="scaffold-kw-chip" onclick="insertKeywordIntoReadingAnswer(${idx}, '${esc(kw)}')">+ ${esc(kw)}</button>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="scaffold-outline-builder">
+          <div class="scaffold-lbl">🧩 Sơ đồ dàn ý trống tự điền (Điền các bước rồi bấm Ghép vào ô làm bài):</div>
+          <div class="scaffold-grid-steps">
+            ${tpl.fields.map((f, fIdx) => `
+              <div class="scaffold-step-field">
+                <label>${esc(f.label)}</label>
+                <input type="text" id="r-scaf-${idx}-s${fIdx + 1}" placeholder="${esc(f.placeholder)}">
+              </div>
+            `).join('')}
+          </div>
+          <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px;">
+            <button type="button" class="btn au sm" onclick="assembleReadingScaffoldToTextarea(${idx}, ${tpl.singleParagraph ? 'true' : 'false'}, ${tpl.fields.length})">
+              <ion-icon name="flash-outline"></ion-icon> <span>Ghép dàn ý thành ${tpl.singleParagraph ? '1 đoạn văn (không xuống dòng)' : 'bài viết'} đưa vào ô làm bài</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
   }
 
   function insertKeywordIntoReadingAnswer(idx, kw) {
@@ -863,11 +1147,10 @@
     toast(`Đã chèn từ khóa: "${kw}"`, 'ok');
   }
 
-  function assembleReadingScaffoldToTextarea(idx, isParagraph) {
+  function assembleReadingScaffoldToTextarea(idx, isSingleParagraph, stepsCount = 7) {
     const tx = document.getElementById(`reading-q-textarea-${idx}`);
     if (!tx) return;
 
-    const stepsCount = isParagraph ? 6 : 3;
     const parts = [];
     for (let i = 1; i <= stepsCount; i++) {
       const inp = document.getElementById(`r-scaf-${idx}-s${i}`);
@@ -882,26 +1165,33 @@
       return;
     }
 
-    const joined = isParagraph ? parts.join(' ') : parts.map(p => '- ' + p).join('\n');
-    tx.value = tx.value.trim() ? (tx.value.trim() + '\n' + joined) : joined;
+    const joined = isSingleParagraph ? parts.join(' ') : parts.map(p => '- ' + p).join('\n');
+    tx.value = tx.value.trim() ? (isSingleParagraph ? `${tx.value.trim()} ${joined}` : `${tx.value.trim()}\n${joined}`) : joined;
     tx.dispatchEvent(new Event('input', { bubbles: true }));
     tx.focus();
     toast('✨ Đã ghép dàn ý vào ô làm bài! Bạn hãy hoàn thiện thêm câu chữ cho thật mượt mà nhé.', 'ok');
   }
 
-  // 3B. Giàn giáo nhận thức cho Luyện viết (Toàn bài & Từng đoạn)
+  // 3B. Giàn giáo nhận thức cho Luyện viết (Toàn bài & Từng đoạn theo đúng 12 dạng bài)
+  let activeWritingTemplateKey = 'nlxh_doan_ynghia';
+
   function initWritingScaffoldingAndTimer() {
     const panel = document.getElementById('writing-scaffolding-panel');
     if (panel) panel.style.display = 'none';
-    renderWritingMainScaffoldingBody();
-    initWritingPressureTimerUI();
+
+    const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
+    const promptText = curSet ? `${curSet.title || ''} ${curSet.prompt || ''}` : '';
+    activeWritingTemplateKey = detectBestTemplateKey(promptText, curSet && curSet.subType, curSet && curSet.category && curSet.category.startsWith('doan-'));
+
+    renderWritingMainScaffoldingBody(activeWritingTemplateKey);
+    initWritingPressureTimerUI(curSet);
   }
 
   function toggleWritingScaffoldingPanel() {
     const panel = document.getElementById('writing-scaffolding-panel');
     if (!panel) return;
     if (panel.style.display === 'none') {
-      renderWritingMainScaffoldingBody();
+      renderWritingMainScaffoldingBody(activeWritingTemplateKey);
       panel.style.display = 'block';
       awardCustomGamificationPoints(10, 'scaffolding');
     } else {
@@ -909,32 +1199,43 @@
     }
   }
 
-  function renderWritingMainScaffoldingBody() {
+  function renderWritingMainScaffoldingBody(selectedKey) {
     const body = document.getElementById('writing-scaffolding-body');
     if (!body) return;
+    if (selectedKey && SCAFFOLD_TEMPLATES[selectedKey]) {
+      activeWritingTemplateKey = selectedKey;
+    }
+    const tpl = SCAFFOLD_TEMPLATES[activeWritingTemplateKey] || SCAFFOLD_TEMPLATES.nlxh_doan_ynghia;
     const promptText = document.getElementById('workspace-prompt-text')?.textContent || '';
     const keywords = extractSmartKeywordsFromText(promptText);
     const connectors = [
-      'Trước hết, cần hiểu rằng',
-      'Thực vậy, trong cuộc sống',
-      'Bên cạnh đó, không thể phủ nhận',
-      'Minh chứng tiêu biểu cho điều này là',
-      'Nhìn từ góc độ ngược lại',
-      'Khép lại trang viết, ta nhận ra'
+      'Thứ nhất,',
+      'Thứ hai,',
+      'Thứ ba,',
+      'Thứ tư,',
+      'Bên cạnh đó,',
+      'Thực tế đã chứng minh',
+      'Nhìn từ góc độ ngược lại,',
+      'Qua đó, tác giả gửi gắm thông điệp'
     ];
 
     body.innerHTML = `
+      <div style="margin-bottom:10px;">
+        <label class="scaffold-lbl" for="writing-main-tpl-select">📂 Chọn đúng Dạng bài Nghị luận (Theo tài liệu phương pháp):</label>
+        <select id="writing-main-tpl-select" class="qa-select" style="font-weight:700; font-size:12.5px;" onchange="renderWritingMainScaffoldingBody(this.value)">
+          ${buildTemplateSelectOptionsHtml(activeWritingTemplateKey)}
+        </select>
+      </div>
+
       <div class="scaffold-formula-banner">
-        <b>📐 Công thức chuẩn viết Đoạn / Bài Nghị luận GDPT 2018:</b>
+        <div style="margin-bottom:4px; color:#b45309; font-weight:800; font-size:12px;">📌 ${esc(tpl.formRule)}</div>
+        <b>📐 Quy trình các bước triển khai:</b>
         <div class="scaffold-steps-pills">
-          <span class="scaffold-step-pill">1. Câu chủ đề (Mở đoạn)</span> ➔
-          <span class="scaffold-step-pill">2. Giải thích</span> ➔
-          <span class="scaffold-step-pill">3. Bàn luận (Phân tích)</span> ➔
-          <span class="scaffold-step-pill">4. Chứng minh</span> ➔
-          <span class="scaffold-step-pill">5. Phản đề</span> ➔
-          <span class="scaffold-step-pill">6. Rút ra bài học</span>
+          ${tpl.formulaSteps.map(st => `<span class="scaffold-step-pill">${esc(st)}</span>`).join(' ➔ ')}
         </div>
       </div>
+
+      ${tpl.referenceHtml || ''}
 
       <div class="scaffold-keywords-section">
         <div class="scaffold-lbl">🔑 Từ khóa gợi ý theo đề (Bấm để chèn vào phần đang viết):</div>
@@ -946,7 +1247,7 @@
       </div>
 
       <div class="scaffold-keywords-section" style="margin-top:8px;">
-        <div class="scaffold-lbl">🔗 Cụm từ nối chuyển ý mạch lạc:</div>
+        <div class="scaffold-lbl">🔗 Cụm từ dẫn luận điểm chuẩn theo tài liệu:</div>
         <div class="scaffold-kw-list">
           ${connectors.map(c => `
             <button type="button" class="scaffold-kw-chip connector" onclick="insertTextIntoActiveWritingSection('${esc(c)} ')">+ ${esc(c)}...</button>
@@ -966,15 +1267,40 @@
     }
 
     awardCustomGamificationPoints(10, 'scaffolding');
+    renderWritingSectionScaffoldingContent(secId, idx, activeWritingTemplateKey);
+    box.style.display = 'block';
+  }
+
+  function renderWritingSectionScaffoldingContent(secId, idx, tplKey) {
+    const box = document.getElementById(`writing-sec-scaffold-${secId}`);
+    if (!box) return;
+    if (tplKey && SCAFFOLD_TEMPLATES[tplKey]) {
+      activeWritingTemplateKey = tplKey;
+    }
+    const tpl = SCAFFOLD_TEMPLATES[activeWritingTemplateKey] || SCAFFOLD_TEMPLATES.nlxh_doan_ynghia;
     const promptText = document.getElementById('workspace-prompt-text')?.textContent || '';
     const keywords = extractSmartKeywordsFromText(promptText);
 
     box.innerHTML = `
       <div class="scaffold-inner">
-        <div class="scaffold-top-bar">
-          <span class="scaffold-tag">💡 GỢI Ý TƯ DUY &amp; SƠ ĐỒ DÀN Ý TRỐNG (PHẦN ${idx + 1})</span>
-          <button type="button" class="btn gh sm" style="padding:2px 8px; font-size:12px;" onclick="document.getElementById('writing-sec-scaffold-${secId}').style.display='none'">Đóng</button>
+        <div class="scaffold-top-bar" style="flex-wrap:wrap; gap:8px;">
+          <span class="scaffold-tag">💡 SƠ ĐỒ DÀN Ý: ${esc(tpl.name)}</span>
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <select class="ept-mode-select" style="max-width:290px;" onchange="renderWritingSectionScaffoldingContent('${esc(secId)}', ${idx}, this.value)">
+              ${buildTemplateSelectOptionsHtml(activeWritingTemplateKey)}
+            </select>
+            <button type="button" class="btn gh sm" style="padding:2px 8px; font-size:12px;" onclick="document.getElementById('writing-sec-scaffold-${secId}').style.display='none'">Đóng</button>
+          </div>
         </div>
+
+        <div class="scaffold-formula-banner">
+          <div style="margin-bottom:4px; color:#b45309; font-weight:800; font-size:12px;">📌 ${esc(tpl.formRule)}</div>
+          <div class="scaffold-steps-pills">
+            ${tpl.formulaSteps.map(st => `<span class="scaffold-step-pill">${esc(st)}</span>`).join(' ➔ ')}
+          </div>
+        </div>
+
+        ${tpl.referenceHtml || ''}
 
         <div class="scaffold-keywords-section">
           <div class="scaffold-lbl">🔑 Từ khóa gợi ý nhanh (Bấm để chèn vào đoạn này):</div>
@@ -986,42 +1312,23 @@
         </div>
 
         <div class="scaffold-outline-builder">
-          <div class="scaffold-lbl">🧩 Điền nhanh các bước tư duy để tự động ghép thành đoạn văn:</div>
+          <div class="scaffold-lbl">🧩 Điền từng bước theo công thức để tự động ghép vào bài viết:</div>
           <div class="scaffold-grid-steps">
-            <div class="scaffold-step-field">
-              <label>1. Câu chủ đề / Luận điểm chính:</label>
-              <input type="text" id="w-scaf-${secId}-s1" placeholder="Nêu trực tiếp luận điểm hoặc câu mở đoạn...">
-            </div>
-            <div class="scaffold-step-field">
-              <label>2. Giải thích / Làm rõ khái niệm:</label>
-              <input type="text" id="w-scaf-${secId}-s2" placeholder="Giải thích ý nghĩa từ khóa hoặc bối cảnh...">
-            </div>
-            <div class="scaffold-step-field">
-              <label>3. Bàn luận &amp; Phân tích chuyên sâu:</label>
-              <input type="text" id="w-scaf-${secId}-s3" placeholder="Phân tích biểu hiện, nguyên nhân, tác dụng, giá trị...">
-            </div>
-            <div class="scaffold-step-field">
-              <label>4. Chứng minh (Dẫn chứng tiêu biểu):</label>
-              <input type="text" id="w-scaf-${secId}-s4" placeholder="Đưa dẫn chứng thực tế hoặc chi tiết nghệ thuật đắt giá...">
-            </div>
-            <div class="scaffold-step-field">
-              <label>5. Phản đề / Mở rộng nâng cao:</label>
-              <input type="text" id="w-scaf-${secId}-s5" placeholder="Nhìn nhận chiều ngược lại hoặc mở rộng vấn đề...">
-            </div>
-            <div class="scaffold-step-field">
-              <label>6. Rút ra bài học / Tiểu kết đoạn:</label>
-              <input type="text" id="w-scaf-${secId}-s6" placeholder="Khẳng định lại vấn đề và liên hệ bài học bản thân...">
-            </div>
+            ${tpl.fields.map((f, fIdx) => `
+              <div class="scaffold-step-field">
+                <label>${esc(f.label)}</label>
+                <input type="text" id="w-scaf-${secId}-s${fIdx + 1}" placeholder="${esc(f.placeholder)}">
+              </div>
+            `).join('')}
           </div>
           <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px;">
-            <button type="button" class="btn au sm" onclick="assembleWritingSectionScaffold('${esc(secId)}')">
-              <ion-icon name="flash-outline"></ion-icon> <span>Ghép dàn ý vào phần viết này</span>
+            <button type="button" class="btn au sm" onclick="assembleWritingSectionScaffold('${esc(secId)}', ${tpl.singleParagraph ? 'true' : 'false'}, ${tpl.fields.length})">
+              <ion-icon name="flash-outline"></ion-icon> <span>Ghép dàn ý thành ${tpl.singleParagraph ? '1 đoạn văn (không xuống dòng)' : 'các đoạn văn'}</span>
             </button>
           </div>
         </div>
       </div>
     `;
-    box.style.display = 'block';
   }
 
   function insertTextIntoSpecificWritingSection(secId, text) {
@@ -1043,11 +1350,11 @@
     insertTextIntoSpecificWritingSection(secId, text);
   }
 
-  function assembleWritingSectionScaffold(secId) {
+  function assembleWritingSectionScaffold(secId, isSingleParagraph = true, stepsCount = 7) {
     const tx = document.getElementById(`sec-input-${secId}`);
     if (!tx) return;
     const parts = [];
-    for (let i = 1; i <= 6; i++) {
+    for (let i = 1; i <= stepsCount; i++) {
       const inp = document.getElementById(`w-scaf-${secId}-s${i}`);
       const val = inp ? inp.value.trim() : '';
       if (val) {
@@ -1058,21 +1365,23 @@
       toast('Hãy điền ít nhất 1 ý vào sơ đồ dàn ý trước khi ghép nhé!', 'bad');
       return;
     }
-    const paragraph = parts.join(' ');
-    tx.value = tx.value.trim() ? `${tx.value.trim()}\n${paragraph}` : paragraph;
+    const separator = isSingleParagraph ? ' ' : '\n\n';
+    const compiled = parts.join(separator);
+    tx.value = tx.value.trim()
+      ? (isSingleParagraph ? `${tx.value.trim()} ${compiled}` : `${tx.value.trim()}\n\n${compiled}`)
+      : compiled;
     if (typeof onSectionInput === 'function') onSectionInput(secId, tx);
     tx.focus();
-    toast('✨ Đã ghép sơ đồ dàn ý thành đoạn văn trong bài viết!', 'ok');
+    toast(isSingleParagraph ? '✨ Đã ghép thành 1 đoạn văn liền mạch (không xuống dòng)!' : '✨ Đã ghép dàn ý thành các đoạn văn trong bài viết!', 'ok');
   }
 
 
   // =========================================================================
   // PHẦN 4: BỘ ĐẾM THỜI GIAN (TIMER) RÈN ÁP LỰC PHÒNG THI
   // =========================================================================
-  // 4A. Đồng hồ đếm ngược cho phòng Đọc hiểu (Reading Workspace)
   let readingTimerInterval = null;
   let readingTimerRunning = false;
-  let readingTimerModeMinutes = 20; // Mặc định 20 phút cho đoạn văn / đọc hiểu
+  let readingTimerModeMinutes = 20;
   let readingTimerSecondsLeft = 20 * 60;
   let readingTimerElapsed = 0;
 
@@ -1174,19 +1483,22 @@
     }
   }
 
-  // 4B. Chế độ Đếm ngược rèn áp lực phòng thi cho Luyện viết (Writing Workspace)
-  let writingPressureMinutes = 0; // 0 = Đếm xuôi, 20 = NLXH, 60 = NLVH...
+  // 4B. Chế độ Đếm ngược rèn áp lực phòng thi cho Luyện viết
+  let writingPressureMinutes = 0;
   let writingCountdownNotified5m = false;
   let writingCountdownNotified1m = false;
   let writingCountdownEnded = false;
 
-  function initWritingPressureTimerUI() {
-    writingPressureMinutes = 0;
+  function initWritingPressureTimerUI(curSet) {
+    // Tự động gợi ý 20 phút cho Đoạn văn 200 chữ, 60 phút cho Bài văn 600 chữ
+    const isDoan200 = curSet && String(curSet.category || '').startsWith('doan-');
+    const isBai600 = curSet && String(curSet.category || '').startsWith('bai-');
+    writingPressureMinutes = isDoan200 ? 20 : (isBai600 ? 60 : 0);
     writingCountdownNotified5m = false;
     writingCountdownNotified1m = false;
     writingCountdownEnded = false;
     const sel = document.getElementById('writing-timer-preset');
-    if (sel) sel.value = '0';
+    if (sel) sel.value = String(writingPressureMinutes);
     const box = document.getElementById('writing-timer-box');
     if (box) box.classList.remove('timer-warn', 'timer-danger');
   }
@@ -1247,7 +1559,7 @@
 
       if (remaining === 300 && !writingCountdownNotified5m) {
         writingCountdownNotified5m = true;
-        toast('⚠️ Còn 5 phút làm bài viết! Hãy khẩn trương hoàn thiện phần Kết bài.', 'bad');
+        toast('⚠️ Còn 5 phút làm bài viết! Hãy khẩn trương hoàn thiện phần Kết.', 'bad');
       } else if (remaining === 60 && !writingCountdownNotified1m) {
         writingCountdownNotified1m = true;
         toast('🔥 Còn 1 phút cuối cùng! Hãy kiểm tra lại chính tả và chuẩn bị nộp bài.', 'bad');
@@ -1265,7 +1577,6 @@
     }
   }
 
-  // Hook vào updateTimerDisplay của writing.js để hiển thị đếm ngược khi bật chế độ áp lực phòng thi
   const origUpdateTimerDisplay = global.updateTimerDisplay;
   global.updateTimerDisplay = function() {
     if (writingPressureMinutes > 0) {
@@ -1443,7 +1754,6 @@
     saveQaReports(list);
     updateQaCountBadge();
 
-    // Nếu giáo viên đã cấu hình Google Sheets Webhook URL, đẩy tự động sang Google Sheets
     const cfg = getQaConfig();
     if (cfg.webhookUrl && /^https?:\/\//i.test(cfg.webhookUrl)) {
       try {
@@ -1630,12 +1940,15 @@
   global.renderGamificationUI = renderGamificationUI;
 
   global.toggleReadingQuestionScaffolding = toggleReadingQuestionScaffolding;
+  global.renderReadingQuestionScaffoldContent = renderReadingQuestionScaffoldContent;
   global.insertKeywordIntoReadingAnswer = insertKeywordIntoReadingAnswer;
   global.assembleReadingScaffoldToTextarea = assembleReadingScaffoldToTextarea;
 
   global.initWritingScaffoldingAndTimer = initWritingScaffoldingAndTimer;
   global.toggleWritingScaffoldingPanel = toggleWritingScaffoldingPanel;
+  global.renderWritingMainScaffoldingBody = renderWritingMainScaffoldingBody;
   global.toggleWritingSectionScaffolding = toggleWritingSectionScaffolding;
+  global.renderWritingSectionScaffoldingContent = renderWritingSectionScaffoldingContent;
   global.insertTextIntoSpecificWritingSection = insertTextIntoSpecificWritingSection;
   global.insertTextIntoActiveWritingSection = insertTextIntoActiveWritingSection;
   global.assembleWritingSectionScaffold = assembleWritingSectionScaffold;

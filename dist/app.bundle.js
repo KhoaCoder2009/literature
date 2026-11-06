@@ -17,7 +17,7 @@ window.COMPONENTS = {
   "screen-writing": "<!-- SCREEN 5: WRITING PRACTICE (LUYỆN VIẾT) -->\n<section id=\"s-writing\" class=\"scr\">\n  <div class=\"wrap writing-wrap\">\n\n    <!-- VIEW 1: DANH SÁCH BỘ ĐỀ LUYỆN VIẾT -->\n    <div id=\"writing-list-view\">\n      <!-- Cartoon Hero Banner -->\n      <div class=\"writing-hero-banner\">\n        <div class=\"writing-hero-content\">\n          <h1 style=\"font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;\">Luyện viết văn</h1>\n          <p class=\"writing-hero-desc\">Rèn luyện kỹ năng viết văn theo cấu trúc mở bài, thân bài, kết bài và các dạng đề chuẩn.</p>\n        </div>\n      </div>\n\n      <!-- Action & Filters Bar -->\n      <div class=\"writing-control-bar card\">\n        <div class=\"writing-control-top\">\n          <div class=\"writing-search-box\" style=\"flex:1;\">\n            <span class=\"writing-search-icon\">\n              <ion-icon name=\"search-outline\"></ion-icon>\n            </span>\n            <input type=\"text\" id=\"writing-search-input\" placeholder=\"Tìm kiếm bộ đề theo tên, dạng đề hoặc chủ đề...\" oninput=\"onWritingSearchInput()\">\n          </div>\n        </div>\n\n        <div class=\"writing-category-filter\">\n          <div class=\"writing-filter-chips-wrap\">\n            <span class=\"reading-filter-label\">Chủ đề:</span>\n            <div class=\"writing-category-chips\" id=\"writing-category-chips\"></div>\n          </div>\n        </div>\n      </div>\n\n      <!-- Container danh sách các bộ đề (sắp xếp và gom nhóm theo chủ đề) -->\n      <div id=\"writing-sets-container\"></div>\n    </div>\n\n    <!-- VIEW 2: PHÒNG LUYỆN VIẾT (SPLIT SCREEN WORKSPACE) -->\n    <div id=\"writing-workspace-view\" style=\"display:none;\">\n      <!-- Workspace Navigation Bar -->\n      <div class=\"writing-workspace-nav\">\n        <div class=\"writing-workspace-title-box\">\n          <h3 id=\"workspace-set-title\">Đề bài luyện viết</h3>\n          <span id=\"workspace-set-badge\" class=\"tag ok\">Nghị luận xã hội</span>\n        </div>\n        <div class=\"writing-workspace-actions\" style=\"display:flex; align-items:center; gap:8px;\">\n          <button class=\"btn no sm btn-exit-exam\" type=\"button\" onclick=\"confirmExitCurrentSession('writing')\" title=\"Thoát bài luyện viết (Sẽ nộp bài và tính 1 lượt làm)\">\n            <ion-icon name=\"log-out-outline\"></ion-icon> <span>Thoát bài</span>\n          </button>\n          <button class=\"btn au sm\" onclick=\"submitWritingEssay()\" title=\"Nộp bài viết để lưu vào Lịch sử và giáo viên chấm điểm\" style=\"font-weight:700;\">\n            <ion-icon name=\"send-outline\"></ion-icon> <span>Nộp bài viết</span>\n          </button>\n          <button class=\"btn no sm teacher-only\" id=\"btn-delete-opened-writing-set\" onclick=\"deleteCurrentOpenedWritingSet()\" title=\"Xóa đề này khỏi danh sách\">\n            <ion-icon name=\"trash-outline\"></ion-icon> <span>Xóa đề</span>\n          </button>\n        </div>\n      </div>\n\n      <!-- Split Layout Container -->\n      <div class=\"writing-split-container\" id=\"writing-split-container\">\n        \n        <!-- LEFT PANEL: Đề bài & Dàn ý ngữ liệu -->\n        <div class=\"writing-left-panel\" id=\"writing-left-panel\">\n          <div class=\"writing-panel-scroll\">\n            \n            <!-- Hộp đề bài -->\n            <div class=\"writing-prompt-card\">\n              <div class=\"writing-prompt-header\">\n                <span class=\"writing-prompt-tag\">Đề bài</span>\n                <button type=\"button\" class=\"btn cy sm scaffold-trigger-btn\" onclick=\"toggleWritingScaffoldingPanel()\" title=\"Mở Giàn giáo nhận thức: Từ khóa, Công thức viết đoạn &amp; Sơ đồ dàn ý trống\">\n                  <ion-icon name=\"bulb-outline\"></ion-icon> <span>Gợi ý tư duy</span>\n                </button>\n              </div>\n              <div class=\"writing-prompt-text-wrapper\">\n                <p id=\"workspace-prompt-text\" class=\"writing-prompt-text\"></p>\n                <button type=\"button\" id=\"workspace-prompt-toggle-btn\" class=\"writing-prompt-toggle\" onclick=\"togglePromptExpand()\">Xem thêm</button>\n              </div>\n            </div>\n\n            <!-- Hộp Giàn giáo nhận thức (Scaffolding) cho Luyện viết -->\n            <div class=\"scaffold-box writing-scaffold-card\" id=\"writing-scaffolding-panel\" style=\"display:none;\">\n              <div class=\"scaffold-header\">\n                <div class=\"scaffold-title-row\">\n                  <span class=\"scaffold-badge-icon\">💡</span>\n                  <div>\n                    <h4 class=\"scaffold-title\">Giàn Giáo Nhận Thức (Scaffolding)</h4>\n                    <p class=\"scaffold-subtitle\">Công thức tư duy, từ khóa gợi mở &amp; sơ đồ dàn ý trống GDPT 2018</p>\n                  </div>\n                </div>\n                <button type=\"button\" class=\"btn gh sm\" onclick=\"toggleWritingScaffoldingPanel()\" style=\"padding:2px 8px;\">Thu gọn</button>\n              </div>\n              <div id=\"writing-scaffolding-body\"></div>\n            </div>\n\n          </div>\n        </div>\n\n        <!-- RESIZE SPLITTER / DIVIDER -->\n        <div class=\"writing-splitter\" id=\"writing-splitter\" title=\"Kéo để thay đổi độ rộng 2 cột\">\n          <div class=\"writing-splitter-handle\"></div>\n        </div>\n\n        <!-- RIGHT PANEL: Không gian viết bài theo từng phần bài viết -->\n        <div class=\"writing-right-panel\" id=\"writing-right-panel\">\n          \n          <!-- Header thanh công cụ phải -->\n          <div class=\"writing-editor-header\">\n            <span style=\"font-size:14px; font-weight:700; color:var(--ink);\">Bài làm</span>\n            <div style=\"display:flex; align-items:center; gap:8px; flex-wrap:wrap;\">\n              <button type=\"button\" class=\"btn gh sm scaffold-mini-btn\" onclick=\"toggleWritingScaffoldingPanel()\" title=\"Bật/tắt Gợi ý tư duy &amp; Công thức viết\">\n                💡 Gợi ý tư duy\n              </button>\n              <div class=\"writing-word-count-badge\">\n                Tổng số từ: <b id=\"workspace-total-words\">0</b>\n              </div>\n            </div>\n          </div>\n\n          <!-- Danh sách các ô viết theo từng phần của Dàn ý -->\n          <div class=\"writing-sections-list\" id=\"writing-sections-list\"></div>\n\n          <!-- Bottom Sticky Action Bar -->\n          <div class=\"writing-bottom-bar\">\n            <div class=\"writing-timer-box\" id=\"writing-timer-box\">\n              <span class=\"writing-timer-label\">⏱️ Áp lực phòng thi:</span>\n              <select class=\"ept-mode-select\" id=\"writing-timer-preset\" onchange=\"setWritingPressureMode(this.value)\" title=\"Chọn chế độ hẹn giờ rèn áp lực phòng thi\">\n                <option value=\"0\">Đếm xuôi (Tự do)</option>\n                <option value=\"20\">🔥 20 phút (Đoạn NLXH 200 chữ)</option>\n                <option value=\"45\">⚡ 45 phút (Bài nghị luận ngắn)</option>\n                <option value=\"60\">🏆 60 phút (Bài Nghị luận Văn học)</option>\n                <option value=\"90\">🎓 90 phút (Đề thi tổng hợp)</option>\n              </select>\n              <b class=\"writing-timer-value\" id=\"workspace-timer-display\">00:00:00</b>\n              <button class=\"writing-timer-btn\" id=\"workspace-timer-btn\" onclick=\"toggleWritingTimer()\" title=\"Tạm dừng / Tiếp tục\">\n                ⏸\n              </button>\n              <button class=\"writing-timer-btn\" type=\"button\" onclick=\"resetWritingPressureTimer()\" title=\"Đặt lại đồng hồ\">\n                ↺\n              </button>\n            </div>\n\n            <div class=\"writing-bottom-buttons\" style=\"display:flex; align-items:center; gap:8px;\">\n              <button class=\"writing-btn-review\" type=\"button\" onclick=\"openWritingReviewModal()\">\n                <ion-icon name=\"document-text-outline\"></ion-icon> <span>Xem &amp; Xuất bài</span>\n              </button>\n              <button class=\"btn au sm\" type=\"button\" onclick=\"submitWritingEssay()\" title=\"Nộp bài viết vào Lịch sử\" style=\"font-weight:700; height:42px; padding:0 18px; border-radius:10px;\">\n                <ion-icon name=\"send-outline\"></ion-icon> <span>Nộp bài viết</span>\n              </button>\n            </div>\n          </div>\n\n        </div>\n\n      </div>\n    </div>\n\n  </div>\n</section>",
   "screen-reading": "<!-- SCREEN: READING COMPREHENSION (ĐỌC HIỂU NGỮ VĂN) -->\n<section id=\"s-reading\" class=\"scr\">\n  <div class=\"wrap reading-wrap\">\n\n    <!-- VIEW 1: DANH SÁCH BỘ ĐỀ ĐỌC HIỂU -->\n    <div id=\"reading-list-view\">\n      <!-- Cartoon Hero Banner -->\n      <div class=\"reading-hero-banner\">\n        <div class=\"reading-hero-content\">\n          <h1 style=\"font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;\">Luyện Đọc hiểu Ngữ Văn</h1>\n          <p class=\"reading-hero-desc\">Rèn luyện kỹ năng đọc hiểu văn bản, nhận diện phương thức biểu đạt, biện pháp nghệ thuật và phát triển tư duy phản biện.</p>\n        </div>\n      </div>\n\n      <!-- Action & Filters Bar -->\n      <div class=\"reading-control-bar card\">\n        <div class=\"reading-control-top\">\n          <div class=\"reading-search-box\">\n            <span class=\"reading-search-icon\">\n              <ion-icon name=\"search-outline\"></ion-icon>\n            </span>\n            <input type=\"text\" id=\"reading-search-input\" placeholder=\"Tìm kiếm bộ đề đọc hiểu theo tên bài, tác giả hoặc thể loại...\" oninput=\"onReadingSearchInput()\">\n          </div>\n        </div>\n\n        <div class=\"reading-category-filter\">\n          <div class=\"reading-filter-chips-wrap\">\n            <span class=\"reading-filter-label\">Chủ đề:</span>\n            <div class=\"reading-category-chips\" id=\"reading-category-chips\"></div>\n          </div>\n        </div>\n      </div>\n\n      <!-- Container danh sách các bộ đề đọc hiểu (sắp xếp theo chủ đề) -->\n      <div id=\"reading-sets-container\"></div>\n    </div>\n\n    <!-- VIEW 2: PHÒNG ĐỌC HIỂU & LÀM BÀI (SPLIT SCREEN WORKSPACE) -->\n    <div id=\"reading-workspace-view\" style=\"display:none;\">\n      <!-- Workspace Navigation Bar -->\n      <div class=\"reading-workspace-nav\">\n        <div class=\"reading-workspace-title-box\">\n          <h3 id=\"reading-workspace-set-title\">Đề bài đọc hiểu</h3>\n          <span id=\"reading-workspace-set-badge\" class=\"tag cy\">Thơ hiện đại</span>\n        </div>\n        <div class=\"reading-workspace-actions\">\n          <div class=\"exam-pressure-timer-widget\" id=\"reading-pressure-timer-widget\">\n            <span class=\"ept-icon\">⏱️</span>\n            <select class=\"ept-mode-select\" id=\"reading-timer-preset\" onchange=\"setReadingPressureTimer(this.value)\" title=\"Chọn thời gian rèn áp lực phòng thi\">\n              <option value=\"0\">Tự do (Đếm xuôi)</option>\n              <option value=\"15\">🔥 15 phút (Đọc hiểu nhanh)</option>\n              <option value=\"20\" selected>⚡ 20 phút (Đoạn văn 200 chữ)</option>\n              <option value=\"30\">🏆 30 phút (Đọc hiểu + Đoạn văn)</option>\n              <option value=\"45\">🎓 45 phút (Đề kiểm tra)</option>\n            </select>\n            <b class=\"ept-clock\" id=\"reading-timer-clock\">20:00</b>\n            <button type=\"button\" class=\"ept-ctrl-btn\" id=\"reading-timer-toggle-btn\" onclick=\"toggleReadingPressureTimer()\" title=\"Bắt đầu / Tạm dừng đồng hồ\">▶️</button>\n            <button type=\"button\" class=\"ept-ctrl-btn\" onclick=\"resetReadingPressureTimer()\" title=\"Đặt lại đồng hồ\">↺</button>\n          </div>\n          <button class=\"btn no sm btn-exit-exam\" type=\"button\" onclick=\"confirmExitCurrentSession('reading')\" title=\"Thoát bài đọc hiểu (Sẽ nộp bài và tính 1 lượt làm)\">\n            <ion-icon name=\"log-out-outline\"></ion-icon> <span>Thoát bài</span>\n          </button>\n          <button class=\"btn gh sm\" onclick=\"resetCurrentReadingDraft()\" title=\"Xóa toàn bộ câu trả lời để làm lại từ đầu\">\n            <ion-icon name=\"refresh-outline\"></ion-icon> <span>Làm lại</span>\n          </button>\n          <button class=\"btn no sm teacher-only\" onclick=\"deleteCurrentOpenedReadingSet()\" title=\"Xóa đề này khỏi danh sách\">\n            <ion-icon name=\"trash-outline\"></ion-icon> <span>Xóa đề</span>\n          </button>\n          <button class=\"btn au sm\" onclick=\"submitReadingAnswers()\" title=\"Nộp bài và xem đánh giá chi tiết\">\n            <ion-icon name=\"checkmark-done-outline\"></ion-icon> <span>Nộp bài làm</span>\n          </button>\n        </div>\n      </div>\n\n      <!-- Split Layout Container -->\n      <div class=\"reading-split-container\" id=\"reading-split-container\">\n        <!-- Cột trái: Văn bản / Ngữ liệu đọc hiểu -->\n        <div class=\"reading-passage-panel card\">\n          <div class=\"reading-panel-header\">\n            <div class=\"reading-panel-title\">\n              <span class=\"reading-panel-icon\">\n                <ion-icon name=\"document-text-outline\" style=\"font-size: 20px;\"></ion-icon>\n              </span>\n              <h4>I. PHẦN ĐỌC HIỂU (3,0 điểm)</h4>\n            </div>\n            <div class=\"reading-text-tools\">\n              <button class=\"btn gh sm btn-icon-only\" type=\"button\" onclick=\"changePassageFontSize(-1)\" title=\"Giảm cỡ chữ\">A-</button>\n              <button class=\"btn gh sm btn-icon-only\" type=\"button\" onclick=\"changePassageFontSize(1)\" title=\"Tăng cỡ chữ\">A+</button>\n            </div>\n          </div>\n          \n          <div class=\"reading-passage-content-wrap\" id=\"reading-passage-scroll\">\n            <div class=\"reading-passage-meta\" id=\"reading-passage-meta\">\n              <span class=\"reading-meta-tag\" id=\"reading-passage-genre\"></span>\n              <span class=\"reading-meta-author\" id=\"reading-passage-author\"></span>\n              <span class=\"reading-meta-work\" id=\"reading-passage-work\" style=\"display:none;\"></span>\n            </div>\n            <div class=\"reading-passage-lead-text\"><b>Đọc đoạn trích:</b></div>\n            <article class=\"reading-passage-body\" id=\"reading-passage-text\">\n              <!-- Nội dung văn bản đọc hiểu -->\n            </article>\n            <div class=\"reading-passage-source\" id=\"reading-passage-source\">\n              <!-- Nguồn trích dẫn -->\n            </div>\n          </div>\n        </div>\n\n        <!-- Cột phải: Hệ thống câu hỏi & Trả lời -->\n        <div class=\"reading-questions-panel card\">\n          <div class=\"reading-panel-header\">\n            <div class=\"reading-panel-title\">\n              <span class=\"reading-panel-icon\">\n                <ion-icon name=\"create-outline\" style=\"font-size: 20px;\"></ion-icon>\n              </span>\n              <h4>Thực hiện các yêu cầu sau: (<span id=\"reading-q-count\">0</span> câu)</h4>\n            </div>\n            <span class=\"reading-save-status\" id=\"reading-save-status\">\n              <ion-icon name=\"cloud-done-outline\"></ion-icon> Tự động lưu\n            </span>\n          </div>\n\n          <div class=\"reading-questions-list\" id=\"reading-questions-list\">\n            <!-- Danh sách câu hỏi render bởi JS -->\n          </div>\n        </div>\n      </div>\n    </div>\n\n  </div>\n</section>",
   "screen-history": "<!-- SCREEN: QUIZ HISTORY (LỊCH SỬ BÀI LÀM) -->\n<section id=\"s-history\" class=\"scr\">\n  <div class=\"wrap\">\n    <!-- Hero Banner -->\n    <div class=\"cartoon-lib-banner history-hero-banner\" style=\"margin-bottom:16px;\">\n      <div class=\"lib-banner-content\">\n        <h1 style=\"font-size:clamp(22px, 3.5vw, 28px); margin:0 0 4px; font-weight:800;\">\n          Lịch sử bài làm &amp; Tiến độ\n        </h1>\n        <p class=\"mut\" style=\"margin:0; font-size:14.5px;\">\n          Theo dõi kết quả làm bài, câu trả lời tự luận và tiến trình ôn tập\n        </p>\n      </div>\n    </div>\n\n\n    <!-- Filter & Search Bar Card -->\n    <div class=\"lib-search-filter-card\" style=\"margin: 0 0 16px;\">\n      <div class=\"lib-search-bar-row\" style=\"display:flex; gap:12px; align-items:center; flex-wrap:wrap;\">\n        <div class=\"lib-search-input-box\" style=\"flex:1; min-width:240px;\">\n          <input id=\"history-page-search\" type=\"text\" placeholder=\"Tìm kiếm theo tên học sinh, lớp, tác phẩm, chủ đề…\" oninput=\"onHistoryPageSearchInput()\" autocomplete=\"off\">\n        </div>\n        <div style=\"display:flex; align-items:center; gap:10px; flex-wrap:wrap;\">\n          <select id=\"history-page-set-filter\" onchange=\"onHistoryPageSetFilterChange()\" style=\"height:46px; border-radius:14px; border:2px solid var(--stroke); padding:0 14px; font-weight:700; font-size:13.5px; background:var(--bg-card); color:var(--ink); min-width:200px; max-width:280px;\" title=\"Lọc theo bộ câu hỏi\">\n            <option value=\"\">Tất cả bộ đề</option>\n          </select>\n          <button class=\"btn no sm teacher-only\" type=\"button\" onclick=\"clearAllQuizHistory()\" title=\"Xóa toàn bộ lịch sử trên máy\" style=\"height:46px; padding:0 14px; font-weight:700; border-radius:14px;\">\n            <ion-icon name=\"trash-outline\"></ion-icon> <span>Xóa tất cả</span>\n          </button>\n        </div>\n      </div>\n\n      <!-- Type Filter Chips (Tất cả / Bài học / Đọc hiểu) -->\n      <div class=\"topic-filter-row\" style=\"margin-top:12px;\">\n        <div class=\"topic-filter-meta\">\n          <span class=\"topic-filter-title\">Loại bài làm:</span>\n        </div>\n        <div class=\"topic-chips-bar\" role=\"tablist\">\n          <button class=\"topic-chip active\" id=\"hist-chip-all\" type=\"button\" onclick=\"setHistoryTypeFilter('all')\">\n            Tất cả <span id=\"hist-count-all\" class=\"chip-count\">(0)</span>\n          </button>\n          <button class=\"topic-chip\" id=\"hist-chip-quiz\" type=\"button\" onclick=\"setHistoryTypeFilter('quiz')\">\n            Bài học <span id=\"hist-count-quiz\" class=\"chip-count\">(0)</span>\n          </button>\n          <button class=\"topic-chip\" id=\"hist-chip-reading\" type=\"button\" onclick=\"setHistoryTypeFilter('reading')\">\n            Đọc hiểu <span id=\"hist-count-reading\" class=\"chip-count\">(0)</span>\n          </button>\n          <button class=\"topic-chip\" id=\"hist-chip-writing\" type=\"button\" onclick=\"setHistoryTypeFilter('writing')\">\n            Luyện viết <span id=\"hist-count-writing\" class=\"chip-count\">(0)</span>\n          </button>\n          <button class=\"topic-chip\" id=\"hist-chip-ungraded\" type=\"button\" onclick=\"setHistoryTypeFilter('ungraded')\">\n            Chờ chấm <span id=\"hist-count-ungraded\" class=\"chip-count\">(0)</span>\n          </button>\n          <button class=\"topic-chip\" id=\"hist-chip-graded\" type=\"button\" onclick=\"setHistoryTypeFilter('graded')\">\n            Đã chấm <span id=\"hist-count-graded\" class=\"chip-count\">(0)</span>\n          </button>\n        </div>\n      </div>\n\n      <!-- Active Set Filter Badge -->\n      <div id=\"history-page-active-filter-badge\" style=\"display:none; margin-top:12px; padding:8px 14px; background:rgba(217, 169, 79, 0.15); border:1.5px solid var(--gold); border-radius:12px; font-size:13.5px; font-weight:700; align-items:center; justify-content:space-between;\">\n        <span id=\"history-page-filter-badge-text\"></span>\n        <button class=\"btn gh sm\" type=\"button\" onclick=\"clearHistoryPageSetFilter()\" style=\"padding:2px 10px; font-size:12.5px; height:28px;\">\n          <ion-icon name=\"close-circle-outline\"></ion-icon> Xem tất cả bộ đề\n        </button>\n      </div>\n    </div>\n\n    <!-- History Items Container -->\n    <div id=\"history-page-list-container\" class=\"history-list-wrap\">\n      <!-- Rendered by JS -->\n    </div>\n  </div>\n</section>",
-  "dialogs": "<!-- FEEDBACK DIALOG -->\n<dialog id=\"feedback-dialog\" aria-live=\"polite\">\n  <div id=\"fb\"></div>\n</dialog>\n\n<!-- CONFIRM DELETE DIALOG -->\n<dialog id=\"dlg\">\n  <p id=\"dm\" style=\"font-size:16px; font-weight:600; margin-bottom:20px;\"></p>\n  <div style=\"display:flex; gap:10px; justify-content:flex-end;\">\n    <button class=\"btn gh sm\" onclick=\"dlg.close()\">Hủy</button>\n    <button class=\"btn no sm\" id=\"dy\">Xóa</button>\n  </div>\n</dialog>\n\n<!-- AI PROMPT DIALOG -->\n<dialog id=\"prompt-dialog\">\n  <div class=\"prompt-dialog-header\">\n    <div>\n      <h2 style=\"display:flex; align-items:center; gap:8px;\">Tạo bộ câu hỏi bằng trợ lý AI</h2>\n      <p class=\"mut\" style=\"margin:4px 0 0; font-size:13px;\">Tạo câu lệnh → Gửi AI → Nhập câu hỏi vào hệ thống</p>\n    </div>\n    <button class=\"btn gh sm prompt-dialog-close\" type=\"button\"\n      onclick=\"$('#prompt-dialog').close()\" aria-label=\"Đóng cửa sổ tạo bộ câu hỏi\" title=\"Đóng\">×</button>\n  </div>\n\n  <div style=\"background:rgba(217, 169, 79, 0.12); border:1px solid var(--gold); border-radius:12px; padding:9px 13px; margin-bottom:14px; font-size:13px; line-height:1.5;\">\n    Hệ thống tạo câu lệnh chuẩn để gửi sang <b>ChatGPT, Gemini hoặc Claude</b>. Sau khi AI trả lời, bạn dán kết quả vào <b>Bước 3</b> bên dưới để tự động tạo bộ câu hỏi.\n  </div>\n\n  <!-- BƯỚC 1 -->\n  <div class=\"prompt-step-box\">\n    <div class=\"prompt-step-title\">\n      <span class=\"prompt-step-badge\">1</span>\n      <span>Thiết lập nội dung & Tạo câu lệnh</span>\n    </div>\n    \n    <label for=\"prompt-topic\" style=\"font-weight:600;\">Chủ đề / Tác phẩm / Bài học <span style=\"color:var(--gold);\">*</span></label>\n    <input id=\"prompt-topic\" type=\"text\" maxlength=\"500\"\n      placeholder=\"Ví dụ: Ông già và biển cả, Vợ nhặt, Tây Tiến, Chí Phèo...\">\n\n    <!-- TỔNG SỐ CÂU HỎI & CHIA ĐỀU -->\n    <div style=\"display:grid; grid-template-columns: 1fr auto; gap:12px; margin-top:12px; align-items:end;\">\n      <div>\n        <label for=\"prompt-question-count\" style=\"font-weight:600;\">Tổng số câu hỏi của bộ đề</label>\n        <select id=\"prompt-question-count\" onchange=\"onPromptTotalCountChange()\">\n          <option value=\"4\">4 câu</option>\n          <option value=\"5\">5 câu</option>\n          <option value=\"6\">6 câu</option>\n          <option value=\"8\">8 câu</option>\n          <option value=\"10\" selected>10 câu</option>\n          <option value=\"12\">12 câu</option>\n          <option value=\"15\">15 câu</option>\n          <option value=\"16\">16 câu</option>\n          <option value=\"20\">20 câu</option>\n          <option value=\"25\">25 câu</option>\n          <option value=\"30\">30 câu</option>\n        </select>\n      </div>\n      <div>\n        <button class=\"btn gh sm\" type=\"button\" onclick=\"autoDistributePromptTypes()\" title=\"Chia đều số câu theo các dạng đang chọn\" style=\"height:42px; padding:0 12px; font-weight:700;\">\n          Chia đều số câu\n        </button>\n      </div>\n    </div>\n\n    <!-- PHÂN BỔ SỐ CÂU THEO TỪNG DẠNG -->\n    <fieldset style=\"margin-top:12px; padding:12px 14px; border:1px solid var(--stroke); border-radius:12px; background:var(--bg);\">\n      <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;\">\n        <legend style=\"padding:0 6px; font-weight:700; font-size:12px; color:var(--mut); margin:0;\">PHÂN BỔ SỐ CÂU THEO TỪNG DẠNG</legend>\n        <span id=\"prompt-count-status-badge\" style=\"font-size:11.5px; font-weight:700; padding:2px 8px; border-radius:6px;\"></span>\n      </div>\n\n      <div style=\"display:flex; flex-direction:column; gap:8px;\">\n        <!-- Dạng 1: Trắc nghiệm -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-mc\" name=\"prompt-question-type\" value=\"mc\" checked onchange=\"onPromptTypeToggle('mc')\" style=\"width:auto; margin:0;\">\n            <span>Trắc nghiệm (4 lựa chọn)</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('mc', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-mc\" type=\"number\" min=\"0\" max=\"50\" value=\"4\" oninput=\"onPromptTypeCountInput('mc')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('mc', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n\n        <!-- Dạng 2: Đúng / Sai -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-tf\" name=\"prompt-question-type\" value=\"tf\" checked onchange=\"onPromptTypeToggle('tf')\" style=\"width:auto; margin:0;\">\n            <span>Đúng / Sai (4 ý)</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('tf', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-tf\" type=\"number\" min=\"0\" max=\"50\" value=\"2\" oninput=\"onPromptTypeCountInput('tf')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('tf', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n\n        <!-- Dạng 3: Trả lời ngắn -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-short\" name=\"prompt-question-type\" value=\"short\" checked onchange=\"onPromptTypeToggle('short')\" style=\"width:auto; margin:0;\">\n            <span>Trả lời ngắn</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('short', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-short\" type=\"number\" min=\"0\" max=\"50\" value=\"2\" oninput=\"onPromptTypeCountInput('short')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('short', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n\n        <!-- Dạng 4: Điền từ -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-fill\" name=\"prompt-question-type\" value=\"fill\" checked onchange=\"onPromptTypeToggle('fill')\" style=\"width:auto; margin:0;\">\n            <span>Điền từ vào chỗ trống</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('fill', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-fill\" type=\"number\" min=\"0\" max=\"50\" value=\"2\" oninput=\"onPromptTypeCountInput('fill')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('fill', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n      </div>\n\n      <!-- TỔNG KẾT & CẢNH BÁO TỔNG SỐ CÂU -->\n      <div id=\"prompt-sum-indicator\" style=\"margin-top:10px; font-size:12.5px; padding:7px 12px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; font-weight:600;\"></div>\n    </fieldset>\n\n    <label for=\"prompt-source\" style=\"margin-top:12px; font-weight:600;\">\n      Văn bản / Ngữ liệu đọc hiểu <span style=\"font-weight:400; color:var(--mut); font-size:12px;\">(Không bắt buộc)</span>\n    </label>\n    <textarea id=\"prompt-source\" maxlength=\"20000\"\n      placeholder=\"Dán đoạn trích nếu muốn câu hỏi đọc hiểu bám sát ngữ liệu riêng. Nếu để trống, AI sẽ tự động tạo câu hỏi dựa trên kiến thức tác phẩm chuẩn theo SGK...\"\n      style=\"min-height:85px;\"></textarea>\n    <div style=\"display:flex; justify-content:flex-end; align-items:center; margin-top:4px; font-size:12px;\">\n      <span id=\"prompt-source-count\" class=\"mut\" aria-live=\"polite\"></span>\n    </div>\n\n    <div style=\"margin-top:12px;\">\n      <button class=\"btn au\" type=\"button\" onclick=\"buildQuestionPrompt()\" style=\"width:100%; justify-content:center; font-weight:700; padding:11px;\">\n        Tạo câu lệnh AI\n      </button>\n    </div>\n  </div>\n\n  <!-- BƯỚC 2 -->\n  <div class=\"prompt-step-box\">\n    <div class=\"prompt-step-title\">\n      <span class=\"prompt-step-badge\">2</span>\n      <span>Gửi câu lệnh sang AI để nhận câu hỏi</span>\n    </div>\n    \n    <label for=\"prompt-output\" style=\"font-weight:600; font-size:13px;\">Câu lệnh AI đã sẵn sàng:</label>\n    <textarea id=\"prompt-output\" readonly style=\"min-height:110px; font-size:12px; font-family:monospace;\"\n      placeholder=\"Câu lệnh sẽ xuất hiện tại đây sau khi bạn nhấn nút ở Bước 1...\"></textarea>\n    \n    <div style=\"display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; align-items:center;\">\n      <button class=\"btn cy sm\" type=\"button\" onclick=\"copyQuestionPrompt()\">\n        <ion-icon name=\"copy-outline\"></ion-icon> Sao chép câu lệnh\n      </button>\n      <span style=\"font-size:12px; color:var(--mut); margin:0 4px;\">Hoặc mở nhanh AI:</span>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"openExternalAI('chatgpt')\">Mở ChatGPT</button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"openExternalAI('gemini')\">Mở Gemini</button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"openExternalAI('claude')\">Mở Claude</button>\n    </div>\n  </div>\n\n  <!-- BƯỚC 3 -->\n  <div class=\"prompt-step-box\" style=\"margin-bottom:0;\">\n    <div class=\"prompt-step-title\">\n      <span class=\"prompt-step-badge\">3</span>\n      <span>Dán kết quả từ AI & Nhập vào hệ thống</span>\n    </div>\n    \n    <label for=\"prompt-result\" style=\"font-weight:600; font-size:13px;\">\n      Dán kết quả tại đây:\n      <span style=\"font-weight:400; color:var(--mut); font-size:12px;\">(Hỗ trợ JSON hoặc văn bản trắc nghiệm: Câu 1: A, B, C, D...)</span>\n    </label>\n    <textarea id=\"prompt-result\" maxlength=\"150000\"\n      placeholder=\"Dán câu trả lời của ChatGPT/Gemini/Claude vào đây...\"\n      style=\"min-height:110px;\"></textarea>\n\n    <div style=\"display:flex; gap:10px; justify-content:flex-end; margin-top:14px;\">\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"$('#prompt-dialog').close()\">Đóng</button>\n      <button class=\"btn au\" type=\"button\" onclick=\"importPromptQuestionSet()\" style=\"font-weight:700;\">\n        Nhập bộ câu hỏi\n      </button>\n    </div>\n  </div>\n</dialog>\n\n<!-- QUIZ HISTORY LIST MODAL -->\n<dialog id=\"quiz-history-dialog\" class=\"history-dialog\">\n  <div class=\"history-modal-header\">\n    <div class=\"history-header-title-box\">\n      <h2 style=\"margin:0; font-size:22px; font-weight:800; display:flex; align-items:center; gap:8px;\">\n        <ion-icon name=\"time-outline\" style=\"font-size:24px; color:var(--gold);\"></ion-icon> <span>Lịch sử bài làm</span>\n      </h2>\n      <div style=\"display:flex; align-items:center; gap:8px; flex-wrap:wrap;\">\n        <span class=\"history-total-badge\" id=\"history-total-count\">0 lượt làm bài</span>\n        <span id=\"history-sync-indicator\" style=\"font-size:12px; font-weight:600; color:var(--mut);\"></span>\n      </div>\n    </div>\n    <div style=\"display:flex; align-items:center; gap:8px;\">\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"loadQuizHistoryFromSupabase(true)\" title=\"Tải lại từ máy chủ\" style=\"padding:0 8px; height:32px;\">\n        <ion-icon name=\"refresh-outline\" style=\"font-size: 18px;\"></ion-icon>\n      </button>\n      <button class=\"btn no sm teacher-only\" type=\"button\" onclick=\"clearAllQuizHistory()\" title=\"Xóa toàn bộ lịch sử\">\n        <ion-icon name=\"trash-outline\"></ion-icon> <span>Xóa tất cả</span>\n      </button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"closeHistoryModal()\" aria-label=\"Đóng\">\n        <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n      </button>\n    </div>\n  </div>\n\n  <div class=\"history-search-bar\" style=\"display:flex; gap:10px; align-items:center; flex-wrap:wrap;\">\n    <div style=\"flex:1; min-width:180px; position:relative; display:flex; align-items:center;\">\n      <span class=\"history-search-icon\">\n        <ion-icon name=\"search-outline\"></ion-icon>\n      </span>\n      <input id=\"history-search-input\" type=\"text\" placeholder=\"Tìm theo học sinh, lớp, từ khóa...\" oninput=\"onHistorySearchInput()\" style=\"width:100%;\">\n    </div>\n    <select id=\"history-set-filter\" onchange=\"onHistorySetFilterChange()\" style=\"height:44px; border-radius:12px; border:2px solid var(--stroke); padding:0 12px; font-weight:700; font-size:13px; background:var(--bg-card); color:var(--ink); max-width:260px;\" title=\"Lọc theo bộ câu hỏi\">\n      <option value=\"\">Tất cả bộ đề</option>\n    </select>\n  </div>\n  <div id=\"history-active-filter-badge\" style=\"display:none; margin:8px 0 4px; padding:6px 12px; background:rgba(217, 169, 79, 0.15); border:1.5px solid var(--gold); border-radius:10px; font-size:13px; font-weight:700; align-items:center; justify-content:space-between;\">\n    <span id=\"history-filter-badge-text\"></span>\n    <button class=\"btn gh sm\" type=\"button\" onclick=\"clearHistorySetFilter()\" style=\"padding:2px 8px; font-size:12px; height:24px;\">\n      <ion-icon name=\"close-circle-outline\"></ion-icon> Xem tất cả\n    </button>\n  </div>\n\n  <div class=\"history-list-wrap\" id=\"history-list-container\">\n    <!-- Rendered by JS -->\n  </div>\n\n  <div class=\"history-modal-footer\">\n    <button class=\"btn gh\" type=\"button\" onclick=\"closeHistoryModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- QUIZ HISTORY DETAIL MODAL -->\n<dialog id=\"history-detail-dialog\" class=\"history-dialog history-detail-modal\">\n  <div class=\"history-modal-header\">\n    <div class=\"history-header-title-box\">\n      <h2 style=\"margin:0; font-size:20px; font-weight:800;\" id=\"history-detail-title\">\n        Chi tiết bài làm\n      </h2>\n    </div>\n    <div style=\"display:flex; align-items:center; gap:8px;\">\n      <button class=\"btn cy sm\" id=\"btn-toggle-grading-mode\" type=\"button\" onclick=\"toggleHistoryGradingMode()\" title=\"Chuyển đổi giữa chế độ xem và chế độ chấm bài\">\n        <ion-icon name=\"create-outline\"></ion-icon> Chấm bài thủ công\n      </button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"closeHistoryDetailModal()\" aria-label=\"Đóng\">\n        <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n      </button>\n    </div>\n  </div>\n\n  <div class=\"history-detail-content-wrap\">\n    <div id=\"history-detail-meta\"></div>\n    <div id=\"history-detail-grading-toolbar\" style=\"display:none;\"></div>\n    <h3 style=\"margin:16px 0 10px; font-size:16px; font-weight:800;\" id=\"history-detail-section-heading\">Danh sách câu hỏi &amp; Bài làm:</h3>\n    <div id=\"history-detail-questions-list\"></div>\n    <div id=\"history-detail-grading-summary\"></div>\n  </div>\n\n  <div class=\"history-modal-footer\">\n    <button class=\"btn au sm\" id=\"btn-save-grading-footer\" type=\"button\" onclick=\"saveManualGrading()\" style=\"display:none; font-weight:800;\">\n      <ion-icon name=\"checkmark-circle-outline\"></ion-icon> Lưu kết quả chấm\n    </button>\n    <button class=\"btn gh\" type=\"button\" onclick=\"closeHistoryDetailModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- WRITING MODAL 1: TẠO / CHỈNH SỬA BỘ ĐỀ LUYỆN VIẾT -->\n<dialog id=\"writing-set-dialog\" class=\"writing-modal writing-set-modal-large\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3 id=\"writing-dialog-heading\">Tạo bộ đề luyện viết</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeCreateWritingSetModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n  \n  <form id=\"writing-set-form\" onsubmit=\"handleSaveWritingSet(event)\" class=\"writing-modal-form-wrap\">\n    <input type=\"hidden\" id=\"edit-writing-set-id\">\n\n    <div class=\"writing-modal-body\">\n      <div class=\"g2\">\n        <div>\n          <label for=\"input-set-title\">Tên bộ đề / Tiêu đề <span style=\"color:var(--red)\">*</span></label>\n          <input type=\"text\" id=\"input-set-title\" required placeholder=\"Ví dụ: Nghị luận xã hội về ý nghĩa của sự sẻ chia...\">\n        </div>\n        <div>\n          <label for=\"input-set-category\">Chủ đề / Dạng đề <span style=\"color:var(--red)\">*</span></label>\n          <select id=\"input-set-category\" onchange=\"onCategorySelectChange(this.value)\">\n            <option value=\"nl-xh\">Nghị luận xã hội (200 chữ / Bài văn ngắn)</option>\n            <option value=\"nl-vh\">Nghị luận văn học (Phân tích thơ, văn xuôi)</option>\n            <option value=\"cam-thu\">Đọc hiểu &amp; Đoạn văn cảm thụ</option>\n          </select>\n        </div>\n      </div>\n\n      <!-- Chế độ hiển thị & Quyền riêng tư -->\n      <div style=\"margin-top:14px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"writing-form-privacy\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"eye-outline\"></ion-icon> Chế độ hiển thị bộ đề:\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Chọn Công khai để học sinh nhìn thấy và làm bài; chọn Riêng tư để tạm ẩn.</span>\n        </div>\n        <select id=\"writing-form-privacy\" style=\"font-weight:700; padding:6px 12px; border-radius:8px; font-size:13px; background:var(--bg-card); color:var(--ink);\">\n          <option value=\"public\">🌐 Công khai (Hiển thị cho học sinh)</option>\n          <option value=\"private\">🔒 Riêng tư (Chỉ lưu cho giáo viên)</option>\n        </select>\n      </div>\n\n      <!-- Thời gian mở bài làm (OpenAt) -->\n      <div style=\"margin-top:10px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"writing-form-open-at\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"time-outline\"></ion-icon> Thời gian mở bài làm (Bắt đầu):\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Bỏ trống để mở ngay. Nếu đặt ngày/giờ, học sinh chỉ có thể vào viết từ thời điểm này.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"datetime-local\" id=\"writing-form-open-at\" style=\"font-weight:600; padding:6px 10px; border-radius:8px; font-size:13px;\">\n          <button type=\"button\" class=\"btn gh sm\" onclick=\"$('#writing-form-open-at').value=''\" title=\"Mở ngay\" style=\"padding:2px 8px; height:32px;\">✕</button>\n        </div>\n      </div>\n\n      <!-- Giới hạn lượt làm bài -->\n      <div style=\"margin-top:10px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"writing-form-max-attempts\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"timer-outline\"></ion-icon> Giới hạn lượt làm bài cho học sinh:\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Số lượt tối đa (0 = Không giới hạn). Học sinh đã làm đủ lượt sẽ chỉ được xem lại bài đã nộp.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"number\" id=\"writing-form-max-attempts\" min=\"0\" max=\"999\" value=\"0\" style=\"width:85px; text-align:center; font-weight:700; padding:6px 8px; border-radius:8px;\">\n          <span style=\"font-size:13px; font-weight:600; color:var(--mut);\">lượt</span>\n        </div>\n      </div>\n\n      <!-- Thời hạn nộp bài (Deadline) -->\n      <div style=\"margin-top:10px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"writing-form-deadline\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"calendar-outline\"></ion-icon> Hạn chót nộp bài (Deadline):\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Bỏ trống nếu không đặt hạn nộp. Quá hạn, học sinh chỉ có thể xem lại bài đã nộp.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"datetime-local\" id=\"writing-form-deadline\" style=\"font-weight:600; padding:6px 10px; border-radius:8px; font-size:13px;\">\n          <button type=\"button\" class=\"btn gh sm\" onclick=\"$('#writing-form-deadline').value=''\" title=\"Xóa hạn nộp\" style=\"padding:2px 8px; height:32px;\">✕</button>\n        </div>\n      </div>\n\n      <div style=\"margin-top:16px;\">\n        <label for=\"input-set-prompt\">Nội dung đề bài chi tiết <span style=\"color:var(--red)\">*</span></label>\n        <textarea id=\"input-set-prompt\" required placeholder=\"Dán nội dung đề bài, câu hỏi yêu cầu tại đây...\"></textarea>\n      </div>\n\n      <!-- Các phần viết -->\n      <div style=\"margin-top:20px;\">\n        <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;\">\n          <label style=\"margin:0; font-size:15px; font-weight:700;\">\n            Các phần bài viết (<span id=\"modal-section-count\">3</span> phần)\n          </label>\n          <div style=\"display:flex; gap:8px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"applyQuickOutlineTemplate()\">Nạp cấu trúc mẫu</button>\n            <button type=\"button\" class=\"btn cy sm\" onclick=\"addNewOutlineSectionRow()\">\n              <ion-icon name=\"add-outline\"></ion-icon> Thêm phần\n            </button>\n          </div>\n        </div>\n        <p class=\"mut\" style=\"font-size:13px; margin:0 0 12px;\">Cấu trúc chuẩn 3 phần (Mở bài, Thân bài, Kết bài).</p>\n        \n        <div id=\"modal-sections-editor\" class=\"modal-sections-editor-list\"></div>\n      </div>\n    </div>\n\n    <div class=\"writing-modal-footer\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeCreateWritingSetModal()\">Hủy</button>\n      <button type=\"submit\" class=\"btn au\">\n        <ion-icon name=\"save-outline\"></ion-icon> Lưu bộ đề\n      </button>\n    </div>\n  </form>\n</dialog>\n\n<!-- WRITING MODAL 2: XEM BÀI HOÀN CHỈNH & XUẤT BÀI -->\n<dialog id=\"writing-review-dialog\" class=\"writing-modal review-modal\">\n  <div class=\"writing-modal-header review-header\">\n    <div class=\"writing-modal-title\">\n      <h3>Tổng quan bài viết</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeWritingReviewModal()\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <div class=\"writing-modal-body review-body\">\n    <!-- Stat metrics cards -->\n    <div class=\"review-stats-grid\">\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-words\">0</span>\n        <span class=\"stat-label\">Tổng số từ</span>\n      </div>\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-paragraphs\">0</span>\n        <span class=\"stat-label\">Số đoạn văn</span>\n      </div>\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-time\">00:00:00</span>\n        <span class=\"stat-label\">Thời gian làm</span>\n      </div>\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-wpm\">0</span>\n        <span class=\"stat-label\">Tốc độ (từ / phút)</span>\n      </div>\n    </div>\n\n    <!-- Combined essay text -->\n    <div class=\"review-essay-box\">\n      <div class=\"review-essay-meta\">\n        <h4 id=\"review-essay-topic\">Đề bài luyện viết</h4>\n        <span class=\"tag ok\" id=\"review-essay-tag\">Hoàn tất</span>\n      </div>\n      <div class=\"review-essay-text\" id=\"review-essay-combined-content\"></div>\n    </div>\n\n    <!-- Feedback suggestions box -->\n    <div class=\"review-feedback-box\">\n      <div class=\"review-feedback-title\">Nhận xét sơ bộ:</div>\n      <div id=\"review-feedback-content\" class=\"review-feedback-list\"></div>\n    </div>\n  </div>\n\n  <div class=\"writing-modal-footer review-footer\">\n    <button class=\"btn gh\" type=\"button\" onclick=\"copyCombinedEssayToClipboard()\">\n      <ion-icon name=\"copy-outline\"></ion-icon> Sao chép bài viết\n    </button>\n    <button class=\"btn cy\" type=\"button\" onclick=\"downloadCombinedEssayAsText()\">\n      <ion-icon name=\"download-outline\"></ion-icon> Tải tệp .txt\n    </button>\n    <button class=\"btn au\" type=\"button\" onclick=\"submitWritingEssay(); closeWritingReviewModal();\" style=\"font-weight:800;\">\n      <ion-icon name=\"send-outline\"></ion-icon> Nộp bài chấm điểm\n    </button>\n    <button class=\"btn gh\" type=\"button\" onclick=\"closeWritingReviewModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- READING MODAL 1: TẠO / SỬA ĐỀ ĐỌC HIỂU -->\n<dialog id=\"reading-edit-modal\" class=\"writing-modal reading-modal\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3 id=\"reading-modal-title\">Thêm bộ đề đọc hiểu mới</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeReadingEditModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <form id=\"reading-edit-form\" onsubmit=\"handleReadingFormSubmit(event)\" class=\"writing-modal-form-wrap\">\n    <input type=\"hidden\" id=\"reading-form-id\">\n\n    <div class=\"writing-modal-body\">\n      <!-- Hàng 1: Tên đề bài & Chủ đề -->\n      <div class=\"g2\" style=\"margin-bottom:14px;\">\n        <div>\n          <label for=\"reading-form-title\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Tựa bài / Tên đề đọc hiểu <span style=\"color:var(--red)\">*</span>\n          </label>\n          <input type=\"text\" id=\"reading-form-title\" required placeholder=\"Ví dụ: Sống hết mình cho thời khắc hiện tại...\" style=\"width:100%;\">\n        </div>\n        <div>\n          <label for=\"reading-form-category\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Chủ đề / Dạng bài <span style=\"color:var(--red)\">*</span>\n          </label>\n          <select id=\"reading-form-category\" required style=\"width:100%;\"></select>\n        </div>\n      </div>\n\n      <!-- Trạng thái xuất bản (Published / Draft) -->\n      <div style=\"margin-bottom:14px;\">\n        <label for=\"reading-form-status\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n          Trạng thái bộ đề <span style=\"font-weight:400; color:var(--mut); font-size:12.5px;\">(Chọn Đã xuất bản để học sinh nhìn thấy và làm bài)</span>\n        </label>\n        <select id=\"reading-form-status\" style=\"width:100%;\">\n          <option value=\"published\">🟢 Đã xuất bản (Published - Hiển thị cho học sinh)</option>\n          <option value=\"draft\">🟡 Bản nháp (Draft - Chỉ lưu riêng cho giáo viên)</option>\n        </select>\n      </div>\n\n      <!-- Thời gian mở bài làm (OpenAt) -->\n      <div style=\"margin-bottom:12px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"reading-form-open-at\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"time-outline\"></ion-icon> Thời gian mở bài làm (Bắt đầu):\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Bỏ trống để mở ngay. Nếu đặt ngày/giờ, học sinh chỉ có thể vào làm từ thời điểm này.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"datetime-local\" id=\"reading-form-open-at\" style=\"font-weight:600; padding:6px 10px; border-radius:8px; font-size:13px;\">\n          <button type=\"button\" class=\"btn gh sm\" onclick=\"$('#reading-form-open-at').value=''\" title=\"Mở ngay\" style=\"padding:2px 8px; height:32px;\">✕</button>\n        </div>\n      </div>\n\n      <!-- Giới hạn lượt làm bài -->\n      <div style=\"margin-bottom:12px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"reading-form-max-attempts\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"timer-outline\"></ion-icon> Giới hạn lượt làm bài cho học sinh:\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Số lượt tối đa (0 = Không giới hạn). Học sinh đã làm đủ lượt sẽ chỉ được xem lại bài đã nộp.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"number\" id=\"reading-form-max-attempts\" min=\"0\" max=\"999\" value=\"0\" style=\"width:85px; text-align:center; font-weight:700; padding:6px 8px; border-radius:8px;\">\n          <span style=\"font-size:13px; font-weight:600; color:var(--mut);\">lượt</span>\n        </div>\n      </div>\n\n      <!-- Thời hạn nộp bài (Deadline) -->\n      <div style=\"margin-bottom:14px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"reading-form-deadline\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"calendar-outline\"></ion-icon> Hạn chót nộp bài (Deadline):\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Bỏ trống nếu không đặt hạn nộp. Quá hạn, học sinh chỉ có thể xem lại bài đã nộp.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"datetime-local\" id=\"reading-form-deadline\" style=\"font-weight:600; padding:6px 10px; border-radius:8px; font-size:13px;\">\n          <button type=\"button\" class=\"btn gh sm\" onclick=\"$('#reading-form-deadline').value=''\" title=\"Xóa hạn nộp\" style=\"padding:2px 8px; height:32px;\">✕</button>\n        </div>\n      </div>\n\n      <!-- Hàng 2: Tác phẩm, Tác giả & Thể loại -->\n      <div class=\"g3\" style=\"display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:14px;\">\n        <div>\n          <label for=\"reading-form-work\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Tên tác phẩm\n          </label>\n          <input type=\"text\" id=\"reading-form-work\" placeholder=\"Ví dụ: Cách sống: từ bình thường trở nên phi thường...\" style=\"width:100%;\">\n        </div>\n        <div>\n          <label for=\"reading-form-author\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Tác giả\n          </label>\n          <input type=\"text\" id=\"reading-form-author\" placeholder=\"Ví dụ: Inamori Kazuo\" style=\"width:100%;\">\n        </div>\n        <div>\n          <label for=\"reading-form-genre\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Thể loại văn bản\n          </label>\n          <input type=\"text\" id=\"reading-form-genre\" placeholder=\"Ví dụ: Văn bản nghị luận, Thơ tự do...\" style=\"width:100%;\">\n        </div>\n      </div>\n\n      <!-- Ngữ liệu đọc hiểu -->\n      <div style=\"margin-bottom:16px;\">\n        <label for=\"reading-form-passage\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n          Văn bản / Ngữ liệu đọc hiểu (Đoạn trích) <span style=\"color:var(--red)\">*</span>\n        </label>\n        <textarea id=\"reading-form-passage\" required rows=\"9\" placeholder=\"Dán hoặc nhập toàn bộ đoạn trích / văn bản đọc hiểu vào đây...\" style=\"width:100%; font-family:inherit; line-height:1.6;\"></textarea>\n      </div>\n\n      <!-- Nguồn trích dẫn -->\n      <div style=\"margin-bottom:18px;\">\n        <label for=\"reading-form-source\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n          Ghi chú nguồn trích dẫn tác phẩm, tác giả, NXB, năm, trang\n        </label>\n        <input type=\"text\" id=\"reading-form-source\" placeholder=\"(Trích Cách sống: từ bình thường trở nên phi thường, Inamori Kazuo, NXB Lao động, 2020, tr. 103-104)\" style=\"width:100%;\">\n      </div>\n\n      <!-- Danh sách câu hỏi đọc hiểu -->\n      <div class=\"reading-form-questions-section\">\n        <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;\">\n          <div>\n            <h4 style=\"margin:0; font-size:16px; font-weight:800; display:flex; align-items:center; gap:8px; flex-wrap:wrap;\">\n              <span>Hệ thống câu hỏi đọc hiểu</span>\n              <span class=\"tag cy\" style=\"font-size:12.5px; font-weight:800; padding:3px 10px;\">\n                Tổng điểm: <b id=\"reading-modal-total-score\">10.0đ</b> / 10.0 điểm\n              </span>\n            </h4>\n            <span class=\"mut\" style=\"font-size:12.5px;\">Chuẩn thang 10đ: Câu 1,2: Nhận biết (1.5đ) • Câu 3,4: Thông hiểu (2.0đ) • Câu 5: Vận dụng (3.0đ)</span>\n          </div>\n          <div style=\"display:flex; gap:6px; flex-wrap:wrap;\">\n            <button type=\"button\" class=\"btn au sm\" onclick=\"applyStandard5QuestionTemplate()\" title=\"Tự động nạp khung chuẩn 5 câu: 2 Nhận biết • 2 Thông hiểu • 1 Vận dụng (Đoạn văn) - Chuẩn thang 10 điểm\">\n              <ion-icon name=\"flash-outline\"></ion-icon> Mẫu chuẩn 5 câu\n            </button>\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"openQuickImportModal()\" title=\"Dán nhanh toàn bộ đề thi để tự động trích xuất\">\n              <ion-icon name=\"clipboard-outline\"></ion-icon> Dán nhanh đề thi\n            </button>\n            <button type=\"button\" class=\"btn cy sm\" onclick=\"addQuestionToReadingForm()\">\n              <ion-icon name=\"add-outline\"></ion-icon> Thêm câu hỏi\n            </button>\n          </div>\n        </div>\n        <div id=\"reading-form-questions-list\"></div>\n      </div>\n    </div>\n\n    <div class=\"writing-modal-footer\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeReadingEditModal()\">Hủy</button>\n      <button type=\"submit\" class=\"btn au\" style=\"font-weight:800;\">\n        <ion-icon name=\"save-outline\"></ion-icon> Lưu đề đọc hiểu\n      </button>\n    </div>\n  </form>\n</dialog>\n\n<!-- READING MODAL 2: DÁN NHANH TOÀN BỘ ĐỀ THI (QUICK IMPORT) -->\n<dialog id=\"reading-quick-import-modal\" class=\"writing-modal\" style=\"max-width:680px;\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3 style=\"display:flex; align-items:center; gap:8px;\">\n        <ion-icon name=\"clipboard-outline\"></ion-icon> Dán nhanh toàn bộ đề thi Đọc hiểu\n      </h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeQuickImportModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n  <div class=\"writing-modal-body\" style=\"padding:18px 22px;\">\n    <p class=\"mut\" style=\"margin:0 0 12px; font-size:13.5px; line-height:1.5;\">\n      Dán nguyên văn đề thi (gồm đoạn trích, nguồn <i>(Trích ...)</i> và các <b>Câu 1, 2, 3, 4, 5</b> hoặc phần Làm văn). Hệ thống sẽ tự động bóc tách và điền vào các ô cho bạn!\n    </p>\n    <textarea id=\"reading-quick-import-text\" rows=\"12\" placeholder=\"Ví dụ:\nI. PHẦN ĐỌC HIỂU (3,0 điểm)\nĐọc đoạn trích:\nKhông cần ngôn ngữ, mọi sự sống nhỏ nhoi trong tự nhiên...\n(Trích Cách sống: từ bình thường trở nên phi thường, Inamori Kazuo, NXB Lao động, 2020)\n\nThực hiện các yêu cầu sau:\nCâu 1: Xác định phương thức biểu đạt chính...\nCâu 2: Theo đoạn trích...\nCâu 3: Chỉ ra điểm tương đồng...\nCâu 4: Anh/chị có đồng tình...\nCâu 5: Viết đoạn văn (khoảng 200 chữ)...\" style=\"width:100%; font-family:inherit; font-size:13.5px; line-height:1.6;\"></textarea>\n  </div>\n  <div class=\"writing-modal-footer\">\n    <button type=\"button\" class=\"btn gh\" onclick=\"closeQuickImportModal()\">Hủy</button>\n    <button type=\"button\" class=\"btn au\" onclick=\"handleQuickImportSubmit()\" style=\"font-weight:800;\">\n      <ion-icon name=\"flash-outline\"></ion-icon> Tự động bóc tách &amp; Áp dụng\n    </button>\n  </div>\n</dialog>\n\n<!-- READING MODAL 3: KẾT QUẢ / ĐÁP ÁN THAM KHẢO KHI NỘP BÀI -->\n<dialog id=\"reading-result-modal\" class=\"writing-modal reading-modal\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3>Kết quả bài làm &amp; Đáp án tham khảo</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeReadingResultModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <div class=\"writing-modal-body\" style=\"padding:20px 24px;\">\n    <div class=\"reading-result-hero\">\n      <div style=\"font-size:36px; margin-bottom:6px; color:var(--primary);\">\n        <ion-icon name=\"ribbon-outline\"></ion-icon>\n      </div>\n      <h3 style=\"margin:0 0 6px; font-weight:800;\">Đã hoàn thành bài đọc hiểu!</h3>\n      <p class=\"mut\" style=\"margin:0; font-size:14px;\">Dưới đây là phần so sánh giữa câu trả lời của bạn và đáp án chuẩn.</p>\n    </div>\n\n    <div id=\"reading-result-comparison-list\" style=\"margin-top:20px;\"></div>\n  </div>\n\n  <div class=\"writing-modal-footer\">\n    <button type=\"button\" class=\"btn au\" onclick=\"closeReadingResultModal(); go('home'); toast('Nộp bài thành công! Bài làm đọc hiểu đã được lưu vào Lịch sử.', 'ok');\" style=\"font-weight:800;\">\n      <ion-icon name=\"home-outline\"></ion-icon> Về trang chủ\n    </button>\n    <button type=\"button\" class=\"btn gh\" onclick=\"closeReadingResultModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- SET ATTEMPT LIMIT, PRIVACY & DEADLINE DIALOG (GIÁO VIÊN & ADMIN) -->\n<!-- SET ATTEMPT LIMIT, PRIVACY & DEADLINE DIALOG (GIÁO VIÊN & ADMIN) -->\n<dialog id=\"set-attempt-limit-dialog\" class=\"set-cfg-dialog\">\n  <div class=\"set-cfg-header\">\n    <div class=\"set-cfg-header-title\">\n      <div class=\"set-cfg-icon\"><ion-icon name=\"options-outline\"></ion-icon></div>\n      <div>\n        <h3>Cài đặt &amp; Giao bài</h3>\n        <p>Quyền Giáo viên &amp; Quản trị viên</p>\n      </div>\n    </div>\n    <button type=\"button\" class=\"set-cfg-close-btn\" onclick=\"closeSetAttemptLimitModal()\" title=\"Đóng\">\n      <ion-icon name=\"close-outline\"></ion-icon>\n    </button>\n  </div>\n\n  <div class=\"set-cfg-body\">\n    <!-- Thông tin bộ đề -->\n    <div class=\"set-cfg-target-card\">\n      <div class=\"set-cfg-target-type\" id=\"limit-modal-type-badge\">DẠNG BÀI</div>\n      <div class=\"set-cfg-target-title\" id=\"limit-modal-title\">Tên bộ đề</div>\n    </div>\n\n    <input type=\"hidden\" id=\"limit-modal-target-type\" value=\"\">\n    <input type=\"hidden\" id=\"limit-modal-target-id\" value=\"\">\n\n    <!-- CẶP CÀI ĐẶT: CHẾ ĐỘ HIỂN THỊ & SỐ LƯỢT LÀM -->\n    <div class=\"set-cfg-grid-2\">\n      <!-- 1. Chế độ hiển thị -->\n      <div class=\"set-cfg-card\">\n        <label for=\"limit-modal-privacy\" class=\"set-cfg-label\">\n          <ion-icon name=\"eye-outline\"></ion-icon> <span>Chế độ hiển thị</span>\n        </label>\n        <select id=\"limit-modal-privacy\" class=\"set-cfg-select\">\n          <option value=\"public\">🌐 Công khai</option>\n          <option value=\"private\">🔒 Riêng tư</option>\n        </select>\n      </div>\n\n      <!-- 2. Giới hạn số lượt làm -->\n      <div class=\"set-cfg-card\">\n        <div class=\"set-cfg-label-row\">\n          <label for=\"limit-modal-input\" class=\"set-cfg-label\">\n            <ion-icon name=\"timer-outline\"></ion-icon> <span>Lượt làm bài</span>\n          </label>\n          <span id=\"limit-modal-explain\" class=\"set-cfg-status status-gray\">Không giới hạn</span>\n        </div>\n        <div class=\"set-cfg-input-stepper-row\">\n          <input type=\"number\" id=\"limit-modal-input\" min=\"0\" max=\"999\" step=\"1\" value=\"0\" class=\"set-cfg-number-input\" oninput=\"onLimitModalInputChange(this.value)\">\n          <div class=\"set-cfg-chips-inline\">\n            <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalPreset(0)\" title=\"Không giới hạn\">♾️</button>\n            <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalPreset(1)\" title=\"1 lượt\">1</button>\n            <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalPreset(2)\" title=\"2 lượt\">2</button>\n            <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalPreset(3)\" title=\"3 lượt\">3</button>\n            <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalPreset(5)\" title=\"5 lượt\">5</button>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <!-- 3. Lịch mở đề (Thời gian bắt đầu làm) -->\n    <div class=\"set-cfg-card\">\n      <div class=\"set-cfg-label-row\">\n        <label for=\"limit-modal-open-at\" class=\"set-cfg-label\">\n          <ion-icon name=\"time-outline\"></ion-icon> <span>Thời gian mở đề</span>\n        </label>\n        <span id=\"limit-modal-open-at-status\" class=\"set-cfg-status status-green\">🟢 Mở ngay</span>\n      </div>\n      <div class=\"set-cfg-input-row\">\n        <input type=\"datetime-local\" id=\"limit-modal-open-at\" class=\"set-cfg-datetime-input\" onchange=\"onLimitModalOpenAtChange(this.value)\">\n        <button type=\"button\" class=\"set-cfg-action-btn\" onclick=\"setLimitModalOpenAtPreset('none')\">✕ Mở ngay</button>\n      </div>\n      <div class=\"set-cfg-chips-wrap\">\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalOpenAtPreset('none')\">🚀 Mở ngay</button>\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalOpenAtPreset('tomorrow-8am')\">🌅 8:00 Sáng mai</button>\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalOpenAtPreset('tomorrow-14pm')\">☀️ 14:00 Chiều mai</button>\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalOpenAtPreset('monday-8am')\">📅 Đầu tuần tới (8:00)</button>\n      </div>\n    </div>\n\n    <!-- 4. Hạn chót nộp bài (Deadline) -->\n    <div class=\"set-cfg-card\">\n      <div class=\"set-cfg-label-row\">\n        <label for=\"limit-modal-deadline\" class=\"set-cfg-label\">\n          <ion-icon name=\"calendar-outline\"></ion-icon> <span>Hạn chót nộp bài</span>\n        </label>\n        <span id=\"limit-modal-deadline-status\" class=\"set-cfg-status status-gray\">Không đặt hạn</span>\n      </div>\n      <div class=\"set-cfg-input-row\">\n        <input type=\"datetime-local\" id=\"limit-modal-deadline\" class=\"set-cfg-datetime-input\" onchange=\"onLimitModalDeadlineChange(this.value)\">\n        <button type=\"button\" class=\"set-cfg-action-btn\" onclick=\"setLimitModalDeadlinePreset('none')\">✕ Xóa hạn</button>\n      </div>\n      <div class=\"set-cfg-chips-wrap\">\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalDeadlinePreset('none')\">♾️ Không hạn</button>\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalDeadlinePreset('tonight')\">🌙 Tối nay (23:59)</button>\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalDeadlinePreset('tomorrow')\">☀️ Tối mai (23:59)</button>\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalDeadlinePreset('3days')\">📅 3 ngày tới</button>\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalDeadlinePreset('7days')\">🗓️ 1 tuần tới</button>\n      </div>\n    </div>\n\n    <!-- FOOTER ACTIONS -->\n    <div class=\"set-cfg-footer\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeSetAttemptLimitModal()\">Hủy</button>\n      <button type=\"button\" class=\"btn au\" onclick=\"submitSetAttemptLimit()\">\n        <ion-icon name=\"checkmark-circle-outline\"></ion-icon> <span>Lưu cài đặt</span>\n      </button>\n    </div>\n  </div>\n</dialog>\n\n<!-- EXIT EXAM CONFIRMATION DIALOG (CẢNH BÁO NỘP BÀI KHI THOÁT) -->\n<dialog id=\"exit-exam-confirm-dialog\" class=\"writing-modal exit-confirm-modal\" style=\"max-width:520px; border-radius:24px; border:3.5px solid var(--stroke); box-shadow:0 12px 0 var(--stroke); padding:0; overflow:hidden;\">\n  <div style=\"background:linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); padding:20px 24px; color:#ffffff; display:flex; align-items:center; justify-content:space-between; gap:12px;\">\n    <div style=\"display:flex; align-items:center; gap:12px;\">\n      <span style=\"font-size:32px; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.25)); line-height:1;\"><ion-icon name=\"warning-outline\"></ion-icon></span>\n      <div>\n        <h3 style=\"margin:0; font-size:19px; font-weight:800; color:#ffffff;\">Xác nhận thoát bài làm?</h3>\n        <p style=\"margin:2px 0 0; font-size:12.5px; opacity:0.95; font-weight:600;\">Hành động này sẽ nộp bài và tính 1 lượt làm</p>\n      </div>\n    </div>\n    <button type=\"button\" class=\"btn gh sm\" onclick=\"closeExitConfirmModal()\" style=\"border:none; color:#ffffff; background:rgba(0,0,0,0.2); width:32px; height:32px; padding:0; border-radius:50%; font-size:18px;\">✕</button>\n  </div>\n\n  <div style=\"padding:22px 24px; background:var(--bg-card);\">\n    <div style=\"background:rgba(239, 68, 68, 0.08); border:2px dashed rgba(239, 68, 68, 0.4); border-radius:14px; padding:14px 16px; margin-bottom:18px;\">\n      <p style=\"margin:0 0 8px; font-weight:800; color:#dc2626; font-size:14px; display:flex; align-items:center; gap:6px;\">\n        <ion-icon name=\"alert-circle-outline\" style=\"font-size:18px;\"></ion-icon> LƯU Ý QUAN TRỌNG TRƯỚC KHI RỜI ĐI:\n      </p>\n      <ul style=\"margin:0; padding-left:20px; font-size:13px; line-height:1.6; color:var(--ink);\">\n        <li>Hệ thống sẽ <b>tự động nộp các câu bạn đã làm</b> tính đến thời điểm này.</li>\n        <li>Hệ thống sẽ <b>tính mất 1 LƯỢT LÀM</b> của bạn trên bộ câu hỏi này.</li>\n        <li>Bài làm sẽ được lưu vào mục <b>Lịch sử</b> để giáo viên xem xét và đối chiếu.</li>\n      </ul>\n    </div>\n\n    <p style=\"font-size:13.5px; font-weight:600; color:var(--ink); margin:0 0 20px; text-align:center;\">\n      Bạn có chắc chắn muốn kết thúc bài làm và nộp kết quả ngay bây giờ không?\n    </p>\n\n    <div style=\"display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap;\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeExitConfirmModal()\" style=\"font-weight:700; flex:1; min-width:140px; justify-content:center;\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon> Tiếp tục làm bài\n      </button>\n      <button type=\"button\" class=\"btn no\" id=\"btn-confirm-exit-action\" onclick=\"executeExitSessionSubmit()\" style=\"font-weight:800; flex:1; min-width:160px; justify-content:center;\">\n        <ion-icon name=\"log-out-outline\"></ion-icon> Xác nhận nộp &amp; Thoát\n      </button>\n    </div>\n  </div>\n</dialog>\n\n<!-- =======================================================================\n     GAMIFICATION DIALOG (CHUỖI NGÀY HỌC, PROGRESS BAR & BỘ SƯU TẬP HUY HIỆU)\n     ======================================================================= -->\n<dialog id=\"gamification-dialog\" class=\"gami-modal\">\n  <div class=\"gami-modal-header\">\n    <div style=\"display:flex; align-items:center; gap:12px;\">\n      <span style=\"font-size:34px; line-height:1;\">🔥</span>\n      <div>\n        <h3 style=\"margin:0; font-size:20px; font-weight:800; color:#ffffff;\">Hành Trình Chinh Phục Ngữ Văn</h3>\n        <p style=\"margin:2px 0 0; font-size:13px; opacity:0.95; font-weight:600;\">Chuỗi ngày học liên tục (Streak), Cấp độ &amp; Huy hiệu danh giá</p>\n      </div>\n    </div>\n    <button type=\"button\" class=\"btn gh sm\" onclick=\"closeGamificationModal()\" style=\"background:rgba(0,0,0,0.2); color:#fff; border:none; border-radius:50%; width:34px; height:34px; padding:0;\">✕</button>\n  </div>\n\n  <div class=\"gami-modal-body\" id=\"gamification-modal-body\">\n    <!-- Sẽ được render động bởi enhancements.js -->\n  </div>\n</dialog>\n\n<!-- =======================================================================\n     QUOTE OF THE DAY DIALOG (GÓC TRUYỀN CẢM HỨNG & SỔ TAY VĂN HỌC)\n     ======================================================================= -->\n<dialog id=\"quote-of-day-dialog\" class=\"qotd-modal\">\n  <div class=\"qotd-modal-header\">\n    <div style=\"display:flex; align-items:center; gap:12px;\">\n      <span style=\"font-size:32px; line-height:1;\">✨</span>\n      <div>\n        <h3 style=\"margin:0; font-size:20px; font-weight:800; color:#ffffff;\">Góc Truyền Cảm Hứng Văn Học</h3>\n        <p style=\"margin:2px 0 0; font-size:13px; opacity:0.95; font-weight:600;\">Nuôi dưỡng tâm hồn &amp; Kho nhận định lý luận văn học đắt giá</p>\n      </div>\n    </div>\n    <button type=\"button\" class=\"btn gh sm\" onclick=\"closeQuoteOfDayModal()\" style=\"background:rgba(0,0,0,0.2); color:#fff; border:none; border-radius:50%; width:34px; height:34px; padding:0;\">✕</button>\n  </div>\n\n  <div class=\"qotd-modal-body\" id=\"qotd-modal-body\">\n    <!-- Sẽ được render động bởi enhancements.js -->\n  </div>\n</dialog>\n\n<!-- =======================================================================\n     QA & BUG REPORT DIALOG (BÁO CÁO LỖI / THẮC MẮC KIẾN THỨC)\n     ======================================================================= -->\n<dialog id=\"qa-report-dialog\" class=\"qa-modal\">\n  <div class=\"qa-modal-header\">\n    <div style=\"display:flex; align-items:center; gap:12px;\">\n      <span style=\"font-size:32px; line-height:1;\">💬</span>\n      <div>\n        <h3 style=\"margin:0; font-size:19px; font-weight:800; color:#ffffff;\">Báo Cáo Lỗi &amp; Giải Đáp Thắc Mắc</h3>\n        <p style=\"margin:2px 0 0; font-size:12.5px; opacity:0.95; font-weight:600;\">Đặt câu hỏi trực tiếp để được giải đáp kịp thời trên lớp</p>\n      </div>\n    </div>\n    <button type=\"button\" class=\"btn gh sm\" onclick=\"closeQaReportModal()\" style=\"background:rgba(0,0,0,0.2); color:#fff; border:none; border-radius:50%; width:34px; height:34px; padding:0;\">✕</button>\n  </div>\n\n  <div class=\"qa-modal-tabs\">\n    <button type=\"button\" class=\"qa-tab-btn active\" id=\"qa-tab-btn-form\" onclick=\"switchQaModalTab('form')\">\n      <ion-icon name=\"paper-plane-outline\"></ion-icon> <span>Gửi câu hỏi / Báo lỗi</span>\n    </button>\n    <button type=\"button\" class=\"qa-tab-btn\" id=\"qa-tab-btn-list\" onclick=\"switchQaModalTab('list')\">\n      <ion-icon name=\"list-outline\"></ion-icon> <span>Danh sách thắc mắc (<span id=\"qa-saved-count\">0</span>)</span>\n    </button>\n    <button type=\"button\" class=\"qa-tab-btn\" id=\"qa-tab-btn-config\" onclick=\"switchQaModalTab('config')\">\n      <ion-icon name=\"settings-outline\"></ion-icon> <span>Kết nối Email / Sheets</span>\n    </button>\n  </div>\n\n  <div class=\"qa-modal-body\">\n    <!-- TAB 1: FORM GỬI THẮC MẮC / BÁO LỖI -->\n    <div id=\"qa-pane-form\">\n      <div class=\"qa-context-banner\" id=\"qa-context-banner\">\n        <ion-icon name=\"location-outline\"></ion-icon>\n        <span>Vị trí đang xem: <b id=\"qa-current-context-label\">Trang chủ</b></span>\n      </div>\n\n      <div class=\"qa-form-grid-2\">\n        <div>\n          <label class=\"qa-label\" for=\"qa-student-name\">Họ và tên học sinh <span style=\"color:var(--red);\">*</span></label>\n          <input type=\"text\" id=\"qa-student-name\" class=\"qa-input\" placeholder=\"Nhập họ tên của em...\" maxlength=\"60\">\n        </div>\n        <div>\n          <label class=\"qa-label\" for=\"qa-student-class\">Lớp</label>\n          <input type=\"text\" id=\"qa-student-class\" class=\"qa-input\" placeholder=\"Ví dụ: 11A1, 12A2...\" maxlength=\"25\">\n        </div>\n      </div>\n\n      <div style=\"margin-top:12px;\">\n        <label class=\"qa-label\" for=\"qa-issue-type\">Phân loại nội dung</label>\n        <select id=\"qa-issue-type\" class=\"qa-select\">\n          <option value=\"Thắc mắc kiến thức\">❓ Thắc mắc kiến thức Ngữ văn (Cần giải đáp trên lớp)</option>\n          <option value=\"Góp ý viết đoạn/bài\">✍️ Xin hướng dẫn cách lập dàn ý / viết đoạn văn 200 chữ</option>\n          <option value=\"Báo lỗi câu hỏi/đáp án\">🐞 Báo lỗi nội dung câu hỏi / Đáp án chưa chính xác</option>\n          <option value=\"Báo lỗi kỹ thuật\">⚙️ Báo lỗi hiển thị / Kỹ thuật trên web</option>\n        </select>\n      </div>\n\n      <div style=\"margin-top:12px;\">\n        <label class=\"qa-label\" for=\"qa-message-input\">Nội dung câu hỏi hoặc lỗi phát hiện <span style=\"color:var(--red);\">*</span></label>\n        <div class=\"qa-quick-chips\">\n          <button type=\"button\" class=\"qa-chip\" onclick=\"fillQuickQaTemplate('Em chưa hiểu rõ cách triển khai luận điểm và dẫn chứng ở đề này ạ.')\">+ Chưa hiểu cách triển khai luận điểm</button>\n          <button type=\"button\" class=\"qa-chip\" onclick=\"fillQuickQaTemplate('Thầy/cô giải thích thêm giúp em tác dụng biện pháp tu từ trong ngữ liệu này với ạ.')\">+ Hỏi về biện pháp tu từ</button>\n          <button type=\"button\" class=\"qa-chip\" onclick=\"fillQuickQaTemplate('Cho em hỏi công thức viết đoạn 200 chữ cho chủ đề này nên bắt đầu như thế nào ạ?')\">+ Hỏi cách viết đoạn 200 chữ</button>\n          <button type=\"button\" class=\"qa-chip\" onclick=\"fillQuickQaTemplate('Em thấy đáp án của câu hỏi này có điểm chưa khớp với ngữ liệu, nhờ kiểm tra lại giúp em ạ.')\">+ Báo lỗi đáp án câu hỏi</button>\n        </div>\n        <textarea id=\"qa-message-input\" class=\"qa-textarea\" rows=\"4\" placeholder=\"Nhập chi tiết phần kiến thức em chưa hiểu hoặc lỗi em gặp phải để được giải đáp kịp thời trên lớp...\" maxlength=\"2000\"></textarea>\n      </div>\n\n      <div class=\"qa-submit-row\">\n        <button type=\"button\" class=\"btn gh sm\" onclick=\"submitQaViaMailto()\" title=\"Mở trình gửi Email trực tiếp\">\n          <ion-icon name=\"mail-outline\"></ion-icon> <span>Gửi qua Email</span>\n        </button>\n        <button type=\"button\" class=\"btn au\" id=\"btn-submit-qa-report\" onclick=\"submitQaReportForm()\">\n          <ion-icon name=\"send-outline\"></ion-icon> <span>Gửi thắc mắc ngay</span>\n        </button>\n      </div>\n    </div>\n\n    <!-- TAB 2: DANH SÁCH THẮC MẮC CỦA LỚP -->\n    <div id=\"qa-pane-list\" style=\"display:none;\">\n      <div style=\"display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:12px;\">\n        <span style=\"font-size:13px; color:var(--mut); font-weight:600;\">Tổng hợp câu hỏi học sinh gửi để giải đáp trên lớp</span>\n        <div style=\"display:flex; gap:6px;\">\n          <button type=\"button\" class=\"btn cy sm\" onclick=\"exportQaReportsToCsv()\" title=\"Xuất file CSV mở bằng Google Sheets / Excel\">\n            <ion-icon name=\"download-outline\"></ion-icon> <span>Xuất Google Sheets (CSV)</span>\n          </button>\n          <button type=\"button\" class=\"btn no sm\" onclick=\"clearAllQaReports()\" title=\"Xóa toàn bộ danh sách\">\n            <ion-icon name=\"trash-outline\"></ion-icon> <span>Xóa hết</span>\n          </button>\n        </div>\n      </div>\n      <div id=\"qa-reports-list-container\" class=\"qa-reports-list\"></div>\n    </div>\n\n    <!-- TAB 3: CẤU HÌNH GOOGLE SHEETS & EMAIL NHẬN -->\n    <div id=\"qa-pane-config\" style=\"display:none;\">\n      <div class=\"qa-config-box\">\n        <h4 style=\"margin:0 0 6px; font-size:15px;\">⚙️ Cấu hình Kênh Nhận Thắc Mắc Trực Tiếp</h4>\n        <p style=\"margin:0 0 14px; font-size:12.5px; color:var(--mut); line-height:1.5;\">\n          Khi học sinh bấm <b>Gửi thắc mắc</b>, dữ liệu sẽ tự động lưu trên hệ thống, đồng thời đẩy thẳng về <b>Google Sheets Webhook</b> hoặc <b>Email</b> bạn thiết lập bên dưới.\n        </p>\n\n        <label class=\"qa-label\" for=\"qa-cfg-email\">📧 Địa chỉ Email nhận câu hỏi</label>\n        <input type=\"email\" id=\"qa-cfg-email\" class=\"qa-input\" placeholder=\"Ví dụ: giaovien.nguvan@gmail.com\">\n\n        <label class=\"qa-label\" for=\"qa-cfg-webhook\" style=\"margin-top:12px;\">📊 Google Sheets Webhook URL (Apps Script Web App URL)</label>\n        <input type=\"url\" id=\"qa-cfg-webhook\" class=\"qa-input\" placeholder=\"https://script.google.com/macros/s/.../exec\">\n        <p style=\"margin:6px 0 14px; font-size:11.5px; color:var(--mut); line-height:1.45;\">\n          💡 <i>Mẹo:</i> Trong Google Sheets, vào <b>Tiện ích mở rộng → Apps Script</b>, dán hàm <code>doPost(e)</code> nhận JSON và triển khai dạng <i>Ứng dụng Web (Bất kỳ ai)</i> rồi dán link vào ô trên để tự động ghi từng dòng câu hỏi của học sinh vào bảng tính!\n        </p>\n\n        <div style=\"display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;\">\n          <button type=\"button\" class=\"btn gh sm\" onclick=\"copyAppsScriptSnippet()\">\n            <ion-icon name=\"code-slash-outline\"></ion-icon> <span>Sao chép mã Apps Script mẫu</span>\n          </button>\n          <button type=\"button\" class=\"btn au sm\" onclick=\"saveQaIntegrationConfig()\">\n            <ion-icon name=\"save-outline\"></ion-icon> <span>Lưu cấu hình kết nối</span>\n          </button>\n        </div>\n      </div>\n    </div>\n  </div>\n</dialog>\n\n<!-- FLOATING QA / BUG REPORT BUTTON & TOAST & BACK TO TOP -->\n<button id=\"fab-qa-report\" class=\"fab-qa-btn\" onclick=\"openQaReportModal()\" aria-label=\"Báo cáo lỗi hoặc Gửi thắc mắc\" title=\"Đặt câu hỏi thắc mắc hoặc Báo lỗi\">\n  <span class=\"fab-qa-icon\">💬</span>\n  <span class=\"fab-qa-text\">Hỏi đáp / Báo lỗi</span>\n</button>\n<div id=\"toast\" role=\"status\"></div>\n<button id=\"back-to-top\" onclick=\"window.scrollTo({top:0,behavior:'smooth'})\" aria-label=\"Về đầu trang\" title=\"Về đầu trang\">\n  <ion-icon name=\"arrow-up-outline\"></ion-icon>\n</button>"
+  "dialogs": "<!-- FEEDBACK DIALOG -->\n<dialog id=\"feedback-dialog\" aria-live=\"polite\">\n  <div id=\"fb\"></div>\n</dialog>\n\n<!-- CONFIRM DELETE DIALOG -->\n<dialog id=\"dlg\">\n  <p id=\"dm\" style=\"font-size:16px; font-weight:600; margin-bottom:20px;\"></p>\n  <div style=\"display:flex; gap:10px; justify-content:flex-end;\">\n    <button class=\"btn gh sm\" onclick=\"dlg.close()\">Hủy</button>\n    <button class=\"btn no sm\" id=\"dy\">Xóa</button>\n  </div>\n</dialog>\n\n<!-- AI PROMPT DIALOG -->\n<dialog id=\"prompt-dialog\">\n  <div class=\"prompt-dialog-header\">\n    <div>\n      <h2 style=\"display:flex; align-items:center; gap:8px;\">Tạo bộ câu hỏi bằng trợ lý AI</h2>\n      <p class=\"mut\" style=\"margin:4px 0 0; font-size:13px;\">Tạo câu lệnh → Gửi AI → Nhập câu hỏi vào hệ thống</p>\n    </div>\n    <button class=\"btn gh sm prompt-dialog-close\" type=\"button\"\n      onclick=\"$('#prompt-dialog').close()\" aria-label=\"Đóng cửa sổ tạo bộ câu hỏi\" title=\"Đóng\">×</button>\n  </div>\n\n  <div style=\"background:rgba(217, 169, 79, 0.12); border:1px solid var(--gold); border-radius:12px; padding:9px 13px; margin-bottom:14px; font-size:13px; line-height:1.5;\">\n    Hệ thống tạo câu lệnh chuẩn để gửi sang <b>ChatGPT, Gemini hoặc Claude</b>. Sau khi AI trả lời, bạn dán kết quả vào <b>Bước 3</b> bên dưới để tự động tạo bộ câu hỏi.\n  </div>\n\n  <!-- BƯỚC 1 -->\n  <div class=\"prompt-step-box\">\n    <div class=\"prompt-step-title\">\n      <span class=\"prompt-step-badge\">1</span>\n      <span>Thiết lập nội dung & Tạo câu lệnh</span>\n    </div>\n    \n    <label for=\"prompt-topic\" style=\"font-weight:600;\">Chủ đề / Tác phẩm / Bài học <span style=\"color:var(--gold);\">*</span></label>\n    <input id=\"prompt-topic\" type=\"text\" maxlength=\"500\"\n      placeholder=\"Ví dụ: Ông già và biển cả, Vợ nhặt, Tây Tiến, Chí Phèo...\">\n\n    <!-- TỔNG SỐ CÂU HỎI & CHIA ĐỀU -->\n    <div style=\"display:grid; grid-template-columns: 1fr auto; gap:12px; margin-top:12px; align-items:end;\">\n      <div>\n        <label for=\"prompt-question-count\" style=\"font-weight:600;\">Tổng số câu hỏi của bộ đề</label>\n        <select id=\"prompt-question-count\" onchange=\"onPromptTotalCountChange()\">\n          <option value=\"4\">4 câu</option>\n          <option value=\"5\">5 câu</option>\n          <option value=\"6\">6 câu</option>\n          <option value=\"8\">8 câu</option>\n          <option value=\"10\" selected>10 câu</option>\n          <option value=\"12\">12 câu</option>\n          <option value=\"15\">15 câu</option>\n          <option value=\"16\">16 câu</option>\n          <option value=\"20\">20 câu</option>\n          <option value=\"25\">25 câu</option>\n          <option value=\"30\">30 câu</option>\n        </select>\n      </div>\n      <div>\n        <button class=\"btn gh sm\" type=\"button\" onclick=\"autoDistributePromptTypes()\" title=\"Chia đều số câu theo các dạng đang chọn\" style=\"height:42px; padding:0 12px; font-weight:700;\">\n          Chia đều số câu\n        </button>\n      </div>\n    </div>\n\n    <!-- PHÂN BỔ SỐ CÂU THEO TỪNG DẠNG -->\n    <fieldset style=\"margin-top:12px; padding:12px 14px; border:1px solid var(--stroke); border-radius:12px; background:var(--bg);\">\n      <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;\">\n        <legend style=\"padding:0 6px; font-weight:700; font-size:12px; color:var(--mut); margin:0;\">PHÂN BỔ SỐ CÂU THEO TỪNG DẠNG</legend>\n        <span id=\"prompt-count-status-badge\" style=\"font-size:11.5px; font-weight:700; padding:2px 8px; border-radius:6px;\"></span>\n      </div>\n\n      <div style=\"display:flex; flex-direction:column; gap:8px;\">\n        <!-- Dạng 1: Trắc nghiệm -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-mc\" name=\"prompt-question-type\" value=\"mc\" checked onchange=\"onPromptTypeToggle('mc')\" style=\"width:auto; margin:0;\">\n            <span>Trắc nghiệm (4 lựa chọn)</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('mc', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-mc\" type=\"number\" min=\"0\" max=\"50\" value=\"4\" oninput=\"onPromptTypeCountInput('mc')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('mc', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n\n        <!-- Dạng 2: Đúng / Sai -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-tf\" name=\"prompt-question-type\" value=\"tf\" checked onchange=\"onPromptTypeToggle('tf')\" style=\"width:auto; margin:0;\">\n            <span>Đúng / Sai (4 ý)</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('tf', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-tf\" type=\"number\" min=\"0\" max=\"50\" value=\"2\" oninput=\"onPromptTypeCountInput('tf')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('tf', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n\n        <!-- Dạng 3: Trả lời ngắn -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-short\" name=\"prompt-question-type\" value=\"short\" checked onchange=\"onPromptTypeToggle('short')\" style=\"width:auto; margin:0;\">\n            <span>Trả lời ngắn</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('short', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-short\" type=\"number\" min=\"0\" max=\"50\" value=\"2\" oninput=\"onPromptTypeCountInput('short')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('short', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n\n        <!-- Dạng 4: Điền từ -->\n        <div class=\"prompt-type-item\" style=\"display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:var(--bg-card); border:1px solid var(--stroke); border-radius:10px;\">\n          <label style=\"margin:0; display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:13.5px; flex:1;\">\n            <input type=\"checkbox\" id=\"prompt-type-cb-fill\" name=\"prompt-question-type\" value=\"fill\" checked onchange=\"onPromptTypeToggle('fill')\" style=\"width:auto; margin:0;\">\n            <span>Điền từ vào chỗ trống</span>\n          </label>\n          <div style=\"display:flex; align-items:center; gap:4px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('fill', -1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">-</button>\n            <input id=\"prompt-count-fill\" type=\"number\" min=\"0\" max=\"50\" value=\"2\" oninput=\"onPromptTypeCountInput('fill')\" style=\"width:44px; text-align:center; padding:2px 4px; font-weight:800; font-size:13.5px; height:26px; border-radius:6px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"adjustPromptTypeCount('fill', 1)\" style=\"width:26px; height:26px; padding:0; min-height:unset; font-size:14px; font-weight:900;\">+</button>\n            <span style=\"font-size:12px; color:var(--mut); min-width:22px;\">câu</span>\n          </div>\n        </div>\n      </div>\n\n      <!-- TỔNG KẾT & CẢNH BÁO TỔNG SỐ CÂU -->\n      <div id=\"prompt-sum-indicator\" style=\"margin-top:10px; font-size:12.5px; padding:7px 12px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; font-weight:600;\"></div>\n    </fieldset>\n\n    <label for=\"prompt-source\" style=\"margin-top:12px; font-weight:600;\">\n      Văn bản / Ngữ liệu đọc hiểu <span style=\"font-weight:400; color:var(--mut); font-size:12px;\">(Không bắt buộc)</span>\n    </label>\n    <textarea id=\"prompt-source\" maxlength=\"20000\"\n      placeholder=\"Dán đoạn trích nếu muốn câu hỏi đọc hiểu bám sát ngữ liệu riêng. Nếu để trống, AI sẽ tự động tạo câu hỏi dựa trên kiến thức tác phẩm chuẩn theo SGK...\"\n      style=\"min-height:85px;\"></textarea>\n    <div style=\"display:flex; justify-content:flex-end; align-items:center; margin-top:4px; font-size:12px;\">\n      <span id=\"prompt-source-count\" class=\"mut\" aria-live=\"polite\"></span>\n    </div>\n\n    <div style=\"margin-top:12px;\">\n      <button class=\"btn au\" type=\"button\" onclick=\"buildQuestionPrompt()\" style=\"width:100%; justify-content:center; font-weight:700; padding:11px;\">\n        Tạo câu lệnh AI\n      </button>\n    </div>\n  </div>\n\n  <!-- BƯỚC 2 -->\n  <div class=\"prompt-step-box\">\n    <div class=\"prompt-step-title\">\n      <span class=\"prompt-step-badge\">2</span>\n      <span>Gửi câu lệnh sang AI để nhận câu hỏi</span>\n    </div>\n    \n    <label for=\"prompt-output\" style=\"font-weight:600; font-size:13px;\">Câu lệnh AI đã sẵn sàng:</label>\n    <textarea id=\"prompt-output\" readonly style=\"min-height:110px; font-size:12px; font-family:monospace;\"\n      placeholder=\"Câu lệnh sẽ xuất hiện tại đây sau khi bạn nhấn nút ở Bước 1...\"></textarea>\n    \n    <div style=\"display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; align-items:center;\">\n      <button class=\"btn cy sm\" type=\"button\" onclick=\"copyQuestionPrompt()\">\n        <ion-icon name=\"copy-outline\"></ion-icon> Sao chép câu lệnh\n      </button>\n      <span style=\"font-size:12px; color:var(--mut); margin:0 4px;\">Hoặc mở nhanh AI:</span>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"openExternalAI('chatgpt')\">Mở ChatGPT</button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"openExternalAI('gemini')\">Mở Gemini</button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"openExternalAI('claude')\">Mở Claude</button>\n    </div>\n  </div>\n\n  <!-- BƯỚC 3 -->\n  <div class=\"prompt-step-box\" style=\"margin-bottom:0;\">\n    <div class=\"prompt-step-title\">\n      <span class=\"prompt-step-badge\">3</span>\n      <span>Dán kết quả từ AI & Nhập vào hệ thống</span>\n    </div>\n    \n    <label for=\"prompt-result\" style=\"font-weight:600; font-size:13px;\">\n      Dán kết quả tại đây:\n      <span style=\"font-weight:400; color:var(--mut); font-size:12px;\">(Hỗ trợ JSON hoặc văn bản trắc nghiệm: Câu 1: A, B, C, D...)</span>\n    </label>\n    <textarea id=\"prompt-result\" maxlength=\"150000\"\n      placeholder=\"Dán câu trả lời của ChatGPT/Gemini/Claude vào đây...\"\n      style=\"min-height:110px;\"></textarea>\n\n    <div style=\"display:flex; gap:10px; justify-content:flex-end; margin-top:14px;\">\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"$('#prompt-dialog').close()\">Đóng</button>\n      <button class=\"btn au\" type=\"button\" onclick=\"importPromptQuestionSet()\" style=\"font-weight:700;\">\n        Nhập bộ câu hỏi\n      </button>\n    </div>\n  </div>\n</dialog>\n\n<!-- QUIZ HISTORY LIST MODAL -->\n<dialog id=\"quiz-history-dialog\" class=\"history-dialog\">\n  <div class=\"history-modal-header\">\n    <div class=\"history-header-title-box\">\n      <h2 style=\"margin:0; font-size:22px; font-weight:800; display:flex; align-items:center; gap:8px;\">\n        <ion-icon name=\"time-outline\" style=\"font-size:24px; color:var(--gold);\"></ion-icon> <span>Lịch sử bài làm</span>\n      </h2>\n      <div style=\"display:flex; align-items:center; gap:8px; flex-wrap:wrap;\">\n        <span class=\"history-total-badge\" id=\"history-total-count\">0 lượt làm bài</span>\n        <span id=\"history-sync-indicator\" style=\"font-size:12px; font-weight:600; color:var(--mut);\"></span>\n      </div>\n    </div>\n    <div style=\"display:flex; align-items:center; gap:8px;\">\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"loadQuizHistoryFromSupabase(true)\" title=\"Tải lại từ máy chủ\" style=\"padding:0 8px; height:32px;\">\n        <ion-icon name=\"refresh-outline\" style=\"font-size: 18px;\"></ion-icon>\n      </button>\n      <button class=\"btn no sm teacher-only\" type=\"button\" onclick=\"clearAllQuizHistory()\" title=\"Xóa toàn bộ lịch sử\">\n        <ion-icon name=\"trash-outline\"></ion-icon> <span>Xóa tất cả</span>\n      </button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"closeHistoryModal()\" aria-label=\"Đóng\">\n        <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n      </button>\n    </div>\n  </div>\n\n  <div class=\"history-search-bar\" style=\"display:flex; gap:10px; align-items:center; flex-wrap:wrap;\">\n    <div style=\"flex:1; min-width:180px; position:relative; display:flex; align-items:center;\">\n      <span class=\"history-search-icon\">\n        <ion-icon name=\"search-outline\"></ion-icon>\n      </span>\n      <input id=\"history-search-input\" type=\"text\" placeholder=\"Tìm theo học sinh, lớp, từ khóa...\" oninput=\"onHistorySearchInput()\" style=\"width:100%;\">\n    </div>\n    <select id=\"history-set-filter\" onchange=\"onHistorySetFilterChange()\" style=\"height:44px; border-radius:12px; border:2px solid var(--stroke); padding:0 12px; font-weight:700; font-size:13px; background:var(--bg-card); color:var(--ink); max-width:260px;\" title=\"Lọc theo bộ câu hỏi\">\n      <option value=\"\">Tất cả bộ đề</option>\n    </select>\n  </div>\n  <div id=\"history-active-filter-badge\" style=\"display:none; margin:8px 0 4px; padding:6px 12px; background:rgba(217, 169, 79, 0.15); border:1.5px solid var(--gold); border-radius:10px; font-size:13px; font-weight:700; align-items:center; justify-content:space-between;\">\n    <span id=\"history-filter-badge-text\"></span>\n    <button class=\"btn gh sm\" type=\"button\" onclick=\"clearHistorySetFilter()\" style=\"padding:2px 8px; font-size:12px; height:24px;\">\n      <ion-icon name=\"close-circle-outline\"></ion-icon> Xem tất cả\n    </button>\n  </div>\n\n  <div class=\"history-list-wrap\" id=\"history-list-container\">\n    <!-- Rendered by JS -->\n  </div>\n\n  <div class=\"history-modal-footer\">\n    <button class=\"btn gh\" type=\"button\" onclick=\"closeHistoryModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- QUIZ HISTORY DETAIL MODAL -->\n<dialog id=\"history-detail-dialog\" class=\"history-dialog history-detail-modal\">\n  <div class=\"history-modal-header\">\n    <div class=\"history-header-title-box\">\n      <h2 style=\"margin:0; font-size:20px; font-weight:800;\" id=\"history-detail-title\">\n        Chi tiết bài làm\n      </h2>\n    </div>\n    <div style=\"display:flex; align-items:center; gap:8px;\">\n      <button class=\"btn cy sm\" id=\"btn-toggle-grading-mode\" type=\"button\" onclick=\"toggleHistoryGradingMode()\" title=\"Chuyển đổi giữa chế độ xem và chế độ chấm bài\">\n        <ion-icon name=\"create-outline\"></ion-icon> Chấm bài thủ công\n      </button>\n      <button class=\"btn gh sm\" type=\"button\" onclick=\"closeHistoryDetailModal()\" aria-label=\"Đóng\">\n        <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n      </button>\n    </div>\n  </div>\n\n  <div class=\"history-detail-content-wrap\">\n    <div id=\"history-detail-meta\"></div>\n    <div id=\"history-detail-grading-toolbar\" style=\"display:none;\"></div>\n    <h3 style=\"margin:16px 0 10px; font-size:16px; font-weight:800;\" id=\"history-detail-section-heading\">Danh sách câu hỏi &amp; Bài làm:</h3>\n    <div id=\"history-detail-questions-list\"></div>\n    <div id=\"history-detail-grading-summary\"></div>\n  </div>\n\n  <div class=\"history-modal-footer\">\n    <button class=\"btn au sm\" id=\"btn-save-grading-footer\" type=\"button\" onclick=\"saveManualGrading()\" style=\"display:none; font-weight:800;\">\n      <ion-icon name=\"checkmark-circle-outline\"></ion-icon> Lưu kết quả chấm\n    </button>\n    <button class=\"btn gh\" type=\"button\" onclick=\"closeHistoryDetailModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- WRITING MODAL 1: TẠO / CHỈNH SỬA BỘ ĐỀ LUYỆN VIẾT -->\n<dialog id=\"writing-set-dialog\" class=\"writing-modal writing-set-modal-large\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3 id=\"writing-dialog-heading\">Tạo bộ đề luyện viết</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeCreateWritingSetModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n  \n  <form id=\"writing-set-form\" onsubmit=\"handleSaveWritingSet(event)\" class=\"writing-modal-form-wrap\">\n    <input type=\"hidden\" id=\"edit-writing-set-id\">\n\n    <div class=\"writing-modal-body\">\n      <div class=\"g2\">\n        <div>\n          <label for=\"input-set-title\">Tên bộ đề / Tiêu đề <span style=\"color:var(--red)\">*</span></label>\n          <input type=\"text\" id=\"input-set-title\" required placeholder=\"Ví dụ: Nghị luận xã hội về ý nghĩa của sự sẻ chia...\">\n        </div>\n        <div>\n          <label for=\"input-set-category\">Chủ đề / Dạng đề <span style=\"color:var(--red)\">*</span></label>\n          <select id=\"input-set-category\" onchange=\"onCategorySelectChange(this.value)\">\n            <option value=\"doan-nlvh\">Đoạn văn NLVH (200 chữ)</option>\n            <option value=\"bai-nlvh\">Bài văn NLVH (600 chữ)</option>\n            <option value=\"doan-nlxh\">Đoạn văn NLXH (200 chữ)</option>\n            <option value=\"bai-nlxh\">Bài văn NLXH (600 chữ)</option>\n          </select>\n        </div>\n      </div>\n\n      <!-- Chế độ hiển thị & Quyền riêng tư -->\n      <div style=\"margin-top:14px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"writing-form-privacy\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"eye-outline\"></ion-icon> Chế độ hiển thị bộ đề:\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Chọn Công khai để học sinh nhìn thấy và làm bài; chọn Riêng tư để tạm ẩn.</span>\n        </div>\n        <select id=\"writing-form-privacy\" style=\"font-weight:700; padding:6px 12px; border-radius:8px; font-size:13px; background:var(--bg-card); color:var(--ink);\">\n          <option value=\"public\">🌐 Công khai (Hiển thị cho học sinh)</option>\n          <option value=\"private\">🔒 Riêng tư (Chỉ lưu cho giáo viên)</option>\n        </select>\n      </div>\n\n      <!-- Thời gian mở bài làm (OpenAt) -->\n      <div style=\"margin-top:10px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"writing-form-open-at\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"time-outline\"></ion-icon> Thời gian mở bài làm (Bắt đầu):\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Bỏ trống để mở ngay. Nếu đặt ngày/giờ, học sinh chỉ có thể vào viết từ thời điểm này.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"datetime-local\" id=\"writing-form-open-at\" style=\"font-weight:600; padding:6px 10px; border-radius:8px; font-size:13px;\">\n          <button type=\"button\" class=\"btn gh sm\" onclick=\"$('#writing-form-open-at').value=''\" title=\"Mở ngay\" style=\"padding:2px 8px; height:32px;\">✕</button>\n        </div>\n      </div>\n\n      <!-- Giới hạn lượt làm bài -->\n      <div style=\"margin-top:10px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"writing-form-max-attempts\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"timer-outline\"></ion-icon> Giới hạn lượt làm bài cho học sinh:\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Số lượt tối đa (0 = Không giới hạn). Học sinh đã làm đủ lượt sẽ chỉ được xem lại bài đã nộp.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"number\" id=\"writing-form-max-attempts\" min=\"0\" max=\"999\" value=\"0\" style=\"width:85px; text-align:center; font-weight:700; padding:6px 8px; border-radius:8px;\">\n          <span style=\"font-size:13px; font-weight:600; color:var(--mut);\">lượt</span>\n        </div>\n      </div>\n\n      <!-- Thời hạn nộp bài (Deadline) -->\n      <div style=\"margin-top:10px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"writing-form-deadline\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"calendar-outline\"></ion-icon> Hạn chót nộp bài (Deadline):\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Bỏ trống nếu không đặt hạn nộp. Quá hạn, học sinh chỉ có thể xem lại bài đã nộp.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"datetime-local\" id=\"writing-form-deadline\" style=\"font-weight:600; padding:6px 10px; border-radius:8px; font-size:13px;\">\n          <button type=\"button\" class=\"btn gh sm\" onclick=\"$('#writing-form-deadline').value=''\" title=\"Xóa hạn nộp\" style=\"padding:2px 8px; height:32px;\">✕</button>\n        </div>\n      </div>\n\n      <div style=\"margin-top:16px;\">\n        <label for=\"input-set-prompt\">Nội dung đề bài chi tiết <span style=\"color:var(--red)\">*</span></label>\n        <textarea id=\"input-set-prompt\" required placeholder=\"Dán nội dung đề bài, câu hỏi yêu cầu tại đây...\"></textarea>\n      </div>\n\n      <!-- Các phần viết -->\n      <div style=\"margin-top:20px;\">\n        <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;\">\n          <label style=\"margin:0; font-size:15px; font-weight:700;\">\n            Các phần bài viết (<span id=\"modal-section-count\">3</span> phần)\n          </label>\n          <div style=\"display:flex; gap:8px;\">\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"applyQuickOutlineTemplate()\">Nạp cấu trúc mẫu</button>\n            <button type=\"button\" class=\"btn cy sm\" onclick=\"addNewOutlineSectionRow()\">\n              <ion-icon name=\"add-outline\"></ion-icon> Thêm phần\n            </button>\n          </div>\n        </div>\n        <p class=\"mut\" style=\"font-size:13px; margin:0 0 12px;\">Cấu trúc chuẩn 3 phần (Mở bài, Thân bài, Kết bài).</p>\n        \n        <div id=\"modal-sections-editor\" class=\"modal-sections-editor-list\"></div>\n      </div>\n    </div>\n\n    <div class=\"writing-modal-footer\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeCreateWritingSetModal()\">Hủy</button>\n      <button type=\"submit\" class=\"btn au\">\n        <ion-icon name=\"save-outline\"></ion-icon> Lưu bộ đề\n      </button>\n    </div>\n  </form>\n</dialog>\n\n<!-- WRITING MODAL 2: XEM BÀI HOÀN CHỈNH & XUẤT BÀI -->\n<dialog id=\"writing-review-dialog\" class=\"writing-modal review-modal\">\n  <div class=\"writing-modal-header review-header\">\n    <div class=\"writing-modal-title\">\n      <h3>Tổng quan bài viết</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeWritingReviewModal()\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <div class=\"writing-modal-body review-body\">\n    <!-- Stat metrics cards -->\n    <div class=\"review-stats-grid\">\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-words\">0</span>\n        <span class=\"stat-label\">Tổng số từ</span>\n      </div>\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-paragraphs\">0</span>\n        <span class=\"stat-label\">Số đoạn văn</span>\n      </div>\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-time\">00:00:00</span>\n        <span class=\"stat-label\">Thời gian làm</span>\n      </div>\n      <div class=\"review-stat-card\">\n        <span class=\"stat-num\" id=\"review-stat-wpm\">0</span>\n        <span class=\"stat-label\">Tốc độ (từ / phút)</span>\n      </div>\n    </div>\n\n    <!-- Combined essay text -->\n    <div class=\"review-essay-box\">\n      <div class=\"review-essay-meta\">\n        <h4 id=\"review-essay-topic\">Đề bài luyện viết</h4>\n        <span class=\"tag ok\" id=\"review-essay-tag\">Hoàn tất</span>\n      </div>\n      <div class=\"review-essay-text\" id=\"review-essay-combined-content\"></div>\n    </div>\n\n    <!-- Feedback suggestions box -->\n    <div class=\"review-feedback-box\">\n      <div class=\"review-feedback-title\">Nhận xét sơ bộ:</div>\n      <div id=\"review-feedback-content\" class=\"review-feedback-list\"></div>\n    </div>\n  </div>\n\n  <div class=\"writing-modal-footer review-footer\">\n    <button class=\"btn gh\" type=\"button\" onclick=\"copyCombinedEssayToClipboard()\">\n      <ion-icon name=\"copy-outline\"></ion-icon> Sao chép bài viết\n    </button>\n    <button class=\"btn cy\" type=\"button\" onclick=\"downloadCombinedEssayAsText()\">\n      <ion-icon name=\"download-outline\"></ion-icon> Tải tệp .txt\n    </button>\n    <button class=\"btn au\" type=\"button\" onclick=\"submitWritingEssay(); closeWritingReviewModal();\" style=\"font-weight:800;\">\n      <ion-icon name=\"send-outline\"></ion-icon> Nộp bài chấm điểm\n    </button>\n    <button class=\"btn gh\" type=\"button\" onclick=\"closeWritingReviewModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- READING MODAL 1: TẠO / SỬA ĐỀ ĐỌC HIỂU -->\n<dialog id=\"reading-edit-modal\" class=\"writing-modal reading-modal\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3 id=\"reading-modal-title\">Thêm bộ đề đọc hiểu mới</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeReadingEditModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <form id=\"reading-edit-form\" onsubmit=\"handleReadingFormSubmit(event)\" class=\"writing-modal-form-wrap\">\n    <input type=\"hidden\" id=\"reading-form-id\">\n\n    <div class=\"writing-modal-body\">\n      <!-- Hàng 1: Tên đề bài & Chủ đề -->\n      <div class=\"g2\" style=\"margin-bottom:14px;\">\n        <div>\n          <label for=\"reading-form-title\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Tựa bài / Tên đề đọc hiểu <span style=\"color:var(--red)\">*</span>\n          </label>\n          <input type=\"text\" id=\"reading-form-title\" required placeholder=\"Ví dụ: Sống hết mình cho thời khắc hiện tại...\" style=\"width:100%;\">\n        </div>\n        <div>\n          <label for=\"reading-form-category\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Chủ đề / Dạng bài <span style=\"color:var(--red)\">*</span>\n          </label>\n          <select id=\"reading-form-category\" required style=\"width:100%;\"></select>\n        </div>\n      </div>\n\n      <!-- Trạng thái xuất bản (Published / Draft) -->\n      <div style=\"margin-bottom:14px;\">\n        <label for=\"reading-form-status\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n          Trạng thái bộ đề <span style=\"font-weight:400; color:var(--mut); font-size:12.5px;\">(Chọn Đã xuất bản để học sinh nhìn thấy và làm bài)</span>\n        </label>\n        <select id=\"reading-form-status\" style=\"width:100%;\">\n          <option value=\"published\">🟢 Đã xuất bản (Published - Hiển thị cho học sinh)</option>\n          <option value=\"draft\">🟡 Bản nháp (Draft - Chỉ lưu riêng cho giáo viên)</option>\n        </select>\n      </div>\n\n      <!-- Thời gian mở bài làm (OpenAt) -->\n      <div style=\"margin-bottom:12px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"reading-form-open-at\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"time-outline\"></ion-icon> Thời gian mở bài làm (Bắt đầu):\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Bỏ trống để mở ngay. Nếu đặt ngày/giờ, học sinh chỉ có thể vào làm từ thời điểm này.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"datetime-local\" id=\"reading-form-open-at\" style=\"font-weight:600; padding:6px 10px; border-radius:8px; font-size:13px;\">\n          <button type=\"button\" class=\"btn gh sm\" onclick=\"$('#reading-form-open-at').value=''\" title=\"Mở ngay\" style=\"padding:2px 8px; height:32px;\">✕</button>\n        </div>\n      </div>\n\n      <!-- Giới hạn lượt làm bài -->\n      <div style=\"margin-bottom:12px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"reading-form-max-attempts\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"timer-outline\"></ion-icon> Giới hạn lượt làm bài cho học sinh:\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Số lượt tối đa (0 = Không giới hạn). Học sinh đã làm đủ lượt sẽ chỉ được xem lại bài đã nộp.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"number\" id=\"reading-form-max-attempts\" min=\"0\" max=\"999\" value=\"0\" style=\"width:85px; text-align:center; font-weight:700; padding:6px 8px; border-radius:8px;\">\n          <span style=\"font-size:13px; font-weight:600; color:var(--mut);\">lượt</span>\n        </div>\n      </div>\n\n      <!-- Thời hạn nộp bài (Deadline) -->\n      <div style=\"margin-bottom:14px; background:var(--bg); border:1px solid var(--stroke); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;\">\n        <div>\n          <label for=\"reading-form-deadline\" style=\"font-weight:700; margin:0; display:flex; align-items:center; gap:6px;\">\n            <ion-icon name=\"calendar-outline\"></ion-icon> Hạn chót nộp bài (Deadline):\n          </label>\n          <span class=\"mut\" style=\"font-size:12px;\">Bỏ trống nếu không đặt hạn nộp. Quá hạn, học sinh chỉ có thể xem lại bài đã nộp.</span>\n        </div>\n        <div style=\"display:flex; align-items:center; gap:6px;\">\n          <input type=\"datetime-local\" id=\"reading-form-deadline\" style=\"font-weight:600; padding:6px 10px; border-radius:8px; font-size:13px;\">\n          <button type=\"button\" class=\"btn gh sm\" onclick=\"$('#reading-form-deadline').value=''\" title=\"Xóa hạn nộp\" style=\"padding:2px 8px; height:32px;\">✕</button>\n        </div>\n      </div>\n\n      <!-- Hàng 2: Tác phẩm, Tác giả & Thể loại -->\n      <div class=\"g3\" style=\"display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:14px;\">\n        <div>\n          <label for=\"reading-form-work\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Tên tác phẩm\n          </label>\n          <input type=\"text\" id=\"reading-form-work\" placeholder=\"Ví dụ: Cách sống: từ bình thường trở nên phi thường...\" style=\"width:100%;\">\n        </div>\n        <div>\n          <label for=\"reading-form-author\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Tác giả\n          </label>\n          <input type=\"text\" id=\"reading-form-author\" placeholder=\"Ví dụ: Inamori Kazuo\" style=\"width:100%;\">\n        </div>\n        <div>\n          <label for=\"reading-form-genre\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n            Thể loại văn bản\n          </label>\n          <input type=\"text\" id=\"reading-form-genre\" placeholder=\"Ví dụ: Văn bản nghị luận, Thơ tự do...\" style=\"width:100%;\">\n        </div>\n      </div>\n\n      <!-- Ngữ liệu đọc hiểu -->\n      <div style=\"margin-bottom:16px;\">\n        <label for=\"reading-form-passage\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n          Văn bản / Ngữ liệu đọc hiểu (Đoạn trích) <span style=\"color:var(--red)\">*</span>\n        </label>\n        <textarea id=\"reading-form-passage\" required rows=\"9\" placeholder=\"Dán hoặc nhập toàn bộ đoạn trích / văn bản đọc hiểu vào đây...\" style=\"width:100%; font-family:inherit; line-height:1.6;\"></textarea>\n      </div>\n\n      <!-- Nguồn trích dẫn -->\n      <div style=\"margin-bottom:18px;\">\n        <label for=\"reading-form-source\" style=\"font-weight:700; display:block; margin-bottom:5px;\">\n          Ghi chú nguồn trích dẫn tác phẩm, tác giả, NXB, năm, trang\n        </label>\n        <input type=\"text\" id=\"reading-form-source\" placeholder=\"(Trích Cách sống: từ bình thường trở nên phi thường, Inamori Kazuo, NXB Lao động, 2020, tr. 103-104)\" style=\"width:100%;\">\n      </div>\n\n      <!-- Danh sách câu hỏi đọc hiểu -->\n      <div class=\"reading-form-questions-section\">\n        <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;\">\n          <div>\n            <h4 style=\"margin:0; font-size:16px; font-weight:800; display:flex; align-items:center; gap:8px; flex-wrap:wrap;\">\n              <span>Hệ thống câu hỏi đọc hiểu</span>\n              <span class=\"tag cy\" style=\"font-size:12.5px; font-weight:800; padding:3px 10px;\">\n                Tổng điểm: <b id=\"reading-modal-total-score\">10.0đ</b> / 10.0 điểm\n              </span>\n            </h4>\n            <span class=\"mut\" style=\"font-size:12.5px;\">Chuẩn thang 10đ: Câu 1,2: Nhận biết (1.5đ) • Câu 3,4: Thông hiểu (2.0đ) • Câu 5: Vận dụng (3.0đ)</span>\n          </div>\n          <div style=\"display:flex; gap:6px; flex-wrap:wrap;\">\n            <button type=\"button\" class=\"btn au sm\" onclick=\"applyStandard5QuestionTemplate()\" title=\"Tự động nạp khung chuẩn 5 câu: 2 Nhận biết • 2 Thông hiểu • 1 Vận dụng (Đoạn văn) - Chuẩn thang 10 điểm\">\n              <ion-icon name=\"flash-outline\"></ion-icon> Mẫu chuẩn 5 câu\n            </button>\n            <button type=\"button\" class=\"btn gh sm\" onclick=\"openQuickImportModal()\" title=\"Dán nhanh toàn bộ đề thi để tự động trích xuất\">\n              <ion-icon name=\"clipboard-outline\"></ion-icon> Dán nhanh đề thi\n            </button>\n            <button type=\"button\" class=\"btn cy sm\" onclick=\"addQuestionToReadingForm()\">\n              <ion-icon name=\"add-outline\"></ion-icon> Thêm câu hỏi\n            </button>\n          </div>\n        </div>\n        <div id=\"reading-form-questions-list\"></div>\n      </div>\n    </div>\n\n    <div class=\"writing-modal-footer\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeReadingEditModal()\">Hủy</button>\n      <button type=\"submit\" class=\"btn au\" style=\"font-weight:800;\">\n        <ion-icon name=\"save-outline\"></ion-icon> Lưu đề đọc hiểu\n      </button>\n    </div>\n  </form>\n</dialog>\n\n<!-- READING MODAL 2: DÁN NHANH TOÀN BỘ ĐỀ THI (QUICK IMPORT) -->\n<dialog id=\"reading-quick-import-modal\" class=\"writing-modal\" style=\"max-width:680px;\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3 style=\"display:flex; align-items:center; gap:8px;\">\n        <ion-icon name=\"clipboard-outline\"></ion-icon> Dán nhanh toàn bộ đề thi Đọc hiểu\n      </h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeQuickImportModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n  <div class=\"writing-modal-body\" style=\"padding:18px 22px;\">\n    <p class=\"mut\" style=\"margin:0 0 12px; font-size:13.5px; line-height:1.5;\">\n      Dán nguyên văn đề thi (gồm đoạn trích, nguồn <i>(Trích ...)</i> và các <b>Câu 1, 2, 3, 4, 5</b> hoặc phần Làm văn). Hệ thống sẽ tự động bóc tách và điền vào các ô cho bạn!\n    </p>\n    <textarea id=\"reading-quick-import-text\" rows=\"12\" placeholder=\"Ví dụ:\nI. PHẦN ĐỌC HIỂU (3,0 điểm)\nĐọc đoạn trích:\nKhông cần ngôn ngữ, mọi sự sống nhỏ nhoi trong tự nhiên...\n(Trích Cách sống: từ bình thường trở nên phi thường, Inamori Kazuo, NXB Lao động, 2020)\n\nThực hiện các yêu cầu sau:\nCâu 1: Xác định phương thức biểu đạt chính...\nCâu 2: Theo đoạn trích...\nCâu 3: Chỉ ra điểm tương đồng...\nCâu 4: Anh/chị có đồng tình...\nCâu 5: Viết đoạn văn (khoảng 200 chữ)...\" style=\"width:100%; font-family:inherit; font-size:13.5px; line-height:1.6;\"></textarea>\n  </div>\n  <div class=\"writing-modal-footer\">\n    <button type=\"button\" class=\"btn gh\" onclick=\"closeQuickImportModal()\">Hủy</button>\n    <button type=\"button\" class=\"btn au\" onclick=\"handleQuickImportSubmit()\" style=\"font-weight:800;\">\n      <ion-icon name=\"flash-outline\"></ion-icon> Tự động bóc tách &amp; Áp dụng\n    </button>\n  </div>\n</dialog>\n\n<!-- READING MODAL 3: KẾT QUẢ / ĐÁP ÁN THAM KHẢO KHI NỘP BÀI -->\n<dialog id=\"reading-result-modal\" class=\"writing-modal reading-modal\">\n  <div class=\"writing-modal-header\">\n    <div class=\"writing-modal-title\">\n      <h3>Kết quả bài làm &amp; Đáp án tham khảo</h3>\n    </div>\n    <button class=\"btn sm gh\" type=\"button\" onclick=\"closeReadingResultModal()\" aria-label=\"Đóng\">\n      <ion-icon name=\"close-outline\" style=\"font-size: 20px;\"></ion-icon>\n    </button>\n  </div>\n\n  <div class=\"writing-modal-body\" style=\"padding:20px 24px;\">\n    <div class=\"reading-result-hero\">\n      <div style=\"font-size:36px; margin-bottom:6px; color:var(--primary);\">\n        <ion-icon name=\"ribbon-outline\"></ion-icon>\n      </div>\n      <h3 style=\"margin:0 0 6px; font-weight:800;\">Đã hoàn thành bài đọc hiểu!</h3>\n      <p class=\"mut\" style=\"margin:0; font-size:14px;\">Dưới đây là phần so sánh giữa câu trả lời của bạn và đáp án chuẩn.</p>\n    </div>\n\n    <div id=\"reading-result-comparison-list\" style=\"margin-top:20px;\"></div>\n  </div>\n\n  <div class=\"writing-modal-footer\">\n    <button type=\"button\" class=\"btn au\" onclick=\"closeReadingResultModal(); go('home'); toast('Nộp bài thành công! Bài làm đọc hiểu đã được lưu vào Lịch sử.', 'ok');\" style=\"font-weight:800;\">\n      <ion-icon name=\"home-outline\"></ion-icon> Về trang chủ\n    </button>\n    <button type=\"button\" class=\"btn gh\" onclick=\"closeReadingResultModal()\">Đóng</button>\n  </div>\n</dialog>\n\n<!-- SET ATTEMPT LIMIT, PRIVACY & DEADLINE DIALOG (GIÁO VIÊN & ADMIN) -->\n<!-- SET ATTEMPT LIMIT, PRIVACY & DEADLINE DIALOG (GIÁO VIÊN & ADMIN) -->\n<dialog id=\"set-attempt-limit-dialog\" class=\"set-cfg-dialog\">\n  <div class=\"set-cfg-header\">\n    <div class=\"set-cfg-header-title\">\n      <div class=\"set-cfg-icon\"><ion-icon name=\"options-outline\"></ion-icon></div>\n      <div>\n        <h3>Cài đặt &amp; Giao bài</h3>\n        <p>Quyền Giáo viên &amp; Quản trị viên</p>\n      </div>\n    </div>\n    <button type=\"button\" class=\"set-cfg-close-btn\" onclick=\"closeSetAttemptLimitModal()\" title=\"Đóng\">\n      <ion-icon name=\"close-outline\"></ion-icon>\n    </button>\n  </div>\n\n  <div class=\"set-cfg-body\">\n    <!-- Thông tin bộ đề -->\n    <div class=\"set-cfg-target-card\">\n      <div class=\"set-cfg-target-type\" id=\"limit-modal-type-badge\">DẠNG BÀI</div>\n      <div class=\"set-cfg-target-title\" id=\"limit-modal-title\">Tên bộ đề</div>\n    </div>\n\n    <input type=\"hidden\" id=\"limit-modal-target-type\" value=\"\">\n    <input type=\"hidden\" id=\"limit-modal-target-id\" value=\"\">\n\n    <!-- CẶP CÀI ĐẶT: CHẾ ĐỘ HIỂN THỊ & SỐ LƯỢT LÀM -->\n    <div class=\"set-cfg-grid-2\">\n      <!-- 1. Chế độ hiển thị -->\n      <div class=\"set-cfg-card\">\n        <label for=\"limit-modal-privacy\" class=\"set-cfg-label\">\n          <ion-icon name=\"eye-outline\"></ion-icon> <span>Chế độ hiển thị</span>\n        </label>\n        <select id=\"limit-modal-privacy\" class=\"set-cfg-select\">\n          <option value=\"public\">🌐 Công khai</option>\n          <option value=\"private\">🔒 Riêng tư</option>\n        </select>\n      </div>\n\n      <!-- 2. Giới hạn số lượt làm -->\n      <div class=\"set-cfg-card\">\n        <div class=\"set-cfg-label-row\">\n          <label for=\"limit-modal-input\" class=\"set-cfg-label\">\n            <ion-icon name=\"timer-outline\"></ion-icon> <span>Lượt làm bài</span>\n          </label>\n          <span id=\"limit-modal-explain\" class=\"set-cfg-status status-gray\">Không giới hạn</span>\n        </div>\n        <div class=\"set-cfg-input-stepper-row\">\n          <input type=\"number\" id=\"limit-modal-input\" min=\"0\" max=\"999\" step=\"1\" value=\"0\" class=\"set-cfg-number-input\" oninput=\"onLimitModalInputChange(this.value)\">\n          <div class=\"set-cfg-chips-inline\">\n            <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalPreset(0)\" title=\"Không giới hạn\">♾️</button>\n            <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalPreset(1)\" title=\"1 lượt\">1</button>\n            <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalPreset(2)\" title=\"2 lượt\">2</button>\n            <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalPreset(3)\" title=\"3 lượt\">3</button>\n            <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalPreset(5)\" title=\"5 lượt\">5</button>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <!-- 3. Lịch mở đề (Thời gian bắt đầu làm) -->\n    <div class=\"set-cfg-card\">\n      <div class=\"set-cfg-label-row\">\n        <label for=\"limit-modal-open-at\" class=\"set-cfg-label\">\n          <ion-icon name=\"time-outline\"></ion-icon> <span>Thời gian mở đề</span>\n        </label>\n        <span id=\"limit-modal-open-at-status\" class=\"set-cfg-status status-green\">🟢 Mở ngay</span>\n      </div>\n      <div class=\"set-cfg-input-row\">\n        <input type=\"datetime-local\" id=\"limit-modal-open-at\" class=\"set-cfg-datetime-input\" onchange=\"onLimitModalOpenAtChange(this.value)\">\n        <button type=\"button\" class=\"set-cfg-action-btn\" onclick=\"setLimitModalOpenAtPreset('none')\">✕ Mở ngay</button>\n      </div>\n      <div class=\"set-cfg-chips-wrap\">\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalOpenAtPreset('none')\">🚀 Mở ngay</button>\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalOpenAtPreset('tomorrow-8am')\">🌅 8:00 Sáng mai</button>\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalOpenAtPreset('tomorrow-14pm')\">☀️ 14:00 Chiều mai</button>\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalOpenAtPreset('monday-8am')\">📅 Đầu tuần tới (8:00)</button>\n      </div>\n    </div>\n\n    <!-- 4. Hạn chót nộp bài (Deadline) -->\n    <div class=\"set-cfg-card\">\n      <div class=\"set-cfg-label-row\">\n        <label for=\"limit-modal-deadline\" class=\"set-cfg-label\">\n          <ion-icon name=\"calendar-outline\"></ion-icon> <span>Hạn chót nộp bài</span>\n        </label>\n        <span id=\"limit-modal-deadline-status\" class=\"set-cfg-status status-gray\">Không đặt hạn</span>\n      </div>\n      <div class=\"set-cfg-input-row\">\n        <input type=\"datetime-local\" id=\"limit-modal-deadline\" class=\"set-cfg-datetime-input\" onchange=\"onLimitModalDeadlineChange(this.value)\">\n        <button type=\"button\" class=\"set-cfg-action-btn\" onclick=\"setLimitModalDeadlinePreset('none')\">✕ Xóa hạn</button>\n      </div>\n      <div class=\"set-cfg-chips-wrap\">\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalDeadlinePreset('none')\">♾️ Không hạn</button>\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalDeadlinePreset('tonight')\">🌙 Tối nay (23:59)</button>\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalDeadlinePreset('tomorrow')\">☀️ Tối mai (23:59)</button>\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalDeadlinePreset('3days')\">📅 3 ngày tới</button>\n        <button type=\"button\" class=\"set-cfg-chip\" onclick=\"setLimitModalDeadlinePreset('7days')\">🗓️ 1 tuần tới</button>\n      </div>\n    </div>\n\n    <!-- FOOTER ACTIONS -->\n    <div class=\"set-cfg-footer\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeSetAttemptLimitModal()\">Hủy</button>\n      <button type=\"button\" class=\"btn au\" onclick=\"submitSetAttemptLimit()\">\n        <ion-icon name=\"checkmark-circle-outline\"></ion-icon> <span>Lưu cài đặt</span>\n      </button>\n    </div>\n  </div>\n</dialog>\n\n<!-- EXIT EXAM CONFIRMATION DIALOG (CẢNH BÁO NỘP BÀI KHI THOÁT) -->\n<dialog id=\"exit-exam-confirm-dialog\" class=\"writing-modal exit-confirm-modal\" style=\"max-width:520px; border-radius:24px; border:3.5px solid var(--stroke); box-shadow:0 12px 0 var(--stroke); padding:0; overflow:hidden;\">\n  <div style=\"background:linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); padding:20px 24px; color:#ffffff; display:flex; align-items:center; justify-content:space-between; gap:12px;\">\n    <div style=\"display:flex; align-items:center; gap:12px;\">\n      <span style=\"font-size:32px; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.25)); line-height:1;\"><ion-icon name=\"warning-outline\"></ion-icon></span>\n      <div>\n        <h3 style=\"margin:0; font-size:19px; font-weight:800; color:#ffffff;\">Xác nhận thoát bài làm?</h3>\n        <p style=\"margin:2px 0 0; font-size:12.5px; opacity:0.95; font-weight:600;\">Hành động này sẽ nộp bài và tính 1 lượt làm</p>\n      </div>\n    </div>\n    <button type=\"button\" class=\"btn gh sm\" onclick=\"closeExitConfirmModal()\" style=\"border:none; color:#ffffff; background:rgba(0,0,0,0.2); width:32px; height:32px; padding:0; border-radius:50%; font-size:18px;\">✕</button>\n  </div>\n\n  <div style=\"padding:22px 24px; background:var(--bg-card);\">\n    <div style=\"background:rgba(239, 68, 68, 0.08); border:2px dashed rgba(239, 68, 68, 0.4); border-radius:14px; padding:14px 16px; margin-bottom:18px;\">\n      <p style=\"margin:0 0 8px; font-weight:800; color:#dc2626; font-size:14px; display:flex; align-items:center; gap:6px;\">\n        <ion-icon name=\"alert-circle-outline\" style=\"font-size:18px;\"></ion-icon> LƯU Ý QUAN TRỌNG TRƯỚC KHI RỜI ĐI:\n      </p>\n      <ul style=\"margin:0; padding-left:20px; font-size:13px; line-height:1.6; color:var(--ink);\">\n        <li>Hệ thống sẽ <b>tự động nộp các câu bạn đã làm</b> tính đến thời điểm này.</li>\n        <li>Hệ thống sẽ <b>tính mất 1 LƯỢT LÀM</b> của bạn trên bộ câu hỏi này.</li>\n        <li>Bài làm sẽ được lưu vào mục <b>Lịch sử</b> để giáo viên xem xét và đối chiếu.</li>\n      </ul>\n    </div>\n\n    <p style=\"font-size:13.5px; font-weight:600; color:var(--ink); margin:0 0 20px; text-align:center;\">\n      Bạn có chắc chắn muốn kết thúc bài làm và nộp kết quả ngay bây giờ không?\n    </p>\n\n    <div style=\"display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap;\">\n      <button type=\"button\" class=\"btn gh\" onclick=\"closeExitConfirmModal()\" style=\"font-weight:700; flex:1; min-width:140px; justify-content:center;\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon> Tiếp tục làm bài\n      </button>\n      <button type=\"button\" class=\"btn no\" id=\"btn-confirm-exit-action\" onclick=\"executeExitSessionSubmit()\" style=\"font-weight:800; flex:1; min-width:160px; justify-content:center;\">\n        <ion-icon name=\"log-out-outline\"></ion-icon> Xác nhận nộp &amp; Thoát\n      </button>\n    </div>\n  </div>\n</dialog>\n\n<!-- =======================================================================\n     GAMIFICATION DIALOG (CHUỖI NGÀY HỌC, PROGRESS BAR & BỘ SƯU TẬP HUY HIỆU)\n     ======================================================================= -->\n<dialog id=\"gamification-dialog\" class=\"gami-modal\">\n  <div class=\"gami-modal-header\">\n    <div style=\"display:flex; align-items:center; gap:12px;\">\n      <span style=\"font-size:34px; line-height:1;\">🔥</span>\n      <div>\n        <h3 style=\"margin:0; font-size:20px; font-weight:800; color:#ffffff;\">Hành Trình Chinh Phục Ngữ Văn</h3>\n        <p style=\"margin:2px 0 0; font-size:13px; opacity:0.95; font-weight:600;\">Chuỗi ngày học liên tục (Streak), Cấp độ &amp; Huy hiệu danh giá</p>\n      </div>\n    </div>\n    <button type=\"button\" class=\"btn gh sm\" onclick=\"closeGamificationModal()\" style=\"background:rgba(0,0,0,0.2); color:#fff; border:none; border-radius:50%; width:34px; height:34px; padding:0;\">✕</button>\n  </div>\n\n  <div class=\"gami-modal-body\" id=\"gamification-modal-body\">\n    <!-- Sẽ được render động bởi enhancements.js -->\n  </div>\n</dialog>\n\n<!-- =======================================================================\n     QUOTE OF THE DAY DIALOG (GÓC TRUYỀN CẢM HỨNG & SỔ TAY VĂN HỌC)\n     ======================================================================= -->\n<dialog id=\"quote-of-day-dialog\" class=\"qotd-modal\">\n  <div class=\"qotd-modal-header\">\n    <div style=\"display:flex; align-items:center; gap:12px;\">\n      <span style=\"font-size:32px; line-height:1;\">✨</span>\n      <div>\n        <h3 style=\"margin:0; font-size:20px; font-weight:800; color:#ffffff;\">Góc Truyền Cảm Hứng Văn Học</h3>\n        <p style=\"margin:2px 0 0; font-size:13px; opacity:0.95; font-weight:600;\">Nuôi dưỡng tâm hồn &amp; Kho nhận định lý luận văn học đắt giá</p>\n      </div>\n    </div>\n    <button type=\"button\" class=\"btn gh sm\" onclick=\"closeQuoteOfDayModal()\" style=\"background:rgba(0,0,0,0.2); color:#fff; border:none; border-radius:50%; width:34px; height:34px; padding:0;\">✕</button>\n  </div>\n\n  <div class=\"qotd-modal-body\" id=\"qotd-modal-body\">\n    <!-- Sẽ được render động bởi enhancements.js -->\n  </div>\n</dialog>\n\n<!-- =======================================================================\n     QA & BUG REPORT DIALOG (BÁO CÁO LỖI / THẮC MẮC KIẾN THỨC)\n     ======================================================================= -->\n<dialog id=\"qa-report-dialog\" class=\"qa-modal\">\n  <div class=\"qa-modal-header\">\n    <div style=\"display:flex; align-items:center; gap:12px;\">\n      <span style=\"font-size:32px; line-height:1;\">💬</span>\n      <div>\n        <h3 style=\"margin:0; font-size:19px; font-weight:800; color:#ffffff;\">Báo Cáo Lỗi &amp; Giải Đáp Thắc Mắc</h3>\n        <p style=\"margin:2px 0 0; font-size:12.5px; opacity:0.95; font-weight:600;\">Đặt câu hỏi trực tiếp để được giải đáp kịp thời trên lớp</p>\n      </div>\n    </div>\n    <button type=\"button\" class=\"btn gh sm\" onclick=\"closeQaReportModal()\" style=\"background:rgba(0,0,0,0.2); color:#fff; border:none; border-radius:50%; width:34px; height:34px; padding:0;\">✕</button>\n  </div>\n\n  <div class=\"qa-modal-tabs\">\n    <button type=\"button\" class=\"qa-tab-btn active\" id=\"qa-tab-btn-form\" onclick=\"switchQaModalTab('form')\">\n      <ion-icon name=\"paper-plane-outline\"></ion-icon> <span>Gửi câu hỏi / Báo lỗi</span>\n    </button>\n    <button type=\"button\" class=\"qa-tab-btn\" id=\"qa-tab-btn-list\" onclick=\"switchQaModalTab('list')\">\n      <ion-icon name=\"list-outline\"></ion-icon> <span>Danh sách thắc mắc (<span id=\"qa-saved-count\">0</span>)</span>\n    </button>\n    <button type=\"button\" class=\"qa-tab-btn\" id=\"qa-tab-btn-config\" onclick=\"switchQaModalTab('config')\">\n      <ion-icon name=\"settings-outline\"></ion-icon> <span>Kết nối Email / Sheets</span>\n    </button>\n  </div>\n\n  <div class=\"qa-modal-body\">\n    <!-- TAB 1: FORM GỬI THẮC MẮC / BÁO LỖI -->\n    <div id=\"qa-pane-form\">\n      <div class=\"qa-context-banner\" id=\"qa-context-banner\">\n        <ion-icon name=\"location-outline\"></ion-icon>\n        <span>Vị trí đang xem: <b id=\"qa-current-context-label\">Trang chủ</b></span>\n      </div>\n\n      <div class=\"qa-form-grid-2\">\n        <div>\n          <label class=\"qa-label\" for=\"qa-student-name\">Họ và tên học sinh <span style=\"color:var(--red);\">*</span></label>\n          <input type=\"text\" id=\"qa-student-name\" class=\"qa-input\" placeholder=\"Nhập họ tên của em...\" maxlength=\"60\">\n        </div>\n        <div>\n          <label class=\"qa-label\" for=\"qa-student-class\">Lớp</label>\n          <input type=\"text\" id=\"qa-student-class\" class=\"qa-input\" placeholder=\"Ví dụ: 11A1, 12A2...\" maxlength=\"25\">\n        </div>\n      </div>\n\n      <div style=\"margin-top:12px;\">\n        <label class=\"qa-label\" for=\"qa-issue-type\">Phân loại nội dung</label>\n        <select id=\"qa-issue-type\" class=\"qa-select\">\n          <option value=\"Thắc mắc kiến thức\">❓ Thắc mắc kiến thức Ngữ văn (Cần giải đáp trên lớp)</option>\n          <option value=\"Góp ý viết đoạn/bài\">✍️ Xin hướng dẫn cách lập dàn ý / viết đoạn văn 200 chữ</option>\n          <option value=\"Báo lỗi câu hỏi/đáp án\">🐞 Báo lỗi nội dung câu hỏi / Đáp án chưa chính xác</option>\n          <option value=\"Báo lỗi kỹ thuật\">⚙️ Báo lỗi hiển thị / Kỹ thuật trên web</option>\n        </select>\n      </div>\n\n      <div style=\"margin-top:12px;\">\n        <label class=\"qa-label\" for=\"qa-message-input\">Nội dung câu hỏi hoặc lỗi phát hiện <span style=\"color:var(--red);\">*</span></label>\n        <div class=\"qa-quick-chips\">\n          <button type=\"button\" class=\"qa-chip\" onclick=\"fillQuickQaTemplate('Em chưa hiểu rõ cách triển khai luận điểm và dẫn chứng ở đề này ạ.')\">+ Chưa hiểu cách triển khai luận điểm</button>\n          <button type=\"button\" class=\"qa-chip\" onclick=\"fillQuickQaTemplate('Thầy/cô giải thích thêm giúp em tác dụng biện pháp tu từ trong ngữ liệu này với ạ.')\">+ Hỏi về biện pháp tu từ</button>\n          <button type=\"button\" class=\"qa-chip\" onclick=\"fillQuickQaTemplate('Cho em hỏi công thức viết đoạn 200 chữ cho chủ đề này nên bắt đầu như thế nào ạ?')\">+ Hỏi cách viết đoạn 200 chữ</button>\n          <button type=\"button\" class=\"qa-chip\" onclick=\"fillQuickQaTemplate('Em thấy đáp án của câu hỏi này có điểm chưa khớp với ngữ liệu, nhờ kiểm tra lại giúp em ạ.')\">+ Báo lỗi đáp án câu hỏi</button>\n        </div>\n        <textarea id=\"qa-message-input\" class=\"qa-textarea\" rows=\"4\" placeholder=\"Nhập chi tiết phần kiến thức em chưa hiểu hoặc lỗi em gặp phải để được giải đáp kịp thời trên lớp...\" maxlength=\"2000\"></textarea>\n      </div>\n\n      <div class=\"qa-submit-row\">\n        <button type=\"button\" class=\"btn gh sm\" onclick=\"submitQaViaMailto()\" title=\"Mở trình gửi Email trực tiếp\">\n          <ion-icon name=\"mail-outline\"></ion-icon> <span>Gửi qua Email</span>\n        </button>\n        <button type=\"button\" class=\"btn au\" id=\"btn-submit-qa-report\" onclick=\"submitQaReportForm()\">\n          <ion-icon name=\"send-outline\"></ion-icon> <span>Gửi thắc mắc ngay</span>\n        </button>\n      </div>\n    </div>\n\n    <!-- TAB 2: DANH SÁCH THẮC MẮC CỦA LỚP -->\n    <div id=\"qa-pane-list\" style=\"display:none;\">\n      <div style=\"display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:12px;\">\n        <span style=\"font-size:13px; color:var(--mut); font-weight:600;\">Tổng hợp câu hỏi học sinh gửi để giải đáp trên lớp</span>\n        <div style=\"display:flex; gap:6px;\">\n          <button type=\"button\" class=\"btn cy sm\" onclick=\"exportQaReportsToCsv()\" title=\"Xuất file CSV mở bằng Google Sheets / Excel\">\n            <ion-icon name=\"download-outline\"></ion-icon> <span>Xuất Google Sheets (CSV)</span>\n          </button>\n          <button type=\"button\" class=\"btn no sm\" onclick=\"clearAllQaReports()\" title=\"Xóa toàn bộ danh sách\">\n            <ion-icon name=\"trash-outline\"></ion-icon> <span>Xóa hết</span>\n          </button>\n        </div>\n      </div>\n      <div id=\"qa-reports-list-container\" class=\"qa-reports-list\"></div>\n    </div>\n\n    <!-- TAB 3: CẤU HÌNH GOOGLE SHEETS & EMAIL NHẬN -->\n    <div id=\"qa-pane-config\" style=\"display:none;\">\n      <div class=\"qa-config-box\">\n        <h4 style=\"margin:0 0 6px; font-size:15px;\">⚙️ Cấu hình Kênh Nhận Thắc Mắc Trực Tiếp</h4>\n        <p style=\"margin:0 0 14px; font-size:12.5px; color:var(--mut); line-height:1.5;\">\n          Khi học sinh bấm <b>Gửi thắc mắc</b>, dữ liệu sẽ tự động lưu trên hệ thống, đồng thời đẩy thẳng về <b>Google Sheets Webhook</b> hoặc <b>Email</b> bạn thiết lập bên dưới.\n        </p>\n\n        <label class=\"qa-label\" for=\"qa-cfg-email\">📧 Địa chỉ Email nhận câu hỏi</label>\n        <input type=\"email\" id=\"qa-cfg-email\" class=\"qa-input\" placeholder=\"Ví dụ: giaovien.nguvan@gmail.com\">\n\n        <label class=\"qa-label\" for=\"qa-cfg-webhook\" style=\"margin-top:12px;\">📊 Google Sheets Webhook URL (Apps Script Web App URL)</label>\n        <input type=\"url\" id=\"qa-cfg-webhook\" class=\"qa-input\" placeholder=\"https://script.google.com/macros/s/.../exec\">\n        <p style=\"margin:6px 0 14px; font-size:11.5px; color:var(--mut); line-height:1.45;\">\n          💡 <i>Mẹo:</i> Trong Google Sheets, vào <b>Tiện ích mở rộng → Apps Script</b>, dán hàm <code>doPost(e)</code> nhận JSON và triển khai dạng <i>Ứng dụng Web (Bất kỳ ai)</i> rồi dán link vào ô trên để tự động ghi từng dòng câu hỏi của học sinh vào bảng tính!\n        </p>\n\n        <div style=\"display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;\">\n          <button type=\"button\" class=\"btn gh sm\" onclick=\"copyAppsScriptSnippet()\">\n            <ion-icon name=\"code-slash-outline\"></ion-icon> <span>Sao chép mã Apps Script mẫu</span>\n          </button>\n          <button type=\"button\" class=\"btn au sm\" onclick=\"saveQaIntegrationConfig()\">\n            <ion-icon name=\"save-outline\"></ion-icon> <span>Lưu cấu hình kết nối</span>\n          </button>\n        </div>\n      </div>\n    </div>\n  </div>\n</dialog>\n\n<!-- FLOATING QA / BUG REPORT BUTTON & TOAST & BACK TO TOP -->\n<button id=\"fab-qa-report\" class=\"fab-qa-btn\" onclick=\"openQaReportModal()\" aria-label=\"Báo cáo lỗi hoặc Gửi thắc mắc\" title=\"Đặt câu hỏi thắc mắc hoặc Báo lỗi\">\n  <span class=\"fab-qa-icon\">💬</span>\n  <span class=\"fab-qa-text\">Hỏi đáp / Báo lỗi</span>\n</button>\n<div id=\"toast\" role=\"status\"></div>\n<button id=\"back-to-top\" onclick=\"window.scrollTo({top:0,behavior:'smooth'})\" aria-label=\"Về đầu trang\" title=\"Về đầu trang\">\n  <ion-icon name=\"arrow-up-outline\"></ion-icon>\n</button>"
 };
 
 (function renderModularComponents() {
@@ -6973,131 +6973,337 @@ function replay() { go('setup', G.s.id); }
    ========================================================================= */
 
 const DEFAULT_WRITING_SETS = [
+  // =========================================================================
+  // NHÓM 1: VIẾT ĐOẠN NGHỊ LUẬN VĂN HỌC (~200 CHỮ - 1 ĐOẠN DUY NHẤT)
+  // =========================================================================
   {
-    id: 'writing_nlxh_kientri',
+    id: 'writing_doan_nlvh_chude',
     status: 'published',
-    category: 'nl-xh',
-    categoryName: 'Nghị luận xã hội',
-    icon: '🌱',
-    title: 'Nghị luận xã hội (200 chữ): Ý nghĩa của lòng kiên trì',
-    prompt: 'Viết một đoạn văn (khoảng 200 chữ) trình bày suy nghĩ của anh/chị về ý nghĩa của lòng kiên trì trên con đường vươn tới thành công của mỗi con người trong cuộc sống hiện đại.',
+    category: 'doan-nlvh',
+    categoryName: 'Đoạn văn NLVH (200 chữ)',
+    subType: 'nlvh_doan_chude',
+    icon: '🖋️',
+    title: '[Đoạn NLVH - Dạng 1] Phân tích, đánh giá NỘI DUNG CHỦ ĐỀ tác phẩm',
+    prompt: 'Viết một đoạn văn (khoảng 200 chữ, chỉ viết trong 1 đoạn văn, không xuống hàng) phân tích, đánh giá nội dung chủ đề của một đoạn thơ hoặc truyện ngắn mà anh/chị tâm đắc (Ví dụ: Chủ đề tình mẫu tử thiêng liêng trong bài thơ "Mây và sóng" - R. Tagore hoặc chủ đề số phận con người trong truyện ngắn).',
     sections: [
       {
-        id: 'sec_mo_bai',
-        title: 'Mở bài',
-        placeholder: 'Nhập phần mở bài / mở đoạn tại đây...',
-        guide: 'Dẫn dắt trực tiếp và nêu vấn đề nghị luận: Lòng kiên trì là chiếc la bàn và kim chỉ nam dẫn lối đến thành công của mỗi con người trong cuộc sống hiện đại.',
-        sample: 'Trên hành trình vươn tới ước mơ, kiên trì chính là chiếc la bàn vững chắc và là kim chỉ nam giúp mỗi con người vượt qua mọi giông bão cuộc đời để chạm tới thành công.'
-      },
-      {
-        id: 'sec_than_bai',
-        title: 'Thân bài',
-        placeholder: 'Nhập phần thân bài / thân đoạn tại đây...',
-        guide: '1. Giải thích: Kiên trì là sự bền bỉ, nhẫn nại theo đuổi mục tiêu dù gặp muôn vàn khó khăn, thử thách mà không hề bỏ cuộc giữa chừng.\n2. Bàn luận & Dẫn chứng: Lòng kiên trì rèn giũa bản lĩnh thép, biến trở ngại thành cơ hội và tích lũy tri thức. Dẫn chứng: Nhà bác học Thomas Edison kiên trì thử nghiệm hàng nghìn lần mới phát minh ra bóng đèn điện; Thầy giáo Nguyễn Ngọc Ký kiên trì tập viết bằng chân...\n3. Phản đề & Mở rộng: Phê phán lối sống thiếu kiên nhẫn, "cả thèm chóng chán", thấy gian nan đã vội vàng buông xuôi.',
-        sample: 'Trước hết, kiên trì là sự bền bỉ, nhẫn nại theo đuổi mục tiêu đã đề ra, dẫu phải đối mặt với muôn vàn khó khăn, thất bại mà không hề chùn bước hay bỏ cuộc giữa chừng. Lòng kiên trì rèn giũa cho ta bản lĩnh thép, giúp biến những thử thách thành bệ phóng tôi luyện trí tuệ và nghị lực. Người kiên trì luôn tìm thấy cơ hội trong nghịch cảnh; như Thomas Edison đã trải qua hàng nghìn lần thử nghiệm thất bại trước khi thắp sáng nhân loại bằng bóng đèn điện. Trái lại, những kẻ thiếu kiên nhẫn, "cả thèm chóng chán", vừa thấy gian nan đã vội vàng buông xuôi sẽ mãi dậm chân tại chỗ và khó có thể chạm tay vào quả ngọt của thành công.'
-      },
-      {
-        id: 'sec_ket_bai',
-        title: 'Kết bài',
-        placeholder: 'Nhập phần kết bài / kết đoạn tại đây...',
-        guide: 'Khái quát lại ý nghĩa của lòng kiên trì; rút ra bài học nhận thức và phương hướng hành động cụ thể cho bản thân trong học tập và cuộc sống.',
-        sample: 'Tóm lại, thành công không đến sau một đêm mà là kết tinh của chuỗi ngày bền bỉ nỗ lực. Là học sinh, em tự nhắc nhở mình phải luôn kiên định với mục tiêu học tập, không ngừng tôi luyện ý chí để vững bước tương lai.'
+        id: 'sec_doan_200',
+        title: 'Đoạn văn Nghị luận Văn học (~200 chữ - Không xuống dòng)',
+        placeholder: 'Viết liền mạch trong 1 đoạn văn duy nhất (khoảng 200 chữ, không xuống hàng) theo đúng trình tự: Mở đoạn (Câu dẫn + GTVĐNL + Nêu chủ đề) ➔ Phân tích 2-3 khía cạnh chủ đề (Thứ nhất... Thứ hai... Thứ ba...) ➔ Đánh giá vai trò chủ đề & thông điệp ➔ Nghệ thuật ➔ Kết đoạn...',
+        guide: '• Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ).\n• Mở đoạn: Câu dẫn + Giới thiệu VĐNL (nội dung chủ đề tác phẩm A) + Nêu rõ chủ đề.\n• Thân đoạn: Phân tích từng khía cạnh của chủ đề (Gọi tên yếu tố + dẫn chứng + phân tích ngắn): Thứ nhất, chủ đề thể hiện qua... Thứ hai, chủ đề còn được làm rõ qua... Thứ ba, chủ đề được làm sáng tỏ qua... (Thơ: Nhan đề, Hình tượng trung tâm, Tình cảm cảm xúc | Truyện: Tình huống truyện, Nhân vật, Chi tiết đặc sắc).\n• Đánh giá & Nghệ thuật: Nêu ý nghĩa của chủ đề, thông điệp tác phẩm và các yếu tố nghệ thuật (thể thơ, từ ngữ, hình ảnh, biện pháp tu từ...)\n• Kết đoạn: Khẳng định lại giá trị và trích dẫn.',
+        sample: ''
       }
     ]
   },
   {
-    id: 'writing_nlvh_taytien',
+    id: 'writing_doan_nlvh_nt_tho',
     status: 'published',
-    category: 'nl-vh',
-    categoryName: 'Nghị luận văn học',
+    category: 'doan-nlvh',
+    categoryName: 'Đoạn văn NLVH (200 chữ)',
+    subType: 'nlvh_doan_nt_tho',
+    icon: '🖋️',
+    title: '[Đoạn NLVH - Dạng 2] Phân tích, đánh giá NGHỆ THUẬT THƠ',
+    prompt: 'Viết một đoạn văn (khoảng 200 chữ, không xuống hàng) phân tích, đánh giá những nét đặc sắc về nghệ thuật (thể thơ, hình ảnh, từ ngữ, biện pháp tu từ) trong đoạn thơ trích bài "Tây Tiến" (Quang Dũng) hoặc "Sóng" (Xuân Quỳnh).',
+    sections: [
+      {
+        id: 'sec_doan_200',
+        title: 'Đoạn văn Phân tích Nghệ thuật Thơ (~200 chữ - Không xuống dòng)',
+        placeholder: 'Viết trong 1 đoạn văn duy nhất: Câu dẫn + GTVĐNL ➔ Thứ nhất, thể thơ (gọi tên + tác dụng) ➔ Thứ hai, hình ảnh (nhận xét + dẫn chứng + phân tích) ➔ Thứ ba, từ ngữ ➔ Thứ tư, biện pháp tu từ ➔ Khẳng định vai trò làm rõ chủ đề & thông điệp...',
+        guide: '• Mở đoạn: Câu dẫn + Giới thiệu VĐNL (đặc sắc nghệ thuật đoạn thơ).\n• Phân tích các khía cạnh nghệ thuật:\n  + Thứ nhất, thể thơ... (gọi tên + nêu tác dụng).\n  + Thứ hai, hình ảnh... (nhận xét chung + đưa dẫn chứng + phân tích).\n  + Thứ ba, từ ngữ... (nhận xét chung + đưa dẫn chứng từ ngữ đắt giá + phân tích).\n  + Thứ tư, biện pháp tu từ... (nhận xét chung + đưa dẫn chứng + phân tích).\n• Đánh giá & Kết đoạn: Các yếu tố hình thức góp phần làm rõ chủ đề tác phẩm (nêu chủ đề) và hỗ trợ nhà thơ chuyển tải thông điệp sâu sắc đến người đọc.',
+        sample: ''
+      }
+    ]
+  },
+  {
+    id: 'writing_doan_nlvh_camxuc_tho',
+    status: 'published',
+    category: 'doan-nlvh',
+    categoryName: 'Đoạn văn NLVH (200 chữ)',
+    subType: 'nlvh_doan_camxuc_tho',
+    icon: '🖋️',
+    title: '[Đoạn NLVH - Dạng 3] Phân tích, đánh giá TÌNH CẢM, CẢM XÚC trong thơ',
+    prompt: 'Viết một đoạn văn (khoảng 200 chữ, không xuống hàng) phân tích, đánh giá mạch tình cảm, cảm xúc của chủ thể trữ tình trong khổ thơ: "Trước muôn trùng sóng bể / Em nghĩ về anh, em / Em nghĩ về biển lớn / Từ nơi nào sóng lên?..." (Sóng - Xuân Quỳnh).',
+    sections: [
+      {
+        id: 'sec_doan_200',
+        title: 'Đoạn văn Phân tích Tình cảm, Cảm xúc trong Thơ (~200 chữ)',
+        placeholder: 'Viết trong 1 đoạn văn duy nhất: Mở đoạn (Câu dẫn + GTVĐNL) ➔ Phân tích Cảm xúc 1 (dẫn chứng + phân tích) ➔ Cảm xúc 2 (dẫn chứng + phân tích) ➔ Đánh giá (cảm xúc chân thành, gửi gắm triết lí nhân sinh, thông điệp & phong cách tác giả)...',
+        guide: '• Mở đoạn: Câu dẫn + Nêu VĐNL (tình cảm, cảm xúc trong đoạn thơ).\n• Phân tích: Chỉ rõ từng cung bậc cảm xúc (Cảm xúc 1 + dẫn chứng + phân tích; Cảm xúc 2 + dẫn chứng + phân tích...).\n• Đánh giá & Kết đoạn: Cảm xúc trong sáng, chân thành, thể hiện cái nhìn tích cực; qua đó gửi gắm triết lí nhân sinh, thông điệp (chức năng giáo dục, nhận thức, thẩm mĩ của văn chương) và tiêu biểu cho phong cách nhà thơ.',
+        sample: ''
+      }
+    ]
+  },
+  {
+    id: 'writing_doan_nlvh_nt_truyen',
+    status: 'published',
+    category: 'doan-nlvh',
+    categoryName: 'Đoạn văn NLVH (200 chữ)',
+    subType: 'nlvh_doan_nt_truyen',
+    icon: '🖋️',
+    title: '[Đoạn NLVH - Dạng 4] Phân tích NGHỆ THUẬT TRUYỆN NGẮN',
+    prompt: 'Viết một đoạn văn (khoảng 200 chữ, không xuống hàng) phân tích các yếu tố nghệ thuật đặc sắc (ngôi kể, điểm nhìn, tình huống truyện, chi tiết nghệ thuật, ngôn ngữ, giọng điệu, miêu tả tâm lí) trong một đoạn trích truyện ngắn hiện đại.',
+    sections: [
+      {
+        id: 'sec_doan_200',
+        title: 'Đoạn văn Phân tích Nghệ thuật Truyện ngắn (~200 chữ)',
+        placeholder: 'Viết liền mạch 1 đoạn văn: Mở đoạn ➔ Phân tích ngôi kể & điểm nhìn ➔ Tình huống truyện & tác dụng ➔ Chi tiết nghệ thuật, ngôn ngữ, giọng điệu, miêu tả diễn biến nội tâm ➔ Đánh giá tài năng, cá tính sáng tạo của nhà văn & thông điệp...',
+        guide: '• Phân tích các phương diện: Ngôi kể (ngôi thứ mấy, tác dụng), Điểm nhìn, Tình huống truyện (tình huống gì, phân tích tác dụng), Chi tiết nghệ thuật đặc sắc, Ngôn ngữ, Giọng điệu, Miêu tả diễn biến nội tâm tinh tế.\n• Đánh giá: Thể hiện tài năng, phong cách, cá tính sáng tạo của tác giả; góp phần làm nổi bật chủ đề, tư tưởng, thông điệp của tác phẩm.',
+        sample: ''
+      }
+    ]
+  },
+  {
+    id: 'writing_doan_nlvh_nhanvat',
+    status: 'published',
+    category: 'doan-nlvh',
+    categoryName: 'Đoạn văn NLVH (200 chữ)',
+    subType: 'nlvh_doan_nhanvat',
+    icon: '🖋️',
+    title: '[Đoạn NLVH - Dạng 5] Phân tích ĐẶC ĐIỂM NHÂN VẬT văn học',
+    prompt: 'Viết một đoạn văn (khoảng 200 chữ, không xuống hàng) phân tích vẻ đẹp phẩm chất, tính cách và nghệ thuật xây dựng một nhân vật văn học tiêu biểu (ví dụ: nhân vật Tràng, bà cụ Tứ trong "Vợ nhặt" - Kim Lân hoặc nhân vật Mị trong "Vợ chồng A Phủ" - Tô Hoài).',
+    sections: [
+      {
+        id: 'sec_doan_200',
+        title: 'Đoạn văn Phân tích Đặc điểm Nhân vật (~200 chữ)',
+        placeholder: 'Viết 1 đoạn văn duy nhất: Mở đoạn & Khái quát (tên tuổi, hoàn cảnh, ngoại hình...) ➔ Phân tích Vẻ đẹp/Phẩm chất 1 (dẫn chứng hành động, lời nói + phân tích) ➔ Vẻ đẹp/Phẩm chất 2 ➔ Nghệ thuật xây dựng nhân vật (tình huống, tâm lí, ngôi kể, điểm nhìn) ➔ Đánh giá (tiêu biểu cho tầng lớp nào, thông điệp của tác giả)...',
+        guide: '• Khái quát: Giới thiệu tên tuổi, hoàn cảnh, ngoại hình, nghề nghiệp nhân vật.\n• Phân tích phẩm chất: Vẻ đẹp 1 (Gọi tên + dẫn chứng hành động, lời nói, thái độ + phân tích); Vẻ đẹp 2...\n• Nghệ thuật xây dựng nhân vật: Khắc họa qua hành động, lời nói, tâm lí; đặt trong tình huống truyện độc đáo; ngôi kể, điểm nhìn, ngôn ngữ, giọng điệu.\n• Đánh giá: Nhân vật tiêu biểu cho tầng lớp nào? Thông qua đó tác giả gửi gắm thông điệp gì về con người và cuộc sống?',
+        sample: ''
+      }
+    ]
+  },
+
+  // =========================================================================
+  // NHÓM 2: VIẾT BÀI NGHỊ LUẬN VĂN HỌC (~600 CHỮ - CHIA NHIỀU ĐOẠN)
+  // =========================================================================
+  {
+    id: 'writing_bai_nlvh_1tacpham',
+    status: 'published',
+    category: 'bai-nlvh',
+    categoryName: 'Bài văn NLVH (600 chữ)',
+    subType: 'nlvh_bai_1tacpham',
     icon: '📜',
-    title: 'Nghị luận văn học: Hình tượng người lính Tây Tiến (Quang Dũng)',
-    prompt: 'Cảm nhận về vẻ đẹp hào hùng và bi tráng của hình tượng người lính Tây Tiến trong đoạn thơ: "Tây Tiến đoàn binh không mọc tóc / Quân xanh màu lá dữ oai hùm / Mắt trừng gửi mộng qua biên giới / Đêm mơ Hà Nội dáng kiều thơm..." (Tây Tiến - Quang Dũng).',
+    title: '[Bài NLVH - Dạng 1] Phân tích, đánh giá nội dung, chủ đề & nghệ thuật MỘT tác phẩm Thơ/Truyện',
+    prompt: 'Viết bài văn nghị luận (khoảng 600 chữ) phân tích, đánh giá nội dung, chủ đề và những nét đặc sắc về hình thức nghệ thuật của bài thơ "Tây Tiến" (Quang Dũng) hoặc một tác phẩm truyện ngắn tiêu biểu trong chương trình Ngữ văn THPT.',
     sections: [
       {
         id: 'sec_mo_bai',
-        title: 'Mở bài',
-        placeholder: 'Nhập phần mở bài tại đây...',
-        guide: 'Giới thiệu tác giả Quang Dũng (hồn thơ phóng khoáng, hồn hậu, lãng mạn), bài thơ "Tây Tiến" và đoạn thơ khắc họa chân dung kiêu hùng của đoàn binh.',
-        sample: 'Quang Dũng là một nghệ sĩ đa tài, một hồn thơ phóng khoáng, hồn hậu và lãng mạn. Nhắc đến ông, người đọc không thể không nhớ đến "Tây Tiến" - bài ca tuyệt tác về những người lính thời kỳ kháng chiến chống Pháp. Đặc biệt, vẻ đẹp hào hùng và bi tráng của người lính Tây Tiến được kết tinh rực rỡ nhất qua đoạn thơ khắc họa chân dung kiêu hùng của họ.'
+        title: 'I. Mở bài',
+        placeholder: 'Trích dẫn nhận định / dẫn dắt ➔ Giới thiệu tác giả, tác phẩm và nêu vấn đề nghị luận (giá trị nội dung, chủ đề và đặc sắc nghệ thuật)...',
+        guide: 'Dẫn dắt từ nhận định văn học hoặc đề tài; giới thiệu tác giả, tác phẩm và nêu khái quát giá trị nội dung, chủ đề cùng hình thức nghệ thuật đặc sắc của tác phẩm.',
+        sample: ''
       },
       {
-        id: 'sec_than_bai',
-        title: 'Thân bài',
-        placeholder: 'Nhập phần thân bài tại đây...',
-        guide: '1. Luận điểm 1: Vẻ đẹp hào hùng, dữ dội - Hiện thực chiến tranh khốc liệt ("không mọc tóc", "quân xanh màu lá") được nâng lên tầm vóc phi thường qua ngòi bút lãng mạn ("dữ oai hùm").\n2. Luận điểm 2: Tâm hồn hào hoa, lãng mạn - Khát vọng chiến đấu qua biên giới gắn liền với nỗi nhớ quê hương ("Mắt trừng gửi mộng qua biên giới / Đêm mơ Hà Nội dáng kiều thơm").\n3. Đánh giá nghệ thuật: Bút pháp lãng mạn kết hợp cảm hứng bi tráng, ngôn từ giàu tính tạo hình và nhạc điệu.',
-        sample: 'Ngay từ những câu thơ đầu, Quang Dũng không hề né tránh hiện thực khốc liệt của chiến tranh. Căn bệnh sốt rét rừng hiểm ác đã khiến đoàn binh "không mọc tóc", làn da "xanh màu lá". Thế nhưng, qua ngòi bút lãng mạn, hiện thực ấy không hề gợi sự tiều tụy mà trái lại toát lên khí phách hiên ngang "dữ oai hùm" như những vị chúa sơn lâm làm chủ đại ngàn. Bên cạnh nét hào hùng là một thế giới nội tâm vô cùng lãng mạn, hào hoa của những chàng trai đất Hà thành. "Mắt trừng" chứa chan ý chí căm thù giặc và khát vọng chiến đấu qua biên giới; nhưng khi đêm về, tâm hồn họ lại hướng về quê hương với "dáng kiều thơm" - nguồn động lực tinh thần diệu kỳ sưởi ấm những đêm đông lạnh giá nơi chiến trường. Với thể thơ thất ngôn giàu nhạc điệu, kết hợp giữa từ ngữ Hán Việt cổ kính và ngôn ngữ đời thường, Quang Dũng đã khắc họa thành công bức tượng đài bi tráng về người lính cách mạng.'
+        id: 'sec_than_bai_nd',
+        title: 'II. Thân bài - 1. Khái quát & Phân tích Nội dung, Chủ đề',
+        placeholder: 'Bước 1: Phân tích (Gọi tên yếu tố + nêu dẫn chứng + phân tích tác dụng) ➔ Bước 2: Đánh giá vai trò với chủ đề / thông điệp...',
+        guide: '• Với THƠ: Làm rõ Đề tài, Chủ đề, Tình cảm cảm xúc – Mạch cảm xúc, Chủ thể trữ tình/Nhân vật trữ tình, Tư tưởng, Thông điệp.\n• Với TRUYỆN: Làm rõ Đề tài, Chủ đề, Vẻ đẹp hình tượng nhân vật (phẩm chất, tính cách, diễn biến tâm trạng...), Tư tưởng, Thông điệp.',
+        sample: ''
+      },
+      {
+        id: 'sec_than_bai_nt',
+        title: 'II. Thân bài - 2. Phân tích, đánh giá Hình thức Nghệ thuật',
+        placeholder: 'Phân tích các tiêu chí hình thức theo đặc trưng thể loại (Thơ: Thể thơ, từ ngữ, hình ảnh, BPTT, vần nhịp, giọng điệu | Truyện: Ngôi kể, điểm nhìn, nhan đề, tình huống, chi tiết tiêu biểu, ngôn ngữ, kết thúc, giọng điệu)...',
+        guide: '• Với THƠ: Thể thơ, Từ ngữ, Hình ảnh, Biện pháp tu từ, Vần/nhịp, Giọng điệu.\n• Với TRUYỆN: Ngôi kể, Điểm nhìn, Nhan đề (gây tò mò, gợi liên tưởng, khắc sâu ý nghĩa), Tình huống truyện, Ngôn ngữ (đối thoại/độc thoại), Chi tiết tiêu biểu (triển khai cốt truyện, khắc họa nhân vật, thể hiện chủ đề), Kết thúc truyện, Giọng điệu trần thuật.',
+        sample: ''
       },
       {
         id: 'sec_ket_bai',
-        title: 'Kết bài',
-        placeholder: 'Nhập phần kết bài tại đây...',
-        guide: 'Tổng kết giá trị nội dung và nghệ thuật của đoạn trích; khẳng định sức sống bất diệt của hình tượng người lính Tây Tiến trong dòng chảy văn học dân tộc.',
-        sample: 'Với bút pháp lãng mạn kết hợp chất bi tráng hào hùng, Quang Dũng đã dựng nên một tượng đài bất tử về người lính vệ quốc. Đoạn thơ không chỉ là khúc ca tri ân thế hệ cha anh mà còn khơi dậy trong lòng mỗi chúng ta niềm tự hào sâu sắc và ý thức trách nhiệm đối với non sông đất nước hôm nay.'
+        title: 'III. Kết bài',
+        placeholder: 'Khẳng định lại giá trị tư tưởng và nghệ thuật của tác phẩm; nêu sức sống của tác phẩm trong lòng người đọc...',
+        guide: 'Tổng kết giá trị nội dung, chủ đề và nghệ thuật; khẳng định tài năng của tác giả và dư âm, thông điệp sâu sắc đối với người đọc hôm nay.',
+        sample: ''
       }
     ]
   },
   {
-    id: 'writing_nlxh_tuhoc',
+    id: 'writing_bai_nlvh_sosanh',
     status: 'published',
-    category: 'nl-xh',
-    categoryName: 'Nghị luận xã hội',
-    icon: '✍️',
-    title: 'Nghị luận xã hội: Tinh thần tự học trong thời đại số',
-    prompt: 'Viết bài văn ngắn trình bày suy nghĩ của anh/chị về vai trò của tinh thần tự học đối với thế hệ trẻ trong kỷ nguyên bùng nổ công nghệ thông tin ngày nay.',
+    category: 'bai-nlvh',
+    categoryName: 'Bài văn NLVH (600 chữ)',
+    subType: 'nlvh_bai_sosanh',
+    icon: '📜',
+    title: '[Bài NLVH - Dạng 2] So sánh, đánh giá HAI đoạn trích / tác phẩm Thơ hoặc Truyện',
+    prompt: 'Viết bài văn nghị luận (khoảng 600 chữ) so sánh, đánh giá hai đoạn trích thơ hoặc hai nhân vật trong hai tác phẩm truyện ngắn để làm nổi bật điểm tương đồng, điểm khác biệt và phong cách sáng tạo độc đáo của mỗi nhà văn, nhà thơ.',
     sections: [
       {
         id: 'sec_mo_bai',
-        title: 'Mở bài',
-        placeholder: 'Nhập phần mở bài tại đây...',
-        guide: 'Dẫn dắt trực tiếp hoặc trích dẫn câu danh ngôn về việc học (Lênin, Bác Hồ), giới thiệu vai trò sống còn của tinh thần tự học trong kỷ nguyên 4.0.',
-        sample: '"Học, học nữa, học mãi" - lời dạy của V.I.Lênin chưa bao giờ mất đi tính thời sự. Đặc biệt trong thế kỷ 21, khi tri thức nhân loại biến đổi từng ngày, tinh thần tự học chính là chiếc chìa khóa vàng giúp người trẻ mở cánh cửa thành công và khẳng định giá trị bản thân.'
+        title: 'I. Mở bài',
+        placeholder: 'Trích dẫn – dẫn dắt – giới thiệu Tác phẩm 1 + Tác giả 1, Tác phẩm 2 + Tác giả 2 + câu chốt VĐNL (điểm tương đồng, khác biệt) + Trích dẫn 2 đoạn...',
+        guide: 'Trích dẫn – dẫn dắt – nêu tên Tác phẩm 1 + Tác giả 1, Tác phẩm 2 + Tác giả 2 + câu chốt VĐNL (điểm tương đồng, khác biệt). Trích 2 đoạn thơ (nếu ngắn) hoặc trích 2 đoạn truyện (dùng “...”, câu đầu và cuối).',
+        sample: ''
       },
       {
-        id: 'sec_than_bai',
-        title: 'Thân bài',
-        placeholder: 'Nhập phần thân bài tại đây...',
-        guide: '1. Giải thích: Tự học là quá trình chủ động, tự giác lĩnh hội kiến thức, kỹ năng mà không phụ thuộc vào sự thúc ép.\n2. Bàn luận & Dẫn chứng: Tự học giúp người học làm chủ công nghệ, thích ứng nhanh với biến động thời đại, rèn tư duy phản biện và khả năng sáng tạo. Dẫn chứng: Tấm gương Bác Hồ tự học ngoại ngữ và văn hóa thế giới...\n3. Phản đề: Phê phán lối học vẹt, thụ động, ỷ lại vào thiết bị điện tử hoặc gian lận thi cử.',
-        sample: 'Tự học là quá trình chủ động, tự giác chiếm lĩnh tri thức mà không phụ thuộc vào sự ép buộc của người khác. Trong thời đại số, tự học biểu hiện qua việc biết tìm kiếm, chọn lọc thông tin trên mạng, tự rèn luyện kỹ năng qua các khóa học trực tuyến và luôn tò mò, khám phá những chân trời kiến thức mới. Tinh thần tự học giúp mỗi người chủ động làm chủ cuộc sống, không bị động trước những thay đổi nhanh chóng của xã hội. Hơn thế, tự học rèn luyện tư duy độc lập, sáng tạo và bản lĩnh kiên trì. Chủ tịch Hồ Chí Minh là tấm gương sáng ngời về tinh thần tự học: từ bến cảng Nhà Rồng ra đi tìm đường cứu nước, Người đã tự học nhiều thứ tiếng và tinh hoa văn hóa nhân loại để lãnh đạo cách mạng Việt Nam thành công. Ngược lại, nếu chỉ học một cách thụ động, ỷ lại vào trí tuệ nhân tạo hay phó mặc cho trường lớp, người trẻ sẽ dễ dàng bị tụt hậu và đào thải.'
+        id: 'sec_tb_khaiquat_tuongdong',
+        title: 'II. Thân bài - 1. Khái quát chung & 2. Điểm tương đồng',
+        placeholder: '1. Khái quát thông tin tác giả, tác phẩm, hoàn cảnh sáng tác, xuất xứ.\n2. Điểm tương đồng về Nội dung và Nghệ thuật (Trình bày: Thứ nhất... Thứ hai... kèm lí lẽ và bằng chứng)...',
+        guide: '1. Khái quát chung: Thông tin về tác giả, tác phẩm, hoàn cảnh sáng tác, xuất xứ.\n2. Điểm tương đồng: Bám theo bảng tiêu chí thể loại (Nội dung: đề tài, chủ đề, hình tượng thơ/nhân vật, cảm hứng chủ đạo, tư tưởng thông điệp | Nghệ thuật: thể loại, bút pháp...). Trình bày: thứ nhất, thứ hai... kèm lí lẽ và bằng chứng.',
+        sample: ''
+      },
+      {
+        id: 'sec_tb_khacbiet',
+        title: 'II. Thân bài - 3. Điểm khác biệt (Nội dung & Hình thức)',
+        placeholder: 'Phân tích điểm khác biệt giữa 2 đoạn trích/tác phẩm về Nội dung và Hình thức nghệ thuật (Thứ nhất... Thứ hai... kèm lí lẽ và bằng chứng)...',
+        guide: '• Nếu so sánh 2 đoạn thơ: Chú trọng Nội dung (Đề tài, hình tượng thơ, cảm hứng chủ đạo) & Hình thức (Chủ thể trữ tình, từ ngữ hình ảnh, biện pháp nghệ thuật).\n• Nếu so sánh 2 nhân vật / truyện: Chú trọng Nội dung (Kiểu nhân vật, tình cảm tác giả) & Hình thức (Ngôi kể, điểm nhìn, cách xây dựng nhân vật, chi tiết, giọng điệu).',
+        sample: ''
+      },
+      {
+        id: 'sec_tb_ligiai_danhgia',
+        title: 'II. Thân bài - 4. Lí giải giống/khác nhau & 5. Đánh giá chung',
+        placeholder: '4. Lí giải vì sao có điểm tương đồng và khác biệt.\n5. Đánh giá ý nghĩa của sự tương đồng, khác biệt đối với phong cách tác giả và nền văn học...',
+        guide: '4. Lí giải: Giống nhau do cùng hoàn cảnh sống, cùng đề cập một hiện tượng đời sống, cùng quan điểm thẩm mĩ hoặc chịu ảnh hưởng nhau. Khác biệt do cá tính sáng tạo riêng, thời đại/truyền thống văn hóa khác nhau, đối tượng và cảm xúc đặc thù.\n5. Đánh giá: Thể hiện sự thống nhất trong quan điểm/thi pháp thời đại và sự độc đáo, đa dạng làm phong phú nền văn học.',
+        sample: ''
       },
       {
         id: 'sec_ket_bai',
-        title: 'Kết bài',
-        placeholder: 'Nhập phần kết bài tại đây...',
-        guide: 'Khẳng định lại ý nghĩa to lớn của tinh thần tự học; rút ra bài học nhận thức và phương hướng hành động cho bản thân học sinh.',
-        sample: 'Khép lại trang sách, mỗi chúng ta cần nhận thức sâu sắc rằng: đường đời là một cái thang không có nấc chót và việc học là quyển sách không có trang cuối. Là học sinh, em nguyện không ngừng trau dồi tinh thần tự giác học tập mỗi ngày để trở thành công dân có ích cho quê hương.'
+        title: 'III. Kết bài',
+        placeholder: 'Khẳng định lại giá trị đặc sắc của cả hai tác phẩm và sức sống trong lòng độc giả...',
+        guide: 'Khái quát lại giá trị của sự tương đồng và khác biệt giữa hai tác phẩm; nêu cảm nhận và bài học tiếp nhận văn chương.',
+        sample: ''
+      }
+    ]
+  },
+
+  // =========================================================================
+  // NHÓM 3: ĐOẠN VĂN NGHỊ LUẬN XÃ HỘI (~200 CHỮ - 1 ĐOẠN DUY NHẤT)
+  // =========================================================================
+  {
+    id: 'writing_doan_nlxh_ynghia',
+    status: 'published',
+    category: 'doan-nlxh',
+    categoryName: 'Đoạn văn NLXH (200 chữ)',
+    subType: 'nlxh_doan_ynghia',
+    icon: '🌱',
+    title: '[Đoạn NLXH - Định dạng 1 & 2] Ý nghĩa / Giá trị / Tầm quan trọng của một vấn đề (200 chữ)',
+    prompt: 'Viết một đoạn văn nghị luận xã hội (khoảng 200 chữ, chỉ viết trong 1 đoạn văn, không xuống hàng) trình bày suy nghĩ của anh/chị về ý nghĩa, tầm quan trọng của lòng kiên trì và bản lĩnh vượt khó đối với tuổi trẻ hôm nay.',
+    sections: [
+      {
+        id: 'sec_doan_200',
+        title: 'Đoạn văn NLXH về Ý nghĩa / Giá trị (~200 chữ - Không xuống dòng)',
+        placeholder: 'Viết trong 1 đoạn văn duy nhất: Mở đoạn ➔ Giải thích (1 câu) ➔ Bàn luận 3 luận điểm (Thứ nhất, A giúp ta mở rộng hiểu biết, bản lĩnh, hoàn thiện nhân cách... Thứ hai, A còn giúp ta thành công, được tin tưởng, hạnh phúc... Thứ ba, đối với xã hội, cải thiện chất lượng sống, văn minh hơn...) + Dẫn chứng ➔ Bài học nhận thức, hành động & Kết đoạn...',
+        guide: '• Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ).\n• Mở đoạn: Nêu vấn đề nghị luận (Nếu gắn với Đọc hiểu: nêu 1-2 câu về vấn đề xã hội trong phần đọc hiểu trước).\n• Thân đoạn (4 bước):\n  1. Giải thích: 1 câu ngắn gọn.\n  2. Bàn luận (Đưa ra 3 luận điểm kèm 1-2 câu lí giải):\n     + Thứ nhất, A giúp ta mở rộng hiểu biết, có ý chí, bản lĩnh, hoàn thiện nhân cách (+ 1-2 câu lí giải).\n     + Thứ hai, A còn giúp ta thành công hơn, được sự tin tưởng, tín nhiệm, mang lại sự bình an, hạnh phúc (+ 1-2 câu lí giải).\n     + Thứ ba, đối với xã hội, A góp phần cải thiện chất lượng sống, làm cộng đồng tốt đẹp, văn minh hơn (+ 1-2 câu lí giải).\n  3. Dẫn chứng: Nêu dẫn chứng thực tế tiêu biểu.\n  4. Bài học nhận thức và hành động.\n• Kết đoạn: Khẳng định lại giá trị vấn đề.',
+        sample: ''
       }
     ]
   },
   {
-    id: 'writing_camthu_song',
+    id: 'writing_doan_nlxh_giaiphap',
     status: 'published',
-    category: 'cam-thu',
-    categoryName: 'Cảm thụ văn học',
-    icon: '🌊',
-    title: 'Cảm thụ văn học: Khát vọng tình yêu trong bài thơ "Sóng" (Xuân Quỳnh)',
-    prompt: 'Viết đoạn văn cảm nhận về khát vọng lý giải tình yêu của người phụ nữ qua khổ thơ: "Trước muôn trùng sóng bể / Em nghĩ về anh, em / Em nghĩ về biển lớn / Từ nơi nào sóng lên? / Gió bắt đầu từ đâu? / Gió bắt đầu từ gió / Gió bắt đầu từ đâu? / Em cũng không biết nữa / Khi nào ta yêu nhau" (Sóng - Xuân Quỳnh).',
+    category: 'doan-nlxh',
+    categoryName: 'Đoạn văn NLXH (200 chữ)',
+    subType: 'nlxh_doan_giaiphap',
+    icon: '🌱',
+    title: '[Đoạn NLXH - Định dạng 3] Cách thức / Giải pháp / Trách nhiệm của tuổi trẻ (200 chữ)',
+    prompt: 'Viết một đoạn văn nghị luận xã hội (khoảng 200 chữ, chỉ viết trong 1 đoạn văn, không xuống hàng) trình bày suy nghĩ của anh/chị về trách nhiệm và những giải pháp thiết thực của người trẻ để giữ gìn bản sắc văn hóa dân tộc trong kỷ nguyên hội nhập.',
+    sections: [
+      {
+        id: 'sec_doan_200',
+        title: 'Đoạn văn NLXH về Giải pháp / Trách nhiệm (~200 chữ - Không xuống dòng)',
+        placeholder: 'Viết trong 1 đoạn văn duy nhất: Mở đoạn ➔ Giải thích (1 câu) ➔ Bàn luận 3 cấp độ giải pháp (Thứ nhất, đối với cá nhân: nâng cao nhận thức, rèn kĩ năng, thái độ tích cực & hành động cụ thể... Thứ hai, đối với gia đình, nhà trường: giáo dục, thấu hiểu, lắng nghe... Thứ ba, đối với cộng đồng, xã hội: chính sách, sự kiện, truyền thông...) + Dẫn chứng ➔ Bài học & Kết đoạn...',
+        guide: '• Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ).\n• Mở đoạn: Giới thiệu vấn đề trách nhiệm / giải pháp.\n• Thân đoạn:\n  1. Giải thích: 1 câu.\n  2. Bàn luận 3 luận điểm giải pháp:\n     + Thứ nhất, đối với cá nhân: Cần nâng cao nhận thức (điều chỉnh quan điểm, tư duy), rèn luyện kĩ năng, thay đổi thói quen, chủ động học hỏi (+ 1-2 câu lí giải); có thái độ tích cực và hành động cụ thể.\n     + Thứ hai, đối với gia đình, nhà trường: Tăng cường giáo dục, thấu hiểu, lắng nghe, định hướng.\n     + Thứ ba, đối với cộng đồng, xã hội: Hoàn thiện chính sách, tổ chức sự kiện, đẩy mạnh truyền thông.\n  3. Dẫn chứng thực tế.\n  4. Bài học nhận thức, hành động & Kết đoạn.',
+        sample: ''
+      }
+    ]
+  },
+
+  // =========================================================================
+  // NHÓM 4: BÀI VĂN NGHỊ LUẬN XÃ HỘI (~600 CHỮ - CHIA NHIỀU ĐOẠN)
+  // =========================================================================
+  {
+    id: 'writing_bai_nlxh_tutuong',
+    status: 'published',
+    category: 'bai-nlxh',
+    categoryName: 'Bài văn NLXH (600 chữ)',
+    subType: 'nlxh_bai_tutuong',
+    icon: '🌍',
+    title: '[Bài NLXH - Dạng 1] Nghị luận về một TƯ TƯỞNG ĐẠO LÍ / CÂU NÓI (600 chữ)',
+    prompt: 'Viết bài văn nghị luận xã hội (khoảng 600 chữ) bàn về ý kiến: “Sống là cho, đâu chỉ nhận riêng mình” (Tố Hữu) hoặc một tư tưởng đạo lí sâu sắc về lẽ sống của tuổi trẻ hôm nay.',
     sections: [
       {
         id: 'sec_mo_bai',
-        title: 'Mở bài',
-        placeholder: 'Nhập phần mở bài / mở đoạn tại đây...',
-        guide: 'Giới thiệu tác giả Xuân Quỳnh (hồn thơ giàu nữ tính, chân thành, da diết) và đoạn thơ thể hiện khát vọng lý giải tình yêu trong thi phẩm "Sóng".',
-        sample: 'Xuân Quỳnh là một trong những gương mặt tiêu biểu của thơ ca kháng chiến chống Mỹ với hồn thơ giàu nữ tính, chân thành và luôn khắc khoải khát vọng hạnh phúc đời thường. Trong thi phẩm "Sóng", khổ thơ thứ ba và thứ tư đã lắng đọng nỗi niềm trăn trở muôn thuở của người phụ nữ khi đứng trước biển lớn tình yêu.'
+        title: 'I. Mở bài & Đoạn 1: Giải thích câu nói / tư tưởng',
+        placeholder: 'Mở bài: Dẫn dắt + Nêu vấn đề nghị luận & trích dẫn câu nói.\nĐoạn 1 (Giải thích): Giải thích từ ngữ quan trọng, từng vế câu ➔ Chốt nghĩa cả câu: “Vậy câu nói này có nghĩa là...”',
+        guide: '• Mở bài: Dẫn dắt và trích dẫn nguyên văn ý kiến / câu nói.\n• Đoạn 1 - Giải thích: Giải thích các từ ngữ trọng tâm, từng vế câu, sau đó rút ra ý nghĩa toàn câu (“Vậy câu này có nghĩa là...”).',
+        sample: ''
       },
       {
-        id: 'sec_than_bai',
-        title: 'Thân bài',
-        placeholder: 'Nhập phần thân bài / thân đoạn tại đây...',
-        guide: '1. Cảm nhận & Phân tích: Đứng trước "muôn trùng sóng bể", người con gái soi mình vào sóng để tự nhận thức ("Em nghĩ về anh, em / Em nghĩ về biển lớn"). Điệp từ "nghĩ" thể hiện sự suy tư sâu lắng.\n2. Khát vọng truy tìm khởi nguồn tình yêu: Chuỗi câu hỏi tu từ về sóng và gió dẫn đến phát hiện tự nhiên, chân thực ("Em cũng không biết nữa / Khi nào ta yêu nhau"). Tình yêu huyền diệu và bí ẩn như thiên nhiên vạn vật.\n3. Đánh giá nghệ thuật: Thể thơ năm chữ giàu nhịp điệu, cấu tứ sóng đôi giữa sóng và em.',
-        sample: 'Đứng trước "muôn trùng sóng bể", người con gái soi mình vào sóng để tự nhận thức: "Em nghĩ về anh, em / Em nghĩ về biển lớn". Điệp từ "nghĩ" vang lên như một nhịp đập thổn thức, suy tư. Từ trăn trở về nguồn gốc của sóng và gió: "Từ nơi nào sóng lên? / Gió bắt đầu từ đâu?", nhân vật trữ tình đã đi đến một phát hiện đầy nữ tính và chân thực: "Em cũng không biết nữa / Khi nào ta yêu nhau". Tình yêu giống như sóng biển và gió trời, bí ẩn, tự nhiên và không thể lý giải bằng lý trí thuần túy mà chỉ có thể cảm nhận bằng trái tim.'
+        id: 'sec_tb_banluan',
+        title: 'II. Thân bài - Bàn luận & Chứng minh (3 luận điểm tách đoạn + Dẫn chứng)',
+        placeholder: 'Trả lời: Vì sao đặt ra vấn đề này? Vấn đề này có ý nghĩa gì?\n- Đoạn Luận điểm 1 (Ý nghĩa 1: đối với nhận thức, nhân cách cá nhân) + Lí lẽ & Dẫn chứng.\n- Đoạn Luận điểm 2 (Ý nghĩa 2: giúp thành công, hạnh phúc, gắn kết) + Lí lẽ & Dẫn chứng.\n- Đoạn Luận điểm 3 (Ý nghĩa 3: đối với cộng đồng, xã hội) + Lí lẽ & Dẫn chứng.',
+        guide: 'Đưa ra hệ thống luận điểm, lí lẽ, bằng chứng làm sáng tỏ quan điểm:\n+ Vì sao đặt ra vấn đề này?\n+ Vấn đề này có ý nghĩa gì? (Đưa ra 3 luận điểm Ý nghĩa 1, Ý nghĩa 2, Ý nghĩa 3, mỗi luận điểm tách thành 1 đoạn nhỏ kèm lí lẽ và dẫn chứng thực tế).',
+        sample: ''
       },
       {
-        id: 'sec_ket_bai',
-        title: 'Kết bài',
-        placeholder: 'Nhập phần kết bài / kết đoạn tại đây...',
-        guide: 'Tổng kết giá trị tư tưởng và nét đặc sắc nghệ thuật; chia sẻ cảm xúc và rung động sâu sắc của bản thân.',
-        sample: 'Bằng thể thơ năm chữ nhịp nhàng như những con sóng vỗ, Xuân Quỳnh đã vẽ nên một nét duyên dáng, đáng yêu của người phụ nữ đang yêu: hồn nhiên, thành thật trước quy luật bất biến của tình cảm muôn đời.'
+        id: 'sec_tb_phephan_giaiphap_kb',
+        title: 'III. Phê phán mở rộng, Giải pháp bài học & Kết bài',
+        placeholder: '- Đoạn Phê phán, mở rộng: Phê phán biểu hiện trái ngược; chỉ ra mặt cần bổ sung (nếu có).\n- Đoạn Giải pháp & Bài học: Liên hệ bản thân, bài học nhận thức và hành động.\n- Kết bài: Khẳng định lại giá trị của tư tưởng đạo lí.',
+        guide: '• Đoạn Phê phán, mở rộng vấn đề (Nếu câu nói có phần chưa toàn diện thì chỉ ra thêm mặt hạn chế).\n• Đoạn Giải pháp, liên hệ bản thân, bài học nhận thức và hành động.\n• Kết bài: Khép lại vấn đề và gửi gắm thông điệp.',
+        sample: ''
+      }
+    ]
+  },
+  {
+    id: 'writing_bai_nlxh_hientuong',
+    status: 'published',
+    category: 'bai-nlxh',
+    categoryName: 'Bài văn NLXH (600 chữ)',
+    subType: 'nlxh_bai_hientuong',
+    icon: '🌍',
+    title: '[Bài NLXH - Dạng 2] Nghị luận về một HIỆN TƯỢNG ĐỜI SỐNG (600 chữ)',
+    prompt: 'Viết bài văn nghị luận xã hội (khoảng 600 chữ) trình bày suy nghĩ của anh/chị về một hiện tượng đời sống đang được xã hội quan tâm hiện nay (ví dụ: văn hóa ứng xử trên mạng xã hội của giới trẻ, hoặc phong trào sống xanh bảo vệ môi trường).',
+    sections: [
+      {
+        id: 'sec_mo_bai_thuctrang',
+        title: 'I. Mở bài & Đoạn 1: Giải thích + Thực trạng',
+        placeholder: 'Mở bài: Dẫn dắt và giới thiệu hiện tượng đời sống.\nĐoạn 1: Giải thích khái niệm hiện tượng và nêu rõ thực trạng, biểu hiện cụ thể trong đời sống hiện nay...',
+        guide: '• Mở bài: Giới thiệu hiện tượng đời sống cần bàn luận.\n• Đoạn 1: Giải thích bản chất hiện tượng + Nêu bức tranh thực trạng (phổ biến như thế nào, biểu hiện ở đâu).',
+        sample: ''
+      },
+      {
+        id: 'sec_tb_nguyennhan_hauqua',
+        title: 'II. Thân bài - Đoạn 2: Nguyên nhân & Đoạn 3: Tác dụng / Hậu quả',
+        placeholder: '- Đoạn 2 (Nguyên nhân): Phân tích nguyên nhân chủ quan (từ ý thức cá nhân) và khách quan (gia đình, nhà trường, xã hội, công nghệ).\n- Đoạn 3 (Tác dụng hoặc Hậu quả): Phân tích sâu tác động đối với cá nhân và xã hội + Dẫn chứng thực tế...',
+        guide: '• Đoạn 2: Phân tích nguyên nhân chủ quan và khách quan dẫn đến hiện tượng.\n• Đoạn 3: Phân tích tác dụng/ý nghĩa (nếu là hiện tượng tốt) hoặc hậu quả/tác hại (nếu là hiện tượng tiêu cực) kèm dẫn chứng xác thực.',
+        sample: ''
+      },
+      {
+        id: 'sec_tb_giaiphap_kb',
+        title: 'III. Thân bài - Đoạn 4: Giải pháp (Cá nhân, Cộng đồng, Trước mắt, Lâu dài) & Kết bài',
+        placeholder: '- Đoạn 4 (Giải pháp): Đề xuất giải pháp từ phía cá nhân, gia đình/nhà trường, cộng đồng/xã hội (cả trước mắt và lâu dài).\n- Kết bài: Khái quát lại vấn đề và liên hệ bài học bản thân...',
+        guide: '• Đoạn 4: Đề xuất hệ thống giải pháp cụ thể: cá nhân, gia đình, nhà trường, cộng đồng; giải pháp trước mắt và lâu dài.\n• Kết bài: Khẳng định thông điệp và trách nhiệm của bản thân.',
+        sample: ''
+      }
+    ]
+  },
+  {
+    id: 'writing_bai_nlxh_vdxh_tpvh',
+    status: 'published',
+    category: 'bai-nlxh',
+    categoryName: 'Bài văn NLXH (600 chữ)',
+    subType: 'nlxh_bai_vdxh_tpvh',
+    icon: '🌍',
+    title: '[Bài NLXH - Dạng 3] Nghị luận về một VẤN ĐỀ XÃ HỘI đặt ra trong tác phẩm văn học (600 chữ)',
+    prompt: 'Từ khát vọng sống và niềm tin vào sự lương thiện của các nhân vật trong truyện ngắn "Vợ nhặt" (Kim Lân) hoặc "Chí Phèo" (Nam Cao), anh/chị hãy viết bài văn nghị luận (khoảng 600 chữ) bàn về sức mạnh của tình người và sự thấu cảm trong cuộc sống hôm nay.',
+    sections: [
+      {
+        id: 'sec_mo_bai_bieuhien',
+        title: 'I. Mở bài & Đoạn 1: Giải thích + Biểu hiện VĐXH trong tác phẩm & đời sống',
+        placeholder: 'Mở bài: Giới thiệu tác phẩm văn học và vấn đề xã hội đặt ra.\nĐoạn 1: Giải thích vấn đề + Nêu biểu hiện của vấn đề xã hội đó trong tác phẩm văn học (dẫn chứng) và ngoài đời thực...',
+        guide: '• Mở bài: Dẫn dắt từ tác phẩm văn học đến vấn đề xã hội cần bàn luận.\n• Đoạn 1: Giải thích khái niệm + Nêu biểu hiện của vấn đề xã hội trong tác phẩm văn học (kèm dẫn chứng ngắn gọn) và biểu hiện ngoài xã hội.',
+        sample: ''
+      },
+      {
+        id: 'sec_tb_banluan_3ynghia',
+        title: 'II. Thân bài - Bàn luận, chứng minh VĐXH (3 luận điểm Ý nghĩa + Dẫn chứng)',
+        placeholder: 'Trả lời: Vì sao đặt ra vấn đề này? Vấn đề này có ý nghĩa gì?\n- Đoạn Ý nghĩa 1 (đối với cá nhân) + Lí lẽ.\n- Đoạn Ý nghĩa 2 (đối với mối quan hệ con người) + Lí lẽ.\n- Đoạn Ý nghĩa 3 (đối với sự phát triển xã hội) + Dẫn chứng thực tế đời sống...',
+        guide: 'Bàn luận, chứng minh vấn đề xã hội:\n+ Vì sao đặt ra vấn đề này?\n+ Vấn đề này có ý nghĩa gì? (Tách thành 3 đoạn luận điểm: Ý nghĩa 1, Ý nghĩa 2, Ý nghĩa 3 kèm dẫn chứng đời sống thực tế).',
+        sample: ''
+      },
+      {
+        id: 'sec_tb_phephan_giaiphap_kb',
+        title: 'III. Phê phán mở rộng, Giải pháp liên hệ bản thân & Kết bài',
+        placeholder: '- Đoạn Phê phán, mở rộng vấn đề.\n- Đoạn Giải pháp, liên hệ bản thân, bài học nhận thức và hành động.\n- Kết bài: Khẳng định sức sống của tác phẩm và ý nghĩa thời sự của vấn đề xã hội...',
+        guide: '• Đoạn Phê phán, mở rộng vấn đề.\n• Đoạn Giải pháp, liên hệ bản thân, rút ra bài học nhận thức và hành động.\n• Kết bài: Khép lại vấn đề và khẳng định giá trị nhân văn kết nối từ trang văn ra cuộc đời.',
+        sample: ''
       }
     ]
   }
@@ -7124,33 +7330,41 @@ function loadWritingSets() {
     if (raw) {
       let parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        // Loại bỏ sạch các bộ đề IELTS cũ hoặc tên liên quan IELTS
+        const legacyDefaultIds = new Set(['writing_nlxh_kientri', 'writing_nlvh_taytien', 'writing_nlxh_tuhoc', 'writing_camthu_song']);
         parsed = parsed.filter(s => 
           s &&
+          !legacyDefaultIds.has(s.id) &&
           s.category !== 'ielts-task1' &&
           s.category !== 'ielts-task2' &&
           !String(s.id).includes('ielts') &&
           !String(s.title).toLowerCase().includes('ielts')
         ).map(s => {
-          if (s.category === 'other') {
-            s.category = 'nl-xh';
-            s.categoryName = 'Nghị luận xã hội';
-            s.icon = '🌱';
-          }
-          if (String(s.id).startsWith('writing_sample_')) {
-            s.id = s.id.replace('writing_sample_', 'writing_');
+          const is200Words = /200\s*chữ|đoạn\s*văn/i.test(String(s.title) + ' ' + String(s.prompt));
+          if (s.category === 'other' || s.category === 'nl-xh') {
+            s.category = is200Words ? 'doan-nlxh' : 'bai-nlxh';
+            s.categoryName = is200Words ? 'Đoạn văn NLXH (200 chữ)' : 'Bài văn NLXH (600 chữ)';
+            s.icon = is200Words ? '🌱' : '🌍';
+          } else if (s.category === 'nl-vh' || s.category === 'cam-thu') {
+            s.category = is200Words ? 'doan-nlvh' : 'bai-nlvh';
+            s.categoryName = is200Words ? 'Đoạn văn NLVH (200 chữ)' : 'Bài văn NLVH (600 chữ)';
+            s.icon = is200Words ? '🖋️' : '📜';
           }
           if (!s.status) s.status = 'published';
           return s;
         });
 
         const existingIds = new Set(parsed.map(s => s.id));
+        const merged = [];
         for (const def of DEFAULT_WRITING_SETS) {
-          if (!existingIds.has(def.id)) {
-            parsed.push(JSON.parse(JSON.stringify(def)));
+          const found = parsed.find(p => p.id === def.id);
+          merged.push(found || JSON.parse(JSON.stringify(def)));
+        }
+        for (const p of parsed) {
+          if (!DEFAULT_WRITING_SETS.some(d => d.id === p.id)) {
+            merged.push(p);
           }
         }
-        writingSets = parsed;
+        writingSets = merged;
         saveWritingSets();
         return;
       }
@@ -7191,9 +7405,10 @@ R.writing = function(setId) {
 // =========================================================================
 
 const DEFAULT_CATEGORIES = [
-  { id: 'nl-xh', name: 'Nghị luận xã hội', icon: '🌱' },
-  { id: 'nl-vh', name: 'Nghị luận văn học', icon: '📜' },
-  { id: 'cam-thu', name: 'Cảm thụ văn học', icon: '🌊' }
+  { id: 'doan-nlvh', name: 'Đoạn văn NLVH (200 chữ)', icon: '🖋️' },
+  { id: 'bai-nlvh', name: 'Bài văn NLVH (600 chữ)', icon: '📜' },
+  { id: 'doan-nlxh', name: 'Đoạn văn NLXH (200 chữ)', icon: '🌱' },
+  { id: 'bai-nlxh', name: 'Bài văn NLXH (600 chữ)', icon: '🌍' }
 ];
 
 function getWritingCategories() {
@@ -7203,18 +7418,19 @@ function getWritingCategories() {
     if (raw) list = JSON.parse(raw);
   } catch (e) {}
 
+  const legacyCatIds = new Set(['nl-xh', 'nl-vh', 'cam-thu', 'other']);
   if (!Array.isArray(list) || list.length === 0) {
     list = [...DEFAULT_CATEGORIES];
-    try {
-      const custom = JSON.parse(localStorage.getItem('vq_writing_custom_cats')) || [];
-      custom.forEach(c => {
-        if (c && c.id && !list.some(x => x.id === c.id)) list.push(c);
-      });
-    } catch (e) {}
-    saveWritingCategories(list);
+  } else {
+    list = list.filter(c => c && c.id && !legacyCatIds.has(c.id));
+    DEFAULT_CATEGORIES.forEach(defCat => {
+      if (!list.some(x => x.id === defCat.id)) {
+        list.push({ ...defCat });
+      }
+    });
   }
-
-  return list.filter(c => c && c.id && c.id !== 'other');
+  saveWritingCategories(list);
+  return list;
 }
 
 function saveWritingCategories(cats) {
@@ -8050,67 +8266,70 @@ function onCategorySelectChange(cat) {
 
 function applyQuickOutlineTemplate(forcedCategory) {
   const cat = forcedCategory || $('#input-set-category').value;
-  if (cat === 'nl-vh') {
+  if (cat === 'doan-nlvh') {
     editingSections = [
       {
         id: 'sec_' + uid(),
-        title: 'Mở bài',
-        guide: 'Giới thiệu tác giả, tác phẩm, hoàn cảnh sáng tác và vấn đề / đoạn trích / nhân vật cần phân tích, cảm nhận.',
-        sample: ''
-      },
-      {
-        id: 'sec_' + uid(),
-        title: 'Thân bài',
-        guide: '1. Luận điểm 1: Phân tích chi tiết nội dung, hình tượng và các tầng ý nghĩa của tác phẩm / đoạn trích.\n2. Luận điểm 2: Chiều sâu tư tưởng, cảm xúc của tác giả gửi gắm qua tác phẩm.\n3. Đánh giá đặc sắc nghệ thuật: Bút pháp, thể loại, kết cấu, ngôn ngữ, giọng điệu đặc trưng.',
-        sample: ''
-      },
-      {
-        id: 'sec_' + uid(),
-        title: 'Kết bài',
-        guide: 'Khái quát lại giá trị nội dung và nghệ thuật của tác phẩm; nêu ấn tượng, bài học và sức sống bền bỉ của tác phẩm trong lòng độc giả.',
+        title: 'Đoạn văn Nghị luận Văn học (~200 chữ - Không xuống dòng)',
+        guide: '• Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ).\n• Cấu trúc: Mở đoạn (Câu trích dẫn + Nêu VĐNL) ➔ Phân tích 2-3 luận điểm (Gọi tên yếu tố + dẫn chứng + tác dụng) ➔ Đánh giá & Nghệ thuật ➔ Kết đoạn – trích dẫn.',
         sample: ''
       }
     ];
-  } else if (cat === 'cam-thu') {
+  } else if (cat === 'bai-nlvh' || cat === 'nl-vh') {
     editingSections = [
       {
         id: 'sec_' + uid(),
-        title: 'Mở bài',
-        guide: 'Giới thiệu tác giả, tác phẩm và cảm nhận chung nhất về đoạn thơ / đoạn văn trích dẫn.',
+        title: 'I. Mở bài',
+        guide: 'Trích dẫn – dẫn dắt – giới thiệu tác giả, tác phẩm và câu chốt vấn đề nghị luận.',
         sample: ''
       },
       {
         id: 'sec_' + uid(),
-        title: 'Thân bài',
-        guide: '1. Cảm nhận về hình ảnh, chi tiết và từ ngữ đắt giá trong đoạn trích.\n2. Phân tích các biện pháp tu từ độc đáo và tác dụng gợi hình, gợi cảm.\n3. Tư tưởng, thông điệp và cảm xúc của nhân vật trữ tình / tác giả.',
+        title: 'II. Thân bài - Phân tích & Đánh giá Nội dung, Chủ đề',
+        guide: 'Bước 1: Phân tích (Gọi tên yếu tố + nêu dẫn chứng + phân tích tác dụng) theo đặc trưng thể loại Thơ/Truyện.\nBước 2: Đánh giá vai trò đối với chủ đề và thông điệp tư tưởng.',
         sample: ''
       },
       {
         id: 'sec_' + uid(),
-        title: 'Kết bài',
-        guide: 'Tổng kết giá trị tư tưởng và nét đặc sắc nghệ thuật; chia sẻ cảm xúc và liên hệ suy nghĩ bản thân.',
+        title: 'II. Thân bài - Phân tích Hình thức Nghệ thuật & Mở rộng',
+        guide: 'Phân tích các yếu tố nghệ thuật đặc sắc (Thơ: thể thơ, từ ngữ, hình ảnh, BPTT, vần nhịp, giọng điệu | Truyện: ngôi kể, điểm nhìn, nhan đề, tình huống, chi tiết tiêu biểu, ngôn ngữ, giọng điệu).',
+        sample: ''
+      },
+      {
+        id: 'sec_' + uid(),
+        title: 'III. Kết bài',
+        guide: 'Khái quát lại giá trị nội dung và nghệ thuật của tác phẩm; nêu sức sống của tác phẩm trong lòng người đọc.',
+        sample: ''
+      }
+    ];
+  } else if (cat === 'doan-nlxh') {
+    editingSections = [
+      {
+        id: 'sec_' + uid(),
+        title: 'Đoạn văn Nghị luận Xã hội (~200 chữ - Không xuống dòng)',
+        guide: '• Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ).\n• Mở đoạn: Nêu VĐNL.\n• Thân đoạn (4 bước): 1. Giải thích (1 câu) ➔ 2. Bàn luận 3 luận điểm (Ý nghĩa: Thứ nhất giúp mở rộng hiểu biết/bản lĩnh; Thứ hai giúp thành công/hạnh phúc; Thứ ba đối với xã hội | Giải pháp: Thứ nhất cá nhân; Thứ hai gia đình/nhà trường; Thứ ba cộng đồng/xã hội) ➔ 3. Dẫn chứng thực tế ➔ 4. Bài học nhận thức, hành động & Kết đoạn.',
         sample: ''
       }
     ];
   } else {
-    // Mặc định hoặc Nghị luận xã hội
+    // bai-nlxh (Bài văn Nghị luận xã hội ~600 chữ)
     editingSections = [
       {
         id: 'sec_' + uid(),
-        title: 'Mở bài',
-        guide: 'Dẫn dắt trực tiếp hoặc gián tiếp, giới thiệu chính xác vấn đề nghị luận xã hội cần bàn luận.',
+        title: 'I. Mở bài & Đoạn 1: Giải thích',
+        guide: 'Mở bài: Dẫn dắt và nêu vấn đề nghị luận.\nĐoạn 1 (Giải thích): Giải thích từ ngữ quan trọng, vế câu, rút ra ý nghĩa cả câu hoặc nêu thực trạng vấn đề.',
         sample: ''
       },
       {
         id: 'sec_' + uid(),
-        title: 'Thân bài',
-        guide: '1. Giải thích: Làm rõ khái niệm, biểu hiện của vấn đề trong thực tế đời sống.\n2. Bàn luận & Dẫn chứng: Phân tích nguyên nhân, vai trò, ý nghĩa; đưa ra dẫn chứng thực tế thuyết phục (người thật việc thật).\n3. Phản đề & Mở rộng: Phê phán những hành vi, nhận thức lệch lạc; nhìn nhận vấn đề đa chiều.',
+        title: 'II. Thân bài - Bàn luận & Chứng minh (3 luận điểm tách đoạn + Dẫn chứng)',
+        guide: 'Trả lời: Vì sao đặt ra vấn đề này? Vấn đề này có ý nghĩa gì? (Đưa ra 3 luận điểm Ý nghĩa 1, Ý nghĩa 2, Ý nghĩa 3 tách đoạn rõ ràng + Dẫn chứng thực tế).',
         sample: ''
       },
       {
         id: 'sec_' + uid(),
-        title: 'Kết bài',
-        guide: 'Khái quát lại ý nghĩa vấn đề; rút ra bài học nhận thức và phương hướng hành động thiết thực cho bản thân.',
+        title: 'III. Phê phán mở rộng, Giải pháp liên hệ bản thân & Kết bài',
+        guide: '• Đoạn Phê phán, mở rộng vấn đề.\n• Đoạn Giải pháp, liên hệ bản thân, bài học nhận thức và hành động.\n• Kết bài: Khẳng định lại ý nghĩa vấn đề.',
         sample: ''
       }
     ];
@@ -10279,7 +10498,7 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
 
 /* =========================================================================
    10. GDPT 2018 EDUCATIONAL ENHANCEMENTS MODULE
-   - 1. Giàn giáo nhận thức (Scaffolding - "Gợi ý tư duy" cho Tự luận & Đoạn 200 chữ)
+   - 1. Giàn giáo nhận thức (Scaffolding - "Gợi ý tư duy" chuẩn hóa theo 12 dạng bài NLVH & NLXH)
    - 2. Cơ chế Gamification (Streak chuỗi ngày học, Thanh tiến trình XP & Huy hiệu)
    - 3. Góc truyền cảm hứng (Quote of the Day & Sổ tay trích dẫn văn học)
    - 4. Bộ đếm thời gian (Timer) rèn áp lực phòng thi (20p NLXH, 60p NLVH...)
@@ -10667,7 +10886,6 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
       }
     } catch (_) {}
 
-    // Cập nhật chuỗi ngày học liên tục (Streak) khi mở web hôm nay
     if (!state.activeDates.includes(today)) {
       state.activeDates.push(today);
       if (state.activeDates.length > 60) state.activeDates = state.activeDates.slice(-60);
@@ -10682,14 +10900,13 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
         state.streak = 1;
       }
       state.lastActiveDate = today;
-      state.xp = (Number(state.xp) || 0) + 10; // Cộng 10 XP điểm danh mỗi ngày
+      state.xp = (Number(state.xp) || 0) + 10;
     }
 
     if (state.streak > (state.bestStreak || 1)) {
       state.bestStreak = state.streak;
     }
 
-    // Đồng bộ thêm thành tích từ lịch sử làm bài hiện có
     syncGamificationWithHistory(state);
     saveGamificationState(state);
     return state;
@@ -10739,7 +10956,6 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
     const hasPerfectOr5 = history.length >= 5 || history.some(h => Number(h.score) >= 10);
     if (hasPerfectOr5) unlock('perfect_scholar');
 
-    // Tính số hoạt động trong ngày hôm nay từ lịch sử
     const today = getTodayDateString();
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0);
@@ -10747,7 +10963,6 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
     const savedTodayCount = Number(state.dailyActivities[today] || 0);
     state.dailyActivities[today] = Math.max(savedTodayCount, todayHistoryCount);
 
-    // Đảm bảo XP tối thiểu tương ứng với lịch sử
     const minCalculatedXp = 25 + history.length * 30 + state.unlockedBadges.length * 20;
     if ((Number(state.xp) || 0) < minCalculatedXp) {
       state.xp = minCalculatedXp;
@@ -10802,11 +11017,9 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
     const dailyGoal = 3;
     const dailyPercent = Math.min(100, Math.round((dailyDone / dailyGoal) * 100));
 
-    // Navbar Streak
     const navStreak = document.getElementById('nav-streak-count');
     if (navStreak) navStreak.textContent = state.streak;
 
-    // Home Card Elements
     const streakDaysEl = document.getElementById('home-streak-days');
     const rankTitleEl = document.getElementById('home-rank-title');
     const unlockedCountEl = document.getElementById('home-badges-unlocked-count');
@@ -10829,7 +11042,6 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
     if (dailyPctEl) dailyPctEl.textContent = `${dailyPercent}%`;
     if (dailyBarEl) dailyBarEl.style.width = `${dailyPercent}%`;
 
-    // Render 7-day Duolingo style week row
     const weekRow = document.getElementById('home-streak-week-row');
     if (weekRow) {
       const dayLabels = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
@@ -10850,7 +11062,6 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
       weekRow.innerHTML = daysHtml.join('');
     }
 
-    // Render mini badges row on Home
     const miniBadgesRow = document.getElementById('home-mini-badges-row');
     if (miniBadgesRow) {
       miniBadgesRow.innerHTML = BADGES_CATALOG.map(b => {
@@ -10955,36 +11166,330 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
 
 
   // =========================================================================
-  // PHẦN 3: GIÀN GIÁO NHẬN THỨC (SCAFFOLDING) - NÚT "GỢI Ý TƯ DUY"
+  // PHẦN 3: GIÀN GIÁO NHẬN THỨC (SCAFFOLDING) THEO ĐÚNG 12 DẠNG BÀI TRONG FILE
   // =========================================================================
+  const SCAFFOLD_TEMPLATES = {
+    // --- NHÓM 1: ĐOẠN VĂN NGHỊ LUẬN VĂN HỌC (~200 CHỮ - 1 ĐOẠN DUY NHẤT) ---
+    nlvh_doan_chude: {
+      group: 'Đoạn văn NLVH (~200 chữ)',
+      name: '1. Đoạn NLVH: Phân tích, đánh giá NỘI DUNG CHỦ ĐỀ (Thơ / Truyện)',
+      singleParagraph: true,
+      formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng. Dung lượng: Khoảng 200 chữ (từ 2/3 đến tối đa 1 trang giấy thi, chừa lại 3 dòng).',
+      formulaSteps: ['Câu dẫn + GTVĐNL', 'Nêu chủ đề', 'Phân tích 2-3 khía cạnh (Thứ nhất, Thứ hai, Thứ ba)', 'Đánh giá vai trò chủ đề', 'Nghệ thuật', 'Kết đoạn – Trích dẫn'],
+      referenceHtml: `
+        <div class="scaffold-ref-table-wrap">
+          <table class="scaffold-ref-table">
+            <thead>
+              <tr>
+                <th>Chủ đề của THƠ thể hiện qua</th>
+                <th>Chủ đề của TRUYỆN thể hiện qua</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>• Nhan đề<br>• Hình tượng trung tâm<br>• Tình cảm, cảm xúc</td>
+                <td>• Tình huống truyện<br>• Nhân vật (tính cách, phẩm chất, hành động)<br>• Chi tiết đặc sắc</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `,
+      fields: [
+        { label: '1. Câu dẫn + GTVĐNL & Nêu chủ đề tác phẩm:', placeholder: 'VD: Chủ đề của bài thơ/truyện ngắn A là ca ngợi tình mẫu tử thiêng liêng, cao quý...' },
+        { label: '2. Khía cạnh 1 (Gọi tên yếu tố + dẫn chứng + phân tích ngắn):', placeholder: 'Thứ nhất, chủ đề được thể hiện qua [nhan đề / tình huống truyện / hình tượng...]' },
+        { label: '3. Khía cạnh 2 (Gọi tên yếu tố + dẫn chứng + phân tích ngắn):', placeholder: 'Thứ hai, chủ đề còn được làm rõ qua [nhân vật / tình cảm cảm xúc / chi tiết...]' },
+        { label: '4. Khía cạnh 3 (Gọi tên yếu tố + dẫn chứng + phân tích ngắn):', placeholder: 'Thứ ba, chủ đề còn được làm sáng tỏ qua...' },
+        { label: '5. Đánh giá vai trò chủ đề & Thông điệp:', placeholder: 'Chủ đề có ý nghĩa sâu sắc, khơi gợi... góp phần làm rõ thông điệp... của tác phẩm' },
+        { label: '6. Phân tích nghệ thuật & Kết đoạn (kèm trích dẫn):', placeholder: 'Bằng thể thơ/ngôi kể, từ ngữ, hình ảnh, biện pháp tu từ đặc sắc, tác phẩm mãi ngân vang...' }
+      ]
+    },
+
+    nlvh_doan_nt_tho: {
+      group: 'Đoạn văn NLVH (~200 chữ)',
+      name: '2. Đoạn NLVH: Phân tích, đánh giá NGHỆ THUẬT THƠ',
+      singleParagraph: true,
+      formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Luôn gắn các yếu tố hình thức với việc làm rõ chủ đề và thông điệp.',
+      formulaSteps: ['Câu dẫn + GTVĐNL', 'Thứ nhất: Thể thơ', 'Thứ hai: Hình ảnh', 'Thứ ba: Từ ngữ', 'Thứ tư: Biện pháp tu từ', 'Làm rõ Chủ đề & Thông điệp'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở đoạn (Câu dẫn + Giới thiệu VĐNL nghệ thuật thơ):', placeholder: 'Giới thiệu tác giả, đoạn thơ và nhận xét khái quát về đặc sắc nghệ thuật...' },
+        { label: '2. Thứ nhất - Thể thơ (Gọi tên + Nêu tác dụng):', placeholder: 'Thứ nhất, thể thơ [gọi tên thể thơ, vần nhịp] có tác dụng tạo âm hưởng...' },
+        { label: '3. Thứ hai - Hình ảnh (Nhận xét chung + Dẫn chứng + Phân tích):', placeholder: 'Thứ hai, hệ thống hình ảnh [nhận xét + dẫn chứng “...” + phân tích]...' },
+        { label: '4. Thứ ba - Từ ngữ (Nhận xét chung + Dẫn chứng từ ngữ hay + Phân tích):', placeholder: 'Thứ ba, cách dùng từ ngữ [nhận xét + dẫn chứng từ láy/động từ mạnh “...” + phân tích]...' },
+        { label: '5. Thứ tư - Biện pháp tu từ (Nhận xét + Dẫn chứng + Phân tích):', placeholder: 'Thứ tư, biện pháp tu từ [ẩn dụ/nhân hóa/điệp...] qua câu thơ “...” đã làm nổi bật...' },
+        { label: '6. Đánh giá (Làm rõ chủ đề & Thông điệp tác phẩm):', placeholder: 'Các yếu tố hình thức trên đã góp phần làm rõ chủ đề [nêu chủ đề], đồng thời hỗ trợ nhà thơ chuyển tải thông điệp...' }
+      ]
+    },
+
+    nlvh_doan_camxuc_tho: {
+      group: 'Đoạn văn NLVH (~200 chữ)',
+      name: '3. Đoạn NLVH: Phân tích, đánh giá TÌNH CẢM, CẢM XÚC trong thơ',
+      singleParagraph: true,
+      formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Chỉ rõ từng cung bậc cảm xúc kèm dẫn chứng và phân tích.',
+      formulaSteps: ['Câu dẫn + GTVĐNL', 'Cảm xúc 1 (Dẫn chứng + Phân tích)', 'Cảm xúc 2 (Dẫn chứng + Phân tích)', 'Nghệ thuật biểu đạt', 'Đánh giá triết lí nhân sinh & Phong cách'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở đoạn (Câu dẫn + Giới thiệu VĐNL tình cảm, cảm xúc):', placeholder: 'Giới thiệu tác giả, bài thơ và mạch cảm xúc chủ đạo của chủ thể trữ tình...' },
+        { label: '2. Phân tích Cảm xúc 1 (Gọi tên + Dẫn chứng + Phân tích):', placeholder: 'Trước hết, đoạn thơ khắc họa cung bậc cảm xúc [gọi tên + dẫn chứng “...” + phân tích]...' },
+        { label: '3. Phân tích Cảm xúc 2 (Gọi tên + Dẫn chứng + Phân tích):', placeholder: 'Bên cạnh đó, mạch cảm xúc còn lắng đọng ở [gọi tên cảm xúc 2 + dẫn chứng + phân tích]...' },
+        { label: '4. Nghệ thuật thể hiện cảm xúc:', placeholder: 'Mạch cảm xúc ấy được thể hiện qua thể thơ, giọng điệu, từ ngữ và hình ảnh giàu sức gợi...' },
+        { label: '5. Đánh giá & Kết đoạn (Triết lí nhân sinh, Chức năng văn chương & Phong cách):', placeholder: 'Cảm xúc trong sáng, chân thành, gửi gắm triết lí nhân sinh và thông điệp... Đó phải chăng là chức năng giáo dục, nhận thức, thẩm mĩ của văn chương? Bài thơ tiêu biểu cho phong cách...' }
+      ]
+    },
+
+    nlvh_doan_nt_truyen: {
+      group: 'Đoạn văn NLVH (~200 chữ)',
+      name: '4. Đoạn NLVH: Phân tích NGHỆ THUẬT TRUYỆN NGẮN',
+      singleParagraph: true,
+      formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Bám sát các yếu tố tự sự: ngôi kể, điểm nhìn, tình huống, chi tiết, ngôn ngữ, giọng điệu, tâm lí.',
+      formulaSteps: ['Câu dẫn + GTVĐNL', 'Ngôi kể & Điểm nhìn', 'Tình huống truyện', 'Chi tiết nghệ thuật & Nội tâm', 'Ngôn ngữ & Giọng điệu', 'Đánh giá tài năng & Chủ đề'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở đoạn (Câu dẫn + Giới thiệu VĐNL nghệ thuật truyện ngắn):', placeholder: 'Giới thiệu tác giả, tác phẩm và đặc sắc nghệ thuật tự sự của truyện ngắn...' },
+        { label: '2. Ngôi kể & Điểm nhìn (Ngôi thứ mấy? Tác dụng?):', placeholder: 'Trước hết, truyện sử dụng ngôi kể thứ [nhất/ba] kết hợp điểm nhìn [bên trong/bên ngoài] giúp...' },
+        { label: '3. Tình huống truyện (Tình huống gì? Phân tích & Tác dụng?):', placeholder: 'Đặc biệt, nhà văn đã đặt nhân vật vào tình huống [nêu tình huống + tác dụng làm bộc lộ tính cách]...' },
+        { label: '4. Chi tiết nghệ thuật & Miêu tả diễn biến nội tâm:', placeholder: 'Cùng với đó là chi tiết nghệ thuật đắt giá [dẫn chứng] và ngòi bút miêu tả tâm lí nhân vật tinh tế...' },
+        { label: '5. Ngôn ngữ & Giọng điệu trần thuật:', placeholder: 'Ngôn ngữ truyện mộc mạc, giàu cá tính kết hợp cùng giọng điệu [trầm buồn/ấm áp/triết lí]...' },
+        { label: '6. Đánh giá (Tài năng, cá tính sáng tạo & Chủ đề, thông điệp):', placeholder: 'Qua đó khẳng định tài năng, cá tính sáng tạo của nhà văn và làm nổi bật chủ đề, tư tưởng, thông điệp...' }
+      ]
+    },
+
+    nlvh_doan_nhanvat: {
+      group: 'Đoạn văn NLVH (~200 chữ)',
+      name: '5. Đoạn NLVH: Phân tích ĐẶC ĐIỂM NHÂN VẬT',
+      singleParagraph: true,
+      formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Kết hợp phân tích phẩm chất (qua hành động, lời nói, thái độ) với nghệ thuật xây dựng nhân vật.',
+      formulaSteps: ['Mở đoạn & Khái quát (tên, ngoại hình, hoàn cảnh)', 'Vẻ đẹp / Phẩm chất 1 (D/c + PT)', 'Vẻ đẹp / Phẩm chất 2 (D/c + PT)', 'Nghệ thuật xây dựng nhân vật', 'Đánh giá (Tiêu biểu cho tầng lớp & Thông điệp)'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở đoạn & Khái quát nhân vật (Tên tuổi, ngoại hình, nghề nghiệp, hoàn cảnh):', placeholder: 'Giới thiệu tác giả, tác phẩm, nhân vật và vài nét khái quát về số phận/ngoại hình...' },
+        { label: '2. Vẻ đẹp / Phẩm chất 1 (Gọi tên + Dẫn chứng hành động, lời nói, thái độ + Phân tích):', placeholder: 'Trước hết, nhân vật hiện lên với vẻ đẹp [phẩm chất 1] thể hiện qua chi tiết/lời nói “...”' },
+        { label: '3. Vẻ đẹp / Phẩm chất 2 (Gọi tên + Dẫn chứng + Phân tích):', placeholder: 'Không chỉ vậy, ở nhân vật còn sáng ngời phẩm chất [phẩm chất 2] qua hành động/nội tâm “...”' },
+        { label: '4. Nghệ thuật xây dựng nhân vật (Tình huống, tâm lí, ngôi kể, điểm nhìn, ngôn ngữ):', placeholder: 'Nhân vật được khắc họa sinh động qua tình huống truyện độc đáo, miêu tả tâm lí tinh tế, ngôi kể và ngôn ngữ đối thoại...' },
+        { label: '5. Đánh giá (Tiêu biểu cho tầng lớp nào? Thông điệp của tác giả?):', placeholder: 'Nhân vật là hình ảnh tiêu biểu cho người lao động/con người... Qua đó nhà văn gửi gắm thông điệp nhân đạo sâu sắc...' }
+      ]
+    },
+
+    // --- NHÓM 2: ĐOẠN VĂN NGHỊ LUẬN XÃ HỘI (~200 CHỮ - 1 ĐOẠN DUY NHẤT) ---
+    nlxh_doan_ynghia: {
+      group: 'Đoạn văn NLXH (~200 chữ)',
+      name: '6. Đoạn NLXH (Định dạng 1 & 2): Ý NGHĨA / GIÁ TRỊ / TẦM QUAN TRỌNG của một vấn đề',
+      singleParagraph: true,
+      formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Nếu đề gắn với phần Đọc hiểu: nêu 1–2 câu về vấn đề xã hội trong phần đọc hiểu trước. Bàn luận phải đưa ra 3 luận điểm kèm dẫn chứng.',
+      formulaSteps: ['Mở đoạn', 'Giải thích (1 câu)', 'Thứ nhất: Mở rộng hiểu biết, bản lĩnh, nhân cách', 'Thứ hai: Thành công, tín nhiệm, hạnh phúc', 'Thứ ba: Đối với xã hội', 'Dẫn chứng thực tế', 'Bài học & Kết đoạn'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở đoạn (Nêu VĐNL; nếu từ Đọc hiểu thì dẫn 1-2 câu từ văn bản):', placeholder: 'Từ văn bản đọc hiểu / Trong hành trình sống, [vấn đề A] đóng vai trò vô cùng quan trọng...' },
+        { label: '2. Giải thích (1 câu ngắn gọn):', placeholder: 'Hiểu một cách giản dị, [vấn đề A] chính là...' },
+        { label: '3. Luận điểm 1 - Đối với bản lĩnh & nhân cách (+ 1-2 câu lí giải):', placeholder: 'Thứ nhất, [A] giúp ta mở rộng hiểu biết, rèn ý chí, bản lĩnh và hoàn thiện nhân cách bởi...' },
+        { label: '4. Luận điểm 2 - Đối với thành công & hạnh phúc (+ 1-2 câu lí giải):', placeholder: 'Thứ hai, [A] còn giúp ta thành công hơn, nhận được sự tin tưởng, tín nhiệm và mang lại bình an, hạnh phúc...' },
+        { label: '5. Luận điểm 3 - Đối với cộng đồng, xã hội (+ 1-2 câu lí giải):', placeholder: 'Thứ ba, đối với xã hội, [A] góp phần cải thiện chất lượng sống, làm cho cộng đồng tốt đẹp, văn minh hơn...' },
+        { label: '6. Dẫn chứng thực tế tiêu biểu:', placeholder: 'Thực tế đã chứng minh qua tấm gương của...' },
+        { label: '7. Bài học nhận thức, hành động & Kết đoạn:', placeholder: 'Vì vậy, mỗi người trẻ chúng ta cần nhận thức sâu sắc và rèn luyện [A] mỗi ngày để...' }
+      ]
+    },
+
+    nlxh_doan_giaiphap: {
+      group: 'Đoạn văn NLXH (~200 chữ)',
+      name: '7. Đoạn NLXH (Định dạng 3): CÁCH THỨC / GIẢI PHÁP / TRÁCH NHIỆM của tuổi trẻ',
+      singleParagraph: true,
+      formRule: 'Hình thức: Chỉ viết trong 1 đoạn văn, không xuống hàng (~200 chữ). Bàn luận 3 luận điểm giải pháp theo 3 cấp độ: Cá nhân ➔ Gia đình, nhà trường ➔ Cộng đồng, xã hội + Dẫn chứng.',
+      formulaSteps: ['Mở đoạn', 'Giải thích (1 câu)', 'Thứ nhất: Đối với cá nhân (Nhận thức, kĩ năng, thái độ, hành động)', 'Thứ hai: Gia đình, nhà trường', 'Thứ ba: Cộng đồng, xã hội', 'Dẫn chứng', 'Bài học & Kết đoạn'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở đoạn (Nêu vấn đề trách nhiệm / giải pháp của tuổi trẻ):', placeholder: 'Trước yêu cầu của thời đại mới, việc tìm ra giải pháp / phát huy trách nhiệm của tuổi trẻ trong [vấn đề A] là vô cùng cấp thiết...' },
+        { label: '2. Giải thích (1 câu ngắn gọn):', placeholder: 'Hiểu một cách cốt lõi, [vấn đề A] là...' },
+        { label: '3. Giải pháp 1 - Đối với cá nhân (Nhận thức, kĩ năng, thói quen, thái độ & hành động):', placeholder: 'Thứ nhất, đối với cá nhân, cần nâng cao nhận thức (điều chỉnh quan điểm, tư duy), rèn luyện kĩ năng..., chủ động học hỏi; bên cạnh đó cần có thái độ tích cực và hành động cụ thể như...' },
+        { label: '4. Giải pháp 2 - Đối với gia đình, nhà trường:', placeholder: 'Thứ hai, đối với gia đình và nhà trường, cần tăng cường giáo dục, thấu hiểu, lắng nghe và đồng hành định hướng...' },
+        { label: '5. Giải pháp 3 - Đối với cộng đồng, xã hội:', placeholder: 'Thứ ba, đối với cộng đồng và xã hội, cần xây dựng chính sách thiết thực, tổ chức sự kiện và đẩy mạnh truyền thông...' },
+        { label: '6. Dẫn chứng thực tế:', placeholder: 'Minh chứng tiêu biểu là những người trẻ / chương trình... đã góp phần...' },
+        { label: '7. Bài học nhận thức, hành động & Kết đoạn:', placeholder: 'Khép lại, mỗi người trẻ hãy bắt đầu từ những hành động nhỏ nhất ngay hôm nay để...' }
+      ]
+    },
+
+    // --- NHÓM 3: BÀI VĂN NGHỊ LUẬN VĂN HỌC (~600 CHỮ - CHIA NHIỀU ĐOẠN) ---
+    nlvh_bai_1tacpham: {
+      group: 'Bài văn NLVH (~600 chữ)',
+      name: '8. Bài NLVH (Dạng 1): Phân tích, đánh giá nội dung, chủ đề & nghệ thuật MỘT tác phẩm Thơ/Truyện',
+      singleParagraph: false,
+      formRule: 'Dung lượng: Khoảng 600 chữ (chia thành nhiều đoạn). Luôn nhớ 2 bước: Bước 1: Phân tích (Gọi tên yếu tố + nêu dẫn chứng + phân tích tác dụng) ➔ Bước 2: Đánh giá (vai trò với chủ đề / thông điệp rút ra).',
+      formulaSteps: ['I. Mở bài', 'II.1. Nội dung & Chủ đề (Theo đặc trưng Thơ/Truyện)', 'II.2. Hình thức Nghệ thuật (Theo đặc trưng Thơ/Truyện)', 'II.3. Đánh giá Tư tưởng & Thông điệp', 'III. Kết bài'],
+      referenceHtml: `
+        <div class="scaffold-ref-table-wrap">
+          <table class="scaffold-ref-table">
+            <thead>
+              <tr>
+                <th>Tiêu chí THƠ (Nội dung &amp; Hình thức)</th>
+                <th>Tiêu chí TRUYỆN (Nội dung &amp; Hình thức)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>• Nội dung:</b> Đề tài, Chủ đề, Tình cảm cảm xúc – Mạch cảm xúc, Chủ thể trữ tình/Nhân vật trữ tình, Tư tưởng, Thông điệp.<br><b>• Hình thức:</b> Thể thơ, Từ ngữ, Hình ảnh, Biện pháp tu từ, Vần/nhịp, Giọng điệu.</td>
+                <td><b>• Nội dung:</b> Đề tài, Chủ đề, Vẻ đẹp hình tượng nhân vật (phẩm chất, tính cách, tâm trạng...), Tư tưởng, Thông điệp.<br><b>• Hình thức:</b> Ngôi kể, Điểm nhìn, Nhan đề (gây tò mò, gợi liên tưởng, khắc sâu ý nghĩa), Tình huống truyện, Ngôn ngữ, Chi tiết tiêu biểu, Kết thúc truyện, Giọng điệu.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `,
+      fields: [
+        { label: '1. Mở bài (Trích dẫn – dẫn dắt – giới thiệu tác giả, tác phẩm & VĐNL):', placeholder: 'Giới thiệu tác giả, tác phẩm và khái quát giá trị nội dung, chủ đề, nghệ thuật...' },
+        { label: '2. Thân bài - Phân tích Đề tài, Chủ đề & Mạch cảm xúc / Hình tượng nhân vật:', placeholder: 'Bước 1: Phân tích (gọi tên + dẫn chứng + tác dụng) các yếu tố nội dung chủ đề...' },
+        { label: '3. Thân bài - Phân tích Hình thức Nghệ thuật đặc sắc (Thơ hoặc Truyện):', placeholder: 'Phân tích thể thơ, từ ngữ, hình ảnh, BPTT (với Thơ) hoặc ngôi kể, điểm nhìn, tình huống, chi tiết tiêu biểu, ngôn ngữ (với Truyện)...' },
+        { label: '4. Thân bài - Đánh giá vai trò đối với Tư tưởng, Thông điệp & Phong cách tác giả:', placeholder: 'Bước 2: Đánh giá vai trò của nội dung và nghệ thuật trong việc thể hiện tư tưởng, thông điệp và tài năng nhà văn...' },
+        { label: '5. Kết bài (Khẳng định giá trị & dư âm tác phẩm):', placeholder: 'Khẳng định lại vị trí, sức sống của tác phẩm trong lòng người đọc...' }
+      ]
+    },
+
+    nlvh_bai_sosanh: {
+      group: 'Bài văn NLVH (~600 chữ)',
+      name: '9. Bài NLVH (Dạng 2): So sánh, đánh giá HAI đoạn trích / tác phẩm Thơ hoặc Truyện',
+      singleParagraph: false,
+      formRule: 'Dung lượng: Khoảng 600 chữ. Thân bài chia thành 5 mục rõ ràng: 1. Khái quát chung ➔ 2. Điểm tương đồng ➔ 3. Điểm khác biệt ➔ 4. Lí giải giống/khác nhau ➔ 5. Đánh giá chung.',
+      formulaSteps: ['I. Mở bài (TP1+TG1, TP2+TG2)', 'II.1. Khái quát chung', 'II.2. Điểm tương đồng', 'II.3. Điểm khác biệt', 'II.4. Lí giải giống & khác', 'II.5. Đánh giá & III. Kết bài'],
+      referenceHtml: `
+        <div class="scaffold-ref-table-wrap">
+          <table class="scaffold-ref-table">
+            <thead>
+              <tr>
+                <th>Tiêu chí</th>
+                <th>So sánh hai tác phẩm THƠ</th>
+                <th>So sánh hai tác phẩm TRUYỆN / KÍ / KỊCH</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Nội dung</b></td>
+                <td>Đề tài, chủ đề; hình tượng thơ; cảm hứng chủ đạo; tư tưởng, thông điệp.</td>
+                <td>Đề tài, chủ đề; hình tượng nhân vật (kiểu nhân vật, tình cảm tác giả); tư tưởng, thông điệp; giá trị hiện thực &amp; nhân đạo.</td>
+              </tr>
+              <tr>
+                <td><b>Hình thức</b></td>
+                <td>Thể thơ, vần, nhịp; sáng tạo từ ngữ, hình ảnh, biểu tượng; chủ thể trữ tình, cấu tứ, biện pháp tu từ.</td>
+                <td><b>Truyện:</b> Cốt truyện, cách xây dựng nhân vật, ngôi kể, điểm nhìn, lời kể, kết thúc...<br><b>Kịch:</b> Xung đột kịch, nhân vật hành động, lời thoại.<br><b>Kí:</b> Tính phi hư cấu, kết hợp sự kiện hiện thực với trải nghiệm.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `,
+      fields: [
+        { label: '1. I. Mở bài (Trích dẫn – dẫn dắt – TP1+TG1, TP2+TG2 – chốt tương đồng, khác biệt):', placeholder: 'Giới thiệu hai tác phẩm, hai tác giả và nêu vấn đề nghị luận (điểm tương đồng và khác biệt)...' },
+        { label: '2. II.1. Khái quát chung (Thông tin tác giả, tác phẩm, hoàn cảnh sáng tác, xuất xứ):', placeholder: 'Giới thiệu ngắn gọn hoàn cảnh sáng tác, xuất xứ của hai đoạn trích/tác phẩm...' },
+        { label: '3. II.2. Điểm tương đồng (Nội dung & Nghệ thuật - kèm lí lẽ và bằng chứng):', placeholder: 'Thứ nhất, hai tác phẩm gặp gỡ nhau ở đề tài, chủ đề, cảm hứng... Thứ hai...' },
+        { label: '4. II.3. Điểm khác biệt (Nội dung & Hình thức thể hiện - kèm lí lẽ và bằng chứng):', placeholder: 'Về nội dung (hình tượng thơ/kiểu nhân vật)... Về hình thức (chủ thể trữ tình, từ ngữ, ngôi kể, điểm nhìn, cách xây dựng nhân vật)...' },
+        { label: '5. II.4. Lí giải điểm giống, khác nhau:', placeholder: 'Hai tác phẩm có điểm giống nhau xuất phát từ việc [cùng hoàn cảnh/đề tài/quan điểm thẩm mĩ]... Và điều dẫn đến sự khác biệt là do [cá tính sáng tạo riêng, thời đại, văn hóa, đối tượng đặc thù]...' },
+        { label: '6. II.5. Đánh giá ý nghĩa & III. Kết bài:', placeholder: 'Sự thống nhất trong quan điểm/thi pháp thời đại cùng sự độc đáo, đa dạng trong phong cách nghệ thuật đã làm phong phú nền văn học...' }
+      ]
+    },
+
+    // --- NHÓM 4: BÀI VĂN NGHỊ LUẬN XÃ HỘI (~600 CHỮ - CHIA NHIỀU ĐOẠN) ---
+    nlxh_bai_tutuong: {
+      group: 'Bài văn NLXH (~600 chữ)',
+      name: '10. Bài NLXH (Dạng 1): Nghị luận về một TƯ TƯỞNG ĐẠO LÍ / CÂU NÓI',
+      singleParagraph: false,
+      formRule: 'Dung lượng: Khoảng 600 chữ. Bàn luận phải tách thành 3 đoạn luận điểm (Ý nghĩa 1, Ý nghĩa 2, Ý nghĩa 3) kèm lí lẽ và dẫn chứng.',
+      formulaSteps: ['Mở bài', 'Đoạn 1: Giải thích từ ngữ & cả câu', 'Đoạn 2, 3, 4: Bàn luận 3 Ý nghĩa + Dẫn chứng', 'Đoạn 5: Phê phán, mở rộng', 'Đoạn 6: Giải pháp, liên hệ & Kết bài'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở bài & Đoạn 1 - Giải thích (Từ ngữ quan trọng, vế câu ➔ “Vậy câu này có nghĩa là...”):', placeholder: 'Dẫn dắt câu nói. Giải thích các từ khóa và rút ra ý nghĩa cả câu: “Vậy câu nói này có nghĩa là...”' },
+        { label: '2. Đoạn Bàn luận - Ý nghĩa 1 (Vì sao đặt ra vấn đề? Ý nghĩa 1 + Lí lẽ & Dẫn chứng):', placeholder: 'Trước hết, tư tưởng này giúp mỗi cá nhân mở rộng nhận thức, hoàn thiện nhân cách...' },
+        { label: '3. Đoạn Bàn luận - Ý nghĩa 2 & Ý nghĩa 3 (+ Lí lẽ & Dẫn chứng thực tế):', placeholder: 'Bên cạnh đó (Ý nghĩa 2)... Không những vậy, đối với cộng đồng xã hội (Ý nghĩa 3)... Dẫn chứng thực tế...' },
+        { label: '4. Đoạn Phê phán, mở rộng vấn đề (Chỉ ra biểu hiện trái ngược hoặc mặt hạn chế nếu có):', placeholder: 'Tuy nhiên, trong cuộc sống vẫn còn những người... (Hoặc bổ sung góc nhìn toàn diện cho câu nói)...' },
+        { label: '5. Đoạn Giải pháp, liên hệ bản thân, bài học nhận thức & hành động + Kết bài:', placeholder: 'Từ đó, mỗi người trẻ cần... Khẳng định lại giá trị bền vững của câu nói.' }
+      ]
+    },
+
+    nlxh_bai_hientuong: {
+      group: 'Bài văn NLXH (~600 chữ)',
+      name: '11. Bài NLXH (Dạng 2): Nghị luận về một HIỆN TƯỢNG ĐỜI SỐNG',
+      singleParagraph: false,
+      formRule: 'Dung lượng: Khoảng 600 chữ. Triển khai theo mạch 4 bước: Giải thích + Thực trạng ➔ Nguyên nhân ➔ Tác dụng hoặc Hậu quả ➔ Giải pháp (cá nhân, cộng đồng / trước mắt, lâu dài).',
+      formulaSteps: ['Mở bài', 'Đoạn 1: Giải thích + Thực trạng', 'Đoạn 2: Nguyên nhân', 'Đoạn 3: Tác dụng / Hậu quả + D/c', 'Đoạn 4: Giải pháp (Cá nhân, cộng đồng, trước mắt, lâu dài) & Kết bài'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở bài & Đoạn 1 - Giải thích + Thực trạng hiện nay:', placeholder: 'Giới thiệu hiện tượng đời sống. Giải thích bản chất và nêu bức tranh thực trạng, biểu hiện cụ thể...' },
+        { label: '2. Đoạn 2 - Nguyên nhân (Chủ quan & Khách quan):', placeholder: 'Hiện tượng trên xuất phát từ nguyên nhân chủ quan (ý thức cá nhân) và khách quan (gia đình, nhà trường, xã hội)...' },
+        { label: '3. Đoạn 3 - Tác dụng (Ý nghĩa) hoặc Hậu quả (Tác hại) + Dẫn chứng:', placeholder: 'Phân tích những tác động sâu sắc đối với cá nhân và cộng đồng kèm dẫn chứng thực tế...' },
+        { label: '4. Đoạn 4 - Giải pháp (Cá nhân, cộng đồng / Trước mắt, lâu dài) & Kết bài:', placeholder: 'Để phát huy/khắc phục hiện tượng này, về phía cá nhân... về phía cộng đồng... (giải pháp trước mắt và lâu dài)...' }
+      ]
+    },
+
+    nlxh_bai_vdxh_tpvh: {
+      group: 'Bài văn NLXH (~600 chữ)',
+      name: '12. Bài NLXH (Dạng 3): Nghị luận về một VẤN ĐỀ XÃ HỘI đặt ra trong tác phẩm văn học',
+      singleParagraph: false,
+      formRule: 'Dung lượng: Khoảng 600 chữ. Kết nối từ biểu hiện của vấn đề xã hội trong tác phẩm văn học (dẫn chứng) ra đời sống xã hội (3 luận điểm Ý nghĩa + Phê phán + Giải pháp).',
+      formulaSteps: ['Mở bài', 'Đoạn 1: Giải thích + Biểu hiện trong TP văn học & Xã hội', 'Đoạn 2, 3, 4: Bàn luận 3 Ý nghĩa + Dẫn chứng đời sống', 'Đoạn 5: Phê phán, mở rộng', 'Đoạn 6: Giải pháp, bài học & Kết bài'],
+      referenceHtml: '',
+      fields: [
+        { label: '1. Mở bài & Đoạn 1 - Giải thích + Biểu hiện VĐXH trong tác phẩm văn học (d/c) & Xã hội:', placeholder: 'Giới thiệu tác phẩm văn học và vấn đề xã hội đặt ra. Giải thích vấn đề và chỉ ra biểu hiện trong tác phẩm + ngoài đời thực...' },
+        { label: '2. Đoạn Bàn luận - Vì sao đặt ra vấn đề? Ý nghĩa 1 & Ý nghĩa 2:', placeholder: 'Bước ra từ trang sách, vấn đề này mang ý nghĩa lớn lao. Thứ nhất (Ý nghĩa 1)... Thứ hai (Ý nghĩa 2)...' },
+        { label: '3. Đoạn Bàn luận - Ý nghĩa 3 + Dẫn chứng thực tế đời sống:', placeholder: 'Thứ ba, đối với cộng đồng xã hội (Ý nghĩa 3)... Thực tế đời sống đã chứng minh qua...' },
+        { label: '4. Đoạn Phê phán, mở rộng vấn đề:', placeholder: 'Bên cạnh đó, cần lên án/phê phán những biểu hiện lệch lạc, thờ ơ...' },
+        { label: '5. Đoạn Giải pháp, liên hệ bản thân, bài học nhận thức & hành động + Kết bài:', placeholder: 'Mỗi người trẻ cần hành động thiết thực... Khẳng định giá trị nhân văn kết nối từ tác phẩm đến cuộc đời.' }
+      ]
+    }
+  };
+
+  function detectBestTemplateKey(text, subTypeHint, isParagraphHint) {
+    if (subTypeHint && SCAFFOLD_TEMPLATES[subTypeHint]) return subTypeHint;
+    const t = String(text || '').toLowerCase();
+
+    if (t.includes('so sánh')) return 'nlvh_bai_sosanh';
+    if (t.includes('hiện tượng')) return 'nlxh_bai_hientuong';
+    if (t.includes('trong tác phẩm') && (t.includes('xã hội') || t.includes('cuộc sống hôm nay'))) return 'nlxh_bai_vdxh_tpvh';
+    if (t.includes('giải pháp') || t.includes('làm thế nào') || t.includes('cách thức') || t.includes('trách nhiệm')) {
+      return 'nlxh_doan_giaiphap';
+    }
+    if (t.includes('nhân vật')) return 'nlvh_doan_nhanvat';
+    if (t.includes('tình cảm') || t.includes('cảm xúc') || t.includes('mạch cảm xúc')) return 'nlvh_doan_camxuc_tho';
+    if (t.includes('nghệ thuật') && (t.includes('truyện') || t.includes('ngôi kể') || t.includes('tình huống'))) return 'nlvh_doan_nt_truyen';
+    if (t.includes('nghệ thuật') && (t.includes('thơ') || t.includes('khổ thơ') || t.includes('đoạn thơ'))) return 'nlvh_doan_nt_tho';
+    if (t.includes('chủ đề')) return 'nlvh_doan_chude';
+
+    if (isParagraphHint || t.includes('200 chữ') || t.includes('đoạn văn')) {
+      if (t.includes('thơ') || t.includes('truyện') || t.includes('tác phẩm')) return 'nlvh_doan_chude';
+      return 'nlxh_doan_ynghia';
+    }
+    if (t.includes('600 chữ') || t.includes('bài văn')) {
+      if (t.includes('thơ') || t.includes('truyện') || t.includes('tác phẩm')) return 'nlvh_bai_1tacpham';
+      return 'nlxh_bai_tutuong';
+    }
+    return 'nlxh_doan_ynghia';
+  }
+
+  function buildTemplateSelectOptionsHtml(selectedKey) {
+    return Object.entries(SCAFFOLD_TEMPLATES).map(([key, tpl]) =>
+      `<option value="${key}" ${key === selectedKey ? 'selected' : ''}>[${esc(tpl.group)}] ${esc(tpl.name)}</option>`
+    ).join('');
+  }
+
   function extractSmartKeywordsFromText(text) {
     const t = String(text || '').toLowerCase();
     const kwSet = new Set();
 
     if (t.includes('tuổi trẻ') || t.includes('khát vọng') || t.includes('ước mơ') || t.includes('cống hiến')) {
-      ['Khát vọng vươn lên', 'Lý tưởng sống đẹp', 'Dấn thân & Cống hiến', 'Nhiệt huyết thanh xuân', 'Vượt qua giới hạn'].forEach(k => kwSet.add(k));
+      ['Khát vọng vươn lên', 'Lý tưởng sống đẹp', 'Dấn thân & Cống hiến', 'Nhiệt huyết thanh xuân', 'Hoàn thiện nhân cách'].forEach(k => kwSet.add(k));
     }
     if (t.includes('nhân ái') || t.includes('sẻ chia') || t.includes('yêu thương') || t.includes('thấu cảm') || t.includes('tình người')) {
       ['Sự thấu cảm', 'Tình người ấm áp', 'Sống là cho đi', 'Gắn kết cộng đồng', 'Lòng trắc ẩn'].forEach(k => kwSet.add(k));
     }
-    if (t.includes('bản lĩnh') || t.includes('khó khăn') || t.includes('nghịch cảnh') || t.includes('ý chí') || t.includes('thất bại')) {
-      ['Bản lĩnh kiên cường', 'Ý chí nghị lực', 'Vượt lên nghịch cảnh', 'Biến thử thách thành cơ hội', 'Tinh thần lạc quan'].forEach(k => kwSet.add(k));
+    if (t.includes('bản lĩnh') || t.includes('kiên trì') || t.includes('khó khăn') || t.includes('nghịch cảnh') || t.includes('ý chí')) {
+      ['Bản lĩnh kiên cường', 'Ý chí nghị lực', 'Vượt lên nghịch cảnh', 'Mở rộng hiểu biết', 'Bình an & Hạnh phúc'].forEach(k => kwSet.add(k));
     }
-    if (t.includes('gia đình') || t.includes('mẹ') || t.includes('cha') || t.includes('quê hương') || t.includes('nguồn cội')) {
-      ['Điểm tựa tâm hồn', 'Tình mẫu tử thiêng liêng', 'Nghĩa tình nguồn cội', 'Bến đỗ bình yên', 'Lòng biết ơn'].forEach(k => kwSet.add(k));
+    if (t.includes('thơ') || t.includes('trữ tình')) {
+      ['Chủ thể trữ tình', 'Hình tượng trung tâm', 'Mạch cảm xúc', 'Nhịp điệu ngân vang', 'Biện pháp tu từ đặc sắc'].forEach(k => kwSet.add(k));
     }
-    if (t.includes('biện pháp') || t.includes('tu từ') || t.includes('nghệ thuật') || t.includes('hình ảnh')) {
-      ['Tăng sức gợi hình, gợi cảm', 'Nhấn mạnh sắc thái biểu đạt', 'Tạo nhịp điệu ngân vang', 'Khắc họa sinh động', 'Thể hiện tấm lòng tác giả'].forEach(k => kwSet.add(k));
+    if (t.includes('truyện') || t.includes('nhân vật')) {
+      ['Tình huống truyện độc đáo', 'Điểm nhìn trần thuật', 'Chi tiết nghệ thuật đắt giá', 'Diễn biến nội tâm tinh tế', 'Cá tính sáng tạo'].forEach(k => kwSet.add(k));
     }
 
-    // Mặc định bổ sung các từ khóa học thuật chuẩn GDPT 2018
     const defaults = [
       'Giá trị nhân văn sâu sắc',
       'Thông điệp giàu ý nghĩa',
-      'Nhận thức & Hành động',
-      'Trách nhiệm cá nhân',
-      'Góc nhìn đa chiều',
-      'Bản sắc riêng biệt'
+      'Triết lí nhân sinh',
+      'Bài học nhận thức & hành động',
+      'Cộng đồng văn minh, tốt đẹp'
     ];
     defaults.forEach(k => {
       if (kwSet.size < 8) kwSet.add(k);
@@ -11004,92 +11509,39 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
     }
 
     awardCustomGamificationPoints(10, 'scaffolding');
-
-    // Lấy nội dung câu hỏi để gợi ý từ khóa sát đề
     const card = document.getElementById(`card-q-${idx}`);
     const qText = card ? (card.querySelector('.reading-q-text')?.textContent || '') : '';
+    const defaultTplKey = isParagraph ? detectBestTemplateKey(qText, null, true) : 'reading_short';
+    renderReadingQuestionScaffoldContent(idx, defaultTplKey, qText);
+    box.style.display = 'block';
+  }
+
+  function renderReadingQuestionScaffoldContent(idx, tplKey, qTextOverride) {
+    const box = document.getElementById(`reading-scaffold-box-${idx}`);
+    if (!box) return;
+    const card = document.getElementById(`card-q-${idx}`);
+    const qText = qTextOverride !== undefined ? qTextOverride : (card ? (card.querySelector('.reading-q-text')?.textContent || '') : '');
     const keywords = extractSmartKeywordsFromText(qText);
 
-    if (isParagraph) {
-      // Sơ đồ Giàn giáo nhận thức chuẩn cho Đoạn văn 200 chữ (6 bước)
+    if (tplKey === 'reading_short') {
       box.innerHTML = `
         <div class="scaffold-inner">
-          <div class="scaffold-top-bar">
-            <span class="scaffold-tag">💡 GIÀN GIÁO NHẬN THỨC · ĐOẠN VĂN 200 CHỮ</span>
-            <button type="button" class="btn gh sm" style="padding:2px 8px; font-size:12px;" onclick="document.getElementById('reading-scaffold-box-${idx}').style.display='none'">Đóng</button>
+          <div class="scaffold-top-bar" style="flex-wrap:wrap; gap:8px;">
+            <span class="scaffold-tag">💡 GIÀN GIÁO NHẬN THỨC · ĐỌC HIỂU &amp; NGHỊ LUẬN</span>
+            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+              <select class="ept-mode-select" style="max-width:290px;" onchange="renderReadingQuestionScaffoldContent(${idx}, this.value)">
+                <option value="reading_short" selected>[Đọc hiểu] Công thức 3 bước trả lời câu đọc hiểu</option>
+                ${buildTemplateSelectOptionsHtml('')}
+              </select>
+              <button type="button" class="btn gh sm" style="padding:2px 8px; font-size:12px;" onclick="document.getElementById('reading-scaffold-box-${idx}').style.display='none'">Đóng</button>
+            </div>
           </div>
 
           <div class="scaffold-formula-banner">
-            <b>📐 Công thức 6 bước viết đoạn 200 chữ chuẩn GDPT 2018:</b>
+            <b>📐 Công thức 3 bước trả lời Đọc hiểu đạt điểm tối đa:</b>
             <div class="scaffold-steps-pills">
-              <span class="scaffold-step-pill">1. Câu chủ đề</span> ➔
-              <span class="scaffold-step-pill">2. Giải thích</span> ➔
-              <span class="scaffold-step-pill">3. Bàn luận</span> ➔
-              <span class="scaffold-step-pill">4. Chứng minh</span> ➔
-              <span class="scaffold-step-pill">5. Phản đề</span> ➔
-              <span class="scaffold-step-pill">6. Bài học</span>
-            </div>
-          </div>
-
-          <div class="scaffold-keywords-section">
-            <div class="scaffold-lbl">🔑 Từ khóa gợi mở (Bấm vào để chèn nhanh vào bài viết):</div>
-            <div class="scaffold-kw-list">
-              ${keywords.map(kw => `
-                <button type="button" class="scaffold-kw-chip" onclick="insertKeywordIntoReadingAnswer(${idx}, '${esc(kw)}')">+ ${esc(kw)}</button>
-              `).join('')}
-            </div>
-          </div>
-
-          <div class="scaffold-outline-builder">
-            <div class="scaffold-lbl">🧩 Sơ đồ dàn ý trống (Điền ý ngắn vào các bước rồi bấm Ghép thành đoạn văn):</div>
-            <div class="scaffold-grid-steps">
-              <div class="scaffold-step-field">
-                <label>1. Mở đoạn (Câu chủ đề):</label>
-                <input type="text" id="r-scaf-${idx}-s1" placeholder="Ví dụ: Từ ngữ liệu trên, ta nhận ra vai trò vô cùng to lớn của [vấn đề nghị luận] trong cuộc sống...">
-              </div>
-              <div class="scaffold-step-field">
-                <label>2. Giải thích khái niệm / ý nghĩa:</label>
-                <input type="text" id="r-scaf-${idx}-s2" placeholder="Ví dụ: Hiểu một cách giản dị, [từ khóa] chính là thái độ sống / phẩm chất...">
-              </div>
-              <div class="scaffold-step-field">
-                <label>3. Bàn luận (Biểu hiện &amp; Ý nghĩa, vì sao?):</label>
-                <input type="text" id="r-scaf-${idx}-s3" placeholder="Ví dụ: Trong hành trình trưởng thành, phẩm chất này giúp con người vượt qua thử thách, lan tỏa giá trị tốt đẹp...">
-              </div>
-              <div class="scaffold-step-field">
-                <label>4. Chứng minh (Dẫn chứng thực tế):</label>
-                <input type="text" id="r-scaf-${idx}-s4" placeholder="Ví dụ: Thực tế đã chứng minh qua tấm gương của... đã kiên trì nỗ lực để...">
-              </div>
-              <div class="scaffold-step-field">
-                <label>5. Phản đề (Mở rộng / Phê phán):</label>
-                <input type="text" id="r-scaf-${idx}-s5" placeholder="Ví dụ: Tuy nhiên, vẫn còn một bộ phận người sống thờ ơ, thiếu đi ý thức... thật đáng buồn.">
-              </div>
-              <div class="scaffold-step-field">
-                <label>6. Kết đoạn (Bài học nhận thức &amp; hành động):</label>
-                <input type="text" id="r-scaf-${idx}-s6" placeholder="Ví dụ: Khép lại trang viết, mỗi người trẻ chúng ta cần rèn luyện bản thân bắt đầu từ những hành động nhỏ nhất...">
-              </div>
-            </div>
-            <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px;">
-              <button type="button" class="btn au sm" onclick="assembleReadingScaffoldToTextarea(${idx}, true)">
-                <ion-icon name="flash-outline"></ion-icon> <span>Ghép dàn ý thành đoạn văn đưa vào ô làm bài</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-    } else {
-      // Sơ đồ Giàn giáo nhận thức cho câu hỏi Đọc hiểu tự luận (3 bước)
-      box.innerHTML = `
-        <div class="scaffold-inner">
-          <div class="scaffold-top-bar">
-            <span class="scaffold-tag">💡 GIÀN GIÁO NHẬN THỨC · CÂU HỎI ĐỌC HIỂU</span>
-            <button type="button" class="btn gh sm" style="padding:2px 8px; font-size:12px;" onclick="document.getElementById('reading-scaffold-box-${idx}').style.display='none'">Đóng</button>
-          </div>
-
-          <div class="scaffold-formula-banner">
-            <b>📐 Công thức 3 bước trả lời đọc hiểu đạt điểm tối đa:</b>
-            <div class="scaffold-steps-pills">
-              <span class="scaffold-step-pill">1. Chỉ ra trực tiếp (Gọi tên &amp; từ ngữ)</span> ➔
-              <span class="scaffold-step-pill">2. Tác dụng nội dung (Gợi hình ảnh/cảm xúc)</span> ➔
+              <span class="scaffold-step-pill">1. Chỉ ra trực tiếp (Gọi tên yếu tố &amp; dẫn chứng)</span> ➔
+              <span class="scaffold-step-pill">2. Phân tích tác dụng nội dung</span> ➔
               <span class="scaffold-step-pill">3. Giá trị nghệ thuật / Thông điệp</span>
             </div>
           </div>
@@ -11107,29 +11559,80 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
             <div class="scaffold-lbl">🧩 Sơ đồ dàn ý trống 3 bước:</div>
             <div class="scaffold-grid-steps">
               <div class="scaffold-step-field">
-                <label>Bước 1 - Chỉ ra dấu hiệu / chi tiết trong văn bản:</label>
+                <label>Bước 1 - Gọi tên yếu tố / Chỉ ra dẫn chứng trong văn bản:</label>
                 <input type="text" id="r-scaf-${idx}-s1" placeholder="Ví dụ: Biện pháp tu từ / Chi tiết thể hiện qua từ ngữ “...”">
               </div>
               <div class="scaffold-step-field">
-                <label>Bước 2 - Phân tích tác dụng nội dung / ý nghĩa:</label>
-                <input type="text" id="r-scaf-${idx}-s2" placeholder="Ví dụ: Nhấn mạnh và làm nổi bật vẻ đẹp / tâm trạng... của nhân vật trữ tình.">
+                <label>Bước 2 - Phân tích tác dụng nội dung / cảm xúc:</label>
+                <input type="text" id="r-scaf-${idx}-s2" placeholder="Ví dụ: Làm nổi bật hình ảnh / tâm trạng... của nhân vật trữ tình.">
               </div>
               <div class="scaffold-step-field">
-                <label>Bước 3 - Tác dụng nghệ thuật / Thông điệp rút ra:</label>
-                <input type="text" id="r-scaf-${idx}-s3" placeholder="Ví dụ: Giúp lời văn/thơ giàu hình ảnh, giàu nhịp điệu và khơi gợi sự đồng cảm sâu sắc.">
+                <label>Bước 3 - Đánh giá tác dụng nghệ thuật / Thông điệp:</label>
+                <input type="text" id="r-scaf-${idx}-s3" placeholder="Ví dụ: Giúp lời văn/thơ giàu hình ảnh, nhịp điệu và gửi gắm thông điệp...">
               </div>
             </div>
             <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px;">
-              <button type="button" class="btn au sm" onclick="assembleReadingScaffoldToTextarea(${idx}, false)">
+              <button type="button" class="btn au sm" onclick="assembleReadingScaffoldToTextarea(${idx}, false, 3)">
                 <ion-icon name="flash-outline"></ion-icon> <span>Ghép câu trả lời vào ô làm bài</span>
               </button>
             </div>
           </div>
         </div>
       `;
+      return;
     }
 
-    box.style.display = 'block';
+    const tpl = SCAFFOLD_TEMPLATES[tplKey] || SCAFFOLD_TEMPLATES.nlxh_doan_ynghia;
+    box.innerHTML = `
+      <div class="scaffold-inner">
+        <div class="scaffold-top-bar" style="flex-wrap:wrap; gap:8px;">
+          <span class="scaffold-tag">💡 ${esc(tpl.group.toUpperCase())}</span>
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <select class="ept-mode-select" style="max-width:320px;" onchange="renderReadingQuestionScaffoldContent(${idx}, this.value)">
+              <option value="reading_short">[Đọc hiểu] Công thức 3 bước trả lời câu đọc hiểu</option>
+              ${buildTemplateSelectOptionsHtml(tplKey)}
+            </select>
+            <button type="button" class="btn gh sm" style="padding:2px 8px; font-size:12px;" onclick="document.getElementById('reading-scaffold-box-${idx}').style.display='none'">Đóng</button>
+          </div>
+        </div>
+
+        <div class="scaffold-formula-banner">
+          <div style="margin-bottom:4px; color:#b45309; font-weight:800; font-size:12px;">📌 ${esc(tpl.formRule)}</div>
+          <b>📐 Cấu trúc dàn ý chuẩn (${esc(tpl.name)}):</b>
+          <div class="scaffold-steps-pills">
+            ${tpl.formulaSteps.map(st => `<span class="scaffold-step-pill">${esc(st)}</span>`).join(' ➔ ')}
+          </div>
+        </div>
+
+        ${tpl.referenceHtml || ''}
+
+        <div class="scaffold-keywords-section">
+          <div class="scaffold-lbl">🔑 Từ khóa gợi mở (Bấm vào để chèn nhanh vào bài viết):</div>
+          <div class="scaffold-kw-list">
+            ${keywords.map(kw => `
+              <button type="button" class="scaffold-kw-chip" onclick="insertKeywordIntoReadingAnswer(${idx}, '${esc(kw)}')">+ ${esc(kw)}</button>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="scaffold-outline-builder">
+          <div class="scaffold-lbl">🧩 Sơ đồ dàn ý trống tự điền (Điền các bước rồi bấm Ghép vào ô làm bài):</div>
+          <div class="scaffold-grid-steps">
+            ${tpl.fields.map((f, fIdx) => `
+              <div class="scaffold-step-field">
+                <label>${esc(f.label)}</label>
+                <input type="text" id="r-scaf-${idx}-s${fIdx + 1}" placeholder="${esc(f.placeholder)}">
+              </div>
+            `).join('')}
+          </div>
+          <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px;">
+            <button type="button" class="btn au sm" onclick="assembleReadingScaffoldToTextarea(${idx}, ${tpl.singleParagraph ? 'true' : 'false'}, ${tpl.fields.length})">
+              <ion-icon name="flash-outline"></ion-icon> <span>Ghép dàn ý thành ${tpl.singleParagraph ? '1 đoạn văn (không xuống dòng)' : 'bài viết'} đưa vào ô làm bài</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
   }
 
   function insertKeywordIntoReadingAnswer(idx, kw) {
@@ -11142,11 +11645,10 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
     toast(`Đã chèn từ khóa: "${kw}"`, 'ok');
   }
 
-  function assembleReadingScaffoldToTextarea(idx, isParagraph) {
+  function assembleReadingScaffoldToTextarea(idx, isSingleParagraph, stepsCount = 7) {
     const tx = document.getElementById(`reading-q-textarea-${idx}`);
     if (!tx) return;
 
-    const stepsCount = isParagraph ? 6 : 3;
     const parts = [];
     for (let i = 1; i <= stepsCount; i++) {
       const inp = document.getElementById(`r-scaf-${idx}-s${i}`);
@@ -11161,26 +11663,33 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
       return;
     }
 
-    const joined = isParagraph ? parts.join(' ') : parts.map(p => '- ' + p).join('\n');
-    tx.value = tx.value.trim() ? (tx.value.trim() + '\n' + joined) : joined;
+    const joined = isSingleParagraph ? parts.join(' ') : parts.map(p => '- ' + p).join('\n');
+    tx.value = tx.value.trim() ? (isSingleParagraph ? `${tx.value.trim()} ${joined}` : `${tx.value.trim()}\n${joined}`) : joined;
     tx.dispatchEvent(new Event('input', { bubbles: true }));
     tx.focus();
     toast('✨ Đã ghép dàn ý vào ô làm bài! Bạn hãy hoàn thiện thêm câu chữ cho thật mượt mà nhé.', 'ok');
   }
 
-  // 3B. Giàn giáo nhận thức cho Luyện viết (Toàn bài & Từng đoạn)
+  // 3B. Giàn giáo nhận thức cho Luyện viết (Toàn bài & Từng đoạn theo đúng 12 dạng bài)
+  let activeWritingTemplateKey = 'nlxh_doan_ynghia';
+
   function initWritingScaffoldingAndTimer() {
     const panel = document.getElementById('writing-scaffolding-panel');
     if (panel) panel.style.display = 'none';
-    renderWritingMainScaffoldingBody();
-    initWritingPressureTimerUI();
+
+    const curSet = typeof currentWritingSet !== 'undefined' ? currentWritingSet : null;
+    const promptText = curSet ? `${curSet.title || ''} ${curSet.prompt || ''}` : '';
+    activeWritingTemplateKey = detectBestTemplateKey(promptText, curSet && curSet.subType, curSet && curSet.category && curSet.category.startsWith('doan-'));
+
+    renderWritingMainScaffoldingBody(activeWritingTemplateKey);
+    initWritingPressureTimerUI(curSet);
   }
 
   function toggleWritingScaffoldingPanel() {
     const panel = document.getElementById('writing-scaffolding-panel');
     if (!panel) return;
     if (panel.style.display === 'none') {
-      renderWritingMainScaffoldingBody();
+      renderWritingMainScaffoldingBody(activeWritingTemplateKey);
       panel.style.display = 'block';
       awardCustomGamificationPoints(10, 'scaffolding');
     } else {
@@ -11188,32 +11697,43 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
     }
   }
 
-  function renderWritingMainScaffoldingBody() {
+  function renderWritingMainScaffoldingBody(selectedKey) {
     const body = document.getElementById('writing-scaffolding-body');
     if (!body) return;
+    if (selectedKey && SCAFFOLD_TEMPLATES[selectedKey]) {
+      activeWritingTemplateKey = selectedKey;
+    }
+    const tpl = SCAFFOLD_TEMPLATES[activeWritingTemplateKey] || SCAFFOLD_TEMPLATES.nlxh_doan_ynghia;
     const promptText = document.getElementById('workspace-prompt-text')?.textContent || '';
     const keywords = extractSmartKeywordsFromText(promptText);
     const connectors = [
-      'Trước hết, cần hiểu rằng',
-      'Thực vậy, trong cuộc sống',
-      'Bên cạnh đó, không thể phủ nhận',
-      'Minh chứng tiêu biểu cho điều này là',
-      'Nhìn từ góc độ ngược lại',
-      'Khép lại trang viết, ta nhận ra'
+      'Thứ nhất,',
+      'Thứ hai,',
+      'Thứ ba,',
+      'Thứ tư,',
+      'Bên cạnh đó,',
+      'Thực tế đã chứng minh',
+      'Nhìn từ góc độ ngược lại,',
+      'Qua đó, tác giả gửi gắm thông điệp'
     ];
 
     body.innerHTML = `
+      <div style="margin-bottom:10px;">
+        <label class="scaffold-lbl" for="writing-main-tpl-select">📂 Chọn đúng Dạng bài Nghị luận (Theo tài liệu phương pháp):</label>
+        <select id="writing-main-tpl-select" class="qa-select" style="font-weight:700; font-size:12.5px;" onchange="renderWritingMainScaffoldingBody(this.value)">
+          ${buildTemplateSelectOptionsHtml(activeWritingTemplateKey)}
+        </select>
+      </div>
+
       <div class="scaffold-formula-banner">
-        <b>📐 Công thức chuẩn viết Đoạn / Bài Nghị luận GDPT 2018:</b>
+        <div style="margin-bottom:4px; color:#b45309; font-weight:800; font-size:12px;">📌 ${esc(tpl.formRule)}</div>
+        <b>📐 Quy trình các bước triển khai:</b>
         <div class="scaffold-steps-pills">
-          <span class="scaffold-step-pill">1. Câu chủ đề (Mở đoạn)</span> ➔
-          <span class="scaffold-step-pill">2. Giải thích</span> ➔
-          <span class="scaffold-step-pill">3. Bàn luận (Phân tích)</span> ➔
-          <span class="scaffold-step-pill">4. Chứng minh</span> ➔
-          <span class="scaffold-step-pill">5. Phản đề</span> ➔
-          <span class="scaffold-step-pill">6. Rút ra bài học</span>
+          ${tpl.formulaSteps.map(st => `<span class="scaffold-step-pill">${esc(st)}</span>`).join(' ➔ ')}
         </div>
       </div>
+
+      ${tpl.referenceHtml || ''}
 
       <div class="scaffold-keywords-section">
         <div class="scaffold-lbl">🔑 Từ khóa gợi ý theo đề (Bấm để chèn vào phần đang viết):</div>
@@ -11225,7 +11745,7 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
       </div>
 
       <div class="scaffold-keywords-section" style="margin-top:8px;">
-        <div class="scaffold-lbl">🔗 Cụm từ nối chuyển ý mạch lạc:</div>
+        <div class="scaffold-lbl">🔗 Cụm từ dẫn luận điểm chuẩn theo tài liệu:</div>
         <div class="scaffold-kw-list">
           ${connectors.map(c => `
             <button type="button" class="scaffold-kw-chip connector" onclick="insertTextIntoActiveWritingSection('${esc(c)} ')">+ ${esc(c)}...</button>
@@ -11245,15 +11765,40 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
     }
 
     awardCustomGamificationPoints(10, 'scaffolding');
+    renderWritingSectionScaffoldingContent(secId, idx, activeWritingTemplateKey);
+    box.style.display = 'block';
+  }
+
+  function renderWritingSectionScaffoldingContent(secId, idx, tplKey) {
+    const box = document.getElementById(`writing-sec-scaffold-${secId}`);
+    if (!box) return;
+    if (tplKey && SCAFFOLD_TEMPLATES[tplKey]) {
+      activeWritingTemplateKey = tplKey;
+    }
+    const tpl = SCAFFOLD_TEMPLATES[activeWritingTemplateKey] || SCAFFOLD_TEMPLATES.nlxh_doan_ynghia;
     const promptText = document.getElementById('workspace-prompt-text')?.textContent || '';
     const keywords = extractSmartKeywordsFromText(promptText);
 
     box.innerHTML = `
       <div class="scaffold-inner">
-        <div class="scaffold-top-bar">
-          <span class="scaffold-tag">💡 GỢI Ý TƯ DUY &amp; SƠ ĐỒ DÀN Ý TRỐNG (PHẦN ${idx + 1})</span>
-          <button type="button" class="btn gh sm" style="padding:2px 8px; font-size:12px;" onclick="document.getElementById('writing-sec-scaffold-${secId}').style.display='none'">Đóng</button>
+        <div class="scaffold-top-bar" style="flex-wrap:wrap; gap:8px;">
+          <span class="scaffold-tag">💡 SƠ ĐỒ DÀN Ý: ${esc(tpl.name)}</span>
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <select class="ept-mode-select" style="max-width:290px;" onchange="renderWritingSectionScaffoldingContent('${esc(secId)}', ${idx}, this.value)">
+              ${buildTemplateSelectOptionsHtml(activeWritingTemplateKey)}
+            </select>
+            <button type="button" class="btn gh sm" style="padding:2px 8px; font-size:12px;" onclick="document.getElementById('writing-sec-scaffold-${secId}').style.display='none'">Đóng</button>
+          </div>
         </div>
+
+        <div class="scaffold-formula-banner">
+          <div style="margin-bottom:4px; color:#b45309; font-weight:800; font-size:12px;">📌 ${esc(tpl.formRule)}</div>
+          <div class="scaffold-steps-pills">
+            ${tpl.formulaSteps.map(st => `<span class="scaffold-step-pill">${esc(st)}</span>`).join(' ➔ ')}
+          </div>
+        </div>
+
+        ${tpl.referenceHtml || ''}
 
         <div class="scaffold-keywords-section">
           <div class="scaffold-lbl">🔑 Từ khóa gợi ý nhanh (Bấm để chèn vào đoạn này):</div>
@@ -11265,42 +11810,23 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
         </div>
 
         <div class="scaffold-outline-builder">
-          <div class="scaffold-lbl">🧩 Điền nhanh các bước tư duy để tự động ghép thành đoạn văn:</div>
+          <div class="scaffold-lbl">🧩 Điền từng bước theo công thức để tự động ghép vào bài viết:</div>
           <div class="scaffold-grid-steps">
-            <div class="scaffold-step-field">
-              <label>1. Câu chủ đề / Luận điểm chính:</label>
-              <input type="text" id="w-scaf-${secId}-s1" placeholder="Nêu trực tiếp luận điểm hoặc câu mở đoạn...">
-            </div>
-            <div class="scaffold-step-field">
-              <label>2. Giải thích / Làm rõ khái niệm:</label>
-              <input type="text" id="w-scaf-${secId}-s2" placeholder="Giải thích ý nghĩa từ khóa hoặc bối cảnh...">
-            </div>
-            <div class="scaffold-step-field">
-              <label>3. Bàn luận &amp; Phân tích chuyên sâu:</label>
-              <input type="text" id="w-scaf-${secId}-s3" placeholder="Phân tích biểu hiện, nguyên nhân, tác dụng, giá trị...">
-            </div>
-            <div class="scaffold-step-field">
-              <label>4. Chứng minh (Dẫn chứng tiêu biểu):</label>
-              <input type="text" id="w-scaf-${secId}-s4" placeholder="Đưa dẫn chứng thực tế hoặc chi tiết nghệ thuật đắt giá...">
-            </div>
-            <div class="scaffold-step-field">
-              <label>5. Phản đề / Mở rộng nâng cao:</label>
-              <input type="text" id="w-scaf-${secId}-s5" placeholder="Nhìn nhận chiều ngược lại hoặc mở rộng vấn đề...">
-            </div>
-            <div class="scaffold-step-field">
-              <label>6. Rút ra bài học / Tiểu kết đoạn:</label>
-              <input type="text" id="w-scaf-${secId}-s6" placeholder="Khẳng định lại vấn đề và liên hệ bài học bản thân...">
-            </div>
+            ${tpl.fields.map((f, fIdx) => `
+              <div class="scaffold-step-field">
+                <label>${esc(f.label)}</label>
+                <input type="text" id="w-scaf-${secId}-s${fIdx + 1}" placeholder="${esc(f.placeholder)}">
+              </div>
+            `).join('')}
           </div>
           <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px;">
-            <button type="button" class="btn au sm" onclick="assembleWritingSectionScaffold('${esc(secId)}')">
-              <ion-icon name="flash-outline"></ion-icon> <span>Ghép dàn ý vào phần viết này</span>
+            <button type="button" class="btn au sm" onclick="assembleWritingSectionScaffold('${esc(secId)}', ${tpl.singleParagraph ? 'true' : 'false'}, ${tpl.fields.length})">
+              <ion-icon name="flash-outline"></ion-icon> <span>Ghép dàn ý thành ${tpl.singleParagraph ? '1 đoạn văn (không xuống dòng)' : 'các đoạn văn'}</span>
             </button>
           </div>
         </div>
       </div>
     `;
-    box.style.display = 'block';
   }
 
   function insertTextIntoSpecificWritingSection(secId, text) {
@@ -11322,11 +11848,11 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
     insertTextIntoSpecificWritingSection(secId, text);
   }
 
-  function assembleWritingSectionScaffold(secId) {
+  function assembleWritingSectionScaffold(secId, isSingleParagraph = true, stepsCount = 7) {
     const tx = document.getElementById(`sec-input-${secId}`);
     if (!tx) return;
     const parts = [];
-    for (let i = 1; i <= 6; i++) {
+    for (let i = 1; i <= stepsCount; i++) {
       const inp = document.getElementById(`w-scaf-${secId}-s${i}`);
       const val = inp ? inp.value.trim() : '';
       if (val) {
@@ -11337,21 +11863,23 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
       toast('Hãy điền ít nhất 1 ý vào sơ đồ dàn ý trước khi ghép nhé!', 'bad');
       return;
     }
-    const paragraph = parts.join(' ');
-    tx.value = tx.value.trim() ? `${tx.value.trim()}\n${paragraph}` : paragraph;
+    const separator = isSingleParagraph ? ' ' : '\n\n';
+    const compiled = parts.join(separator);
+    tx.value = tx.value.trim()
+      ? (isSingleParagraph ? `${tx.value.trim()} ${compiled}` : `${tx.value.trim()}\n\n${compiled}`)
+      : compiled;
     if (typeof onSectionInput === 'function') onSectionInput(secId, tx);
     tx.focus();
-    toast('✨ Đã ghép sơ đồ dàn ý thành đoạn văn trong bài viết!', 'ok');
+    toast(isSingleParagraph ? '✨ Đã ghép thành 1 đoạn văn liền mạch (không xuống dòng)!' : '✨ Đã ghép dàn ý thành các đoạn văn trong bài viết!', 'ok');
   }
 
 
   // =========================================================================
   // PHẦN 4: BỘ ĐẾM THỜI GIAN (TIMER) RÈN ÁP LỰC PHÒNG THI
   // =========================================================================
-  // 4A. Đồng hồ đếm ngược cho phòng Đọc hiểu (Reading Workspace)
   let readingTimerInterval = null;
   let readingTimerRunning = false;
-  let readingTimerModeMinutes = 20; // Mặc định 20 phút cho đoạn văn / đọc hiểu
+  let readingTimerModeMinutes = 20;
   let readingTimerSecondsLeft = 20 * 60;
   let readingTimerElapsed = 0;
 
@@ -11453,19 +11981,22 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
     }
   }
 
-  // 4B. Chế độ Đếm ngược rèn áp lực phòng thi cho Luyện viết (Writing Workspace)
-  let writingPressureMinutes = 0; // 0 = Đếm xuôi, 20 = NLXH, 60 = NLVH...
+  // 4B. Chế độ Đếm ngược rèn áp lực phòng thi cho Luyện viết
+  let writingPressureMinutes = 0;
   let writingCountdownNotified5m = false;
   let writingCountdownNotified1m = false;
   let writingCountdownEnded = false;
 
-  function initWritingPressureTimerUI() {
-    writingPressureMinutes = 0;
+  function initWritingPressureTimerUI(curSet) {
+    // Tự động gợi ý 20 phút cho Đoạn văn 200 chữ, 60 phút cho Bài văn 600 chữ
+    const isDoan200 = curSet && String(curSet.category || '').startsWith('doan-');
+    const isBai600 = curSet && String(curSet.category || '').startsWith('bai-');
+    writingPressureMinutes = isDoan200 ? 20 : (isBai600 ? 60 : 0);
     writingCountdownNotified5m = false;
     writingCountdownNotified1m = false;
     writingCountdownEnded = false;
     const sel = document.getElementById('writing-timer-preset');
-    if (sel) sel.value = '0';
+    if (sel) sel.value = String(writingPressureMinutes);
     const box = document.getElementById('writing-timer-box');
     if (box) box.classList.remove('timer-warn', 'timer-danger');
   }
@@ -11526,7 +12057,7 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
 
       if (remaining === 300 && !writingCountdownNotified5m) {
         writingCountdownNotified5m = true;
-        toast('⚠️ Còn 5 phút làm bài viết! Hãy khẩn trương hoàn thiện phần Kết bài.', 'bad');
+        toast('⚠️ Còn 5 phút làm bài viết! Hãy khẩn trương hoàn thiện phần Kết.', 'bad');
       } else if (remaining === 60 && !writingCountdownNotified1m) {
         writingCountdownNotified1m = true;
         toast('🔥 Còn 1 phút cuối cùng! Hãy kiểm tra lại chính tả và chuẩn bị nộp bài.', 'bad');
@@ -11544,7 +12075,6 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
     }
   }
 
-  // Hook vào updateTimerDisplay của writing.js để hiển thị đếm ngược khi bật chế độ áp lực phòng thi
   const origUpdateTimerDisplay = global.updateTimerDisplay;
   global.updateTimerDisplay = function() {
     if (writingPressureMinutes > 0) {
@@ -11722,7 +12252,6 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
     saveQaReports(list);
     updateQaCountBadge();
 
-    // Nếu giáo viên đã cấu hình Google Sheets Webhook URL, đẩy tự động sang Google Sheets
     const cfg = getQaConfig();
     if (cfg.webhookUrl && /^https?:\/\//i.test(cfg.webhookUrl)) {
       try {
@@ -11909,12 +12438,15 @@ if (typeof currentScreen !== 'undefined' && currentScreen === 'reading') {
   global.renderGamificationUI = renderGamificationUI;
 
   global.toggleReadingQuestionScaffolding = toggleReadingQuestionScaffolding;
+  global.renderReadingQuestionScaffoldContent = renderReadingQuestionScaffoldContent;
   global.insertKeywordIntoReadingAnswer = insertKeywordIntoReadingAnswer;
   global.assembleReadingScaffoldToTextarea = assembleReadingScaffoldToTextarea;
 
   global.initWritingScaffoldingAndTimer = initWritingScaffoldingAndTimer;
   global.toggleWritingScaffoldingPanel = toggleWritingScaffoldingPanel;
+  global.renderWritingMainScaffoldingBody = renderWritingMainScaffoldingBody;
   global.toggleWritingSectionScaffolding = toggleWritingSectionScaffolding;
+  global.renderWritingSectionScaffoldingContent = renderWritingSectionScaffoldingContent;
   global.insertTextIntoSpecificWritingSection = insertTextIntoSpecificWritingSection;
   global.insertTextIntoActiveWritingSection = insertTextIntoActiveWritingSection;
   global.assembleWritingSectionScaffold = assembleWritingSectionScaffold;
@@ -12206,8 +12738,8 @@ try {
     'openQuoteOfDayModal', 'closeQuoteOfDayModal', 'renderQuoteOfDayModalBody', 'copySpecificQuote',
     'openGamificationModal', 'closeGamificationModal', 'onActivityCompletedGamification',
     'awardCustomGamificationPoints', 'renderGamificationUI',
-    'toggleReadingQuestionScaffolding', 'insertKeywordIntoReadingAnswer', 'assembleReadingScaffoldToTextarea',
-    'initWritingScaffoldingAndTimer', 'toggleWritingScaffoldingPanel', 'toggleWritingSectionScaffolding',
+    'toggleReadingQuestionScaffolding', 'renderReadingQuestionScaffoldContent', 'insertKeywordIntoReadingAnswer', 'assembleReadingScaffoldToTextarea',
+    'initWritingScaffoldingAndTimer', 'toggleWritingScaffoldingPanel', 'renderWritingMainScaffoldingBody', 'toggleWritingSectionScaffolding', 'renderWritingSectionScaffoldingContent',
     'insertTextIntoSpecificWritingSection', 'insertTextIntoActiveWritingSection', 'assembleWritingSectionScaffold',
     'initReadingPressureTimer', 'setReadingPressureTimer', 'toggleReadingPressureTimer', 'resetReadingPressureTimer',
     'setWritingPressureMode', 'resetWritingPressureTimer',
