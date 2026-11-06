@@ -7068,11 +7068,17 @@ ion-icon {
   margin: 0;
 }
 
-.auth-dialog-header p {
-  color: var(--mut) !important;
+.auth-dialog-header p,
+.auth-dialog-subtitle {
+  color: #475569 !important;
   font-size: 12px;
   font-weight: 600;
   margin: 2px 0 0;
+}
+
+[data-theme="dark"] .auth-dialog-header p,
+[data-theme="dark"] .auth-dialog-subtitle {
+  color: #cbd5e1 !important;
 }
 
 .auth-close-btn {

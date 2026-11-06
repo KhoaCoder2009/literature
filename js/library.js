@@ -438,7 +438,7 @@ R.lib = () => {
 
   const isStudent = Boolean(window.Auth && window.Auth.isStudent());
   const l = sets.filter(s => {
-    if (isStudent && s.privacy === 'private') return false;
+    if (isStudent && typeof isSetPrivate === 'function' && isSetPrivate(s, 'quiz')) return false;
     const topic = (s.topic && s.topic.trim()) ? s.topic.trim() : 'Chưa phân loại';
     const matchTopic = !currentTopicFilter || topic.toLowerCase() === currentTopicFilter.toLowerCase();
     const matchText = !f || N(s.title + ' ' + (s.topic || '')).includes(f);
@@ -805,8 +805,7 @@ function renderLibReadingPane() {
   // Filter Sets
   const isStudent = Boolean(window.Auth && window.Auth.isStudent());
   const filtered = allSets.filter(s => {
-    if (isStudent && s.status === 'draft') return false;
-    if (isStudent && s.privacy === 'private') return false;
+    if (isStudent && typeof isSetPrivate === 'function' && isSetPrivate(s, 'reading')) return false;
     const top = (s.genre || s.category || 'Chưa phân loại').trim();
     if (currentLibReadingTopic && top.toLowerCase() !== currentLibReadingTopic.toLowerCase()) {
       return false;
@@ -890,8 +889,7 @@ function renderLibWritingPane() {
   // Filter Sets
   const isStudent = Boolean(window.Auth && window.Auth.isStudent());
   const filtered = allSets.filter(s => {
-    if (isStudent && s.status === 'draft') return false;
-    if (isStudent && s.privacy === 'private') return false;
+    if (isStudent && typeof isSetPrivate === 'function' && isSetPrivate(s, 'writing')) return false;
     const top = (s.categoryName || s.category || 'Chưa phân loại').trim();
     if (currentLibWritingTopic && top.toLowerCase() !== currentLibWritingTopic.toLowerCase()) {
       return false;

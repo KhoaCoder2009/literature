@@ -1976,6 +1976,21 @@ function openWritingWorkspace(set, chosenMinutes = null) {
     toggleBtn.style.display = 'none';
   }
 
+  // Genre Pill under Prompt Card
+  const genrePill = $('#workspace-prompt-genre-pill');
+  if (genrePill) {
+    const isDoan = String(set.category || '').startsWith('doan-');
+    const isBai = String(set.category || '').startsWith('bai-');
+    genrePill.textContent = isDoan ? 'Đoạn văn 200 chữ' : (isBai ? 'Bài văn nghị luận' : 'Luyện viết');
+  }
+
+  // GỢI Ý TƯ DUY NẰM TRỰC TIẾP DƯỚI ĐỀ BÀI
+  if (typeof initWritingScaffoldingAndTimer === 'function') {
+    initWritingScaffoldingAndTimer();
+  } else if (typeof renderWorkspaceThinkingGuide === 'function') {
+    renderWorkspaceThinkingGuide(set);
+  }
+
   // Outline card removed from student workspace (no hints shown during testing)
   const outlineContent = $('#workspace-outline-content');
   if (outlineContent) {

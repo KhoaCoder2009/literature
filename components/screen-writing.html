@@ -67,13 +67,35 @@
             <div class="writing-prompt-card">
               <div class="writing-prompt-header">
                 <span class="writing-prompt-tag">Đề bài</span>
-                <button type="button" class="btn cy sm scaffold-trigger-btn" onclick="toggleWritingScaffoldingPanel()" title="Mở Giàn giáo nhận thức: Từ khóa, Công thức viết đoạn &amp; Sơ đồ dàn ý trống">
-                  <ion-icon name="bulb-outline"></ion-icon> <span>Gợi ý tư duy</span>
-                </button>
+                <span id="workspace-prompt-genre-pill" class="tag cy sm" style="font-size:11.5px; font-weight:700;">Nghị luận</span>
               </div>
               <div class="writing-prompt-text-wrapper">
                 <p id="workspace-prompt-text" class="writing-prompt-text"></p>
                 <button type="button" id="workspace-prompt-toggle-btn" class="writing-prompt-toggle" onclick="togglePromptExpand()">Xem thêm</button>
+              </div>
+            </div>
+
+            <!-- HỘP GỢI Ý TƯ DUY TRỌNG TÂM NẰM NGAY DƯỚI ĐỀ BÀI -->
+            <div class="writing-thinking-card" id="workspace-thinking-card">
+              <div class="thinking-card-header">
+                <div class="thinking-card-title-box">
+                  <span class="thinking-card-badge-icon">💡</span>
+                  <div>
+                    <h4 class="thinking-card-heading">GỢI Ý TƯ DUY TRỌNG TÂM</h4>
+                    <p class="thinking-card-sub" id="workspace-thinking-card-sub">Định hướng luận điểm, thao tác lập luận &amp; dẫn chứng</p>
+                  </div>
+                </div>
+                <div class="thinking-card-actions">
+                  <button type="button" class="btn au sm thinking-action-btn" onclick="insertSetThinkingGuideToActiveSection()" title="Chèn toàn bộ gợi ý tư duy này vào bài làm để phát triển bài viết">
+                    <ion-icon name="flash-outline"></ion-icon> <span>Chèn vào bài</span>
+                  </button>
+                  <button type="button" class="btn gh sm thinking-action-btn" onclick="toggleWritingScaffoldingPanel()" title="Mở rộng sơ đồ Giàn giáo nhận thức &amp; khung dàn ý chi tiết">
+                    <ion-icon name="options-outline"></ion-icon> <span>Mở rộng dàn ý</span>
+                  </button>
+                </div>
+              </div>
+              <div class="thinking-card-body" id="workspace-thinking-guide-body">
+                <!-- Nội dung gợi ý tư duy hiển thị trực quan ở đây -->
               </div>
             </div>
 

@@ -470,8 +470,13 @@ function getSetPrivacy(setOrId, type = '') {
   }
 
   const map = getSetPrivacyMap();
-  const mapPrivacy = map[id] ? String(map[id]).trim() : '';
-  return (directPrivacy || mapPrivacy || 'public').toLowerCase();
+  const mapPrivacy = (map && map[id]) ? String(map[id]).trim().toLowerCase() : '';
+  // Cài đặt của Giáo viên/Admin trong map ghi đè tuyệt đối thuộc tính mặc định
+  if (mapPrivacy === 'public' || mapPrivacy === 'private') {
+    return mapPrivacy;
+  }
+  if (directPrivacy) return directPrivacy.toLowerCase();
+  return 'public';
 }
 
 function isSetPrivate(setOrId, type = '') {
@@ -677,13 +682,9 @@ function updateSetAttemptLimit(type, setId, limit, deadline, privacy, openAt) {
   }
   saveSetDeadlinesMap(dMap);
 
-  // 3. Lưu vào map chế độ riêng tư
+  // 3. Lưu vào map chế độ riêng tư (Luôn lưu rõ ràng 'public' hoặc 'private' để ghi đè)
   const pMap = getSetPrivacyMap();
-  if (privacyStr === 'private') {
-    pMap[targetIdStr] = 'private';
-  } else {
-    delete pMap[targetIdStr];
-  }
+  pMap[targetIdStr] = privacyStr;
   saveSetPrivacyMap(pMap);
 
   // 4. Lưu vào map ngày mở đề
@@ -703,6 +704,8 @@ function updateSetAttemptLimit(type, setId, limit, deadline, privacy, openAt) {
         target.maxAttempts = numLimit;
         target.deadline = deadlineStr;
         target.privacy = privacyStr;
+        target.status = (privacyStr === 'private' ? 'draft' : 'published');
+        target.isDraft = (privacyStr === 'private');
         target.openAt = openAtStr;
         if (typeof save === 'function') save();
       }
@@ -715,6 +718,7 @@ function updateSetAttemptLimit(type, setId, limit, deadline, privacy, openAt) {
         target.deadline = deadlineStr;
         target.privacy = privacyStr;
         target.status = (privacyStr === 'private' ? 'draft' : 'published');
+        target.isDraft = (privacyStr === 'private');
         target.openAt = openAtStr;
         if (typeof saveReadingData === 'function') saveReadingData();
       }
@@ -726,6 +730,8 @@ function updateSetAttemptLimit(type, setId, limit, deadline, privacy, openAt) {
         target.maxAttempts = numLimit;
         target.deadline = deadlineStr;
         target.privacy = privacyStr;
+        target.status = (privacyStr === 'private' ? 'draft' : 'published');
+        target.isDraft = (privacyStr === 'private');
         target.openAt = openAtStr;
         if (typeof saveWritingSets === 'function') saveWritingSets();
       }
@@ -994,6 +1000,33 @@ function submitSetAttemptLimit() {
   closeSetAttemptLimitModal();
 }
 
+function toggleSetPrivacyQuick(type, setId, e) {
+  if (e) {
+    if (typeof e.stopPropagation === 'function') e.stopPropagation();
+    if (typeof e.preventDefault === 'function') e.preventDefault();
+  }
+  if (typeof Auth !== 'undefined' && !Auth.isTeacher() && !Auth.isAdmin()) {
+    toast('Chỉ Giáo viên và Quản trị viên mới có quyền đổi chế độ riêng tư!', 'bad');
+    return false;
+  }
+
+  const current = getSetPrivacy(setId, type);
+  const next = current === 'private' ? 'public' : 'private';
+  const limit = getSetMaxAttempts(setId, type);
+  const dl = getSetDeadline(setId, type);
+  const oa = getSetOpenAt(setId, type);
+
+  const ok = updateSetAttemptLimit(type, setId, limit, dl, next, oa);
+  if (ok) {
+    if (next === 'public') {
+      toast('🌐 Đã chuyển sang CÔNG KHAI! Học sinh đã có thể nhìn thấy và làm bài.', 'ok');
+    } else {
+      toast('🔒 Đã chuyển sang RIÊNG TƯ! Bộ đề đã được tạm ẩn với học sinh.', 'ok');
+    }
+  }
+  return ok;
+}
+
 function getSetPrivacyBadgeHtml(s, type = 'quiz') {
   if (!s) return '';
   const isTeacherOrAdmin = (typeof Auth !== 'undefined' && (Auth.isTeacher() || Auth.isAdmin()));
@@ -1001,9 +1034,9 @@ function getSetPrivacyBadgeHtml(s, type = 'quiz') {
 
   const isPriv = isSetPrivate(s, type);
   if (isPriv) {
-    return `<button type="button" class="lib-pill pill-privacy-private" onclick="event.stopPropagation(); openSetAttemptLimitModal('${type}', '${esc(s.id)}')" title="Chế độ Riêng tư (Học sinh bị ẩn). Nhấp để đổi sang Công khai"><ion-icon name="lock-closed-outline"></ion-icon> Riêng tư</button>`;
+    return `<button type="button" class="lib-pill pill-privacy-private" onclick="event.stopPropagation(); toggleSetPrivacyQuick('${type}', '${esc(s.id)}', event)" title="Đang ở chế độ Riêng tư (Tạm ẩn với học sinh). Nhấp 1 chạm để ĐỔI sang Công khai"><ion-icon name="lock-closed-outline"></ion-icon> Riêng tư</button>`;
   }
-  return '';
+  return `<button type="button" class="lib-pill pill-privacy-public" onclick="event.stopPropagation(); toggleSetPrivacyQuick('${type}', '${esc(s.id)}', event)" title="Đang ở chế độ Công khai (Học sinh có thể làm bài). Nhấp để ĐỔI sang Riêng tư"><ion-icon name="globe-outline"></ion-icon> Công khai</button>`;
 }
 
 function getSetOpenAtBadgeHtml(s, type = 'quiz') {
@@ -2656,5 +2689,7 @@ function copyHistoryDetailText() {
     toast('Không thể sao chép tự động.', 'bad');
   });
 }
+
+window.toggleSetPrivacyQuick = toggleSetPrivacyQuick;
 
 

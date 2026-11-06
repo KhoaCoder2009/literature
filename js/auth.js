@@ -296,7 +296,7 @@ const Auth = (() => {
       }
     }
 
-    throw new Error('Tài khoản hoặc mật khẩu Giáo viên không đúng! (Gợi ý: giaovien / 123456 hoặc admin / admin9999)');
+    throw new Error('Tài khoản hoặc mật khẩu Giáo viên không chính xác. Vui lòng kiểm tra lại!');
   }
 
   function logout() {

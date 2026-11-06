@@ -616,10 +616,9 @@ function renderReadingSetsGrid() {
   // Filter sets
   const isStudent = Boolean(window.Auth && window.Auth.isStudent());
   const filteredSets = readingSets.filter(s => {
-    // Học sinh chỉ xem bộ đề đã xuất bản (status !== 'draft') và không phải riêng tư
+    // Học sinh chỉ xem bộ đề công khai (không phải riêng tư/nháp)
     if (isStudent) {
-      if (s.status === 'draft') return false;
-      if (typeof isSetPrivate === 'function' && isSetPrivate(s, 'reading')) return false;
+      if (typeof isSetPrivate === 'function' ? isSetPrivate(s, 'reading') : (s.status === 'draft' || s.privacy === 'private')) return false;
     }
     if (currentReadingCategory !== 'all' && (s.category || '').trim() !== currentReadingCategory) {
       return false;

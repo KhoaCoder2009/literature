@@ -1194,6 +1194,36 @@
   // 3B. Giàn giáo nhận thức cho Luyện viết (Toàn bài & Từng đoạn theo đúng 12 dạng bài)
   let activeWritingTemplateKey = 'nlxh_doan_ynghia';
 
+  function renderWorkspaceThinkingGuide(curSet) {
+    const card = document.getElementById('workspace-thinking-card');
+    const body = document.getElementById('workspace-thinking-guide-body');
+    const sub = document.getElementById('workspace-thinking-card-sub');
+    if (!card || !body) return;
+
+    if (!curSet) {
+      card.style.display = 'none';
+      return;
+    }
+
+    let guide = (curSet.thinkingGuide || '').trim();
+    if (!guide && typeof autoGenerateThinkingGuideForSet === 'function') {
+      guide = autoGenerateThinkingGuideForSet(curSet);
+    }
+
+    if (guide) {
+      card.style.display = 'block';
+      body.textContent = guide;
+      if (sub) {
+        const isDoan = String(curSet.category || '').startsWith('doan-');
+        sub.textContent = isDoan
+          ? 'Định hướng 01 đoạn văn 200 chữ: Luận điểm then chốt & Thao tác lập luận'
+          : 'Định hướng toàn bài: Khung luận điểm, Thao tác phân tích & Dẫn chứng tiêu biểu';
+      }
+    } else {
+      card.style.display = 'none';
+    }
+  }
+
   function initWritingScaffoldingAndTimer() {
     const panel = document.getElementById('writing-scaffolding-panel');
     if (panel) panel.style.display = 'none';
@@ -1202,6 +1232,7 @@
     const promptText = curSet ? `${curSet.title || ''} ${curSet.prompt || ''}` : '';
     activeWritingTemplateKey = detectBestTemplateKey(promptText, curSet && curSet.subType, curSet && curSet.category && curSet.category.startsWith('doan-'));
 
+    renderWorkspaceThinkingGuide(curSet);
     renderWritingMainScaffoldingBody(activeWritingTemplateKey);
     initWritingPressureTimerUI(curSet);
   }
@@ -2133,6 +2164,7 @@
   global.assembleReadingScaffoldToTextarea = assembleReadingScaffoldToTextarea;
 
   global.initWritingScaffoldingAndTimer = initWritingScaffoldingAndTimer;
+  global.renderWorkspaceThinkingGuide = renderWorkspaceThinkingGuide;
   global.toggleWritingScaffoldingPanel = toggleWritingScaffoldingPanel;
   global.renderWritingMainScaffoldingBody = renderWritingMainScaffoldingBody;
   global.toggleWritingSectionScaffolding = toggleWritingSectionScaffolding;
