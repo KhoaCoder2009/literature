@@ -560,6 +560,14 @@ function renderNavbarUserWidget() {
 
           <div class="dropdown-divider"></div>
 
+          <button type="button" class="dropdown-item" onclick="closeUserDropdownMenu(); openSettingsDialog();" title="Cài đặt hệ thống &amp; Giao diện">
+            <span class="dropdown-item-icon icon-muted">
+              <ion-icon name="settings-outline"></ion-icon>
+            </span>
+            <span class="dropdown-item-label">Cài đặt</span>
+            <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
+          </button>
+
           <button type="button" class="dropdown-item" onclick="closeUserDropdownMenu(); openChangePasswordModal();" title="Đổi mật khẩu tài khoản">
             <span class="dropdown-item-icon icon-muted">
               <ion-icon name="key-outline"></ion-icon>
@@ -589,11 +597,72 @@ function renderNavbarUserWidget() {
 
   container.innerHTML = `
     <div class="nav-student-bar">
-      <button type="button" class="nav-student-pill" onclick="openStudentNameModal()" title="Học sinh: Bấm để đổi Họ tên &amp; Lớp (không cần đăng nhập)">
-        <span>🎓</span>
-        <span class="nav-student-name">${escHtml(studentDisplay)}</span>
-        <ion-icon name="create-outline" style="font-size:13px; color:var(--mut); flex-shrink:0;"></ion-icon>
-      </button>
+      <div style="position:relative; display:inline-block;">
+        <div class="nav-user-pill student" id="nav-student-pill-btn" onclick="toggleStudentDropdownMenu(event)" title="Tài khoản Học sinh: ${escHtml(studentDisplay)}">
+          <div class="user-pill-avatar-wrap student" style="width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(37,99,235,0.12);">
+            <span style="font-size:14px;">🎓</span>
+          </div>
+          <span class="user-pill-name">${escHtml(studentDisplay)}</span>
+          <span class="user-role-badge student" style="font-size:10px; font-weight:700; padding:1px 6px; border-radius:999px; background:rgba(37,99,235,0.1); color:var(--bl, #2563eb);">Học sinh</span>
+          <span class="user-pill-arrow"><ion-icon name="chevron-down-outline"></ion-icon></span>
+        </div>
+
+        <div class="user-dropdown-menu" id="student-dropdown-menu" onclick="event.stopPropagation()">
+          <div class="dropdown-header">
+            <div class="dropdown-avatar-wrap">
+              <div class="dropdown-avatar-box" style="width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(37,99,235,0.1); border:2px solid var(--bd);">
+                <span style="font-size:24px;">🎓</span>
+              </div>
+              <span class="dropdown-online-dot"></span>
+            </div>
+            <div class="dropdown-info">
+              <div class="dropdown-name" style="font-size:14.5px; font-weight:800; color:var(--ink);">${escHtml(sName || 'Học sinh')}</div>
+              <div class="dropdown-meta" style="display:flex; align-items:center; gap:6px;">
+                <span class="user-role-badge" style="font-size:10px; font-weight:700; padding:1px 6px; border-radius:999px; background:rgba(37,99,235,0.1); color:var(--bl, #2563eb);">
+                  ${sClass ? 'Lớp ' + escHtml(sClass) : 'Chế độ Học sinh'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dropdown-items" style="padding:6px 0; display:flex; flex-direction:column; gap:2px;">
+            <button type="button" class="dropdown-item" onclick="closeStudentDropdownMenu(); openStudentNameModal();" title="Cập nhật họ tên và lớp học của học sinh">
+              <span class="dropdown-item-icon icon-blue">
+                <ion-icon name="create-outline"></ion-icon>
+              </span>
+              <span class="dropdown-item-label">Đổi tên &amp; Lớp học</span>
+              <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
+            </button>
+
+            <button type="button" class="dropdown-item" onclick="closeStudentDropdownMenu(); go('history');" title="Xem lịch sử bài làm đã nộp">
+              <span class="dropdown-item-icon icon-emerald">
+                <ion-icon name="time-outline"></ion-icon>
+              </span>
+              <span class="dropdown-item-label">Lịch sử bài làm</span>
+              <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
+            </button>
+
+            <div class="dropdown-divider"></div>
+
+            <button type="button" class="dropdown-item" onclick="closeStudentDropdownMenu(); openSettingsDialog();" title="Cài đặt hệ thống &amp; Giao diện">
+              <span class="dropdown-item-icon icon-muted">
+                <ion-icon name="settings-outline"></ion-icon>
+              </span>
+              <span class="dropdown-item-label">Cài đặt</span>
+              <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
+            </button>
+
+            <button type="button" class="dropdown-item" onclick="closeStudentDropdownMenu(); openLoginDialog();" title="Đăng nhập tài khoản Giáo viên &amp; Quản trị viên">
+              <span class="dropdown-item-icon icon-amber">
+                <ion-icon name="shield-checkmark-outline"></ion-icon>
+              </span>
+              <span class="dropdown-item-label">Đăng nhập Giáo viên</span>
+              <ion-icon name="chevron-forward-outline" class="dropdown-item-chevron"></ion-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <button type="button" class="nav-teacher-login-btn" onclick="openLoginDialog()" title="Đăng nhập tài khoản Giáo viên &amp; Quản trị viên (Học sinh không cần đăng nhập)">
         <ion-icon name="log-in-outline" style="font-size:15px;"></ion-icon>
         <span>Đăng nhập</span>
@@ -632,6 +701,9 @@ function renderMobileSidebarUser() {
           <button type="button" class="btn cy sm" style="flex:1; font-size:11.5px;" onclick="closeMobileMenu(); openAccountManagerModal('students');">
             <ion-icon name="people-outline"></ion-icon> <span>QL Học sinh</span>
           </button>
+          <button type="button" class="btn gh sm" style="font-size:11.5px;" onclick="closeMobileMenu(); openSettingsDialog();" title="Cài đặt">
+            <ion-icon name="settings-outline"></ion-icon> <span>Cài đặt</span>
+          </button>
           <button type="button" class="btn no sm" style="font-size:11.5px;" onclick="closeMobileMenu(); logoutUser();">
             <ion-icon name="log-out-outline"></ion-icon> <span>Thoát</span>
           </button>
@@ -649,9 +721,14 @@ function renderMobileSidebarUser() {
           </div>
           <button type="button" class="btn gh sm" style="padding:3px 8px; font-size:11.5px;" onclick="closeMobileMenu(); openStudentNameModal();">Đổi tên</button>
         </div>
-        <button type="button" class="btn au sm" style="width:100%; justify-content:center;" onclick="closeMobileMenu(); openLoginDialog();">
-          <ion-icon name="shield-checkmark-outline"></ion-icon> <span>Đăng nhập Giáo viên</span>
-        </button>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn gh sm" style="flex:1; font-size:11.5px;" onclick="closeMobileMenu(); openSettingsDialog();">
+            <ion-icon name="settings-outline"></ion-icon> <span>Cài đặt</span>
+          </button>
+          <button type="button" class="btn au sm" style="flex:1.2; justify-content:center; font-size:11.5px;" onclick="closeMobileMenu(); openLoginDialog();">
+            <ion-icon name="shield-checkmark-outline"></ion-icon> <span>Đăng nhập</span>
+          </button>
+        </div>
       </div>
     `;
   }
@@ -659,6 +736,7 @@ function renderMobileSidebarUser() {
 
 function toggleUserDropdownMenu(e) {
   if (e) e.stopPropagation();
+  closeStudentDropdownMenu();
   const menu = document.getElementById('user-dropdown-menu');
   const pill = document.getElementById('nav-user-pill-btn');
   if (!menu) return;
@@ -673,9 +751,27 @@ function closeUserDropdownMenu() {
   if (pill) pill.classList.remove('active');
 }
 
+function toggleStudentDropdownMenu(e) {
+  if (e) e.stopPropagation();
+  closeUserDropdownMenu();
+  const menu = document.getElementById('student-dropdown-menu');
+  const pill = document.getElementById('nav-student-pill-btn');
+  if (!menu) return;
+  const isOpen = menu.classList.toggle('show');
+  if (pill) pill.classList.toggle('active', isOpen);
+}
+
+function closeStudentDropdownMenu() {
+  const menu = document.getElementById('student-dropdown-menu');
+  const pill = document.getElementById('nav-student-pill-btn');
+  if (menu) menu.classList.remove('show');
+  if (pill) pill.classList.remove('active');
+}
+
 if (typeof document !== 'undefined' && typeof document.addEventListener === 'function') {
   document.addEventListener('click', () => {
     closeUserDropdownMenu();
+    closeStudentDropdownMenu();
   });
 }
 
@@ -1425,6 +1521,8 @@ window.renderNavbarUserWidget = renderNavbarUserWidget;
 window.renderMobileSidebarUser = renderMobileSidebarUser;
 window.toggleUserDropdownMenu = toggleUserDropdownMenu;
 window.closeUserDropdownMenu = closeUserDropdownMenu;
+window.toggleStudentDropdownMenu = toggleStudentDropdownMenu;
+window.closeStudentDropdownMenu = closeStudentDropdownMenu;
 window.openLoginDialog = openLoginDialog;
 window.closeLoginDialog = closeLoginDialog;
 window.switchAuthTab = switchAuthTab;

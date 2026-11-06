@@ -1048,11 +1048,16 @@ Câu 5: Viết đoạn văn (khoảng 200 chữ)..." style="width:100%; font-fam
       <input id="student-modal-class" class="fi" type="text" placeholder="Ví dụ: 11A1, 12A2..." maxlength="25">
     </div>
 
-    <div style="display:flex; justify-content:flex-end; gap:8px;">
-      <button type="button" class="btn gh sm" onclick="closeStudentNameModal()">Hủy</button>
-      <button type="submit" class="btn au">
-        <ion-icon name="checkmark-circle-outline"></ion-icon> <span id="student-name-submit-label">Lưu thông tin</span>
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:16px;">
+      <button type="button" class="btn gh sm" onclick="closeStudentNameModal(); openSettingsDialog();" title="Mở cài đặt hệ thống" style="font-size:12px; color:var(--mut);">
+        <ion-icon name="settings-outline"></ion-icon> <span>Cài đặt</span>
       </button>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="btn gh sm" onclick="closeStudentNameModal()">Hủy</button>
+        <button type="submit" class="btn au">
+          <ion-icon name="checkmark-circle-outline"></ion-icon> <span id="student-name-submit-label">Lưu thông tin</span>
+        </button>
+      </div>
     </div>
   </form>
 </dialog>

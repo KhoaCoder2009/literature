@@ -15,55 +15,6 @@
       </div>
     </div>
 
-    <!-- GAMIFICATION & TIẾN TRÌNH HỌC TẬP -->
-    <div class="home-enrichment-grid">
-      <!-- 1. CƠ CHẾ GAMIFICATION: STREAK, PROGRESS BAR & BADGES -->
-      <div class="card gami-home-card" id="home-gamification-card">
-        <div class="gami-card-header">
-          <div class="gami-title-group">
-            <span class="gami-flame-badge" id="home-streak-flame">🔥</span>
-            <div>
-              <h3 class="gami-heading">Chuỗi <span id="home-streak-days">1</span> Ngày Học Liên Tục</h3>
-              <p class="gami-subtitle" id="home-rank-title">Danh hiệu: Tân Sĩ Tử · 0 XP</p>
-            </div>
-          </div>
-          <button class="btn au sm" type="button" onclick="openGamificationModal()">
-            <ion-icon name="ribbon-outline"></ion-icon> <span>Huy hiệu (<span id="home-badges-unlocked-count">1/8</span>)</span>
-          </button>
-        </div>
-
-        <!-- Thanh tiến trình XP & Mục tiêu ngày (Gộp 2 cột gọn gàng) -->
-        <div class="gami-progress-section gami-progress-dual">
-          <div class="gami-progress-col">
-            <div class="gami-progress-labels">
-              <span>Cấp độ (<span id="home-xp-current">0</span>/<span id="home-xp-next">100</span> XP)</span>
-              <b id="home-xp-percent">0%</b>
-            </div>
-            <div class="gami-progress-track">
-              <div class="gami-progress-fill" id="home-xp-bar" style="width: 15%;"></div>
-            </div>
-          </div>
-
-          <div class="gami-progress-col">
-            <div class="gami-progress-labels">
-              <span>Mục tiêu ngày (<span id="home-daily-done">0</span>/3 bài)</span>
-              <b id="home-daily-percent">0%</b>
-            </div>
-            <div class="gami-progress-track gami-daily-track">
-              <div class="gami-progress-fill gami-daily-fill" id="home-daily-bar" style="width: 0%;"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Lịch tuần 7 ngày -->
-        <div class="gami-week-row" id="home-streak-week-row"></div>
-
-        <!-- Dải huy hiệu nhanh -->
-        <div class="gami-mini-badges-row" id="home-mini-badges-row"></div>
-      </div>
-    </div>
-
-
     <!-- LEADERBOARD -->
     <div class="card lb-card">
       <div class="lb-header-bar">
