@@ -2035,11 +2035,8 @@ function openWritingWorkspace(set, chosenMinutes = null) {
     genrePill.textContent = isDoan ? 'Đoạn văn 200 chữ' : (isBai ? 'Bài văn nghị luận' : 'Luyện viết');
   }
 
-  // GỢI Ý TƯ DUY NẰM TRỰC TIẾP DƯỚI ĐỀ BÀI
-  if (typeof initWritingScaffoldingAndTimer === 'function') {
-    initWritingScaffoldingAndTimer();
-  } else if (typeof renderWorkspaceThinkingGuide === 'function') {
-    renderWorkspaceThinkingGuide(set);
+  if (typeof initWritingPressureTimerUI === 'function') {
+    initWritingPressureTimerUI(set);
   }
 
   // Outline card removed from student workspace (no hints shown during testing)
@@ -2725,58 +2722,7 @@ function handleSaveWritingSet(e) {
   if (typeof updateLibTabsUI === 'function') updateLibTabsUI();
 }
 
-function autoGenerateThinkingGuideForModal() {
-  const cat = $('#input-set-category')?.value || 'doan-nlxh';
-  const prompt = ($('#input-set-prompt')?.value || '').trim().toLowerCase();
-  const title = ($('#input-set-title')?.value || '').trim().toLowerCase();
-  const subType = $('#input-set-subtype')?.value || '';
-
-  let generated = '';
-
-  if (cat === 'doan-nlxh') {
-    if (subType === 'nlxh_doan_giaiphap' || prompt.includes('trách nhiệm') || prompt.includes('giải pháp') || prompt.includes('cần làm') || title.includes('trách nhiệm') || title.includes('cần làm')) {
-      generated = `• Mở đoạn: Dẫn dắt và nêu vấn đề trách nhiệm / hành động của tuổi trẻ hôm nay.\n• Giải thích (1 câu): Nêu ngắn gọn bản chất cốt lõi của vấn đề.\n• Bàn luận hành động (3 ý):\n  - Thứ nhất (Đối với cá nhân): Nâng cao nhận thức, rèn luyện kĩ năng, thay đổi thói quen xấu, chủ động hành động...\n  - Thứ hai (Đối với gia đình & nhà trường): Tăng cường giáo dục, lắng nghe, thấu hiểu và đồng hành định hướng...\n  - Thứ ba (Đối với cộng đồng & xã hội): Xây dựng chính sách thiết thực, tổ chức sự kiện và đẩy mạnh truyền thông...\n• Dẫn chứng: [Nêu 1 tấm gương / phong trào tiêu biểu]\n• Khẳng định & Bài học: Thông điệp hành động mạnh mẽ của người trẻ.`;
-    } else if (subType === 'nlxh_doan_tachai' || prompt.includes('tác hại') || prompt.includes('hậu quả') || title.includes('tác hại')) {
-      generated = `• Mở đoạn: Nêu hiện tượng / thói quen tiêu cực cần cảnh báo.\n• Giải thích (1 câu): Khái quát bản chất của hiện tượng / thói quen đó.\n• Bàn luận 3 tác hại trực tiếp:\n  - Thứ nhất (Đối với bản thân): Đánh mất cơ hội quý báu, làm suy giảm năng lực và thui chột ý chí cá nhân.\n  - Thứ hai (Đối với uy tín & quan hệ): Làm giảm uy tín, đánh mất sự tin cậy từ những người xung quanh.\n  - Thứ ba (Đối với xã hội): Gây lực cản đối với sự phát triển văn minh, bền vững của cộng đồng.\n• Dẫn chứng: [Minh chứng cụ thể từ đời sống]\n• Bài học nhận thức & hành động: Nhận diện nguy cơ và kiên quyết rèn luyện lối sống lành mạnh, chủ động.`;
-    } else {
-      generated = `• Mở đoạn: Dẫn dắt và nêu vấn đề / ý kiến / câu nói cần bàn luận.\n• Giải thích (1 câu): Giải thích từ ngữ quan trọng / câu nói; khái quát ý nghĩa của vấn đề.\n• Bàn luận 3 luận điểm ý nghĩa:\n  - Thứ nhất: Giúp cá nhân mở rộng nhận thức, tôi luyện ý chí, bản lĩnh và hoàn thiện nhân cách.\n  - Thứ hai: Giúp gặt hái thành công chân chính, tạo dựng uy tín và mang lại bình an, hạnh phúc.\n  - Thứ ba: Đóng góp tích cực xây dựng cộng đồng gắn kết, tiến bộ và nhân văn.\n• Dẫn chứng: [Tấm gương / sự kiện thực tế tiêu biểu]\n• Bài học: Rút ra nhận thức sâu sắc và hành động thiết thực cho bản thân.`;
-    }
-  } else if (cat === 'bai-nlxh') {
-    if (subType === 'nlxh_bai_hientuong' || prompt.includes('hiện tượng') || title.includes('hiện tượng')) {
-      generated = `• Mở bài: Dẫn dắt và giới thiệu hiện tượng đời sống đang được xã hội quan tâm.\n• Thân bài:\n  - Đoạn 1: Giải thích bản chất hiện tượng + Nêu bức tranh thực trạng, biểu hiện sinh động trong đời sống.\n  - Đoạn 2: Phân tích nguyên nhân (nguyên nhân chủ quan từ ý thức cá nhân & nguyên nhân khách quan từ gia đình, xã hội).\n  - Đoạn 3: Tác dụng (nếu hiện tượng tích cực) hoặc Hậu quả (nếu hiện tượng tiêu cực) kèm dẫn chứng thực tế xác thực.\n  - Đoạn 4: Đề xuất giải pháp đồng bộ (về phía cá nhân rèn luyện, gia đình & nhà trường giáo dục, xã hội quản lí & truyền thông; giải pháp trước mắt và lâu dài).\n• Kết bài: Khái quát lại bài học nhận thức và trách nhiệm của thế hệ trẻ.`;
-    } else if (subType === 'nlxh_bai_vdxh_tpvh' || prompt.includes('trong tác phẩm') || prompt.includes('văn học') || title.includes('trong tác phẩm')) {
-      generated = `• Mở bài: Giới thiệu tác phẩm văn học và vấn đề xã hội giàu ý nghĩa nhân sinh được đặt ra.\n• Thân bài:\n  - Đoạn 1: Giải thích vấn đề xã hội; chỉ ra biểu hiện sinh động của vấn đề trong tác phẩm văn học (dẫn chứng từ tác phẩm).\n  - Đoạn 2: Kết nối biểu hiện của vấn đề xã hội từ trang sách bước ra đời sống thực tế.\n  - Đoạn 3: Bàn luận ý nghĩa sâu sắc của vấn đề đối với việc hoàn thiện nhân cách con người (3 luận điểm).\n  - Đoạn 4: Phê phán những quan niệm sai lệch, lối sống ích kỉ, vô cảm.\n  - Đoạn 5: Giải pháp và bài học nhận thức, hành động cho bản thân.\n• Kết bài: Khẳng định sức sống nhân văn bền vững của vấn đề xã hội bắt nguồn từ tác phẩm.`;
-    } else {
-      generated = `• Mở bài: Dẫn dắt câu nói / tư tưởng đạo lí và giới thiệu vấn đề nghị luận.\n• Thân bài:\n  - Đoạn 1: Giải thích các từ ngữ quan trọng, vế câu và rút ra ý nghĩa cả câu (“Vậy câu nói này có nghĩa là...”).\n  - Đoạn 2 (Ý nghĩa 1): Bàn luận vì sao đặt ra vấn đề; ý nghĩa đối với nhận thức và nhân cách (Lí lẽ + Dẫn chứng).\n  - Đoạn 3 (Ý nghĩa 2): Ý nghĩa đối với thành công, các mối quan hệ và hạnh phúc (Lí lẽ + Dẫn chứng).\n  - Đoạn 4 (Ý nghĩa 3): Ý nghĩa đối với sự tiến bộ, văn minh của toàn xã hội (Lí lẽ + Dẫn chứng).\n  - Đoạn 5: Phê phán, mở rộng vấn đề (chỉ ra góc nhìn đa chiều hoặc phản đề nếu có).\n  - Đoạn 6: Bài học nhận thức và hành động của tuổi trẻ.\n• Kết bài: Khẳng định giá trị trường tồn của câu nói đối với mọi thời đại.`;
-    }
-  } else if (cat === 'doan-nlvh') {
-    if (subType === 'nlvh_doan_nt_tho' || (prompt.includes('nghệ thuật') && (prompt.includes('thơ') || prompt.includes('câu thơ')))) {
-      generated = `• Mở đoạn: Câu dẫn + Giới thiệu tác giả, đoạn thơ và nét đặc sắc nghệ thuật.\n• Phân tích 4 khía cạnh nghệ thuật:\n  - Thứ nhất: Thể thơ (gọi tên + tác dụng nhịp điệu, âm hưởng).\n  - Thứ hai: Hình ảnh thơ (nhận xét chung + dẫn chứng + phân tích sức gợi).\n  - Thứ ba: Từ ngữ (nhận xét + dẫn chứng từ đắt giá/từ láy + tác dụng biểu đạt).\n  - Thứ tư: Biện pháp tu từ (gọi tên BPTT + dẫn chứng + tác dụng làm nổi bật hình tượng).\n• Đánh giá: Các yếu tố nghệ thuật góp phần làm rõ chủ đề tác phẩm và gửi gắm thông điệp nhân văn sâu sắc.`;
-    } else if (subType === 'nlvh_doan_camxuc_tho' || prompt.includes('cảm xúc') || prompt.includes('tâm trạng') || title.includes('cảm xúc')) {
-      generated = `• Mở đoạn: Câu dẫn + Giới thiệu tác giả, tác phẩm và mạch cảm xúc chủ đạo của nhân vật trữ tình.\n• Phân tích mạch cảm xúc:\n  - Cung bậc cảm xúc 1: [Gọi tên cảm xúc 1 + Dẫn chứng câu thơ + Phân tích tác dụng]\n  - Cung bậc cảm xúc 2: [Gọi tên cảm xúc 2 + Dẫn chứng câu thơ + Phân tích sự chuyển biến tâm trạng]\n• Nghệ thuật thể hiện: Giọng điệu thiết tha, thể thơ truyền cảm, hình ảnh giàu sức gợi.\n• Đánh giá: Cảm xúc trong sáng, chân thành, thể hiện cái nhìn nhân sinh sâu sắc và chức năng thẩm mĩ của văn chương.`;
-    } else if (subType === 'nlvh_doan_nhanvat' || prompt.includes('nhân vật') || title.includes('nhân vật')) {
-      generated = `• Mở đoạn & Khái quát: Giới thiệu tác giả, tác phẩm, nhân vật (tên tuổi, ngoại hình, hoàn cảnh số phận).\n• Phân tích phẩm chất nhân vật:\n  - Vẻ đẹp / Phẩm chất 1: [Gọi tên phẩm chất + Dẫn chứng hành động, lời nói, thái độ + Phân tích]\n  - Vẻ đẹp / Phẩm chất 2: [Gọi tên phẩm chất + Dẫn chứng nội tâm / việc làm + Phân tích]\n• Nghệ thuật xây dựng nhân vật: Khắc họa qua hành động, lời thoại, miêu tả tâm lí tinh tế, tình huống truyện độc đáo.\n• Đánh giá: Nhân vật tiêu biểu cho phẩm chất con người thời đại; qua đó gửi gắm thông điệp nhân đạo sâu sắc.`;
-    } else if (subType === 'nlvh_doan_nt_truyen' || prompt.includes('truyện') || prompt.includes('chi tiết') || prompt.includes('tình huống') || prompt.includes('điểm nhìn')) {
-      generated = `• Mở đoạn: Câu dẫn + Giới thiệu tác giả, truyện ngắn và đặc sắc nghệ thuật tự sự.\n• Phân tích các yếu tố nghệ thuật:\n  - Ngôi kể & Điểm nhìn: [Ngôi thứ mấy? Điểm nhìn bên trong/bên ngoài? Tác dụng biểu đạt]\n  - Tình huống truyện / Chi tiết nghệ thuật: [Chỉ ra chi tiết/tình huống + Dẫn chứng + Phân tích ý nghĩa]\n  - Ngôn ngữ & Giọng điệu trần thuật: [Mộc mạc, đa thanh, giàu chất triết lí]\n  - Diễn biến nội tâm: Miêu tả tinh vi những biến chuyển tâm lí nhân vật.\n• Đánh giá: Khẳng định tài năng, cá tính sáng tạo độc đáo của nhà văn và tư tưởng tác phẩm.`;
-    } else {
-      generated = `• Câu dẫn + Giới thiệu VĐNL: Nội dung chủ đề tác phẩm.\n• Nêu chủ đề: Chủ đề của tác phẩm là...\n• Phân tích 3 khía cạnh của chủ đề:\n  - Thứ nhất: Chủ đề thể hiện qua nhan đề / hình tượng trung tâm / tình huống truyện (dẫn chứng + phân tích).\n  - Thứ hai: Chủ đề làm rõ qua tâm trạng nhân vật / tình cảm cảm xúc (dẫn chứng + phân tích).\n  - Thứ ba: Chủ đề sáng tỏ qua chi tiết nghệ thuật đắt giá (dẫn chứng + phân tích).\n• Đánh giá: Chủ đề có ý nghĩa sâu sắc, khẳng định thông điệp nhân văn và tài nghệ sáng tạo của tác giả.`;
-    }
-  } else {
-    // bai-nlvh
-    if (subType === 'nlvh_bai_sosanh' || prompt.includes('so sánh') || prompt.includes('hai đoạn trích') || prompt.includes('hai tác phẩm')) {
-      generated = `• I. Mở bài: Dẫn dắt, giới thiệu tác phẩm 1 + tác giả 1, tác phẩm 2 + tác giả 2; nêu vấn đề nghị luận (so sánh điểm tương đồng và khác biệt).\n• II. Thân bài:\n  1. Khái quát chung: Hoàn cảnh sáng tác, xuất xứ, vị trí của hai đoạn trích / tác phẩm.\n  2. Điểm tương đồng:\n    - Về nội dung: Đề tài, chủ đề, cảm hứng chủ đạo, kiểu nhân vật...\n    - Về hình thức: Bút pháp nghệ thuật, thể loại...\n  3. Điểm khác biệt:\n    - Về nội dung: Góc nhìn hiện thực, sắc thái cảm xúc, vẻ đẹp riêng biệt của từng hình tượng...\n    - Về hình thức: Ngôi kể, điểm nhìn, sáng tạo từ ngữ hình ảnh, giọng điệu...\n  4. Lí giải nguyên nhân giống và khác nhau (hoàn cảnh thời đại, cá tính sáng tạo, thi pháp riêng của từng tác giả).\n  5. Đánh giá chung: Ý nghĩa sự tương đồng (quy luật thời đại) và khác biệt (sự phong phú, đa dạng của nền văn học).\n• III. Kết bài: Khẳng định sức sống và vị thế của cả hai tác phẩm trong dòng chảy văn học dân tộc.`;
-    } else {
-      generated = `• I. Mở bài: Trích dẫn – dẫn dắt – giới thiệu tác giả, tác phẩm và định hướng vấn đề nghị luận.\n• II. Thân bài:\n  1. Phân tích nội dung, chủ đề (theo đặc trưng thể loại Thơ hoặc Truyện):\n    - Đề tài, chủ đề cốt lõi của tác phẩm.\n    - Mạch cảm xúc / Quá trình phát triển tâm lí và vẻ đẹp hình tượng nhân vật (kèm dẫn chứng và phân tích tác dụng).\n    - Tư tưởng nhân văn và thông điệp mà tác giả gửi gắm.\n  2. Phân tích hình thức nghệ thuật đặc sắc:\n    - Với Thơ: Thể thơ, vần nhịp, sáng tạo từ ngữ, hình ảnh biểu tượng, biện pháp tu từ, giọng điệu.\n    - Với Truyện: Ngôi kể, điểm nhìn trần thuật, tình huống truyện, nghệ thuật xây dựng nhân vật, chi tiết tiêu biểu, ngôn ngữ đối thoại/độc thoại.\n  3. Đánh giá tổng hợp: Bước 1 phân tích gắn liền Bước 2 đánh giá vai trò đối với chủ đề; khẳng định phong cách nghệ thuật độc đáo của tác giả.\n• III. Kết bài: Khái quát lại giá trị tác phẩm và ấn tượng sâu sắc để lại trong tâm hồn người đọc.`;
-    }
-  }
-
-  const guideEl = document.getElementById('input-set-thinking-guide');
-  if (guideEl) {
-    guideEl.value = generated;
-    guideEl.focus();
-    toast('✨ Đã tự động tạo khung Gợi ý tư duy chuẩn theo dạng bài!', 'ok');
-  }
-}
+function autoGenerateThinkingGuideForModal() {}
 window.autoGenerateThinkingGuideForModal = autoGenerateThinkingGuideForModal;
 
 function deleteCurrentOpenedWritingSet() {

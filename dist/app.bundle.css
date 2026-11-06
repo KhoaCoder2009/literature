@@ -8811,7 +8811,7 @@ body.in-writing-workspace .writing-workspace-nav {
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* --- HỘP GỢI Ý TƯ DUY NẰM TRỰC TIẾP DƯỚI ĐỀ BÀI --- */
+/* --- WORKSPACE GUIDE CARD --- */
 .writing-thinking-card {
   margin-top: 14px;
   background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(99, 102, 241, 0.06) 100%);
@@ -9947,9 +9947,8 @@ body.in-reading-workspace .reading-workspace-nav {
    GDPT 2018 EDUCATIONAL ENHANCEMENTS STYLESHEET
    1. Gamification (Streak, Progress Bar, Badges)
    2. Quote of the Day (Góc truyền cảm hứng)
-   3. Cognitive Scaffolding ("Gợi ý tư duy" - Giàn giáo nhận thức)
-   4. Exam Pressure Timer (Bộ đếm thời gian rèn áp lực phòng thi)
-   5. Q&A & Bug Report ("Báo cáo lỗi / Thắc mắc")
+   3. Exam Pressure Timer (Bộ đếm thời gian rèn áp lực phòng thi)
+   4. Q&A & Bug Report ("Báo cáo lỗi / Thắc mắc")
    ========================================================================= */
 
 /* --- NAVBAR PILLS --- */
@@ -10454,7 +10453,7 @@ body.in-reading-workspace .reading-workspace-nav {
   border-right: 1.5px solid var(--stroke);
 }
 
-/* --- GỢI Ý TƯ DUY TRỌNG TÂM (PROMPT THINKING GUIDE CARD) --- */
+/* --- PROMPT GUIDE CARD --- */
 .scaffold-specific-guide-card {
   background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(99, 102, 241, 0.06) 100%);
   border: 2px solid var(--stroke);

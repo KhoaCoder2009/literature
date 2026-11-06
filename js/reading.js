@@ -867,14 +867,10 @@ function renderReadingWorkspace(set) {
               <span class="reading-q-level ${levelClass}">${esc(levelTitle)}</span>
             </div>
             <div style="display:flex; align-items:center; gap:6px;">
-              <button type="button" class="btn cy sm scaffold-trigger-btn" onclick="toggleReadingQuestionScaffolding(${idx}, ${isParagraphQuestion ? 'true' : 'false'})" title="Mở Gợi ý tư duy (Giàn giáo nhận thức): Từ khóa, Công thức &amp; Sơ đồ dàn ý trống">
-                💡 Gợi ý tư duy
-              </button>
               <span class="tag cy" style="font-weight:800; font-size:12px; padding:2px 8px;"><ion-icon name="trophy-outline"></ion-icon> ${maxPts} điểm</span>
             </div>
           </div>
           <div class="reading-q-text">${esc(q.text)}</div>
-          <div class="scaffold-box reading-q-scaffold-box" id="reading-scaffold-box-${idx}" style="display:none;"></div>
           <div class="reading-answer-box">
             <textarea
               id="reading-q-textarea-${idx}"

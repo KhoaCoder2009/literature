@@ -1,10 +1,9 @@
 /* =========================================================================
    10. GDPT 2018 EDUCATIONAL ENHANCEMENTS MODULE
-   - 1. Giàn giáo nhận thức (Scaffolding - "Gợi ý tư duy" chuẩn hóa theo 12 dạng bài NLVH & NLXH)
-   - 2. Cơ chế Gamification (Streak chuỗi ngày học, Thanh tiến trình XP & Huy hiệu)
-   - 3. Góc truyền cảm hứng (Quote of the Day & Sổ tay trích dẫn văn học)
-   - 4. Bộ đếm thời gian (Timer) rèn áp lực phòng thi (20p NLXH, 60p NLVH...)
-   - 5. Hệ thống "Báo cáo lỗi / Thắc mắc" (Đẩy về Email / Google Sheets / Quản lý lớp)
+   - 1. Cơ chế Gamification (Streak chuỗi ngày học, Thanh tiến trình XP & Huy hiệu)
+   - 2. Góc truyền cảm hứng (Quote of the Day & Sổ tay trích dẫn văn học)
+   - 3. Bộ đếm thời gian (Timer) rèn áp lực phòng thi (20p NLXH, 60p NLVH...)
+   - 4. Hệ thống "Báo cáo lỗi / Thắc mắc" (Đẩy về Email / Google Sheets / Quản lý lớp)
    ========================================================================= */
 
 (function initEducationalEnhancements(global) {
@@ -350,8 +349,8 @@
     {
       id: 'scaffold_thinker',
       icon: '💡',
-      name: 'Kiến Trúc Sư Tư Duy',
-      desc: 'Sử dụng "Gợi ý tư duy (Giàn giáo nhận thức)" để lập dàn ý',
+      name: 'Tư Duy Sâu Sắc',
+      desc: 'Hoàn thành bài luyện viết với đầy đủ cấu trúc các phần',
       xpBonus: 30
     },
     {
@@ -1039,19 +1038,7 @@
   // 3A. Giàn giáo nhận thức cho câu hỏi Đọc hiểu & Đoạn văn 200 chữ
   function toggleReadingQuestionScaffolding(idx, isParagraph) {
     const box = document.getElementById(`reading-scaffold-box-${idx}`);
-    if (!box) return;
-
-    if (box.style.display !== 'none') {
-      box.style.display = 'none';
-      return;
-    }
-
-    awardCustomGamificationPoints(10, 'scaffolding');
-    const card = document.getElementById(`card-q-${idx}`);
-    const qText = card ? (card.querySelector('.reading-q-text')?.textContent || '') : '';
-    const defaultTplKey = isParagraph ? detectBestTemplateKey(qText, null, true) : 'reading_short';
-    renderReadingQuestionScaffoldContent(idx, defaultTplKey, qText);
-    box.style.display = 'block';
+    if (box) box.style.display = 'none';
   }
 
   function renderReadingQuestionScaffoldContent(idx, tplKey, qTextOverride) {
@@ -1225,213 +1212,36 @@
 
   function renderWorkspaceThinkingGuide(curSet, overrideKey) {
     const card = document.getElementById('workspace-thinking-card');
-    const body = document.getElementById('workspace-thinking-guide-body');
-    const sub = document.getElementById('workspace-thinking-card-sub');
+    if (card) card.style.display = 'none';
     const btn = document.getElementById('btn-toggle-thinking-guide');
-    if (!card) return;
-
-    if (!curSet && typeof currentWritingSet !== 'undefined' && currentWritingSet) curSet = currentWritingSet;
-    if (!curSet && typeof window !== 'undefined' && window.currentWritingSet) curSet = window.currentWritingSet;
-
-    if (!curSet) {
-      card.style.display = 'none';
-      if (btn) btn.style.display = 'none';
-      return;
-    }
-
-    if (overrideKey && SCAFFOLD_TEMPLATES[overrideKey]) {
-      activeWritingTemplateKey = overrideKey;
-    } else {
-      if (curSet.subType && SCAFFOLD_TEMPLATES[curSet.subType]) {
-        activeWritingTemplateKey = curSet.subType;
-      } else {
-        const promptText = `${curSet.title || ''} ${curSet.prompt || ''}`;
-        const isParagraph = Boolean(
-          (curSet.category && curSet.category.startsWith('doan-')) ||
-          (curSet.sections && curSet.sections.length === 1) ||
-          promptText.includes('200 chữ') ||
-          promptText.includes('đoạn văn')
-        );
-        activeWritingTemplateKey = detectBestTemplateKey(promptText, curSet.subType, isParagraph);
-      }
-    }
-
-    const tpl = SCAFFOLD_TEMPLATES[activeWritingTemplateKey] || SCAFFOLD_TEMPLATES.nlxh_doan_ynghia;
-    const promptText = document.getElementById('workspace-prompt-text')?.textContent || (curSet ? curSet.prompt : '');
-    const keywords = extractSmartKeywordsFromText(`${curSet.title || ''} ${promptText}`);
-    const connectors = [
-      'Thứ nhất,',
-      'Thứ hai,',
-      'Thứ ba,',
-      'Thứ tư,',
-      'Bên cạnh đó,',
-      'Thực tế đã chứng minh',
-      'Nhìn từ góc độ ngược lại,',
-      'Qua đó, tác giả gửi gắm thông điệp'
-    ];
-
-    let thinkingGuide = (curSet.thinkingGuide || '').trim();
-    if (!thinkingGuide && typeof autoGenerateThinkingGuideForSet === 'function') {
-      thinkingGuide = autoGenerateThinkingGuideForSet(curSet);
-    }
-
-    const thinkingGuideHtml = thinkingGuide ? `
-      <div class="scaffold-specific-guide-card" style="margin-top:12px;">
-        <div class="scaffold-guide-card-header">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <span class="scaffold-guide-badge">🎯 GỢI Ý TƯ DUY TRỌNG TÂM (ĐỌC ĐỊNH HƯỚNG BÀI VIẾT)</span>
-          </div>
-        </div>
-        <div class="scaffold-thinking-guide-text">${esc(thinkingGuide)}</div>
-      </div>
-    ` : `
-      <div class="scaffold-specific-guide-card" style="margin-top:12px;">
-        <div class="scaffold-guide-card-header">
-          <span class="scaffold-guide-badge">💡 KHUNG DÀN Ý &amp; QUY TRÌNH DẠNG BÀI</span>
-        </div>
-      </div>
-    `;
-
-    const fullScaffoldHtml = `
-      <div style="margin-bottom:12px;">
-        <label class="scaffold-lbl" for="writing-main-tpl-select" style="font-weight:700; color:var(--ink); font-size:13px; display:block; margin-bottom:6px;">
-          📁 Chọn đúng Dạng bài Nghị luận (Theo tài liệu phương pháp):
-        </label>
-        <select id="writing-main-tpl-select" class="qa-select" style="font-weight:700; font-size:12.5px; width:100%; border:2px solid var(--stroke); border-radius:10px; padding:8px 12px; background:var(--bg-card); color:var(--ink);" onchange="onScaffoldTemplateChange(this.value)">
-          ${buildTemplateSelectOptionsHtml(activeWritingTemplateKey)}
-        </select>
-      </div>
-
-      <div class="scaffold-formula-banner">
-        <div style="margin-bottom:6px; color:#b45309; font-weight:800; font-size:12.5px; line-height:1.45;">
-          📌 ${esc(tpl.formRule)}
-        </div>
-        <div style="font-weight:800; font-size:12.5px; margin-bottom:6px; color:var(--ink);">
-          📐 Quy trình các bước triển khai:
-        </div>
-        <div class="scaffold-steps-pills">
-          ${tpl.formulaSteps.map(st => `<span class="scaffold-step-pill">${esc(st)}</span>`).join(' ➔ ')}
-        </div>
-      </div>
-
-      ${thinkingGuideHtml}
-
-      ${tpl.referenceHtml || ''}
-
-      <div class="scaffold-keywords-section" style="margin-top:12px;">
-        <div class="scaffold-lbl" style="font-weight:700; font-size:12.5px; margin-bottom:6px;">
-          🔑 Từ khóa gợi ý tham khảo theo đề:
-        </div>
-        <div class="scaffold-kw-list">
-          ${keywords.map(kw => `
-            <span class="scaffold-kw-chip-static">🔖 ${esc(kw)}</span>
-          `).join('')}
-        </div>
-      </div>
-
-      <div class="scaffold-keywords-section" style="margin-top:10px;">
-        <div class="scaffold-lbl" style="font-weight:700; font-size:12.5px; margin-bottom:6px;">
-          🔗 Cụm từ dẫn luận điểm tham khảo:
-        </div>
-        <div class="scaffold-kw-list">
-          ${connectors.map(c => `
-            <span class="scaffold-kw-chip-static connector">✨ ${esc(c)}...</span>
-          `).join('')}
-        </div>
-      </div>
-    `;
-
-    if (body) {
-      body.innerHTML = fullScaffoldHtml;
-    }
-    const legacyBody = document.getElementById('writing-scaffolding-body');
-    if (legacyBody && legacyBody !== body) {
-      legacyBody.innerHTML = fullScaffoldHtml;
-    }
-
-    card.style.display = 'block';
-    if (btn) {
-      btn.style.display = 'inline-flex';
-      btn.classList.add('active');
-      const span = typeof btn.querySelector === 'function' ? btn.querySelector('span') : null;
-      if (span) span.textContent = 'Thu gọn gợi ý';
-    }
-    if (sub) {
-      sub.textContent = `[${tpl.group}] ${tpl.name}`;
-    }
+    if (btn) btn.style.display = 'none';
   }
 
   function toggleWorkspaceThinkingGuide() {
     const card = document.getElementById('workspace-thinking-card');
+    if (card) card.style.display = 'none';
     const btn = document.getElementById('btn-toggle-thinking-guide');
-    if (!card) return;
-
-    const isHidden = (card.style.display === 'none' || (typeof window !== 'undefined' && typeof window.getComputedStyle === 'function' && window.getComputedStyle(card).display === 'none'));
-    if (isHidden) {
-      const curSet = (typeof currentWritingSet !== 'undefined' && currentWritingSet) ? currentWritingSet : (typeof window !== 'undefined' ? window.currentWritingSet : null);
-      renderWorkspaceThinkingGuide(curSet);
-      card.style.display = 'block';
-      if (btn) {
-        btn.classList.add('active');
-        const span = typeof btn.querySelector === 'function' ? btn.querySelector('span') : null;
-        if (span) span.textContent = 'Thu gọn gợi ý';
-      }
-      toast('💡 Đã mở gợi ý tư duy dưới đề bài!', 'ok');
-    } else {
-      card.style.display = 'none';
-      if (btn) {
-        btn.classList.remove('active');
-        const span = typeof btn.querySelector === 'function' ? btn.querySelector('span') : null;
-        if (span) span.textContent = '💡 Gợi ý tư duy';
-      }
-    }
+    if (btn) btn.style.display = 'none';
   }
 
   function initWritingScaffoldingAndTimer() {
     const curSet = (typeof currentWritingSet !== 'undefined' && currentWritingSet) ? currentWritingSet : (typeof window !== 'undefined' ? window.currentWritingSet : null);
-    if (curSet && curSet.subType && SCAFFOLD_TEMPLATES[curSet.subType]) {
-      activeWritingTemplateKey = curSet.subType;
-    } else if (curSet) {
-      const promptText = `${curSet.title || ''} ${curSet.prompt || ''}`;
-      const isParagraph = Boolean(
-        (curSet.category && curSet.category.startsWith('doan-')) ||
-        (curSet.sections && curSet.sections.length === 1) ||
-        promptText.includes('200 chữ') ||
-        promptText.includes('đoạn văn')
-      );
-      activeWritingTemplateKey = detectBestTemplateKey(promptText, curSet.subType, isParagraph);
-    } else {
-      activeWritingTemplateKey = 'nlxh_doan_ynghia';
-    }
-
-    renderWorkspaceThinkingGuide(curSet, activeWritingTemplateKey);
     initWritingPressureTimerUI(curSet);
   }
 
   function toggleWritingScaffoldingPanel() {
-    toggleWorkspaceThinkingGuide();
+    const card = document.getElementById('workspace-thinking-card');
+    if (card) card.style.display = 'none';
   }
 
   function renderWritingMainScaffoldingBody(selectedKey) {
-    if (selectedKey && SCAFFOLD_TEMPLATES[selectedKey]) {
-      activeWritingTemplateKey = selectedKey;
-    }
-    const curSet = (typeof currentWritingSet !== 'undefined' && currentWritingSet) ? currentWritingSet : (typeof window !== 'undefined' ? window.currentWritingSet : null);
-    renderWorkspaceThinkingGuide(curSet, selectedKey);
+    const card = document.getElementById('workspace-thinking-card');
+    if (card) card.style.display = 'none';
   }
 
   function toggleWritingSectionScaffolding(secId, idx) {
     const box = document.getElementById(`writing-sec-scaffold-${secId}`);
-    if (!box) return;
-
-    if (box.style.display !== 'none') {
-      box.style.display = 'none';
-      return;
-    }
-
-    awardCustomGamificationPoints(10, 'scaffolding');
-    renderWritingSectionScaffoldingContent(secId, idx, activeWritingTemplateKey);
-    box.style.display = 'block';
+    if (box) box.style.display = 'none';
   }
 
   function renderWritingSectionScaffoldingContent(secId, idx, tplKey) {
@@ -1519,13 +1329,9 @@
     toast(`Đã chèn: "${text}"`, 'ok');
   }
 
-  function insertSpecificSectionGuide(secId) {
-    toast('💡 Gợi ý tư duy dùng để đọc định hướng, bạn hãy tự viết bài bằng lời văn của mình nhé!', 'info');
-  }
+  function insertSpecificSectionGuide(secId) {}
 
-  function insertSetThinkingGuideToActiveSection() {
-    toast('💡 Gợi ý tư duy dùng để đọc định hướng, bạn hãy tự viết bài bằng lời văn của mình nhé!', 'info');
-  }
+  function insertSetThinkingGuideToActiveSection() {}
 
   function insertScaffoldFormulaOutline() {
     toast('💡 Quy trình và khung dàn ý dùng để đọc tham khảo khi làm bài!', 'info');
